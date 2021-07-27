@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MediatR;
+using Perflow.Studio.DataAccess.Repositories;
+using Perflow.Studio.Domain.Entities;
 
 namespace Perflow.Studio
 {
@@ -11,6 +13,8 @@ namespace Perflow.Studio
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddGenericRepository<Song>();
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddMediatR(typeof(Startup));
