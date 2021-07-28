@@ -1,0 +1,16 @@
+﻿using AutoMapper;
+using Perflow.Common.DTO;
+using Perflow.Domain;
+
+namespace Perflow.Common.MappingProfiles
+{
+    public sealed class AlbumProfile : Profile
+    {
+        public AlbumProfile()
+        {
+            CreateMap<Album, AlbumDTO>();
+
+            CreateMap<AlbumDTO, Album>();
+        }
+    }
+}

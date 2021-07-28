@@ -10,26 +10,25 @@ namespace Shared.RabbitMQ
         IConnection _connection;
         IModel _channel;
 
-        public RabbitMQWrapper()
+        public RabbitMQWrapper(IConnectionFactory connectionFactory)
         {
-            var _factory = new ConnectionFactory() { HostName = "localhost" };
-            _connection = _factory.CreateConnection();
+            _connection = connectionFactory.CreateConnection();
             _channel = _connection.CreateModel();
         }
 
-        public void DeclareExhange(string exhangeName, string exhangeType)
+        public void DeclareExсhange(string exсhangeName, string exсhangeType)
         {
-            _channel.ExchangeDeclare(exhangeName, exhangeType ?? string.Empty);
+            _channel.ExchangeDeclare(exсhangeName, exсhangeType ?? string.Empty);
         }
 
-        public void BindQueue(string exhangeName, string routingKey, string queueName)
+        public void BindQueue(string exсhangeName, string routingKey, string queueName)
         {
             _channel.QueueDeclare(
                 queue: queueName,
                 durable: true,
                 exclusive: false,
                 autoDelete: false);
-            _channel.QueueBind(queueName, exhangeName, routingKey);
+            _channel.QueueBind(queueName, exсhangeName, routingKey);
         }
 
         public void SetAcknowledge(ulong deliveryTag, bool processed)
@@ -50,10 +49,10 @@ namespace Shared.RabbitMQ
                                   consumer: consumer);
         }
 
-        public void SendMessageToQueue(string exhangeName, string routingKey, string queueName, string message)
+        public void SendMessageToQueue(string exchangeName, string routingKey, string message)
         {
             var body = Encoding.UTF8.GetBytes(message);
-            _channel.BasicPublish(exhangeName,
+            _channel.BasicPublish(exchangeName,
                                   routingKey,
                                   basicProperties: null,
                                   body);
