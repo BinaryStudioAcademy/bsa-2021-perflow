@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-landingpage',
@@ -25,7 +25,7 @@ export class LandingpageComponent implements OnInit {
     this.authService.login().subscribe(() => {
       this.message = this.getMessage();
       if (this.authService.isLoggedIn) {
-        const redirectUrl = '/main-nav';
+        const redirectUrl = '/main';
         this.router.navigate([redirectUrl]);
       }
     });

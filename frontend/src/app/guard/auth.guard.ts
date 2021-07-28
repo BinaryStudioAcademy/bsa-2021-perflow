@@ -7,7 +7,7 @@ import {
   NavigationExtras,
   CanLoad, Route
 } from '@angular/router';
-import { AuthService } from './../service/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
