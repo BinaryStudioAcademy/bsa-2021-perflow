@@ -1,15 +1,15 @@
 ﻿using System;
+using Perflow.Studio.Domain.Enums;
 
 namespace Perflow.Studio.Business.Songs.DTOs
 {
     public record SongReadDTO(
         int Id,
         string Name,
-        int? Duration,
+        int Duration,
         string? IconURL,
-        string? TrackURL,
-        bool IsExplicit,
-        DateTimeOffset? PublishedAt,
-        DateTimeOffset CreatedAt
+        bool HasCensorship,
+        DateTime CreatedAt,
+        AuthorType AuthorType
     );
 }

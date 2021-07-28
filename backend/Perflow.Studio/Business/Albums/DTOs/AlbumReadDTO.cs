@@ -6,10 +6,13 @@ namespace Perflow.Studio.Business.Albums.DTOs
     public record AlbumReadDTO(
         int Id,
         string Name,
-        string? Description,
-        AlbumType Type,
+        int? Year,
         string? IconURL,
-        DateTimeOffset? PublishedAt,
-        DateTimeOffset CreatedAt
+        string? Description,
+        DateTime CreatedAt,
+        AlbumRegion AlbumRegion,
+        bool IsPublished,
+        bool IsSingle,
+        int AuthorId
     );
 }

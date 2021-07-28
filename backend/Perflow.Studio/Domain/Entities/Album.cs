@@ -9,14 +9,20 @@ namespace Perflow.Studio.Domain.Entities
 
         public string Name { get; set; } = string.Empty;
 
-        public string? Description { get; set; }
-
-        public AlbumType Type { get; set; }
+        public int? Year { get; set; }
 
         public string? IconURL { get; set; }
 
-        public DateTimeOffset? PublishedAt { get; set; }
+        public string? Description { set; get; }
 
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public AlbumRegion AlbumRegion { get; set; }
+
+        public bool IsPublished { get; set; }
+
+        public bool IsSingle { get; set; }
+
+        public int AuthorId { get; set; }
     }
 }

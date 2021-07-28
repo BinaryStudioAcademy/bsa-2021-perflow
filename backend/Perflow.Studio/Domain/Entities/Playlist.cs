@@ -15,6 +15,8 @@ namespace Perflow.Studio.Domain.Entities
 
         public string? IconURL { get; set; }
 
-        private DateTimeOffset CreatedAt { get; set; }
+        public int AuthorId { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 }

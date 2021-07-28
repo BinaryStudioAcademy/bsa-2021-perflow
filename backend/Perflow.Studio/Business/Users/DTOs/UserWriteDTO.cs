@@ -3,7 +3,10 @@
 namespace Perflow.Studio.Business.Users.DTOs
 {
     public record UserWriteDTO(
-        DateTimeOffset? Birthday,
+        string UserName,
+        string Email,
+        string Country,
+        DateTime? Birthday,
         string? Description,
         string? IconURL
     );
