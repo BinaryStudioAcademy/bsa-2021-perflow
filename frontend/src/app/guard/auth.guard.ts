@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
+export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -23,12 +23,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.canActivate(route, state);
-  }
-
-  canLoad(route: Route): boolean {
-    const url = `/${route.path}`;
-
-    return this.checkLogin(url);
   }
 
   checkLogin(url: string): boolean {

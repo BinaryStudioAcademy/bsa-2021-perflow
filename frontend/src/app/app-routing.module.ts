@@ -5,12 +5,12 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./moduls/auth/auth.module').then((m) => m.AuthModule),
+      import('./moduls/auth/auth.module').then((m) => m.AuthModule)
   },
   {
     path: 'main',
     loadChildren: () =>
-      import('./moduls/main/main.module').then((m) => m.MainModule),
+      import('./moduls/main/main.module').then((m) => m.MainModule)
   },
   { path: '**', redirectTo: '' },
 ];
