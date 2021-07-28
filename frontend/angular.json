@@ -30,8 +30,9 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.sass"
+            "styles": [             
+              "src/styles.sass",
+              "node_modules/semantic-ui-css/semantic.min.css"
             ],
             "scripts": []
           },
