@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialComponentsModule } from './common/material-components.module';
+import { AuthModule } from './moduls/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { MaterialComponentsModule } from './common/material-components.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialComponentsModule
+    MaterialComponentsModule,
+    AuthModule
   ],
   exports: [MaterialComponentsModule],
   providers: [],

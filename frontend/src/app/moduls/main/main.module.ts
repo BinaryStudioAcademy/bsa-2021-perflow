@@ -2,16 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MainRoutingModule } from './main-routing.module';
-import { MainComponent } from './main.component';
+import { MenuNavComponent } from './menu-nav/menu-nav.component';
+import { MaterialComponentsModule } from 'src/app/common/material-components.module';
 
 
 @NgModule({
   declarations: [
-    MainComponent
+    MenuNavComponent
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
+    MaterialComponentsModule
   ]
 })
 export class MainModule { }
