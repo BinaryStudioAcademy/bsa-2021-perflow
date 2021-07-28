@@ -1,1 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
+
+    // Fonts
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap')
+
+    //Font-Weights
+        $light-weight:    300
+        $normal-weight:   400
+        $medium-weight:   500
+        $semibold-weight: 600
+        $bold-weight:     700
+
+    //colors
+        $background:#21292D
+        $second-color:#282F37
+        $button-full-from:#FD9122
+        $button-full-to:#FD5D34
+        $button-ghost-border:#FF792A
+        $text:#FAFBFF
+        $input-background:#282F37
+
+
+html
+    margin: 0
+    padding: 0
+    font-family:'Rubik','sans-serif'
+
+    //bodies
+body
+    font-size: 14px
+
+.body-light
+    font-weight:$light-weight
+
+.body-regular
+    font-weight:$normal-weight
+
+    //headers
+
+h3,h4,h5,h6   
+    font-weight:$bold-weight
+
+h3
+    font-size:40px
+
+h4
+    font-size:24px
+
+h5
+    font-size:18px
+    font-weight:$medium-weight
+
+h6
+    font-size:16px
+    font-weight:$medium-weight
+
+
+//menues
+
+.menu
+    font-size:14px
+    font-weight:$medium-weight
+
+
+//tubs
+    .tub
+        font-size:16px
+        font-family:$semibold-weight
+
+
+//buttons
+
+.btn-full
+    background: linear-gradient(90deg, $button-full-from 0%, $button-full-to 100%)
+    border-radius: 50px
+
+.btn-ghost
+    border: 1px solid $button-ghost-border
+    box-sizing: border-box
+    border-radius: 50px
+
+//inputs
+    .input-dark
+        background: $input-background
+        border-radius: 50px
