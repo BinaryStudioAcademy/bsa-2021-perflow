@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using MediatR;
 using Perflow.Studio.DataAccess.Repositories;
 using Perflow.Studio.Domain.Entities;
+using Shared.ExceptionsHandler.Filters;
 
 namespace Perflow.Studio
 {
@@ -19,7 +20,7 @@ namespace Perflow.Studio
 
             services.AddMediatR(typeof(Startup));
 
-            services.AddControllers();
+            services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
             services.AddSwaggerGen(c =>
             {

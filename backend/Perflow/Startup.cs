@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using Perflow.Services.Extensions;
 using Perflow.DataAccess.Context;
+using Shared.ExceptionsHandler.Filters;
 
 namespace Perflow
 {
@@ -36,7 +37,7 @@ namespace Perflow
 
             services.RegisterCustomServices();
 
-            services.AddControllers();
+            services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
             services.AddSwaggerGen(c =>
             {
