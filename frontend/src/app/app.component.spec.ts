@@ -6,30 +6,31 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
       ],
       declarations: [
-        AppComponent
+        AppComponent,
       ],
     }).compileComponents();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    const FIXTURE = TestBed.createComponent(AppComponent);
+    const APP = FIXTURE.componentInstance;
+    expect(APP).toBeTruthy();
   });
 
-  it(`should have as title 'frontend'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('frontend');
+  it('should have as title \'frontend\'', () => {
+    const FIXTURE = TestBed.createComponent(AppComponent);
+    const APP = FIXTURE.componentInstance;
+    expect(APP.title).toEqual('frontend');
   });
 
   it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('frontend app is running!');
+    const FIXTURE = TestBed.createComponent(AppComponent);
+    FIXTURE.detectChanges();
+    const COMPILED = FIXTURE.nativeElement as HTMLElement;
+    expect(COMPILED.querySelector('.content span')?.textContent)
+      .toContain('frontend app is running!');
   });
 });
