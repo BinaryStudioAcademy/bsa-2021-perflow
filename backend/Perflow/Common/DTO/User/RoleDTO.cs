@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Perflow.Common.DTO.User;
 
-namespace Perflow.Common.DTO
+namespace Perflow.Common.DTO.User
 {
     public class RoleDTO
     {

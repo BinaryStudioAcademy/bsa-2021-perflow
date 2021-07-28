@@ -1,4 +1,6 @@
-﻿namespace Perflow.Common.DTO
+﻿using Perflow.Common.DTO.User;
+
+namespace Perflow.Common.DTO.Playlist
 {
     public sealed class PlaylistReactionDTO
     {

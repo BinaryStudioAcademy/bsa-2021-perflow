@@ -1,7 +1,8 @@
 ﻿using Perflow.Domain.Enums;
 using System;
+using Perflow.Common.DTO.User;
 
-namespace Perflow.Common.DTO
+namespace Perflow.Common.DTO.User
 {
     public class UserSettingsDTO
     {

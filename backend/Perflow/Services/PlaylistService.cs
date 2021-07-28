@@ -8,6 +8,7 @@ using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Perflow.Common.DTO.Playlist;
 
 namespace Perflow.Services
 {

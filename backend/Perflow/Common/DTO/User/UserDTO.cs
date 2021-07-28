@@ -1,8 +1,9 @@
-﻿using Perflow.Domain;
+﻿using Perflow.Common.DTO.Artist;
+using Perflow.Domain;
 using System;
 using System.Collections.Generic;
 
-namespace Perflow.Common.DTO
+namespace Perflow.Common.DTO.User
 {
     public sealed class UserDTO
     {
@@ -15,9 +16,7 @@ namespace Perflow.Common.DTO
         public string Country { get; set; }
         public DateTime Birthday { get; set; }
         public bool Gender { get; set; }
-        public string Password { get; set; }
-        public string Salt { get; set; }
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
         public GroupDTO Group { get; set; }
         public ICollection<RoleDTO> Roles { get; set; }
         public ICollection<ArtistFollower> Followers { get; set; }

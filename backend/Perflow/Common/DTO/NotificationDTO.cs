@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Perflow.Common.DTO.User;
 
 namespace Perflow.Common.DTO
 {

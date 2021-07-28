@@ -1,8 +1,9 @@
 ﻿using System;
 using Perflow.Domain.Enums;
 using System.Collections.Generic;
+using Perflow.Common.DTO.User;
 
-namespace Perflow.Common.DTO
+namespace Perflow.Common.DTO.Playlist
 {
     public sealed class PlaylistDTO
     {

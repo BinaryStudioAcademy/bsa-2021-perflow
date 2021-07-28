@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Perflow.Common.DTO.Playlist;
+using Perflow.Common.DTO.Song;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

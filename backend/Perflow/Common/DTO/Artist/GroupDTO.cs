@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Perflow.Common.DTO.User;
+using System;
 using System.Collections.Generic;
 
-namespace Perflow.Common.DTO
+namespace Perflow.Common.DTO.Artist
 {
     public sealed class GroupDTO
     {

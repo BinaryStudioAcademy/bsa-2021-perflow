@@ -2,8 +2,11 @@
 using Perflow.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using Perflow.Common.DTO.User;
+using Perflow.Common.DTO.Artist;
+using Perflow.Common.DTO.Album;
 
-namespace Perflow.Common.DTO
+namespace Perflow.Common.DTO.Song
 {
     public sealed class SongDTO
     {

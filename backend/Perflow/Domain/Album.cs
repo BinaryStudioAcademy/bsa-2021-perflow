@@ -7,7 +7,7 @@ namespace Perflow.Domain
     public sealed class Album : BaseEntity
     {
         public string Name { get; set; }
-        public int ReleaseYear { get; set; }
+        public int? ReleaseYear { get; set; }
         public string IconURL { get; set; }
         public string Description { get; set; }
         public AlbumRegion Region { get; set; }

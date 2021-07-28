@@ -10,7 +10,7 @@ using Perflow.DataAccess.Context;
 namespace Perflow.Migrations
 {
     [DbContext(typeof(PerflowContext))]
-    [Migration("20210728125635_Init")]
+    [Migration("20210728165219_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,7 +67,7 @@ namespace Perflow.Migrations
                     b.Property<int>("Region")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReleaseYear")
+                    b.Property<int?>("ReleaseYear")
                         .HasColumnType("int");
 
                     b.Property<bool>("isPublished")
@@ -379,7 +379,7 @@ namespace Perflow.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("IconURL")
@@ -637,9 +637,7 @@ namespace Perflow.Migrations
                 {
                     b.HasOne("Perflow.Domain.Group", "Group")
                         .WithMany("Users")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });

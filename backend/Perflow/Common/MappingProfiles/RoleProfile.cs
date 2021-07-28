@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Perflow.Common.DTO;
+using Perflow.Common.DTO.User;
 using Perflow.Domain;
 
 namespace Perflow.Common.MappingProfiles

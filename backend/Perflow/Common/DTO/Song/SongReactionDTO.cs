@@ -1,6 +1,7 @@
 ﻿using System;
+using Perflow.Common.DTO.User;
 
-namespace Perflow.Common.DTO
+namespace Perflow.Common.DTO.Song
 {
     public sealed class SongReactionDTO
     {

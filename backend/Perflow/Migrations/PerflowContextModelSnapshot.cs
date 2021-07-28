@@ -65,7 +65,7 @@ namespace Perflow.Migrations
                     b.Property<int>("Region")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReleaseYear")
+                    b.Property<int?>("ReleaseYear")
                         .HasColumnType("int");
 
                     b.Property<bool>("isPublished")
@@ -377,7 +377,7 @@ namespace Perflow.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("IconURL")
@@ -635,9 +635,7 @@ namespace Perflow.Migrations
                 {
                     b.HasOne("Perflow.Domain.Group", "Group")
                         .WithMany("Users")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
