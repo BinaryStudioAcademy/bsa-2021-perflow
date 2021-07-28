@@ -7,7 +7,7 @@ namespace Perflow.Common.DTO
     public sealed class PlaylistDTO
     {
         public int Id { get; set; }
-
+        public DateTime CreatedAt { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -18,13 +18,9 @@ namespace Perflow.Common.DTO
 
         public UserDTO Author { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-
-        public bool IsGlobal { get; set; }
-
         public AccessType AccessType { get; set; }
 
-        public ICollection<SongDTO> Songs { get; set; } 
+        public ICollection<PlaylistSongDTO> Songs { get; set; }
 
         public ICollection<PlaylistReactionDTO> Reactions { get; set; }
     }

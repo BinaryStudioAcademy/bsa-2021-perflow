@@ -16,11 +16,9 @@ namespace Perflow.Domain
 
         public User Author { get; set; }
 
-        public bool IsGlobal { get; set; }
-
         public AccessType AccessType { get; set; }
 
-        public ICollection<Song> Songs { get; set; } 
+        public ICollection<PlaylistSong> Songs { get; set; } 
 
         public ICollection<PlaylistReaction> Reactions { get; set; }
     }

@@ -8,7 +8,17 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Playlist> builder)
         {
-            // TODO
+            builder
+                .HasOne(pl => pl.Author)
+                .WithMany();
+
+            builder
+                .HasMany(pl => pl.Reactions)
+                .WithOne(pr => pr.Playlist);
+
+            builder
+                .HasMany(pr => pr.Songs)
+                .WithOne(ps => ps.Playlist);
         }
     }
 }
