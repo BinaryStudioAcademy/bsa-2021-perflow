@@ -10,10 +10,9 @@ namespace Shared.RabbitMQ
         IConnection _connection;
         IModel _channel;
 
-        public RabbitMQWrapper()
+        public RabbitMQWrapper(IConnectionFactory connectionFactory)
         {
-            var _factory = new ConnectionFactory() { HostName = "localhost" };
-            _connection = _factory.CreateConnection();
+            _connection = connectionFactory.CreateConnection();
             _channel = _connection.CreateModel();
         }
 
@@ -50,10 +49,10 @@ namespace Shared.RabbitMQ
                                   consumer: consumer);
         }
 
-        public void SendMessageToQueue(string exhangeName, string routingKey, string message)
+        public void SendMessageToQueue(string exchangeName, string routingKey, string message)
         {
             var body = Encoding.UTF8.GetBytes(message);
-            _channel.BasicPublish(exhangeName,
+            _channel.BasicPublish(exchangeName,
                                   routingKey,
                                   basicProperties: null,
                                   body);
