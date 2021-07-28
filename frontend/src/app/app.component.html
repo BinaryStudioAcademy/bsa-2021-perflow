@@ -1,16 +1,57 @@
-<ul>
-  <li>
-    <a routerLink="/main">Main</a>
-  </li>
-  <li>
-    <a routerLink="/search">Search</a>
-  </li>
-  <li>
-    <a routerLink="/playlists">Playlists</a>
-  </li>
-  <li>
-    <a routerLink="/songs">Songs</a>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>
+<div class="main-page">
+  <mat-sidenav-container>
+    <mat-sidenav class="left-side-menu" mode="side" opened>
+      <div class="logo">
+        <mat-icon>cloud_circle</mat-icon>
+        LOGO
+      </div>
+      <mat-nav-list class="list">
+        <a mat-list-item routerLink="/main">
+          <span class="fa-stack">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-fire fa-stack-1x fa-inverse"></i>
+          </span>
+          <span> Home </span>
+        </a>
+        <a mat-list-item routerLink="/search">
+          <span class="fa-stack">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-search fa-stack-1x fa-inverse"></i>
+          </span>
+          <span> Search </span>
+        </a>
+        <a mat-list-item routerLink="/playlists">
+          <span class="fa-stack">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-music fa-stack-1x fa-inverse"></i>
+          </span>
+          <span> My playlists </span>
+        </a>
+        <a mat-list-item routerLink="/songs">
+          <span class="fa-stack">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
+          </span>
+          <span> Linked songs </span>
+        </a>
+      </mat-nav-list>
+      <div class="playlists-user">
+        <div id="list-of-playlists">
+          Created playlists
+          <ul>
+            <li><span>Home playlist</span></li>
+            <li><span>Wife playlist</span></li>
+            <li><span>Playlist for run</span></li>
+            <li><span>For work</span></li>
+          </ul>
+          <button id="create-playlist">
+            <strong>Create Playlist</strong>
+          </button>
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
