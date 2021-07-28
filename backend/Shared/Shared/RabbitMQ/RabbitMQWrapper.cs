@@ -50,7 +50,7 @@ namespace Shared.RabbitMQ
                                   consumer: consumer);
         }
 
-        public void SendMessageToQueue(string exhangeName, string routingKey, string queueName, string message)
+        public void SendMessageToQueue(string exhangeName, string routingKey, string message)
         {
             var body = Encoding.UTF8.GetBytes(message);
             _channel.BasicPublish(exhangeName,
