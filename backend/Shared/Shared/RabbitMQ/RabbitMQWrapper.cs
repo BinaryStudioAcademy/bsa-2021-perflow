@@ -16,19 +16,19 @@ namespace Shared.RabbitMQ
             _channel = _connection.CreateModel();
         }
 
-        public void DeclareExhange(string exhangeName, string exhangeType)
+        public void DeclareExсhange(string exсhangeName, string exсhangeType)
         {
-            _channel.ExchangeDeclare(exhangeName, exhangeType ?? string.Empty);
+            _channel.ExchangeDeclare(exсhangeName, exсhangeType ?? string.Empty);
         }
 
-        public void BindQueue(string exhangeName, string routingKey, string queueName)
+        public void BindQueue(string exсhangeName, string routingKey, string queueName)
         {
             _channel.QueueDeclare(
                 queue: queueName,
                 durable: true,
                 exclusive: false,
                 autoDelete: false);
-            _channel.QueueBind(queueName, exhangeName, routingKey);
+            _channel.QueueBind(queueName, exсhangeName, routingKey);
         }
 
         public void SetAcknowledge(ulong deliveryTag, bool processed)
