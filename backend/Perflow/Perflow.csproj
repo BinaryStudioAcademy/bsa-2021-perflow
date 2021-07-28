@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.9.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,6 +16,12 @@
     <Folder Include="Infrastructure\" />
     <Folder Include="DataAccess\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Shared">
+      <HintPath>..\Shared\Shared\bin\Debug\net5.0\Shared.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
