@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Perflow.Domain
 {
-    public class PlaylistSong : BaseEntity
+    public class PlaylistSong : AuditEntity
     { 
         public int PlaylistId { get; set; }
         public int SongId { get; set; }
@@ -14,15 +14,5 @@ namespace Perflow.Domain
         public Playlist Playlist { get; set; }
         public Song Song { get; set; }
 
-        private DateTimeOffset _createdAt;
-        public DateTimeOffset CreatedAt
-        {
-            get => _createdAt;
-            set => _createdAt = (value == DateTimeOffset.MinValue) ? DateTimeOffset.Now : value;
-        }
-        public PlaylistSong()
-        {
-            CreatedAt = DateTimeOffset.Now;
-        }
     }
 }

@@ -12,9 +12,6 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
                 .HasOne(ar => ar.Album)
                 .WithMany(al => al.Reactions);
 
-            //builder
-            //    .HasOne(ar => ar.User)
-            //    .WithMany();
         }
     }
 }

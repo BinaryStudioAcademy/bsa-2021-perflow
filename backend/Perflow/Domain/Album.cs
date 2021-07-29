@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Perflow.Domain
 {
-    public sealed class Album : BaseEntity
+    public sealed class Album : AuditEntity
     {
         public string Name { get; set; }
         public int? ReleaseYear { get; set; }
@@ -21,16 +21,5 @@ namespace Perflow.Domain
         public bool isSingle { get; set; }
         public ICollection<AlbumReaction> Reactions { get; set; }
         public ICollection<Song> Songs { get; set; }
-
-        private DateTimeOffset _createdAt;
-        public DateTimeOffset CreatedAt
-        {
-            get => _createdAt;
-            set => _createdAt = (value == DateTimeOffset.MinValue) ? DateTimeOffset.Now : value;
-        }
-        public Album()
-        {
-            CreatedAt = DateTimeOffset.Now;
-        }
     }
 }

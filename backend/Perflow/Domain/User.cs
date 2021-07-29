@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Perflow.Domain
 {
-    public sealed class User : BaseEntity
+    public sealed class User : AuditEntity
     {
         public string UserName { get; set; }
         public string IconURL { get; set; }
@@ -21,15 +21,5 @@ namespace Perflow.Domain
         public ICollection<ArtistFollower> Followers { get; set; }
         public ICollection<ArtistFollower> Subscriptions { get; set; }
 
-        private DateTimeOffset _createdAt;
-        public DateTimeOffset CreatedAt
-        {
-            get => _createdAt;
-            set => _createdAt = (value == DateTimeOffset.MinValue) ? DateTimeOffset.Now : value;
-        }
-        public User()
-        {
-            CreatedAt = DateTimeOffset.Now;
-        }
     }
 }

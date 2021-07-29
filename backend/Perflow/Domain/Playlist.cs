@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Perflow.Domain
 {
-    public sealed class Playlist : BaseEntity
+    public sealed class Playlist : AuditEntity
     {
         public string Name { get; set; }
 
@@ -23,15 +23,5 @@ namespace Perflow.Domain
 
         public ICollection<PlaylistReaction> Reactions { get; set; }
 
-        private DateTimeOffset _createdAt;
-        public DateTimeOffset CreatedAt
-        {
-            get => _createdAt;
-            set => _createdAt = (value == DateTimeOffset.MinValue) ? DateTimeOffset.Now : value;
-        }
-        public Playlist()
-        {
-            CreatedAt = DateTimeOffset.Now;
-        }
     }
 }
