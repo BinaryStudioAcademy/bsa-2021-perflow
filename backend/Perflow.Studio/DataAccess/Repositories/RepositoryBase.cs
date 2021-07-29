@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Perflow.Studio.Common.Interfaces;
@@ -26,7 +25,7 @@ namespace Perflow.Studio.DataAccess.Repositories
         {
             var sql = $"SELECT * From {_tableName} WHERE Id = @Id";
 
-            return (await _connection.QueryAsync<TEntity>(sql, new { id })).FirstOrDefault();
+            return await _connection.QueryFirstOrDefaultAsync<TEntity>(sql, new { id });
         }
 
         public virtual Task<IEnumerable<TEntity>> ReadAllAsync()

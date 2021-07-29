@@ -1,6 +1,7 @@
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
+using Perflow.Studio.Business.Songs.DTOs;
 using Perflow.Studio.Common.Interfaces;
 using Perflow.Studio.Common.Interfaces.Repositories;
 using Perflow.Studio.Domain.Entities;
@@ -11,6 +12,21 @@ namespace Perflow.Studio.DataAccess.Repositories
     {
         public SongsRepository(IDbConnectionFactory connectionFactory)
             : base("Songs", connectionFactory) { }
+
+        public async Task<SongReadDTO?> ReadAsDTOAsync(int id)
+        {
+            var sql = @"SELECT Id, Name, Duration, IconURL, HasCensorship, CreatedAt, AuthorType FROM Songs
+                        WHERE Id = @Id";
+            var data = new {id};
+            var songDto = await Connection.QueryFirstOrDefaultAsync<SongReadDTO>(sql, data);
+            return songDto;
+        }
+
+        public Task<IEnumerable<SongReadDTO>> ReadAllAsDTOAsync()
+        {
+            var sql = @"SELECT Id, Name, Duration, IconURL, HasCensorship, CreatedAt, AuthorType FROM Songs";
+            return Connection.QueryAsync<SongReadDTO>(sql);
+        }
 
         public override async Task<Song> AddAsync(Song song)
         {
@@ -26,7 +42,7 @@ namespace Perflow.Studio.DataAccess.Repositories
                 song.CreatedAt,
                 song.AuthorType
             };
-            var id = (await Connection.QueryAsync<int>(sql, data)).First();
+            var id = await Connection.QueryFirstAsync<int>(sql, data);
 
             song.Id = id;
             return song;
