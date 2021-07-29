@@ -44,7 +44,14 @@
         "max-len":[
             "error",
             {
+                "code": 120,
                 "ignoreComments": true
+            }
+        ],
+        "no-underscore-dangle":[
+            "error",
+            {
+              "allowAfterThis": true
             }
         ],
         "@typescript-eslint/naming-convention":[
@@ -75,7 +82,7 @@
         ],
         "@typescript-eslint/brace-style": [
           "error",
-          "stroustrup", 
+          "allman", 
           { "allowSingleLine": false }
         ],
         "@typescript-eslint/lines-between-class-members":[

@@ -1,0 +1,21 @@
+<div class="uploadblock">
+    <div class="dropZone" appDragDrop [type]="fileType" [addedFiles]="files" (files)="filesDropped($event)">
+        <h3 class="drag-text"><i class="cloud upload icon"></i></h3>
+        <h3 class="drag-text body-regular">Drag and drop file here</h3>
+        <h4 class="drag-text body-regular">or you can</h4>
+        <div class="huge ui labeled icon button btn-full upload-button">
+            <i class="upload icon" aria-hidden="true"></i>
+            Upload
+            <input type="file" multiple class="filepicker" [attr.accept]="fileType===1 ? 'image/*' : 'audio/*' " (change)="filesAddedByButton($event)">
+        </div>           
+    </div>
+    <div class="filelist">
+        <div *ngFor="let file of files" class="uploaded-file">
+            <i *ngIf="fileType===1" class="file image icon typeicon"></i>
+            <i *ngIf="fileType===0" class="file audio icon typeicon"></i>
+            <h5 class="filename">{{file.name}}</h5>
+            <h5 class="filesize">{{bytesToSize(file.size)}}</h5>
+            <i class="trash alternate icon removeicon" (click)="delete(file)"></i>
+        </div>
+    </div>
+</div>

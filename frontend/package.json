@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "(npm run lint --fix) & (ng serve)",
-    "build": "(npm run lint --fix) && (ng build)",
+    "start": "(npm run lint) & (ng serve)",
+    "build": "(npm run lint) && (ng build)",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint --fix"
   },
   "private": true,
   "dependencies": {
