@@ -57,10 +57,6 @@
                 "selector": "variable",
                 "format": ["camelCase", "UPPER_CASE"]
             },
-            { 
-                "selector": "variable",
-                "modifiers": ["const"], 
-                "format": ["UPPER_CASE"] },
             {
                 "selector": "parameter",
                 "format": ["camelCase"],
@@ -78,13 +74,18 @@
             }
         ],
         "@typescript-eslint/brace-style": [
-            "error",
-            "stroustrup", 
-            { "allowSingleLine": false }],
+          "error",
+          "stroustrup", 
+          { "allowSingleLine": false }
+        ],
         "@typescript-eslint/lines-between-class-members":[
-            "error",
-            "never",
-            { "exceptAfterSingleLine": true }
+          "error",
+          "never",
+          { "exceptAfterSingleLine": true }
+        ],
+        "@typescript-eslint/comma-dangle": [
+          "error",
+          "never"
         ]
       }
     },
