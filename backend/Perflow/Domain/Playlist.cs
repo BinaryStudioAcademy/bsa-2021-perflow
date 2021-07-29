@@ -1,10 +1,11 @@
 ﻿using Perflow.Domain.Abstract;
 using Perflow.Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Perflow.Domain
 {
-    public sealed class Playlist : BaseEntity
+    public sealed class Playlist : AuditEntity
     {
         public string Name { get; set; }
 
@@ -16,12 +17,11 @@ namespace Perflow.Domain
 
         public User Author { get; set; }
 
-        public bool IsGlobal { get; set; }
-
         public AccessType AccessType { get; set; }
 
-        public ICollection<Song> Songs { get; set; } 
+        public ICollection<PlaylistSong> Songs { get; set; } 
 
         public ICollection<PlaylistReaction> Reactions { get; set; }
+
     }
 }

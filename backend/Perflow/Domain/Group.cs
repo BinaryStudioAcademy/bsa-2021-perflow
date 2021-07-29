@@ -1,9 +1,14 @@
 ﻿using Perflow.Domain.Abstract;
+using System;
+using System.Collections.Generic;
 
 namespace Perflow.Domain
 {
-    public sealed class Group : BaseEntity
+    public sealed class Group : AuditEntity
     {
+        public string Name { get; set; }
+
+        public ICollection<User> Users { get; set; }
 
     }
 }

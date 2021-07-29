@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Perflow", "Perflow.csproj", "{8D1B04AC-9B0A-44C9-9755-82D3EA59BC4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perflow", "Perflow.csproj", "{8D1B04AC-9B0A-44C9-9755-82D3EA59BC4D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "..\Shared\Shared\Shared.csproj", "{A074B8DD-6ECE-4269-BDF0-54984D1B5384}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8D1B04AC-9B0A-44C9-9755-82D3EA59BC4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D1B04AC-9B0A-44C9-9755-82D3EA59BC4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D1B04AC-9B0A-44C9-9755-82D3EA59BC4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A074B8DD-6ECE-4269-BDF0-54984D1B5384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A074B8DD-6ECE-4269-BDF0-54984D1B5384}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A074B8DD-6ECE-4269-BDF0-54984D1B5384}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A074B8DD-6ECE-4269-BDF0-54984D1B5384}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

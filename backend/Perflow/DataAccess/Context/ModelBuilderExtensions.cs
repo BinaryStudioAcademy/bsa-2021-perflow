@@ -18,6 +18,8 @@ namespace Perflow.DataAccess.Context
             modelBuilder.ApplyConfiguration(new SongReactionConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserSettingsConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration());
+            modelBuilder.ApplyConfiguration(new ArtistFollowerConfiguration());
         }
     }
 }
