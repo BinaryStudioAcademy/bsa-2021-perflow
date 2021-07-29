@@ -8,6 +8,7 @@ using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Perflow.Common.DTO.Playlist;
 
 namespace Perflow.Services
 {
@@ -51,6 +52,10 @@ namespace Perflow.Services
 
                 return _mapper.Map<PlaylistDTO>(createdPlaylist);
             }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -73,6 +78,10 @@ namespace Perflow.Services
                 var updatedPlaylist = await GetEntityAsync(playlist.Id);
 
                 return _mapper.Map<PlaylistDTO>(updatedPlaylist);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
             }
             catch (Exception ex)
             {
