@@ -5,6 +5,7 @@
     list-style: none
     box-sizing: border-box
 
+
 main
     display: grid
     position: relative
@@ -28,6 +29,7 @@ main
         grid-template-rows: 100%
         align-items: center
         gap: 15px
+        cursor: pointer
         .avatar
             grid-column: 1
             grid-row: 1
@@ -49,6 +51,43 @@ main
             color: #FAFBFF
             align-self: center
             top: -3px
+
+                
+    .dropdown-content 
+        display: none
+        position: absolute
+        top: 45px
+        left: -25px
+        width: 209px
+        height: 169px
+        padding: 9px 0px
+        background: #282F37
+        border: 0.5px solid #373C43
+        border-radius: 2px
+        transition: all 1s ease-out
+        z-index: 99
+        a
+            display: flex
+            font-family: Rubik
+            font-style: normal
+            font-weight: 500
+            font-size: 14px
+            line-height: 135%
+            color: #FAFBFF
+            padding: 9px 19px
+            &:hover
+                background: #373C43
+            &:last-child
+                color: #FD9122
+                i
+                    color: #FD9122
+            i
+                margin-right: 15px
+                
+
+
+
+
 
     .main__accordion
         grid-row: 1
@@ -76,10 +115,12 @@ main
                 border: 0px solid
                 color: #FAFBFF
                 text-align: center
+                cursor: pointer
             .btn-right
                 margin-left: 15px 
                 text-align: center 
                 transform: rotate(-180deg)
+                cursor: pointer
 
         .accordion-information
             grid-column: 1 / 4
@@ -218,3 +259,6 @@ main
     font-size: 24px
     line-height: 28px
     color: #FAFBFF  
+
+.showme
+    display: block !important
