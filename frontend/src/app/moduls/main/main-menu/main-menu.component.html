@@ -1,3 +1,28 @@
+<div class="ui two column grid" id="main">
+  <div class="column" id="menu">
+    <div class="ui six row grid">
+      <div class="row" id="logo-image">
+        <span>
+          <i class="circle icon"></i>
+        </span>
+        <span id="logo-name"> LOGO </span>
+      </div>
+      <div class="row" id="routers">
+        <a id="link" routerLink="./main-home">
+          <i class="huge icons">
+            <i class="circle icon"></i>
+            <i class="fire icon"></i>
+          </i>
+          <span> Home </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
 <!-- <div class="main-page">
   <mat-sidenav-container>
     <mat-sidenav class="left-side-menu" mode="side" opened>
@@ -133,20 +158,3 @@ a:hover
     
 .playlists-user
     margin: 25px -->
-
-<div>
-  <a routerLink="./main-home">Home</a>
-</div>
-<div>
-  <a routerLink="./search">Search</a>
-</div>
-<div>
-  <a routerLink="./playlists">Playlists</a>
-</div>
-<div>
-  <a routerLink="./songs">Songs</a>
-</div>
-
-<div>
-  <router-outlet></router-outlet>
-</div>
