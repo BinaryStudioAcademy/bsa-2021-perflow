@@ -12,7 +12,9 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthGuard implements CanActivate, CanActivateChild {
+
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -25,19 +27,17 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return this.canActivate(route, state);
   }
 
+
+  // TODO: Temporary body metod. 
+  // After adding the token based authorization. 
+  // Here, in the verification condition, replace the request for the authorization service - token verification.
   checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn) { return true; }
+    if (this.authService.isLoggedIn) {       
+      return true; 
+    }
 
-    this.authService.redirectUrl = url;
+    this.router.navigate(['/login']);
 
-    const sessionId = 123456789;
-
-    const navigationExtras: NavigationExtras = {
-      queryParams: { session_id: sessionId },
-      fragment: 'anchor'
-    };
-
-    this.router.navigate(['/login'], navigationExtras);
     return false;
   }
 }
