@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Perflow.Domain
 {
-    public class ArtistFollower
+    public class ArtistFollower : BaseEntity
     {
-        public int Id { get; set; }
         public int ArtistId { get; set; }
         public User Artist { get; set; }
 

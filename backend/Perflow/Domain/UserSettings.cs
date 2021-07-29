@@ -1,10 +1,10 @@
-﻿using Perflow.Domain.Enums;
+﻿using Perflow.Domain.Abstract;
+using Perflow.Domain.Enums;
 
 namespace Perflow.Domain
 {
-    public class UserSettings
+    public class UserSettings : BaseEntity
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
         public string Language { get; set; }

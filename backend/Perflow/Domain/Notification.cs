@@ -14,5 +14,16 @@ namespace Perflow.Domain
         public User Author { get; set; }
         public bool IsRead { get; set; }
         //public int Reference { get; set; }     To implement
+
+        private DateTimeOffset _createdAt;
+        public DateTimeOffset CreatedAt
+        {
+            get => _createdAt;
+            set => _createdAt = (value == DateTimeOffset.MinValue) ? DateTimeOffset.Now : value;
+        }
+        public Notification()
+        {
+            CreatedAt = DateTimeOffset.Now;
+        }
     }
 }

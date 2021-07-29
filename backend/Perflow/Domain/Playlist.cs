@@ -1,5 +1,6 @@
 ﻿using Perflow.Domain.Abstract;
 using Perflow.Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Perflow.Domain
@@ -21,5 +22,16 @@ namespace Perflow.Domain
         public ICollection<PlaylistSong> Songs { get; set; } 
 
         public ICollection<PlaylistReaction> Reactions { get; set; }
+
+        private DateTimeOffset _createdAt;
+        public DateTimeOffset CreatedAt
+        {
+            get => _createdAt;
+            set => _createdAt = (value == DateTimeOffset.MinValue) ? DateTimeOffset.Now : value;
+        }
+        public Playlist()
+        {
+            CreatedAt = DateTimeOffset.Now;
+        }
     }
 }
