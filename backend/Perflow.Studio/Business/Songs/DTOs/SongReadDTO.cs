@@ -9,7 +9,7 @@ namespace Perflow.Studio.Business.Songs.DTOs
         int Duration,
         string? IconURL,
         bool HasCensorship,
-        DateTime CreatedAt,
+        DateTimeOffset CreatedAt,
         AuthorType AuthorType
     );
 }

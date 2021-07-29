@@ -15,7 +15,7 @@ namespace Perflow.Studio.Domain.Entities
 
         public string? Description { set; get; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         public AlbumRegion AlbumRegion { get; set; }
 

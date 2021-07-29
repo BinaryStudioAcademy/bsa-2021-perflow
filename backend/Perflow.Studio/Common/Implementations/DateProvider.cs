@@ -5,6 +5,6 @@ namespace Perflow.Studio.Common.Implementations
 {
     public class DateProvider : IDateProvider
     {
-        public DateTime Now => DateTime.Now;
+        public DateTimeOffset Now => DateTimeOffset.Now;
     }
 }

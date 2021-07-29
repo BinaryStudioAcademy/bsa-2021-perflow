@@ -15,7 +15,7 @@ namespace Perflow.Studio.Domain.Entities
 
         public bool HasCensorship { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         public AuthorType AuthorType { get; set; }
     }

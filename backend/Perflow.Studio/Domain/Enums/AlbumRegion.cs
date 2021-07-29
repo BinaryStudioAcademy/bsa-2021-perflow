@@ -2,6 +2,10 @@ namespace Perflow.Studio.Domain.Enums
 {
     public enum AlbumRegion
     {
-        UA
+        USA,
+        UK,
+        EU,
+        Japan,
+        CIS
     }
 }

@@ -6,7 +6,7 @@ namespace Perflow.Studio.Business.Users.DTOs
         string UserName,
         string Email,
         string Country,
-        DateTime? Birthday,
+        DateTimeOffset? Birthday,
         string? Description,
         string? IconURL
     );

@@ -17,6 +17,6 @@ namespace Perflow.Studio.Domain.Entities
 
         public int AuthorId { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }

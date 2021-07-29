@@ -9,7 +9,7 @@ namespace Perflow.Studio.Business.Albums.DTOs
         int? Year,
         string? IconURL,
         string? Description,
-        DateTime CreatedAt,
+        DateTimeOffset CreatedAt,
         AlbumRegion AlbumRegion,
         bool IsPublished,
         bool IsSingle,

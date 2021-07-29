@@ -12,7 +12,7 @@ namespace Perflow.Studio.Domain.Entities
 
         public string Country { get; set; } = string.Empty;
 
-        public DateTime? Birthday { get; set; }
+        public DateTimeOffset? Birthday { get; set; }
 
         public string? Description { get; set; }
 
