@@ -13,10 +13,6 @@ namespace Perflow.Studio
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(configurationBuilder =>
-                {
-                    configurationBuilder.AddJsonFile("dbconnections.json");
-                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
