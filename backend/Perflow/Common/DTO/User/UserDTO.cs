@@ -8,13 +8,13 @@ namespace Perflow.Common.DTO.User
     public sealed class UserDTO
     {
         public int Id { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         public string UserName { get; set; }
         public string IconURL { get; set; }
         public string Description { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTimeOffset Birthday { get; set; }
         public bool Gender { get; set; }
         public int? GroupId { get; set; }
         public GroupDTO Group { get; set; }

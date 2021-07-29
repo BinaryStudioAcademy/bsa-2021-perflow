@@ -11,7 +11,7 @@ namespace Perflow.Domain
         public string Description { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTimeOffset Birthday { get; set; }
         public bool Gender { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }

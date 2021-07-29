@@ -4,19 +4,19 @@ namespace Perflow.Domain.Abstract
 {
     public abstract class BaseEntity
     {
-        private DateTime _createdAt;
+        private DateTimeOffset _createdAt;
 
         public int Id { get; set; }
 
-        public DateTime CreatedAt
+        public DateTimeOffset CreatedAt
         {
             get => _createdAt;
-            set => _createdAt = (value == DateTime.MinValue) ? DateTime.Now : value;
+            set => _createdAt = (value == DateTimeOffset.MinValue) ? DateTimeOffset.Now : value;
         }
 
         public BaseEntity()
         {
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTimeOffset.Now;
         }
     }
 }

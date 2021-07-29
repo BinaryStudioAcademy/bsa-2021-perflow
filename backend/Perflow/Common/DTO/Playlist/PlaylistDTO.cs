@@ -8,7 +8,7 @@ namespace Perflow.Common.DTO.Playlist
     public sealed class PlaylistDTO
     {
         public int Id { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }

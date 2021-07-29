@@ -10,7 +10,7 @@ namespace Perflow.Common.DTO.Album
     public sealed class AlbumDTO
     {
         public int Id { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         public string Name { get; set; }
         public int? ReleaseYear { get; set; }
         public string IconURL { get; set; }

@@ -10,7 +10,7 @@ namespace Perflow.Common.DTO
     public class PlaylistSongDTO
     {
         public int Id { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         public int PlaylistId { get; set; }
         public int SongId { get; set; }
 
