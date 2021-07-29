@@ -9,6 +9,7 @@ namespace Perflow.Studio.Business.Playlists.DTOs
         string? Description,
         PlaylistAccessType AccessType,
         string? IconURL,
+        int AuthorId,
         DateTimeOffset CreatedAt
     );
 }
