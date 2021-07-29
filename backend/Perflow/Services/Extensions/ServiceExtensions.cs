@@ -3,6 +3,7 @@ using Perflow.Services.Interfaces;
 using Perflow.Common.MappingProfiles;
 using System.Reflection;
 using Perflow.Common.DTO;
+using Perflow.Common.DTO.Playlist;
 
 namespace Perflow.Services.Extensions
 {

@@ -1,7 +1,12 @@
-﻿namespace Perflow.Domain
+﻿using Perflow.Domain.Abstract;
+using System.Collections.Generic;
+
+namespace Perflow.Domain
 {
-    public class Role
+    public class Role : BaseEntity
     {
-        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 }
