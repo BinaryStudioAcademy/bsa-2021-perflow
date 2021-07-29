@@ -11,6 +11,7 @@ export class LandingpageComponent implements OnInit {
   message: string;
 
   constructor(public authService: AuthService, public router: Router) {
+    
     this.message = this.getMessage();
   }
   ngOnInit(): void { }

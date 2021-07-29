@@ -6,7 +6,10 @@ import { tap, delay } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
+
+ // TODO: Temporary service to simulate authorization and test routing. Remove after installing the correct authorization system.
 export class AuthService {
+
   isLoggedIn = false;
 
   redirectUrl: string | null = null;
@@ -20,5 +23,5 @@ export class AuthService {
 
   logout(): void {
     this.isLoggedIn = false;
-  }
+  }  
 }

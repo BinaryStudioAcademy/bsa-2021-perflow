@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialComponentsModule } from './common/material-components.module';
 import { AuthModule } from './moduls/auth/auth.module';
 
 @NgModule({
@@ -15,10 +14,9 @@ import { AuthModule } from './moduls/auth/auth.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialComponentsModule,
     AuthModule
   ],
-  exports: [MaterialComponentsModule],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })
