@@ -8,13 +8,13 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Album> builder)
         {
-            builder
-                .HasOne(al => al.Author)
-                .WithMany();
+            //builder
+            //    .HasOne(al => al.Author)
+            //    .WithMany();
 
-            builder
-                .HasOne(al => al.Group)
-                .WithMany();
+            //builder
+            //    .HasOne(al => al.Group)
+            //    .WithMany();
 
             builder
                 .HasMany(al => al.Reactions)

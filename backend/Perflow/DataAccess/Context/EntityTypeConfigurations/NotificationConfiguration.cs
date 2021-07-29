@@ -12,9 +12,9 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Notification> builder)
         {
-            builder
-                .HasOne(n => n.Author)
-                .WithMany();
+            //builder
+            //    .HasOne(n => n.Author)
+            //    .WithMany();
         }
     }
 }

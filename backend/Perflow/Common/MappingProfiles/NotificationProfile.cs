@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Perflow.Common.DTO;
 using Perflow.Domain;
 using System;
 using System.Collections.Generic;
@@ -12,9 +11,6 @@ namespace Perflow.Common.MappingProfiles
     {
         public NotificationProfile()
         {
-            CreateMap<Notification, NotificationDTO>();
-
-            CreateMap<NotificationDTO, Notification>();
         }
     }
 }
