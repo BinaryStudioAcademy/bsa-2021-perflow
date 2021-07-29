@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Perflow.Extensions;
+using System;
 using System.Collections.Generic;
 using Perflow.Services.Extensions;
 using Perflow.DataAccess.Context;
@@ -42,6 +43,8 @@ namespace Perflow
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Perflow", Version = "v1" });
             });
+
+            services.AddBlobStorage(Configuration.GetConnectionString("BlobStorage"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
