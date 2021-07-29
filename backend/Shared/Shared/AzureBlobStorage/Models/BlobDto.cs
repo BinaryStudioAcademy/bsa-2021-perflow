@@ -1,5 +1,7 @@
 ﻿using System.IO;
 
+#nullable disable
+
 namespace Shared.AzureBlobStorage.Models
 {
     public class BlobDto
