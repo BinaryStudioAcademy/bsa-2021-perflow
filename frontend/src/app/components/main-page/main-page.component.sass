@@ -1,0 +1,220 @@
+*
+    margin: 0
+    padding: 0
+    text-decoration: none
+    list-style: none
+    box-sizing: border-box
+
+main
+    display: grid
+    position: relative
+    width: 100%
+    height: auto
+    grid-template-columns: 100%
+    grid-template-rows: repeat( 6, auto )
+    gap: 0px 0px
+    background: #21292D //$drk-gray
+    .main__avatar-box
+        display: grid
+        position: absolute
+        z-index: 99
+        left: calc(100% - 42px - 205px)
+        right: 42px
+        top: 35px
+        width: fit-content
+        height: 35px
+        padding: 0px 7px 
+        grid-template-columns: 35px max-content 10px
+        grid-template-rows: 100%
+        align-items: center
+        gap: 15px
+        .avatar
+            grid-column: 1
+            grid-row: 1
+            width: 35px
+            height: 35px
+            border-radius: 50% 
+            object-fit: cover
+        span
+            grid-column: 2
+            grid-row: 1
+            font-family: Rubik
+            font-style: normal
+            font-weight: 500
+            font-size: 18px
+            line-height: 21px
+            color: #FAFBFF
+        i
+            position: relative
+            color: #FAFBFF
+            align-self: center
+            top: -3px
+
+    .main__accordion
+        grid-row: 1
+        display: grid
+        position: relative
+        grid-template-columns: 10% 70% 20%
+        grid-template-rows: 104px auto
+        gap: 0px 0px
+        height: 401px
+        border-radius: 5px
+        background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+        .arrows-box
+            grid-column: 1
+            grid-row: 1
+            position: relative
+            top: 38px
+            left: 37px
+            height: 28px
+            width: fit-content
+            .btn-left
+                background: #A859C0
+                border-radius: 2px
+                width: 28px
+                height: 28px
+                border: 0px solid
+                color: #FAFBFF
+                text-align: center
+            .btn-right
+                margin-left: 15px 
+                text-align: center 
+                transform: rotate(-180deg)
+
+        .accordion-information
+            grid-column: 1 / 4
+            grid-row: 2
+            display: grid
+            position: relative
+            justify-self: center
+            left: 160px
+            width: 100%
+            grid-template-columns: 245px max-content
+            grid-template-rows: 100%
+            gap: 0px
+            .album-icon
+                grid-column: 1
+                grid-row: 1
+                width: 245px
+                height: 245px
+                border-radius: 50%
+                object-fit: cover
+                background: #C4C4C4
+                box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
+            .album-info
+                grid-column: 2
+                grid-row: 1
+                margin-left: 35px
+                position: relative
+                .type
+                    margin-top: 20px
+                    font-family: Rubik
+                    font-style: normal
+                    font-weight: 300
+                    font-size: 18px
+                    line-height: 21px
+                    color: #FAFBFF
+                .album-title
+                    position: relative
+                    margin-top: 10px
+                    font-family: Rubik
+                    font-style: normal
+                    font-weight: 700
+                    font-size: 40px
+                    line-height: 47px
+                    color: #FAFBFF
+                .album-description
+                    position: relative
+                    margin-top: 22px
+                    font-family: Rubik
+                    font-style: normal
+                    font-weight: 300
+                    font-size: 18px
+                    line-height: 21px
+                    color: #FAFBFF                    
+                    width: 759px
+                    height: 42px
+                .btn-play
+                    position: relative
+                    margin-top: 20px
+                    padding: 12px 22px
+                    width: 79px
+                    height: 43px
+                    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+                    border: none
+                    border-radius: 50px             
+                    color: #FAFBFF
+                    font-family: Rubik
+                    font-style: normal
+                    font-weight: 700
+                    font-size: 16px
+                    line-height: 19px
+                .btn-save
+                    position: relative
+                    margin-left: 20px 
+                    margin-top: 20px
+                    padding: 12px 22px
+                    width: 79px
+                    height: 43px
+                    background: none
+                    color: #FAFBFF
+                    font-family: Rubik
+                    font-style: normal
+                    font-weight: 700
+                    font-size: 16px
+                    line-height: 19px   
+                    border: 1px solid #FAFBFF
+                    border-radius: 50px
+
+
+    .recently-played
+        grid-row: 2
+        height: 199px
+        width: auto
+        margin: 53px 38px  
+        border: 1px solid red             
+        .card
+            height: 58px
+            width: 326px
+            display: grid
+            grid-template-columns: 93px 
+
+    .new-releases
+        grid-row: 3
+        height: 328px
+        width: auto
+        margin: 0 38px 53px 38px  
+        border: 1px solid red  
+
+
+    .calm-rhythms
+        grid-row: 4
+        height: 286px
+        width: auto
+        margin: 0 38px 53px 38px   
+        border: 1px solid red  
+ 
+
+    .your-mix
+        grid-row: 5
+        height: 271px
+        width: auto
+        margin: 0 38px 53px 38px  
+        border: 1px solid red   
+
+
+    .top-songs
+        grid-row: 6
+        height: 286px
+        width: auto
+        margin: 0 38px 53px 38px  
+        border: 1px solid red 
+
+.section-title
+    height: 28px
+    font-family: Rubik
+    font-style: normal
+    font-weight: 700
+    font-size: 24px
+    line-height: 28px
+    color: #FAFBFF  
