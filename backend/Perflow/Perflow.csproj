@@ -17,11 +17,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.9.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Infrastructure\" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared\Shared.csproj" />
+  </ItemGroup>
 </Project>
