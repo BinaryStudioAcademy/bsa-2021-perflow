@@ -26,9 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Shared">
-      <HintPath>..\Shared\Shared\bin\Debug\net5.0\Shared.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Shared\Shared\Shared.csproj" />
   </ItemGroup>
-
 </Project>
