@@ -1,11 +1,11 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO;
 using Perflow.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Playlist;
+
 
 namespace Perflow.Controllers
 {
@@ -32,7 +32,7 @@ namespace Perflow.Controllers
         public async Task<ActionResult<PlaylistDTO>> Get(int id)
         {
             if (id <= 0)
-                return BadRequest("Playlist ID cannot be less than or equal to zero");
+                throw new ArgumentException("Playlist ID cannot be less than or equal to zero");
 
             var playlist = await _playlistService.GetEntityAsync(id);
 
@@ -47,22 +47,11 @@ namespace Perflow.Controllers
         public async Task<ActionResult> PostAsync([FromBody] PlaylistDTO playlistDTO)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                throw new ArgumentException("Model is not valid.");
 
-            try
-            {
-                var playlist = await _playlistService.AddEntityAsync(playlistDTO);
+            var playlist = await _playlistService.AddEntityAsync(playlistDTO);
 
-                return CreatedAtAction(nameof(Get), new { Id = playlist.Id }, playlist);
-            }
-            catch (ArgumentException ex)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return CreatedAtAction(nameof(Get), new { Id = playlist.Id }, playlist);
         }
 
 
@@ -70,22 +59,11 @@ namespace Perflow.Controllers
         public async Task<ActionResult> Put([FromBody] PlaylistDTO playlistDTO)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                throw new ArgumentException("Model is not valid.");
 
-            try
-            {
-                var playlist = await _playlistService.UpdateEntityAsync(playlistDTO);
+            var playlist = await _playlistService.UpdateEntityAsync(playlistDTO);
 
-                return Ok(playlist);
-            }
-            catch (ArgumentException ex)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Ok(playlist);
         }
 
 
@@ -93,25 +71,14 @@ namespace Perflow.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             if (id <= 0)
-                return BadRequest("Playlist ID cannot be less than or equal to zero");
+                throw new ArgumentException("Playlist ID cannot be less than or equal to zero");
 
-            try
-            {
-                var playlist = await _playlistService.GetEntityAsync(id);
+            var playlist = await _playlistService.GetEntityAsync(id);
 
-                if (playlist == null)
-                    return NotFound("There are no playlist with this Id");
+            if (playlist == null)
+                return NotFound("There are no playlist with this Id");
 
-                return Ok(await _playlistService.DeleteEntityAsync(id));
-            }
-            catch (ArgumentNullException ex)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Ok(await _playlistService.DeleteEntityAsync(id));
         }
     }
 }
