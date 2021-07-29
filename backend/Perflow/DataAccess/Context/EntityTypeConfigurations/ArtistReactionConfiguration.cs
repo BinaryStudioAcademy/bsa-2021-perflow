@@ -8,7 +8,15 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<ArtistReaction> builder)
         {
-            // TODO
+            builder
+                .HasOne(ar => ar.Artist)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasOne(ar => ar.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
