@@ -2,28 +2,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SongImageComponent } from './song-image.component';
 
-describe('SongImageComponent', () =>
-{
+describe('SongImageComponent', () => {
   let component: SongImageComponent;
   let fixture: ComponentFixture<SongImageComponent>;
 
-  beforeEach(async () =>
-  {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SongImageComponent]
     })
       .compileComponents();
   });
 
-  beforeEach(() =>
-  {
+  beforeEach(() => {
     fixture = TestBed.createComponent(SongImageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () =>
-  {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

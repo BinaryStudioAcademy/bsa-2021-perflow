@@ -82,7 +82,7 @@
         ],
         "@typescript-eslint/brace-style": [
           "error",
-          "allman", 
+          "stroustrup", 
           { "allowSingleLine": false }
         ],
         "@typescript-eslint/lines-between-class-members":[

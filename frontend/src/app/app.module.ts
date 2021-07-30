@@ -19,5 +19,4 @@ import { DragDropDirective } from './directives/shared/upload/song-image/drag-dr
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule
-{ }
+export class AppModule { }

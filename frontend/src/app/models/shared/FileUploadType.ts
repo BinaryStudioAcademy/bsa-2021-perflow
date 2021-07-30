@@ -1,5 +1,4 @@
-export enum FileUploadType
-  {
-  audio,
-  images
+export enum FileUploadType {
+  audio = 'audio',
+  images = 'images'
 }
