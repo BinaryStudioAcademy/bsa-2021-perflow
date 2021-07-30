@@ -1,0 +1,73 @@
+<form [formGroup]="registrationForm" #formDir="ngForm" class="ui fluid form">
+
+    <div [hidden]="formDir.submitted">
+
+      <div class="cross-validation" [class.cross-validation-error]="registrationForm.errors?.identityRevealed && (registrationForm.touched || registrationForm.dirty)">
+            <div class="form-group">
+                <div class="field">
+                  <input type="text" placeholder="Enter your User Name..." id="userName" class="form-control input-dark" formControlName="userName" required>
+                  <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="ui pointing red basic label">
+                    <div *ngIf="userName.errors?.required">
+                        User Name is required!
+                    </div>
+                    <div *ngIf="userName.invalid">
+                        Username should consist of min 6 characters. There is can contain Latin letters, digits and special characters
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="field">
+                    <input type="text" placeholder="Enter your Email..." id="email" class="form-control input-dark" formControlName="email" required>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="ui pointing red basic label">
+                        <div *ngIf="email.errors?.required">
+                            Email is required!
+                        </div>
+                        <div *ngIf="email.invalid">
+                            Email address should be according to standard for the email format.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="form-group">
+                <div class="field">
+                    <input type="text" placeholder="Enter your Password..." id="password" class="form-control input-dark" formControlName="password" required>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="ui pointing red basic label">
+                        <div *ngIf="password.errors?.required">
+                            Password is required!
+                        </div>
+                        <div *ngIf="password.invalid">
+                            Password should consist of min 8 characters. There is must include at least one number or special character and one letter. Is case-sensitive
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="field">
+                    <input type="text" placeholder="Confirm your Password..." id="passwordConfirmation" class="form-control input-dark" formControlName="passwordConfirmation" required>
+                    <div *ngIf="passwordConfirmation.invalid && (passwordConfirmation.dirty || passwordConfirmation.touched)" class="ui pointing red basic label">
+                        <div *ngIf="passwordConfirmation.errors?.required">
+                            Password Confirmation is required!
+                        </div>
+                        <div *ngIf="passwordConfirmation.invalid">
+                            Password should consist of min 8 characters. There is must include at least one number or special character and one letter. Is case-sensitive
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!--<div *ngIf="authorId.invalid && (authorId.dirty || authorId.touched)"
+            class="alert alert-danger">
+
+          <div *ngIf="authorId.errors?.required">
+            Author ID is required.
+          </div>
+        </div>-->
+      <button type="submit"
+              class="btn-full"
+              [disabled]="registrationForm.invalid"
+              (click)="onSubmit()">Sign Up</button>
+    </div>
+    </div>
+  </form>
