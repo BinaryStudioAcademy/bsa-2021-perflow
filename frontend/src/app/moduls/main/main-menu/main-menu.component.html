@@ -1,26 +1,38 @@
-<div class="ui two column grid" id="main">
-  <div class="column" id="menu">
-    <div class="ui six row grid">
-      <div class="row" id="logo-image">
-        <span>
-          <i class="circle icon"></i>
-        </span>
-        <span id="logo-name"> LOGO </span>
-      </div>
-      <div class="row" id="routers">
-        <a id="link" routerLink="./main-home">
-          <i class="huge icons">
-            <i class="circle icon"></i>
-            <i class="fire icon"></i>
-          </i>
-          <span> Home </span>
-        </a>
-      </div>
+<div class="ui visible sidebar inverted vertical menu"> 
+  <div id="logo">
+    <a class="ui logo icon image" id="logo" routerLink="/">
+      <i class="circle icon"></i>LOGO
+    </a>    
+  </div>
+  <div id="routers">
+    <div>
+      <a routerLink="./main-home">
+        <i class="small circular inverted fire icon"></i>
+        <span id="name-route">Home</span>
+      </a>
+    </div>
+    <div>
+      <a routerLink="./search">
+        <i class="small circular inverted search icon"></i>
+        <span id="name-route">Search</span>
+      </a>
+    </div>
+    <div>
+      <a routerLink="./playlists">
+        <i class="small circular inverted music icon"></i>
+        <span id="name-route">My playlists</span>
+      </a>
+    </div>
+    <div>
+      <a routerLink="./songs">
+        <i class="small circular inverted heart icon"></i>
+        <span id="name-route">Linked songs</span>
+      </a>
     </div>
   </div>
-  <div class="column">
-    <router-outlet></router-outlet>
-  </div>
+</div>
+<div class="pusher" id="content">
+  <router-outlet></router-outlet>
 </div>
 
 <!-- <div class="main-page">

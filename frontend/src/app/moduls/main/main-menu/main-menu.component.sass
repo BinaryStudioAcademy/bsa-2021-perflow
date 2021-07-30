@@ -1,28 +1,33 @@
-#main
-    background: #21292D
+.ui.visible.sidebar.inverted.vertical.menu
+    width: 13%
+    padding-left: 1.3%
 
-#menu   
-    width: 207px
-    height: 2369px
-    left: 40px
-    top: 0px    
-    border-right: 1.5px solid #373C43   
+.pusher
+    margin-left: 13%
 
-#content
-    width: 100%
-    height: 100vh
-
-#logo-image
-    position: absolute
-    font-size: 22px
-    top: 34px
-    color: rgba(205, 205, 205, 0.5)
-
-#logo-name    
-    font-family: Montserrat
-    ont-style: normal
-    font-weight: 500
-    font-size: 15.6024px
-    line-height: 19px
-    letter-spacing: 0.01em
+#logo
+    padding: 0
+    top: 15px
+    margin-bottom: 30px
+    display: flex
     color: #CDCDCD
+
+#name-route
+    padding: 8px
+    color: #FAFBFF
+
+#routers
+    position: absolute
+    margin-top: 20px
+    border-bottom: 1.5px solid #373C43
+
+a:hover 
+    #name-route
+        color: #FD5D34
+    i.small.circular.inverted.fire.icon
+        color: #FD5D34 
+    cursor: pointer
+
+#routers > div
+    margin-bottom: 18px
+    line-height: 21px
