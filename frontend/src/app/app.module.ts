@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SongImageComponent } from './components/shared/upload/song-image/song-image.component';
 import { DragDropDirective } from './directives/shared/upload/song-image/drag-drop.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthModule } from './moduls/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -14,8 +16,11 @@ import { DragDropDirective } from './directives/shared/upload/song-image/drag-dr
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    AuthModule
   ],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })
