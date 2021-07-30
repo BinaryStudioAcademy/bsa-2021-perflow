@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { UserRegistrationPageComponent } from './components/user-registration/user-registration-page/user-registration-page.component';
 import { UserRegistrationFormComponent } from './components/user-registration/user-registration-form/user-registration-form/user-registration-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthModule } from './moduls/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    AuthModule
   ],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })
