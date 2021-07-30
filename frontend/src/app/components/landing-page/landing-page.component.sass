@@ -52,30 +52,96 @@ html, body
 
 .login-form
     min-width: 250px
+    padding: 0
+    max-width: 375px
 
 .login-form .content 
     color: $text-color-gray
  
 .login-form .content h4
     color: $login-text-color
+    margin-bottom: 11px
 
-.login-form .content p a
+.login-form .content p
+    margin-bottom: 25px
+
+.sign-up-link
     color: $login-text-color
 
-.login-form .content p a:hover
+.sign-up-link:hover
     text-decoration: underline
 
 
 .login-form .content .field
-    max-width: 375px
+    color: $text-color-gray
 
 .login-form .content .field input 
     background-color: $input-background-color
     color: white
     border-radius: 100px
 
+.login-form .content .field input::placeholder
+    color: $text-color-gray
+
 .eye-slash-icon
     color: $text-color-gray
+
+.forgot-password-link
+    margin-top: 15px 
+
+.forgot-password-link a
+    color: $text-color-gray
+
+.forgot-password-link:hover
+    text-decoration: underline
+
+
+//Remeber me checkbox style
+.remember-me
+    min-width: 123px
+
+.remember-me input
+    background: $orange-gradient
+
+.remember-me.ui.checkbox label
+    color: $text-color-gray
+    
+.remember-me.ui.checkbox label:before
+    background:  $orange-gradient
+    border: none
+
+.remember-me.ui.checkbox label:hover::before
+    border: none
+
+.remember-me.ui.checkbox label:active::before
+    border: none
+
+.remember-me.ui.checkbox label:active
+    color: $text-color-gray
+
+.remember-me.ui.checkbox label:active::after
+    color:white
+
+.remember-me.ui.checkbox input:active~label
+    color: $text-color-gray
+
+.remember-me.ui.checkbox input:checked~label
+    color: $text-color-gray
+
+.remember-me.ui.checkbox input:checked~label:before
+    color: #fff
+
+.remember-me.ui.checkbox input:checked~label:after
+    color: #fff
+
+//Remeber me checkbox style end
+
+.log-in-btn
+    width: 100%
+    margin-left: 37px
+
+
+
 
 
     
