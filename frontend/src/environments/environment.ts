@@ -11,8 +11,6 @@ export const environment = {
     projectId: "perflow-5d819",
     storageBucket: "perflow-5d819.appspot.com",
     messagingSenderId: "194291102756",
-    appId: "xxxxx",
-    measurementId: "xxxxxxxxxxxxxxxx"
   }
 };
 
