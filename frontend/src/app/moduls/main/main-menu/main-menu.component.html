@@ -4,36 +4,53 @@
       <i class="circle icon"></i>LOGO
     </a>
   </div>
-  <div id="routers">
-    <div>
+  <div id="routers">   
+    <div >
       <a routerLink="./main-home">
-        <i class="small circular inverted fire icon"></i>
+        <i class="huge icons">
+          <i class="big circle icon"></i>
+          <i class="fire icon"></i>
+        </i>
         <span id="name-route">Home</span>
       </a>
     </div>
-    <div>
+    <div >
       <a routerLink="./search">
-        <i class="small circular inverted search icon"></i>
+        <i class="huge icons">
+          <i class="big circle icon"></i>
+          <i class="search icon"></i>
+        </i>
         <span id="name-route">Search</span>
       </a>
     </div>
-    <div>
+    <div >
       <a routerLink="./playlists">
-        <i class="small circular inverted music icon"></i>
+        <i class="huge icons">
+          <i class="big circle icon"></i>
+          <i class="music icon"></i>
+        </i>
         <span id="name-route">My playlists</span>
       </a>
     </div>
-    <div>
+    <div >
       <a routerLink="./songs">
-        <i class="small circular inverted heart icon"></i>
+        <i class="huge icons">
+          <i class="big circle icon"></i>
+          <i class="heart icon"></i>
+        </i>
         <span id="name-route">Linked songs</span>
       </a>
     </div>
   </div>
   <div id="playlists-menu">
     <span *ngIf="playlists.length > 0">Created playlists</span>
-    <li *ngFor="let playlist of playlists"><span>{{playlist}}</span></li>
-    <button class="ui button active" id="create-playlist" (click)=CreatePlaylist()>
+    <li *ngFor="let playlist of playlists">
+      <span>{{ playlist }}</span>
+    </li>
+    <button
+      class="ui button active"
+      id="create-playlist"
+      (click)="CreatePlaylist()"    >
       <strong>Create Playlist</strong>
     </button>
   </div>
