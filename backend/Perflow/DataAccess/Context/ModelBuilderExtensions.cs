@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Perflow.Common.Security;
 using Perflow.DataAccess.Context.EntityTypeConfigurations;
 using Perflow.Domain;
 using Perflow.Domain.Enums;
@@ -105,7 +105,7 @@ namespace Perflow.DataAccess.Context
                     GroupId = null,
                     IconURL = avatar,
                     Salt = "2W+y0GwQIbcSl5vUC6DAyo6I+opkO3E9NlSa+hU7huA=",
-                    Password = HashPassword(password, Convert.FromBase64String("2W+y0GwQIbcSl5vUC6DAyo6I+opkO3E9NlSa+hU7huA=")),
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("2W+y0GwQIbcSl5vUC6DAyo6I+opkO3E9NlSa+hU7huA=")),
                     UserName = "user"
                 },
                 new User
@@ -120,7 +120,7 @@ namespace Perflow.DataAccess.Context
                     GroupId = null,
                     IconURL = "https://cdn.ananasposter.ru/image/cache/catalog/poster/music/85/8817-1000x830.jpg",
                     Salt = "K2M0pMRA8JCJmVqY69nhwbEW7cXnFvqhj3K8A9WqpCo=",
-                    Password = HashPassword(password, Convert.FromBase64String("K2M0pMRA8JCJmVqY69nhwbEW7cXnFvqhj3K8A9WqpCo=")),
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("K2M0pMRA8JCJmVqY69nhwbEW7cXnFvqhj3K8A9WqpCo=")),
                     UserName = "JohnLennon"
                 },
                 new User
@@ -135,7 +135,7 @@ namespace Perflow.DataAccess.Context
                     GroupId = null,
                     IconURL = "https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg",
                     Salt = "n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=",
-                    Password = HashPassword(password, Convert.FromBase64String("n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=")),
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=")),
                     UserName = "PaulMcCartney"
                 },
                 new User
@@ -150,7 +150,7 @@ namespace Perflow.DataAccess.Context
                     GroupId = null,
                     IconURL = avatar,
                     Salt = "jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=",
-                    Password = HashPassword(password, Convert.FromBase64String("jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=")),
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=")),
                     UserName = "moderator"
                 }
             };
@@ -161,47 +161,47 @@ namespace Perflow.DataAccess.Context
             {
                 new Album
                 {
-                    Id=1,
-                    AuthorId=users[1].Id,
-                    AuthorType=AuthorType.Artist,
-                    CreatedAt= new DateTimeOffset(new DateTime(2020, 9, 9)),
-                    Description="Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                    GroupId=null,
-                    IconURL= "https://upload.wikimedia.org/wikipedia/ru/6/69/ImagineCover.jpg",
-                    isPublished=true,
-                    isSingle=true,
-                    Name="Imagine",
-                    Region= AlbumRegion.UK,
+                    Id = 1,
+                    AuthorId = users[1].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://upload.wikimedia.org/wikipedia/ru/6/69/ImagineCover.jpg",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "Imagine",
+                    Region = AlbumRegion.UK,
                     ReleaseYear = 1971
                 },
                 new Album
                 {
-                    Id=2,
-                    AuthorId=users[1].Id,
-                    AuthorType=AuthorType.Artist,
-                    CreatedAt= new DateTimeOffset(new DateTime(2020, 9, 9)),
-                    Description="Lorem printing and typesetting industry.",
-                    GroupId=null,
-                    IconURL= "https://upload.wikimedia.org/wikipedia/ru/2/2a/MindGames.jpg",
-                    isPublished=true,
-                    isSingle=false,
-                    Name="Mind Games",
-                    Region= AlbumRegion.UK,
+                    Id = 2,
+                    AuthorId = users[1].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Description = "Lorem printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://upload.wikimedia.org/wikipedia/ru/2/2a/MindGames.jpg",
+                    isPublished = true,
+                    isSingle = false,
+                    Name = "Mind Games",
+                    Region = AlbumRegion.UK,
                     ReleaseYear = 1973
                 },
                 new Album
                 {
-                    Id=3,
-                    AuthorId=users[2].Id,
-                    AuthorType=AuthorType.Artist,
-                    CreatedAt= new DateTimeOffset(new DateTime(2020, 9, 9)),
-                    Description="Lorem text of the printing and typesetting industry.",
-                    GroupId=null,
-                    IconURL= "https://upload.wikimedia.org/wikipedia/ru/thumb/e/eb/Mccartney_album.jpg/274px-Mccartney_album.jpg",
-                    isPublished=true,
-                    isSingle=true,
-                    Name="McCartney",
-                    Region= AlbumRegion.UK,
+                    Id = 3,
+                    AuthorId = users[2].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Description = "Lorem text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://upload.wikimedia.org/wikipedia/ru/thumb/e/eb/Mccartney_album.jpg/274px-Mccartney_album.jpg",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "McCartney",
+                    Region = AlbumRegion.UK,
                     ReleaseYear = 1970
                 },
             };
@@ -214,51 +214,51 @@ namespace Perflow.DataAccess.Context
             {
                 new Song
                 {
-                    Id=1,
+                    Id = 1,
                     Name = "That Would Be Something",
-                    AuthorType=AuthorType.Artist,
-                    ArtistId =albums[2].AuthorId,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 9, 9)),
-                    Duration=2,
-                    GroupId=null,
-                    HasCensorship=false,
-                    IconURL=icon
+                    AuthorType = AuthorType.Artist,
+                    ArtistId = albums[2].AuthorId,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 2,
+                    GroupId = null,
+                    HasCensorship = false,
+                    IconURL = icon
                 },
                 new Song
                 {
-                    Id=2,
+                    Id = 2,
                     Name = "Mind Games",
-                    AuthorType=AuthorType.Artist,
-                    ArtistId =albums[1].AuthorId,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 9, 9)),
-                    Duration=4,
-                    GroupId=null,
-                    HasCensorship=false,
-                    IconURL=icon
+                    AuthorType = AuthorType.Artist,
+                    ArtistId = albums[1].AuthorId,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 4,
+                    GroupId = null,
+                    HasCensorship = false,
+                    IconURL = icon
                 },
                 new Song
                 {
-                    Id=3,
+                    Id = 3,
                     Name = "Imagine",
-                    AuthorType=AuthorType.Artist,
-                    ArtistId =albums[0].AuthorId,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 9, 9)),
-                    Duration=2,
-                    GroupId=null,
-                    HasCensorship=false,
-                    IconURL=icon
+                    AuthorType = AuthorType.Artist,
+                    ArtistId = albums[0].AuthorId,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 2,
+                    GroupId = null,
+                    HasCensorship = false,
+                    IconURL = icon
                 },
                 new Song
                 {
-                    Id=4,
+                    Id = 4,
                     Name = "Only People",
-                    AuthorType=AuthorType.Artist,
-                    ArtistId =albums[1].AuthorId,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 9, 9)),
-                    Duration=3,
-                    GroupId=null,
-                    HasCensorship=false,
-                    IconURL=icon
+                    AuthorType = AuthorType.Artist,
+                    ArtistId = albums[1].AuthorId,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 3,
+                    GroupId = null,
+                    HasCensorship = false,
+                    IconURL = icon
                 },
             };
         }
@@ -271,33 +271,33 @@ namespace Perflow.DataAccess.Context
             {
                 new Playlist
                 {
-                    Id=1,
-                    AccessType=AccessType.Default,
-                    AuthorId=users[3].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 10, 19)),
-                    Description="It is a long established fact readable content of a page when looking at its layout.",
-                    IconURL=icon,
-                    Name="Rock"
+                    Id = 1,
+                    AccessType = AccessType.Default,
+                    AuthorId = users[3].Id,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 10, 19)),
+                    Description = "It is a long established fact readable content of a page when looking at its layout.",
+                    IconURL = icon,
+                    Name = "Rock"
                 },
                 new Playlist
                 {
-                    Id=2,
-                    AccessType=AccessType.Default,
-                    AuthorId=users[0].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 2, 1)),
-                    Description="It is a page when looking at its layout.",
-                    IconURL=icon,
-                    Name="Almost the Beatles"
+                    Id = 2,
+                    AccessType = AccessType.Default,
+                    AuthorId = users[0].Id,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 2, 1)),
+                    Description = "It is a page when looking at its layout.",
+                    IconURL = icon,
+                    Name = "Almost the Beatles"
                 },
                 new Playlist
                 {
-                    Id=3,
-                    AccessType=AccessType.Secret,
-                    AuthorId=users[0].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 12, 1)),
-                    Description="It is a some page when looking at its layout.",
-                    IconURL=icon,
-                    Name="JohnLennon"
+                    Id = 3,
+                    AccessType = AccessType.Secret,
+                    AuthorId = users[0].Id,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1)),
+                    Description = "It is a some page when looking at its layout.",
+                    IconURL = icon,
+                    Name = "JohnLennon"
                 }
             };
         }
@@ -307,79 +307,68 @@ namespace Perflow.DataAccess.Context
             {
                 new PlaylistSong
                 {
-                    Id=1,
+                    Id = 1,
                     PlaylistId = playlists[0].Id,
                     SongId = songs[0].Id,
-                    CreatedAt =new DateTimeOffset(new DateTime(2020, 10, 19))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 10, 19))
                 },
                 new PlaylistSong
                 {
-                    Id=2,
+                    Id = 2,
                     PlaylistId = playlists[0].Id,
                     SongId = songs[1].Id,
-                    CreatedAt =new DateTimeOffset(new DateTime(2020, 10, 19))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 10, 19))
                 },
                 new PlaylistSong
                 {
-                    Id=3,
+                    Id = 3,
                     PlaylistId = playlists[0].Id,
                     SongId = songs[2].Id,
-                    CreatedAt =new DateTimeOffset(new DateTime(2020, 10, 19))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 10, 19))
                 },
                 new PlaylistSong
                 {
-                    Id=4,
+                    Id = 4,
                     PlaylistId = playlists[1].Id,
                     SongId = songs[0].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 2, 1))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 2, 1))
                 },
                 new PlaylistSong
                 {
-                    Id=5,
+                    Id = 5,
                     PlaylistId = playlists[1].Id,
                     SongId = songs[1].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 2, 1))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 2, 1))
                 },
                 new PlaylistSong
                 {
-                    Id=6,
+                    Id = 6,
                     PlaylistId = playlists[1].Id,
                     SongId = songs[2].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 2, 1))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 2, 1))
                 },
                 new PlaylistSong
                 {
-                    Id=7,
+                    Id = 7,
                     PlaylistId = playlists[2].Id,
                     SongId = songs[1].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 12, 1))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1))
                 },
                 new PlaylistSong
                 {
-                    Id=8,
+                    Id = 8,
                     PlaylistId = playlists[2].Id,
                     SongId = songs[2].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 12, 1))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1))
                 }
                 ,
                 new PlaylistSong
                 {
-                    Id=9,
+                    Id = 9,
                     PlaylistId = playlists[2].Id,
                     SongId = songs[3].Id,
-                    CreatedAt=new DateTimeOffset(new DateTime(2020, 12, 1))
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1))
                 }
             };
-
-        private static string HashPassword(string password, byte[] salt) =>
-            Convert.ToBase64String(
-                    KeyDerivation.Pbkdf2(
-                        password: password,
-                        salt: salt,
-                        prf: KeyDerivationPrf.HMACSHA256,
-                        iterationCount: 10000,
-                        numBytesRequested: 256 / 8
-                        )
-                );
     }
 }
