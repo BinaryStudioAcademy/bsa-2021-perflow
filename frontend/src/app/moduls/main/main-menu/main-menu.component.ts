@@ -13,5 +13,6 @@ export class MainMenuComponent {
     'My playlists',
     'Linked songs'
   ];
+
   public createPlaylist = () => { };
 }

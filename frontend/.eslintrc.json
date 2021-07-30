@@ -86,9 +86,10 @@
           { "allowSingleLine": false }
         ],
         "@typescript-eslint/lines-between-class-members":[
-          "error",
-          "never",
-          { "exceptAfterSingleLine": true }
+          "off",
+          { 
+            "exceptAfterSingleLine": true
+          }
         ],
         "@typescript-eslint/comma-dangle": [
           "error",

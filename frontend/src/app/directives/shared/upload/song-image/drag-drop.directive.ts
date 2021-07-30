@@ -15,17 +15,20 @@ export class DragDropDirective {
   type : FileUploadType = FileUploadType.audio;
   @Input()
   addedFiles : File[] = [];
+
   @HostBinding('style.background')
   @HostListener('dragover', ['$event'])
   public onDragOver = (evt: DragEvent) => {
     evt.preventDefault();
     evt.stopPropagation();
   };
+
   @HostListener('dragleave', ['$event'])
   public onDragLeave = (evt: DragEvent) => {
     evt.preventDefault();
     evt.stopPropagation();
   };
+
   @HostListener('drop', ['$event'])
   public onDrop = (evt: DragEvent) => {
     evt.preventDefault();

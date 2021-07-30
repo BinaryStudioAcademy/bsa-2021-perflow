@@ -13,14 +13,17 @@ import { AuthService } from '../services/auth.service';
 
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(private _authService: AuthService, private _router: Router) {}
+
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const { url } = state;
 
     return this.checkLogin(url);
   }
+
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.canActivate(route, state);
   }
+
   // TODO: Temporary body metod.
   // After adding the token based authorization.
   // Here, in the verification condition, replace the request for the authorization service - token verification.

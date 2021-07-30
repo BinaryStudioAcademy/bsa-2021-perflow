@@ -9,12 +9,15 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LandingpageComponent {
   message: string;
+
   constructor(public authService: AuthService, public router: Router) {
     this.message = this.getMessage();
   }
+
   getMessage() {
     return `Logged ${this.authService.isLoggedIn ? 'out' : 'in'}`;
   }
+
   login() {
     this.message = 'Trying to log in ...';
 
@@ -26,6 +29,7 @@ export class LandingpageComponent {
       }
     });
   }
+
   logout() {
     this.authService.logout();
     this.message = this.getMessage();
