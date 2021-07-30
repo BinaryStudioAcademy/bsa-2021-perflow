@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "xxxxxxxx-xxxxxxxx",
-    authDomain: "xxxxxxxxxxxxxxxxxxxxxxxx",
-    databaseURL: "xxxxxxxxxxxxxxxxxxxxxxxx",
-    projectId: "xxxxxxxx",
-    storageBucket: "xxxxxxxx",
-    messagingSenderId: "xxxxxx",
+    apiKey: "AIzaSyA2BkmAvCNrKPrC97fWLCsWaKpNUODaZNw",
+    authDomain: "perflow-5d819.firebaseapp.com",
+    databaseURL: "https://perflow-5d819.firebaseio",
+    projectId: "perflow-5d819",
+    storageBucket: "perflow-5d819.appspot.com",
+    messagingSenderId: "194291102756",
     appId: "xxxxx",
     measurementId: "xxxxxxxxxxxxxxxx"
   }
