@@ -3,22 +3,19 @@ import {
   CanActivate, Router,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  CanActivateChild,
-  NavigationExtras,
-  CanLoad, Route
+  CanActivateChild
 } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 
 export class AuthGuard implements CanActivate, CanActivateChild {
-
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private _authService: AuthService, private _router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const url: string = state.url;
+    const { url } = state;
 
     return this.checkLogin(url);
   }
@@ -27,16 +24,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return this.canActivate(route, state);
   }
 
-
-  // TODO: Temporary body metod. 
-  // After adding the token based authorization. 
+  // TODO: Temporary body metod.
+  // After adding the token based authorization.
   // Here, in the verification condition, replace the request for the authorization service - token verification.
   checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn) {       
-      return true; 
+    if (this._authService.isLoggedIn) {
+      return true;
     }
 
-    this.router.navigate(['/login']);
+    this._router.navigate(['/login']);
 
     return false;
   }

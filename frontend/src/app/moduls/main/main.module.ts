@@ -8,7 +8,6 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 
-
 @NgModule({
   declarations: [
     MainMenuComponent,
