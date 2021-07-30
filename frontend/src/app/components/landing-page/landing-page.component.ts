@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
+  showPassword : boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  toggleShowPassword() : void{
+    this.showPassword = !this.showPassword;
+  }
 }

@@ -1,5 +1,11 @@
 @import "../../../styles"
 
+$login-text-color:#FF792A
+$text-color-gray:#717477
+$input-background-color: #282F37
+
+
+
 html, body 
    height: 100%
 
@@ -30,6 +36,48 @@ html, body
     background-color: $drk-gray
     width: 100%
     height: 100%
+    // padding: 6% 13% 6% 11%
+    padding: 70px 13% 70px 11%
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: flex-start
 
 .main-content
+    height: 452px
+    width: 100%
+
+.logo
+    color: white
+
+.login-form
+    min-width: 250px
+
+.login-form .content 
+    color: $text-color-gray
+ 
+.login-form .content h4
+    color: $login-text-color
+
+.login-form .content p a
+    color: $login-text-color
+
+.login-form .content p a:hover
+    text-decoration: underline
+
+
+.login-form .content .field
+    max-width: 375px
+
+.login-form .content .field input 
+    background-color: $input-background-color
+    color: white
+    border-radius: 100px
+
+.eye-slash-icon
+    color: $text-color-gray
+
+
     
+
+
