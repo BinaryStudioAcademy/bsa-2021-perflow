@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainMenuComponent implements OnInit {
 
+
+  // TODO: Tempolary array
+  playlists: string[] = [
+    "Home",
+    "Search",
+    "My playlists",
+    "Linked songs"
+  ]
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  public CreatePlaylist() { }
 }

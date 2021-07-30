@@ -1,8 +1,8 @@
-<div class="ui visible sidebar inverted vertical menu"> 
+<div class="ui visible sidebar inverted vertical menu">
   <div id="logo">
     <a class="ui logo icon image" id="logo" routerLink="/">
       <i class="circle icon"></i>LOGO
-    </a>    
+    </a>
   </div>
   <div id="routers">
     <div>
@@ -30,143 +30,14 @@
       </a>
     </div>
   </div>
+  <div id="playlists-menu">
+    <span *ngIf="playlists.length > 0">Created playlists</span>
+    <li *ngFor="let playlist of playlists"><span>{{playlist}}</span></li>
+    <button class="ui button active" id="create-playlist" (click)=CreatePlaylist()>
+      <strong>Create Playlist</strong>
+    </button>
+  </div>
 </div>
-<div class="pusher" id="content">
+<div class="pusher">
   <router-outlet></router-outlet>
 </div>
-
-<!-- <div class="main-page">
-  <mat-sidenav-container>
-    <mat-sidenav class="left-side-menu" mode="side" opened>
-      <div class="logo">
-        <mat-icon>cloud_circle</mat-icon>
-        LOGO
-      </div>
-      <mat-nav-list class="list">
-        <a mat-list-item routerLink="./main-home">
-          <span class="fa-stack">
-            <i class="fas fa-circle fa-stack-2x"></i>
-            <i class="fas fa-fire fa-stack-1x fa-inverse"></i>
-          </span>
-          <span> Home </span>
-        </a>
-        <a mat-list-item routerLink="./search">
-          <span class="fa-stack">
-            <i class="fas fa-circle fa-stack-2x"></i>
-            <i class="fas fa-search fa-stack-1x fa-inverse"></i>
-          </span>
-          <span> Search </span>
-        </a>
-        <a mat-list-item routerLink="./playlists">
-          <span class="fa-stack">
-            <i class="fas fa-circle fa-stack-2x"></i>
-            <i class="fas fa-music fa-stack-1x fa-inverse"></i>
-          </span>
-          <span> My playlists </span>
-        </a>
-        <a mat-list-item routerLink="./songs">
-          <span class="fa-stack">
-            <i class="fas fa-circle fa-stack-2x"></i>
-            <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
-          </span>
-          <span> Linked songs </span>
-        </a>
-      </mat-nav-list>
-      <div class="playlists-user">
-        <div id="list-of-playlists">
-          Created playlists
-          <ul>
-            <li><span>Home playlist</span></li>
-            <li><span>Wife playlist</span></li>
-            <li><span>Playlist for run</span></li>
-            <li><span>For work</span></li>
-          </ul>
-          <button id="create-playlist">
-            <strong>Create Playlist</strong>
-          </button>
-        </div>
-      </div>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div> -->
-<!-- li
-    margin: 10px
-    color: #FD5D34 
-
-li span 
-    color: #fff
-
-ul
-    padding: 0
-
-mat-icon
-    padding: 15px  
-
-mat-list-item
-    padding: 0
-
-mat-nav-list
-    padding-bottom: 40px
-
-mat-sidenav-container
-    flex: 1
-
-mat-sidenav 
-    border: 2px solid #373c43
-
-span
-    padding: 15px
-    
-a:hover 
-    color: #FD5D34 
-    .fa-circle
-        color: #FD5D34 
-    cursor: pointer
-
-#create-playlist
-    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-    border-radius: 50px  
-    padding: 10px  
-    color: #fff
-    border: 1px solid #FD8D24
-
-
-#list-of-playlists
-    margin: 10px
-    display: flex
-    flex-direction: column
-    align-items: flex-start
-
-.fa-circle
-    color: #21292D
-
-.fa-stack
-    padding: 0
-
-.left-side-menu
-    padding: 15px
-    background: #21292D
-    color: #fff
-
-.list 
-    border-bottom: 1px solid #373c43
-
-.logo
-    margin: 10px
-    display: flex
-    align-items: center
-
-.main-page
-    display: flex
-    flex-direction: column
-    position: absolute
-    top: 0
-    bottom: 0
-    left: 0
-    right: 0
-    
-.playlists-user
-    margin: 25px -->
