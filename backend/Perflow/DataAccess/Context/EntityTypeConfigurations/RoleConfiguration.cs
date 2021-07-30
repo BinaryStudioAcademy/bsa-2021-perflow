@@ -8,7 +8,9 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            // TODO
+            builder
+                .HasMany(r => r.Users)
+                .WithMany(u => u.Roles);
         }
     }
 }

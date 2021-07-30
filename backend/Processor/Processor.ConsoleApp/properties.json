@@ -1,0 +1,16 @@
+{
+  "RabbitMQConnection": {
+    "HostName": "localhost",
+    "Port": 5672,
+    "Username": "guest",
+    "Password": "guest"
+  },
+  "ExchangeOptions": {
+    "Name": "Processor-test-exchange",
+    "Type": "direct"
+  },
+  "QueueOptions": {
+    "Name": "Processor-test-queue",
+    "RoutingKey": "processor-test"
+  }
+}
