@@ -50,11 +50,11 @@ namespace Perflow.Authorization
             }
             catch (FirebaseAuthException ex)
             {
-                throw ex;
+                throw new Exception(ex.Message, ex);
             }
             catch(Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
         public async Task<UserRecord> VerifyUserByEmailAsync(string email)
@@ -65,11 +65,11 @@ namespace Perflow.Authorization
             }
             catch (FirebaseAuthException ex)
             {
-                throw ex;
+                throw new Exception(ex.Message, ex);
             }
             catch(Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
     }
