@@ -8,14 +8,24 @@ import { SongImageComponent } from './components/shared/upload/song-image/song-i
 import { DragDropDirective } from './directives/shared/upload/song-image/drag-drop.directive';
 import { AuthModule } from './moduls/auth/auth.module';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { RecentlyPlayedCardComponent } from './components/shared/recently-played-card/recently-played-card.component';
+import { NewReleasesCardComponent } from './components/shared/new-releases-card/new-releases-card.component';
+import { CalmRhythmsCardComponent } from './components/shared/calm-rhythms-card/calm-rhythms-card.component';
+import { YourMixCardComponent } from './components/shared/your-mix-card/your-mix-card.component';
+import { TopSongsCardComponent } from './components/shared/top-songs-card/top-songs-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SongImageComponent,
-    DragDropDirective
+    DragDropDirective,
     AppComponent,
-    MainPageComponent
+    MainPageComponent,
+    RecentlyPlayedCardComponent,
+    NewReleasesCardComponent,
+    CalmRhythmsCardComponent,
+    YourMixCardComponent,
+    TopSongsCardComponent
   ],
   imports: [
     BrowserModule,

@@ -59,6 +59,11 @@ export class MainPageComponent implements OnInit {
       duration: 800
     });
   }
+  scroll(id: string) {
+    this.bar = 2;
+    const el = document.getElementById(id);
+    el?.scrollBy({ left: 270, behavior: 'smooth' });
+  }
 }
 
 interface IAlbum {
