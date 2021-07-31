@@ -7,22 +7,25 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 
-const routes: Routes = [{ path: '', component: MainMenuComponent,
-canActivate: [AuthGuard],
-children: [
-  {
-    path: '',
-    canActivateChild: [AuthGuard],
-    children: [
-  { path: 'main-home',  component: MainHomeComponent},
-  { path: 'search', component: SearchComponent },
-  { path: 'playlists', component: PlaylistComponent },
-  { path: 'songs',  component: SongsComponent }
-]}]
+const routes: Routes = [{
+  path: '',
+  component: MainMenuComponent,
+  canActivate: [AuthGuard],
+  children: [
+    {
+      path: '',
+      canActivateChild: [AuthGuard],
+      children: [
+        { path: 'main-home', component: MainHomeComponent },
+        { path: 'search', component: SearchComponent },
+        { path: 'playlists', component: PlaylistComponent },
+        { path: 'songs', component: SongsComponent }
+      ]
+    }]
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class MainRoutingModule {}
