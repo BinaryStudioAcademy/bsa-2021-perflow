@@ -2,8 +2,11 @@
     font-size: 18px
 
 $row-margin-left: 51px
+$first-main-background: #21292D
 $second-main-background: #282F37
-$row-1-button-active: #2F4054
+$row-1-arrow-button-hover-background: #2F4054
+$row-1-link-button-hover-background: #FD5E34
+$color-white: #FFFFFF
 
 #row-1
     margin-left: $row-margin-left
@@ -11,9 +14,10 @@ $row-1-button-active: #2F4054
     height: 35px
     display: flex
     align-content: center
+    align-items: center
     background: red
 
-.ui.button
+#arrow
     margin-right: 15px
     height: 28px
     width: 28px
@@ -22,8 +26,27 @@ $row-1-button-active: #2F4054
     align-items: center
     background: $second-main-background
 
-.ui.button:hover
-    background: $row-1-button-active
+#navigation
+    margin-left: 35px
+    display: flex
+    justify-content: space-between
+    width: 212px
+
+#link
+    height: 21px
+    display: flex
+    align-items: center
+    font-style: normal
+    font-weight: 500
+    line-height: 21px
+    background: $first-main-background
+    color: $color-white
+
+#arrow:hover
+    background: $row-1-arrow-button-hover-background
+
+#link:hover
+    color: $row-1-link-button-hover-background
 
 #row-2
     margin-left: $row-margin-left
