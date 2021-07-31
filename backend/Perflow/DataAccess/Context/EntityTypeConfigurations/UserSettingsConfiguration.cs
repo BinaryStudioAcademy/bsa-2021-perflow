@@ -8,7 +8,10 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<UserSettings> builder)
         {
-            // TODO
+            builder
+                .HasOne(us => us.User)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

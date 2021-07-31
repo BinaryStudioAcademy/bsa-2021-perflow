@@ -1,13 +1,15 @@
-﻿using System;
-using Perflow.Studio.Domain.Enums;
+﻿using Perflow.Studio.Domain.Enums;
 
 namespace Perflow.Studio.Business.Albums.DTOs
 {
     public record AlbumWriteDTO(
         string Name,
-        string? Description,
-        AlbumType Type,
+        int? Year,
         string? IconURL,
-        DateTimeOffset? PublishedAt
+        string? Description,
+        AlbumRegion AlbumRegion,
+        bool IsPublished,
+        bool IsSingle,
+        int AuthorId
     );
 }
