@@ -12,16 +12,11 @@ const routes: Routes = [{
   component: MainMenuComponent,
   canActivate: [AuthGuard],
   children: [
-    {
-      path: '',
-      canActivateChild: [AuthGuard],
-      children: [
-        { path: 'main-home', component: MainHomeComponent },
-        { path: 'search', component: SearchComponent },
-        { path: 'playlists', component: PlaylistComponent },
-        { path: 'songs', component: SongsComponent }
-      ]
-    }]
+      { path: 'main', component: MainHomeComponent },
+      { path: 'search', component: SearchComponent },
+      { path: 'playlists', component: PlaylistComponent },
+      { path: 'songs', component: SongsComponent }
+    ]
 }];
 
 @NgModule({
