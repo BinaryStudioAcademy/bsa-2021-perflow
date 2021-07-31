@@ -6,6 +6,7 @@ using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace Perflow.Authorization
 {
@@ -23,11 +24,18 @@ namespace Perflow.Authorization
 
         private void InitFirebaseAuth()
         {
+            Dictionary<string, object> settings = _config
+                                    .GetSection("FireBaseCreads")
+                                    .Get<Dictionary<string, object>>();
+
+            string json = JsonConvert.SerializeObject(settings);
+
             FirebaseApp.Create(new AppOptions()
             {
-                Credential = GoogleCredential.FromFile(_config.GetSection("FireBaseCreads").Value)
+                Credential = GoogleCredential.FromJson(json)
             });
-            _firebaseApp = FirebaseApp.GetInstance("Perflow");
+
+            _firebaseApp = FirebaseApp.DefaultInstance;
             _firebaseAuth = FirebaseAuth.GetAuth(_firebaseApp);
         }
         
@@ -40,13 +48,13 @@ namespace Perflow.Authorization
 
                 return await _firebaseAuth.GetUserAsync(userId);
             }
-            catch (FirebaseAuthException)
+            catch (FirebaseAuthException ex)
             {
-                throw;
+                throw ex;
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
         public async Task<UserRecord> VerifyUserByEmailAsync(string email)
@@ -55,13 +63,13 @@ namespace Perflow.Authorization
             {
                 return await _firebaseAuth.GetUserByEmailAsync(email);
             }
-            catch (FirebaseAuthException)
+            catch (FirebaseAuthException ex)
             {
-                throw;
+                throw ex;
             }
-            catch 
+            catch(Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }
