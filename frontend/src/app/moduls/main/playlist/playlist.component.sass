@@ -1,9 +1,44 @@
-p
-    margin: 40px
-    font-size: 40px
+*
+    font-size: 18px
 
-.ui.segment
-    height: auto
-    width: 1653px
-    background: #21292D
-    border-radius: 0
+$row-margin-left: 51px
+$second-main-background: #282F37
+$row-1-button-active: #2F4054
+
+#row-1
+    margin-left: $row-margin-left
+    margin-top: 50px
+    height: 35px
+    display: flex
+    align-content: center
+    background: red
+
+.ui.button
+    margin-right: 15px
+    height: 28px
+    width: 28px
+    display: flex
+    justify-content: center
+    align-items: center
+    background: $second-main-background
+
+.ui.button:hover
+    background: $row-1-button-active
+
+#row-2
+    margin-left: $row-margin-left
+    background: green
+
+#row-3
+    margin-left: $row-margin-left
+    background: #FD8D24
+
+#column-1
+    padding: 0
+    background: white
+
+#column-2
+    padding: 0
+    background: yellow
+
+#card
