@@ -44,7 +44,14 @@
         "max-len":[
             "error",
             {
+                "code": 120,
                 "ignoreComments": true
+            }
+        ],
+        "no-underscore-dangle":[
+            "error",
+            {
+              "allowAfterThis": true
             }
         ],
         "@typescript-eslint/naming-convention":[
@@ -79,13 +86,18 @@
           { "allowSingleLine": false }
         ],
         "@typescript-eslint/lines-between-class-members":[
-          "error",
-          "never",
-          { "exceptAfterSingleLine": true }
+          "off",
+          { 
+            "exceptAfterSingleLine": true
+          }
         ],
         "@typescript-eslint/comma-dangle": [
           "error",
           "never"
+        ],
+        "@typescript-eslint/no-unused-vars":[
+          "error", 
+          { "args": "none" }
         ]
       }
     },
