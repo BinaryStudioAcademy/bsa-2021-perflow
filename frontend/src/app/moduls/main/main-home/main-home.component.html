@@ -10,16 +10,21 @@
             </button>
         </div>
         <!-- Profile icon in top right corner -->
-        <button class="profile" (click)="showProfileMenu()">
+        <h4 class="ui header profile" (click)="showProfileMenu()">
             <img class="ui avatar image" src="https://s3-alpha-sig.figma.com/img/5ba6/3340/8981907adb4cdc9c14be2ac429a30ff6?Expires=1628467200&Signature=F0KRMuqseJflr9PZvKCf6GeWuVkI9hxAeXrvKSVMPdGcHY98Sltas2~pAn~wNyFkRV3Inyn-qL1f5-k~HLx58EeYG75xZSwBIpWNZVOUp8vrB2jKl9ojIT557f7OPVQ0yYGx6vjTCGB8uPbaGp9DWR9JJVuzpuyR0kn~eRTmaO8cveSQDC9rDf-rizQ3JeupdUS-KBv-InGcQ5u7tQLjD1QsUFXLtLg7AB-ZNxPpy6xB9bZKK44HUOu8G6NZIpZOY6cLILsfKwGx-ULoGo8jubwtNrspmAf8N0Zi-JrQmuq1c0JeNdankoH8Mp0CR0b~N~7~voG7LGo16pKRTjJHMg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
-            <span>marc_dorwart</span><i class="caret down icon"></i>
-            <div id="profile-menu" class="menu dropdown-content">
-                <a routerLink="/"><i class="user icon"></i> My Profile</a>
-                <a routerLink="/"><i class="setting icon"></i> Settings</a>
-                <a routerLink="/"><i class="external alternate icon"></i> Perflow studio</a>
-                <a (click)="logout()" routerLink="/"><i class="sign-out icon"></i> Log Out</a>
+            <div class="content">
+                marc_dorwart
+                <div class="ui inline dropdown">
+                    <i class="dropdown icon"></i>
+                    <div id="profile_menu" class="left menu dropdown-content">
+                        <a routerLink="/" class="item"><i class="user icon"></i> My Profile</a>
+                        <a routerLink="/" class="item"><i class="setting icon"></i> Settings</a>
+                        <a routerLink="/" class="item" *ngIf="isRightRole()"><i class="external alternate icon"></i> Perflow Studio</a>
+                        <a (click)="logout()" routerLink="/" class="item"><i class="sign-out icon"></i> Log Out</a>
+                    </div>
+                </div>
             </div>
-        </button>
+        </h4>
         <!-- Accordion Information -->
         <div class="accordion-information">
             <img class="album-icon" alt="Album" src="https://s3-alpha-sig.figma.com/img/d75c/1009/f21231d6f5d9480e4025fca6081aa434?Expires=1628467200&Signature=OTjTRmC-15s41yTDgmE8aKF5q6CnBmJAo55dQRIG7K0XOj8A9L3ENDn6dN4EmFOukNiA7DkyXDUXbf3bAjngVFLV7yUgxTssDto6jzNDJGShiDViBnpZAvV6BSpHRuQYIkGj4vTtKJZLeNtDQXQgnMrNLLz8LA1m1XHxLhvug7dLrmXAO2hxHhJk4PUqXplBNEnxyPSZjs-sY44I--97FKwspfh1eyjIlEIdj9eowU4WNh52N-mrnShdCdKJpbaIzE5-mJkpug91XKth-IWB5iHnotKb88bARs1rCFiMaZlp5-Xxi6jpJdOeYIriyilk9~obp6ItPZK-3t2OxS7tag__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
@@ -34,12 +39,14 @@
             </div>
         </div>
     </div>
+
     
     <div class="ui grid">
         <!-- Recently played -->
         <div class="ui sixteen column row recently-played">
             <div class="header">Recently played</div>
             <div class="ui grid recently-played-cont">
+                <!-- Demonstration cards (delete them) -->
                 <app-recently-played-card></app-recently-played-card>
                 <app-recently-played-card></app-recently-played-card>
                 <app-recently-played-card></app-recently-played-card>
@@ -48,6 +55,8 @@
                 <app-recently-played-card></app-recently-played-card>
                 <app-recently-played-card></app-recently-played-card>
                 <app-recently-played-card></app-recently-played-card>
+                <!-- Work component -->
+                <app-recently-played-card *ngFor="let card of recentlyPlayed"></app-recently-played-card>
             </div>
         </div>
 
@@ -56,6 +65,7 @@
         <div class="ui sixteen column row new-releases">
             <div class="header">New Releases</div>
             <div id="newReleases" class="new-releases-cont">
+                <!-- Demonstration cards (delete them) -->
                 <app-new-releases-card></app-new-releases-card>
                 <app-new-releases-card></app-new-releases-card>
                 <app-new-releases-card></app-new-releases-card>
@@ -65,6 +75,10 @@
                 <app-new-releases-card></app-new-releases-card>
                 <app-new-releases-card></app-new-releases-card>
                 <app-new-releases-card></app-new-releases-card>
+                <app-new-releases-card></app-new-releases-card>
+                <app-new-releases-card></app-new-releases-card>
+                <!-- Work component -->
+                <app-new-releases-card *ngFor="let card of newReleases"></app-new-releases-card>
             </div>
             <div class="scroll-box">
                 <button class="scroll-button" (click)="scroll('newReleases')">
@@ -78,6 +92,7 @@
         <div class="sixteen column row calm-rhythms">  
             <div class="header">Calm rhythms</div>
             <div id="calmRhythms" class="calm-rhythms-cont">
+                <!-- Demonstration cards (delete them) -->
                 <app-calm-rhythms-card></app-calm-rhythms-card>
                 <app-calm-rhythms-card></app-calm-rhythms-card>
                 <app-calm-rhythms-card></app-calm-rhythms-card>
@@ -87,6 +102,9 @@
                 <app-calm-rhythms-card></app-calm-rhythms-card>
                 <app-calm-rhythms-card></app-calm-rhythms-card>
                 <app-calm-rhythms-card></app-calm-rhythms-card>
+                <app-calm-rhythms-card></app-calm-rhythms-card>
+                <!-- Work component -->
+                <app-calm-rhythms-card *ngFor="let card of calmRhythms"></app-calm-rhythms-card>
             </div>
             <div class="scroll-box">
                 <button class="scroll-button" (click)="scroll('calmRhythms')">
@@ -100,12 +118,15 @@
         <div class="sixteen column row your-mix">
             <div class="header">Your mix</div>
             <div id="yourMix"  class="ui grid your-mix-cont">
+                <!-- Demonstration cards (delete them) -->
                 <app-your-mix-card></app-your-mix-card>
                 <app-your-mix-card></app-your-mix-card>
                 <app-your-mix-card></app-your-mix-card>
                 <app-your-mix-card></app-your-mix-card>
                 <app-your-mix-card></app-your-mix-card>
                 <app-your-mix-card></app-your-mix-card>
+                <!-- Work component -->
+                <app-your-mix-card *ngFor="let card of yourMix"></app-your-mix-card>
             </div>
         </div>
 
@@ -114,16 +135,20 @@
         <div class="sixteen column row calm-rhythms">
             <div class="header">Top 100 songs</div>
             <div id="top100Songs" class="calm-rhythms-cont">
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
-               <app-top-songs-card></app-top-songs-card>
+                <!-- Demonstration cards (delete them) -->      
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <app-top-songs-card></app-top-songs-card>
+                <!-- Work component -->
+                <app-top-songs-card *ngFor="let card of top100Songs"></app-top-songs-card>
             </div>
             <div class="scroll-box">
                 <button class="scroll-button" (click)="scroll('top100Songs')">
