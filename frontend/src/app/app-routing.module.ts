@@ -12,10 +12,9 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () =>
-      import('./moduls/register/user-registration.module').then((m) => m.UserRegistrationModule)
+    loadChildren: () => import('./moduls/register/user-registration.module').then((m) => m.UserRegistrationModule)
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

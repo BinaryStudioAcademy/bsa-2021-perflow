@@ -1,22 +1,19 @@
-$drk-rain: #282F37
-$drk-gray:#21292D
+@import ./../../../../../styles
+    
 
-*
-    background-color: $drk-gray
 .form-group 
     width: 100%  
   
-label 
-    display: block
-    margin-bottom: .5rem
+h3
+    text-align: center
+    color: #FF792A
 
-  
 form
+    display: flex
+    justify-content: center
     padding: 20px
     text-align: center
-
-.inline
-    text-align: center
+    height: 100%
 
 .input-dark
     display: inline-block !important
@@ -30,3 +27,45 @@ form
 
 .field
     height: 110px !important
+
+.btn-full
+    padding: 10px 55px 10px 55px
+    font-weight: $bold-weight
+    color: white
+
+
+.drk-gray
+    background-color: $drk-gray !important
+    color: red
+
+button:disabled
+    color: white
+
+button:hover
+    cursor: pointer
+
+.icon
+    background-color: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%) !important
+    color: -webkit-gradient(linear, 90deg 0%, 0 100%, from($light-orange), to($medium-orange))
+
+.social 
+    display: flex
+    grid-gap: 15px
+    justify-content: center
+    .icon
+        font-size: 24px
+        background: -moz-linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
+        background: -webkit-linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
+        background: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
+        -webkit-background-clip: text
+        -moz-background-clip: text
+        background-clip: text
+        -webkit-text-fill-color: transparent
+        padding: 15px
+        border: 1px solid $light-orange
+    .icon:hover 
+        border-color: $medium-orange
+    h4 
+        text-align: center
+        color: #FF792A
+        

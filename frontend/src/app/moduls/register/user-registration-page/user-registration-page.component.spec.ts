@@ -8,9 +8,9 @@ describe('UserRegistrationPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserRegistrationPageComponent ]
+      declarations: [UserRegistrationPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
