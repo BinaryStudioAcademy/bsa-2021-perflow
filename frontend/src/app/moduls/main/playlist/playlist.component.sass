@@ -9,11 +9,13 @@ $color-white: #FFFFFF
 $color-almost-white: #FAFBFF
 $color-profile-menu-log-out: #FD9122
 
+#all-playlists
+    padding: 0 0 0 247px
+
 #row-1
-    padding: 35px 0 0 48px
+    padding: 35px 0 0 38px
     display: flex
     align-items: center
-    background: red
 
 #arrows
     display: flex
@@ -29,10 +31,7 @@ $color-profile-menu-log-out: #FD9122
     background: $second-main-background
 
 #navigation
-    margin-left: 25px
     display: flex
-    justify-content: space-between
-    width: 212px
 
 #link
     height: 21px
@@ -45,8 +44,10 @@ $color-profile-menu-log-out: #FD9122
     color: $color-white
 
 #profile
+    padding-right: 55px
     display: flex
     align-items: center
+    justify-content: flex-end
     color: $color-almost-white
 
 .ui.dropdown.item
@@ -56,7 +57,7 @@ $color-profile-menu-log-out: #FD9122
     top: 20px
     right: 20px
     left: auto
-    background: $second-main-background
+    background: $first-main-background
     border: 0.5px solid #373C43
     border-radius: 2px
 
@@ -82,7 +83,7 @@ $color-profile-menu-log-out: #FD9122
     color: $color-profile-menu-log-out
 
 #profile-menu > .item:hover
-    background: #3e444d
+    background: $second-main-background
 
 #arrow:hover
     background: $row-1-arrow-button-hover-background
