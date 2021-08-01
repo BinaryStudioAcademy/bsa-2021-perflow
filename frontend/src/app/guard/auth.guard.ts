@@ -5,14 +5,15 @@ import {
   RouterStateSnapshot,
   CanActivateChild
 } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { map } from 'rxjs/operators';
+import { AuthService } from '../services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private _authService: AuthService, private _router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const { url } = state;
@@ -24,16 +25,17 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return this.canActivate(route, state);
   }
 
-  // TODO: Temporary body metod.
-  // After adding the token based authorization.
-  // Here, in the verification condition, replace the request for the authorization service - token verification.
+
   checkLogin(url: string): boolean {
-    if (this._authService.isLoggedIn) {
-      return true;
-    }
-
-    this._router.navigate(['/login']);
-
+    this.authService.currentUser$.pipe(
+      map((user)=>{
+        if(user){
+          return true;
+        }
+        this.router.navigate(['/login']);
+        return false;
+      })
+    )
     return false;
   }
 }

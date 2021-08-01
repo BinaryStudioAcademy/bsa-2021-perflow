@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-<<<<<<< HEAD
-//use auth.guard for prevent unauthorized users
-const routes: Routes = [
 
-=======
+//use auth.guard for prevent unauthorized users
+
 const routes: Routes = [
   {
     path: '',
@@ -16,7 +14,6 @@ const routes: Routes = [
     loadChildren: () => import('./moduls/main/main.module').then((m) => m.MainModule)
   },
   { path: '**', redirectTo: '' }
->>>>>>> 6fab1a93350a2b63deac7e22cde8cf476350abe6
 ];
 
 @NgModule({

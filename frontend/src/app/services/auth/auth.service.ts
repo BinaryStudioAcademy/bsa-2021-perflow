@@ -25,8 +25,6 @@ export class AuthService {
   }
 
   SignIn(email: string, password: string) {
-    if (this.sLoggedIn())
-      return;
 
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -34,7 +32,7 @@ export class AuthService {
           this.SetUserData(result.user);
         }
       }).catch((error) => {
-        window.alert(error.message)
+        console.log(error);
       })
   }
 
@@ -44,7 +42,7 @@ export class AuthService {
       .then((result) => {
         this.SetUserData(result.user);
       }).catch((error) => {
-        window.alert(error.message)
+        console.log(error);
       })
   }
 
@@ -61,7 +59,7 @@ export class AuthService {
       .then((result) => {
         this.SetUserData(result.user);
       }).catch((error) => {
-        window.alert(error)
+        console.log(error);
       })
   }
 
@@ -100,7 +98,7 @@ export class AuthService {
     })
   }
 
-  sLoggedIn(): boolean {
+  isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
     return (user !== null) ? true : false;
   }

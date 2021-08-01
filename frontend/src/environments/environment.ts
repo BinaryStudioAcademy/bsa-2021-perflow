@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-<<<<<<< HEAD
+
   firebase: {
     apiKey: "AIzaSyA2BkmAvCNrKPrC97fWLCsWaKpNUODaZNw",
     authDomain: "perflow-5d819.firebaseapp.com",
@@ -12,10 +12,8 @@ export const environment = {
     projectId: "perflow-5d819",
     storageBucket: "perflow-5d819.appspot.com",
     messagingSenderId: "194291102756",
-  }
-=======
+  },
   apiUrl: 'https://localhost:44344',
->>>>>>> 6fab1a93350a2b63deac7e22cde8cf476350abe6
 };
 
 /*
