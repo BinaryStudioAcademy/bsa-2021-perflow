@@ -1,3 +1,4 @@
+import { ArtistsComponent } from './artists/artists.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/guard/auth.guard';
@@ -18,7 +19,8 @@ const routes: Routes = [{
       { path: 'playlists', component: PlaylistComponent, 
       canActivate: [AuthGuard],
       children: [
-          { path: 'all', component: AllPlaylistsComponent }
+          { path: 'all', component: AllPlaylistsComponent },
+          { path: 'artists', component: ArtistsComponent }
       ]},
       { path: 'songs', component: SongsComponent }
     ]

@@ -8,10 +8,12 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { AllPlaylistsComponent } from './playlists-all/all-playlists.component';
+import { ArtistsComponent } from './artists/artists.component';
 
 @NgModule({
   declarations: [
     AllPlaylistsComponent,
+    ArtistsComponent,
     MainMenuComponent,
     MainHomeComponent,
     PlaylistComponent,
