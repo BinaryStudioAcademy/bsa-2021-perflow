@@ -140,18 +140,16 @@ html, body
     padding: 1px 1px 1px 1px
     margin-right: 33px
 
-.social-media-buttons .ui.circular.button
-    margin-right: 0px
-    box-shadow: 0 0 0 0px $login-text-color inset !important
-    background: $drk-gray
-
-.social-media-buttons .ui.circular.button:active .icon
-    color: #fff
-
-.social-media-buttons i.icon
-    color: $login-text-color
-    font-size: 16px !important
-
+.social-media-buttons 
+    .ui.circular.button
+        margin-right: 0px
+        box-shadow: 0 0 0 0px $login-text-color inset !important
+        background: $drk-gray
+        &:active .icon
+            color: white
+    i.icon
+        color: $login-text-color
+        font-size: 16px !important
 
 //Welcome text
 .welcome-text h5
