@@ -30,7 +30,8 @@
                                     <div class="field">
                                         <div class="ui icon input">
                                             <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" autocomplete="new-password"> 
-                                            <i class="eye slash link icon eye-slash-icon gray-text" (click)="toggleShowPassword()"></i>
+                                            <i *ngIf="showPassword" class="eye link icon gray-text" (click)="toggleShowPassword()"></i>
+                                            <i *ngIf="!showPassword" class="eye slash link icon gray-text" (click)="toggleShowPassword()"></i>
                                         </div>
                                     </div>
                                 </form>
