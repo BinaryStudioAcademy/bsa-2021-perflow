@@ -4,7 +4,8 @@ $login-text-color:#FF792A
 $text-color-gray:#717477
 $input-background-color: #282F37
 
-
+.gray-text
+    color: $text-color-gray
 
 html, body 
    height: 100%
@@ -61,14 +62,12 @@ html, body
     min-width: 250px
     padding: 0
     max-width: 375px
-    color: $text-color-gray
     h4
         color: $login-text-color
         margin-bottom: 11px
     p
         margin-bottom: 25px
     .field
-        color: $text-color-gray
         input 
             background-color: $input-background-color
             color: $text
@@ -87,15 +86,10 @@ html, body
     &:hover
         text-decoration: underline
 
-.eye-slash-icon
-    color: $text-color-gray
-
 .forgot-password-link
     margin-top: 15px 
     &:hover
          text-decoration: underline
-    a
-        color: $text-color-gray
 
 
 //Remeber me checkbox style
@@ -159,7 +153,6 @@ html, body
         color: $text
         font-weight: bold
     p
-        color: $text-color-gray
         font-weight: $medium-weight
         position: absolute
         bottom: 25px
