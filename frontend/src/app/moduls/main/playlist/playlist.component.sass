@@ -1,33 +1,35 @@
 *
     font-size: 18px
 
-$row-margin-left: 51px
 $first-main-background: #21292D
 $second-main-background: #282F37
 $row-1-arrow-button-hover-background: #2F4054
 $row-1-link-button-hover-background: #FD5E34
 $color-white: #FFFFFF
+$color-almost-white: #FAFBFF
+$color-profile-menu-log-out: #FD9122
 
 #row-1
-    margin-left: $row-margin-left
-    margin-top: 50px
-    height: 35px
+    padding: 35px 0 0 48px
     display: flex
-    align-content: center
     align-items: center
     background: red
+
+#arrows
+    display: flex
 
 #arrow
     margin-right: 15px
     height: 28px
     width: 28px
     display: flex
-    justify-content: center
+    justify-content: flex-end
     align-items: center
+    border-radius: 2px
     background: $second-main-background
 
 #navigation
-    margin-left: 35px
+    margin-left: 25px
     display: flex
     justify-content: space-between
     width: 212px
@@ -42,26 +44,48 @@ $color-white: #FFFFFF
     background: $first-main-background
     color: $color-white
 
+#profile
+    display: flex
+    align-items: center
+    color: $color-almost-white
+
+.ui.dropdown.item
+    padding: 20px 0 20px 0
+
+#profile-menu
+    top: 20px
+    right: 20px
+    left: auto
+    background: $second-main-background
+    border: 0.5px solid #373C43
+    border-radius: 2px
+
+#profile-user-name
+    margin-left: 15px
+
+#profile-menu > .item > a
+    font-family: 'Montserrat', sans-serif
+    font-style: normal
+    font-weight: 500
+    font-size: 19px
+    line-height: 135%
+    margin: 2px 10px 2px 10px
+    display: flex
+    align-items: center
+    color: $color-almost-white
+
+#profile-menu > .item > a > img
+    margin: 8px 0 8px 0
+    padding: 0 16px 0 0
+
+#profile-menu > #log-out > a
+    color: $color-profile-menu-log-out
+
+#profile-menu > .item:hover
+    background: #3e444d
+
 #arrow:hover
     background: $row-1-arrow-button-hover-background
 
 #link:hover
     color: $row-1-link-button-hover-background
-
-#row-2
-    margin-left: $row-margin-left
-    background: green
-
-#row-3
-    margin-left: $row-margin-left
-    background: #FD8D24
-
-#column-1
-    padding: 0
-    background: white
-
-#column-2
-    padding: 0
-    background: yellow
-
-#card

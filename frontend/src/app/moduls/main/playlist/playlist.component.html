@@ -1,31 +1,59 @@
-<div class="full width height">
-  <div class="ui three row grid">
-    <div class="row" id="row-1">
+<div class="ui grid">
+  <div class="row" id="row-1">
+    <!-- TODO:  Here, How wok this buttons? -->
+    <div class="two wide column" id="arrows">
       <button class="ui icon button" id="arrow">
         <i class="angle left inverted icon"></i>
       </button>
       <button class="ui icon button" id="arrow">
         <i class="angle right inverted icon"></i>
       </button>
-      <div id="navigation">
-        <button class="ui icon button" id="link">All</button>
-        <button class="ui icon button" id="link">Artists</button>
-        <button class="ui icon button" id="link">Albums</button>
-      </div>
     </div>
-    <div class="row" id="row-2">
-      <div class="ui two column grid">
-        <div class="column" id="column-1">ROW-2 column-1</div>
-        <div class="column" id="column-2">
-          <div class="ui four column grid">
-            <div class="column" id="card">ROW-2 column-card</div>
-            <div class="column" id="card">ROW-2 column-card</div>
-            <div class="column" id="card">ROW-2 column-card</div>
-            <div class="column" id="card">ROW-2 column-card</div>
+
+    <!-- TODO:  Here, Create a router on routers from specification -->
+    <div class="six wide column" id="navigation">
+      <button class="ui icon button" id="link">All</button>
+      <button class="ui icon button" id="link">Artists</button>
+      <button class="ui icon button" id="link">Albums</button>
+    </div>
+
+    <!-- TODO:  Here, insert links to your account profile pages, etc. -->
+    <div class="four wide column" id="profile">
+      <img
+        src="./../../../../assets/images/photo-user-in-my-playlists-35x35.png"
+      />
+      <div class="ui simple dropdown item">
+        <div class="text" id="profile-user-name">marc_dorwart</div>
+        <i class="dropdown icon"></i>
+        <div class="menu" id="profile-menu">
+          <div class="item">
+            <a routerLink="./../main">
+              <img src="./../../../../assets/images/user-profile-13x13.png" />
+              View account
+            </a>
+          </div>
+          <div class="item">
+            <a routerLink="./../main">
+              <img src="./../../../../assets/images/cog-profile-13x13.png" />
+              Account Settings
+            </a>
+          </div>
+          <div class="item">
+            <a routerLink="./../main">
+              <img src="./../../../../assets/images/pencil-profile-13x13.png" />
+              Edit profile
+            </a>
+          </div>
+          <div class="item" id="log-out">
+            <a routerLink="./../main">
+              <img
+                src="./../../../../assets/images/log-out-profile-13x13.png"
+              />
+              Log out
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <div class="row" id="row-3">ROW-3</div>
   </div>
 </div>
