@@ -63,30 +63,24 @@ html, body
     padding: 0
     max-width: 375px
     color: $text-color-gray
-
     h4
         color: $login-text-color
         margin-bottom: 11px
-
     p
         margin-bottom: 25px
-
     .field
         color: $text-color-gray
-
-    .field input 
-        background-color: $input-background-color
-        color: $text
-        border-radius: 100px
-    
-    .field input::placeholder
-        color: $text-color-gray
-
-    .field input:-webkit-autofill,
-    .field input:-webkit-autofill:focus,
-    .field input:-webkit-autofill:hover
-        -webkit-box-shadow:0 0 0 100px  $drk-gray inset !important 
-        -webkit-text-fill-color: $text
+        input 
+            background-color: $input-background-color
+            color: $text
+            border-radius: 100px
+            &::placeholder
+                color: $text-color-gray
+            &:-webkit-autofill,
+            &:-webkit-autofill:focus,
+            &:-webkit-autofill:hover
+                -webkit-box-shadow:0 0 0 100px  $drk-gray inset !important 
+                -webkit-text-fill-color: $text
  
 
 .sign-up-link
