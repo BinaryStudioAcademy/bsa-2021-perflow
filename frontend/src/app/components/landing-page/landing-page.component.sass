@@ -108,40 +108,30 @@ html, body
 //Remeber me checkbox style
 .remember-me
     min-width: 123px
+    input
+        background: $orange-gradient
 
-.remember-me input
-    background: $orange-gradient
-
-.remember-me.ui.checkbox label
-    color: $text-color-gray
-    
-.remember-me.ui.checkbox label:before
-    background:  $orange-gradient
-    border: none
-
-.remember-me.ui.checkbox label:hover::before
-    border: none
-
-.remember-me.ui.checkbox label:active::before
-    border: none
-
-.remember-me.ui.checkbox label:active
-    color: $text-color-gray
-
-.remember-me.ui.checkbox label:active::after
-    color:white
-
-.remember-me.ui.checkbox input:active~label
-    color: $text-color-gray
-
-.remember-me.ui.checkbox input:checked~label
-    color: $text-color-gray
-
-.remember-me.ui.checkbox input:checked~label:before
-    color: #fff
-
-.remember-me.ui.checkbox input:checked~label:after
-    color: #fff
+.remember-me.ui.checkbox 
+    label
+        color: $text-color-gray
+        &::before
+            background:  $orange-gradient
+            border: none
+        &:hover::before
+            border: none
+        &:active
+            color: $text-color-gray
+            &::before
+                 border: none
+            &::after
+                color: white
+    input
+        &:active~label
+            color: $text-color-gray
+        &:checked~label
+            color: $text-color-gray
+            &::before, &::after
+                color: white
 
 //Remeber me checkbox style end
 
