@@ -8,7 +8,7 @@ import { DragDropDirective } from './directives/shared/upload/song-image/drag-dr
 import { AuthModule } from './moduls/auth/auth.module';
 
 import { AppRoutingModule } from './app-routing.module';
-import { FireBaseModule } from './shared/FireBaseAuth/FireBaseAuth.module';
+import { FireBaseModule } from './shared/firebase-auth/firebase-auth.module';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
