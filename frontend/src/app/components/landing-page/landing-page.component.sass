@@ -58,43 +58,42 @@ html, body
     font-weight: normal
     opacity: 0.5
 
-.login-form
+.login-form  
     min-width: 250px
     padding: 0
     max-width: 375px
-
-.login-form .content 
     color: $text-color-gray
- 
-.login-form .content h4
-    color: $login-text-color
-    margin-bottom: 11px
 
-.login-form .content p
-    margin-bottom: 25px
+    h4
+        color: $login-text-color
+        margin-bottom: 11px
+
+    p
+        margin-bottom: 25px
+
+    .field
+        color: $text-color-gray
+
+    .field input 
+        background-color: $input-background-color
+        color: $text
+        border-radius: 100px
+    
+    .field input::placeholder
+        color: $text-color-gray
+
+    .field input:-webkit-autofill,
+    .field input:-webkit-autofill:focus,
+    .field input:-webkit-autofill:hover
+        -webkit-box-shadow:0 0 0 100px  $drk-gray inset !important 
+        -webkit-text-fill-color: $text
+ 
 
 .sign-up-link
     color: $login-text-color
 
 .sign-up-link:hover
     text-decoration: underline
-
-.login-form .content .ui.form .field input:-webkit-autofill,
-.login-form .content .ui.form .field input:-webkit-autofill:focus,
-.login-form .content .ui.form .field input:-webkit-autofill:hover
-    -webkit-box-shadow:0 0 0 100px  $drk-gray inset !important 
-    -webkit-text-fill-color: $text
-
-.login-form .content .field
-    color: $text-color-gray
-
-.login-form .content .field input 
-    background-color: $input-background-color
-    color: $text
-    border-radius: 100px
-
-.login-form .content .field input::placeholder
-    color: $text-color-gray
 
 .eye-slash-icon
     color: $text-color-gray
