@@ -8,6 +8,7 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { AllPlaylistsComponent } from './playlists-all/all-playlists.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
+import { AlbumsComponent } from './albums/albums.component';
 
 const routes: Routes = [{
   path: '',
@@ -20,7 +21,8 @@ const routes: Routes = [{
       canActivate: [AuthGuard],
       children: [
           { path: 'all', component: AllPlaylistsComponent },
-          { path: 'artists', component: ArtistsComponent }
+          { path: 'artists', component: ArtistsComponent },
+          { path: 'albums', component: AlbumsComponent }
       ]},
       { path: 'songs', component: SongsComponent }
     ]
