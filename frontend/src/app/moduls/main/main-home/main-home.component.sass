@@ -2,21 +2,34 @@
     padding: 0
     margin: 0
     text-decoration: none
-    list-style: none
-    box-sizing: border-box
 
 main
     background: #21292D //$drk-gray
     width: 100%
+    // overflow-y: scroll 
+    // &::-webkit-scrollbar 
+    //     width: 0px
+    //     height: 0px
 .accordion
     position: relative
     width: 100%
-    height: 415px
+    height: 401px
     border-radius: 5px
+    display: grid
+    grid-template-columns: 100%
+    grid-template-rows: 66px auto
     background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)    
+    
+    // Navigation arrows
     .arrows
+        grid-column: 1
+        grid-row: 1
+        position: relative
         height: 30px
+        min-height: 30px
         width: 73px
+        min-width: 73px
+        max-width: 73px
         position: relative
         top: 38px
         left: 37px
@@ -46,16 +59,17 @@ main
             &:active
                 border: 2px solid #A859C0
     
+    // Profile icon in top right corner
     .profile
+        grid-column: 1
+        grid-row: 1
         position: absolute
         right: 42px
-        top: 50px
+        top: 35px
         width: fit-content
         height: 35px
         padding: 0px 7px 
         background: none
-        grid-column: 2
-        grid-row: 1
         font-family: Rubik
         font-style: normal
         font-weight: 500
@@ -103,28 +117,47 @@ main
                 i
                     margin-right: 15px
 
+    // Accordion Information
     .accordion-information
-        position: absolute
-        top: 118px
+        grid-column: 1
+        grid-row: 2
+        position: relative
         left: 160px
+        top: 38px
         width: 70%    
-        height: 245px 
-        min-width: 750px 
+        height: 245px
+        overflow: hidden 
+        display: grid
+        grid-template-columns: 245px auto
+        grid-template-row: 100%
+        gap: 0px 0px
+        @media (max-width: 1300px)
+            left: 150px
         @media (max-width: 1200px)
+            width: 750px
+        @media (max-width: 1050px)
             transform: scale(0.9)
-            left: 100px 
-        @media (max-width: 1100px)
-            transform: scale(0.8)  
-            left: 50px  
+            left: 100px
         @media (max-width: 1000px)
-            transform: scale(0.7)  
-            left: -10px
+            left: 80px
         @media (max-width: 900px)
-            transform: scale(0.6) 
-            left: -80px                
+            left: 50px   
+        @media (max-width: 800px)
+            grid-template-columns: 100% 
+            width: 600px
+        @media (max-width: 600px)
+            left: 30px 
+            width: 500px  
+        @media (max-width: 500px)
+            left: 0px 
+            width: 400px     
+        @media (max-width: 500px)
+            transform: scale(0.9)  
+        @media (max-width: 400px)
+            transform: scale(0.8)  
         .album-icon
-            margin-top: -14px 
-            margin-left: -14px
+            grid-column: 1
+            grid-row: 1
             width: 245px
             height: 245px
             border-radius: 50%
@@ -134,10 +167,16 @@ main
             @media (max-width: 800px)
                 display: none     
         .album-info
-            margin-left: 23px
-            height: 205px
+            grid-column: 2
+            grid-row: 1
+            margin-left: 35px
+            height: 245px
+            @media (max-width: 800px)
+                grid-column: 1
+            @media (max-width: 500px)
+                margin-left: 0px
             .type
-                margin-top: 5px
+                margin-top: 20px
                 font-family: Rubik
                 font-style: normal
                 font-weight: 300
@@ -154,6 +193,7 @@ main
                 line-height: 47px
                 color: #FAFBFF
                 height: fit-content
+                text-overflow: ellipsis
             .album-description
                 margin-top: 22px
                 font-family: Rubik
@@ -165,87 +205,180 @@ main
                 width: 100%
                 max-height: 42px
                 overflow: hidden
-            .btn-play
-                position: relative
-                top: 33px
-                padding: 12px 22px
-                width: 79px
-                height: 43px
-                max-height: 43px
-                background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                border: none
-                border-radius: 50px             
-                color: #FAFBFF
-                font-family: Rubik
-                font-style: normal
-                font-weight: 700
-                font-size: 16px
-                line-height: 19px
-                &:hover
-                    cursor: pointer
-                    background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%) 
-                &:active
-                    border: 3px solid #FD5D34 
-                    padding: 9px 19px
-            .btn-save
-                position: relative
-                margin-left: 20px 
-                top: 33px
-                padding: 11px 21px
-                width: 79px
-                height: 43px
-                background: none
-                color: #FAFBFF
-                font-family: Rubik
-                font-style: normal
-                font-weight: 700
-                font-size: 16px
-                line-height: 19px   
-                border: 1px solid #FAFBFF
-                border-radius: 50px
-                &:hover
-                    cursor: pointer
-                    background: #864099d0
-                &:active
-                    border: 3px solid #FAFBFF
-                    padding: 9px 19px
+                text-overflow: ellipsis
+            .buttons
+                margin-top: 20px
+                width: 180px
+                min-width: 180px 
+                .button-play
+                    display: inline-block
+                    padding: 12px 22px
+                    width: 79px
+                    height: 43px
+                    max-height: 43px
+                    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+                    border: none
+                    border-radius: 50px             
+                    color: #FAFBFF
+                    font-family: Rubik
+                    font-style: normal
+                    font-weight: 700
+                    font-size: 16px
+                    line-height: 19px
+                    &:hover
+                        cursor: pointer
+                        background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%) 
+                    &:active
+                        border: 3px solid #FD5D34 
+                        padding: 9px 19px
+                .button-save
+                    display: inline-block
+                    margin-left: 20px 
+                    padding: 11px 21px
+                    width: 79px
+                    height: 43px
+                    background: none
+                    color: #FAFBFF
+                    font-family: Rubik
+                    font-style: normal
+                    font-weight: 700
+                    font-size: 16px
+                    line-height: 19px   
+                    border: 1px solid #FAFBFF
+                    border-radius: 50px
+                    &:hover
+                        cursor: pointer
+                        background: #864099d0
+                    &:active
+                        border: 3px solid #FAFBFF
+                        padding: 9px 19px
 
+// Recently played
 .recently-played
     height: 199px
     margin: 53px 38px  
-    overflow: hidden
+    @media (max-width: 800px)
+        margin-bottom: 10px !important
+        height: 220px
+    .recently-played-cont
+        overflow-y: auto
+        max-height: 155px
+        align-content: stretch
+        margin-top: 30px
+        justify-content: start
+        @media (max-width: 800px)
+            justify-content: center
+        &::-webkit-scrollbar 
+            width: 0px
+            height: 0px
 
+
+// New Releases
 .new-releases
+    position: relative
     height: 328px
-    width: auto
-    margin: 0 38px 53px 38px   
+    margin: 0 38px 53px 38px  
+    overflow: hidden
+    @media (max-width: 800px)
+        margin-bottom: 10px !important
+        height: 350px
+    .new-releases-cont
+        position: relative
+        display: flex
+        width: 100%
+        height: 270px
+        min-height: 270px
+        overflow-y: scroll
+        margin-top: 30px
+        @media (max-width: 800px)
+            justify-content: center
+        &::-webkit-scrollbar 
+            width: 0px
+            height: 0px
+
+
+// Calm rhythms & Top 100 songs
 .calm-rhythms
     height: 286px
-    width: auto
-    margin: 0 38px 53px 38px   
+    width: 100%
+    margin: 0 38px 53px 38px 
+    overflow: hidden
+    @media (max-width: 800px)
+        margin-bottom: 20px !important
+        height: 306px
+    .calm-rhythms-cont
+        position: relative
+        display: flex
+        width: 100%
+        height: fit-content
+        min-height: 228px
+        overflow-y: scroll
+        margin-top: 30px
+        @media (max-width: 800px)
+            justify-content: center
+        &::-webkit-scrollbar 
+            width: 0px
+            height: 0px       
 
+// Your mix
 .your-mix
     height: 271px
-    width: auto
+    width: 100%
     margin: 0 38px 53px 38px   
-.top-songs
-    height: 286px
-    width: auto
-    margin: 0 38px 53px 38px  
+    @media (max-width: 800px)
+        margin-bottom: 20px !important
+        height: 291px
+    .your-mix-cont 
+        overflow-y: scroll
+        height: 220px
+        width: 100%
+        margin-top: 30px
+        align-content: stretch
+        justify-content: start
+        @media (max-width: 800px)
+            justify-content: center
+        &::-webkit-scrollbar 
+            width: 0px
+            height: 0px
 
 
-
+// This is for profile menu
 .show
-    display: block !important
+    display: block !important    
 
 
+// Styles for horizontal scrolling           
+.scroll-box
+    width: 44px
+    height: calc(100% - 53px)
+    position: absolute
+    right: 0px
+    bottom: 0px
+    display: flex
+    align-items: center
+    justify-content: center
+    background: #21292D
+    .scroll-button
+        width: 33px
+        height: 33px
+        font-size: 1.2rem
+        color: #FAFBFF
+        border: none
+        border-radius: 3px
+        background: #282F37
+        cursor: pointer
+        &:hover
+            background: #373C43
 
-
-
-
-
-
-
-
-.border
-    border: 1px solid red
+.header
+    width: 100%
+    height: fit-content
+    margin-top: -15px 
+    font-family: Rubik
+    font-style: normal
+    font-weight: bold
+    font-size: 24px
+    line-height: 28px
+    color: #FAFBFF
+    @media (max-width: 800px)
+        margin-top: -15px 

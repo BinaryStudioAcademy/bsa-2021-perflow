@@ -8,9 +8,9 @@ describe('TopSongsCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TopSongsCardComponent ]
+      declarations: [TopSongsCardComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

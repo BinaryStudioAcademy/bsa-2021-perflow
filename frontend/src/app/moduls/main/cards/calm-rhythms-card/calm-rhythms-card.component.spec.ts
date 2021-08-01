@@ -8,9 +8,9 @@ describe('CalmRhythmsCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CalmRhythmsCardComponent ]
+      declarations: [CalmRhythmsCardComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

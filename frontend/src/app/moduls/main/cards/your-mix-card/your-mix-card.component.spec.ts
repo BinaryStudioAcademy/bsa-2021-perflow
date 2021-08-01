@@ -8,9 +8,9 @@ describe('YourMixCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ YourMixCardComponent ]
+      declarations: [YourMixCardComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

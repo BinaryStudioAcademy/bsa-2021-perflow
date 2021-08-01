@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-main-home',
@@ -14,8 +15,18 @@ export class MainHomeComponent implements OnInit {
     { pic: '../../../assets/album.jpg', name: '4', desc: '4' },
     { pic: '../../../assets/album.jpg', name: '5', desc: '5' }];
   currentAlbum: IAlbum = this.albums[0];
+  constructor(private _authService: AuthService) {
+  }
   ngOnInit() {
     this.hideProfileMenu();
+    this.resizer();
+  }
+  logout() {
+    this._authService.logout();
+  }
+  resizer() {
+    // RESIZER
+    this.bar = 1;
   }
   hideProfileMenu() {
     this.bar = 2;
@@ -58,6 +69,11 @@ export class MainHomeComponent implements OnInit {
     ], {
       duration: 800
     });
+  }
+  scroll(id: string) {
+    this.bar = 2;
+    const el = document.getElementById(id);
+    el?.scrollBy({ left: 270, behavior: 'smooth' });
   }
 }
 
