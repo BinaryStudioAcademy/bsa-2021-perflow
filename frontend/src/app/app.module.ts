@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './moduls/auth/auth.module';
 import { SongRowComponent } from './components/shared/song-row/song-row.component';
 import { SemanticDropdownDirective } from './directives/shared/dropdown/semantic-dropdown.directive';
-import { SemanticPopupDirective } from './directives/shared/popup/semantic-popup.directive';
 
 @NgModule({
   declarations: [
@@ -17,8 +16,7 @@ import { SemanticPopupDirective } from './directives/shared/popup/semantic-popup
     SongImageComponent,
     DragDropDirective,
     SongRowComponent,
-    SemanticDropdownDirective,
-    SemanticPopupDirective
+    SemanticDropdownDirective
   ],
   imports: [
     BrowserModule,

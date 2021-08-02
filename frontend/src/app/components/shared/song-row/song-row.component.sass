@@ -1,4 +1,5 @@
 @import ./../../../../styles
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400")
 
 %ellipsis-overflow
     text-overflow: ellipsis
@@ -82,12 +83,16 @@
 .item
     background-color: $light-gray
     color: $text !important
+    font-family: 'Montserrat' !important
+    font-style: normal !important
     &:hover
         background-color: $drk-gray !important
         @extend %clickable
     &:active
         background-color: $drk-gray !important
         font-weight: $medium-weight !important
+    >i, >.img-wrapper
+        margin-right: 1rem !important
 
 .item.active.selected
     background-color: $light-gray !important
@@ -111,3 +116,20 @@
     display: inline
     margin: 0% !important
     padding: 0% !important
+
+.img-wrapper
+    display: inline-block
+    width: 1.18em
+    height: 1em
+
+=svg-icon($height, $width)
+    height: $height
+    width: $width
+    margin-top: -.1em !important
+    margin-bottom: -.1em !important
+
+.streaming
+    +svg-icon(18px, 18px)
+
+.playlist
+    +svg-icon(15px, 15px)
