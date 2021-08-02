@@ -5,9 +5,13 @@
       <div class="text" id="like-songs-count">{{ likedSongs }} songs</div>
     </div>
     <div class="column" id="cards">
-      <div *ngFor="let image of images">
+      <div *ngFor="let album of albums">
         <div id="card">
-          <img src="{{ image }}" />
+          <img src="{{ album.titleImage }}" />
+          <div>{{ album.nameAlbum }}</div>
+          <span id="songs" *ngFor="let song of album.songs">
+            {{ song }},
+          </span>
         </div>
       </div>
     </div>
