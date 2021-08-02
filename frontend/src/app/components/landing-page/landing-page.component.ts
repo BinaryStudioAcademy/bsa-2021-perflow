@@ -9,24 +9,24 @@ import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular
 export class LandingPageComponent implements OnInit {
 
   showPassword: boolean = false;
-  isSignUpClicked: boolean = false;
+  isLogInClicked: boolean = false;
   loginForm = new FormGroup({
-    login: new FormControl('', [Validators.required, Validators.email]),
+    login: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern("^[a-zA-Z0-9@._\-]*$")])
   });
 
   constructor() { 
     this.loginForm.valueChanges.subscribe( changes => {
-      this.isSignUpClicked = false;
+      this.isLogInClicked = false;
     })
    }
 
   ngOnInit(): void {
   }
 
-  signUpOnClick()
+  logInpOnClick()
   {
-    this.isSignUpClicked = true;
+    this.isLogInClicked = true;
   }
 
   toggleShowPassword() : void{

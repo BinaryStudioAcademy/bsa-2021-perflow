@@ -13,7 +13,7 @@
                     <div class="ui grid" style="height: 100%">
                         <div class="eight wide column">
                             <div class="welcome-text">
-                                <h5>Welcom</h5>
+                                <h5>Welcome</h5>
                                 <h1>No music, no life</h1>
                                 <p class="gray-text">To continue, log in to Music</p>
                             </div>
@@ -22,14 +22,14 @@
                             <div class="login-form gray-text">
                                 <!-- Login start -->
                                 <h4>Log In</h4>
-                                <p>Don't have an account? <a class="sign-up-link" (click)="signUpOnClick()">Sign up</a></p>
+                                <p>Don't have an account? <a class="sign-up-link">Sign up</a></p>
                                 <form class="ui form error" method="POST" [formGroup]="loginForm">
                                     <div class="field">
                                         <input formControlName="login" type="text" placeholder="Email address or username" autocomplete="email">
                                         <div *ngIf="loginForm.get('login')!.invalid &&
                                                     (loginForm.get('login')!.dirty || loginForm.get('login')!.touched)"
                                                 class="ui error message">
-                                                    Invalid email
+                                                    Invalid email address or user name
                                         </div>
                                     </div>
                                     <div class="field">
@@ -41,9 +41,9 @@
                                         <div *ngIf="loginForm.get('password')!.invalid &&
                                                     (loginForm.get('password')!.dirty || loginForm.get('password')!.touched)"
                                                 class="ui error message">
-                                                    Invalid Password
+                                                    Invalid password
                                         </div>
-                                        <div *ngIf="(!loginForm.get('password')!.value || !loginForm.get('login')!.value) && isSignUpClicked"
+                                        <div *ngIf="(!loginForm.get('password')!.value || !loginForm.get('login')!.value) && isLogInClicked"
                                                 class="ui error message">
                                                     Fill in fields
                                         </div>
@@ -58,7 +58,7 @@
                                         <label>Remember me</label>
                                     </div>
                                     <button class="ui btn-full button log-in-btn"
-                                    [disabled]="loginForm.invalid">
+                                            (click)="logInpOnClick()">
                                         Log In
                                     </button>
                                 </div>
@@ -90,10 +90,5 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="ui grid">
-    <div class="left floated six wide column" style="background: sienna;"></div>
-    <div class="right floated six wide column" style=" background: red"></div>
-</div> -->
 
 
