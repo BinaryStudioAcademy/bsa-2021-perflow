@@ -35,9 +35,8 @@ export class MainHomeComponent implements OnInit {
     this.top100Songs = this.getTop100Songs();
   }
 
-  logout() {
-    this._authService.logout();
-  }
+  logout = () => {
+  };
 
   onClickOutsideProfileMenu = (event: Event) => {
     this.isProfileMenuShown = false;
