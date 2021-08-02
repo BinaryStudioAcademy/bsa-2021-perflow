@@ -6,12 +6,7 @@ export const environment = {
   production: false,
 
   firebase: {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
+    apiKey: "insert key here",
   },
   apiUrl: 'https://localhost:44344',
 };

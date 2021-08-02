@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+
+
+  constructor(private auth:AuthService){}
+  signIn(){
+    this.auth.signIn("test@test.test","123456").then(result=>{
+      console.log(result);
+    });
+  }
 }
+
