@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 export class MainMenuComponent {
   // TODO: Tempolary array
   playlists: string[] = [
-    'Home',
-    'Search',
-    'My playlists',
-    'Linked songs'
+    'Home playlist',
+    'Wife playlist',
+    'Playlist for run',
+    'For work'
   ];
 
   public createPlaylist = () => { };

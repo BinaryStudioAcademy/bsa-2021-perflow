@@ -16,7 +16,7 @@ const routes: Routes = [{
       path: '',
       canActivateChild: [AuthGuard],
       children: [
-        { path: 'main-home', component: MainHomeComponent },
+        { path: 'main', component: MainHomeComponent },
         { path: 'search', component: SearchComponent },
         { path: 'playlists', component: PlaylistComponent },
         { path: 'songs', component: SongsComponent }
