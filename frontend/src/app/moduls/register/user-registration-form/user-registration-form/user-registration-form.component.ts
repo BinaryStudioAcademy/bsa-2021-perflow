@@ -25,15 +25,15 @@ export class UserRegistrationFormComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(6),
         Validators.maxLength(20),
-        Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{8,20}$')
+        Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{6,20}$')
       ]),
       passwordConfirmation: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(20),
-        Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{8,20}$')
+        Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{6,20}$')
       ]),
       userName: new FormControl('', [
         Validators.required,

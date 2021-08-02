@@ -10,7 +10,7 @@
           <input type="text" placeholder="Enter your User Name..." id="userName" class="form-control input-dark"
             formControlName="userName" required>
           <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="ui error message">
-            
+
             <div *ngIf="userName.errors?.required">
               User Name is required!
             </div>
@@ -72,8 +72,20 @@
     </div>
   </div>
 </form>
-<div class="social">
-  <a href="#"><i class="circular google icon"></i></a>
-  <a href="#"><i class="circular apple icon"></i></a>
-  <a href="#"><i class="circular facebook icon"></i></a>
+<div class="social-media-buttons">
+  <div class="sphere">
+    <button class="ui circular icon button">
+      <i class="google icon"></i>
+    </button>
+  </div>
+  <div class="sphere">
+    <button class="ui circular icon button">
+      <i class="apple icon"></i>
+    </button>
+  </div>
+  <div class="sphere" style="margin-right: 0px">
+    <button class="ui circular icon button">
+      <i class="facebook icon"></i>
+    </button>
+  </div>
 </div>

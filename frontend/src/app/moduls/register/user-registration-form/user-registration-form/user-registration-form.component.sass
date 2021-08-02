@@ -1,9 +1,5 @@
 @import ./../../../../../styles
     
-
-.form-group 
-    width: 100%  
-  
 h3
     text-align: center
     color: #FF792A
@@ -11,60 +7,62 @@ h3
 form
     display: flex
     justify-content: center
+    align-items: center
     padding: 20px
+    padding-bottom: 0
     text-align: center
     height: 100%
+    .cross-validation
+        width: 450px
+    .field
+        margin-bottom: 15px !important
+        .input-dark
+            #display: inline-block !important
+            #background: $drk-rain !important
+            #border-radius: 50px !important
+            #min-width: 200px !important
+            #width: 100% !important
+            background-color: #282F37
+            color: $text
+            border-radius: 100px
+            caret-color: white
+            &::placeholder
+                color: #717477
+            &:-webkit-autofill,
+            &:-webkit-autofill:focus,
+            &:-webkit-autofill:hover
+                -webkit-box-shadow:0 0 0 100px  $drk-gray inset !important 
+                -webkit-text-fill-color: $text
+    button:disabled
+    color: white
+    button:hover
+        cursor: pointer
 
 .ui.error.message
     border-radius: 25px !important
-
-.input-dark
-    display: inline-block !important
-    background: $drk-rain !important
-    border-radius: 50px !important
-    min-width: 200px !important
-    width: 100% !important
-
-.cross-validation
-    width: 450px
-
-.field
-    margin-bottom: 15px !important
 
 .btn-full
     padding: 10px 55px 10px 55px
     font-weight: $bold-weight
     color: white
 
-
-button:disabled
-    color: white
-
-button:hover
-    cursor: pointer
-
-.icon
-    background-color: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%) !important
-    color: -webkit-gradient(linear, 90deg 0%, 0 100%, from($light-orange), to($medium-orange))
-
-.social 
-    display: flex
-    grid-gap: 15px
-    justify-content: center
-    .icon
-        font-size: 24px
-        background: -moz-linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
-        background: -webkit-linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
-        background: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
-        -webkit-background-clip: text
-        -moz-background-clip: text
-        background-clip: text
-        -webkit-text-fill-color: transparent
-        padding: 15px
-        border: 1px solid $light-orange
-    .icon:hover 
-        border-color: $medium-orange
-    h4 
-        text-align: center
+.social-media-buttons 
+    text-align: center
+    .sphere
+        border-radius: 50%
+        display: inline-block
+        background: $orange-gradient
+        padding: 1px 1px 1px 1px
+        margin-right: 33px
+    .sphere:hover
+        background: $reversed-orange-gradient
+    .ui.circular.button
+        margin-right: 0px
+        box-shadow: 0 0 0 0px #FF792A inset !important
+        background: $drk-gray
+        &:active .icon
+            color: white
+    i.icon
         color: #FF792A
-        
+        font-size: 16px !important
+
