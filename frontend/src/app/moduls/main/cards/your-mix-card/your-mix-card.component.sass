@@ -1,3 +1,5 @@
+@import "../../../../../styles.sass"
+    
 .ym-card
     height: 94px
     width: 400px
@@ -7,7 +9,7 @@
     grid-template-columns: 147px auto
     grid-template-rows: 100%
     gap: 0px
-    background: #282F37
+    background: $light-gray
     @media ( max-width: 400px )
         width: 300px
         grid-template-columns: 117px auto
@@ -38,7 +40,7 @@
             width: 28px
             border: none
             border-radius: 2px
-            background: linear-gradient(180deg, #FD8427 0%, #FD6831 100%)
+            background: $bg-gradient
             opacity: 0
             cursor: pointer
             transition: opacity 0.4s ease
@@ -60,5 +62,5 @@
         font-size: 16px
         line-height: 19px
         text-overflow: ellipsis
-        color: #FAFBFF 
+        color: $text
         cursor: pointer

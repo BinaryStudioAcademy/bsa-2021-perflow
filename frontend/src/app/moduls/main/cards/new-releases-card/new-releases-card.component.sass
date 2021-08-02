@@ -1,3 +1,5 @@
+@import "../../../../../styles.sass"
+    
 .nr-card
     height: 270px
     width: 214px
@@ -21,7 +23,7 @@
             width: 28px
             border: none
             border-radius: 2px
-            background: linear-gradient(180deg, #FD8427 0%, #FD6831 100%)
+            background: $bg-gradient
             opacity: 0
             cursor: pointer
             transition: opacity 0.4s ease
@@ -40,7 +42,7 @@
         line-height: 19px
         text-overflow: ellipsis
         text-align: center
-        color: #FAFBFF
+        color: $text
     .card-desc
         margin-top: 5px
         font-family: Rubik
@@ -50,4 +52,4 @@
         line-height: 17px
         text-overflow: ellipsis
         text-align: center
-        color: #FAFBFF
+        color: $text

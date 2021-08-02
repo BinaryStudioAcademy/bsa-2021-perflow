@@ -104,7 +104,7 @@ export class MainHomeComponent implements OnInit {
     });
   };
 
-  scroll = (id: string): void => {
+  scroll = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   };
