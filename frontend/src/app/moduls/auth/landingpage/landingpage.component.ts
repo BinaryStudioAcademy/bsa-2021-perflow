@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,17 +7,15 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './landingpage.component.html',
   styleUrls: ['./landingpage.component.sass']
 })
-export class LandingpageComponent implements OnInit {
+export class LandingpageComponent {
   message: string;
 
   constructor(public authService: AuthService, public router: Router) {
-    
     this.message = this.getMessage();
   }
-  ngOnInit(): void { }
 
   getMessage() {
-    return 'Logged ' + (this.authService.isLoggedIn ? 'out' : 'in');
+    return `Logged ${this.authService.isLoggedIn ? 'out' : 'in'}`;
   }
 
   login() {

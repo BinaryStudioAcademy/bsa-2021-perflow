@@ -1,25 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.sass']
 })
-export class MainMenuComponent implements OnInit {
-
-
+export class MainMenuComponent {
   // TODO: Tempolary array
   playlists: string[] = [
-    "Home",
-    "Search",
-    "My playlists",
-    "Linked songs"
-  ]
+    'Home playlist',
+    'Wife playlist',
+    'Playlist for run',
+    'For work'
+  ];
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  public CreatePlaylist() { }
+  public createPlaylist = () => { };
 }
