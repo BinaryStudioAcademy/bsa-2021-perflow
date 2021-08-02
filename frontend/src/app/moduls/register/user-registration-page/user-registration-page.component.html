@@ -1,9 +1,18 @@
-<div class="user-registration-page">
-    <app-user-registration-form (newUser)="onSubmit($event)"></app-user-registration-form>
-    <div [ngClass]="['ui', 'success', 'message']" *ngIf="isSuccess">
-        <div class="header">
-          Registration successful!
-        </div>
-        <p>You may now log-in with your email and password.</p>
+<div class="user-registration-page-container">
+  <div class="ui equal height padded grid" style="min-height: 100%">
+    <div class="five wide column">
+      <img class="ui img user-registration-page-side-image" src="/../../assets/LandingPageSideImage.jpg" />
     </div>
+    <div class="eleven wide column" style="padding: 0 0 0 0 ;">
+    <div class="user-registration-page">
+      <app-user-registration-form (newUser)="onSubmit($event)"></app-user-registration-form>
+    </div>
+  </div>
+</div>  
 </div>
+<div [ngClass]="['ui', 'success', 'message']" *ngIf="isSuccess">
+  <div class="header">
+    Registration successful!
+  </div>
+  <p>You may now log-in with your email and password.</p>
+</div>  

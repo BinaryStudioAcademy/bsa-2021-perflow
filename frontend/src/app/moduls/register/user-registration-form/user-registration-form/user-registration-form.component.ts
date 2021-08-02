@@ -31,7 +31,7 @@ export class UserRegistrationFormComponent implements OnInit {
       ]),
       passwordConfirmation: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(6),
         Validators.maxLength(20),
         Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{8,20}$')
       ]),
@@ -42,6 +42,7 @@ export class UserRegistrationFormComponent implements OnInit {
       ])
     }, { validators: this._checkPasswords });
   }
+
   get email() {
     return this.registrationForm.get('email')!;
   }
