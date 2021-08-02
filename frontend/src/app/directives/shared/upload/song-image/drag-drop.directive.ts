@@ -15,6 +15,7 @@ export class DragDropDirective {
   type: FileUploadType = FileUploadType.audio;
   @Input()
   addedFiles: File[] = [];
+
   @HostBinding('style.background')
   @HostListener('dragover', ['$event'])
   public onDragOver = (evt: DragEvent) => {
