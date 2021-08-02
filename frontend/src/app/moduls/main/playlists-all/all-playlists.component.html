@@ -9,7 +9,10 @@
         <div id="card">
           <div id="image-card">
             <img id="title-image" src="{{ album.titleImage }}" />
-             <img id="play" src="./../../../../assets/button-icon-images/play-13x13.png">
+            <img
+              id="play"
+              src="./../../../../assets/button-icon-images/play-13x13.png"
+            />
           </div>
           <div>{{ album.nameAlbum }}</div>
           <span id="songs" *ngFor="let song of album.songs"> {{ song }}, </span>
@@ -18,6 +21,16 @@
     </div>
   </div>
   <div class="row" id="row-2">
-    <p>playlists</p>
+    <div *ngFor="let playlist of playlists">
+      <div id="card-playlist">
+        <div id="image-card">
+          <img id="title-image" src="{{ playlist.titleImage }}" />
+        </div>
+        <div>{{ playlist.nameAlbum }}</div>
+        <span id="songs-palylist" *ngFor="let song of playlist.songs">
+          {{ song }},
+        </span>
+      </div>
+    </div>
   </div>
 </div>
