@@ -54,6 +54,9 @@
               "allowAfterThis": true
             }
         ],
+        "linebreak-style":[
+          "off"
+        ],
         "@typescript-eslint/naming-convention":[
             "error",
             {

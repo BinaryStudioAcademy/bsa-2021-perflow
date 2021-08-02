@@ -1,0 +1,50 @@
+<audio controls id="audio" (loadedmetadata)="initSong()" (ended)="resetPlaying()" (timeupdate)="updateTime()">
+    <source [attr.src]="songForPlay.songURL">
+</audio>
+
+<div class="toolbar" appShowHide [show]="show">
+    <input type="range" id="seek-slider" class="seekrange" max="100" value="0" (change)="getSeekSliderValue($event)" (mousedown)="setTimeChanging(true)" (mouseup)="setTimeChanging(false)">
+    <div class="infocontrol">
+        <div class="leftpart">
+            <div class="songicon">
+                <img [attr.src]="songForPlay.imageURL">
+            </div>
+            <h6 class="songname">{{songForPlay.name}}</h6>
+            <span class="artistname body-light">{{songForPlay.artistName}}</span>
+            <div class="likebutton">
+                <i class="heart outline icon"></i>
+            </div>
+        </div>
+        <div class="midpart">
+            <div class="shufflebutton" id="shufflebutton" (click)="toggleShuffle()">
+                <i class="random icon"></i>
+            </div>
+            <div class="backwardbutton">
+                <i class="step backward icon"></i>
+            </div>
+            <div class="playbutton" (click)="playPause()" id="playbutton">
+                <i class="play icon"></i>
+            </div>
+            <div class="forwardbutton">
+                <i class="step forward icon"></i>
+            </div>
+            <div class="repeatbutton" id="repeatbutton" (click)="toggleRepeat()">
+                <i class="undo alternate icon"></i>
+            </div>
+        </div>
+        <div class="rightpart">
+            <div class="timeinfo">
+                <span id="current-time" class="time">0:00</span>
+                /
+                <span id="duration" class="time">0:00</span>
+            </div>
+            <div class="queuebutton">
+                <i class="outdent icon"></i>
+            </div>
+            <div class="mutebutton" (click)="muteUnmute()">
+                <i class="volume up icon"></i>
+            </div>
+            <input type="range" id="volume-slider" class="volumerange" max="100" value="100" (input)="getVolumeSliderValue($event)">
+        </div>
+    </div>
+</div>
