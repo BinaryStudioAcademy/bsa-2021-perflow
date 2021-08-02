@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClickOutsideModule } from 'ng-click-outside';
+
+import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { CalmRhythmsCardComponent } from './cards/calm-rhythms-card/calm-rhythms-card.component';
 import { NewReleasesCardComponent } from './cards/new-releases-card/new-releases-card.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
@@ -21,6 +23,7 @@ import { SongsComponent } from './songs/songs.component';
     PlaylistComponent,
     SearchComponent,
     SongsComponent,
+    ProfileMenuComponent,
     CalmRhythmsCardComponent,
     NewReleasesCardComponent,
     RecentlyPlayedCardComponent,
@@ -31,6 +34,7 @@ import { SongsComponent } from './songs/songs.component';
     CommonModule,
     MainRoutingModule,
     ClickOutsideModule
-  ]
+  ],
+  exports: [ProfileMenuComponent]
 })
 export class MainModule { }

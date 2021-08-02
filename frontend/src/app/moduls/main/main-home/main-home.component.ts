@@ -14,8 +14,6 @@ export class MainHomeComponent implements OnInit {
   private readonly _animationDuration: number = 800;
   private readonly _scrollingSize: number = 270;
 
-  public isProfileMenuShown: boolean = false;
-
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
   public newReleases = new Array<object>();
@@ -34,21 +32,6 @@ export class MainHomeComponent implements OnInit {
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
   }
-
-  logout = () => {
-  };
-
-  onClickOutsideProfileMenu = (event: Event) => {
-    this.isProfileMenuShown = false;
-  };
-
-  showProfileMenu = () => {
-    this.isProfileMenuShown = !this.isProfileMenuShown;
-  };
-
-  // Determines if the menu item 'Perflow Studio' will be shown in Profile menu
-  // 'Perflow Studio' - available only for artists and moderators
-  isRightRole = (): boolean => false;
 
   playAlbum = () => {
     // Ability to play album
