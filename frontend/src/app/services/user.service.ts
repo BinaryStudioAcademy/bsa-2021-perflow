@@ -1,7 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { UserRegisterDto } from '../models/auth/user-register-dto';
+import { UserRegister } from '../models/auth/user-register';
 import { HttpInternalService } from './http-internal.service';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private _httpService: HttpInternalService) { }
 
-  public createUser(newUser: UserRegisterDto): Observable<HttpResponse<UserRegisterDto>> {
-    return this._httpService.postFullRequest<UserRegisterDto>(`${this.routePrefix}`, newUser);
+  public createUser(newUser: UserRegister): Observable<HttpResponse<UserRegister>> {
+    return this._httpService.postFullRequest<UserRegister>(`${this.routePrefix}`, newUser);
   }
 }

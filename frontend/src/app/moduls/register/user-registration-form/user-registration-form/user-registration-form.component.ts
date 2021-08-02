@@ -2,9 +2,9 @@ import {
   Component, EventEmitter, OnInit, Output
 } from '@angular/core';
 import {
-  AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators
+  AbstractControl, FormControl, FormGroup, ValidatorFn, Validators
 } from '@angular/forms';
-import { UserRegisterDto } from 'src/app/models/auth/user-register-dto';
+import { UserRegister } from 'src/app/models/auth/user-register';
 
 @Component({
   selector: 'app-user-registration-form',
@@ -13,11 +13,17 @@ import { UserRegisterDto } from 'src/app/models/auth/user-register-dto';
 })
 export class UserRegistrationFormComponent implements OnInit {
   public registrationForm!: FormGroup;
-  @Output() isSuccess = new EventEmitter<boolean>();
-  @Output() isRequiredError = new EventEmitter<boolean>();
-  @Output() newUser = new EventEmitter<UserRegisterDto>();
 
-  ngOnInit(): void {
+  @Output() 
+    isSuccess = new EventEmitter<boolean>();
+
+  @Output() 
+    isRequiredError = new EventEmitter<boolean>();
+
+  @Output() 
+    newUser = new EventEmitter<UserRegister>();
+
+  ngOnInit() {
     this.registrationForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
@@ -59,13 +65,13 @@ export class UserRegistrationFormComponent implements OnInit {
     return this.registrationForm.get('passwordConfirmation')!;
   }
 
-  public onSubmit(newUser: UserRegisterDto): void {
+  public onSubmit(newUser: UserRegister) {
     this.isSuccess.emit(true);
     this.newUser.emit(newUser);
     this.registrationForm.reset();
   }
 
-  public onValidate(): boolean {
+  public onValidate() {
     if (this.registrationForm.invalid
       && (
         this.registrationForm.controls.email.hasError('required')
@@ -79,7 +85,7 @@ export class UserRegistrationFormComponent implements OnInit {
     return true;
   }
 
-  private _checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+  private _checkPasswords: ValidatorFn = (group: AbstractControl) => {
     const pass = group.get('password')!.value;
     const confirmPass = group.get('passwordConfirmation')!.value;
     return pass === confirmPass ? null : { notSame: true };

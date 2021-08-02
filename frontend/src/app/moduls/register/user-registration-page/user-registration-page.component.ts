@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserRegisterDto } from 'src/app/models/auth/user-register-dto';
+import { UserRegister } from 'src/app/models/auth/user-register';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,11 +9,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserRegistrationPageComponent {
   isSuccess: boolean = false;
-  @Input() isRequiredError: boolean = false;
-  newUser!: UserRegisterDto;
+  newUser!: UserRegister;
+
+  @Input() 
+    isRequiredError: boolean = false;
+  
   constructor(private _userService: UserService) { }
 
-  onSubmit(newUser: UserRegisterDto): void {
+  onSubmit(newUser: UserRegister) {
     this.newUser = newUser;
     this._userService.createUser(newUser); // to implement on backend
     this.isSuccess = true;
