@@ -1,0 +1,48 @@
+<div class="ui padded grid song">
+    <div class="sm-row">
+      <div class="column song-number">
+        <span class="number">{{number}}</span>
+        <i class="play icon"></i>
+      </div>
+      <div class="column like">
+        <i class="heart outline icon"></i>
+      </div>
+      <div class="column song-name text">
+        <span class="e" *ngIf="song.hasCensorship">E</span>
+        {{song.name}}
+      </div>
+      <div class="column artist-name text">
+        {{song.artist.name}}
+      </div>
+      <div class="column album-name text">
+        {{song.album.name}}
+      </div>
+      <div class="column added text">
+        {{song.createdAt | date:'yyyy-MM-dd HH:mm'}}
+      </div>
+      <div class="column duration text">
+        <span>{{song.duration * 1000 | date:'mm:ss'}}</span>
+      </div>
+      <div class="column settings">
+        <div class="ui floating dropdown icon" sm-dropdown>
+          <i class="ellipsis vertical icon"></i>
+          <div class="left menu" style="box-shadow: none !important">
+            <div class="item">
+              <img style="height: 18px; width: 18px; margin-right: 11px; margin-top: -.1em !important;margin-bottom: -.1em !important" src="../../../../assets/images/streaming.svg" />Start radio</div>
+            <div class="item">
+              <img style="height: 15px; margin-right: 14px; margin-top: -.1em !important;margin-bottom: -.1em !important" src="../../../../assets/images/playlist.svg" />Add to queue
+            </div>
+            <div class="item">
+              <i class="list icon" style="margin-right: 14px;"></i>Add to playlist
+            </div>
+            <div class="item">
+              <i class="trash icon" style="margin-right: 14px;"></i>Remove from queue
+            </div>
+            <div class="item">
+              <i class="share alternate icon" style="margin-right: 14px;"></i>Share
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
