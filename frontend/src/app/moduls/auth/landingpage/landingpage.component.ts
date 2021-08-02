@@ -30,7 +30,7 @@ export class LandingpageComponent {
   }
 
   logout() {
-    this.authService.SignOut();
+    this.authService.signOut();
     this.message = this.getMessage();
   }
 }
