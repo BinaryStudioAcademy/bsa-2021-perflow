@@ -22,16 +22,30 @@
                             <div class="login-form gray-text">
                                 <!-- Login start -->
                                 <h4>Log In</h4>
-                                <p>Don't have an account? <a class="sign-up-link" href="url">Sign up</a></p>
-                                <form class="ui form" method="POST">
+                                <p>Don't have an account? <a class="sign-up-link" (click)="signUpOnClick()">Sign up</a></p>
+                                <form class="ui form error" method="POST" [formGroup]="loginForm">
                                     <div class="field">
-                                        <input type="text" placeholder="Email address or username" autocomplete="username">
+                                        <input formControlName="login" type="text" placeholder="Email address or username" autocomplete="email">
+                                        <div *ngIf="loginForm.get('login')!.invalid &&
+                                                    (loginForm.get('login')!.dirty || loginForm.get('login')!.touched)"
+                                                class="ui error message">
+                                                    Invalid email
+                                        </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui icon input">
-                                            <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" autocomplete="new-password"> 
+                                            <input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="Password" autocomplete="new-password" autofill="off"> 
                                             <i *ngIf="showPassword" class="eye link icon gray-text" (click)="toggleShowPassword()"></i>
                                             <i *ngIf="!showPassword" class="eye slash link icon gray-text" (click)="toggleShowPassword()"></i>
+                                        </div>
+                                        <div *ngIf="loginForm.get('password')!.invalid &&
+                                                    (loginForm.get('password')!.dirty || loginForm.get('password')!.touched)"
+                                                class="ui error message">
+                                                    Invalid Password
+                                        </div>
+                                        <div *ngIf="(!loginForm.get('password')!.value || !loginForm.get('login')!.value) && isSignUpClicked"
+                                                class="ui error message">
+                                                    Fill in fields
                                         </div>
                                     </div>
                                 </form>
@@ -43,9 +57,10 @@
                                         <input type="checkbox" name="example">
                                         <label>Remember me</label>
                                     </div>
-                                    <div class="ui btn-full button log-in-btn">
+                                    <button class="ui btn-full button log-in-btn"
+                                    [disabled]="loginForm.invalid">
                                         Log In
-                                    </div>
+                                    </button>
                                 </div>
                                 <div class="ui divider" style="margin: 60px 0px 61px 0px;"></div>
                                 <div class="social-media-buttons">

@@ -72,6 +72,7 @@ html, body
             background-color: $input-background-color
             color: $text
             border-radius: 100px
+            caret-color: white
             &::placeholder
                 color: $text-color-gray
             &:-webkit-autofill,
@@ -85,6 +86,7 @@ html, body
     color: $login-text-color
     &:hover
         text-decoration: underline
+        cursor: pointer
 
 .forgot-password-link
     margin-top: 15px 
@@ -125,6 +127,8 @@ html, body
 .log-in-btn
     width: 100%
     margin-left: 37px
+    &[disabled]
+        background: $orange-gradient !important
 
 .sphere
     border-radius: 50%
