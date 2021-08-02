@@ -24,15 +24,9 @@ namespace Perflow.Authorization
 
         private void InitFirebaseAuth()
         {
-            Dictionary<string, object> settings = _config
-                                    .GetSection("FireBaseCreads")
-                                    .Get<Dictionary<string, object>>();
-
-            string json = JsonConvert.SerializeObject(settings);
-
             FirebaseApp.Create(new AppOptions()
             {
-                Credential = GoogleCredential.FromJson(json)
+                Credential = GoogleCredential.GetApplicationDefault()
             });
 
             _firebaseApp = FirebaseApp.DefaultInstance;

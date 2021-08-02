@@ -6,21 +6,23 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
 import { User } from '../../models/shared/User';
-import { take } from 'rxjs/operators';
 
 @Injectable()
-export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(private auth: AuthService) { }
+export class JwtInterceptor implements HttpInterceptor {
+  constructor(private _auth: AuthService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let currentUser: User;
 
-    this.auth.currentUser$.pipe(take(1)).subscribe(
-      user => currentUser = user
-    );
+    this._auth.currentUser$.pipe(take(1))
+      .subscribe(
+        (user) => {
+          return currentUser = user;
+        });  
     if (currentUser!) {
       request = request.clone({
         setHeaders: {
@@ -28,7 +30,6 @@ export class JwtInterceptor implements HttpInterceptor {
         }
       });
     }
-  
     return next.handle(request);
   }
 }
