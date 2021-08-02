@@ -1,4 +1,5 @@
 $color-almost-white: #FAFBFF
+$first-main-background: #21292D
 
 #all-playlists
     padding: 0 0 0 247px
@@ -60,3 +61,32 @@ $color-almost-white: #FAFBFF
     line-height: 17px
     text-align: center
     color: $color-almost-white
+
+#title-image
+    position: relative
+    margin: 0 auto
+
+#image-card
+    display: flex
+    position: relative
+    z-index: 0
+    align-content: center
+    justify-content: center
+    align-items: center
+    flex-wrap: wrap
+
+#play
+    position: absolute
+    z-index: 2
+    display: none
+    width: 28px
+    height: 28px
+    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+    color: $color-almost-white
+
+#image-card:hover #play
+    display: flex
+
+#image-card:hover > #title-image
+    opacity: 0.5
+    transition: 0.3s

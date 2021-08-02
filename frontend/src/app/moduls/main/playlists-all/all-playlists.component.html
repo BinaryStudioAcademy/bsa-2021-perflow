@@ -7,11 +7,12 @@
     <div class="column" id="cards">
       <div *ngFor="let album of albums">
         <div id="card">
-          <img src="{{ album.titleImage }}" />
+          <div id="image-card">
+            <img id="title-image" src="{{ album.titleImage }}" />
+             <img id="play" src="./../../../../assets/button-icon-images/play-13x13.png">
+          </div>
           <div>{{ album.nameAlbum }}</div>
-          <span id="songs" *ngFor="let song of album.songs">
-            {{ song }},
-          </span>
+          <span id="songs" *ngFor="let song of album.songs"> {{ song }}, </span>
         </div>
       </div>
     </div>
