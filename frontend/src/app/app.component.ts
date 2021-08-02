@@ -8,13 +8,5 @@ import { AuthService } from './services/auth/auth.service';
 })
 export class AppComponent {
   title = 'frontend';
-
-
-  constructor(private auth:AuthService){}
-  signIn(){
-    this.auth.signIn("test@test.test","123456").then(result=>{
-      console.log(result);
-    });
-  }
 }
 
