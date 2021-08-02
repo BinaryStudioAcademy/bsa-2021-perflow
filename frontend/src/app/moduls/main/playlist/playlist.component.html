@@ -1,46 +1,50 @@
 <div class="ui grid" id="hat-playlists">
   <div class="row" id="row-1">
-    <!-- TODO:  Here, How wok this buttons? -->
-    <div class="one wide column" id="arrows">
-      <button class="ui icon button" id="arrow">
-        <i class="angle left inverted icon"></i>
-      </button>
-      <button class="ui icon button" id="arrow">
-        <i class="angle right inverted icon"></i>
-      </button>
-    </div>
 
-    <!-- TODO:  Here, Create a router on routers from specification -->
-    <div class="nine wide column" id="navigation">
-        <a routerLink="./../playlists/all" id="link"> All </a>
-        <a routerLink="./../playlists/artists" id="link"> Artists </a>
-        <a routerLink="./../playlists/albums" id="link"> Albums </a>
+    <div id="nav-link">
+      <a routerLink="./../playlists/all" id="link">
+        <h5>All</h5>
+      </a>
+      <a routerLink="./../playlists/artists" id="link">
+        <h5>Artists</h5>
+      </a>
+      <a routerLink="./../playlists/albums" id="link">
+        <h5>Albums</h5>
+      </a>
     </div>
 
     <!-- TODO:  Here, insert links to your account profile pages, etc. -->
-    <div class="six wide column" id="profile">
+    <div id="profile">
       <img
         src="./../../../../assets/tepolary-images/photo-user-in-my-playlists-35x35.png"
       />
       <div class="ui simple dropdown item">
-        <div class="text" id="profile-user-name">marc_dorwart</div>
+        <div class="text" id="profile-user-name">
+          <h5>marc_dorwart</h5>
+        </div>
         <i class="dropdown icon"></i>
         <div class="menu" id="profile-menu">
           <div class="item">
             <a routerLink="./../main">
-              <img src="./../../../../assets/button-icon-images/user-profile-13x13.png" />
+              <img
+                src="./../../../../assets/button-icon-images/user-profile-13x13.png"
+              />
               View account
             </a>
           </div>
           <div class="item">
             <a routerLink="./../main">
-              <img src="./../../../../assets/button-icon-images/cog-profile-13x13.png" />
+              <img
+                src="./../../../../assets/button-icon-images/cog-profile-13x13.png"
+              />
               Account Settings
             </a>
           </div>
           <div class="item">
             <a routerLink="./../main">
-              <img src="./../../../../assets/button-icon-images/pencil-profile-13x13.png" />
+              <img
+                src="./../../../../assets/button-icon-images/pencil-profile-13x13.png"
+              />
               Edit profile
             </a>
           </div>

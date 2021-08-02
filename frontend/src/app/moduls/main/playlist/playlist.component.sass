@@ -1,13 +1,4 @@
-*
-    font-size: 18px
-
-$first-main-background: #21292D
-$second-main-background: #282F37
-$row-1-arrow-button-hover-background: #2F4054
-$row-1-link-button-hover-background: #FD5E34
-$color-white: #FFFFFF
-$color-almost-white: #FAFBFF
-$color-profile-menu-log-out: #FD9122
+@import "../../../../styles.sass"
 
 #hat-playlists
     padding: 0 0 0 247px
@@ -15,37 +6,23 @@ $color-profile-menu-log-out: #FD9122
 #row-1
     padding: 35px 0 0 38px
     display: flex
-    flex-wrap: wrap
     align-items: center
-    
+    justify-content: space-between
 
-#arrows
+#nav-link
     display: flex
-
-#arrow
-    margin-right: 15px
-    height: 28px
-    width: 28px
-    display: flex
-    justify-content: flex-end
-    align-items: center
-    border-radius: 2px
-    background: $second-main-background
 
 #link
     margin: 0 20px 0 20px
-    font-style: normal
-    font-weight: 500
-    line-height: 21px
-    background: $first-main-background
-    color: $color-white
+    font-weight: $medium-weight
+    color: $default-white
 
 #profile
     padding-right: 55px
     display: flex
     align-items: center
     justify-content: flex-end
-    color: $color-almost-white
+    color: $text
 
 .ui.dropdown.item
     padding: 20px 0 20px 0
@@ -54,7 +31,7 @@ $color-profile-menu-log-out: #FD9122
     top: 20px
     right: 20px
     left: auto
-    background: $first-main-background
+    background: $dark-gray
     border: 0.5px solid #373C43
     border-radius: 2px
 
@@ -70,20 +47,17 @@ $color-profile-menu-log-out: #FD9122
     margin: 2px 10px 2px 10px
     display: flex
     align-items: center
-    color: $color-almost-white
+    color: $text
 
 #profile-menu > .item > a > img
     margin: 8px 0 8px 0
     padding: 0 16px 0 0
 
 #profile-menu > #log-out > a
-    color: $color-profile-menu-log-out
+    color: $light-orange
 
 #profile-menu > .item:hover
-    background: $second-main-background
-
-#arrow:hover
-    background: $row-1-arrow-button-hover-background
+    background: $light-gray
 
 #link:hover
-    color: $row-1-link-button-hover-background
+    color: $medium-orange
