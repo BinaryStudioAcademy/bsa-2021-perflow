@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClickOutsideModule } from 'ng-click-outside';
 import { CalmRhythmsCardComponent } from './cards/calm-rhythms-card/calm-rhythms-card.component';
 import { NewReleasesCardComponent } from './cards/new-releases-card/new-releases-card.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
@@ -28,7 +29,8 @@ import { SongsComponent } from './songs/songs.component';
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
+    ClickOutsideModule
   ]
 })
 export class MainModule { }

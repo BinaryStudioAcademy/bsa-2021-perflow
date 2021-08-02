@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./calm-rhythms-card.component.sass']
 })
 export class CalmRhythmsCardComponent {
-
 }

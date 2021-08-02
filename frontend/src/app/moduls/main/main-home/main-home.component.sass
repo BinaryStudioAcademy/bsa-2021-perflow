@@ -84,6 +84,7 @@ main
             border-radius: 50% 
             object-fit: cover  
         .dropdown-content
+            display: block
             top: 35px
             width: 209px
             padding: 9px 0px
@@ -95,7 +96,7 @@ main
             .item
                 font-family: Rubik
                 font-style: normal
-                font-weight: 500
+                font-weight: 300
                 font-size: 14px !important
                 line-height: 135%
                 color: #FAFBFF
@@ -217,7 +218,8 @@ main
                     line-height: 19px
                     &:hover
                         cursor: pointer
-                        background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%) 
+                        background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+                        color: #000000 
                     &:active
                         border: 3px solid #FD5D34 
                         padding: 9px 19px
@@ -239,6 +241,7 @@ main
                     &:hover
                         cursor: pointer
                         background: #864099d0
+                        color: #000000
                     &:active
                         border: 3px solid #FAFBFF
                         padding: 9px 19px
@@ -251,7 +254,7 @@ main
         margin-bottom: 10px !important
         height: 220px
     .recently-played-cont
-        overflow-y: auto
+        overflow: hidden
         max-height: 155px
         align-content: stretch
         margin-top: 30px
@@ -285,6 +288,8 @@ main
         &::-webkit-scrollbar 
             width: 0px
             height: 0px
+    .scroll-box
+        bottom: 38px
 
 
 // Calm rhythms & Top 100 songs
@@ -319,7 +324,7 @@ main
         margin-bottom: 20px !important
         height: 291px
     .your-mix-cont 
-        overflow-y: scroll
+        overflow: hidden
         height: 220px
         width: 100%
         margin-top: 30px
