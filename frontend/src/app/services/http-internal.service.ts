@@ -8,7 +8,7 @@ export class HttpInternalService {
   public baseUrl: string = environment.apiUrl;
   public headers = new HttpHeaders();
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   public getHeaders(): HttpHeaders {
     return this.headers;
@@ -59,13 +59,11 @@ export class HttpInternalService {
       { headers: this.getHeaders(), observe: 'response', params: httpParams }
     );
   }
-
   public buildUrl(url: string): string {
     if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
     return this.baseUrl + url;
   }
-
   public prepareData = (payload: object): string => JSON.stringify(payload);
 }
