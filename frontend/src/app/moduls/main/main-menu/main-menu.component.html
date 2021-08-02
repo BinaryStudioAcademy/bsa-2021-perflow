@@ -1,4 +1,4 @@
-<div class="ui visible sidebar inverted vertical menu">
+<div class="ui visible sidebar vertical menu">
   <div id="logo">
     <a class="ui logo icon image" routerLink="/main">
       <i class="circle icon"></i>
@@ -9,36 +9,38 @@
     <div>
       <a routerLink="./main">
         <span id="circle"> <i id="icon" class="fire icon"></i></span>
-        <span id="name-route">Home</span>
+        <h5 id="name-route">Home</h5>
       </a>
     </div>
     <div>
       <a routerLink="./search">
         <span id="circle"> <i id="icon" class="search icon"></i></span>
-        <span id="name-route">Search</span>
+        <h5 id="name-route">Search</h5>
       </a>
     </div>
     <div>
       <a routerLink="./playlists/all">
         <span id="circle"> <i id="icon" class="music icon"></i></span>
-        <span id="name-route">My playlists</span>
+        <h5 id="name-route">My playlists</h5>
       </a>
     </div>
     <div>
       <a routerLink="./songs">
         <span id="circle"> <i id="icon" class="heart icon"></i></span>
-        <span id="name-route">Liked songs</span>
+        <h5 id="name-route">Liked songs</h5>
       </a>
     </div>
   </div>
   <div id="playlists-menu">
-    <span id="title" *ngIf="playlists.length > 0">Created playlists</span>
+    <span id="title" *ngIf="playlists.length > 0">
+      <h6>Created playlists</h6>
+    </span>
     <li *ngFor="let playlist of playlists">
       <span id="playlist">{{ playlist }}</span>
     </li>
     <button
-      class="ui button active" id="create-playlist" (click)="createPlaylist()">
-      <strong>Create Playlist</strong>
+      class="ui button" (click)="createPlaylist()">
+      <h6>Create Playlist</h6>
     </button>
   </div>  
 </div>

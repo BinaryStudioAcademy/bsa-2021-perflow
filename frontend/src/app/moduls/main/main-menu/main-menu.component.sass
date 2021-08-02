@@ -1,15 +1,17 @@
-.ui.visible.sidebar.inverted.vertical.menu
+@import "../../../../styles.sass"
+    
+.ui.visible.sidebar.vertical.menu
     width: 247px
     height: auto
     min-height: 100vh
     padding-left: 40px
-    background: #21292D
+    background: $dark-gray
     border-right: 1.5px solid #373C43
 
 .container
     height: 100vh
     width: auto
-    background: #21292D
+    background: $dark-gray
 
 #logo
     padding: 0
@@ -19,24 +21,20 @@
     top: 45px
 
 .ui.logo.icon.image
-    font-size: 22px
+    font-size: 20px
     color: #CDCDCD
     opacity: 50%
 
 #name-logo
-    padding-left: 4px
+    padding-left: 5px
     font-family: Montserrat
     font-style: normal
-    font-weight: 500
-    font-size: 15.6024px
-    line-height: 19px
+    font-weight: $medium-weight
     letter-spacing: 0.01em
-    color: #CDCDCD
 
 #name-route
-    padding-left: 17.5px
-    font-size: 18px
-    color: #FAFBFF
+    padding-left: 20px
+    color: $text
 
 #routers
     position: relative
@@ -45,49 +43,36 @@
     border-bottom: 1.5px solid #373C43
 
 #routers > div
-    margin-bottom: 41px
+    margin-bottom: 40px
 
 #playlists-menu
     position: relative
     top: 100px
     width: max-content
     margin-top: 40px
-    color: #FFFFFF
+    color: $default-white
 
 li
     margin-top: 20px
-    color: #FD5D34
+    color: $medium-orange
 
 li > span
-    color: #fff
-
-#create-playlist
-    margin-top: 25px
-    padding: 10px
-    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-    border-radius: 50px
+    color: $default-white
 
 .ui.button
     margin-top: 25px
-    padding: 12px 22px
-    width: 162px
-    height: 43px
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-content: center
-    font-weight: bold
-    font-size: 14px
-    line-height: 19px
-    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+    padding: 10px 20px
+    width: 160px
+    height: 40px
+    background: $fire-orange
     border-radius: 50px
-    color: #fff
+    color: $default-white
 
 .ui.button:active
-    border: 3px solid #FD6333
+    border: 3px solid $medium-orange
 
 i
-    color: #FFFFFF
+    color: $default-white
 
 a
     display: flex
@@ -96,25 +81,15 @@ a
     align-items: center
 
 #playlist
-    font-style: normal
-    font-weight: 300
-    font-size: 14px
-    line-height: 17px
-
-#title
-    font-style: normal
-    font-weight: 500
-    font-size: 16px
-    line-height: 19px
+    font-weight: $light-weight
 
 #circle
-    background-color: darkcyan
     width: 30px
     height: 30px
     border-radius: 100%
     position: relative
     transition: .3s
-    background: #21292D
+    background: $dark-gray
 
 #icon
     position: absolute
@@ -126,8 +101,8 @@ a
 
 a:hover
     #name-route
-        color: #fe6c2f
+        color: $medium-orange
     #circle
-        background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+        background: $fire-orange
         cursor: pointer
 
