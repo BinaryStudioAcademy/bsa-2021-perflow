@@ -28,11 +28,11 @@ export class LandingPageComponent {
     });
   }
 
-  logInpOnClick() {
+  logInOnClick() {
     this.isLogInClicked = true;
   }
 
-  toggleShowPassword() : void {
+  toggleShowPassword() {
     this.showPassword = !this.showPassword;
   }
 }
