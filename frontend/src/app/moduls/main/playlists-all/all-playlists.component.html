@@ -5,10 +5,11 @@
       <div class="text" id="like-songs-count">{{ likedSongs }} songs</div>
     </div>
     <div class="column" id="cards">
-      <div id="card">card</div>
-      <div id="card">card</div>
-      <div id="card">card</div>
-      <div id="card">card</div>
+      <div *ngFor="let image of images">
+        <div id="card">
+          <img src="{{ image }}" />
+        </div>
+      </div>
     </div>
   </div>
   <div class="row" id="row-2">
