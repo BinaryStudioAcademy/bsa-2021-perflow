@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./all-playlists.component.sass']
 })
 export class AllPlaylistsComponent {
+// TODO: Here insert array count songs
+  likedSongs: number = 256;
 }
