@@ -9,10 +9,12 @@ main
     background: $dark-gray
     width: 100%
     height: 100vh
-    overflow-y: scroll 
-    &::-webkit-scrollbar 
+    padding-left: 247px
+    overflow-y: scroll
+    &::-webkit-scrollbar
         width: 0px
         height: 0px
+
 .accordion
     position: relative
     width: 100%
@@ -21,65 +23,60 @@ main
     display: grid
     grid-template-columns: 100%
     grid-template-rows: 66px auto
-    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)    
-    
-    // Navigation arrows
-    .arrows
-        grid-column: 1
-        grid-row: 1
-        position: relative
-        height: 30px
-        min-height: 30px
-        width: 73px
-        min-width: 73px
-        max-width: 73px
-        position: relative
-        top: 38px
-        left: 37px
-        .arrow-left
-            background: $pink
-            border-radius: 2px
-            width: 28px
-            height: 28px
-            border: 0px solid
-            color: $text
-            cursor: pointer   
-            &:hover
-                background: $pink
-            &:active
-                border: 2px solid $pink
-        .arrow-right
-            background: $pink
-            border-radius: 2px
-            width: 28px
-            height: 28px
-            border: 0px solid
-            color: $text
-            margin-left: 15px 
-            cursor: pointer
-            &:hover
-                background: $pink
-            &:active
-                border: 2px solid $pink
-    
-    // Profile icon in top right corner
-    .profile-menu
-        grid-column: 1
-        grid-row: 1
-        position: absolute
-        right: 42px
-        top: 45px
+    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+    border-radius: 0
+
+    // Navigation arrows   
+.arrows
+    display: flex
+ 
+.arrow-left
+    background: $pink
+    border-radius: 2px
+    width: 28px
+    height: 28px
+    border: 0px solid
+    color: $text   
+
+.arrow-left:hover
+    background: $pink
+    cursor: pointer
+
+.arrow-left:active
+    border: 2px solid $pink
+
+.arrow-right
+    background: $pink
+    border-radius: 2px
+    width: 28px
+    height: 28px
+    border: 0px solid
+    color: $text
+    margin-left: 15px    
+
+.arrow-right:hover
+    background: $pink
+    cursor: pointer
+
+.arrow-right:active
+    border: 2px solid $pink
+
+#hat-main-home
+    padding: 35px 0 0 35px
+    display: flex
+    align-items: center
+    justify-content: space-between  
 
     // Accordion Information
-    .accordion-information
+.accordion > .accordion-information
         grid-column: 1
         grid-row: 2
         position: relative
         left: 160px
         top: 38px
-        width: 70%    
+        width: 70%
         height: 245px
-        overflow: hidden 
+        overflow: hidden
         display: grid
         grid-template-columns: 245px auto
         grid-template-row: 100%
@@ -94,20 +91,20 @@ main
         @media (max-width: 1000px)
             left: 80px
         @media (max-width: 900px)
-            left: 50px   
+            left: 50px
         @media (max-width: 800px)
-            grid-template-columns: 100% 
+            grid-template-columns: 100%
             width: 600px
         @media (max-width: 600px)
-            left: 30px 
-            width: 500px  
+            left: 30px
+            width: 500px
         @media (max-width: 500px)
-            left: 0px 
-            width: 400px     
+            left: 0px
+            width: 400px
         @media (max-width: 500px)
-            transform: scale(0.9)  
+            transform: scale(0.9)
         @media (max-width: 400px)
-            transform: scale(0.8)  
+            transform: scale(0.8)
         .album-icon
             grid-column: 1
             grid-row: 1
@@ -118,7 +115,7 @@ main
             background: #C4C4C4
             box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
             @media (max-width: 800px)
-                display: none     
+                display: none
         .album-info
             grid-column: 2
             grid-row: 1
@@ -154,7 +151,7 @@ main
                 font-weight: $light-weight
                 font-size: 18px
                 line-height: 21px
-                color: $text                 
+                color: $text
                 width: 100%
                 max-height: 42px
                 overflow: hidden
@@ -162,7 +159,7 @@ main
             .buttons
                 margin-top: 20px
                 width: 180px
-                min-width: 180px 
+                min-width: 180px
                 .button-play
                     display: inline-block
                     padding: 12px 22px
@@ -171,7 +168,7 @@ main
                     max-height: 43px
                     background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
                     border: none
-                    border-radius: 50px             
+                    border-radius: 50px
                     color: $text
                     font-family: Rubik
                     font-style: normal
@@ -181,13 +178,13 @@ main
                     &:hover
                         cursor: pointer
                         background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                        color: $black 
+                        color: $black
                     &:active
-                        border: 3px solid $medium-orange 
+                        border: 3px solid $medium-orange
                         padding: 9px 19px
                 .button-save
                     display: inline-block
-                    margin-left: 20px 
+                    margin-left: 20px
                     padding: 11px 21px
                     width: 79px
                     height: 43px
@@ -197,7 +194,7 @@ main
                     font-style: normal
                     font-weight: $bold-weight
                     font-size: 16px
-                    line-height: 19px   
+                    line-height: 19px
                     border: 1px solid $text
                     border-radius: 50px
                     &:hover
@@ -211,7 +208,7 @@ main
 // Recently played
 .recently-played
     height: 199px
-    margin: 53px 38px  
+    margin: 53px 38px
     @media (max-width: 800px)
         margin-bottom: 10px !important
         height: 220px
@@ -223,16 +220,15 @@ main
         justify-content: start
         @media (max-width: 800px)
             justify-content: center
-        &::-webkit-scrollbar 
+        &::-webkit-scrollbar
             width: 0px
             height: 0px
-
 
 // New Releases
 .new-releases
     position: relative
     height: 328px
-    margin: 0 38px 53px 38px  
+    margin: 0 38px 53px 38px
     overflow: hidden
     @media (max-width: 800px)
         margin-bottom: 10px !important
@@ -247,18 +243,17 @@ main
         margin-top: 30px
         @media (max-width: 800px)
             justify-content: center
-        &::-webkit-scrollbar 
+        &::-webkit-scrollbar
             width: 0px
             height: 0px
     .scroll-box
         bottom: 38px
 
-
 // Calm rhythms & Top 100 songs
 .calm-rhythms
     height: 286px
     width: 100%
-    margin: 0 38px 53px 38px 
+    margin: 0 38px 53px 38px
     overflow: hidden
     @media (max-width: 800px)
         margin-bottom: 20px !important
@@ -273,19 +268,19 @@ main
         margin-top: 30px
         @media (max-width: 800px)
             justify-content: center
-        &::-webkit-scrollbar 
+        &::-webkit-scrollbar
             width: 0px
-            height: 0px       
+            height: 0px
 
 // Your mix
 .your-mix
     height: 271px
     width: 100%
-    margin: 0 38px 53px 38px   
+    margin: 0 38px 53px 38px
     @media (max-width: 800px)
         margin-bottom: 20px !important
         height: 291px
-    .your-mix-cont 
+    .your-mix-cont
         overflow: hidden
         height: 220px
         width: 100%
@@ -294,7 +289,7 @@ main
         justify-content: start
         @media (max-width: 800px)
             justify-content: center
-        &::-webkit-scrollbar 
+        &::-webkit-scrollbar
             width: 0px
             height: 0px
 
@@ -324,7 +319,7 @@ main
 .header
     width: 100%
     height: fit-content
-    margin-top: -15px 
+    margin-top: -15px
     font-family: Rubik
     font-style: normal
     font-weight: bold
@@ -332,4 +327,4 @@ main
     line-height: 28px
     color: $text
     @media (max-width: 800px)
-        margin-top: -15px 
+        margin-top: -15px

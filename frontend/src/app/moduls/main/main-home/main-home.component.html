@@ -1,27 +1,30 @@
 <main>
   <div class="accordion">
     <!-- Navigation arrows -->
-    <div class="arrows">
-      <button (click)="nextSlide()" class="arrow-left">
-        <i class="chevron left icon"></i>
-      </button>
-      <button (click)="previousSlide()" class="arrow-right">
-        <i class="chevron right icon"></i>
-      </button>
+    <div id="hat-main-home">
+      <div class="arrows">
+        <button (click)="nextSlide()" class="arrow-left">
+          <i class="chevron left icon"></i>
+        </button>
+        <button (click)="previousSlide()" class="arrow-right">
+          <i class="chevron right icon"></i>
+        </button>
+      </div>
+
+      <!-- Profile icon in top right corner -->
+      <app-profile-menu class="profile-menu"></app-profile-menu>
     </div>
-
-
-    <!-- Profile icon in top right corner -->
-    <app-profile-menu class="profile-menu"></app-profile-menu> 
-
-
+    
     <!-- Accordion Information -->
     <div class="accordion-information">
-      <img class="album-icon" alt="Album" src="https://s3-alpha-sig.figma.com/img/d75c/1009/f21231d6f5d9480e4025fca6081aa434?Expires=1628467200&Signature=OTjTRmC-15s41yTDgmE8aKF5q6CnBmJAo55dQRIG7K0XOj8A9L3ENDn6dN4EmFOukNiA7DkyXDUXbf3bAjngVFLV7yUgxTssDto6jzNDJGShiDViBnpZAvV6BSpHRuQYIkGj4vTtKJZLeNtDQXQgnMrNLLz8LA1m1XHxLhvug7dLrmXAO2hxHhJk4PUqXplBNEnxyPSZjs-sY44I--97FKwspfh1eyjIlEIdj9eowU4WNh52N-mrnShdCdKJpbaIzE5-mJkpug91XKth-IWB5iHnotKb88bARs1rCFiMaZlp5-Xxi6jpJdOeYIriyilk9~obp6ItPZK-3t2OxS7tag__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
-        <div class="album-info">
-          <p class="type">Album</p>
-          <p class="album-title">Perfect Morning</p>
-          <p class="album-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores facilis deleniti quidem atque obcaecati eaque quod tenetur odit laborum ex explicabo iste placeat, repellendus aliquid alias voluptatibus, quos incidunt? Quos.</p>
+      <img class="album-icon" alt="Album"
+        src="https://s3-alpha-sig.figma.com/img/d75c/1009/f21231d6f5d9480e4025fca6081aa434?Expires=1628467200&Signature=OTjTRmC-15s41yTDgmE8aKF5q6CnBmJAo55dQRIG7K0XOj8A9L3ENDn6dN4EmFOukNiA7DkyXDUXbf3bAjngVFLV7yUgxTssDto6jzNDJGShiDViBnpZAvV6BSpHRuQYIkGj4vTtKJZLeNtDQXQgnMrNLLz8LA1m1XHxLhvug7dLrmXAO2hxHhJk4PUqXplBNEnxyPSZjs-sY44I--97FKwspfh1eyjIlEIdj9eowU4WNh52N-mrnShdCdKJpbaIzE5-mJkpug91XKth-IWB5iHnotKb88bARs1rCFiMaZlp5-Xxi6jpJdOeYIriyilk9~obp6ItPZK-3t2OxS7tag__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
+      <div class="album-info">
+        <p class="type">Album</p>
+        <p class="album-title">Perfect Morning</p>
+        <p class="album-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores facilis deleniti
+          quidem atque obcaecati eaque quod tenetur odit laborum ex explicabo iste placeat, repellendus aliquid alias
+          voluptatibus, quos incidunt? Quos.</p>
         <div class="buttons">
           <button class="button-play">Play</button>
           <button class="button-save">Save</button>
@@ -76,13 +79,13 @@
       </div>
       <div class="scroll-box">
         <button class="scroll-button" (click)="scroll('newReleases')">
-        <i class="chevron right icon"></i>
+          <i class="chevron right icon"></i>
         </button>
       </div>
     </div>
 
 
-        <!-- Calm rhythms -->
+    <!-- Calm rhythms -->
     <div class="sixteen column row calm-rhythms">
       <div class="header">Calm rhythms</div>
       <div id="calmRhythms" class="calm-rhythms-cont">
@@ -91,14 +94,14 @@
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>  
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>  
+        <app-calm-rhythms-card></app-calm-rhythms-card>
+        <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <app-calm-rhythms-card></app-calm-rhythms-card>
         <!-- Work component -->
@@ -115,7 +118,7 @@
     <!-- Your mix -->
     <div class="sixteen column row your-mix">
       <div class="header">Your mix</div>
-      <div id="yourMix"  class="ui grid your-mix-cont">
+      <div id="yourMix" class="ui grid your-mix-cont">
         <!-- Demonstration cards (delete them) -->
         <app-your-mix-card></app-your-mix-card>
         <app-your-mix-card></app-your-mix-card>
