@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Perflow.Common.DTO.Album;
 using Perflow.Domain;
 
 namespace Perflow.Common.MappingProfiles
@@ -7,6 +8,7 @@ namespace Perflow.Common.MappingProfiles
     {
         public AlbumProfile()
         {
+            CreateMap<Album, AlbumViewDTO>();
         }
     }
 }
