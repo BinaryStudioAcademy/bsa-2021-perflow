@@ -83,7 +83,22 @@ namespace Perflow.DataAccess.Context
                     new { SongsId = songs[5].Id, AlbumsId = albums[6].Id },
                     new { SongsId = songs[6].Id, AlbumsId = albums[6].Id },
                     new { SongsId = songs[7].Id, AlbumsId = albums[6].Id },
-                    new { SongsId = songs[8].Id, AlbumsId = albums[6].Id }
+                    new { SongsId = songs[8].Id, AlbumsId = albums[6].Id },
+                    new { SongsId = songs[4].Id, AlbumsId = albums[7].Id },
+                    new { SongsId = songs[5].Id, AlbumsId = albums[7].Id },
+                    new { SongsId = songs[6].Id, AlbumsId = albums[7].Id },
+                    new { SongsId = songs[7].Id, AlbumsId = albums[7].Id },
+                    new { SongsId = songs[8].Id, AlbumsId = albums[7].Id },
+                    new { SongsId = songs[4].Id, AlbumsId = albums[8].Id },
+                    new { SongsId = songs[5].Id, AlbumsId = albums[8].Id },
+                    new { SongsId = songs[6].Id, AlbumsId = albums[8].Id },
+                    new { SongsId = songs[7].Id, AlbumsId = albums[8].Id },
+                    new { SongsId = songs[8].Id, AlbumsId = albums[8].Id },
+                    new { SongsId = songs[4].Id, AlbumsId = albums[9].Id },
+                    new { SongsId = songs[5].Id, AlbumsId = albums[9].Id },
+                    new { SongsId = songs[6].Id, AlbumsId = albums[9].Id },
+                    new { SongsId = songs[7].Id, AlbumsId = albums[9].Id },
+                    new { SongsId = songs[8].Id, AlbumsId = albums[9].Id }
                     )
                 );
         }
@@ -367,6 +382,51 @@ namespace Perflow.DataAccess.Context
                     AuthorId = users[2].Id,
                     AuthorType = AuthorType.Artist,
                     CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 26)),
+                    Description = "Lorem text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://i.ibb.co/sK5hcbn/Ellipse-42-4.png",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "Beautiful People",
+                    Region = AlbumRegion.UK,
+                    ReleaseYear = 2015
+                },
+                new Album
+                {
+                    Id = 8,
+                    AuthorId = users[2].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 25)),
+                    Description = "Lorem text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://i.ibb.co/4SHq8NX/Ellipse-42-3.png",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "Relax Work",
+                    Region = AlbumRegion.UK,
+                    ReleaseYear = 2015
+                },
+                new Album
+                {
+                    Id = 9,
+                    AuthorId = users[2].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 23)),
+                    Description = "Lorem text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://i.ibb.co/7r5Ft4n/Ellipse-42.png",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "Tropical chaos",
+                    Region = AlbumRegion.UK,
+                    ReleaseYear = 2015
+                },
+                new Album
+                {
+                    Id = 10,
+                    AuthorId = users[2].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 24)),
                     Description = "Lorem text of the printing and typesetting industry.",
                     GroupId = null,
                     IconURL = "https://i.ibb.co/sK5hcbn/Ellipse-42-4.png",
