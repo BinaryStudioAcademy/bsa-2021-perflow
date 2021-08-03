@@ -1,6 +1,5 @@
 // /* You can add global styles to this file, and also import other style files */
 
-
 $hairline-weight: 100
 $thin-weight:     200
 $light-weight:    300
@@ -11,6 +10,7 @@ $bold-weight:     700
 $xbold-weight:    800
 $black-weight:    900
 
+$bg-gradient: linear-gradient(180deg, #FD8427 0%, #FD6831 100%)
 $drk-gray:#21292D
 $light-gray:#282F37
 $light-orange:#FD9122
@@ -67,6 +67,13 @@ h6
     background: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
     border-radius: 50px
 
+.btn-full:hover
+    background: linear-gradient(90deg, darken($light-orange, 5%) 0%, darken($medium-orange, 5%) 100%)
+
+.btn-full:active
+    background: linear-gradient(90deg, darken($light-orange, 8%) 0%, darken($medium-orange, 8%) 100%)
+    
+
 .btn-ghost
     
     border: $button-ghost-border
@@ -82,4 +89,3 @@ h6
 card
     background-color: $drk-rain
     border-radius: 4px
-    

@@ -1,0 +1,191 @@
+@import "../../../styles.sass"
+
+*
+    padding: 0
+    margin: 0
+    text-decoration: none
+main
+    background: $drk-gray
+    width: 100%
+    height: 100vh
+    overflow-y: scroll 
+    &::-webkit-scrollbar 
+        width: 0px
+        height: 0px
+
+.accordion
+    position: relative
+    width: 100%
+    height: 401px
+    border-radius: 5px
+    display: grid
+    grid-template-columns: 100%
+    grid-template-rows: 66px auto
+    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)    
+    
+.arrows
+    grid-column: 1
+    grid-row: 1
+    position: relative
+    height: 30px
+    min-height: 30px
+    width: 73px
+    min-width: 73px
+    max-width: 73px
+    position: relative
+    top: 38px
+    left: 37px
+    .arrow-left
+        background: #A859C0
+        border-radius: 2px
+        width: 28px
+        height: 28px
+        border: 0px solid
+        color: $text
+        cursor: pointer   
+        &:hover
+            background: #A859C0aa
+        &:active
+            border: 2px solid #A859C0
+    .arrow-right
+        background: #A859C0
+        border-radius: 2px
+        width: 28px
+        height: 28px
+        border: 0px solid
+        color: $text
+        margin-left: 15px 
+        cursor: pointer
+        &:hover
+            background: #A859C0aa
+        &:active
+            border: 2px solid #A859C0
+
+.ellipsis-icon
+    background: none
+    border-radius: 2px
+    width: 28px
+    height: 28px
+    border: 0px solid
+    color: $text
+    cursor: pointer
+
+
+.user-info
+    color: $text
+    top: 80px
+    left: 285px
+    position: absolute
+    .user-profile
+        font-weight: 300
+        font-size: 18px
+        line-height: 21px
+        display: inline-block
+    .user-name
+        font-weight: 700
+        font-size: 40px
+        line-height: 47px
+
+
+.profile
+    grid-column: 1
+    grid-row: 1
+    position: relative
+    right: -250px
+    top: 42px
+    min-height: 30px
+    width: 73px
+    min-width: 73px
+    max-width: 73px
+    padding: 0px 7px 
+    background: none
+    font-family: Rubik
+    font-style: normal
+    font-weight: 500
+    font-size: 18px
+    line-height: 21px
+    color: $text
+    border: none
+    cursor: pointer
+    img
+        width: 35px
+        height: 35px
+        border-radius: 50% 
+        object-fit: cover  
+    .dropdown-content
+        display: block
+        top: 35px
+        width: 209px
+        padding: 9px 0px
+        background: $light-gray
+        border: 0.5px solid #373C43
+        border-radius: 2px
+        transition: all 1s ease-out
+        z-index: 99
+        .item
+            font-family: Rubik
+            font-style: normal
+            font-weight: 300
+            font-size: 14px !important
+            line-height: 135%
+            color: $text
+            padding: 9px 19px
+            &:hover
+                background: #373C43
+            &:last-child
+                color: $light-orange
+                i
+                    color: $light-orange
+
+.accordion-information
+    grid-column: 1
+    grid-row: 2
+    position: relative
+    left: 160px
+    top: 38px
+    width: 70%    
+    height: 245px
+    overflow: hidden 
+    display: grid
+    grid-template-columns: 245px auto
+    grid-template-row: 100%
+    gap: 0px 0px
+    .user-avatar
+        left: 428px
+        top: 104px
+        object-fit: cover
+        background: #C4C4C4
+        @media (max-width: 800px)
+            display: none   
+    img  
+        width: 245px
+        height: 245px
+        border-radius: 50%
+        box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
+
+.dropdown-content
+        display: block
+        top: -70px
+        left: 20px
+        position: absolute
+        width: 209px
+        background: $light-gray
+        border: 0.5px solid #373C43
+        border-radius: 2px
+        transition: all 1s ease-out
+        padding: 19px 19px
+        z-index: 99
+        .item
+            font-family: Rubik
+            font-style: normal
+            font-weight: 300
+            font-size: 14px !important
+            line-height: 135%
+            color: $text
+            padding: 9px 19px
+            &:hover
+                background: #373C43
+            &:last-child
+                color: $light-orange
+                i
+                    color: $light-orange
