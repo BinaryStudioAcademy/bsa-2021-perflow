@@ -1,0 +1,180 @@
+@import "../../../styles"
+
+.gray-text
+    color: $text-color-gray
+
+html, body 
+   height: 100%
+
+    
+.landing-page-container
+    background: $drk-gray
+    position: relative
+    width: 100%
+    height: 100%
+    &>.ui.grid
+        min-height: 100%
+    .eleven.wide.column
+        padding: 0 0 0 0
+
+
+.landing-page-side-image
+    background: $drk-gray
+    background-image: url('/../../assets/LandingPageSideImage.jpg')
+    background-repeat: no-repeat
+    position: absolute
+    left: 0px
+    top: 0px
+    height: 100%
+    width: 100%
+    object-fit: cover
+    object-position: 50% 0
+    backdrop-filter: blur(2px)
+    border-radius: 5px
+
+
+.main-content-container
+    background: $drk-gray
+    width: 100%
+    height: 100%
+    padding: 70px 13% 70px 11%
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: flex-start
+
+.main-content
+    height: 452px
+    width: 100%
+    .ui.grid
+        height: 100%
+
+.logo
+    width: 200px
+    height: 65px
+    background: rgba(111, 111, 111, 0.5)
+    border-radius: 4px
+    padding: 18px 16px 18px 16px
+    h4
+        color: $text
+        font-weight: normal
+        opacity: 0.5
+
+.login-form  
+    min-width: 250px
+    padding: 0
+    max-width: 375px
+    h4
+        color: $login-text-color
+        margin-bottom: 11px
+    p
+        margin-bottom: 25px
+    .field input 
+        background-color: $input-background-color
+        color: $text
+        border-radius: 100px
+        caret-color: white
+        &::placeholder
+            color: $text-color-gray
+        &:-webkit-autofill,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:hover
+            -webkit-box-shadow:0 0 0 100px  $drk-gray inset !important 
+            -webkit-text-fill-color: $text
+ 
+
+.sign-up-link
+    color: $login-text-color
+    &:hover
+        text-decoration: underline
+        cursor: pointer
+
+.forgot-password-link
+    margin-top: 15px 
+    &:hover
+         text-decoration: underline
+         cursor: pointer
+
+.ui .error .message
+    border-radius: 25px
+    font-size: 0.9em
+    padding: 0.5em 1.5em
+
+
+//Remeber me checkbox style
+.checkbox-container
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+.remember-me
+    min-width: 123px
+    input
+        background: $orange-gradient
+
+.remember-me.ui.checkbox 
+    label
+        color: $text-color-gray
+        &::before
+            background:  $orange-gradient
+            border: none
+        &:hover::before
+            border: none
+        &:active
+            color: $text-color-gray
+            &::before
+                 border: none
+            &::after
+                color: white
+    input
+        &:active~label
+            color: $text-color-gray
+        &:checked~label
+            color: $text-color-gray
+            &::before, &::after
+                color: white
+
+//Remeber me checkbox style end
+
+.log-in-btn
+    width: 100%
+    margin-left: 37px
+    &[disabled]
+        background: $orange-gradient !important
+
+.sphere
+    border-radius: 50%
+    display: inline-block
+    background: $orange-gradient
+    padding: 1px 1px 1px 1px
+    margin-right: 33px
+
+.social-media-buttons 
+    .ui.circular.button
+        margin-right: 0px
+        box-shadow: 0 0 0 0px $login-text-color inset !important
+        background: $drk-gray
+        &:active .icon
+            color: white
+    i.icon
+        color: $login-text-color
+        font-size: 16px !important
+    &:last-child
+        margin-right: 0px
+
+//Welcome text
+.welcome-text 
+    h5
+        color: $text
+        font-weight: $light-weight
+    h1
+        color: $text
+        font-weight: bold
+    p
+        font-weight: $medium-weight
+        position: absolute
+        bottom: 25px
+        margin-top: 20px
+
+.login-form-devider
+    margin: 60px 0px 60px 0px
