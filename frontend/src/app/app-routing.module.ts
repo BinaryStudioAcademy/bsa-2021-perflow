@@ -10,6 +10,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./moduls/main/main.module').then((m) => m.MainModule)
   },
+  {
+    path: 'editUser',
+    loadChildren: () => import('./moduls/user/user.module').then((m) => m.UserModule)
+  },
   { path: '**', redirectTo: 'login' }
 ];
 
