@@ -31,6 +31,7 @@ namespace Perflow.Services.Extensions
         public static void RegisterCustomServices(this IServiceCollection services)
         {
             services.AddScoped<IService<PlaylistDTO>, PlaylistService>();
+            services.AddScoped<AlbumsService>();
         }
     }
 }
