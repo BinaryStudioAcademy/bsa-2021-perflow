@@ -4,6 +4,8 @@ using Perflow.Common.MappingProfiles;
 using System.Reflection;
 using Perflow.Common.DTO;
 using Perflow.Common.DTO.Playlist;
+using Perflow.Common.DTO.Reactions;
+using Perflow.Domain;
 
 namespace Perflow.Services.Extensions
 {
@@ -31,6 +33,7 @@ namespace Perflow.Services.Extensions
         public static void RegisterCustomServices(this IServiceCollection services)
         {
             services.AddScoped<IService<PlaylistDTO>, PlaylistService>();
+            services.AddScoped<SongReactionService, SongReactionService>();
         }
     }
 }

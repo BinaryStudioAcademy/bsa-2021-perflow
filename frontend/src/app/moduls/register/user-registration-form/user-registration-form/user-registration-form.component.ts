@@ -14,14 +14,14 @@ import { UserRegister } from 'src/app/models/auth/user-register';
 export class UserRegistrationFormComponent implements OnInit {
   public registrationForm!: FormGroup;
 
-  @Output() 
-    isSuccess = new EventEmitter<boolean>();
+  @Output()
+  isSuccess = new EventEmitter<boolean>();
 
-  @Output() 
-    isRequiredError = new EventEmitter<boolean>();
+  @Output()
+  isRequiredError = new EventEmitter<boolean>();
 
-  @Output() 
-    newUser = new EventEmitter<UserRegister>();
+  @Output()
+  newUser = new EventEmitter<UserRegister>();
 
   ngOnInit() {
     this.registrationForm = new FormGroup({

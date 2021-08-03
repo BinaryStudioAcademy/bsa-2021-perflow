@@ -15,7 +15,7 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
 
             builder
                 .HasOne(sr => sr.User)
-                .WithMany()
+                .WithMany(u => u.Reactions)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
