@@ -18,7 +18,7 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
                 .WithOne(ps => ps.Song);
 
             builder
-                .HasMany(s => s.Albums)
+                .HasOne(s => s.Album)
                 .WithMany(a => a.Songs);
         }
     }
