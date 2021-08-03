@@ -21,7 +21,7 @@ namespace Perflow.Services
         {
         }
 
-        public async Task LikeSong(NewSongReactionDTO songReactionDto)
+        public async Task<bool> LikeSong(NewSongReactionDTO songReactionDto)
         {
             if (songReactionDto == null)
                 throw new ArgumentNullException("Argument cannot be null");
@@ -36,7 +36,7 @@ namespace Perflow.Services
                     _context.SongReactions.RemoveRange(likes);
                     await _context.SaveChangesAsync();
 
-                    return;
+                    return false;
                 }
 
                 var songReaction = new SongReaction(){SongId = songReactionDto.SongId, UserId = songReactionDto.UserId};
@@ -44,6 +44,8 @@ namespace Perflow.Services
                 await _context.SongReactions.AddAsync(songReaction);
 
                 await _context.SaveChangesAsync();
+
+                return true;
             }
             catch (ArgumentException ex)
             {

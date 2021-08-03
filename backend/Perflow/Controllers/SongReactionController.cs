@@ -18,17 +18,15 @@ namespace Perflow.Controllers
             _songReactionService = songReactionService;
         }
 
-        [HttpPost]
+        [HttpPost("like")]
         public async Task<ActionResult> PostAsync([FromBody] NewSongReactionDTO songReactionDto)
         {
             if (!ModelState.IsValid)
                 throw new ArgumentException("Model is not valid.");
 
-            //TODO: get current user's id
+            var result = await _songReactionService.LikeSong(songReactionDto);
 
-            await _songReactionService.LikeSong(songReactionDto);
-
-            return Ok();
+            return Ok(result);
         }
     }
 }
