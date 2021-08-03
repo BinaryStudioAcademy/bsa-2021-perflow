@@ -10,7 +10,10 @@ export class ReactionService {
     this.httpService = httpService;
   }
   likeSong(songId: number, userId: number) {
-    const response = this.httpService.postRequest<boolean>('/api/SongReaction/like', { UserId: userId, SongId: songId });
+    const response = this.httpService.postRequest<boolean>(
+      '/api/SongReaction/like',
+      { userId, songId }
+    );
     return response;
   }
 }
