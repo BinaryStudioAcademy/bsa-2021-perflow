@@ -3,7 +3,9 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HttpInternalService {
   public baseUrl: string = environment.apiUrl;
   public headers = new HttpHeaders();
