@@ -37,7 +37,7 @@ main
         top: 38px
         left: 37px
         .arrow-left
-            background: #A859C0
+            background: $pink
             border-radius: 2px
             width: 28px
             height: 28px
@@ -45,11 +45,11 @@ main
             color: $text
             cursor: pointer   
             &:hover
-                background: #A859C0aa
+                background: $pink
             &:active
-                border: 2px solid #A859C0
+                border: 2px solid $pink
         .arrow-right
-            background: #A859C0
+            background: $pink
             border-radius: 2px
             width: 28px
             height: 28px
@@ -58,9 +58,9 @@ main
             margin-left: 15px 
             cursor: pointer
             &:hover
-                background: #A859C0aa
+                background: $pink
             &:active
-                border: 2px solid #A859C0
+                border: 2px solid $pink
     
     // Profile icon in top right corner
     .profile-menu
@@ -132,7 +132,7 @@ main
                 margin-top: 20px
                 font-family: Rubik
                 font-style: normal
-                font-weight: 300
+                font-weight: $light-weight
                 font-size: 18px
                 line-height: 21px
                 color: $text
@@ -141,7 +141,7 @@ main
                 margin-top: 10px
                 font-family: Rubik
                 font-style: normal
-                font-weight: 700
+                font-weight: $bold-weight
                 font-size: 40px
                 line-height: 47px
                 color: $text
@@ -151,7 +151,7 @@ main
                 margin-top: 22px
                 font-family: Rubik
                 font-style: normal
-                font-weight: 300
+                font-weight: $light-weight
                 font-size: 18px
                 line-height: 21px
                 color: $text                 
@@ -175,13 +175,13 @@ main
                     color: $text
                     font-family: Rubik
                     font-style: normal
-                    font-weight: 700
+                    font-weight: $bold-weight
                     font-size: 16px
                     line-height: 19px
                     &:hover
                         cursor: pointer
                         background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                        color: #000000 
+                        color: $black 
                     &:active
                         border: 3px solid $medium-orange 
                         padding: 9px 19px
@@ -195,7 +195,7 @@ main
                     color: $text
                     font-family: Rubik
                     font-style: normal
-                    font-weight: 700
+                    font-weight: $bold-weight
                     font-size: 16px
                     line-height: 19px   
                     border: 1px solid $text
@@ -203,7 +203,7 @@ main
                     &:hover
                         cursor: pointer
                         background: #864099d0
-                        color: #000000
+                        color: $black
                     &:active
                         border: 3px solid $text
                         padding: 9px 19px
@@ -298,12 +298,6 @@ main
             width: 0px
             height: 0px
 
-
-// This is for profile menu
-.show
-    display: block !important    
-
-
 // Styles for horizontal scrolling           
 .scroll-box
     width: 44px
@@ -325,7 +319,7 @@ main
         background: $light-gray
         cursor: pointer
         &:hover
-            background: #373C43
+            background: $light-gray
 
 .header
     width: 100%
