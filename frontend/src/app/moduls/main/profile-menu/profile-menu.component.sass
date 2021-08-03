@@ -1,48 +1,46 @@
 @import "../../../../styles.sass"
-    
+
 // Profile icon in top right corner
-.profile
-    width: fit-content
-    height: 35px
-    max-height: 35px
-    padding: 0px 7px 
-    background: none
-    font-family: Rubik
-    font-style: normal
-    font-weight: 500
-    font-size: 18px
-    line-height: 21px
+#profile
+    padding-right: 55px
+    display: flex
+    align-items: center
+    justify-content: flex-end
     color: $text
-    border: none
-    cursor: pointer
-    img
-        width: 35px
-        height: 35px
-        max-height: 35px
-        max-width: 35px
-        border-radius: 50% 
-        object-fit: cover  
-    .dropdown-content
-        display: block
-        width: 100%
-        top: 35px
-        width: 209px
-        background: $light-gray
-        border: 0.5px solid #373C43
-        border-radius: 2px
-        transition: all 1s ease-out
-        z-index: 99
-        .item
-            font-family: Rubik
-            font-style: normal
-            font-weight: 300
-            font-size: 14px !important
-            line-height: 135%
-            color: $text
-            padding: 9px 19px
-            &:hover
-                background: #373C43
-            &:last-child
-                color: $light-orange
-                i
-                    color: $light-orange
+
+.ui.dropdown.item
+    padding: 20px 0 20px 0
+
+#profile-menu
+    top: 20px
+    right: 20px
+    left: auto
+    background: $dark-gray
+    border: 0.5px solid #373C43
+    border-radius: 2px
+
+#profile-user-name
+    margin-left: 15px
+
+#profile > img
+    width: 40px
+    height: 40px
+    border-radius: 100%
+
+#profile-menu > .item > a
+    font-family: "Montserrat", sans-serif
+    font-size: 18px
+    margin: 0 15px
+    display: flex
+    align-items: center
+    color: $text
+
+#profile-menu > .item > a > img
+    margin: 8px 0 8px 0
+    padding: 0 16px 0 0
+
+#profile-menu > #log-out > a
+    color: $light-orange
+
+#profile-menu > .item:hover
+    background: $light-gray

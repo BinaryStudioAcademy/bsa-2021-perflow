@@ -1,6 +1,5 @@
 <div class="ui grid" id="hat-playlists">
   <div class="row" id="row-1">
-
     <div id="nav-link">
       <a routerLink="./../playlists/all" id="link">
         <h5>All</h5>
@@ -13,52 +12,9 @@
       </a>
     </div>
 
-    <!-- TODO:  Here, insert links to your account profile pages, etc. -->
-    <div id="profile">
-      <img
-        src="./../../../../assets/tepolary-images/photo-user-in-my-playlists-35x35.png"
-      />
-      <div class="ui simple dropdown item">
-        <div class="text" id="profile-user-name">
-          <h5>marc_dorwart</h5>
-        </div>
-        <i class="dropdown icon"></i>
-        <div class="menu" id="profile-menu">
-          <div class="item">
-            <a routerLink="./../main">
-              <img
-                src="./../../../../assets/button-icon-images/user-profile-13x13.png"
-              />
-              View account
-            </a>
-          </div>
-          <div class="item">
-            <a routerLink="./../main">
-              <img
-                src="./../../../../assets/button-icon-images/cog-profile-13x13.png"
-              />
-              Account Settings
-            </a>
-          </div>
-          <div class="item">
-            <a routerLink="./../main">
-              <img
-                src="./../../../../assets/button-icon-images/pencil-profile-13x13.png"
-              />
-              Edit profile
-            </a>
-          </div>
-          <div class="item" id="log-out">
-            <a routerLink="./../main">
-              <img
-                src="./../../../../assets/button-icon-images/log-out-profile-13x13.png"
-              />
-              Log out
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Profile icon in top right corner -->
+    <app-profile-menu class="profile-menu"></app-profile-menu>
+    
   </div>
 </div>
 <div class="container">
