@@ -1,4 +1,4 @@
-import { Directive, ElementRef } from "@angular/core";
+import { AfterViewInit, Directive, ElementRef } from '@angular/core';
 
 declare global {
   interface JQuery {
@@ -7,13 +7,12 @@ declare global {
 }
 
 @Directive({
-  selector: '[sm-dropdown]'
+  selector: '[appSmDropdown]'
 })
-export class SemanticDropdownDirective {
-
-  constructor(private dropdown: ElementRef) { }
+export class SemanticDropdownDirective implements AfterViewInit {
+  constructor(private _dropdown: ElementRef) { }
 
   ngAfterViewInit() {
-    $(this.dropdown.nativeElement).dropdown();
+    $(this._dropdown.nativeElement).dropdown();
   }
 }
