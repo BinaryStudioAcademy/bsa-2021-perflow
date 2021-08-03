@@ -12,6 +12,8 @@ import { SongImageComponent } from './components/shared/upload/song-image/song-i
 import { ShowHideDirective } from './directives/shared/show/show-hide.directive';
 import { DragDropDirective } from './directives/shared/upload/song-image/drag-drop.directive';
 import { AuthModule } from './moduls/auth/auth.module';
+import { SongRowComponent } from './components/shared/song-row/song-row.component';
+import { SemanticDropdownDirective } from './directives/shared/dropdown/semantic-dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { AuthModule } from './moduls/auth/auth.module';
     SongImageComponent,
     DragDropDirective,
     SongToolbarComponent,
-    ShowHideDirective
+    ShowHideDirective,
+    SongRowComponent,
+    SemanticDropdownDirective
   ],
   imports: [
     FormsModule,
