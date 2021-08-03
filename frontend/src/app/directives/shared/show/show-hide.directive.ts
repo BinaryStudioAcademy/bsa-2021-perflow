@@ -7,30 +7,26 @@ import { Directive, ElementRef, Input } from '@angular/core';
   selector: '[appShowHide]'
 })
 export class ShowHideDirective {
-  constructor(private builder: AnimationBuilder, private el: ElementRef) {}
+  constructor(private _builder: AnimationBuilder, private _el: ElementRef) {}
 
   toolbar!: HTMLElement;
 
   @Input()
   set show(show: boolean) {
-    const metadata = show ? this.fadeIn() : this.fadeOut();
+    const metadata = show ? this._fadeIn() : this._fadeOut();
 
-    const factory = this.builder.build(metadata);
-    const player = factory.create(this.el.nativeElement);
+    const factory = this._builder.build(metadata);
+    const player = factory.create(this._el.nativeElement);
     player.play();
   }
 
-  private fadeIn(): AnimationMetadata[] {
-    return [
-      style({ opacity: 0 }),
-      animate('200ms ease-in', style({ opacity: 1 }))
-    ];
-  }
+  private _fadeIn = (): AnimationMetadata[] => [
+    style({ opacity: 0 }),
+    animate('200ms ease-in', style({ opacity: 1 }))
+  ];
 
-  private fadeOut(): AnimationMetadata[] {
-    return [
-      style({ opacity: '*' }),
-      animate('200ms ease-in', style({ opacity: 0 }))
-    ];
-  }
+  private _fadeOut = (): AnimationMetadata[] => [
+    style({ opacity: '*' }),
+    animate('200ms ease-in', style({ opacity: 0 }))
+  ];
 }

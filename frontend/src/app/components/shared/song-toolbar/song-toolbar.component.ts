@@ -10,7 +10,7 @@ import { SongInfo } from 'src/app/models/shared/SongInfo';
   styleUrls: ['./song-toolbar.component.sass']
 })
 export class SongToolbarComponent implements OnInit {
-  @ViewChild('audio') audio_ref! : ElementRef<HTMLAudioElement>;
+  @ViewChild('audio') audioRef! : ElementRef<HTMLAudioElement>;
 
   songForPlay: SongInfo = new SongInfo('NONAME', 'NOARTIST', '', '');
 
@@ -94,17 +94,17 @@ export class SongToolbarComponent implements OnInit {
   };
 
   getSeekSliderValue = (event: Event) => {
-    this.audio!.currentTime = Number.parseInt((<HTMLInputElement>event.target).value);
+    this.audio!.currentTime = Number.parseInt((<HTMLInputElement>event.target).value, 10);
   };
 
   getVolumeSliderValue = (event: Event) => {
-    const volume = Number.parseInt((<HTMLInputElement>event.target).value);
+    const volume = Number.parseInt((<HTMLInputElement>event.target).value, 10);
     this.savedVolume = volume;
     this.audio!.volume = volume / 100;
   };
 
   setInitialVolume = () => {
-    this.audio!.volume = Number.parseInt(this.volumeSlider!.value) / 100;
+    this.audio!.volume = Number.parseInt(this.volumeSlider!.value, 10) / 100;
   };
 
   playPause = () => {
@@ -125,7 +125,6 @@ export class SongToolbarComponent implements OnInit {
       this.isMuted = false;
       this.volumeSlider!.value = this.savedVolume.toString();
       this.audio!.volume = this.savedVolume / 100;
-      console.log(this.audio!.volume);
     }
     else {
       this.isMuted = true;
