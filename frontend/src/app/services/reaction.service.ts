@@ -6,12 +6,22 @@ import { HttpInternalService } from './http-internal.service';
 })
 export class ReactionService {
   httpService: HttpInternalService;
+
   constructor(httpService: HttpInternalService) {
     this.httpService = httpService;
   }
+
   likeSong(songId: number, userId: number) {
-    const response = this.httpService.postRequest<boolean>(
+    const response = this.httpService.postClearRequest(
       '/api/SongReaction/like',
+      { userId, songId }
+    );
+    return response;
+  }
+
+  removeLike(songId: number, userId: number) {
+    const response = this.httpService.postClearRequest(
+      '/api/SongReaction/removeLike',
       { userId, songId }
     );
     return response;

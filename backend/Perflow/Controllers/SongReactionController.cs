@@ -19,14 +19,25 @@ namespace Perflow.Controllers
         }
 
         [HttpPost("like")]
-        public async Task<ActionResult> PostAsync([FromBody] NewSongReactionDTO songReactionDto)
+        public async Task<ActionResult> LikeAsync([FromBody] NewSongReactionDTO songReactionDto)
         {
             if (!ModelState.IsValid)
                 throw new ArgumentException("Model is not valid.");
 
-            var result = await _songReactionService.LikeSong(songReactionDto);
+            await _songReactionService.LikeSong(songReactionDto);
 
-            return Ok(result);
+            return Ok();
+        }
+
+        [HttpPost("removeLike")]
+        public async Task<ActionResult> RemoveLikeAsync([FromBody] NewSongReactionDTO songReactionDto)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            await _songReactionService.RemoveLikeSong(songReactionDto);
+
+            return Ok();
         }
     }
 }
