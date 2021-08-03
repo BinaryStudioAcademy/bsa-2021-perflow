@@ -1,0 +1,93 @@
+<div class="landing-page-container">
+  <div class="ui equal height padded grid">
+    <div class="five wide column">
+      <img class="ui img landing-page-side-image" src="/../../assets/LandingPageSideImage.jpg" />
+    </div>
+    <div class="eleven wide column">
+      <div class="main-content-container">
+        <div class="logo">
+          <h4>Logo</h4>
+        </div>
+        <div class="main-content">
+          <div class="ui grid">
+            <div class="eight wide column">
+              <div class="welcome-text">
+                <h5>Welcome</h5>
+                <h1>No music, no life</h1>
+                <p class="gray-text">To continue, log in to Music</p>
+              </div>
+            </div>
+            <div class="eight wide column">
+              <div class="login-form gray-text">
+                <!-- Login start -->
+                <h4>Log In</h4>
+                <p>Don't have an account? <a class="sign-up-link">Sign up</a></p>
+                <form class="ui form error" method="POST" [formGroup]="loginForm">
+                  <div class="field">
+                    <input formControlName="login" type="text" placeholder="Email address or username"
+                      autocomplete="email">
+                    <div *ngIf="loginForm.get('login')!.invalid &&
+                                                    (loginForm.get('login')!.dirty || loginForm.get('login')!.touched)"
+                      class="ui error message">
+                      Invalid email address or user name
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="ui icon input">
+                      <input formControlName="password" [type]="showPassword ? 'text' : 'password'"
+                        placeholder="Password" autocomplete="new-password" autofill="off">
+                      <i *ngIf="showPassword" class="eye link icon gray-text" (click)="toggleShowPassword()"></i>
+                      <i *ngIf="!showPassword" class="eye slash link icon gray-text" (click)="toggleShowPassword()"></i>
+                    </div>
+                    <div
+                      *ngIf="loginForm.get('password')!.invalid &&
+                                                    (loginForm.get('password')!.dirty || loginForm.get('password')!.touched)"
+                      class="ui error message">
+                      Invalid password
+                    </div>
+                    <div *ngIf="(!loginForm.get('password')!.value || !loginForm.get('login')!.value) && isLogInClicked"
+                      class="ui error message">
+                      Fill in fields
+                    </div>
+                  </div>
+                </form>
+                <p class="forgot-password-link">
+                  <a class="gray-text">Forgot your password?</a>
+                </p>
+                <div class="checkbox-container">
+                  <div class="ui checkbox remember-me">
+                    <input type="checkbox" name="example">
+                    <label>Remember me</label>
+                  </div>
+                  <button class="ui btn-full button log-in-btn" (click)="logInOnClick()">
+                    Log In
+                  </button>
+                </div>
+                <div class="ui divider login-form-devider"></div>
+                <div class="social-media-buttons">
+                  <div class="sphere">
+                    <button class="ui circular icon button">
+                      <i class="google icon"></i>
+                    </button>
+                  </div>
+                  <div class="sphere">
+                    <button class="ui circular icon button">
+                      <i class="apple icon"></i>
+                    </button>
+                  </div>
+                  <div class="sphere">
+                    <button class="ui circular icon button">
+                      <i class="facebook icon"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- Login end -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fake"></div>
+      </div>
+    </div>
+  </div>
+</div>
