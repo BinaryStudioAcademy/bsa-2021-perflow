@@ -1,7 +1,7 @@
-import { ArtistsComponent } from './artists/artists.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/guard/auth.guard';
+import { ArtistsComponent } from './artists/artists.component';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { PlaylistComponent } from './playlist/playlist.component';
@@ -15,17 +15,20 @@ const routes: Routes = [{
   component: MainMenuComponent,
   canActivate: [AuthGuard],
   children: [
-      { path: 'main', component: MainHomeComponent },
-      { path: 'search', component: SearchComponent },
-      { path: 'playlists', component: PlaylistComponent, 
+    { path: 'main', component: MainHomeComponent },
+    { path: 'search', component: SearchComponent },
+    {
+      path: 'playlists',
+      component: PlaylistComponent,
       canActivate: [AuthGuard],
       children: [
-          { path: 'all', component: AllPlaylistsComponent },
-          { path: 'artists', component: ArtistsComponent },
-          { path: 'albums', component: AlbumsComponent }
-      ]},
-      { path: 'songs', component: SongsComponent }
-    ]
+        { path: 'all', component: AllPlaylistsComponent },
+        { path: 'artists', component: ArtistsComponent },
+        { path: 'albums', component: AlbumsComponent }
+      ]
+    },
+    { path: 'songs', component: SongsComponent }
+  ]
 }];
 
 @NgModule({
