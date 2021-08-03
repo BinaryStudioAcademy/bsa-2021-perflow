@@ -28,8 +28,8 @@ namespace Perflow.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Configure();
-            modelBuilder.Seed();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
