@@ -16,7 +16,11 @@
             </div>
         </div>
         <div class="midpart">
+<<<<<<< HEAD
             <div class="shufflebutton" id="shufflebutton" (click)="toggleShuffle()">
+=======
+            <div class="shufflebutton" id="shufflebutton" (click)="toggleShuffle()" [ngClass]="isShuffling ? 'active' : ''">
+>>>>>>> develop
                 <i class="random icon"></i>
             </div>
             <div class="backwardbutton">
@@ -28,7 +32,11 @@
             <div class="forwardbutton">
                 <i class="step forward icon"></i>
             </div>
+<<<<<<< HEAD
             <div class="repeatbutton" id="repeatbutton" (click)="toggleRepeat()">
+=======
+            <div class="repeatbutton" id="repeatbutton" (click)="toggleRepeat()" [ngClass]="isRepeating ? 'active' : ''">
+>>>>>>> develop
                 <i class="undo alternate icon"></i>
             </div>
         </div>
