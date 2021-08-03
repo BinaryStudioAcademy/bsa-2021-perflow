@@ -1,0 +1,70 @@
+@import ./../../../../../styles
+    
+h3
+    text-align: center
+    color: #FF792A
+
+form
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 20px
+    padding-bottom: 0
+    text-align: center
+    height: 100%
+    .cross-validation
+        width: 450px
+    .field
+        margin-bottom: 15px !important
+        .input-dark
+            #display: inline-block !important
+            #background: $drk-rain !important
+            #border-radius: 50px !important
+            #min-width: 200px !important
+            #width: 100% !important
+            background-color: #282F37
+            color: $text
+            border-radius: 100px
+            caret-color: white
+            &::placeholder
+                color: #717477
+            &:-webkit-autofill,
+            &:-webkit-autofill:focus,
+            &:-webkit-autofill:hover
+                -webkit-box-shadow:0 0 0 100px  $drk-gray inset !important 
+                -webkit-text-fill-color: $text
+    button:disabled
+        color: white
+    button:hover
+        cursor: pointer
+
+.ui.error.message
+    border-radius: 25px !important
+
+.btn-full
+    padding: 10px 55px 10px 55px
+    font-weight: $bold-weight
+    color: white
+
+.social-media-buttons 
+    text-align: center
+    .sphere
+        border-radius: 50%
+        display: inline-block
+        background: $orange-gradient
+        padding: 1px 1px 1px 1px
+        margin-right: 33px
+    .sphere:last-child
+        margin-right: 0px
+    .sphere:hover
+        background: $reversed-orange-gradient
+    .ui.circular.button
+        margin-right: 0px
+        box-shadow: 0 0 0 0px #FF792A inset !important
+        background: $drk-gray
+        &:active .icon
+            color: white
+    i.icon
+        color: #FF792A
+        font-size: 16px !important
+
