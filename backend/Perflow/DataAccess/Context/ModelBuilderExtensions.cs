@@ -31,6 +31,7 @@ namespace Perflow.DataAccess.Context
         {
             var roles = GenerateRoles();
             var users = GenerateUsers();
+            var groups = GenerateGroups();
             var albums = GenerateAlbums(users);
             var songs = GenerateSongs(albums);
             var playlists = GeneratePlaylists(users);
@@ -42,6 +43,7 @@ namespace Perflow.DataAccess.Context
             modelBuilder.Entity<Song>().HasData(songs);
             modelBuilder.Entity<Playlist>().HasData(playlists);
             modelBuilder.Entity<PlaylistSong>().HasData(playlistSongs);
+            modelBuilder.Entity<Group>().HasData(groups);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Roles)
@@ -61,7 +63,27 @@ namespace Perflow.DataAccess.Context
                     new { SongsId = songs[0].Id, AlbumsId = albums[2].Id },
                     new { SongsId = songs[1].Id, AlbumsId = albums[1].Id },
                     new { SongsId = songs[2].Id, AlbumsId = albums[0].Id },
-                    new { SongsId = songs[3].Id, AlbumsId = albums[1].Id }
+                    new { SongsId = songs[3].Id, AlbumsId = albums[1].Id },
+                    new { SongsId = songs[4].Id, AlbumsId = albums[3].Id },
+                    new { SongsId = songs[5].Id, AlbumsId = albums[3].Id },
+                    new { SongsId = songs[6].Id, AlbumsId = albums[3].Id },
+                    new { SongsId = songs[7].Id, AlbumsId = albums[3].Id },
+                    new { SongsId = songs[8].Id, AlbumsId = albums[3].Id },
+                    new { SongsId = songs[4].Id, AlbumsId = albums[4].Id },
+                    new { SongsId = songs[5].Id, AlbumsId = albums[4].Id },
+                    new { SongsId = songs[6].Id, AlbumsId = albums[4].Id },
+                    new { SongsId = songs[7].Id, AlbumsId = albums[4].Id },
+                    new { SongsId = songs[8].Id, AlbumsId = albums[4].Id },
+                    new { SongsId = songs[4].Id, AlbumsId = albums[5].Id },
+                    new { SongsId = songs[5].Id, AlbumsId = albums[5].Id },
+                    new { SongsId = songs[6].Id, AlbumsId = albums[5].Id },
+                    new { SongsId = songs[7].Id, AlbumsId = albums[5].Id },
+                    new { SongsId = songs[8].Id, AlbumsId = albums[5].Id },
+                    new { SongsId = songs[4].Id, AlbumsId = albums[6].Id },
+                    new { SongsId = songs[5].Id, AlbumsId = albums[6].Id },
+                    new { SongsId = songs[6].Id, AlbumsId = albums[6].Id },
+                    new { SongsId = songs[7].Id, AlbumsId = albums[6].Id },
+                    new { SongsId = songs[8].Id, AlbumsId = albums[6].Id }
                     )
                 );
         }
@@ -84,6 +106,21 @@ namespace Perflow.DataAccess.Context
                     Id = 3,
                     Name = "User"
                 }
+            };
+
+        public static IList<Group> GenerateGroups() =>
+            new List<Group>
+            {
+                 new Group
+                 {
+                    Id = 1,
+                    Name = "Maroon 5"
+                 },
+                 new Group
+                 {
+                    Id = 2,
+                    Name = "Imagine Dragons"
+                 },
             };
 
         public static IList<User> GenerateUsers()
@@ -152,7 +189,82 @@ namespace Perflow.DataAccess.Context
                     Salt = "jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=",
                     Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=")),
                     UserName = "moderator"
-                }
+                },
+                new User
+                {
+                    Id = 5,
+                    Birthday = new DateTimeOffset(new DateTime(1999, 3, 2)),
+                    Country = "Ukraine",
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 29)),
+                    Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    Email = "artist3@gmail.com",
+                    Gender = true,
+                    GroupId = null,
+                    IconURL = avatar,
+                    Salt = "2W+y0GwQIbcSl5vUC6DAyo6I+opkO3E9NlSa+hU7huA=",
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("2W+y0GwQIbcSl5vUC6DAyo6I+opkO3E9NlSa+hU7huA=")),
+                    UserName = "Ed Sheeran"
+                },
+                new User
+                {
+                    Id = 6,
+                    Birthday = new DateTimeOffset(new DateTime(1940, 10, 9)),
+                    Country = "Great Britain",
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 28)),
+                    Description = " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                    Email = "artist4@gmail.com",
+                    Gender = true,
+                    GroupId = null,
+                    IconURL = "https://cdn.ananasposter.ru/image/cache/catalog/poster/music/85/8817-1000x830.jpg",
+                    Salt = "K2M0pMRA8JCJmVqY69nhwbEW7cXnFvqhj3K8A9WqpCo=",
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("K2M0pMRA8JCJmVqY69nhwbEW7cXnFvqhj3K8A9WqpCo=")),
+                    UserName = "Paloma Mami"
+                },
+                new User
+                {
+                    Id = 7,
+                    Birthday = new DateTimeOffset(new DateTime(1942, 6, 18)),
+                    Country = "Great Britain",
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 27)),
+                    Description = "It was popularised in the 1960s.",
+                    Email = "artist5@gmail.com",
+                    Gender = true,
+                    GroupId = 1,
+                    IconURL = "https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg",
+                    Salt = "n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=",
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=")),
+                    UserName = "Adam Levine"
+                },
+                new User
+                {
+                    Id = 8,
+                    Birthday = new DateTimeOffset(new DateTime(1996, 2, 2)),
+                    Country = "Poland",
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 26)),
+                    Description = "It has survived not only five centuries, but also the leap into electronic, remaining essentially unchanged.",
+                    Email = "artist6@gmail.com",
+                    Gender = false,
+                    GroupId = 2,
+                    IconURL = avatar,
+                    Salt = "jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=",
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=")),
+                    UserName = "Dan Reynolds"
+                },
+                new User
+                {
+                    Id = 9,
+                    Birthday = new DateTimeOffset(new DateTime(1942, 6, 18)),
+                    Country = "Great Britain",
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 27)),
+                    Description = "It was popularised in the 1960s.",
+                    Email = "artist7@gmail.com",
+                    Gender = true,
+                    GroupId = null,
+                    IconURL = "https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg",
+                    Salt = "n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=",
+                    Password = SecurityHelper.HashPassword(password, Convert.FromBase64String("n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=")),
+                    UserName = "Oxxxymiron"
+                },
             };
         }
 
@@ -204,6 +316,66 @@ namespace Perflow.DataAccess.Context
                     Region = AlbumRegion.UK,
                     ReleaseYear = 1970
                 },
+                new Album
+                {
+                    Id = 4,
+                    AuthorId = users[2].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 29)),
+                    Description = "Lorem text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://s3-alpha-sig.figma.com/img/1fb9/07df/8cb83fc1826b60e1ac4136f907838260?Expires=1628467200&Signature=AYz434YZD2rEyIIGCCPLssB3aItrqVCktB59iue5-RQ68UQyUM~Vc5ek7Lc-yoItOaPgcw7r1J6eLz82wSA5zqTI9Hh7Bp7LzgD5uIM5P90QWdpYmgeCxW5u66n~~VxMy51WfAcGL8VQ2C1PTT9OpChOhrT4r9jpzFwfmJCShPZbqdRQslmU3b8oyInIdnR~XFUdf2Demw5X0NbSF4esMgkkWvT5gDdR19Q5RNyDcdG8nh5rQY~LSXRBVFmEcd5aDr8-bRMjdr36BJ0ntsF2CeUaJ1y3tJB64rgZrCZO11deVRMl6XGAlwT3I~BF~wo4vM~-qyGn4HghkFFHh~sxxw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "Fresh & Chill",
+                    Region = AlbumRegion.UK,
+                    ReleaseYear = 2015
+                },
+                new Album
+                {
+                    Id = 5,
+                    AuthorId = users[2].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 27)),
+                    Description = "Lorem text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://i.ibb.co/4SHq8NX/Ellipse-42-3.png",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "Relax Work",
+                    Region = AlbumRegion.UK,
+                    ReleaseYear = 2015
+                },
+                new Album
+                {
+                    Id = 6,
+                    AuthorId = users[2].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 28)),
+                    Description = "Lorem text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://i.ibb.co/7r5Ft4n/Ellipse-42.png",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "Tropical chaos",
+                    Region = AlbumRegion.UK,
+                    ReleaseYear = 2015
+                },
+                new Album
+                {
+                    Id = 7,
+                    AuthorId = users[2].Id,
+                    AuthorType = AuthorType.Artist,
+                    CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 26)),
+                    Description = "Lorem text of the printing and typesetting industry.",
+                    GroupId = null,
+                    IconURL = "https://i.ibb.co/sK5hcbn/Ellipse-42-4.png",
+                    isPublished = true,
+                    isSingle = true,
+                    Name = "Beautiful People",
+                    Region = AlbumRegion.UK,
+                    ReleaseYear = 2015
+                },
             };
 
         public static IList<Song> GenerateSongs(IList<Album> albums)
@@ -254,6 +426,66 @@ namespace Perflow.DataAccess.Context
                     Name = "Only People",
                     AuthorType = AuthorType.Artist,
                     ArtistId = albums[1].AuthorId,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 3,
+                    GroupId = null,
+                    HasCensorship = false,
+                    IconURL = icon
+                },
+                new Song
+                {
+                    Id = 5,
+                    Name = "Bad Habits",
+                    AuthorType = AuthorType.Artist,
+                    ArtistId = 5,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 2,
+                    GroupId = null,
+                    HasCensorship = false,
+                    IconURL = icon
+                },
+                new Song
+                {
+                    Id = 6,
+                    Name = "Mi Palomita",
+                    AuthorType = AuthorType.Artist,
+                    ArtistId = 6,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 4,
+                    GroupId = null,
+                    HasCensorship = false,
+                    IconURL = icon
+                },
+                new Song
+                {
+                    Id = 7,
+                    Name = "If I Never See Your Face Again",
+                    AuthorType = AuthorType.Group,
+                    ArtistId = null,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 2,
+                    GroupId = 1,
+                    HasCensorship = false,
+                    IconURL = icon
+                },
+                new Song
+                {
+                    Id = 8,
+                    Name = "Follow You",
+                    AuthorType = AuthorType.Artist,
+                    ArtistId = null,
+                    CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
+                    Duration = 3,
+                    GroupId = 2,
+                    HasCensorship = false,
+                    IconURL = icon
+                },
+                new Song
+                {
+                    Id = 9,
+                    Name = "KONSTRUKT",
+                    AuthorType = AuthorType.Artist,
+                    ArtistId = 9,
                     CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9)),
                     Duration = 3,
                     GroupId = null,
