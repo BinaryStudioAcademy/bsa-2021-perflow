@@ -20,6 +20,7 @@ namespace Perflow.Domain
         public ICollection<Role> Roles { get; set; }
         public ICollection<ArtistFollower> Followers { get; set; }
         public ICollection<ArtistFollower> Subscriptions { get; set; }
+        public ICollection<SongReaction> Reactions { get; set; }
 
     }
 }
