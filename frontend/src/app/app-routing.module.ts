@@ -10,6 +10,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./moduls/main/main.module').then((m) => m.MainModule)
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./moduls/register/user-registration.module').then((m) => m.UserRegistrationModule)
+  },
   { path: '**', redirectTo: 'login' }
 ];
 

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SongImageComponent } from './components/shared/upload/song-image/song-image.component';
@@ -15,10 +17,13 @@ import { AuthModule } from './moduls/auth/auth.module';
     DragDropDirective
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthModule
+    AuthModule,
+    HttpClientModule
   ],
   exports: [],
   providers: [],
