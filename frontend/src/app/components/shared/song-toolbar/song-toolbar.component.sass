@@ -1,0 +1,164 @@
+@import ../../../../styles
+
+$secondarybuttonsize: 30px
+
+#audio
+    display: none
+
+.toolbar
+    height: 100px
+    width: 100vw
+    background-color: $drk-rain
+    position: fixed
+    bottom: 0
+    color: $text
+
+.seekrange,
+.volumerange
+    overflow: hidden
+    -webkit-appearance: none
+    left: 0
+    top: 0
+    background-color: rgba($light-orange, 0.5)
+    &::-webkit-slider-runnable-track
+        -webkit-appearance: none
+        height: 5px
+        cursor: pointer
+        color: $medium-orange
+    &::-webkit-slider-thumb
+        -webkit-appearance: none
+        box-shadow: -100vw 0 0 100vw $light-orange
+        width: 0
+        border-radius: 50%
+        cursor: pointer
+        margin-top: -5px
+        
+.seekrange
+    position: absolute
+    height: 5px
+    width: 100vw
+    &:hover
+        height: 8px
+        
+.volumerange
+    height: 4px
+    width: 150px
+    &:hover
+        height: 6px
+
+.infocontrol
+    height: calc(100px - 10px)
+    margin: 8px 25px 0px 
+    display: grid
+    grid-template-columns: 450px 1fr 450px
+    .leftpart,
+    .midpart,
+    .rightpart
+        display: grid
+        align-items: center
+    .leftpart
+        grid-template-columns: 90px 200px 50px
+        grid-template-rows: repeat(2, 50%)
+    .midpart
+        grid-template-columns: repeat(5, 50px)
+        justify-items: center
+        justify-content: center
+    .rightpart
+        grid-template-columns: 1fr 50px 150px
+        justify-items: right
+        justify-content: left
+
+.songicon
+    width: 80px
+    height: 55px
+    position: relative
+    grid-row: 1/-1
+    grid-column: 1
+    img
+        height: 100%
+        width: 100%
+        object-fit: cover
+
+.songname
+    grid-row: 1
+    grid-column: 2
+    margin: 5px 0px
+    align-self: flex-end
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+
+.artistname
+    grid-row: 2
+    grid-column: 2
+    margin: 5px 0px
+    align-self: flex-start
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+
+.likebutton
+    grid-row: 1/-1
+    grid-column: 3
+    height: $secondarybuttonsize
+    width: $secondarybuttonsize
+    border-radius: 50%
+    font-size: 20px
+    margin-left: 10px    
+    padding: 6px 3px
+    color: $gray
+    &:hover
+        cursor: pointer
+        background: lighten($drk-rain, 10%)
+
+.timeinfo
+    position: absolute
+    color: $gray
+    grid-row: 1/-1
+    grid-column: 4
+    right: 21px
+    top: 10px
+    .time
+        display: inline-block
+        width: 32px
+
+.playbutton,
+.backwardbutton,
+.forwardbutton
+    display: inline-block
+    border-radius: 50%
+    height: 44px
+    width: 44px
+    font-size: 22px
+    padding: 12px 9px
+    &:hover
+        background: lighten($drk-rain, 10%)
+        cursor: pointer
+    .icon
+        color: $text
+
+.shufflebutton,
+.repeatbutton
+    height: $secondarybuttonsize
+    width: $secondarybuttonsize
+    padding: 5px 5px
+    font-size: 17px
+    color: $gray
+    border-radius: 50%
+    &:hover
+        background: lighten($drk-rain, 10%)
+        cursor: pointer
+.active
+    color: $light-orange
+
+.queuebutton,
+.mutebutton
+    height: $secondarybuttonsize
+    width: $secondarybuttonsize
+    padding: 5px 5px
+    font-size: 17px
+    color: $gray
+    border-radius: 50%
+    &:hover
+        background: lighten($drk-rain, 10%)
+        cursor: pointer
