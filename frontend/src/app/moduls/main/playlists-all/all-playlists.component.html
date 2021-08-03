@@ -1,24 +1,27 @@
 <div class="ui grid" id="all-playlists">
   <div class="row" id="row-1">
     <div class="ui button" id="liked-songs">
-      <div>Liked songs</div>
-      <div class="text" id="like-songs-count">{{ likedSongs }} songs</div>
+      <h3>Liked songs</h3>
+      <div class="text" id="like-count">{{ likedSongs }} songs</div>
     </div>
+
     <div class="column" id="cards">
       <div *ngFor="let album of albums">
         <div id="card">
           <div id="image-card">
             <img id="title-image" src="{{ album.titleImage }}" />
-            <img
+            <!-- <img
+              class="ui a"
               id="play"
               src="./../../../../assets/button-icon-images/play-13x13.png"
-            />
+            /> -->
           </div>
-          <div>{{ album.nameAlbum }}</div>
-          <span id="songs" *ngFor="let song of album.songs"> {{ song }}, </span>
+          <h6>{{ album.nameAlbum }}</h6>
+          <span id="songs" *ngFor="let song of album.songs"> {{ song }}. </span>
         </div>
       </div>
     </div>
+
   </div>
   <div class="row" id="row-2">
     <div *ngFor="let playlist of playlists">
@@ -26,9 +29,9 @@
         <div id="image-card">
           <img id="title-image" src="{{ playlist.titleImage }}" />
         </div>
-        <div>{{ playlist.nameAlbum }}</div>
+        <h6>{{ playlist.nameAlbum }}</h6>
         <span id="songs-palylist" *ngFor="let song of playlist.songs">
-          {{ song }},
+          {{ song }}
         </span>
       </div>
     </div>

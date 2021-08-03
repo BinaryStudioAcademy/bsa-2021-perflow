@@ -1,82 +1,66 @@
-$color-almost-white: #FAFBFF
-$first-main-background: #21292D
+@import "../../../../styles.sass"
 
 #all-playlists
     padding: 0 0 0 247px
-    background: $first-main-background
+    height: auto
+    min-height: 100vh
+    background: $dark-gray
 
 #row-1
     padding: 0
-    margin: 38px 88px 0 50px
+    margin: 35px 90px 0 50px
     height: 266px
 
 #liked-songs
+    padding: 0 30px
     display: flex
-    padding: 0 0 0 30px
-    width: 31.86%
+    width: 32%
+    min-width: 20%
     border-radius: 5px
-    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-    font-family: Rubik
-    font-style: normal
-    font-weight: bold
-    font-size: 40px
     line-height: 47px
-    color: $color-almost-white
     flex-direction: column
-    align-content: flex-start
     justify-content: center
     align-items: flex-start
+    background: $fire-orange
+    color: $text
 
-#like-songs-count
-    font-family: Rubik
-    font-style: normal
+#like-count
     font-weight: normal
     font-size: 18px
     line-height: 21px
-    color: $color-almost-white
+    color: $text
 
 #cards
-    padding: 0
-    width: 65%
+    width: 15%
     display: flex
 
 #card
-    width: 100%
-    max-width: 214px
-    height: 100%
-    font-family: Rubik
-    font-style: normal
-    font-weight: 500
-    font-size: 16px
-    line-height: 19px
     text-align: center
-    color: #FAFBFF
-    margin-left: 40px
-    margin-right: 21px
+    color: $default-white
+    margin: 0 20px
 
 #songs
-    font-family: Rubik
-    font-style: normal
-    font-weight: 300
-    font-size: 14px
-    line-height: 17px
-    text-align: center
-    color: $color-almost-white
+    font-weight: $light-weight
 
 #title-image
     position: relative
+    width: auto
+    height: 100%
     margin: 0 auto
 
 #image-card
-    display: flex
-    margin-bottom: 15px
-    position: relative
-    z-index: 0
-    align-content: center
-    justify-content: center
-    align-items: center
-    flex-wrap: wrap
-
+    // display: flex
+    // margin-bottom: 15px
+    // position: relative
+    // z-index: 0
+    // align-content: center
+    // justify-content: center
+    // align-items: center
+    // flex-wrap: wrap
+    border-radius: 100%
+    margin: 0 auto
+    width: auto
+    overflow: hidden
 #play
     position: absolute
     z-index: 2
@@ -94,6 +78,7 @@ $first-main-background: #21292D
 #row-2
     height: 100%
     margin: 38px 8px 0 50px
+    overflow: hidden
 
 #card-playlist
     width: 100%
@@ -104,8 +89,8 @@ $first-main-background: #21292D
     font-weight: 500
     font-size: 16px
     line-height: 19px
-    color: #FAFBFF
-    background: #282F37
+    color: $text
+    background: $light-gray
     border-radius: 4px
     margin: 17px 35px 17px 0
     padding: 13px
@@ -121,4 +106,8 @@ $first-main-background: #21292D
     font-size: 14px
     line-height: 17px
     text-align: center
-    color: $color-almost-white
+    color: $text
+
+.ui.animated.fade.button
+    padding: 0
+    background: $dark-gray

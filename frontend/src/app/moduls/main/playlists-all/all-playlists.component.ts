@@ -1,5 +1,5 @@
-import { Album } from './../../../models/album';
 import { Component } from '@angular/core';
+import { Album } from '../../../models/album';
 
 @Component({
   selector: 'app-all-playlists',
@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./all-playlists.component.sass']
 })
 export class AllPlaylistsComponent {
-// TODO: Here insert array count songs
+  // TODO: Here insert array count songs
   likedSongs: number = 256;
-// TODO: tempolary albums
+  // TODO: tempolary albums
   allTemplary: Album[] = [
     {
       id: 1,
@@ -145,6 +145,6 @@ export class AllPlaylistsComponent {
     },     
   ];
 
-  albums = this.allTemplary.slice(0, 4);
+  albums = this.allTemplary.slice(4, 8);
   playlists = this.allTemplary.slice(4, 11);
 }
