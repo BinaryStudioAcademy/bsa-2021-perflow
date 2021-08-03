@@ -44,7 +44,7 @@ export class SongToolbarComponent implements OnInit {
     this.audio = document.querySelector('audio');
   }
 
-  UpdateSong = (songInfo: SongInfo) => {
+  updateSong = (songInfo: SongInfo) => {
     this.songForPlay = songInfo;
     this.resetPlaying();
     this.audio?.load();
@@ -136,12 +136,10 @@ export class SongToolbarComponent implements OnInit {
 
   toggleShuffle = () => {
     this.isShuffling = !this.isShuffling;
-    (<HTMLButtonElement>document.getElementById('shufflebutton')).classList.toggle('active');
   };
 
   toggleRepeat = () => {
     this.isRepeating = !this.isRepeating;
     this.audio!.loop = this.isRepeating;
-    (<HTMLButtonElement>document.getElementById('repeatbutton')).classList.toggle('active');
   };
 }
