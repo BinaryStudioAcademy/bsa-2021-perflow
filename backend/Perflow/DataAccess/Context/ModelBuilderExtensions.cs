@@ -5,6 +5,7 @@ using Perflow.Domain;
 using Perflow.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Perflow.DataAccess.Context
 {
@@ -25,6 +26,7 @@ namespace Perflow.DataAccess.Context
             modelBuilder.ApplyConfiguration(new UserSettingsConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             modelBuilder.ApplyConfiguration(new ArtistFollowerConfiguration());
+            Seed(modelBuilder);
         }
 
         public static void Seed(this ModelBuilder modelBuilder)
@@ -36,6 +38,7 @@ namespace Perflow.DataAccess.Context
             var playlists = GeneratePlaylists(users);
             var playlistSongs = GeneratePlaylistSongs(playlists, songs);
             var songReactions = GenerateSongReactions(users, songs);
+            var artistReactions = GenerateArtistReactions(users);
 
             modelBuilder.Entity<Role>().HasData(roles);
             modelBuilder.Entity<User>().HasData(users);
@@ -44,6 +47,7 @@ namespace Perflow.DataAccess.Context
             modelBuilder.Entity<Playlist>().HasData(playlists);
             modelBuilder.Entity<PlaylistSong>().HasData(playlistSongs);
             modelBuilder.Entity<SongReaction>().HasData(songReactions);
+            modelBuilder.Entity<ArtistReaction>().HasData(artistReactions);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Roles)
@@ -55,6 +59,7 @@ namespace Perflow.DataAccess.Context
                     new { UsersId = users[3].Id, RolesId = roles[0].Id }
                     )
                 );
+
         }
 
         public static IList<Role> GenerateRoles() =>
@@ -387,6 +392,25 @@ namespace Perflow.DataAccess.Context
                     Id = 3,
                     SongId = songs[3].Id,
                     UserId = users[0].Id,
+                }
+            };
+        }
+
+        private static IList<ArtistReaction> GenerateArtistReactions(IList<User> users)
+        {
+            return new List<ArtistReaction>
+            {
+                new ArtistReaction
+                {
+                    Id = 1,
+                    UserId = 1,
+                    ArtistId = 2
+                },
+                new ArtistReaction
+                {
+                    Id = 2,
+                    UserId = 1,
+                    ArtistId = 3
                 }
             };
         }
