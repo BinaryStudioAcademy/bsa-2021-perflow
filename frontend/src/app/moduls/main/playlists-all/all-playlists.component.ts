@@ -13,7 +13,7 @@ export class AllPlaylistsComponent {
   allTemplary: Album[] = [
     {
       id: 1,
-      titleImage: './../../../../assets/tepolary-images/card-title-1.png',
+      titleImage: './../../../../assets/tepolary-images/castle-big-image.jpeg',
       nameAlbum: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -286,6 +286,6 @@ export class AllPlaylistsComponent {
     }
   ];
 
-  albums = this.allTemplary.slice(4, 8);
+  albums = this.allTemplary.slice(0, 4);
   playlists = this.allTemplary.slice(4, 11);
 }
