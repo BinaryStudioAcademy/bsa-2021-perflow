@@ -36,6 +36,7 @@ namespace Perflow.DataAccess.Context
             var songs = GenerateSongs(albums);
             var playlists = GeneratePlaylists(users);
             var playlistSongs = GeneratePlaylistSongs(playlists, songs);
+            var songReactions = GenerateSongReactions(users, songs);
 
             modelBuilder.Entity<Role>().HasData(roles);
             modelBuilder.Entity<User>().HasData(users);
@@ -44,6 +45,7 @@ namespace Perflow.DataAccess.Context
             modelBuilder.Entity<Playlist>().HasData(playlists);
             modelBuilder.Entity<PlaylistSong>().HasData(playlistSongs);
             modelBuilder.Entity<Group>().HasData(groups);
+            modelBuilder.Entity<SongReaction>().HasData(songReactions);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Roles)
@@ -63,42 +65,7 @@ namespace Perflow.DataAccess.Context
                     new { SongsId = songs[0].Id, AlbumsId = albums[2].Id },
                     new { SongsId = songs[1].Id, AlbumsId = albums[1].Id },
                     new { SongsId = songs[2].Id, AlbumsId = albums[0].Id },
-                    new { SongsId = songs[3].Id, AlbumsId = albums[1].Id },
-                    new { SongsId = songs[4].Id, AlbumsId = albums[3].Id },
-                    new { SongsId = songs[5].Id, AlbumsId = albums[3].Id },
-                    new { SongsId = songs[6].Id, AlbumsId = albums[3].Id },
-                    new { SongsId = songs[7].Id, AlbumsId = albums[3].Id },
-                    new { SongsId = songs[8].Id, AlbumsId = albums[3].Id },
-                    new { SongsId = songs[4].Id, AlbumsId = albums[4].Id },
-                    new { SongsId = songs[5].Id, AlbumsId = albums[4].Id },
-                    new { SongsId = songs[6].Id, AlbumsId = albums[4].Id },
-                    new { SongsId = songs[7].Id, AlbumsId = albums[4].Id },
-                    new { SongsId = songs[8].Id, AlbumsId = albums[4].Id },
-                    new { SongsId = songs[4].Id, AlbumsId = albums[5].Id },
-                    new { SongsId = songs[5].Id, AlbumsId = albums[5].Id },
-                    new { SongsId = songs[6].Id, AlbumsId = albums[5].Id },
-                    new { SongsId = songs[7].Id, AlbumsId = albums[5].Id },
-                    new { SongsId = songs[8].Id, AlbumsId = albums[5].Id },
-                    new { SongsId = songs[4].Id, AlbumsId = albums[6].Id },
-                    new { SongsId = songs[5].Id, AlbumsId = albums[6].Id },
-                    new { SongsId = songs[6].Id, AlbumsId = albums[6].Id },
-                    new { SongsId = songs[7].Id, AlbumsId = albums[6].Id },
-                    new { SongsId = songs[8].Id, AlbumsId = albums[6].Id },
-                    new { SongsId = songs[4].Id, AlbumsId = albums[7].Id },
-                    new { SongsId = songs[5].Id, AlbumsId = albums[7].Id },
-                    new { SongsId = songs[6].Id, AlbumsId = albums[7].Id },
-                    new { SongsId = songs[7].Id, AlbumsId = albums[7].Id },
-                    new { SongsId = songs[8].Id, AlbumsId = albums[7].Id },
-                    new { SongsId = songs[4].Id, AlbumsId = albums[8].Id },
-                    new { SongsId = songs[5].Id, AlbumsId = albums[8].Id },
-                    new { SongsId = songs[6].Id, AlbumsId = albums[8].Id },
-                    new { SongsId = songs[7].Id, AlbumsId = albums[8].Id },
-                    new { SongsId = songs[8].Id, AlbumsId = albums[8].Id },
-                    new { SongsId = songs[4].Id, AlbumsId = albums[9].Id },
-                    new { SongsId = songs[5].Id, AlbumsId = albums[9].Id },
-                    new { SongsId = songs[6].Id, AlbumsId = albums[9].Id },
-                    new { SongsId = songs[7].Id, AlbumsId = albums[9].Id },
-                    new { SongsId = songs[8].Id, AlbumsId = albums[9].Id }
+                    new { SongsId = songs[3].Id, AlbumsId = albums[1].Id }
                     )
                 );
         }
@@ -454,7 +421,8 @@ namespace Perflow.DataAccess.Context
                     Duration = 2,
                     GroupId = null,
                     HasCensorship = false,
-                    IconURL = icon
+                    IconURL = icon,
+                    AlbumId = 1,
                 },
                 new Song
                 {
@@ -466,7 +434,8 @@ namespace Perflow.DataAccess.Context
                     Duration = 4,
                     GroupId = null,
                     HasCensorship = false,
-                    IconURL = icon
+                    IconURL = icon,
+                    AlbumId = 2
                 },
                 new Song
                 {
@@ -478,7 +447,8 @@ namespace Perflow.DataAccess.Context
                     Duration = 2,
                     GroupId = null,
                     HasCensorship = false,
-                    IconURL = icon
+                    IconURL = icon,
+                    AlbumId = 2
                 },
                 new Song
                 {
@@ -490,7 +460,8 @@ namespace Perflow.DataAccess.Context
                     Duration = 3,
                     GroupId = null,
                     HasCensorship = false,
-                    IconURL = icon
+                    IconURL = icon,
+                    AlbumId = 3
                 },
                 new Song
                 {
@@ -662,5 +633,30 @@ namespace Perflow.DataAccess.Context
                     CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1))
                 }
             };
+
+        private static IList<SongReaction> GenerateSongReactions(IList<User> users, IList<Song> songs)
+        {
+            return new List<SongReaction>
+            {
+                new SongReaction
+                {
+                    Id = 1,
+                    SongId = songs[0].Id,
+                    UserId = users[0].Id,
+                },
+                new SongReaction
+                {
+                    Id = 2,
+                    SongId = songs[2].Id,
+                    UserId = users[0].Id,
+                },
+                new SongReaction
+                {
+                    Id = 3,
+                    SongId = songs[3].Id,
+                    UserId = users[0].Id,
+                }
+            };
+        }
     }
 }

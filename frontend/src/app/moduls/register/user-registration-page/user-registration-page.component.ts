@@ -11,9 +11,9 @@ export class UserRegistrationPageComponent {
   isSuccess: boolean = false;
   newUser!: UserRegister;
 
-  @Input() 
-    isRequiredError: boolean = false;
-  
+  @Input()
+  isRequiredError: boolean = false;
+
   constructor(private _userService: UserService) { }
 
   onSubmit(newUser: UserRegister) {
