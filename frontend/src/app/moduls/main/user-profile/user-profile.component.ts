@@ -1,19 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.sass']
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.sass']
 })
-export class HomeComponent implements OnInit {
+export class UserProfileComponent implements OnInit {
 
   public isProfileMenuShown: boolean = false;
+
+  private readonly _scrollingSize: number = 270;
+  public topArtists = new Array<object>();
 
   constructor() { }
 
   ngOnInit(): void {
 
   }
+
+  getTopArtists = (): Array<object> => new Array<object>();
 
   onClickOutsideProfileMenu = (event: Event) => {
     this.isProfileMenuShown = false;
@@ -41,5 +46,10 @@ export class HomeComponent implements OnInit {
   previousSlide = () => {
 
   }
+
+  scroll = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
+  };
 
 }

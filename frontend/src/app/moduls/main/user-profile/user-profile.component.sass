@@ -1,4 +1,4 @@
-@import "../../../styles.sass"
+@import "../../../../styles.sass"
 
 *
     padding: 0
@@ -12,6 +12,16 @@ main
     &::-webkit-scrollbar 
         width: 0px
         height: 0px
+
+.profile-menu
+        grid-column: 1
+        grid-row: 1
+        position: absolute
+        right: 42px
+        top: 45px
+
+.show
+    display: block !important         
 
 .accordion
     position: relative
@@ -162,18 +172,15 @@ main
         height: 245px
         border-radius: 50%
         box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
-
-.dropdown-content
+    .dropdown-content
         display: block
         top: -70px
         left: 20px
         position: absolute
-        width: 209px
         background: $light-gray
         border: 0.5px solid #373C43
         border-radius: 2px
         transition: all 1s ease-out
-        padding: 19px 19px
         z-index: 99
         .item
             font-family: Rubik
@@ -189,3 +196,59 @@ main
                 color: $light-orange
                 i
                     color: $light-orange
+// Calm rhythms & Top 100 songs
+.top-artists
+    margin: 53px 38px  
+    width: 100%
+    overflow: hidden
+    @media (max-width: 800px)
+        margin-bottom: 20px !important
+        height: 306px
+    .top-artists-cont
+        position: relative
+        display: flex
+        width: 100%
+        height: fit-content
+        min-height: 228px
+        overflow-y: scroll
+        margin-top: 30px
+        @media (max-width: 800px)
+            justify-content: center
+        &::-webkit-scrollbar 
+            width: 0px
+            height: 0px   
+
+.scroll-box
+    width: 44px
+    height: calc(100% - 53px)
+    position: absolute
+    right: 0px
+    bottom: 0px
+    display: flex
+    align-items: center
+    justify-content: center
+    background: $drk-gray
+    .scroll-button
+        width: 33px
+        height: 33px
+        font-size: 1.2rem
+        color: $text
+        border: none
+        border-radius: 3px
+        background: $light-gray
+        cursor: pointer
+        &:hover
+            background: #373C43
+
+.header
+    width: 100%
+    height: fit-content
+    margin-top: -15px 
+    font-family: Rubik  
+    font-style: normal
+    font-weight: bold
+    font-size: 24px
+    line-height: 28px
+    color: $text
+    @media (max-width: 800px)
+        margin-top: -15px 

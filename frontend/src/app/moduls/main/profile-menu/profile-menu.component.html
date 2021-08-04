@@ -6,7 +6,7 @@
     <div class="ui inline dropdown">
       <i class="dropdown icon"></i>
       <div class="left menu dropdown-content" *ngIf="isProfileMenuShown">
-        <a routerLink="/" class="item"><i class="user icon"></i> My Profile</a>
+        <a routerLink="/profile" class="item"><i class="user icon"></i> My Profile</a>
         <a routerLink="/" class="item"><i class="setting icon"></i> Settings</a>
         <a routerLink="/" class="item" *ngIf="isRightRole()"><i class="external alternate icon"></i> Perflow Studio</a>
         <a (click)="logout()" routerLink="/" class="item"><i class="sign-out icon"></i> Log Out</a>

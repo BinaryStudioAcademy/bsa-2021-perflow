@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthGuard } from 'src/app/guard/auth.guard';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
@@ -19,7 +20,8 @@ const routes: Routes = [{
         { path: 'main', component: MainHomeComponent },
         { path: 'search', component: SearchComponent },
         { path: 'playlists', component: PlaylistComponent },
-        { path: 'songs', component: SongsComponent }
+        { path: 'songs', component: SongsComponent },
+        { path: 'profile', component: UserProfileComponent }
       ]
     }]
 }];
