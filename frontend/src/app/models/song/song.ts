@@ -1,5 +1,5 @@
-import { Album } from './album.model';
-import { Artist } from './artist.model';
+import { Album } from '../album';
+import { User } from '../user';
 
 export interface Song {
   id: number;
@@ -9,7 +9,7 @@ export interface Song {
   duration: number;
   hasCensorship: boolean;
   album: Album;
-  artist: Artist;
+  artist: User;
 
   // TODO: add fields
 }

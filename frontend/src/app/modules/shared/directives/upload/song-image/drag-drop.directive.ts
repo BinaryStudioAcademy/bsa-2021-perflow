@@ -2,7 +2,7 @@ import {
   Directive, EventEmitter, HostBinding, HostListener, Input, Output
 } from '@angular/core';
 import { StringEndChecker } from 'src/app/helpers/StringEndChecker';
-import { FileUploadType } from 'src/app/models/common/FileUploadType';
+import { FileUploadType } from 'src/app/models/common/file-upload-type';
 
 @Directive({
   selector: '[appDragDrop]'

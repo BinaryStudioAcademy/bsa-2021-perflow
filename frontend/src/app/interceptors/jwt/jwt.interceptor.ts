@@ -7,8 +7,8 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuthService } from '../../services/auth/auth.service';
-import { User } from '../../models/common/User';
+import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Injectable()
 

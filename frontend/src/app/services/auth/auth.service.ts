@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import firebase from 'firebase/app';
-import { User } from '../../models/common/User';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
