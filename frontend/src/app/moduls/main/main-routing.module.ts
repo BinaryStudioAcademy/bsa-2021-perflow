@@ -24,7 +24,8 @@ const routes: Routes = [{
       children: [
         { path: 'all', component: AllPlaylistsComponent },
         { path: 'artists', component: ArtistsComponent },
-        { path: 'albums', component: AlbumsComponent }
+        { path: 'albums', component: AlbumsComponent },
+        { path: '**', redirectTo: 'all' }
       ]
     },
     { path: 'songs', component: SongsComponent }
