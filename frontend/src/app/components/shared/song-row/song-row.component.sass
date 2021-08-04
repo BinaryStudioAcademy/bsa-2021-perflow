@@ -40,8 +40,8 @@
 .sm-row
     width: 100%
     display: grid
-    grid-template-areas: "song-number like song-name artist-name album-name added duration settings"
-    grid-template-columns: 4% 5% 22% 25% 25% 12% 5% 2%
+    grid-template-areas: $song-row-areas
+    grid-template-columns: $song-row-columns
     padding-top: 1rem
     padding-bottom: 1rem
 
@@ -110,7 +110,7 @@
     background-color: $text
     border: 0.5px solid black
     border-radius: 2px
-    margin-right: 2px 
+    margin-right: 2px
 
 .ellipsis.vertical
     display: inline
