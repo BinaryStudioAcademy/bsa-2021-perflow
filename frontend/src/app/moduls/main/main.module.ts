@@ -15,6 +15,7 @@ import { MainHomeComponent } from './main-home/main-home.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
+import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SongsComponent } from './songs/songs.component';
     NewReleasesCardComponent,
     RecentlyPlayedCardComponent,
     TopSongsCardComponent,
-    YourMixCardComponent
+    YourMixCardComponent,
+    ArtistListComponent
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/guard/auth.guard';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
+import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
@@ -19,7 +20,8 @@ const routes: Routes = [{
         { path: 'main', component: MainHomeComponent },
         { path: 'search', component: SearchComponent },
         { path: 'playlists', component: PlaylistComponent },
-        { path: 'songs', component: SongsComponent }
+        { path: 'songs', component: SongsComponent },
+        { path: 'playlists/artists', component: ArtistListComponent }
       ]
     }]
 }];
