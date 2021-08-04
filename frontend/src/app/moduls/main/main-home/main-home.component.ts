@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Album } from 'src/app/models/album';
+import { Playlist } from 'src/app/models/playlist';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -201,9 +202,411 @@ export class MainHomeComponent implements OnInit {
       ]
     }
   ];
+  allPlaylist: Playlist[] = [
+    {
+      id: 1,
+      titleImage: './../../../../assets/tepolary-images/castle-big-image.jpeg',
+      namePlaylist: 'Fresh & Chill. When I home or work',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 2,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
+      namePlaylist: 'Tropical chaos',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 3,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-7.png',
+      namePlaylist: 'Hot mood',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 4,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-8.jpeg',
+      namePlaylist: 'Beautiful People',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 5,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-4.png',
+      namePlaylist: 'Beautiful People',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 6,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-5.png',
+      namePlaylist: 'Fresh & Chill',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 7,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-6.png',
+      namePlaylist: 'Beautiful People',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 8,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
+      namePlaylist: 'Fresh & Chill',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 9,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
+      namePlaylist: 'Fresh & Chill',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 10,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-5.png',
+      namePlaylist: 'Tropical chaos',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 11,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-6.png',
+      namePlaylist: 'Fresh & Chill',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 12,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
+      namePlaylist: 'OneRepublic',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 13,
+      titleImage: './../../../../assets/tepolary-images/castle-big-image.jpeg',
+      namePlaylist: 'Tropical chaos',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 14,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-7.png',
+      namePlaylist: 'OneRepublic',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 15,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-8.jpeg',
+      namePlaylist: 'Hot mood',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 16,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
+      namePlaylist: 'Fresh & Chill',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 17,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-4.png',
+      namePlaylist: 'OneRepublic',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 18,
+      titleImage: './../../../../assets/tepolary-images/castle-big-image.jpeg',
+      namePlaylist: 'Hot mood',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 19,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
+      namePlaylist: 'Beautiful People',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 20,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-7.png',
+      namePlaylist: 'OneRepublic',
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    }
+  ];
 
+  playlists = this.allPlaylist;
   albums = this.allTemplary.slice(1, 8);
-  playlists = this.allTemplary.slice(4, 11);
 
   constructor(private _authService: AuthService) {
   }

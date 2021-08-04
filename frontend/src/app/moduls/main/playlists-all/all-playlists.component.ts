@@ -293,7 +293,7 @@ export class AllPlaylistsComponent {
     {
       id: 1,
       titleImage: './../../../../assets/tepolary-images/castle-big-image.jpeg',
-      namePlaylist: 'Fresh & Chill',
+      namePlaylist: 'Fresh & Chill. When I home or work',
       songs: [
         'Ed Sheeran',
         'Bad Liar',

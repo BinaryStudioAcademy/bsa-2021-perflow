@@ -41,19 +41,22 @@
             object-fit: cover
 
     #card-name
-        margin-top: 15px
+        margin-top: 10px
         text-align: center
         color: $text
+        display: -webkit-box
+        -webkit-line-clamp: 01
+        -webkit-box-orient: vertical
+        overflow: hidden
     #card-desc
         margin-top: 5px
-        padding: 5px
-        height: 40px
+        padding: 4px
         font-style: normal
         font-weight: $light-weight
         font-size: 14px
-        overflow: hidden
         text-align: center
         color: $text
         display: -webkit-box
         -webkit-line-clamp: 02
         -webkit-box-orient: vertical
+        overflow: hidden
