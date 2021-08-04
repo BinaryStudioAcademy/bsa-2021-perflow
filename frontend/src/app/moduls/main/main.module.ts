@@ -31,7 +31,7 @@ import { SongsComponent } from './songs/songs.component';
   ],
   imports: [
     CommonModule,
-    MainRoutingModule,
+    MainRoutingModule
   ],
   exports: [ProfileMenuComponent]
 })
