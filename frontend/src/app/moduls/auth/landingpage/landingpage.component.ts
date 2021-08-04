@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-landingpage',
@@ -15,15 +15,14 @@ export class LandingpageComponent {
   }
 
   getMessage() {
-    return `Logged ${this.authService.isLoggedIn ? 'out' : 'in'}`;
+    return `Logged ${this.authService.isLoggedIn() ? 'out' : 'in'}`;
   }
 
   login() {
     this.message = 'Trying to log in ...';
-
-    this.authService.login().subscribe(() => {
+    this.authService.currentUser$.subscribe(() => {
       this.message = this.getMessage();
-      if (this.authService.isLoggedIn) {
+      if (this.authService.isLoggedIn()) {
         const redirectUrl = '/main';
         this.router.navigate([redirectUrl]);
       }
@@ -31,7 +30,7 @@ export class LandingpageComponent {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.signOut();
     this.message = this.getMessage();
   }
 }

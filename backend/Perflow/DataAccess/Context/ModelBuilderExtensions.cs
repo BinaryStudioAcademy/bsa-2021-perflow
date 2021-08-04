@@ -59,15 +59,8 @@ namespace Perflow.DataAccess.Context
                 );
 
             modelBuilder.Entity<Song>()
-                .HasMany(s => s.Albums)
-                .WithMany(a => a.Songs)
-                .UsingEntity(sa => sa.HasData(
-                    new { SongsId = songs[0].Id, AlbumsId = albums[2].Id },
-                    new { SongsId = songs[1].Id, AlbumsId = albums[1].Id },
-                    new { SongsId = songs[2].Id, AlbumsId = albums[0].Id },
-                    new { SongsId = songs[3].Id, AlbumsId = albums[1].Id }
-                    )
-                );
+                .HasOne(s => s.Album)
+                .WithMany(a => a.Songs);
         }
 
         public static IList<Role> GenerateRoles() =>
