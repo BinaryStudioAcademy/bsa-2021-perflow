@@ -13,7 +13,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private _authService: AuthService, private _router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const { url } = state;
@@ -25,17 +25,16 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return this.canActivate(route, state);
   }
 
-
   checkLogin(url: string): boolean {
-    this.authService.currentUser$.pipe(
-      map((user)=>{
-        if(user){
+    this._authService.currentUser$.pipe(
+      map((user) => {
+        if (user) {
           return true;
         }
-        this.router.navigate(['/login']);
+        this._router.navigate(['/login']);
         return false;
       })
-    )
+    );
     return false;
   }
 }

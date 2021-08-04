@@ -22,7 +22,7 @@ export class JwtInterceptor implements HttpInterceptor {
       .subscribe(
         (user) => {
           return currentUser = user;
-        });  
+        });
     if (currentUser!) {
       request = request.clone({
         setHeaders: {

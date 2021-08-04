@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth/auth.service';
 
 @Component({
@@ -9,4 +10,5 @@ import { AuthService } from './services/auth/auth.service';
 export class AppComponent {
   title = 'frontend';
 }
+  
 
