@@ -13,6 +13,6 @@ export class SemanticDropdownDirective implements AfterViewInit {
   constructor(private _dropdown: ElementRef) { }
 
   ngAfterViewInit() {
-    $(this._dropdown.nativeElement).dropdown();
+    (this._dropdown.nativeElement).dropdown();
   }
 }
