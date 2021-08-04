@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ClickOutsideModule } from 'ng-click-outside';
 
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
-import { CalmRhythmsCardComponent } from './cards/calm-rhythms-card/calm-rhythms-card.component';
+import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { TopSongsCardComponent } from './cards/top-songs-card/top-songs-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
@@ -30,7 +30,7 @@ import { AlbumCardComponent } from './cards/album-card/album-card.component';
     SearchComponent,
     SongsComponent,
     ProfileMenuComponent,
-    CalmRhythmsCardComponent,
+    PlaylistCardComponent,
     AlbumCardComponent,
     RecentlyPlayedCardComponent,
     TopSongsCardComponent,
