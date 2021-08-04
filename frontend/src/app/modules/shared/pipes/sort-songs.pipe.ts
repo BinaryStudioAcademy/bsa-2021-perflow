@@ -7,12 +7,12 @@ import { SongSortType } from '../../../models/shared/song-sort-type.model';
   name: 'sortSongs'
 })
 export class SortSongsPipe implements PipeTransform {
-  transform(songs: Song[], sortType: SongSortType | null): Song[] {
+  transform = (songs: Song[], sortType: SongSortType | null): Song[] => {
     if (sortType === null) {
       return songs;
     }
 
     const compareFunction = getCompareFunctionFromSortType(sortType);
     return [...songs].sort(compareFunction);
-  }
+  };
 }

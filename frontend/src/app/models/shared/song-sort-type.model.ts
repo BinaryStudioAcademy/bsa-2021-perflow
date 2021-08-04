@@ -1,14 +1,14 @@
 export enum SongSortProperty {
-  Name,
-  Artist,
-  Album,
-  Added,
-  Time
+  name,
+  artist,
+  album,
+  added,
+  time
 }
 
 export enum SongSortOrder {
-  Ascending,
-  Descending
+  ascending,
+  descending
 }
 
 export interface SongSortType {

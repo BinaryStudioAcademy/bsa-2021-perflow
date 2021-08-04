@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SongSortOrder } from '../../../../models/shared/song-sort-type.model';
 
 @Component({
@@ -9,11 +9,14 @@ import { SongSortOrder } from '../../../../models/shared/song-sort-type.model';
 export class SortOrderIconComponent {
   @Input() set order(value: SongSortOrder) {
     switch (value) {
-      case SongSortOrder.Ascending:
+      case SongSortOrder.ascending:
         this.iconClass = 'icon angle up';
         break;
-      case SongSortOrder.Descending:
+      case SongSortOrder.descending:
         this.iconClass = 'icon angle down';
+        break;
+      default:
+        this.iconClass = 'icon';
         break;
     }
   }

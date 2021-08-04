@@ -15,5 +15,4 @@ export class SongRowComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

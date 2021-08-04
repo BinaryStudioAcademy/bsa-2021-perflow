@@ -1,6 +1,4 @@
-import {
-  Component, EventEmitter, OnInit, Output
-} from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { SongSortOrder, SongSortProperty, SongSortType } from '../../../models/shared/song-sort-type.model';
 
 @Component({
@@ -8,22 +6,17 @@ import { SongSortOrder, SongSortProperty, SongSortType } from '../../../models/s
   templateUrl: './songs-list-header.component.html',
   styleUrls: ['./songs-list-header.component.sass']
 })
-export class SongsListHeaderComponent implements OnInit {
+export class SongsListHeaderComponent {
   @Output() sortTypeChanged = new EventEmitter<SongSortType | null>();
 
   sortProperties = SongSortProperty;
   sortType: SongSortType | null = null;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
   updateSortType(property: SongSortProperty) {
     if (this.sortType === null) {
       this.setSortType({
         property,
-        order: SongSortOrder.Descending
+        order: SongSortOrder.descending
       });
       return;
     }
@@ -31,15 +24,15 @@ export class SongsListHeaderComponent implements OnInit {
     if (this.sortType.property !== property) {
       this.setSortType({
         property,
-        order: SongSortOrder.Descending
+        order: SongSortOrder.descending
       });
       return;
     }
 
-    if (this.sortType.order === SongSortOrder.Descending) {
+    if (this.sortType.order === SongSortOrder.descending) {
       this.setSortType({
         property,
-        order: SongSortOrder.Ascending
+        order: SongSortOrder.ascending
       });
       return;
     }
