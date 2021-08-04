@@ -27,6 +27,19 @@
       "UpstreamPathTemplate": "/api/Playlists/{id}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
+    {
+      "DownstreamPathTemplate": "/api/Albums/new-releases",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Albums/new-releases",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
     //perflow.studio
     {
       "DownstreamPathTemplate": "/api/songs",
