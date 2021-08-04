@@ -4,6 +4,15 @@
 
 export const environment = {
   production: false,
+
+  firebase: {
+    apiKey:process.env.apiKey,
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+  },
   apiUrl: 'https://localhost:44344',
 };
 

@@ -1,0 +1,53 @@
+<div class="ui padded grid song">
+    <div class="sm-row">
+        <div class="column song-number">
+            <span class="number">{{number}}</span>
+            <i class="play icon"></i>
+        </div>
+        <div class="column like">
+            <i class="heart outline icon"></i>
+        </div>
+        <div class="column song-name text">
+            <span class="e" *ngIf="song.hasCensorship">E</span>
+            {{song.name}}
+        </div>
+        <div class="column artist-name text">
+            {{song.artist.name}}
+        </div>
+        <div class="column album-name text">
+            {{song.album.name}}
+        </div>
+        <div class="column added text">
+            {{song.createdAt | date:'yyyy-MM-dd HH:mm'}}
+        </div>
+        <div class="column duration text">
+            <span>{{song.duration * 1000 | date:'mm:ss'}}</span>
+        </div>
+        <div class="column settings">
+            <div class="ui floating dropdown icon" sm-dropdown>
+                <i class="ellipsis vertical icon"></i>
+                <div class="left menu">
+                    <div class="item first">
+                        <div class="img-wrapper">
+                            <img class="streaming icon" src="../../../../assets/images/streaming.svg" />
+                        </div>Start radio
+                    </div>
+                    <div class="item">
+                        <div class="img-wrapper">
+                            <img class="playlist" src="../../../../assets/images/playlist.svg" />
+                        </div>Add to queue
+                    </div>
+                    <div class="item">
+                        <i class="list icon"></i>Add to playlist
+                    </div>
+                    <div class="item">
+                        <i class="trash icon"></i>Remove from queue
+                    </div>
+                    <div class="item last">
+                        <i class="share alternate icon"></i>Share
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
