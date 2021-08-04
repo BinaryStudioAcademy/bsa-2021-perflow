@@ -25,10 +25,10 @@ export class MainHomeComponent implements OnInit {
   public calmRhythms = new Array<object>();
   public yourMix = new Array<object>();
   public top100Songs = new Array<object>();
-  private unsubscribe$ = new Subject<void>();
+  private _unsubscribe$ = new Subject<void>();
 
   constructor(private _authService: AuthService,
-              private _albumService: AlbumService) {
+    private _albumService: AlbumService) {
   }
 
   async ngOnInit() {
@@ -55,14 +55,15 @@ export class MainHomeComponent implements OnInit {
   getRecentlyPlayed = (): Array<object> => new Array<object>();
 
   // User should be able to play New Releases - songs/albums which was added to system during last month
-  public getNewReleases(){
+  public getNewReleases() {
     this._albumService
-          .getNewReleases()
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(
-            (resp: HttpResponse<AlbumView[]>) => {
-                this.newReleases = resp.body!;
-            });
+      .getNewReleases()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp: HttpResponse<AlbumView[]>) => {
+          this.newReleases = resp.body!;
+        }
+      );
   }
 
   // User should be able to play Calm rhythms - the newest playlists which moderator creates

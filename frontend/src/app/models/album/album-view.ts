@@ -1,4 +1,4 @@
-import { SongView } from "../song/song-view";
+import { SongView } from '../song/song-view';
 
 export interface AlbumView {
   name: string,

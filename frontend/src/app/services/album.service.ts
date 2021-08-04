@@ -1,6 +1,4 @@
-import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
 import { AlbumView } from '../models/album/album-view';
 import { HttpInternalService } from './http-internal.service';
 
@@ -13,6 +11,6 @@ export class AlbumService {
   constructor(private _httpService: HttpInternalService) { }
 
   public getNewReleases() {
-    return this._httpService.getFullRequest<AlbumView[]>(this.routePrefix + '/new-releases');
+    return this._httpService.getFullRequest<AlbumView[]>(`${this.routePrefix}/new-releases`);
   }
 }

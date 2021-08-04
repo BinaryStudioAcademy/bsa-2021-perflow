@@ -12,9 +12,9 @@ export class NewReleasesCardComponent implements OnInit {
   public authors: string = '';
 
   ngOnInit() {
-    console.log(this.card);
-    this.card.songs.forEach(song => this.authors += (song.artist != null ? song.artist : song.group) + ', ');
+    this.card.songs.forEach((song) => {
+      this.authors += `${song.artist != null ? song.artist : song.group}, `;
+    });
     this.authors = this.authors.slice(0, -2);
-    console.log(this.card.iconURL);
   }
 }
