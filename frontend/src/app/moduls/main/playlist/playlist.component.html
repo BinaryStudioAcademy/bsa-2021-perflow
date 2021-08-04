@@ -1,23 +1,19 @@
 <main>
   <div>
-    <div id="hat-playlist">
+    <div id="hat-playlists">
       <div id="nav-link">
-        <a routerLink="./../playlists/all" id="link">
+        <a routerLink="./../playlists/all" id="link" routerLinkActive="active-link">
           <h5>All</h5>
         </a>
-        <a routerLink="./../playlists/artists" id="link">
+        <a routerLink="./../playlists/artists" id="link" routerLinkActive="active-link">
           <h5>Artists</h5>
         </a>
-        <a routerLink="./../playlists/albums" id="link">
+        <a routerLink="./../playlists/albums" id="link" routerLinkActive="active-link">
           <h5>Albums</h5>
         </a>
       </div>
-
-      <!-- Profile icon in top right corner -->
-      <app-profile-menu class="profile-menu"></app-profile-menu>
-
     </div>
-    <div class="container">
+    <div class="content">
       <router-outlet></router-outlet>
     </div>
   </div>
