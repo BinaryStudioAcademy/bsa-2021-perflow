@@ -17,9 +17,18 @@ export class AllPlaylistsComponent {
       nameAlbum: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
-        'Paloma Mami Maroon 5',
+        'Bad Liar',
         'SigalaPink',
-        'Oximer'
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -30,7 +39,19 @@ export class AllPlaylistsComponent {
         'Believer',
         'Natural',
         'Thunder',
-        'Bad Liar'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -41,7 +62,19 @@ export class AllPlaylistsComponent {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -52,7 +85,19 @@ export class AllPlaylistsComponent {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -63,7 +108,19 @@ export class AllPlaylistsComponent {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -74,7 +131,19 @@ export class AllPlaylistsComponent {
         'Believer',
         'Natural',
         'Thunder',
-        'Bad Liar'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -85,7 +154,19 @@ export class AllPlaylistsComponent {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -96,7 +177,19 @@ export class AllPlaylistsComponent {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -107,7 +200,19 @@ export class AllPlaylistsComponent {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -118,7 +223,19 @@ export class AllPlaylistsComponent {
         'Believer',
         'Natural',
         'Thunder',
-        'Bad Liar'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -129,7 +246,19 @@ export class AllPlaylistsComponent {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -140,7 +269,19 @@ export class AllPlaylistsComponent {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     }
   ];

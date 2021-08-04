@@ -4,7 +4,7 @@
         <img src="{{album.titleImage}}" alt="Artist Avatar">    
     </div>
     <h6 id="card-name">{{album.nameAlbum}}</h6>
-    <div id="card-desc" > 
-        {{album.songs.slice(1, 5).join(', ')}} 
+    <div class="text" id="card-desc" > 
+        {{album.songs.join(', ').toString()}} 
     </div>
 </div>

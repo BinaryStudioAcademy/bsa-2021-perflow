@@ -42,8 +42,16 @@ export class MainHomeComponent implements OnInit {
       songs: [
         'Believer',
         'Natural',
+        'Believer',
+        'Natural',
         'Thunder',
-        'Bad Liar'
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural'
       ]
     },
     {
@@ -51,10 +59,18 @@ export class MainHomeComponent implements OnInit {
       titleImage: './../../../../assets/tepolary-images/card-title-3.png',
       nameAlbum: 'Tropical chaos',
       songs: [
-        'Ed Sheeran',
-        'Paloma Mami Maroon 5',
-        'SigalaPink',
-        'Oximer'
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural'
       ]
     },
     {
@@ -73,10 +89,18 @@ export class MainHomeComponent implements OnInit {
       titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
       nameAlbum: 'Fresh & Chill',
       songs: [
-        'Ed Sheeran',
-        'Paloma Mami Maroon 5',
-        'SigalaPink',
-        'Oximer'
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural'
       ]
     },
     {
@@ -95,10 +119,18 @@ export class MainHomeComponent implements OnInit {
       titleImage: './../../../../assets/tepolary-images/my-playlists-3.png',
       nameAlbum: 'Tropical chaos',
       songs: [
-        'Ed Sheeran',
-        'Paloma Mami Maroon 5',
-        'SigalaPink',
-        'Oximer'
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural'
       ]
     },
     {
@@ -117,10 +149,18 @@ export class MainHomeComponent implements OnInit {
       titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
       nameAlbum: 'Fresh & Chill',
       songs: [
-        'Ed Sheeran',
-        'Paloma Mami Maroon 5',
-        'SigalaPink',
-        'Oximer'
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural',
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Believer',
+        'Natural'
       ]
     },
     {
@@ -150,6 +190,10 @@ export class MainHomeComponent implements OnInit {
       titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
       nameAlbum: 'Relax work',
       songs: [
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Oximer',
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
