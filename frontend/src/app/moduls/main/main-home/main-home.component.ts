@@ -29,12 +29,7 @@ export class MainHomeComponent implements OnInit {
       id: 1,
       titleImage: './../../../../assets/tepolary-images/card-title-1.png',
       nameAlbum: 'Fresh & Chill',
-      songs: [
-        'Ed Sheeran',
-        'Paloma Mami Maroon 5',
-        'SigalaPink',
-        'Oximer'
-      ]
+      songs: ['Ed Sheeran', 'Paloma Mami Maroon 5', 'SigalaPink', 'Oximer'],
     },
     {
       id: 2,
@@ -52,8 +47,8 @@ export class MainHomeComponent implements OnInit {
         'Natural',
         'Thunder',
         'Believer',
-        'Natural'
-      ]
+        'Natural',
+      ],
     },
     {
       id: 3,
@@ -71,19 +66,14 @@ export class MainHomeComponent implements OnInit {
         'Natural',
         'Thunder',
         'Believer',
-        'Natural'
-      ]
+        'Natural',
+      ],
     },
     {
       id: 4,
       titleImage: './../../../../assets/tepolary-images/card-title-4.png',
       nameAlbum: 'Relax work',
-      songs: [
-        'Ed Sheeran',
-        'Paloma Mami Maroon 5',
-        'SigalaPink',
-        'Oximer'
-      ]
+      songs: ['Ed Sheeran', 'Paloma Mami Maroon 5', 'SigalaPink', 'Oximer'],
     },
     {
       id: 5,
@@ -101,19 +91,14 @@ export class MainHomeComponent implements OnInit {
         'Natural',
         'Thunder',
         'Believer',
-        'Natural'
-      ]
+        'Natural',
+      ],
     },
     {
       id: 6,
       titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
       nameAlbum: 'Imagine Dragons',
-      songs: [
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Bad Liar'
-      ]
+      songs: ['Believer', 'Natural', 'Thunder', 'Bad Liar'],
     },
     {
       id: 7,
@@ -131,19 +116,14 @@ export class MainHomeComponent implements OnInit {
         'Natural',
         'Thunder',
         'Believer',
-        'Natural'
-      ]
+        'Natural',
+      ],
     },
     {
       id: 8,
       titleImage: './../../../../assets/tepolary-images/my-playlists-4.png',
       nameAlbum: 'Relax work',
-      songs: [
-        'Ed Sheeran',
-        'Paloma Mami Maroon 5',
-        'SigalaPink',
-        'Oximer'
-      ]
+      songs: ['Ed Sheeran', 'Paloma Mami Maroon 5', 'SigalaPink', 'Oximer'],
     },
     {
       id: 9,
@@ -161,30 +141,20 @@ export class MainHomeComponent implements OnInit {
         'Natural',
         'Thunder',
         'Believer',
-        'Natural'
-      ]
+        'Natural',
+      ],
     },
     {
       id: 10,
       titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
       nameAlbum: 'Imagine Dragons',
-      songs: [
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Bad Liar'
-      ]
+      songs: ['Believer', 'Natural', 'Thunder', 'Bad Liar'],
     },
     {
       id: 11,
       titleImage: './../../../../assets/tepolary-images/my-playlists-3.png',
       nameAlbum: 'Tropical chaos',
-      songs: [
-        'Ed Sheeran',
-        'Paloma Mami Maroon 5',
-        'SigalaPink',
-        'Oximer'
-      ]
+      songs: ['Ed Sheeran', 'Paloma Mami Maroon 5', 'SigalaPink', 'Oximer'],
     },
     {
       id: 12,
@@ -198,9 +168,9 @@ export class MainHomeComponent implements OnInit {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
-      ]
-    }
+        'Oximer',
+      ],
+    },
   ];
   allPlaylist: Playlist[] = [
     {
@@ -220,8 +190,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 2,
@@ -240,8 +210,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 3,
@@ -260,8 +230,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 4,
@@ -280,8 +250,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 5,
@@ -300,8 +270,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 6,
@@ -320,8 +290,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 7,
@@ -340,8 +310,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 8,
@@ -360,8 +330,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 9,
@@ -380,8 +350,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 10,
@@ -400,8 +370,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 11,
@@ -420,8 +390,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 12,
@@ -440,8 +410,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 13,
@@ -460,8 +430,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 14,
@@ -480,8 +450,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 15,
@@ -500,8 +470,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 16,
@@ -520,8 +490,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 17,
@@ -540,8 +510,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 18,
@@ -560,8 +530,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 19,
@@ -580,8 +550,8 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
+        'SigalaPink',
+      ],
     },
     {
       id: 20,
@@ -600,16 +570,15 @@ export class MainHomeComponent implements OnInit {
         'SigalaPink',
         'Ed Sheeran',
         'Bad Liar',
-        'SigalaPink'
-      ]
-    }
+        'SigalaPink',
+      ],
+    },
   ];
 
   playlists = this.allPlaylist;
   albums = this.allTemplary.slice(1, 8);
 
-  constructor(private _authService: AuthService) {
-  }
+  constructor(private _authService: AuthService) {}
 
   ngOnInit() {
     this._newestAlbums = this.getNewestFiveAlbums();
@@ -666,12 +635,11 @@ export class MainHomeComponent implements OnInit {
   };
 
   accordionAnimation = () => {
-    document.getElementsByClassName('accordion-information')[0]?.animate([
-      { opacity: '0' },
-      { opacity: '1' }
-    ], {
-      duration: this._animationDuration
-    });
+    document
+      .getElementsByClassName('accordion-information')[0]
+      ?.animate([{ opacity: '0' }, { opacity: '1' }], {
+        duration: this._animationDuration
+      });
   };
 
   scroll = (id: string) => {
