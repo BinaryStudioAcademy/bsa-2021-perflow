@@ -45,9 +45,7 @@ export class AuthService {
     return this.authLogin(new firebase.auth.FacebookAuthProvider());
   }
 
-  refreshToken = () => {
-    return firebase.auth().currentUser?.getIdToken(true);
-  }
+  refreshToken = () => firebase.auth().currentUser?.getIdToken(true);
 
   authLogin(provider: any) {
     return this._afAuth.signInWithPopup(provider)
@@ -75,10 +73,8 @@ export class AuthService {
     });
   }
 
-  getCurrentToken = () => {
-    return firebase.auth().currentUser?.getIdToken(false)
-      .then((result) => result);
-  }
+  getCurrentToken = () => firebase.auth().currentUser?.getIdToken(false)
+    .then((result) => result);
 
   signOut() {
     return this._afAuth.signOut().then(() => {
@@ -90,5 +86,5 @@ export class AuthService {
   isLoggedIn = (): boolean => {
     const user = JSON.parse(localStorage.getItem('user')!);
     return (user !== null);
-  }
+  };
 }
