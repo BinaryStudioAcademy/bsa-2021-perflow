@@ -1,4 +1,6 @@
 <p>artist-list works!</p>
 <div *ngFor="let artist of artists">
-    {{artist.userName}}
+    <app-artist-card [imageUrl]="artist.iconURL" [artistName]="artist.userName"></app-artist-card>
+    <!-- <img [attr.src]="artist.iconURL" alt=""> -->
 </div>
+

@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 declare var process:Process;
 
 interface Process{

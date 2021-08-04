@@ -1,0 +1,54 @@
+@import ../../../../../styles
+    
+.artist-card
+    position: relative
+    width: 200px
+    height: 260px
+    background-color: $drk-rain
+    border-radius: 5px
+    margin: 5px
+    box-shadow: 0 0 10px black
+    transition: background-color .2s ease-in-out
+    .image-block
+        width: 200px
+        height: 200px
+        padding: 20px
+        position: relative
+    .image
+        width: 160px
+        height: 160px
+        border-radius: 50%
+        box-shadow: 0 0 20px black
+        margin: auto
+        img
+            border-radius: 50%
+            width: 100%
+            height: 100%
+            object-fit: cover
+    .remove-artist
+        opacity: 0
+        position: absolute
+        width: 45px
+        height: 45px
+        font-size: 30px
+        background-color: rgba(0, 0, 0, 0.7)
+        border-radius: 50%
+        color: $medium-orange
+        padding: 15px 4.5px
+        bottom: 15px
+        right: 20px
+        transition: opacity .2s ease-in-out
+    .info-block
+        color: $text
+        margin: 0 20px
+        >span
+            color: $gray
+        .artist-name h5
+            overflow: hidden
+            white-space: nowrap
+            text-overflow: ellipsis
+    &:hover
+        background-color: lighten($drk-rain, 5%)
+        cursor: pointer
+        .remove-artist
+            opacity: 1

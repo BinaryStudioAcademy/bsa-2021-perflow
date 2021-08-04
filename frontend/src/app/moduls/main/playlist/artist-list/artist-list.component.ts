@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user/User';
+import { UserDTO } from 'src/app/models/user/UserDTO';
 import { ArtistService } from 'src/app/services/artist.service';
+import { ArtistCardComponent } from '../../cards/artist-card/artist-card.component';
 
 @Component({
   selector: 'app-artist-list',
@@ -8,7 +9,7 @@ import { ArtistService } from 'src/app/services/artist.service';
   styleUrls: ['./artist-list.component.sass']
 })
 export class ArtistListComponent implements OnInit {
-  artists!: User[];
+  artists!: UserDTO[];
 
   constructor(private _artistService: ArtistService) { }
 

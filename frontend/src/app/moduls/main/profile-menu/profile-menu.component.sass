@@ -1,48 +1,51 @@
 @import "../../../../styles.sass"
-    
+
 // Profile icon in top right corner
-.profile
-    width: fit-content
-    height: 35px
-    max-height: 35px
-    padding: 0px 7px 
-    background: none
-    font-family: Rubik
-    font-style: normal
-    font-weight: 500
-    font-size: 18px
-    line-height: 21px
+#profile
+    position: fixed
+    top: 20px
+    right: 20px
+    border-radius: 25px
+    display: grid
+    grid-template-columns: 40px 1fr
+    align-items: center
     color: $text
-    border: none
-    cursor: pointer
+    width: fit-content
+    min-width: 140px
+    height: 50px
+    padding: 0 5px
+    font-weight: $normal-weight
+    font-size: 18px
+    .text
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        margin: 0 5px
+        span
+            margin: 0 10px
     img
-        width: 35px
-        height: 35px
-        max-height: 35px
-        max-width: 35px
-        border-radius: 50% 
-        object-fit: cover  
-    .dropdown-content
-        display: block
-        width: 100%
-        top: 35px
-        width: 209px
-        background: $light-gray
-        border: 0.5px solid #373C43
-        border-radius: 2px
-        transition: all 1s ease-out
-        z-index: 99
-        .item
-            font-family: Rubik
-            font-style: normal
-            font-weight: 300
-            font-size: 14px !important
-            line-height: 135%
-            color: $text
-            padding: 9px 19px
+        object-fit: cover
+        width: 40px
+        height: 40px
+        border-radius: 50%
+    #profile-menu
+        &.active
+            visibility: visible
+        visibility: hidden
+        position: absolute
+        right: 0
+        top: 60px
+        width: 200px
+        background: $drk-gray
+        border: 1px solid #373C43
+        border-radius: 4px
+        >.item
+            padding: 12px
+            > span
+                font-weight: $thin-weight
+                font-size: 15px
             &:hover
-                background: #373C43
-            &:last-child
-                color: $light-orange
-                i
+                background-color: $light-gray
+                cursor: pointer
+                > span
                     color: $light-orange

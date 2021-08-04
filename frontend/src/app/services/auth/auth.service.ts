@@ -77,9 +77,7 @@ export class AuthService {
 
   getCurrentToken() {
     return firebase.auth().currentUser?.getIdToken(false)
-      .then(result => {
-        return result;
-      });
+      .then((result) => result);
   }
 
   signOut() {

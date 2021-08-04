@@ -20,13 +20,12 @@ export class JwtInterceptor implements HttpInterceptor {
 
     this._auth.currentUser$.pipe(take(1))
       .subscribe(
-        (user) => {
-          return currentUser = user;
-        });
+        (user) => currentUser = user
+      );
     if (currentUser!) {
       request = request.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + currentUser.token
+          Authorization: `Bearer ${currentUser.token}`
         }
       });
     }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ClickOutsideModule } from 'ng-click-outside';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { CalmRhythmsCardComponent } from './cards/calm-rhythms-card/calm-rhythms-card.component';
 import { NewReleasesCardComponent } from './cards/new-releases-card/new-releases-card.component';
@@ -15,6 +16,7 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
+import { ArtistCardComponent } from './cards/artist-card/artist-card.component';
 
 @NgModule({
   declarations: [
@@ -29,11 +31,13 @@ import { ArtistListComponent } from './playlist/artist-list/artist-list.componen
     RecentlyPlayedCardComponent,
     TopSongsCardComponent,
     YourMixCardComponent,
-    ArtistListComponent
+    ArtistListComponent,
+    ArtistCardComponent
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
+    ClickOutsideModule
   ],
   exports: [ProfileMenuComponent]
 })

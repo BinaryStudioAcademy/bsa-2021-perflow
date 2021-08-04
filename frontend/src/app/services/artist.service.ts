@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user/User';
+import { UserDTO } from '../models/user/UserDTO';
 import { HttpInternalService } from './http-internal.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class ArtistService {
   }
 
   getArtistsByUserId(userId: number) {
-    const response = this.httpService.getRequest<User[]>(`/api/ArtistReaction/${userId}`);
+    const response = this.httpService.getRequest<UserDTO[]>(`/api/ArtistReaction/${userId}`);
     return response;
   }
 }
