@@ -2,7 +2,7 @@ import {
   Component, ElementRef, Input, OnInit, ViewChild
 } from '@angular/core';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
-import { SongInfo } from 'src/app/models/shared/SongInfo';
+import { SongInfo } from 'src/app/models/common/SongInfo';
 
 @Component({
   selector: 'app-song-toolbar',

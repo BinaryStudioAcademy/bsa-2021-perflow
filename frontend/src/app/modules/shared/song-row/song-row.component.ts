@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Song } from 'src/app/models/shared/song.model';
+import { Song } from 'src/app/models/common/song.model';
 
 @Component({
   selector: 'app-song-row',
