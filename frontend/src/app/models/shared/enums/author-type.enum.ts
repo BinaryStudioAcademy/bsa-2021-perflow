@@ -1,4 +1,4 @@
 export enum AuthorType {
-  Artist,
-  Group
+  artist,
+  group
 }

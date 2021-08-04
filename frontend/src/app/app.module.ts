@@ -9,14 +9,9 @@ import { SongToolbarComponent } from './components/shared/song-toolbar/song-tool
 import { SongImageComponent } from './components/shared/upload/song-image/song-image.component';
 import { ShowHideDirective } from './directives/shared/show/show-hide.directive';
 import { DragDropDirective } from './directives/shared/upload/song-image/drag-drop.directive';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './modules/auth/auth.module';
-import { SongRowComponent } from './components/shared/song-row/song-row.component';
-import { SemanticDropdownDirective } from './directives/shared/dropdown/semantic-dropdown.directive';
-
 import { AppRoutingModule } from './app-routing.module';
 import { FireBaseModule } from './shared/firebase-auth/firebase-auth.module';
-
 import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
 
 @NgModule({
@@ -26,9 +21,7 @@ import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
     SongImageComponent,
     DragDropDirective,
     SongToolbarComponent,
-    ShowHideDirective,
-    SongRowComponent,
-    SemanticDropdownDirective
+    ShowHideDirective
   ],
   imports: [
     FormsModule,

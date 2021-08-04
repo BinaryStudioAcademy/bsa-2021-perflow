@@ -5,9 +5,11 @@ import { SortSongsPipe } from './pipes/sort-songs.pipe';
 import { SortOrderIconComponent } from './songs-list-header/sort-order-icon/sort-order-icon.component';
 import { SongsListComponent } from './songs-list/songs-list.component';
 import { SongsListHeaderComponent } from './songs-list-header/songs-list-header.component';
+import { SemanticDropdownDirective } from '../../directives/shared/dropdown/semantic-dropdown.directive';
 
 @NgModule({
   declarations: [
+    SemanticDropdownDirective,
     SortSongsPipe,
     SongRowComponent,
     SortOrderIconComponent,
@@ -18,6 +20,7 @@ import { SongsListHeaderComponent } from './songs-list-header/songs-list-header.
     CommonModule
   ],
   exports: [
+    SemanticDropdownDirective,
     SortSongsPipe,
     SongRowComponent,
     SortOrderIconComponent,
