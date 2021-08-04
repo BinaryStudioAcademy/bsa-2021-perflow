@@ -1,3 +1,64 @@
-p
-    margin: 40px
-    font-size: 40px
+@import "../../../../styles.sass"
+
+$image-size: 200px
+
+main
+  background: $drk-gray
+  width: 100%
+  height: 100vh
+  overflow-y: scroll
+
+.header
+  width: 100%
+  height: 260px
+  font-size: 24px
+  line-height: 28px
+  color: $text
+  background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+  border-radius: 5px
+  display: flex
+  align-items: center
+
+  .row
+    height: $image-size
+    display: flex
+    align-items: center
+    margin-left: 36px
+
+    .liked-background
+      border-radius: 5px
+      height: $image-size
+      width: $image-size
+      background: linear-gradient(90deg, #FD9122 0%, #FD5D34 100%)
+      box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
+      display: flex
+      align-items: center
+      justify-content: center
+
+      i
+        font-size: 64px
+        margin-top: 3rem
+        margin-right: 0 !important
+
+  .column
+    height: 100%
+    margin-left: 2rem
+    display: flex
+    flex-direction: column
+    justify-content: flex-end
+
+    .title
+      font-size: 52px
+      font-weight: $bold-weight
+
+    .subtitle
+      font-size: 18px
+      font-weight: $light-weight
+
+      .username:hover
+        text-decoration: underline
+        cursor: pointer
+
+      .count
+        font-size: 16px
+        opacity: 0.8

@@ -1,1 +1,18 @@
-<p>songs works!</p>
+<main>
+  <div class="ui header">
+    <div class="row">
+      <div class="liked-background">
+        <i class="heart icon"></i>
+      </div>
+      <div class="column">
+        <p class="title">Liked Songs</p>
+        <p class="subtitle">
+          <span class="username">UserName</span>
+          <span class="count"> · {{songs.length}} songs</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <app-songs-list [songs]="songs"></app-songs-list>
+</main>
+

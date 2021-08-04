@@ -1,10 +1,7 @@
-﻿using Perflow.Common.DTO.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using Perflow.Common.DTO.Users;
 
-namespace Perflow.Common.DTO.Playlist
+namespace Perflow.Common.DTO.Playlists
 {
     public class PlaylistDTO
     {
@@ -16,7 +13,7 @@ namespace Perflow.Common.DTO.Playlist
 
         public string IconURL { get; set; }
 
-        public UserDTO Author { get; set; }
+        public UserReadDTO Author { get; set; }
 
         public AccessTypeDTO AccessType { get; set; }
     }
