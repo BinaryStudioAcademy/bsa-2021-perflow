@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Song } from 'src/app/models/shared/song.model';
 
 @Component({
@@ -7,13 +7,7 @@ import { Song } from 'src/app/models/shared/song.model';
   styleUrls: ['./song-row.component.sass']
 })
 
-export class SongRowComponent implements OnInit {
+export class SongRowComponent {
   @Input() song: Song;
   @Input() number: number;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

@@ -1,5 +1,5 @@
 export interface Album {
-    name: string;
+  name: string;
 
-    //TODO: add fields
+  // TODO: add fields
 }
