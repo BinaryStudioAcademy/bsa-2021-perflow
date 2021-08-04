@@ -4,7 +4,6 @@ import { ClickOutsideModule } from 'ng-click-outside';
 
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { CalmRhythmsCardComponent } from './cards/calm-rhythms-card/calm-rhythms-card.component';
-import { NewReleasesCardComponent } from './cards/new-releases-card/new-releases-card.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { TopSongsCardComponent } from './cards/top-songs-card/top-songs-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
@@ -18,6 +17,7 @@ import { SongsComponent } from './songs/songs.component';
 import { AllPlaylistsComponent } from './playlists-all/all-playlists.component';
 import { ArtistsComponent } from './artists/artists.component';
 import { AlbumsComponent } from './albums/albums.component';
+import { AlbumCardComponent } from './cards/album-card/album-card.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { AlbumsComponent } from './albums/albums.component';
     SongsComponent,
     ProfileMenuComponent,
     CalmRhythmsCardComponent,
-    NewReleasesCardComponent,
+    AlbumCardComponent,
     RecentlyPlayedCardComponent,
     TopSongsCardComponent,
     YourMixCardComponent

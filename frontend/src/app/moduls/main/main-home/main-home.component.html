@@ -14,7 +14,7 @@
       <!-- Profile icon in top right corner -->
       <app-profile-menu class="profile-menu"></app-profile-menu>
     </div>
-    
+
     <!-- Accordion Information -->
     <div class="accordion-information">
       <img class="album-icon" alt="Album"
@@ -58,29 +58,15 @@
     <div class="ui sixteen column row new-releases">
       <div class="header">New Releases</div>
       <div id="newReleases" class="new-releases-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
         <!-- Work component -->
-        <app-new-releases-card *ngFor="let card of newReleases"></app-new-releases-card>
-      </div>
-      <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('newReleases')">
-          <i class="chevron right icon"></i>
-        </button>
+        <div *ngFor="let album of albums; let i index">
+          <app-album-card [album]="i"></app-album-card>
+        </div>
+        <div class="scroll-box">
+          <button class="scroll-button" (click)="scroll('newReleases')">
+            <i class="chevron right icon"></i>
+          </button>
+        </div>
       </div>
     </div>
 

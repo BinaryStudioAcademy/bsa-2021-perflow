@@ -1,0 +1,72 @@
+@import "../../../../../styles.sass"
+
+#album-card
+    margin: 0 10px
+    width: 220px
+    display: flex
+    flex-direction: column
+    align-items: center
+    #fader
+        width: 190px
+        height: 190px
+        border-radius: 100%
+        position: relative
+        transition: .3s
+        overflow: hidden
+        display: flex
+        justify-content: center
+        @media (max-width: 1300px)
+            width: 130px
+            height: 130px
+        @media (max-width: 1200px)
+            width: 120px
+            height: 120px
+        @media (max-width: 1100px)
+            width: 100px
+            height: 100px
+        @media (max-width: 1000px)
+            width: 90px
+            height: 90px
+        @media (max-width: 900px)
+            width: 80px
+            height: 80px
+        @media (max-width: 800px)
+            width: 70px
+            height: 70px
+        img
+            width: auto
+            height: 100%
+            margin: 0 auto
+
+        &:hover
+            #play-icon
+                opacity: 0.7
+        #play-icon
+            position: absolute
+            left: 50%
+            top: 50%
+            transform: translate(-50%, -50%)
+            font-size: 16px
+            transition: .3s
+            border: none
+            border-radius: 2px
+            background: $fire-orange
+            opacity: 0
+            cursor: pointer
+            transition: opacity 0.4s ease
+            i
+                font-size: 24px
+                margin: 5px 5px 5px 5px
+    #card-name
+        margin-top: 15px
+        text-align: center
+        color: $text
+    #card-desc
+        margin-top: 5px
+        font-style: normal
+        font-weight: $light-weight
+        font-size: 14px
+        line-height: 17px
+        text-overflow: ellipsis
+        text-align: center
+        color: $text

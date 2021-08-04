@@ -7,15 +7,17 @@
     background: $dark-gray
 
 #row-1
-    padding: 0
-    margin: 35px 90px 0 50px
-    height: 266px
+    margin-top: 50px
+    margin-left: 50px
+    display: flex
+    flex-wrap: nowrap
 
 #liked-songs
     padding: 0 30px
     display: flex
     width: 32%
     min-width: 20%
+    max-height: 265px
     border-radius: 5px
     line-height: 47px
     flex-direction: column
@@ -31,83 +33,10 @@
     color: $text
 
 #cards
-    width: 15%
-    display: flex
-
-#card
-    text-align: center
-    color: $default-white
-    margin: 0 20px
-
-#songs
-    font-weight: $light-weight
-
-#title-image
-    position: relative
     width: auto
-    height: 100%
-    margin: 0 auto
-
-#image-card
-    // display: flex
-    // margin-bottom: 15px
-    // position: relative
-    // z-index: 0
-    // align-content: center
-    // justify-content: center
-    // align-items: center
-    // flex-wrap: wrap
-    border-radius: 100%
-    margin: 0 auto
-    width: auto
-    overflow: hidden
-#play
-    position: absolute
-    z-index: 2
-    display: none
-    width: 28px
-    height: 28px
-
-#image-card:hover #play
     display: flex
-
-#image-card:hover > #title-image
-    opacity: 0.5
-    transition: 0.3s
 
 #row-2
     height: 100%
     margin: 38px 8px 0 50px
     overflow: hidden
-
-#card-playlist
-    width: 100%
-    max-width: 228px
-    height: 234px
-    font-family: Rubik
-    font-style: normal
-    font-weight: 500
-    font-size: 16px
-    line-height: 19px
-    color: $text
-    background: $light-gray
-    border-radius: 4px
-    margin: 17px 35px 17px 0
-    padding: 13px
-    display: flex
-    flex-direction: column
-    align-items: flex-start
-    justify-content: center
-
-#songs-palylist
-    font-family: Rubik
-    font-style: normal
-    font-weight: 300
-    font-size: 14px
-    line-height: 17px
-    text-align: center
-    color: $text
-
-.ui.animated.fade.button
-    padding: 0
-    background: $dark-gray
