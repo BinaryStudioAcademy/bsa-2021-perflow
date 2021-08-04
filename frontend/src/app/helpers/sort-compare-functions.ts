@@ -10,9 +10,13 @@ function getOrderNum(order: SongSortOrder) {
 function compare<T>(a: T, b: T, order: SongSortOrder) {
   const orderNum = getOrderNum(order);
 
-  if (a < b) return -orderNum;
+  if (a < b) {
+    return -orderNum;
+  }
 
-  if (a > b) return orderNum;
+  if (a > b) {
+    return orderNum;
+  }
 
   return 0;
 }
