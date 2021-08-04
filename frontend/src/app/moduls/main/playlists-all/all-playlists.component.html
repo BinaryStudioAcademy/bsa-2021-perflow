@@ -13,15 +13,9 @@
   </div>
 
   <div class="row" id="row-2">
-    <div *ngFor="let playlist of playlists">
-      <div id="card-playlist">
-        <div id="image-card">
-          <img id="title-image" src="{{ playlist.titleImage }}" />
-        </div>
-        <h6>{{ playlist.nameAlbum }}</h6>
-        <span id="songs-palylist" *ngFor="let song of playlist.songs">
-          {{ song }}
-        </span>
+    <div id="cards">
+      <div *ngFor="let playlist of playlists; let i index">
+        <app-playlist-card [playlist]="i"></app-playlist-card>
       </div>
     </div>
   </div>
