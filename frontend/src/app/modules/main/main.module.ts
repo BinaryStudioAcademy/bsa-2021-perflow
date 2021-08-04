@@ -14,6 +14,7 @@ import { MainHomeComponent } from './main-home/main-home.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SongsComponent } from './songs/songs.component';
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
+    SharedModule
   ],
   exports: [ProfileMenuComponent]
 })
