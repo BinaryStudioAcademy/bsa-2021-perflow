@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { AuthModule } from './modules/auth/auth.module';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,8 +12,7 @@ import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LandingPageComponent
+    AppComponent
   ],
   imports: [
     FormsModule,
