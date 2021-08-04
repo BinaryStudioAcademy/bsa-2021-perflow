@@ -6,13 +6,14 @@ import { Song } from 'src/app/models/shared/song.model';
   templateUrl: './song-row.component.html',
   styleUrls: ['./song-row.component.sass']
 })
+
 export class SongRowComponent implements OnInit {
-  @Input() song:Song;
-  @Input() number:number;
+  @Input() song: Song;
+  @Input() number: number;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

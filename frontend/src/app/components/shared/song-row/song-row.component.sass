@@ -42,7 +42,6 @@
     display: grid
     grid-template-areas: $song-row-areas
     grid-template-columns: $song-row-columns
-    padding-top: 1rem
     padding-bottom: 1rem
 
 .column
@@ -79,6 +78,14 @@
 .menu
     border: 0.5px solid #373C43 !important
     border-radius: 2px
+
+.ui.floating.dropdown
+    >.menu
+        box-shadow: none !important
+        >.item.first
+            padding-top: 18px !important
+        >.item.last
+            padding-bottom: 18px !important
 
 .item
     background-color: $light-gray
