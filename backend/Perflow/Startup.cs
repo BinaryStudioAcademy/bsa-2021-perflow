@@ -54,7 +54,7 @@ namespace Perflow
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
-                .WithOrigins("http://localhost:4200"));
+                .WithOrigins(Configuration["AngularAppURL"]));
 
             app.UseHttpsRedirection();
 

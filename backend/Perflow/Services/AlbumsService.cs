@@ -60,28 +60,17 @@ namespace Perflow.Services
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
-            try
-            {
-                albumDTO.Id = 0;
+            albumDTO.Id = 0;
 
-                var album = _mapper.Map<Album>(albumDTO);
+            var album = _mapper.Map<Album>(albumDTO);
 
-                await _context.Albums.AddAsync(album);
+            await _context.Albums.AddAsync(album);
 
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-                var createdAlbum = await GetEntityAsync(album.Id);
+            var createdAlbum = await GetEntityAsync(album.Id);
 
-                return _mapper.Map<Album>(createdAlbum);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return _mapper.Map<Album>(createdAlbum);
         }
 
         public async Task<Album> UpdateEntityAsync(Album albumDTO)
@@ -89,48 +78,26 @@ namespace Perflow.Services
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
-            try
-            {
-                var album = _mapper.Map<Album>(albumDTO);
+             var album = _mapper.Map<Album>(albumDTO);
 
-                _context.Entry(album).State = EntityState.Modified;
+            _context.Entry(album).State = EntityState.Modified;
 
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-                var updatedAlbum = await GetEntityAsync(album.Id);
+            var updatedAlbum = await GetEntityAsync(album.Id);
 
-                return _mapper.Map<Album>(updatedAlbum);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return _mapper.Map<Album>(updatedAlbum);
         }
 
         public async Task<int> DeleteEntityAsync(int entityId)
         {
-            try
-            {
-                var deletedAlbum = await _context.Albums.FirstOrDefaultAsync(p => p.Id == entityId);
+            var deletedAlbum = await _context.Albums.FirstOrDefaultAsync(p => p.Id == entityId);
 
-                _context.Albums.Remove(deletedAlbum);
+            _context.Albums.Remove(deletedAlbum);
 
-                await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
 
-                return entityId;
-            }
-            catch (ArgumentNullException ex)
-            {
-                throw new ArgumentNullException(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return entityId;
         }
     }
 }
