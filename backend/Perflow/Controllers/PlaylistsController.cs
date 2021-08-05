@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using Perflow.Common.DTO;
 using Perflow.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
