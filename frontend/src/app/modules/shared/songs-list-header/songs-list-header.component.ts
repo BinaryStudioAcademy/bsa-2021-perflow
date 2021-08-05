@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SongSortOrder, SongSortProperty, SongSortType } from '../../../models/shared/song-sort-type.model';
+import { SongSortOrder, SongSortProperty, SongSortType } from '../../../models/song/song-sort-type';
 
 @Component({
   selector: 'app-songs-list-header',

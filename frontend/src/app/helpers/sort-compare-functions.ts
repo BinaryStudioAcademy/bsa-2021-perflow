@@ -1,5 +1,5 @@
-import { Song } from '../models/shared/song.model';
-import { SongSortOrder, SongSortProperty, SongSortType } from '../models/shared/song-sort-type.model';
+import { Song } from '../models/song/song';
+import { SongSortOrder, SongSortProperty, SongSortType } from '../models/song/song-sort-type';
 
 type SongsCompareFunction = (a: Song, b: Song) => number;
 
