@@ -1,6 +1,5 @@
 ﻿using Perflow.Domain.Abstract;
 using Perflow.Domain.Enums;
-using System;
 using System.Collections.Generic;
 
 namespace Perflow.Domain

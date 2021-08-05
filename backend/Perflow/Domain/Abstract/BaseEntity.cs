@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Perflow.Domain.Abstract
+﻿namespace Perflow.Domain.Abstract
 {
     public abstract class BaseEntity
     {

@@ -5,13 +5,13 @@ namespace Perflow.Services.Abstract
 {
     public abstract class BaseService
     {
-        private protected readonly PerflowContext _context;
-        private protected readonly IMapper _mapper;
+        private protected readonly PerflowContext context;
+        private protected readonly IMapper mapper;
 
         protected BaseService(PerflowContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            this.context = context;
+            this.mapper = mapper;
         }
     }
 }

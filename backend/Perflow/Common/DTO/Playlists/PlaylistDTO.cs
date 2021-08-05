@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Perflow.Common.DTO.Users;
 
 namespace Perflow.Common.DTO.Playlists

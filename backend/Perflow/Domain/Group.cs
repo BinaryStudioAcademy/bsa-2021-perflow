@@ -1,5 +1,4 @@
 ﻿using Perflow.Domain.Abstract;
-using System;
 using System.Collections.Generic;
 
 namespace Perflow.Domain

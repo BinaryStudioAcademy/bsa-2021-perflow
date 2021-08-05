@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Perflow.Common.DTO.Reactions
+﻿namespace Perflow.Common.DTO.Reactions
 {
     public class NewSongReactionDTO
     {

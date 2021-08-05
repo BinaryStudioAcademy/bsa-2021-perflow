@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Users;
-using Perflow.Domain;
 using Perflow.Domain.Enums;
 
 namespace Perflow.Common.DTO.Songs
