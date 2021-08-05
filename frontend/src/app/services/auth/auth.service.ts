@@ -4,14 +4,14 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import firebase from 'firebase/app';
-import { User } from '../../models/shared/User';
+import { UserRecord } from 'src/app/models/user/user-record';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  private _currentUserSource = new ReplaySubject<User>();
+  private _currentUserSource = new ReplaySubject<UserRecord>();
   currentUser$ = this._currentUserSource.asObservable();
 
   constructor(private _afs: AngularFirestore, private _afAuth: AngularFireAuth, private _router: Router) {
@@ -45,9 +45,7 @@ export class AuthService {
     return this.authLogin(new firebase.auth.FacebookAuthProvider());
   }
 
-  refreshToken() {
-    return firebase.auth().currentUser?.getIdToken(true);
-  }
+  refreshToken = () => firebase.auth().currentUser?.getIdToken(true);
 
   authLogin(provider: any) {
     return this._afAuth.signInWithPopup(provider)
@@ -57,9 +55,9 @@ export class AuthService {
   }
 
   async setUserData(user: any) {
-    const userRef: AngularFirestoreDocument<User> = this._afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<UserRecord> = this._afs.doc(`users/${user.uid}`);
     const curentToken: string = await this.getCurrentToken()!;
-    const userData: User = {
+    const userData: UserRecord = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
@@ -75,10 +73,8 @@ export class AuthService {
     });
   }
 
-  getCurrentToken() {
-    return firebase.auth().currentUser?.getIdToken(false)
-      .then((result) => result);
-  }
+  getCurrentToken = () => firebase.auth().currentUser?.getIdToken(false)
+    .then((result) => result);
 
   signOut() {
     return this._afAuth.signOut().then(() => {
@@ -87,8 +83,8 @@ export class AuthService {
     });
   }
 
-  isLoggedIn(): boolean {
+  isLoggedIn = (): boolean => {
     const user = JSON.parse(localStorage.getItem('user')!);
     return (user !== null);
-  }
+  };
 }

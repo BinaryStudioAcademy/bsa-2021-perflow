@@ -19,72 +19,46 @@ namespace Perflow.Services
         public async Task LikeSong(NewSongReactionDTO songReactionDto)
         {
             if (songReactionDto == null)
-                throw new ArgumentNullException("Argument cannot be null");
+                throw new ArgumentNullException(nameof(songReactionDto), "Argument cannot be null");
 
-            try
+            var likes = context.SongReactions.Where(x =>
+                x.UserId == songReactionDto.UserId && x.SongId == songReactionDto.SongId);
+
+            if (!likes.Any())
             {
-                var likes = _context.SongReactions.Where(x =>
-                    x.UserId == songReactionDto.UserId && x.SongId == songReactionDto.SongId);
-
-                if (!likes.Any())
+                var songReaction = new SongReaction()
                 {
-                    var songReaction = new SongReaction()
-                    {
-                        SongId = songReactionDto.SongId,
-                        UserId = songReactionDto.UserId
-                    };
+                    SongId = songReactionDto.SongId,
+                    UserId = songReactionDto.UserId
+                };
 
-                    await _context.SongReactions.AddAsync(songReaction);
+                await context.SongReactions.AddAsync(songReaction);
 
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    throw new ArgumentException("Reaction already exists");
-                }
-
-
+                await context.SaveChangesAsync();
             }
-            catch (ArgumentException ex)
+            else
             {
-                throw new ArgumentException(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
+                throw new ArgumentException("Reaction already exists");
             }
         }
 
         public async Task RemoveLikeSong(NewSongReactionDTO songReactionDto)
         {
             if (songReactionDto == null)
-                throw new ArgumentNullException("Argument cannot be null");
+                throw new ArgumentNullException(nameof(songReactionDto), "Argument cannot be null");
 
-            try
-            {
-                var likes = _context.SongReactions.Where(x =>
-                    x.UserId == songReactionDto.UserId && x.SongId == songReactionDto.SongId);
+            var likes = context.SongReactions.Where(x =>
+                x.UserId == songReactionDto.UserId && x.SongId == songReactionDto.SongId);
 
-                if (likes.Any())
-                {
-                    _context.SongReactions.RemoveRange(likes);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    throw new ArgumentException("Reaction does not exist");
-                }
-            }
-            catch (ArgumentException ex)
+            if (likes.Any())
             {
-                throw new ArgumentException(ex.Message);
+                context.SongReactions.RemoveRange(likes);
+                await context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception(ex.Message);
+                throw new ArgumentException("Reaction does not exist");
             }
-
         }
-
     }
 }

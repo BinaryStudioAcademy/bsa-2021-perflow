@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Perflow.Domain;
 
 namespace Perflow.Common.MappingProfiles
 {
