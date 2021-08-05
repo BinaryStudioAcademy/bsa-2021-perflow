@@ -15,7 +15,7 @@ export class MainHomeComponent implements OnInit {
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
   private readonly _scrollingSizeAlbums: number = 255;
-  private readonly _scrollingSizePlaylists: number = 235;
+  private readonly _scrollingSizePlaylists: number = 258;
   private readonly _scrollingSize: number = 270;
 
   public currentNewestAlbum = this._newestAlbums[0];
@@ -870,7 +870,8 @@ export class MainHomeComponent implements OnInit {
 
   // TODO: seetings without registration
   start: number = 0;
-  end: number = 7;
+  endAlbums: number = 7;
+  endPlaylists: number = 7;
   adjusterAlbums: number = 6;
   adjusterPlaylists: number = 6;
 
@@ -883,16 +884,16 @@ export class MainHomeComponent implements OnInit {
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
-    this.cashedAlbums = this.allAlbums.slice(this.start, this.end);
-    this.cashedPlaylists = this.allPlaylists.slice(this.start, this.end);
+    this.cashedAlbums = this.allAlbums.slice(this.start, this.endAlbums);
+    this.cashedPlaylists = this.allPlaylists.slice(this.start, this.endPlaylists);
   }
 
   nextAlbums(pressingButton: HTMLElement) {
     this.adjusterAlbums += 1;
     pressingButton.scrollBy({ left: this._scrollingSizeAlbums, behavior: 'smooth' });
-    if (this.end !== this.allAlbums.length) {
-      const index: number = this.end;
-      this.end += 1;
+    if (this.endAlbums !== this.allAlbums.length) {
+      const index: number = this.endAlbums;
+      this.endAlbums += 1;
       this.cashedAlbums.push(this.allAlbums[index]);
     }
   }
@@ -905,9 +906,9 @@ export class MainHomeComponent implements OnInit {
   nextPlaylists(pressingButton: HTMLElement) {
     this.adjusterPlaylists += 1;
     pressingButton.scrollBy({ left: this._scrollingSizePlaylists, behavior: 'smooth' });
-    if (this.end !== this.allPlaylists.length) {
-      const index: number = this.end;
-      this.end += 1;
+    if (this.endPlaylists !== this.allPlaylists.length) {
+      const index: number = this.endPlaylists;
+      this.endPlaylists += 1;
       this.cashedPlaylists.push(this.allPlaylists[index]);
     }
   }
