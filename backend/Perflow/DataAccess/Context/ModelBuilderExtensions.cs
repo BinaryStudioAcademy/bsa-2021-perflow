@@ -255,8 +255,8 @@ namespace Perflow.DataAccess.Context
                     Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                     GroupId = null,
                     IconURL = "https://upload.wikimedia.org/wikipedia/ru/6/69/ImagineCover.jpg",
-                    isPublished = true,
-                    isSingle = true,
+                    IsPublished = true,
+                    IsSingle = true,
                     Name = "Imagine",
                     Region = AlbumRegion.UK,
                     ReleaseYear = 1971
@@ -270,8 +270,8 @@ namespace Perflow.DataAccess.Context
                     Description = "Lorem printing and typesetting industry.",
                     GroupId = null,
                     IconURL = "https://upload.wikimedia.org/wikipedia/ru/2/2a/MindGames.jpg",
-                    isPublished = true,
-                    isSingle = false,
+                    IsPublished = true,
+                    IsSingle = false,
                     Name = "Mind Games",
                     Region = AlbumRegion.UK,
                     ReleaseYear = 1973
@@ -285,8 +285,8 @@ namespace Perflow.DataAccess.Context
                     Description = "Lorem text of the printing and typesetting industry.",
                     GroupId = null,
                     IconURL = "https://upload.wikimedia.org/wikipedia/ru/thumb/e/eb/Mccartney_album.jpg/274px-Mccartney_album.jpg",
-                    isPublished = true,
-                    isSingle = true,
+                    IsPublished = true,
+                    IsSingle = true,
                     Name = "McCartney",
                     Region = AlbumRegion.UK,
                     ReleaseYear = 1970
