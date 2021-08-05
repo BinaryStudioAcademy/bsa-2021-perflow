@@ -1,8 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
-import { UserRecord } from 'src/app/models/user/user-record';
 import { ArtistService } from 'src/app/services/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactionService } from 'src/app/services/reaction.service';
@@ -17,7 +14,11 @@ export class ArtistListComponent implements OnInit {
   userId: number = 1; // Temporary value
   artists!: ArtistReadDTO[];
 
-  constructor(private _artistService: ArtistService, private _reactionService: ReactionService, private _authService: AuthService) { }
+  constructor(
+    private _artistService: ArtistService,
+    private _reactionService: ReactionService,
+    private _authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this._artistService.getArtistsByUserId(this.userId).subscribe(

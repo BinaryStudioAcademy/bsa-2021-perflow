@@ -12,9 +12,9 @@ export class ArtistCardComponent {
   @Input()
   artist: ArtistReadDTO;
   @Output()
-  onDelete = new EventEmitter<ArtistReadDTO>();
+  delete = new EventEmitter<ArtistReadDTO>();
 
   onDeleteClick(artist: ArtistReadDTO) {
-    this.onDelete.emit(artist);
+    this.delete.emit(artist);
   }
 }

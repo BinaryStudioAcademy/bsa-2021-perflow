@@ -21,7 +21,9 @@ export class JwtInterceptor implements HttpInterceptor {
 
     this._auth.currentUser$.pipe(take(1))
       .subscribe(
-        (user) => currentUser = user
+        (user) => {
+          currentUser = user;
+        }
       );
     if (currentUser!) {
       result = request.clone({
