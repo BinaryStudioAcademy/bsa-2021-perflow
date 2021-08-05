@@ -16,7 +16,7 @@ namespace Perflow.Services.Implementations
 
         public async Task<IEnumerable<SongReadDTO>> GetLikedSongsAsync(int userId)
         {
-            var songs = await _context.SongReactions
+            var songs = await context.SongReactions
                 .Where(songReaction => songReaction.UserId == userId)
                 .Include(songReaction => songReaction.Song)
                     .ThenInclude(song => song.Artist)
@@ -27,7 +27,7 @@ namespace Perflow.Services.Implementations
                 .Select(songReaction => songReaction.Song)
                 .ToListAsync();
 
-            return _mapper.Map<IEnumerable<SongReadDTO>>(songs);
+            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
         }
     }
 }
