@@ -14,7 +14,7 @@ export class MainHomeComponent implements OnInit {
 
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
-  private readonly _scrollingSize: number = 270;
+  private readonly _scrollingSize: number = 255;
 
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
