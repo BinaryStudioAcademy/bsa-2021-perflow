@@ -1,5 +1,5 @@
 export interface Artist {
-  name: string;
+  userName: string;
 
   // TODO: add fields
 }
