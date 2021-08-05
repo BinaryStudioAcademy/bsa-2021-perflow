@@ -864,9 +864,9 @@ export class MainHomeComponent implements OnInit {
   ];
 
   playlists = this.allPlaylist;
-  albums: Album[] = [];
+  cashedAlbums: Album[] = [];
   start: number = 0;
-  end: number = 6;
+  end: number = 7;
   constructor(private _authService: AuthService) {}
 
   ngOnInit() {
@@ -876,23 +876,16 @@ export class MainHomeComponent implements OnInit {
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
-    this.albums = this.allAlbums.slice(this.start, this.end);
+    this.cashedAlbums = this.allAlbums.slice(this.start, this.end);
   }
 
-  nextData() {
-    this.start += 1;
-    this.end += 1;
-    this.albums = this.allAlbums.slice(this.start, this.end);// Get the next 100 records
-    console.log(this.start, this.end);
-    console.log(this.albums);
+  nextData(pressingButton: HTMLElement) {
+    this.cashedAlbums.push(this.allAlbums[this.end += 1]);
+    pressingButton.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   }
 
-  prevData() {
-    this.start -= 1;
-    this.end -= 1;
-    this.albums = this.allAlbums.slice(this.start, this.end);// Get the previous 100 records
-    console.log(this.start, this.end);
-    console.log(this.albums);
+  prevData(pressingButton: HTMLElement) {
+    pressingButton.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
   }
 
   playAlbum = () => {

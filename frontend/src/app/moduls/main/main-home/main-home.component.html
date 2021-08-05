@@ -60,23 +60,33 @@
       </div>
     </div>
 
-    <!-- New Releases -->
-    <div class="ui sixteen column row new-releases">
-      <div class="header">New Releases</div>
-      <button *ngIf="start > 0" (click)="prevData()">Previous</button>
-      <button *ngIf="end < allAlbums.length" (click)="nextData()">Next</button>
-      <div id="newReleases" class="new-releases-cont">
-        <!-- Work component -->
-        <div *ngFor="let album of albums; let i; index">
+  <!-- New Releases -->
+  <div  class="ui sixteen column row new-releases">
+    <div class="header">New Releases</div>
+    <div id="newReleases">
+      <div class="ui icon button" id="btn-scroll-data" (click)="prevData(nextalbum)" >
+        <i class="chevron inverted left icon"></i>
+      </div>
+
+      <div #nextalbum class="new-releases-cont">
+      <!-- Work component -->
+        <div *ngFor="let album of cashedAlbums; let i; index">
           <app-album-card [album]="i"></app-album-card>
         </div>
-        <!-- <div class="scroll-box">
-          <button class="scroll-button" (click)="scroll('newReleases')">
-            <i class="chevron right icon"></i>
-          </button>
-        </div> -->
+      <!-- *ngIf="start > 0" -->
+      <!-- *ngIf="end < allAlbums.length" -->
+      <!-- <div class="scroll-box">
+        <button class="scroll-button" (click)="scroll('newReleases')">
+          <i class="chevron right icon"></i>
+        </button>
+      </div> -->
+      </div>
+
+      <div class="ui icon button" id="btn-scroll-data" (click)="nextData(nextalbum)">
+        <i class="chevron inverted right icon"></i>
       </div>
     </div>
+  </div>
 
     <!-- Calm rhythms -->
     <div class="sixteen column row calm-rhythms">
