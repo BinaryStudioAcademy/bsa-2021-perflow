@@ -119,7 +119,7 @@ jobs:
           host: ${{ secrets.PERFLOW_VM_HOST }}
           username: ${{ secrets.PERFLOW_VM_USERNAME }}
           password: ${{ secrets.PERFLOW_VM_PASSWORD }}
-          source: ".docker/env/frontend.env"
+          source: "env/frontend.txt"
           # source: "env/*.env,docker-compose.prod.yml"
           target: "perflow/"
 
