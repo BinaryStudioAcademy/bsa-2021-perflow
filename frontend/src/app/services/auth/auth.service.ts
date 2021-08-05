@@ -58,10 +58,12 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<User> = this._afs.doc(`users/${user.uid}`);
     const curentToken: string = await this.getCurrentToken()!;
     const userData: User = {
-      uid: user.uid,
+      id: user.id,
+      name: user.name,
+      iconURL: user.iconURL,
       email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
+      birthday: user.birthday,
+      gender: user.gender,
       emailVerified: user.emailVerified,
       token: curentToken
     };

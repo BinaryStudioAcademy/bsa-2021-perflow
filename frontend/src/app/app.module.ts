@@ -4,11 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { AuthModule } from './modules/auth/auth.module';
-
 import { AppRoutingModule } from './app-routing.module';
-
 import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
+import { FireBaseModule } from './modules/fire-base/fire-base.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +18,7 @@ import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthModule,
+    FireBaseModule,
     HttpClientModule
   ],
   providers: [
