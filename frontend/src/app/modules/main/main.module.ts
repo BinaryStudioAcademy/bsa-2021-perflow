@@ -7,7 +7,6 @@ import { NewReleasesCardComponent } from './cards/new-releases-card/new-releases
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { TopSongsCardComponent } from './cards/top-songs-card/top-songs-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
-
 import { MainRoutingModule } from './main-routing.module';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { MainHomeComponent } from './main-home/main-home.component';

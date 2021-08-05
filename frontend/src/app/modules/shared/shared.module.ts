@@ -5,6 +5,10 @@ import { SongToolbarComponent } from './song-toolbar/song-toolbar.component';
 import { SongRowComponent } from './song-row/song-row.component';
 import { DragDropDirective } from './directives/upload/song-image/drag-drop.directive';
 import { ShowHideDirective } from './directives/show/show-hide.directive';
+import { SortSongsPipe } from './pipes/sort-songs.pipe';
+import { SortOrderIconComponent } from './songs-list-header/sort-order-icon/sort-order-icon.component';
+import { SongsListHeaderComponent } from './songs-list-header/songs-list-header.component';
+import { SongsListComponent } from './songs-list/songs-list.component';
 import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdown.directive';
 
 @NgModule({
@@ -14,7 +18,12 @@ import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdo
     SongImageComponent,
     DragDropDirective,
     ShowHideDirective,
-    SemanticDropdownDirective
+    SemanticDropdownDirective,
+    SortSongsPipe,
+    SongRowComponent,
+    SortOrderIconComponent,
+    SongsListHeaderComponent,
+    SongsListComponent
   ],
   imports: [
     CommonModule
@@ -22,7 +31,15 @@ import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdo
   exports: [
     SongRowComponent,
     SongToolbarComponent,
-    SongImageComponent
+    SongImageComponent,
+    DragDropDirective,
+    ShowHideDirective,
+    SemanticDropdownDirective,
+    SortSongsPipe,
+    SongRowComponent,
+    SortOrderIconComponent,
+    SongsListHeaderComponent,
+    SongsListComponent
   ]
 })
 export class SharedModule { }

@@ -12,9 +12,9 @@ export class DragDropDirective {
   @Output()
   files: EventEmitter<File[]> = new EventEmitter();
   @Input()
-  type : FileUploadType = FileUploadType.audio;
+  type: FileUploadType = FileUploadType.audio;
   @Input()
-  addedFiles : File[] = [];
+  addedFiles: File[] = [];
 
   @HostBinding('style.background')
   @HostListener('dragover', ['$event'])
@@ -22,13 +22,11 @@ export class DragDropDirective {
     evt.preventDefault();
     evt.stopPropagation();
   };
-
   @HostListener('dragleave', ['$event'])
   public onDragLeave = (evt: DragEvent) => {
     evt.preventDefault();
     evt.stopPropagation();
   };
-
   @HostListener('drop', ['$event'])
   public onDrop = (evt: DragEvent) => {
     evt.preventDefault();

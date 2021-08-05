@@ -12,13 +12,13 @@
             {{song.name}}
         </div>
         <div class="column artist-name text">
-            {{song.artist.name}}
+            {{song.artist.userName}}
         </div>
         <div class="column album-name text">
             {{song.album.name}}
         </div>
         <div class="column added text">
-            {{song.createdAt | date:'yyyy-MM-dd HH:mm'}}
+            {{song.createdAt | date:'yyyy-MM-dd'}}
         </div>
         <div class="column duration text">
             <span>{{song.duration * 1000 | date:'mm:ss'}}</span>

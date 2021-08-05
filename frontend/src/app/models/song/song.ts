@@ -1,5 +1,6 @@
 import { Album } from '../album';
 import { User } from '../user/user';
+import { AuthorType } from './enums/author-type.enum';
 
 export interface Song {
   id: number;
@@ -10,6 +11,7 @@ export interface Song {
   hasCensorship: boolean;
   album: Album;
   artist: User;
+  authorType: AuthorType;
 
   // TODO: add fields
 }
