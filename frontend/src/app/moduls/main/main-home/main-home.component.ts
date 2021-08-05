@@ -867,6 +867,7 @@ export class MainHomeComponent implements OnInit {
   cashedAlbums: Album[] = [];
   start: number = 0;
   end: number = 7;
+  adjuster: number = 6;
   constructor(private _authService: AuthService) {}
 
   ngOnInit() {
@@ -877,44 +878,20 @@ export class MainHomeComponent implements OnInit {
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
     this.cashedAlbums = this.allAlbums.slice(this.start, this.end);
-    console.log(this.cashedAlbums);
-    console.log(this.allAlbums);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   nextData(pressingButton: HTMLElement) {
+    this.adjuster += 1;
     pressingButton.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
-    console.log(this.end);
     if (this.end !== this.allAlbums.length) {
       const index: number = this.end;
       this.end += 1;
       this.cashedAlbums.push(this.allAlbums[index]);
-      console.log(this.end);
-      console.log(this.cashedAlbums);
-      console.log(this.allAlbums);
     }
-    // const limit: number = this.allAlbums.length;
-    // console.log(limit);
-    // console.log(this.end);
-    // if (limit !== this.cashedAlbums.length) {
-    //   const index: number = this.end - 1;
-    //   this.end += 1;
-    //   this.cashedAlbums.push(this.allAlbums[index]);
-    // }
-    // console.log(pressingButton.scrollWidth);
-    // pressingButton.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
-    // if (limit === this.cashedAlbums.length) {
-    //   this.adjuster = !this.adjuster;
-    //   console.log('this.adjuster');
-    //   console.log(this.adjuster);
-    // }
-    // console.log(this.cashedAlbums.length);
-    // console.log(this.allAlbums.length);
-    // console.log(this.cashedAlbums);
-    // console.log(this.allAlbums);
   }
 
   prevData(pressingButton: HTMLElement) {
+    this.adjuster -= 1;
     pressingButton.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
   }
 

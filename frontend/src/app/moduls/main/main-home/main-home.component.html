@@ -64,7 +64,7 @@
   <div  class="ui sixteen column row new-releases">
     <div class="header">New Releases</div>
     <div id="newReleases">
-      <div class="ui icon button" id="btn-scroll-data" (click)="prevData(nextalbum)" >
+      <div class="ui icon button" [style.visibility]="adjuster > 6 ? 'visible': 'hidden'" id="btn-scroll-data" (click)="prevData(nextalbum)" >
         <i class="chevron inverted left icon"></i>
       </div>
 
@@ -82,7 +82,7 @@
       </div> -->
       </div>
 
-      <div class="ui icon button" id="btn-scroll-data" (click)="nextData(nextalbum)">
+      <div class="ui icon button" [style.visibility]="adjuster !== allAlbums.length ? 'visible': 'hidden'" id="btn-scroll-data" (click)="nextData(nextalbum)">
         <i class="chevron inverted right icon"></i>
       </div>
     </div>
