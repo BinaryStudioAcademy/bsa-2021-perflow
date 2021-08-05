@@ -1,2 +1,26 @@
-<p>user-profile-edit works!</p>
-<app-profile-edit-form></app-profile-edit-form>
+<main>
+    <div>
+        <div>
+            <app-profile-edit-form (updatedUser)="onSubmit($event)"></app-profile-edit-form>
+        </div>
+        <div class="container">
+            <div class="form">
+                <app-update-password-form></app-update-password-form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="ui success message" *ngIf="isSuccess">
+    <i class="close icon" sm-message></i>
+    <div class="header">
+        Changed successfully!
+    </div>
+</div>
+
+<div class="ui warning message" *ngIf="isError">
+    <i class="close icon" sm-message></i>
+    <div class="header">
+        Error occured!
+    </div>
+</div>

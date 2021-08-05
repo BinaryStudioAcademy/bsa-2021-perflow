@@ -32,11 +32,14 @@
             ],
             "styles": [             
               "src/styles.sass",
-              "node_modules/semantic-ui-css/semantic.min.css"
+              "node_modules/semantic-ui-css/semantic.min.css",
+              "node_modules/semantic-ui-css/components/dropdown.css",
+              "node_modules/fomantic-ui-css/components/calendar.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/semantic-ui-css/semantic.min.js"
+              "node_modules/semantic-ui-css/semantic.min.js",
+              "node_modules/fomantic-ui-css/semantic.min.js"
             ]
           },
           "configurations": {

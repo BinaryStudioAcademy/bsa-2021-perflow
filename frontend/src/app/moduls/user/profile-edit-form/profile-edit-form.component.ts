@@ -1,6 +1,15 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from '../../../models/shared/user.model';
+import { countries } from '../data/countries';
+import { Country } from '../models/country';
+
+declare global {
+  interface JQuery {
+    modal(action: string): void;
+  }
+}
 
 @Component({
   selector: 'app-profile-edit-form',
@@ -9,10 +18,15 @@ import { User } from '../../../models/shared/user.model';
 })
 export class ProfileEditFormComponent implements OnInit {
   public form!: FormGroup;
-  @Input() user: User = { id: 1, userName: "as", email: "q@gmail.com", description: "qqqqqq", gender: true, country: "UK", birthday: new Date(), password: "" };
+  public genders: { key: boolean; text: string; }[] = [{ key: false, text: "Male" }, { key: true, text: "Female" }];
+  public countries: Country[] = countries;
+  public standartIcon: string = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiWMxxTKJB-4WptJQP94DgYzLQJMZ4U69ASOnDvNMmvEZJwwvHx7LVXg7iwQvpK6eAeHQ&usqp=CAU";
 
+  user: User = { id: 1, userName: "someName", email: "some@gmail.com", description: "some", gender: true, country: "Albania", birthday: new Date(), password: "", iconURL: undefined };
+  @Output()
+  updatedUser = new EventEmitter<User>();
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -30,9 +44,10 @@ export class ProfileEditFormComponent implements OnInit {
         Validators.required,
         Validators.maxLength(150)
       ]),
-      gender: new FormControl(this.user.gender, Validators.required),
-      birthday: new FormControl(this.user.birthday, Validators.required),
-      country: new FormControl(this.user.country, Validators.required)
+      birthday: new FormControl(this.user.birthday),
+      iconURL: new FormControl(this.user?.iconURL),
+      gender: new FormControl(this.user.gender),
+      country: new FormControl(this.user.country)
     });
   }
 
@@ -46,5 +61,29 @@ export class ProfileEditFormComponent implements OnInit {
 
   get description() {
     return this.form.get('description')!;
+  }
+
+  onSelect(event: Event) {
+    const file = (<HTMLInputElement>event.target).files![0];
+
+    if (['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)) {
+      this.form.patchValue({ iconURL: file });
+      this.form.get('iconURL')!.updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.user.iconURL = reader.result!.toString();
+      };
+      reader.readAsDataURL(file);
+    } else {
+      $('.ui.modal').modal("show");
+    }
+  }
+
+  redirect(route: string) {
+    this.router.navigate([route]);
+  }
+
+  public onSubmit(updatedUser: User) {
+    this.updatedUser.emit(updatedUser);
   }
 }

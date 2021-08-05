@@ -1,1 +1,98 @@
-<p>It works!</p>
+<form [formGroup]="form" #formDir="ngForm" class="ui form error">
+  <div class="avatar">
+    <div class="user-icon">
+      <input hidden #file type="file" id="iconURL" accept=".png, .jpg, .jpeg" (change)="onSelect($event)">
+      <img class="image" alt="avatar" [src]="user?.iconURL ?? standartIcon">
+      <button class="btn-full btn-edit bottom-right-corner" (click)="file.click()">
+        <i class="fitted pencil alternate icon"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="info">
+    <div class="form-fields">
+      <h3 class="header">Edit profile</h3>
+      <h4 class="sub-header">User details</h4>
+      <div class="fields">
+        <div class="cross-validation"
+          [class.cross-validation-error]="form.errors?.identityRevealed && (form.touched || form.dirty)">
+
+          <div class="form-group">
+            <div class="field">
+              <input type="text" placeholder="User Name" id="userName" class="form-control input-dark"
+                formControlName="userName">
+              <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="ui error message">
+                <div *ngIf="userName.invalid">
+                  Username should consist of min 6 characters. There is can contain Latin letters, digits and
+                  special characters.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="field">
+              <input type="email" placeholder="Email" id="email" class="form-control input-dark"
+                formControlName="email">
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="ui error message">
+                <div *ngIf="email.invalid">
+                  Email address should be according to standard for the email format.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="field">
+              <input type="text" placeholder="Description" id="description" class="form-control input-dark"
+                formControlName="description">
+              <div *ngIf="description.invalid && (description.dirty || description.touched)" class="ui error message">
+                <div *ngIf="description.invalid">
+                  Description should consist of max 150 characters. There is can contain letters, digits and
+                  special characters.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="field">
+              <select class="ui floating dropdown labeled search icon" id="gender" formControlName="gender" sm-dropdown>
+                <option *ngFor="let gender of genders" [ngValue]="gender.key">
+                  {{gender.text}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="field">
+              <div class="ui inverted calendar" sm-calendar calendarType="date">
+                <div class="ui input right icon">
+                  <i class="calendar icon white"></i>
+                  <input readonly id="birthday" class="form-control input-dark" formControlName="birthday">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="field">
+              <select class="ui floating dropdown" id="country" formControlName="country" sm-dropdown>
+                <option *ngFor="let country of countries" [ngValue]="country.name">
+                  <i [class]=country.icon></i> {{country.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="buttons">
+            <button class="btn-full btn-save" [disabled]="form.invalid" (click)="onSubmit(form.value)">Save</button>
+            <button class="button-cancel" (click)="redirect('/main')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<app-upload-image-modal></app-upload-image-modal>
