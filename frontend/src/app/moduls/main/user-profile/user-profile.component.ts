@@ -6,16 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-profile.component.sass']
 })
 export class UserProfileComponent implements OnInit {
-
   public isProfileMenuShown: boolean = false;
 
   private readonly _scrollingSize: number = 270;
   public topArtists = new Array<object>();
 
-  constructor() { }
-
   ngOnInit(): void {
-
+    this.topArtists = this.getTopArtists();
   }
 
   getTopArtists = (): Array<object> => new Array<object>();
@@ -30,26 +27,25 @@ export class UserProfileComponent implements OnInit {
 
   logout = () => {
 
-  }
+  };
 
   editProfile = () => {
 
-  }
+  };
 
   isRightRole = () => {
 
-  }
+  };
   nextSlide = () => {
 
-  }
+  };
 
   previousSlide = () => {
 
-  }
+  };
 
   scroll = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   };
-
 }

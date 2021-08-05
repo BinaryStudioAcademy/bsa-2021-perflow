@@ -5,11 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './top-artists-card.component.html',
   styleUrls: ['./top-artists-card.component.sass']
 })
-export class TopArtistsCardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class TopArtistsCardComponent {
 
 }
