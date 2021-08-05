@@ -2,7 +2,6 @@ version: '3.1'
 services:
   frontend:
     image: krasnovnikita/bsa2021-perflow-frontend
-    # container_name: frontend
     ports:
       - '80:80'
       # - '443:443'
@@ -11,7 +10,6 @@ services:
 
   gateway:
     image: krasnovnikita/bsa2021-perflow-gateway
-    # container_name: gateway
     ports:
       - '4201:4201'
     environment: 
@@ -21,7 +19,6 @@ services:
 
   perflow:
     image: krasnovnikita/bsa2021-perflow-api
-    # container_name: perflow
     ports:
       - '4202:4202'
     environment: 
@@ -31,7 +28,6 @@ services:
 
   perflow-studio:
     image: krasnovnikita/bsa2021-perflow-studio-api
-    # container_name: perflow-studio
     ports:
       - '4203:4203'
     environment: 
@@ -41,7 +37,6 @@ services:
 
   processor:
     image: krasnovnikita/bsa2021-perflow-processor
-    # container_name: processor
     env_file:
      - ./env/processor.env
     environment:
@@ -50,9 +45,6 @@ services:
   # RabbitMQ
   rabbitmq:
     image: rabbitmq:3-management
-    #container_name: 'rabbitmq'
-    # env_file:
-    #  - ./env/rabbitmq.env
     ports:
       - '15672:15672'
       - '5672:5672'
