@@ -7,7 +7,7 @@ services:
       - '80:80'
       # - '443:443'
     env_file:
-     - ./frontend.env
+     - ./env/frontend.env
 
   gateway:
     image: krasnovnikita/bsa2021-perflow-gateway
@@ -17,7 +17,7 @@ services:
     environment: 
       ASPNETCORE_URLS: http://+:4201
     env_file:
-     - ./gateway.env
+     - ./env/gateway.env
 
   perflow:
     image: krasnovnikita/bsa2021-perflow-api
@@ -27,7 +27,7 @@ services:
     environment: 
       ASPNETCORE_URLS: http://+:4202
     env_file:
-     - ./perflow.env
+     - ./env/perflow.env
 
   perflow-studio:
     image: krasnovnikita/bsa2021-perflow-studio-api
@@ -37,13 +37,13 @@ services:
     environment: 
       ASPNETCORE_URLS: http://+:4203
     env_file:
-     - ./perflow-studio.env
+     - ./env/perflow-studio.env
 
   processor:
     image: krasnovnikita/bsa2021-perflow-processor
     # container_name: processor
     env_file:
-     - ./processor.env
+     - ./env/processor.env
     environment:
       WAIT_HOSTS: rabbitmq:5672
       
@@ -52,7 +52,7 @@ services:
     image: rabbitmq:3-management
     #container_name: 'rabbitmq'
     # env_file:
-    #  - ./rabbitmq.env
+    #  - ./env/rabbitmq.env
     ports:
       - '15672:15672'
       - '5672:5672'
