@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from 'src/app/guard/auth.guard';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { PlaylistComponent } from './playlist/playlist.component';

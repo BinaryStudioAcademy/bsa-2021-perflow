@@ -1,5 +1,5 @@
-import { Album } from './album.model';
-import { Artist } from './artist.model';
+import { Album } from '../album';
+import { User } from '../user/user';
 import { AuthorType } from './enums/author-type.enum';
 
 export interface Song {
@@ -10,7 +10,7 @@ export interface Song {
   duration: number;
   hasCensorship: boolean;
   album: Album;
-  artist: Artist;
+  artist: User;
   authorType: AuthorType;
 
   // TODO: add fields

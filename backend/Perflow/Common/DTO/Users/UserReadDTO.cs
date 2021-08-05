@@ -5,6 +5,7 @@ namespace Perflow.Common.DTO.Users
 {
     public class UserReadDTO
     {
+        public int Id { get; set; }
         public string UserName { get; set; }
         public string IconURL { get; set; }
         public string Email { get; set; }

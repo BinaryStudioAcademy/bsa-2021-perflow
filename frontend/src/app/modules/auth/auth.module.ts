@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
-import { LandingpageComponent } from './landingpage/landingpage.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
-    LandingpageComponent
+    LandingPageComponent
   ],
   imports: [
     CommonModule,

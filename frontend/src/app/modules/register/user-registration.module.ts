@@ -6,6 +6,7 @@ import { UserRegistrationFormComponent }
   from './user-registration-form/user-registration-form/user-registration-form.component';
 import { UserRegistrationPageComponent } from './user-registration-page/user-registration-page.component';
 import { UserRegistrationRoutingModule } from './user-registration-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { UserRegistrationRoutingModule } from './user-registration-routing.modul
   imports: [
     CommonModule,
     UserRegistrationRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [UserService]
 })

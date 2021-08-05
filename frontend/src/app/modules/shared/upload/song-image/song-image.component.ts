@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FileSizeConverter } from 'src/app/helpers/FileSizeConverter';
-import { FileUploadType } from 'src/app/models/shared/FileUploadType';
+import { FileUploadType } from 'src/app/models/common/file-upload-type';
 
 @Component({
   selector: 'app-song-image',

@@ -1,14 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SongRowComponent } from '../../components/shared/song-row/song-row.component';
+import { SongImageComponent } from './upload/song-image/song-image.component';
+import { SongToolbarComponent } from './song-toolbar/song-toolbar.component';
+import { SongRowComponent } from './song-row/song-row.component';
+import { DragDropDirective } from './directives/upload/song-image/drag-drop.directive';
+import { ShowHideDirective } from './directives/show/show-hide.directive';
 import { SortSongsPipe } from './pipes/sort-songs.pipe';
 import { SortOrderIconComponent } from './songs-list-header/sort-order-icon/sort-order-icon.component';
-import { SongsListComponent } from './songs-list/songs-list.component';
 import { SongsListHeaderComponent } from './songs-list-header/songs-list-header.component';
-import { SemanticDropdownDirective } from '../../directives/shared/dropdown/semantic-dropdown.directive';
+import { SongsListComponent } from './songs-list/songs-list.component';
+import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdown.directive';
 
 @NgModule({
   declarations: [
+    SongRowComponent,
+    SongToolbarComponent,
+    SongImageComponent,
+    DragDropDirective,
+    ShowHideDirective,
     SemanticDropdownDirective,
     SortSongsPipe,
     SongRowComponent,
@@ -20,6 +29,11 @@ import { SemanticDropdownDirective } from '../../directives/shared/dropdown/sema
     CommonModule
   ],
   exports: [
+    SongRowComponent,
+    SongToolbarComponent,
+    SongImageComponent,
+    DragDropDirective,
+    ShowHideDirective,
     SemanticDropdownDirective,
     SortSongsPipe,
     SongRowComponent,

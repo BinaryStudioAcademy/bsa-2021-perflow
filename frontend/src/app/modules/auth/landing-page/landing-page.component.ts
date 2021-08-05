@@ -1,9 +1,7 @@
-import {
-  Component
-} from '@angular/core';
-import {
-  FormControl, FormGroup, Validators
-} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -22,7 +20,7 @@ export class LandingPageComponent {
     ])
   });
 
-  constructor() {
+  constructor(private _authService: AuthService, private _router: Router) {
     this.loginForm.valueChanges.subscribe((changes) => {
       this.isLogInClicked = false;
     });
