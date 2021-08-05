@@ -119,8 +119,8 @@ jobs:
           host: ${{ secrets.PERFLOW_VM_HOST }}
           username: ${{ secrets.PERFLOW_VM_USERNAME }}
           password: ${{ secrets.PERFLOW_VM_PASSWORD }}
-          # source: "docker-compose.prod.yml,env/frontend.env,env/perflow.env,env/perflow-studio.env,env/processor.env,env/gateway.env"
-          source: "env/*.env,docker-compose.prod.yml"
+          source: "docker-compose.prod.yml,env/frontend.env,env/perflow.env,env/perflow-studio.env,env/processor.env,env/gateway.env"
+          # source: "env/*.env,docker-compose.prod.yml"
           target: "perflow/"
 
       - name: update vm
