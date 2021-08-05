@@ -1,16 +1,16 @@
 version: '3.1'
 services:
   frontend:
-    image: frontend
+    image: krasnovnikita/bsa2021-perflow-frontend
     # container_name: frontend
     ports:
-      - '4200:80'
+      - '80:80'
       # - '443:443'
     env_file:
      - ./frontend.env
 
   gateway:
-    image: gateway
+    image: krasnovnikita/bsa2021-perflow-gateway
     # container_name: gateway
     ports:
       - '4201:4201'
@@ -20,7 +20,7 @@ services:
      - ./gateway.env
 
   perflow:
-    image: perflow
+    image: krasnovnikita/bsa2021-perflow-api
     # container_name: perflow
     ports:
       - '4202:4202'
@@ -30,7 +30,7 @@ services:
      - ./perflow.env
 
   perflow-studio:
-    image: perflow-studio
+    image: krasnovnikita/bsa2021-perflow-studio-api
     # container_name: perflow-studio
     ports:
       - '4203:4203'
@@ -40,7 +40,7 @@ services:
      - ./perflow-studio.env
 
   processor:
-    image: processor
+    image: krasnovnikita/bsa2021-perflow-processor
     # container_name: processor
     env_file:
      - ./processor.env

@@ -113,17 +113,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: update compose and keys
+      - name: Update compose
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.PERFLOW_VM_HOST }}
           username: ${{ secrets.PERFLOW_VM_USERNAME }}
           password: ${{ secrets.PERFLOW_VM_PASSWORD }}
-          source: "env/"
-          # source: "env/*.env,docker-compose.prod.yml"
-          target: "perflow/"
+          source: "docker-compose.prod.yml"
+          target: "."
 
-      - name: update vm
+      - name: Update VM
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.PERFLOW_VM_HOST }}
