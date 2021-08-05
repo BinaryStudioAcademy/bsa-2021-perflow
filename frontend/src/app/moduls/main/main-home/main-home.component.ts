@@ -14,7 +14,9 @@ export class MainHomeComponent implements OnInit {
 
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
-  private readonly _scrollingSize: number = 255;
+  private readonly _scrollingSizeAlbums: number = 255;
+  private readonly _scrollingSizePlaylists: number = 235;
+  private readonly _scrollingSize: number = 270;
 
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
@@ -23,7 +25,7 @@ export class MainHomeComponent implements OnInit {
   public yourMix = new Array<object>();
   public top100Songs = new Array<object>();
 
-  // TODO: tempolary albums
+  // TODO: tempolary albums and seetings
   allAlbums: Album[] = [
     {
       id: 1,
@@ -460,7 +462,7 @@ export class MainHomeComponent implements OnInit {
       ]
     }
   ];
-  allPlaylist: Playlist[] = [
+  allPlaylists: Playlist[] = [
     {
       id: 1,
       titleImage: './../../../../assets/tepolary-images/castle-big-image.jpeg',
@@ -862,12 +864,16 @@ export class MainHomeComponent implements OnInit {
       ]
     }
   ];
-
-  playlists = this.allPlaylist;
+  playlists = this.allPlaylists;
   cashedAlbums: Album[] = [];
+  cashedPlaylists: Playlist[] = [];
+
+  // TODO: seetings without registration
   start: number = 0;
   end: number = 7;
   adjusterAlbums: number = 6;
+  adjusterPlaylists: number = 6;
+
   constructor(private _authService: AuthService) {}
 
   ngOnInit() {
@@ -878,11 +884,12 @@ export class MainHomeComponent implements OnInit {
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
     this.cashedAlbums = this.allAlbums.slice(this.start, this.end);
+    this.cashedPlaylists = this.allPlaylists.slice(this.start, this.end);
   }
 
   nextAlbums(pressingButton: HTMLElement) {
     this.adjusterAlbums += 1;
-    pressingButton.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
+    pressingButton.scrollBy({ left: this._scrollingSizeAlbums, behavior: 'smooth' });
     if (this.end !== this.allAlbums.length) {
       const index: number = this.end;
       this.end += 1;
@@ -892,7 +899,22 @@ export class MainHomeComponent implements OnInit {
 
   prevAlbums(pressingButton: HTMLElement) {
     this.adjusterAlbums -= 1;
-    pressingButton.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
+    pressingButton.scrollBy({ left: -this._scrollingSizeAlbums, behavior: 'smooth' });
+  }
+
+  nextPlaylists(pressingButton: HTMLElement) {
+    this.adjusterPlaylists += 1;
+    pressingButton.scrollBy({ left: this._scrollingSizePlaylists, behavior: 'smooth' });
+    if (this.end !== this.allPlaylists.length) {
+      const index: number = this.end;
+      this.end += 1;
+      this.cashedPlaylists.push(this.allPlaylists[index]);
+    }
+  }
+
+  prevPlaylists(pressingButton: HTMLElement) {
+    this.adjusterPlaylists -= 1;
+    pressingButton.scrollBy({ left: -this._scrollingSizePlaylists, behavior: 'smooth' });
   }
 
   playAlbum = () => {

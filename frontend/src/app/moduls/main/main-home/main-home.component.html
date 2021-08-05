@@ -60,47 +60,58 @@
       </div>
     </div>
 
-  <!-- New Releases -->
-  <div  class="ui sixteen column row new-releases">
-    <div class="header">New Releases</div>
-    <div id="newReleases">
-      <div class="ui icon button" [style.visibility]="adjusterAlbums > 6 ? 'visible': 'hidden'" id="btn-scroll-data" (click)="prevAlbums(nextalbum)" >
-        <i class="chevron inverted left icon"></i>
-      </div>
-
-      <div #nextalbum class="new-releases-cont">
-      <!-- Work component -->
-        <div *ngFor="let album of cashedAlbums; let i; index">
-          <app-album-card [album]="i"></app-album-card>
+    <!-- New Releases -->
+    <div class="ui sixteen column row new-releases">
+      <div class="header">New Releases</div>
+      <div id="newReleases">
+        <div
+          class="ui icon button"
+          [style.visibility]="adjusterAlbums > 6 ? 'visible' : 'hidden'"
+          id="btn-scroll-data"
+          (click)="prevAlbums(nextalbum)"
+        >
+          <i class="chevron inverted left icon"></i>
         </div>
-      <!-- *ngIf="start > 0" -->
-      <!-- *ngIf="end < allAlbums.length" -->
-      <!-- <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('newReleases')">
-          <i class="chevron right icon"></i>
-        </button>
-      </div> -->
-      </div>
-
-      <div class="ui icon button" [style.visibility]="adjusterAlbums !== allAlbums.length ? 'visible': 'hidden'" id="btn-scroll-data" (click)="nextAlbums(nextalbum)">
-        <i class="chevron inverted right icon"></i>
+        <div #nextalbum class="new-releases-cont">
+          <div *ngFor="let album of cashedAlbums; let i; index">
+            <app-album-card [album]="i"></app-album-card>
+          </div>
+        </div>
+        <div
+          class="ui icon button"
+          [style.visibility]="
+            adjusterAlbums !== allAlbums.length ? 'visible' : 'hidden'
+          "
+          id="btn-scroll-data"
+          (click)="nextAlbums(nextalbum)"
+        >
+          <i class="chevron inverted right icon"></i>
+        </div>
       </div>
     </div>
-  </div>
 
     <!-- Calm rhythms -->
     <div class="sixteen column row calm-rhythms">
       <div class="header">Calm rhythms</div>
-      <div id="calmRhythms" class="calm-rhythms-cont">
-        <div *ngFor="let playlist of playlists; let i; index">
-          <app-playlist-card [playlist]="i"></app-playlist-card>
+      <div id="calmRhythms">
+        <div class="ui icon button"
+          [style.visibility]="adjusterPlaylists > 6 ? 'visible' : 'hidden'"
+          id="btn-scroll-data"
+          (click)="prevPlaylists(nextPlaylist)" >
+          <i class="chevron inverted left icon"></i>
+        </div>
+        <div #nextPlaylist  class="calm-rhythms-cont">
+          <div *ngFor="let playlist of cashedPlaylists; let i; index">
+            <app-playlist-card [playlist]="i"></app-playlist-card>
+          </div>
+        </div>
+        <div class="ui icon button"
+          [style.visibility]="
+          adjusterPlaylists !== allPlaylists.length ? 'visible' : 'hidden' "
+          id="btn-scroll-data" (click)="nextPlaylists(nextPlaylist)">
+          <i class="chevron inverted right icon"></i>
         </div>
       </div>
-      <!-- <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('calmRhythms')">
-          <i class="chevron right icon"></i>
-        </button>
-      </div> -->
     </div>
 
     <!-- Your mix -->
