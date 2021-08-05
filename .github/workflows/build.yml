@@ -1,0 +1,68 @@
+name: Build
+
+on:
+  push:
+    branches: [ feature/ci ]
+
+  workflow_dispatch:
+
+jobs:
+  build-gateway:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build Gateway
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Gateway.Dockerfile
+  
+  build-perflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+          
+      - name: Build Perflow
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Perflow.Dockerfile
+
+  build-perflow-studio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Perflow.Studio
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Perflow.Studio.Dockerfile
+
+  build-processor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build Processor
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Processor.Dockerfile
+          
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build Frontend
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Frontend.Dockerfile
