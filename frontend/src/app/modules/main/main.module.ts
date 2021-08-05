@@ -18,6 +18,8 @@ import { ArtistListComponent } from './playlist/artist-list/artist-list.componen
 import { ArtistCardComponent } from './cards/artist-card/artist-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
+import { AlbumListComponent } from './playlist/album-list/album-list.component';
+import { AlbumCardComponent } from './cards/album-card/album-card.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.
     YourMixCardComponent,
     ArtistListComponent,
     ArtistCardComponent,
-    MainMenuProfileComponent
+    MainMenuProfileComponent,
+    AlbumListComponent,
+    AlbumCardComponent
   ],
   imports: [
     CommonModule,

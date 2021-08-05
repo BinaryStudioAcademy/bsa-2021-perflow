@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
-import { ArtistService } from 'src/app/services/artist.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 
 @Component({
@@ -15,13 +13,11 @@ export class ArtistListComponent implements OnInit {
   artists!: ArtistReadDTO[];
 
   constructor(
-    private _artistService: ArtistService,
-    private _reactionService: ReactionService,
-    private _authService: AuthService
+    private _reactionService: ReactionService
   ) { }
 
   ngOnInit(): void {
-    this._artistService.getArtistsByUserId(this.userId).subscribe(
+    this._reactionService.getArtistsByUserId(this.userId).subscribe(
       (response) => {
         this.artists = response;
       }

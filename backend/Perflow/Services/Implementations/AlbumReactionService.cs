@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Reactions;
 using Perflow.DataAccess.Context;
@@ -20,6 +22,8 @@ namespace Perflow.Services.Implementations
         public async Task<ICollection<AlbumForListDTO>> GetAlbumsByUserId(int userId)
         {
             var albums = context.AlbumReactions
+                .Include(ar => ar.Album)
+                .ThenInclude(al => al.Author)
                 .Where(r => r.UserId == userId)
                 .Select(albumReaction => albumReaction.Album);
 

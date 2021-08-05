@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AlbumForReadDTO } from '../models/album/albumForReadDTO';
+import { ArtistReadDTO } from '../models/user/ArtistReadDTO';
 import { HttpInternalService } from './http-internal.service';
 
 @Injectable({
@@ -27,6 +29,11 @@ export class ReactionService {
     return response;
   }
 
+  getArtistsByUserId(userId: number) {
+    const response = this.httpService.getRequest<ArtistReadDTO[]>(`/api/ArtistReaction/${userId}`);
+    return response;
+  }
+
   addArtistReaction(artistId: number, userId: number) {
     const response = this.httpService.postClearRequest(
       '/api/ArtistReaction/like',
@@ -39,6 +46,27 @@ export class ReactionService {
     const response = this.httpService.postClearRequest(
       '/api/ArtistReaction/removeLike',
       { artistId, userId }
+    );
+    return response;
+  }
+
+  getAlbumsByUserId(userId: number) {
+    const response = this.httpService.getRequest<AlbumForReadDTO[]>(`/api/AlbumReaction/${userId}`);
+    return response;
+  }
+
+  addAlbumReaction(albumId: number, userId: number) {
+    const response = this.httpService.postClearRequest(
+      '/api/AlbumReaction/like',
+      { albumId, userId }
+    );
+    return response;
+  }
+
+  removeAlbumReaction(albumId: number, userId: number) {
+    const response = this.httpService.postClearRequest(
+      '/api/AlbumReaction/removeLike',
+      { albumId, userId }
     );
     return response;
   }
