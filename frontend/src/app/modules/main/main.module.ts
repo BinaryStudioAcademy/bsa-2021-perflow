@@ -17,6 +17,7 @@ import { SongsComponent } from './songs/songs.component';
 import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
 import { ArtistCardComponent } from './cards/artist-card/artist-card.component';
 import { SharedModule } from '../shared/shared.module';
+import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SharedModule } from '../shared/shared.module';
     TopSongsCardComponent,
     YourMixCardComponent,
     ArtistListComponent,
-    ArtistCardComponent
+    ArtistCardComponent,
+    MainMenuProfileComponent
   ],
   imports: [
     CommonModule,

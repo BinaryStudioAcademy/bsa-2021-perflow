@@ -14,7 +14,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
 })
 export class ArtistListComponent implements OnInit {
   @Input()
-  userId: number = 1; //Temporary value
+  userId: number = 1; // Temporary value
   artists!: ArtistReadDTO[];
 
   constructor(private _artistService: ArtistService, private _reactionService: ReactionService, private _authService: AuthService) { }
