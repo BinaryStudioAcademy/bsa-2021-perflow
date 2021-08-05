@@ -1,43 +1,37 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
-import { SharedModule } from './moduls/shared/shared.module';
 import { AppComponent } from './app.component';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { SongToolbarComponent } from './components/shared/song-toolbar/song-toolbar.component';
-import { SongImageComponent } from './components/shared/upload/song-image/song-image.component';
-import { ShowHideDirective } from './directives/shared/show/show-hide.directive';
-import { DragDropDirective } from './directives/shared/upload/song-image/drag-drop.directive';
-import { AuthModule } from './moduls/auth/auth.module';
-import { SongRowComponent } from './components/shared/song-row/song-row.component';
+import { AppRoutingModule } from './app-routing.module';
+import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
+import { FireBaseModule } from './modules/fire-base/fire-base.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LandingPageComponent,
-    SongImageComponent,
-    DragDropDirective,
-    SongToolbarComponent,
-    ShowHideDirective,
-    SongRowComponent
+    AppComponent
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
+    FireBaseModule,
+    HttpClientModule
     AuthModule,
     HttpClientModule,
     SharedModule
   ],
-  exports: [],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }

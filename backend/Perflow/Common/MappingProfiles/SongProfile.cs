@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Perflow.Common.DTO.Song;
+using Perflow.Common.DTO.Songs;
 using Perflow.Domain;
 
 namespace Perflow.Common.MappingProfiles
@@ -8,9 +8,7 @@ namespace Perflow.Common.MappingProfiles
     {
         public SongProfile()
         {
-            CreateMap<Song, SongDTO>();
-
-            CreateMap<SongDTO, Song>();
+            CreateMap<Song, SongReadDTO>();
         }
     }
 }
