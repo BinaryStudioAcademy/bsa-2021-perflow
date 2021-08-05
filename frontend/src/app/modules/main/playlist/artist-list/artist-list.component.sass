@@ -6,16 +6,17 @@
     border-left: $light-gray 1px solid
     box-sizing: border-box
     padding-top: 90px
-
-.artistlist
-    border-top: $light-gray 1px solid
-    display: grid
-    grid-template-columns: repeat(auto-fill, 200px)
-    grid-template-rows: repeat(auto, 280px)
-    grid-column-gap: 30px
-    grid-row-gap: 30px
-    justify-content: center
-    padding: 15px
-
-.artist-card
-    display: inline-block
+    .artistslabel
+        color: $text
+        padding-top: 20px
+        width: 100%
+        grid-column: 1/-1
+    .artistlist
+        border-top: $light-gray 1px solid
+        display: grid
+        grid-template-columns: repeat(auto-fill, 200px)
+        grid-template-rows: 1fr repeat(auto, 280px)
+        grid-column-gap: 30px
+        grid-row-gap: 30px
+        justify-content: center
+        padding: 0 20px

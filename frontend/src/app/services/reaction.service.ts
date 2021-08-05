@@ -28,10 +28,18 @@ export class ReactionService {
   }
 
   addArtistReaction(artistId: number, userId: number) {
-    
+    const response = this.httpService.postClearRequest(
+      '/api/ArtistReaction/like',
+      { artistId, userId }
+    );
+    return response;
   }
 
   removeArtistReaction(artistId: number, userId: number) {
-    
+    const response = this.httpService.postClearRequest(
+      '/api/ArtistReaction/removeLike',
+      { artistId, userId }
+    );
+    return response;
   }
 }
