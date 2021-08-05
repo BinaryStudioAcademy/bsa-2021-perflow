@@ -7,12 +7,12 @@ declare global {
 }
 
 @Directive({
-  selector: '[sm-dropdown]'
+  selector: '[appSmDropdown]'
 })
 export class SemanticDropdownDirective {
-  constructor(private dropdown: ElementRef) { }
+  constructor(private _dropdown: ElementRef) { }
 
   ngAfterViewInit() {
-    $(this.dropdown.nativeElement).dropdown();
+    $(this._dropdown.nativeElement).dropdown();
   }
 }

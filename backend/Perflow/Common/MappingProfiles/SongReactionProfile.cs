@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Perflow.Common.DTO.Reactions;
-using Perflow.Domain;
 
 namespace Perflow.Common.MappingProfiles
 {
