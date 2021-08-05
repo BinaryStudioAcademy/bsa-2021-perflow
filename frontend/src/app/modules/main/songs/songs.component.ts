@@ -7,6 +7,7 @@ import { SongsService } from '../../../services/songs/songs.service';
   templateUrl: './songs.component.html',
   styleUrls: ['./songs.component.sass']
 })
+
 export class SongsComponent implements OnInit {
   songs: Song[] = [];
 
