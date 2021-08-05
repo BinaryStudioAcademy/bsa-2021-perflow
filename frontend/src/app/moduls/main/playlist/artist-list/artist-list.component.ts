@@ -22,4 +22,9 @@ export class ArtistListComponent implements OnInit {
       }
     );
   }
+
+  deleteArtist(artist: UserDTO) {
+    const index = this.artists.indexOf(artist);
+    this.artists.splice(index, 1);
+  }
 }

@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter
+} from '@angular/core';
+import { UserDTO } from 'src/app/models/user/UserDTO';
 
 @Component({
   selector: 'app-artist-card',
@@ -7,7 +10,11 @@ import { Component, Input } from '@angular/core';
 })
 export class ArtistCardComponent {
   @Input()
-  imageUrl: string;
-  @Input()
-  artistName: string;
+  artist: UserDTO;
+  @Output()
+  onDelete = new EventEmitter<UserDTO>();
+
+  onDeleteClick(artist: UserDTO) {
+    this.onDelete.emit(artist);
+  }
 }

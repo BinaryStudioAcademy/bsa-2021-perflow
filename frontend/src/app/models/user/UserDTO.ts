@@ -1,9 +1,14 @@
 export class UserDTO {
+  id!: number;
+  createdAt: Date;
   userName!: string;
   iconURL!: string;
   email!: string;
   birthday!: Date;
   gender!: boolean;
-  Description!: string;
-  Country!: string;
+  description!: string;
+  country!: string;
+  password!: string;
+  salt!: string;
+  groupId: number;
 }

@@ -1,13 +1,13 @@
 @import ../../../../../styles
     
 .artist-card
+    display: inline-block
     position: relative
     width: 200px
-    height: 260px
+    height: 280px
     background-color: $drk-rain
     border-radius: 5px
-    margin: 5px
-    box-shadow: 0 0 10px black
+    box-shadow: 0 0 10px darken($drk-gray, 5%)
     transition: background-color .2s ease-in-out
     .image-block
         width: 200px
@@ -30,17 +30,17 @@
         position: absolute
         width: 45px
         height: 45px
-        font-size: 30px
+        font-size: 25px
         background-color: rgba(0, 0, 0, 0.7)
         border-radius: 50%
         color: $medium-orange
-        padding: 15px 4.5px
+        padding: 15px 8px
         bottom: 15px
         right: 20px
         transition: opacity .2s ease-in-out
     .info-block
         color: $text
-        margin: 0 20px
+        margin: 10px 20px
         >span
             color: $gray
         .artist-name h5

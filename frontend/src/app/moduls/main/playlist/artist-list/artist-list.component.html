@@ -1,6 +1,7 @@
-<p>artist-list works!</p>
-<div *ngFor="let artist of artists">
-    <app-artist-card [imageUrl]="artist.iconURL" [artistName]="artist.userName"></app-artist-card>
-    <!-- <img [attr.src]="artist.iconURL" alt=""> -->
+<div class="infolist">
+    <div class="artistlist">
+        <div *ngFor="let artist of artists" class="artist-card">
+            <app-artist-card [artist]="artist" (onDelete)="deleteArtist($event)"></app-artist-card>
+        </div>    
+    </div>    
 </div>
-
