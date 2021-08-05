@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Album } from 'src/app/models/album';
 import { Playlist } from 'src/app/models/playlist';
 import { AuthService } from 'src/app/services/auth.service';
+import { Album } from '../../../models/album';
 
 @Component({
   selector: 'app-main-home',
@@ -24,12 +24,26 @@ export class MainHomeComponent implements OnInit {
   public top100Songs = new Array<object>();
 
   // TODO: tempolary albums
-  allTemplary: Album[] = [
+  allAlbums: Album[] = [
     {
       id: 1,
-      titleImage: './../../../../assets/tepolary-images/card-title-1.png',
+      titleImage: './../../../../assets/tepolary-images/castle-big-image.jpeg',
       nameAlbum: 'Fresh & Chill',
-      songs: ['Ed Sheeran', 'Paloma Mami Maroon 5', 'SigalaPink', 'Oximer']
+      songs: [
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
     },
     {
       id: 2,
@@ -38,16 +52,20 @@ export class MainHomeComponent implements OnInit {
       songs: [
         'Believer',
         'Natural',
-        'Believer',
-        'Natural',
         'Thunder',
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
@@ -55,106 +73,207 @@ export class MainHomeComponent implements OnInit {
       titleImage: './../../../../assets/tepolary-images/card-title-3.png',
       nameAlbum: 'Tropical chaos',
       songs: [
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural'
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
       id: 4,
       titleImage: './../../../../assets/tepolary-images/card-title-4.png',
       nameAlbum: 'Relax work',
-      songs: ['Ed Sheeran', 'Paloma Mami Maroon 5', 'SigalaPink', 'Oximer']
+      songs: [
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
     },
     {
       id: 5,
       titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
       nameAlbum: 'Fresh & Chill',
       songs: [
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural'
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
       id: 6,
       titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
       nameAlbum: 'Imagine Dragons',
-      songs: ['Believer', 'Natural', 'Thunder', 'Bad Liar']
+      songs: [
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
     },
     {
       id: 7,
       titleImage: './../../../../assets/tepolary-images/my-playlists-3.png',
       nameAlbum: 'Tropical chaos',
       songs: [
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural'
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
       id: 8,
       titleImage: './../../../../assets/tepolary-images/my-playlists-4.png',
       nameAlbum: 'Relax work',
-      songs: ['Ed Sheeran', 'Paloma Mami Maroon 5', 'SigalaPink', 'Oximer']
+      songs: [
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
     },
     {
       id: 9,
       titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
       nameAlbum: 'Fresh & Chill',
       songs: [
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural',
-        'Believer',
-        'Natural',
-        'Thunder',
-        'Believer',
-        'Natural'
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     },
     {
       id: 10,
       titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
       nameAlbum: 'Imagine Dragons',
-      songs: ['Believer', 'Natural', 'Thunder', 'Bad Liar']
+      songs: [
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
     },
     {
       id: 11,
       titleImage: './../../../../assets/tepolary-images/my-playlists-3.png',
       nameAlbum: 'Tropical chaos',
-      songs: ['Ed Sheeran', 'Paloma Mami Maroon 5', 'SigalaPink', 'Oximer']
+      songs: [
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
     },
     {
       id: 12,
@@ -164,11 +283,180 @@ export class MainHomeComponent implements OnInit {
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
         'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 13,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
+      nameAlbum: 'Imagine Dragons',
+      songs: [
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 14,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-3.png',
+      nameAlbum: 'Tropical chaos',
+      songs: [
         'Ed Sheeran',
         'Paloma Mami Maroon 5',
         'SigalaPink',
-        'Oximer'
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 15,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-4.png',
+      nameAlbum: 'Relax work',
+      songs: [
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 16,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
+      nameAlbum: 'Fresh & Chill',
+      songs: [
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 17,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-2.png',
+      nameAlbum: 'Imagine Dragons',
+      songs: [
+        'Believer',
+        'Natural',
+        'Thunder',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 18,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-3.png',
+      nameAlbum: 'Tropical chaos',
+      songs: [
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
+      ]
+    },
+    {
+      id: 19,
+      titleImage: './../../../../assets/tepolary-images/my-playlists-1.png',
+      nameAlbum: 'Relax work',
+      songs: [
+        'Ed Sheeran',
+        'Paloma Mami Maroon 5',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Oximer',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink',
+        'Ed Sheeran',
+        'Bad Liar',
+        'SigalaPink'
       ]
     }
   ];
@@ -576,8 +864,9 @@ export class MainHomeComponent implements OnInit {
   ];
 
   playlists = this.allPlaylist;
-  albums = this.allTemplary.slice(1, 8);
-
+  albums: Album[] = [];
+  start: number = 0;
+  end: number = 6;
   constructor(private _authService: AuthService) {}
 
   ngOnInit() {
@@ -587,6 +876,23 @@ export class MainHomeComponent implements OnInit {
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
+    this.albums = this.allAlbums.slice(this.start, this.end);
+  }
+
+  nextData() {
+    this.start += 1;
+    this.end += 1;
+    this.albums = this.allAlbums.slice(this.start, this.end);// Get the next 100 records
+    console.log(this.start, this.end);
+    console.log(this.albums);
+  }
+
+  prevData() {
+    this.start -= 1;
+    this.end -= 1;
+    this.albums = this.allAlbums.slice(this.start, this.end);// Get the previous 100 records
+    console.log(this.start, this.end);
+    console.log(this.albums);
   }
 
   playAlbum = () => {
