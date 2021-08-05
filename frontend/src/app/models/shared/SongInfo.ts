@@ -3,6 +3,7 @@ export class SongInfo {
   artistName: string;
   songURL: string;
   imageURL: string;
+
   constructor(name: string, artistName: string, songURL: string, imageURL: string) {
     this.name = name;
     this.artistName = artistName;
