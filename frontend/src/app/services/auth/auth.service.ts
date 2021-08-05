@@ -4,14 +4,14 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import firebase from 'firebase/app';
-import { User } from 'src/app/models/user';
+import { VerifiedUser } from 'src/app/models/user/verified-user';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  private _currentUserSource = new ReplaySubject<User>();
+  private _currentUserSource = new ReplaySubject<VerifiedUser>();
   currentUser$ = this._currentUserSource.asObservable();
 
   constructor(private _afs: AngularFirestore, private _afAuth: AngularFireAuth, private _router: Router) {
@@ -55,9 +55,9 @@ export class AuthService {
   }
 
   async setUserData(user: any) {
-    const userRef: AngularFirestoreDocument<User> = this._afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<VerifiedUser> = this._afs.doc(`users/${user.uid}`);
     const curentToken: string = await this.getCurrentToken()!;
-    const userData: User = {
+    const userData: VerifiedUser = {
       id: user.id,
       name: user.name,
       iconURL: user.iconURL,

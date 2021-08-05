@@ -1,5 +1,5 @@
 import { Album } from '../album';
-import { User } from '../user';
+import { User } from '../user/user';
 
 export interface Song {
   id: number;

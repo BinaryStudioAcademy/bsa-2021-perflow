@@ -5,6 +5,4 @@ export interface User {
   email: string;
   birthday: Date;
   gender: boolean;
-  emailVerified: boolean;
-  token:string;
 }

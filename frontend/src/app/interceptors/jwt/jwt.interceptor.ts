@@ -7,8 +7,8 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { VerifiedUser } from 'src/app/models/user/verified-user';
 
 @Injectable()
 
@@ -16,7 +16,7 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private _auth: AuthService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    let currentUser: User;
+    let currentUser: VerifiedUser;
     let result = request;
 
     this._auth.currentUser$.pipe(take(1))
