@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Song } from '../../../models/shared/song.model';
+import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type.model';
 
 @Component({

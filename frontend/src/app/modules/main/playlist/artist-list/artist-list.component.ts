@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDTO } from 'src/app/models/user/ArtistReadDTO';
+import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { ArtistService } from 'src/app/services/artist.service';
 import { ArtistCardComponent } from '../../cards/artist-card/artist-card.component';
 
@@ -9,7 +9,7 @@ import { ArtistCardComponent } from '../../cards/artist-card/artist-card.compone
   styleUrls: ['./artist-list.component.sass']
 })
 export class ArtistListComponent implements OnInit {
-  artists!: UserDTO[];
+  artists!: ArtistReadDTO[];
 
   constructor(private _artistService: ArtistService) { }
 
@@ -23,7 +23,7 @@ export class ArtistListComponent implements OnInit {
     );
   }
 
-  deleteArtist(artist: UserDTO) {
+  deleteArtist(artist: ArtistReadDTO) {
     const index = this.artists.indexOf(artist);
     this.artists.splice(index, 1);
   }

@@ -1,5 +1,5 @@
-import { Song } from '../models/shared/song.model';
-import { SongSortOrder, SongSortProperty, SongSortType } from '../models/shared/song-sort-type.model';
+import { Song } from '../models/song/song';
+import { SongSortOrder, SongSortProperty, SongSortType } from '../models/song/song-sort-type.model';
 
 type SongsCompareFunction = (a: Song, b: Song) => number;
 
@@ -31,7 +31,7 @@ export function getCompareFunctionFromSortType(sortType: SongSortType): SongsCom
     case SongSortProperty.name:
       return (a, b) => compareStrings(a.name, b.name, sortType.order);
     case SongSortProperty.artist:
-      return (a, b) => compareStrings(a.artist.userName, b.artist.userName, sortType.order);
+      return (a, b) => compareStrings(a.artist.name, b.artist.name, sortType.order);
     case SongSortProperty.album:
       return (a, b) => compareStrings(a.album.name, b.album.name, sortType.order);
     case SongSortProperty.time:

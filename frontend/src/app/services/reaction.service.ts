@@ -26,4 +26,12 @@ export class ReactionService {
     );
     return response;
   }
+
+  addArtistReaction(artistId: number, userId: number) {
+    
+  }
+
+  removeArtistReaction(artistId: number, userId: number) {
+    
+  }
 }
