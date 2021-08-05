@@ -44,6 +44,12 @@ namespace Perflow.Migrations
                     b.Property<string>("IconURL")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSingle")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -52,12 +58,6 @@ namespace Perflow.Migrations
 
                     b.Property<int?>("ReleaseYear")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isPublished")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("isSingle")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -76,11 +76,11 @@ namespace Perflow.Migrations
                             CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                             IconURL = "https://upload.wikimedia.org/wikipedia/ru/6/69/ImagineCover.jpg",
+                            IsPublished = true,
+                            IsSingle = true,
                             Name = "Imagine",
                             Region = 1,
-                            ReleaseYear = 1971,
-                            isPublished = true,
-                            isSingle = true
+                            ReleaseYear = 1971
                         },
                         new
                         {
@@ -90,11 +90,11 @@ namespace Perflow.Migrations
                             CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
                             Description = "Lorem printing and typesetting industry.",
                             IconURL = "https://upload.wikimedia.org/wikipedia/ru/2/2a/MindGames.jpg",
+                            IsPublished = true,
+                            IsSingle = false,
                             Name = "Mind Games",
                             Region = 1,
-                            ReleaseYear = 1973,
-                            isPublished = true,
-                            isSingle = false
+                            ReleaseYear = 1973
                         },
                         new
                         {
@@ -104,11 +104,11 @@ namespace Perflow.Migrations
                             CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
                             Description = "Lorem text of the printing and typesetting industry.",
                             IconURL = "https://upload.wikimedia.org/wikipedia/ru/thumb/e/eb/Mccartney_album.jpg/274px-Mccartney_album.jpg",
+                            IsPublished = true,
+                            IsSingle = true,
                             Name = "McCartney",
                             Region = 1,
-                            ReleaseYear = 1970,
-                            isPublished = true,
-                            isSingle = true
+                            ReleaseYear = 1970
                         });
                 });
 
@@ -132,6 +132,26 @@ namespace Perflow.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AlbumReactions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AlbumId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AlbumId = 2,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AlbumId = 3,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.ArtistFollower", b =>

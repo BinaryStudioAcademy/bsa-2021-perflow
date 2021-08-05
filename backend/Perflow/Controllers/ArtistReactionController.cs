@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Reactions;
 using Perflow.Common.DTO.Users;
-using Perflow.Services;
+using Perflow.Services.Implementations;
 
 namespace Perflow.Controllers
 {

@@ -36,6 +36,8 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<ArtistReactionService>();
 
+            services.AddScoped<AlbumReactionService>();
+
             services.AddScoped<ISongsService, SongsService>();
         }
     }

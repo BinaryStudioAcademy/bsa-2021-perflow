@@ -38,7 +38,8 @@ namespace Perflow.DataAccess.Context
             var playlists = GeneratePlaylists(users);
             var playlistSongs = GeneratePlaylistSongs(playlists, songs);
             var songReactions = GenerateSongReactions(users, songs);
-            var artistReactions = GenerateArtistReactions(users);
+            var artistReactions = GenerateArtistReactions();
+            var albumReactions = GenerateAlbumReactions();
 
             modelBuilder.Entity<Role>().HasData(roles);
             modelBuilder.Entity<User>().HasData(users);
@@ -48,6 +49,7 @@ namespace Perflow.DataAccess.Context
             modelBuilder.Entity<PlaylistSong>().HasData(playlistSongs);
             modelBuilder.Entity<SongReaction>().HasData(songReactions);
             modelBuilder.Entity<ArtistReaction>().HasData(artistReactions);
+            modelBuilder.Entity<AlbumReaction>().HasData(albumReactions);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Roles)
@@ -396,7 +398,7 @@ namespace Perflow.DataAccess.Context
             };
         }
 
-        private static IList<ArtistReaction> GenerateArtistReactions(IList<User> users)
+        private static IList<ArtistReaction> GenerateArtistReactions()
         {
             return new List<ArtistReaction>
             {
@@ -411,6 +413,31 @@ namespace Perflow.DataAccess.Context
                     Id = 2,
                     UserId = 1,
                     ArtistId = 3
+                }
+            };
+        }
+
+        private static IList<AlbumReaction> GenerateAlbumReactions()
+        {
+            return new List<AlbumReaction>
+            {
+                new AlbumReaction
+                {
+                    Id = 1,
+                    UserId = 1,
+                    AlbumId = 1
+                },
+                new AlbumReaction
+                {
+                    Id = 2,
+                    UserId = 1,
+                    AlbumId = 2
+                },
+                new AlbumReaction
+                {
+                    Id = 3,
+                    UserId = 1,
+                    AlbumId = 3
                 }
             };
         }

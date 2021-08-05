@@ -9,6 +9,8 @@ namespace Perflow.Common.MappingProfiles
         public AlbumProfile()
         {
             CreateMap<Album, AlbumReadDTO>();
+            CreateMap<Album, AlbumForListDTO>();
+            CreateMap<AlbumForListDTO, Album>();
         }
     }
 }
