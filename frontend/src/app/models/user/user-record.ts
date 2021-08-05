@@ -1,4 +1,3 @@
-
 export interface UserRecord {
   uid: string;
   email: string;
