@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,10 @@ namespace Perflow.Services.Implementations
 
             var playlist = mapper.Map<Playlist>(playlistDTO);
 
+            // These two lines are needed for create/edit playlist component while there is no ability to get currnt auth user 
+            var randomUser = await context.Users.FirstOrDefaultAsync();
+            playlist.Author = randomUser;
+
             await context.Playlists.AddAsync(playlist);
 
             await context.SaveChangesAsync();
@@ -56,6 +61,14 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentNullException(nameof(playlistDTO), "Argument cannot be null");
 
             var playlist = mapper.Map<Playlist>(playlistDTO);
+
+            var author = await context.Playlists
+                .Where(playlist => playlist.Id == playlistDTO.Id)
+                .Include(playlist => playlist.Author)
+                .Select(playlist => playlist.Author)
+                .FirstOrDefaultAsync();
+
+            playlist.Author = author;
 
             context.Entry(playlist).State = EntityState.Modified;
 
