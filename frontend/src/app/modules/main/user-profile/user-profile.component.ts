@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.topArtists = this.getTopArtists();
+    this.loadTopSongs();
   }
 
   getTopArtists = (): Array<object> => new Array<object>();
@@ -56,4 +57,12 @@ export class UserProfileComponent implements OnInit {
     const element = document.getElementById(id);
     element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   };
+
+  loadTopSongs() {
+    this._songService.getTopSongs().subscribe(
+      (songs) => {
+        this.songs = songs;
+      }
+    );
+  }
 }

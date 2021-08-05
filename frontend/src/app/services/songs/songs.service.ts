@@ -13,4 +13,8 @@ export class SongsService {
   public getLikedSongs() {
     return this._httpService.getRequest<Song[]>('/api/songs/liked');
   }
+
+  public getTopSongs() {
+    return this._httpService.getRequest<Song[]>('/api/songs/top');
+  }
 }
