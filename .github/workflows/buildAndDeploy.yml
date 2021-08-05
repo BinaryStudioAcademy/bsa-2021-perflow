@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-gateway:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +26,19 @@ jobs:
           file: .docker/Gateway.Dockerfile
           push: true
           tags: krasnovnikita/bsa2021-perflow-gateway:latest
-          
+
+  build-perflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
       - name: Build Perflow
         uses: docker/build-push-action@v2.6.1
         with:
@@ -35,7 +47,19 @@ jobs:
           push: true
           tags: krasnovnikita/bsa2021-perflow-api:latest
 
-      - name: Build Perflow.Studio
+  build-perflow-studio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build Perflow Studio
         uses: docker/build-push-action@v2.6.1
         with:
           context: .
@@ -43,6 +67,18 @@ jobs:
           push: true
           tags: krasnovnikita/bsa2021-perflow-studio-api:latest
 
+  build-processor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
       - name: Build Processor
         uses: docker/build-push-action@v2.6.1
         with:
@@ -50,8 +86,20 @@ jobs:
           file: .docker/Processor.Dockerfile
           push: true
           tags: krasnovnikita/bsa2021-perflow-processor:latest
-          
-      - name: Build Frontend
+
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build frontend
         uses: docker/build-push-action@v2.6.1
         with:
           context: .
