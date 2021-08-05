@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Perflow.Common.DTO.User;
+using Perflow.Common.DTO.Users;
 using Perflow.Services;
 
 namespace Perflow.Controllers
@@ -20,7 +20,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ICollection<UserDTO>>> Get(int id)
+        public async Task<ActionResult<ICollection<ArtistReadDTO>>> Get(int id)
         {
             return Ok(await _artistReactionService.GetArtistsByUserId(id));
         }

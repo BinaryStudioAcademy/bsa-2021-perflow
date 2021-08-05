@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Perflow.Common.DTO.User;
+using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
@@ -16,12 +16,12 @@ namespace Perflow.Services
         {
         }
 
-        public async Task<ICollection<UserDTO>> GetArtistsByUserId(int userId)
+        public async Task<ICollection<ArtistReadDTO>> GetArtistsByUserId(int userId)
         {
-            var artists = _context.ArtistReactions
+            var artists = context.ArtistReactions
                 .Where(r => r.UserId == userId)
                 .Select(userReaction => userReaction.Artist);
-            return _mapper.Map<ICollection<UserDTO>>(artists);
+            return mapper.Map<ICollection<ArtistReadDTO>>(artists);
         }
     }
 }

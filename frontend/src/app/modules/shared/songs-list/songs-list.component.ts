@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Song } from '../../../models/shared/song.model';
-import { SongSortType } from '../../../models/shared/song-sort-type.model';
+import { SongSortType } from '../../../models/song/song-sort-type.model';
 
 @Component({
   selector: 'app-songs-list',

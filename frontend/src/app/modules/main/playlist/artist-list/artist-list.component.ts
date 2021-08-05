@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDTO } from 'src/app/models/user/UserDTO';
+import { UserDTO } from 'src/app/models/user/ArtistReadDTO';
 import { ArtistService } from 'src/app/services/artist.service';
 import { ArtistCardComponent } from '../../cards/artist-card/artist-card.component';
 

@@ -1,7 +1,7 @@
 import {
   Component, Input, Output, EventEmitter
 } from '@angular/core';
-import { UserDTO } from 'src/app/models/user/UserDTO';
+import { UserDTO } from 'src/app/models/user/ArtistReadDTO';
 
 @Component({
   selector: 'app-artist-card',
