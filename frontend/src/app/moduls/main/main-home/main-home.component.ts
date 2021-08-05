@@ -867,7 +867,7 @@ export class MainHomeComponent implements OnInit {
   cashedAlbums: Album[] = [];
   start: number = 0;
   end: number = 7;
-  adjuster: number = 6;
+  adjusterAlbums: number = 6;
   constructor(private _authService: AuthService) {}
 
   ngOnInit() {
@@ -880,8 +880,8 @@ export class MainHomeComponent implements OnInit {
     this.cashedAlbums = this.allAlbums.slice(this.start, this.end);
   }
 
-  nextData(pressingButton: HTMLElement) {
-    this.adjuster += 1;
+  nextAlbums(pressingButton: HTMLElement) {
+    this.adjusterAlbums += 1;
     pressingButton.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
     if (this.end !== this.allAlbums.length) {
       const index: number = this.end;
@@ -890,8 +890,8 @@ export class MainHomeComponent implements OnInit {
     }
   }
 
-  prevData(pressingButton: HTMLElement) {
-    this.adjuster -= 1;
+  prevAlbums(pressingButton: HTMLElement) {
+    this.adjusterAlbums -= 1;
     pressingButton.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
   }
 
