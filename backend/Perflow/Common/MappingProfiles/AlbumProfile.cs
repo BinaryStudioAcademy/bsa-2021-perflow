@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Perflow.Common.DTO.Album;
 using Perflow.Common.DTO.Albums;
 using Perflow.Domain;
 
