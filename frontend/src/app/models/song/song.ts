@@ -1,6 +1,6 @@
-import { Album } from '../album';
+import { Album } from '../album/album';
 import { User } from '../user/user';
-import { AuthorType } from './enums/author-type.enum';
+import { AuthorType } from '../enums/author-type.enum';
 
 export interface Song {
   id: number;

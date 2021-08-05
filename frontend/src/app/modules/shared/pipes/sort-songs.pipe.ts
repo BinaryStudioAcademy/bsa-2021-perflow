@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Song } from '../../../models/song/song';
 import { getCompareFunctionFromSortType } from '../../../helpers/sort-compare-functions';
-import { SongSortType } from '../../../models/song/song-sort-type.model';
+import { SongSortType } from '../../../models/song/song-sort-type';
 
 @Pipe({
   name: 'sortSongs'
