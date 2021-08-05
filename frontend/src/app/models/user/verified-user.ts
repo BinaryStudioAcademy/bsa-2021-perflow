@@ -1,6 +1,6 @@
-import { User } from "./user";
+import { User } from './user';
 
 export interface VerifiedUser extends User {
-    emailVerified: boolean;
-    token:string;
-  }
+  emailVerified: boolean;
+  token:string;
+}
