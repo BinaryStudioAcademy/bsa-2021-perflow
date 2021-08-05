@@ -7,7 +7,7 @@ services:
       - '4200:80'
       # - '443:443'
     env_file:
-     - ./env/frontend.env
+     - ./frontend.env
 
   gateway:
     image: gateway
@@ -17,7 +17,7 @@ services:
     environment: 
       ASPNETCORE_URLS: http://+:4201
     env_file:
-     - ./env/gateway.env
+     - ./gateway.env
 
   perflow:
     image: perflow
@@ -27,7 +27,7 @@ services:
     environment: 
       ASPNETCORE_URLS: http://+:4202
     env_file:
-     - ./env/perflow.env
+     - ./perflow.env
 
   perflow-studio:
     image: perflow-studio
@@ -37,13 +37,13 @@ services:
     environment: 
       ASPNETCORE_URLS: http://+:4203
     env_file:
-     - ./env/perflow-studio.env
+     - ./perflow-studio.env
 
   processor:
     image: processor
     # container_name: processor
     env_file:
-     - ./env/processor.env
+     - ./processor.env
     environment:
       WAIT_HOSTS: rabbitmq:5672
       
@@ -52,7 +52,7 @@ services:
     image: rabbitmq:3-management
     #container_name: 'rabbitmq'
     # env_file:
-    #  - ./env/rabbitmq.env
+    #  - ./rabbitmq.env
     ports:
       - '15672:15672'
       - '5672:5672'
