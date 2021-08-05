@@ -128,4 +128,4 @@ jobs:
           host: ${{ secrets.PERFLOW_VM_HOST }}
           username: ${{ secrets.PERFLOW_VM_USERNAME }}
           password: ${{ secrets.PERFLOW_VM_PASSWORD }}
-          script: docker-compose -f docker-compose.prod.yml stop && docker-compose -f docker-compose.prod.yml pull && docker system prune -f && docker-compose -f docker-compose.prod.yml up -d
+          script: sudo docker-compose -f docker-compose.prod.yml stop && docker-compose -f docker-compose.prod.yml pull && docker system prune -f && docker-compose -f docker-compose.prod.yml up -d
