@@ -869,9 +869,6 @@ export class MainHomeComponent implements OnInit {
   cashedPlaylists: Playlist[] = [];
 
   // TODO: seetings without registration
-  start: number = 0;
-  endAlbums: number = 7;
-  endPlaylists: number = 7;
   adjusterAlbums: number = 6;
   adjusterPlaylists: number = 6;
 
@@ -884,18 +881,13 @@ export class MainHomeComponent implements OnInit {
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
-    this.cashedAlbums = this.allAlbums.slice(this.start, this.endAlbums);
-    this.cashedPlaylists = this.allPlaylists.slice(this.start, this.endPlaylists);
+    this.cashedAlbums = this.allAlbums;
+    this.cashedPlaylists = this.allPlaylists;
   }
 
   nextAlbums(pressingButton: HTMLElement) {
     this.adjusterAlbums += 1;
     pressingButton.scrollBy({ left: this._scrollingSizeAlbums, behavior: 'smooth' });
-    if (this.endAlbums !== this.allAlbums.length) {
-      const index: number = this.endAlbums;
-      this.endAlbums += 1;
-      this.cashedAlbums.push(this.allAlbums[index]);
-    }
   }
 
   prevAlbums(pressingButton: HTMLElement) {
@@ -906,11 +898,6 @@ export class MainHomeComponent implements OnInit {
   nextPlaylists(pressingButton: HTMLElement) {
     this.adjusterPlaylists += 1;
     pressingButton.scrollBy({ left: this._scrollingSizePlaylists, behavior: 'smooth' });
-    if (this.endPlaylists !== this.allPlaylists.length) {
-      const index: number = this.endPlaylists;
-      this.endPlaylists += 1;
-      this.cashedPlaylists.push(this.allPlaylists[index]);
-    }
   }
 
   prevPlaylists(pressingButton: HTMLElement) {
