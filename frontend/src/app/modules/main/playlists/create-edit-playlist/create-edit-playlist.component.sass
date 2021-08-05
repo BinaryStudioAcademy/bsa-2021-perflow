@@ -365,20 +365,31 @@ img[src='']
                 cursor: pointer
                 border-radius: 50px
 
-.alert
-    display: block
-    width: 100%
-    height: 30px
-    color: red
 
-files
-    width: 450px
-    height: 330px
-    overflow: hidden
-    transform: scale(0.6)
-    border: 2px solid red
-    position: absolute
-    top: 0
-    left: 0
-    margin-left: -90px
-    margin-top: -50px
+
+.menu
+    border: 0.5px solid #373C43 !important
+    border-radius: 2px
+
+.ui.floating.dropdown
+    i
+        color: $text
+        margin-left: 13px 
+    .menu
+        display: none !important
+        box-shadow: none !important
+        .item.first
+            padding-top: 18px !important
+        .item.last
+            padding-bottom: 18px !important
+
+.item
+    background-color: $light-gray !important
+    font-weight: $normal-weight !important
+    color: $text !important
+    font-family: 'Rubik' !important
+    &:hover
+        background-color: $drk-gray !important
+    &:active
+        color: #aaaaaa !important
+ 

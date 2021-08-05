@@ -4,7 +4,7 @@ using Perflow.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Playlists;
-
+using Perflow.Services.Implementations;
 
 namespace Perflow.Controllers
 {
@@ -12,9 +12,9 @@ namespace Perflow.Controllers
     [ApiController]
     public class PlaylistsController : ControllerBase
     {
-        private readonly IService<PlaylistDTO> _playlistService;
+        private readonly PlaylistService _playlistService;
 
-        public PlaylistsController(IService<PlaylistDTO> playlistService)
+        public PlaylistsController(PlaylistService playlistService)
         {
             _playlistService = playlistService;
         }
@@ -53,6 +53,24 @@ namespace Perflow.Controllers
             return CreatedAtAction(nameof(Get), new { Id = playlist.Id }, playlist);
         }
 
+
+        [HttpPost("songs")]
+        public async Task<ActionResult> AddSongToPlaylistAsync([FromBody] PlaylistSongDTO playlistSongDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            return Ok(await _playlistService.AddSongAsync(playlistSongDTO));
+        }
+
+        [HttpDelete("songs")]
+        public async Task<ActionResult> DeleteSongToPlaylistAsync([FromQuery] PlaylistSongDTO playlistSongDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            return Ok(await _playlistService.DeleteSongAsync(playlistSongDTO));
+        }
 
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] PlaylistDTO playlistDTO)

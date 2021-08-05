@@ -17,13 +17,23 @@
           <p class="playlist-title">{{playlist.name}}</p>
           <div class="playlist-description">
             <span class="author">You</span> | 
-            <span class="amount">53 songs</span> | 
-            <span class="duration">3 h 33 min</span>
+            <span class="amount">{{ playlistSongs.length }} songs</span> | 
+            <span class="duration">{{ playlistSongs | songDuration }}</span>
           </div>
           <div class="buttons">
             <button class="button-play btn-full">Play</button>
             <i class="heart outline icon reaction"></i>
-            <i class="ellipsis vertical icon menu"></i>
+            <div class="ui floating dropdown icon" appSmDropdown>
+              <i class="ellipsis vertical icon"></i>
+              <div class="right menu">
+                  <div class="item first" (click)="deletePlaylist()">
+                      <i class="trash icon"></i>Remove playlist
+                  </div>
+                  <div class="item last">
+                      <i class="share alternate icon"></i>Share
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -108,7 +118,7 @@
     <!-- Added Songs -->
     <div class="song-container">
       <div class="search-result">
-        <app-songs-list [songs]="playlistSongs" *ngIf="playlistSongs.length"></app-songs-list>
+        <app-songs-list (clickMenuItem)="clickMenuHandler($event)" [songs]="playlistSongs" *ngIf="playlistSongs.length"></app-songs-list>
       </div>
     </div>
   
@@ -122,31 +132,12 @@
         <i class="search icon"></i>
       </div>
       <div class="search-result" *ngIf="foundSongs.length" >
-        <app-songs-list-header></app-songs-list-header>
-        <!-- <app-songs-list [songs]="foundSongs"></app-songs-list> -->
+        <app-songs-list (clickMenuItem)="clickMenuHandler($event)"  [songs]="foundSongs"></app-songs-list>
       </div>
     </div>
 
-  
-  
-  <!--  
+
     
-    <ul>
-          <li *ngFor="let song of foundSongs">{{song.name}} 
-            <button class="ui inverted button" (click)="addSongToPlaylist(song)">Add</button>
-          </li>
-        </ul>
-
-        <ul>
-          <li *ngFor="let song of playlistSongs">{{song.name}} 
-            <button class="ui inverted button" (click)="deleteSongFromPlaylist(song)">Delete</button>
-          </li>
-        </ul>
-
-  <div class="files">
-    <app-song-image></app-song-image>
-  </div>
-  -->
   
    
   </div>

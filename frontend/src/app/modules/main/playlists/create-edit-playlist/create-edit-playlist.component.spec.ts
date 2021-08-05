@@ -8,9 +8,9 @@ describe('CreateEditPlaylistComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateEditPlaylistComponent ]
+      declarations: [CreateEditPlaylistComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

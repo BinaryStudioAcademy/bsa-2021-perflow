@@ -10,6 +10,7 @@ import { AccessType } from 'src/app/models/playlist/accessType';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -23,7 +24,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   public isModalShown = false;
   public playlist = {} as Playlist;
   public foundSongs: Array<Song> = new Array<Song>();
-  public playlistSongs: Array<Song> = new Array<Song>();
+  public playlistSongs = [] as Song[]; // Array<Song> = new Array<Song>();
+
   public previousDataObject = {
     name: '',
     description: '',
@@ -36,7 +38,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
 
   constructor(
     private _playlistService: PlaylistsService,
-    private _songService: SongsService
+    private _songService: SongsService,
+    private _router: Router
   ) { }
 
   ngOnInit() {
@@ -46,8 +49,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     this.playlist.createdAt = new Date();
     this.playlist.author = { id: 1 } as User;
     this.playlist.iconURL = '';
-
-    // this.createPlaylist();
+    this.createPlaylist();
 
     this._searchTerms.pipe(
       takeUntil(this._unsubscribe$),
@@ -61,10 +63,53 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     });
   }
 
-  addSongToPlaylist(song: any) {
+  clickMenuHandler(data: { menuItem: string, song: Song }) {
+    switch (data.menuItem) {
+      case 'Add to playlist':
+        this.addSongToPlaylist(data.song);
+        break;
+      case 'Remove from queue':
+        this.deleteSongToPlaylist(data.song);
+        break;
+      default:
+        break;
+    }
+  }
+
+  deletePlaylist() {
+    this._playlistService.deletePlaylist(this.playlist.id)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this._router.navigateByUrl('/playlists');
+        }
+      });
+  }
+
+  deleteSongToPlaylist(song: Song) {
+    if (this.playlistSongs.find((s) => s.id === song.id)) {
+      const playlistSong = { playlistId: this.playlist.id, songId: song.id };
+      this._playlistService.deleteSongToPlaylist(playlistSong)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe({
+          next: (data) => {
+            this.playlistSongs = this.playlistSongs.filter((s) => s.id !== data.songId);
+          }
+        });
+    }
+  }
+
+  addSongToPlaylist(song: Song) {
     if (!this.playlistSongs.find((s) => s.id === song.id)) {
-      this.foundSongs = this.foundSongs.filter((s) => s.id !== song.id);
-      this.playlistSongs.push(song);
+      const playlistSong = { playlistId: this.playlist.id, songId: song.id };
+      this._playlistService.addSongToPlaylist(playlistSong)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe({
+          next: () => {
+            this.foundSongs = this.foundSongs.filter((s) => s.id !== song.id);
+            this.playlistSongs.push(song);
+          }
+        });
     }
   }
 

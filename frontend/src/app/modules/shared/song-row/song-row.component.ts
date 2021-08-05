@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter
+} from '@angular/core';
 import { Song } from 'src/app/models/song/song';
 
 @Component({
@@ -10,4 +12,10 @@ import { Song } from 'src/app/models/song/song';
 export class SongRowComponent {
   @Input() song: Song;
   @Input() number: number;
+
+  @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
+
+  clickItem(menu: string) {
+    this.clickMenuItem.emit({ menuItem: menu, song: this.song });
+  }
 }

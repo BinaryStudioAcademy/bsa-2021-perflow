@@ -19,7 +19,13 @@ const routes: Routes = [{
       children: [
         { path: 'main', component: CreateEditPlaylistComponent }, // MainHomeComponent
         { path: 'search', component: SearchComponent },
-        { path: 'playlists', component: PlaylistComponent },
+        {
+          path: 'playlists',
+          children: [
+            { path: '', component: PlaylistComponent },
+            { path: 'create', component: CreateEditPlaylistComponent }
+          ]
+        },
         { path: 'songs', component: SongsComponent }
       ]
     }]

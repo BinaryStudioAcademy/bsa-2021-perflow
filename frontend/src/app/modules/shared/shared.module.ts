@@ -11,6 +11,7 @@ import { SongsListHeaderComponent } from './songs-list-header/songs-list-header.
 import { SongsListComponent } from './songs-list/songs-list.component';
 import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdown.directive';
 import { AccessTypePipe } from './pipes/access-type.pipe';
+import { SongDurationPipe } from './pipes/song-duration.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AccessTypePipe } from './pipes/access-type.pipe';
     SortOrderIconComponent,
     SongsListHeaderComponent,
     SongsListComponent,
-    AccessTypePipe
+    AccessTypePipe,
+    SongDurationPipe
   ],
   imports: [
     CommonModule
@@ -42,7 +44,8 @@ import { AccessTypePipe } from './pipes/access-type.pipe';
     SortOrderIconComponent,
     SongsListHeaderComponent,
     SongsListComponent,
-    AccessTypePipe
+    AccessTypePipe,
+    SongDurationPipe
   ]
 })
 export class SharedModule { }

@@ -12,7 +12,7 @@ using Perflow.Services.Interfaces;
 
 namespace Perflow.Services.Implementations
 {
-    public class PlaylistService : BaseService, IService<PlaylistDTO>
+    public class PlaylistService : BaseService
     {
 
         public PlaylistService(PerflowContext context, IMapper mapper) : base(context, mapper)
@@ -88,6 +88,41 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
 
             return entityId;
+        }
+
+        public async Task<PlaylistSongDTO> AddSongAsync(PlaylistSongDTO playlistSongDTO)
+        {
+            var playlist = await context.Playlists
+                .Where(playlist => playlist.Id == playlistSongDTO.PlaylistId)
+                .FirstOrDefaultAsync();
+
+            var song = await context.Songs
+                .FirstOrDefaultAsync(song => song.Id == playlistSongDTO.SongId);
+
+            var playlistSong = new PlaylistSong {
+                Playlist = playlist,
+                Song = song
+            };
+
+            context.PlaylistSong.Add(playlistSong);
+
+            await context.SaveChangesAsync();
+
+            return playlistSongDTO;
+        }
+
+        public async Task<PlaylistSongDTO> DeleteSongAsync(PlaylistSongDTO playlistSongDTO)
+        {
+            var playlistSong = await context.PlaylistSong
+                .Where(p => p.PlaylistId == playlistSongDTO.PlaylistId && p.SongId == playlistSongDTO.SongId)
+                .FirstOrDefaultAsync();
+
+            // context.PlaylistSong.Remove(playlistSong);
+            context.Entry(playlistSong).State = EntityState.Deleted;
+
+            await context.SaveChangesAsync();
+
+            return playlistSongDTO;
         }
     }
 }
