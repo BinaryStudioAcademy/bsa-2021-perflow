@@ -15,7 +15,7 @@ import { MainHomeComponent } from './main-home/main-home.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileComponent } from '../../modules/main/user-profile/user-profile.component';
 import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
 
 @NgModule({
