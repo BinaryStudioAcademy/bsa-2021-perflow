@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Perflow.Common.DTO.Playlists;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Perflow.Common.DTO.Playlist;
 
-namespace Perflow.Services
+namespace Perflow.Services.Implementations
 {
     public class PlaylistService : BaseService, IService<PlaylistDTO>
     {

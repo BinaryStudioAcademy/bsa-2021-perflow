@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Perflow.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Perflow.Common.DTO.Playlist;
+using Perflow.Common.DTO.Playlists;
 
 
 namespace Perflow.Controllers

@@ -1,4 +1,4 @@
-﻿namespace Perflow.Common.DTO.Playlist
+﻿namespace Perflow.Common.DTO.Playlists
 {
     public enum AccessTypeDTO
     {

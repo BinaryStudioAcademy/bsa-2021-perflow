@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Perflow.Common.DTO.User
+namespace Perflow.Common.DTO.Users
 {
-    public class UserDTO
+    public class UserReadDTO
     {
         public string UserName { get; set; }
         public string IconURL { get; set; }

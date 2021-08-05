@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Perflow.Common.DTO.Groups;
+using Perflow.Domain;
 
 namespace Perflow.Common.MappingProfiles
 {
@@ -6,6 +8,7 @@ namespace Perflow.Common.MappingProfiles
     {
         public GroupProfile()
         {
+            CreateMap<Group, GroupReadDTO>();
         }
     }
 }
