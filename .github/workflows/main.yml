@@ -37,7 +37,7 @@ jobs:
           context: .
           file: .docker/Gateway.Dockerfile
           push: true
-          tags: bsa2021-perflow-gateway:latest
+          tags: krasnovnikita/bsa2021-perflow-gateway:latest
           
       - name: Build Perflow
         uses: docker/build-push-action@v2.6.1
@@ -45,7 +45,7 @@ jobs:
           context: .
           file: .docker/Perflow.Dockerfile
           push: true
-          tags: bsa2021-perflow-api:latest
+          tags: krasnovnikita/bsa2021-perflow-api:latest
 
       - name: Build Perflow.Studio
         uses: docker/build-push-action@v2.6.1
@@ -53,7 +53,7 @@ jobs:
           context: .
           file: .docker/Perflow.Studio.Dockerfile
           push: true
-          tags: bsa2021-perflow-studio-api:latest
+          tags: krasnovnikita/bsa2021-perflow-studio-api:latest
 
       - name: Build Processor
         uses: docker/build-push-action@v2.6.1
@@ -61,7 +61,7 @@ jobs:
           context: .
           file: .docker/Processor.Dockerfile
           push: true
-          tags: bsa2021-perflow-processor:latest
+          tags: krasnovnikita/bsa2021-perflow-processor:latest
           
       - name: Build Frontend
         uses: docker/build-push-action@v2.6.1
@@ -69,4 +69,4 @@ jobs:
           context: .
           file: .docker/Frontend.Dockerfile
           push: true
-          tags: bsa2021-perflow-frontend:latest
+          tags: krasnovnikita/bsa2021-perflow-frontend:latest
