@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Song } from 'src/app/models/song/song';
+import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -10,6 +12,12 @@ export class UserProfileComponent implements OnInit {
 
   private readonly _scrollingSize: number = 270;
   public topArtists = new Array<object>();
+
+  songs: Song[] = [];
+
+  constructor(
+    private _songService: SongsService
+  ) {}
 
   ngOnInit(): void {
     this.topArtists = this.getTopArtists();
