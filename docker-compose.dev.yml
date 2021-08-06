@@ -1,0 +1,54 @@
+version: '3.1'
+services:
+  frontend:
+    image: frontend
+    ports:
+      - '4200:80'
+    env_file:
+     - ./env/frontend.env
+
+  gateway:
+    image: gateway
+    ports:
+      - '4201:4201'
+    environment: 
+      ASPNETCORE_URLS: http://+:4201
+    env_file:
+     - ./env/gateway.env
+
+  perflow:
+    image: krasnovnikita/bsa2021-perflow-api
+    ports:
+      - '4202:4202'
+    environment: 
+      ASPNETCORE_URLS: http://+:4202
+    env_file:
+     - ./env/perflow.env
+
+  perflow-studio:
+    image: krasnovnikita/bsa2021-perflow-studio-api
+    ports:
+      - '4203:4203'
+    environment: 
+      ASPNETCORE_URLS: http://+:4203
+    env_file:
+     - ./env/perflow-studio.env
+
+  processor:
+    image: krasnovnikita/bsa2021-perflow-processor
+    env_file:
+     - ./env/processor.env
+    environment:
+      WAIT_HOSTS: rabbitmq:5672
+      
+  # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

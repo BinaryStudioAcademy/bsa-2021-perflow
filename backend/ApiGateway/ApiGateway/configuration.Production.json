@@ -54,7 +54,7 @@
       }
     ],
     "GlobalConfiguration": {
-      "BaseUrl": "http://perflow:4202"
+      "BaseUrl": "http://perflow:4202/api"
     }
   }  
   
