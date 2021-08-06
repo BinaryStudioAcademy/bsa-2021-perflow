@@ -16,10 +16,6 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./modules/register/user-registration.module').then((m) => m.UserRegistrationModule)
   },
-  {
-    path: 'editUser',
-    loadChildren: () => import('./moduls/user/user.module').then((m) => m.UserModule)
-  },
   { path: '**', redirectTo: 'login' }
 ];
 

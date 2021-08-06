@@ -8,9 +8,9 @@ describe('UpdatePasswordFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdatePasswordFormComponent ]
+      declarations: [UpdatePasswordFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

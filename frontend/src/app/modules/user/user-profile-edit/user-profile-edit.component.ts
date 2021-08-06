@@ -1,28 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/shared/user.model';
+import { Component, ViewChild } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+import { User } from 'src/app/models/user/user';
+import { UserChangePassword } from 'src/app/models/user/user-change-password';
 import { UserService } from 'src/app/services/user.service';
+import { UpdatePasswordFormComponent } from '../update-password-form/update-password-form.component';
 
 @Component({
   selector: 'app-user-profile-edit',
   templateUrl: './user-profile-edit.component.html',
   styleUrls: ['./user-profile-edit.component.sass']
 })
-export class UserProfileEditComponent implements OnInit {
+export class UserProfileEditComponent {
+  @ViewChild(UpdatePasswordFormComponent, { static: false })
+  private _updatePasswordFormComponent: UpdatePasswordFormComponent | undefined;
   updatedUser: User;
+  updatedUserPassword: UserChangePassword;
   isSuccess: boolean = false;
   isError: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private _userService: UserService) { }
 
-  onSubmit(updatedUser: User) {
-    console.log(updatedUser);
+  onSubmitUser(updatedUser: User) {
     this.updatedUser = updatedUser;
-    this.userService.updateUser(updatedUser)
-      .subscribe(() => this.isSuccess = true,
-                 () => this.isError = true);
+    this._userService.updateUser(updatedUser)
+      .subscribe(() => {
+        this.isSuccess = true;
+      },
+      () => {
+        this.isError = true;
+      });
   }
 
-  ngOnInit(): void {
+  onSubmitPassword(updatedUserPassword: UserChangePassword) {
+    this.updatedUserPassword = updatedUserPassword;
+    this._userService.updateUserPassword(updatedUserPassword)
+      .pipe(
+        finalize(() => {
+          this._updatePasswordFormComponent?.reset();
+        })
+      )
+      .subscribe(() => {
+        this.isSuccess = true;
+      },
+      () => {
+        this.isError = true;
+      });
   }
-
 }

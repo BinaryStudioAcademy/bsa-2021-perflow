@@ -1,7 +1,9 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import {
+  Component, EventEmitter, OnInit, Output
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../../../models/shared/user.model';
+import { User } from '../../../models/user/user';
 import { countries } from '../data/countries';
 import { Country } from '../models/country';
 
@@ -17,16 +19,16 @@ declare global {
   styleUrls: ['./profile-edit-form.component.sass']
 })
 export class ProfileEditFormComponent implements OnInit {
-  public form!: FormGroup;
-  public genders: { key: boolean; text: string; }[] = [{ key: false, text: "Male" }, { key: true, text: "Female" }];
-  public countries: Country[] = countries;
-  public standartIcon: string = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiWMxxTKJB-4WptJQP94DgYzLQJMZ4U69ASOnDvNMmvEZJwwvHx7LVXg7iwQvpK6eAeHQ&usqp=CAU";
+  form!: FormGroup;
+  genders: { key: boolean; text: string; }[] = [{ key: false, text: 'Male' }, { key: true, text: 'Female' }];
+  countries: Country[] = countries;
+  standartIcon: string = 'src/assets/images/standartIcon.png';
+  user: User;
 
-  user: User = { id: 1, userName: "someName", email: "some@gmail.com", description: "some", gender: true, country: "Albania", birthday: new Date(), password: "", iconURL: undefined };
   @Output()
   updatedUser = new EventEmitter<User>();
 
-  constructor(private router: Router) { }
+  constructor(private _router: Router) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -45,7 +47,7 @@ export class ProfileEditFormComponent implements OnInit {
         Validators.maxLength(150)
       ]),
       birthday: new FormControl(this.user.birthday),
-      iconURL: new FormControl(this.user?.iconURL),
+      iconURL: new FormControl(this.user.iconURL),
       gender: new FormControl(this.user.gender),
       country: new FormControl(this.user.country)
     });
@@ -74,16 +76,17 @@ export class ProfileEditFormComponent implements OnInit {
         this.user.iconURL = reader.result!.toString();
       };
       reader.readAsDataURL(file);
-    } else {
-      $('.ui.modal').modal("show");
+    }
+    else {
+      $('.ui.modal').modal('show');
     }
   }
 
   redirect(route: string) {
-    this.router.navigate([route]);
+    this._router.navigate([route]);
   }
 
-  public onSubmit(updatedUser: User) {
-    this.updatedUser.emit(updatedUser);
+  public onSubmit() {
+    this.updatedUser.emit(this.user);
   }
 }

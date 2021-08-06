@@ -3,11 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: UserProfileEditComponent,
-  //   children: []
-  // }
+  {
+    path: '',
+    component: UserProfileEditComponent,
+    children: []
+  }
 ];
 
 @NgModule({

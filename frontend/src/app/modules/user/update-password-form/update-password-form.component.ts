@@ -1,7 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  Component, EventEmitter, OnInit, Output
+} from '@angular/core';
+import {
+  AbstractControl, FormControl, FormGroup, ValidatorFn, Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/shared/user.model';
+import { UserChangePassword } from 'src/app/models/user/user-change-password';
 
 @Component({
   selector: 'app-update-password-form',
@@ -9,13 +14,13 @@ import { User } from 'src/app/models/shared/user.model';
   styleUrls: ['./update-password-form.component.sass']
 })
 export class UpdatePasswordFormComponent implements OnInit {
-  public form!: FormGroup;
+  form!: FormGroup;
+  user: User;
 
-  user: User = { id: 1, userName: "someName", email: "some@gmail.com", description: "some", gender: true, country: "Albania", birthday: new Date(), password: "", iconURL: undefined };
   @Output()
-  updatedUser = new EventEmitter<User>();
+  updatedUserPassword = new EventEmitter<UserChangePassword>();
 
-  constructor(private router: Router) { }
+  constructor(private _router: Router) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -31,8 +36,8 @@ export class UpdatePasswordFormComponent implements OnInit {
         Validators.minLength(6),
         Validators.maxLength(20),
         Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{6,20}$')
-      ]),
-    }, { validators: this.checkPasswords });
+      ])
+    }, { validators: this._checkPasswords });
   }
 
   get currentPassword() {
@@ -48,14 +53,23 @@ export class UpdatePasswordFormComponent implements OnInit {
   }
 
   redirect(route: string) {
-    this.router.navigate([route]);
+    this._router.navigate([route]);
   }
 
-  public onSubmit(updatedUser: User) {
-    this.updatedUser.emit(updatedUser);
+  public reset() {
+    this.form.reset();
   }
 
-  private checkPasswords: ValidatorFn = (group: AbstractControl) => {
+  public onSubmit() {
+    const updatedUserPassword: UserChangePassword = {
+      currentPassword: this.form.get('currentPassword')!.value,
+      newPassword: this.form.get('newPassword')!.value,
+      id: this.user.id
+    };
+    this.updatedUserPassword.emit(updatedUserPassword);
+  }
+
+  private _checkPasswords: ValidatorFn = (group: AbstractControl) => {
     const pass = group.get('newPassword')!.value;
     const confirmPass = group.get('newPasswordConfirmation')!.value;
     return pass === confirmPass ? null : { notSame: true };

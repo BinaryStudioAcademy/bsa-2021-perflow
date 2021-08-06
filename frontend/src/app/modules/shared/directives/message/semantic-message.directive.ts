@@ -1,4 +1,4 @@
-import { Directive, ElementRef } from "@angular/core";
+import { AfterViewInit, Directive, ElementRef } from '@angular/core';
 
 declare global {
   interface JQuery {
@@ -7,16 +7,14 @@ declare global {
 }
 
 @Directive({
-  selector: '[sm-message]'
+  selector: '[appSmMessage]'
 })
 
-export class SemanticMessageDirective {
-
-  constructor(private message: ElementRef) { }
+export class SemanticMessageDirective implements AfterViewInit {
+  constructor(private _message: ElementRef) { }
 
   ngAfterViewInit() {
-    let element = $(this.message.nativeElement);
+    const element = $(this._message.nativeElement);
     element.on('click', () => element.closest('.message').transition('fade'));
   }
-
 }

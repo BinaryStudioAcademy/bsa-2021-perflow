@@ -20,9 +20,6 @@ import { FireBaseModule } from './modules/fire-base/fire-base.module';
     BrowserAnimationsModule,
     FireBaseModule,
     HttpClientModule
-    AuthModule,
-    HttpClientModule,
-    SharedModule
   ],
   providers: [
     {

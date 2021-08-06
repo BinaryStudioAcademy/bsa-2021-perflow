@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
+using System.Security.Cryptography;
 
 namespace Perflow.Common.Security
 {
@@ -18,5 +19,21 @@ namespace Perflow.Common.Security
                     numBytesRequested: KeyLength
                 )
             );
+
+        public static bool ValidatePassword(string password, string hash, string salt)
+        {
+            return HashPassword(password, Convert.FromBase64String(salt)) == hash;
+        }
+
+        public static byte[] GetRandomBytes(int length = 32)
+        {
+            using (var randomNumberGenerator = new RNGCryptoServiceProvider())
+            {
+                var salt = new byte[length];
+                randomNumberGenerator.GetBytes(salt);
+
+                return salt;
+            }
+        }
     }
 }
