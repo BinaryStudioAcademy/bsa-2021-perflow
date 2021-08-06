@@ -101,11 +101,13 @@ jobs:
       
       - name: Build frontend
         uses: docker/build-push-action@v2.6.1
-        env:
-          FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
+        # env:
+        #   FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
         with:
           context: .
           file: .docker/Frontend.Dockerfile
+          build-args: |
+            FIREBASE_KEY=${{ secrets.FIREBASE_KEY }}
           push: true
           tags: krasnovnikita/bsa2021-perflow-frontend:latest
 
