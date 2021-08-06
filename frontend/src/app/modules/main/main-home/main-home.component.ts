@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Playlist } from 'src/app/models/playlist';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -17,9 +18,9 @@ export class MainHomeComponent implements OnInit {
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
   public newReleases = new Array<object>();
-  public calmRhythms = new Array<object>();
+  public calmRhythms = new Array<Playlist>();
   public yourMix = new Array<object>();
-  public top100Songs = new Array<object>();
+  public top100Songs = new Array<Playlist>();
 
   constructor(private _authService: AuthService) {
   }
@@ -51,13 +52,31 @@ export class MainHomeComponent implements OnInit {
   getNewReleases = (): Array<object> => new Array<object>();
 
   // User should be able to play Calm rhythms - the newest playlists which moderator creates
-  getCalmRhythms = (): Array<object> => new Array<object>();
+  getCalmRhythms = (): Array<Playlist> => new Array<Playlist>(15).fill(
+    {
+      id: 0,
+      createdAt: new Date(),
+      name: 'Fresh & Chill',
+      description: 'Ed Sheeran, Paloma Mami Maroon 5, SigalaPink, Oximer',
+      iconURL: '../../../../../assets/images/playlist1.png',
+      author: undefined
+    }
+  );
 
   // User should be able to play Your mix - take songs from all playlists plus liked songs and show in random order
   getYourMix = (): Array<object> => new Array<object>();
 
   // User should be able to play Top 100 songs - 100 song ordering by amount of likes by all users
-  getTop100Songs = (): Array<object> => new Array<object>();
+  getTop100Songs = (): Array<Playlist> => new Array<Playlist>(15).fill(
+    {
+      id: 0,
+      createdAt: new Date(),
+      name: 'Fresh & Chill',
+      description: 'Ed Sheeran, Paloma Mami Maroon 5, SigalaPink, Oximer',
+      iconURL: '../../../../../assets/images/playlist2.png',
+      author: undefined
+    }
+  );
 
   nextSlide = () => {
     this.accordionAnimation();

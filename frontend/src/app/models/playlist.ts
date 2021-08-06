@@ -6,5 +6,5 @@ export interface Playlist {
   name: string;
   description: string;
   iconURL: string;
-  author: User;
+  author?: User;
 }

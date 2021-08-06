@@ -1,6 +1,8 @@
-<div class="ui grid">
-    <app-playlist-card *ngFor="let i of [].constructor(30)"
-    [playlist]="playlists[0]"
-    >
-    </app-playlist-card>
+<div class="playlist">
+    <div class="ui grid">
+        <app-playlist-card *ngFor="let k of [].constructor(30); let i = index"
+        [playlist]="playlists[i%3]"
+        >
+        </app-playlist-card>
+    </div>
 </div>
