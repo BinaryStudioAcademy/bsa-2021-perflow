@@ -19,6 +19,218 @@ namespace Perflow.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("AlbumSong", b =>
+                {
+                    b.Property<int>("AlbumsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SongsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AlbumsId", "SongsId");
+
+                    b.HasIndex("SongsId");
+
+                    b.ToTable("AlbumSong");
+
+                    b.HasData(
+                        new
+                        {
+                            AlbumsId = 3,
+                            SongsId = 1
+                        },
+                        new
+                        {
+                            AlbumsId = 2,
+                            SongsId = 2
+                        },
+                        new
+                        {
+                            AlbumsId = 1,
+                            SongsId = 3
+                        },
+                        new
+                        {
+                            AlbumsId = 2,
+                            SongsId = 4
+                        },
+                        new
+                        {
+                            AlbumsId = 4,
+                            SongsId = 5
+                        },
+                        new
+                        {
+                            AlbumsId = 4,
+                            SongsId = 6
+                        },
+                        new
+                        {
+                            AlbumsId = 4,
+                            SongsId = 7
+                        },
+                        new
+                        {
+                            AlbumsId = 4,
+                            SongsId = 8
+                        },
+                        new
+                        {
+                            AlbumsId = 4,
+                            SongsId = 9
+                        },
+                        new
+                        {
+                            AlbumsId = 5,
+                            SongsId = 5
+                        },
+                        new
+                        {
+                            AlbumsId = 5,
+                            SongsId = 6
+                        },
+                        new
+                        {
+                            AlbumsId = 5,
+                            SongsId = 7
+                        },
+                        new
+                        {
+                            AlbumsId = 5,
+                            SongsId = 8
+                        },
+                        new
+                        {
+                            AlbumsId = 5,
+                            SongsId = 9
+                        },
+                        new
+                        {
+                            AlbumsId = 6,
+                            SongsId = 5
+                        },
+                        new
+                        {
+                            AlbumsId = 6,
+                            SongsId = 6
+                        },
+                        new
+                        {
+                            AlbumsId = 6,
+                            SongsId = 7
+                        },
+                        new
+                        {
+                            AlbumsId = 6,
+                            SongsId = 8
+                        },
+                        new
+                        {
+                            AlbumsId = 6,
+                            SongsId = 9
+                        },
+                        new
+                        {
+                            AlbumsId = 7,
+                            SongsId = 5
+                        },
+                        new
+                        {
+                            AlbumsId = 7,
+                            SongsId = 6
+                        },
+                        new
+                        {
+                            AlbumsId = 7,
+                            SongsId = 7
+                        },
+                        new
+                        {
+                            AlbumsId = 7,
+                            SongsId = 8
+                        },
+                        new
+                        {
+                            AlbumsId = 7,
+                            SongsId = 9
+                        },
+                        new
+                        {
+                            AlbumsId = 8,
+                            SongsId = 5
+                        },
+                        new
+                        {
+                            AlbumsId = 8,
+                            SongsId = 6
+                        },
+                        new
+                        {
+                            AlbumsId = 8,
+                            SongsId = 7
+                        },
+                        new
+                        {
+                            AlbumsId = 8,
+                            SongsId = 8
+                        },
+                        new
+                        {
+                            AlbumsId = 8,
+                            SongsId = 9
+                        },
+                        new
+                        {
+                            AlbumsId = 9,
+                            SongsId = 5
+                        },
+                        new
+                        {
+                            AlbumsId = 9,
+                            SongsId = 6
+                        },
+                        new
+                        {
+                            AlbumsId = 9,
+                            SongsId = 7
+                        },
+                        new
+                        {
+                            AlbumsId = 9,
+                            SongsId = 8
+                        },
+                        new
+                        {
+                            AlbumsId = 9,
+                            SongsId = 9
+                        },
+                        new
+                        {
+                            AlbumsId = 10,
+                            SongsId = 5
+                        },
+                        new
+                        {
+                            AlbumsId = 10,
+                            SongsId = 6
+                        },
+                        new
+                        {
+                            AlbumsId = 10,
+                            SongsId = 7
+                        },
+                        new
+                        {
+                            AlbumsId = 10,
+                            SongsId = 8
+                        },
+                        new
+                        {
+                            AlbumsId = 10,
+                            SongsId = 9
+                        });
+                });
+
             modelBuilder.Entity("Perflow.Domain.Album", b =>
                 {
                     b.Property<int>("Id")
@@ -66,6 +278,148 @@ namespace Perflow.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("Albums");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorId = 2,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                            IconURL = "https://upload.wikimedia.org/wikipedia/ru/6/69/ImagineCover.jpg",
+                            Name = "Imagine",
+                            Region = 1,
+                            ReleaseYear = 1971,
+                            isPublished = true,
+                            isSingle = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AuthorId = 2,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem printing and typesetting industry.",
+                            IconURL = "https://upload.wikimedia.org/wikipedia/ru/2/2a/MindGames.jpg",
+                            Name = "Mind Games",
+                            Region = 1,
+                            ReleaseYear = 1973,
+                            isPublished = true,
+                            isSingle = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AuthorId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem text of the printing and typesetting industry.",
+                            IconURL = "https://upload.wikimedia.org/wikipedia/ru/thumb/e/eb/Mccartney_album.jpg/274px-Mccartney_album.jpg",
+                            Name = "McCartney",
+                            Region = 1,
+                            ReleaseYear = 1970,
+                            isPublished = true,
+                            isSingle = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AuthorId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem text of the printing and typesetting industry.",
+                            IconURL = "https://s3-alpha-sig.figma.com/img/1fb9/07df/8cb83fc1826b60e1ac4136f907838260?Expires=1628467200&Signature=AYz434YZD2rEyIIGCCPLssB3aItrqVCktB59iue5-RQ68UQyUM~Vc5ek7Lc-yoItOaPgcw7r1J6eLz82wSA5zqTI9Hh7Bp7LzgD5uIM5P90QWdpYmgeCxW5u66n~~VxMy51WfAcGL8VQ2C1PTT9OpChOhrT4r9jpzFwfmJCShPZbqdRQslmU3b8oyInIdnR~XFUdf2Demw5X0NbSF4esMgkkWvT5gDdR19Q5RNyDcdG8nh5rQY~LSXRBVFmEcd5aDr8-bRMjdr36BJ0ntsF2CeUaJ1y3tJB64rgZrCZO11deVRMl6XGAlwT3I~BF~wo4vM~-qyGn4HghkFFHh~sxxw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+                            Name = "Fresh & Chill",
+                            Region = 1,
+                            ReleaseYear = 2015,
+                            isPublished = true,
+                            isSingle = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AuthorId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem text of the printing and typesetting industry.",
+                            IconURL = "https://i.ibb.co/4SHq8NX/Ellipse-42-3.png",
+                            Name = "Relax Work",
+                            Region = 1,
+                            ReleaseYear = 2015,
+                            isPublished = true,
+                            isSingle = true
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AuthorId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem text of the printing and typesetting industry.",
+                            IconURL = "https://i.ibb.co/7r5Ft4n/Ellipse-42.png",
+                            Name = "Tropical chaos",
+                            Region = 1,
+                            ReleaseYear = 2015,
+                            isPublished = true,
+                            isSingle = true
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AuthorId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem text of the printing and typesetting industry.",
+                            IconURL = "https://i.ibb.co/sK5hcbn/Ellipse-42-4.png",
+                            Name = "Beautiful People",
+                            Region = 1,
+                            ReleaseYear = 2015,
+                            isPublished = true,
+                            isSingle = true
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AuthorId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem text of the printing and typesetting industry.",
+                            IconURL = "https://i.ibb.co/4SHq8NX/Ellipse-42-3.png",
+                            Name = "Relax Work",
+                            Region = 1,
+                            ReleaseYear = 2015,
+                            isPublished = true,
+                            isSingle = true
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AuthorId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem text of the printing and typesetting industry.",
+                            IconURL = "https://i.ibb.co/7r5Ft4n/Ellipse-42.png",
+                            Name = "Tropical chaos",
+                            Region = 1,
+                            ReleaseYear = 2015,
+                            isPublished = true,
+                            isSingle = true
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AuthorId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem text of the printing and typesetting industry.",
+                            IconURL = "https://i.ibb.co/sK5hcbn/Ellipse-42-4.png",
+                            Name = "Beautiful People",
+                            Region = 1,
+                            ReleaseYear = 2015,
+                            isPublished = true,
+                            isSingle = true
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.AlbumReaction", b =>
@@ -150,6 +504,20 @@ namespace Perflow.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Name = "Maroon 5"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Name = "Imagine Dragons"
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.Notification", b =>
@@ -211,6 +579,38 @@ namespace Perflow.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Playlists");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessType = 2,
+                            AuthorId = 4,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "It is a long established fact readable content of a page when looking at its layout.",
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "Rock"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessType = 2,
+                            AuthorId = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            Description = "It is a page when looking at its layout.",
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "Almost the Beatles"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessType = 0,
+                            AuthorId = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            Description = "It is a some page when looking at its layout.",
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "JohnLennon"
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.PlaylistReaction", b =>
@@ -258,6 +658,71 @@ namespace Perflow.Migrations
                     b.HasIndex("SongId");
 
                     b.ToTable("PlaylistSong");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            PlaylistId = 1,
+                            SongId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            PlaylistId = 1,
+                            SongId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            PlaylistId = 1,
+                            SongId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            PlaylistId = 2,
+                            SongId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            PlaylistId = 2,
+                            SongId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            PlaylistId = 2,
+                            SongId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            PlaylistId = 3,
+                            SongId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            PlaylistId = 3,
+                            SongId = 3
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            PlaylistId = 3,
+                            SongId = 4
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.Role", b =>
@@ -273,6 +738,23 @@ namespace Perflow.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Moderator"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Artist"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "User"
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.Song", b =>
@@ -318,6 +800,107 @@ namespace Perflow.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("Songs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ArtistId = 3,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 2,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "That Would Be Something"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ArtistId = 2,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 4,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "Mind Games"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ArtistId = 2,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 2,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "Imagine"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ArtistId = 2,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 3,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "Only People"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ArtistId = 5,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 2,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "Bad Habits"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ArtistId = 6,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 4,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "Mi Palomita"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AuthorType = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 2,
+                            GroupId = 1,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "If I Never See Your Face Again"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 3,
+                            GroupId = 2,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "Follow You"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ArtistId = 9,
+                            AuthorType = 0,
+                            CreatedAt = new DateTimeOffset(new DateTime(2020, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Duration = 3,
+                            HasCensorship = false,
+                            IconURL = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg",
+                            Name = "KONSTRUKT"
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.SongReaction", b =>
@@ -387,6 +970,136 @@ namespace Perflow.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Birthday = new DateTimeOffset(new DateTime(1999, 3, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            Country = "Ukraine",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                            Email = "user@gmail.com",
+                            Gender = true,
+                            IconURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiWMxxTKJB-4WptJQP94DgYzLQJMZ4U69ASOnDvNMmvEZJwwvHx7LVXg7iwQvpK6eAeHQ&usqp=CAU",
+                            Password = "2w4tdavyRWnzPwjhzJJseAcm3kkrRQaTvuzAXBloRZs=",
+                            Salt = "2W+y0GwQIbcSl5vUC6DAyo6I+opkO3E9NlSa+hU7huA=",
+                            UserName = "user"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Birthday = new DateTimeOffset(new DateTime(1940, 10, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Country = "Great Britain",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                            Email = "artist@gmail.com",
+                            Gender = true,
+                            IconURL = "https://cdn.ananasposter.ru/image/cache/catalog/poster/music/85/8817-1000x830.jpg",
+                            Password = "xNzTPir2trd17vYgGnQyv6xs6tKVoFbloHMN9wXSi2E=",
+                            Salt = "K2M0pMRA8JCJmVqY69nhwbEW7cXnFvqhj3K8A9WqpCo=",
+                            UserName = "JohnLennon"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Birthday = new DateTimeOffset(new DateTime(1942, 6, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Country = "Great Britain",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "It was popularised in the 1960s.",
+                            Email = "artist2@gmail.com",
+                            Gender = true,
+                            IconURL = "https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg",
+                            Password = "xldj0m3IAZ/yYdH+eaWN5FmdSCqMNxPEk4CxgbrxbXk=",
+                            Salt = "n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=",
+                            UserName = "PaulMcCartney"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Birthday = new DateTimeOffset(new DateTime(1996, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            Country = "Poland",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "It has survived not only five centuries, but also the leap into electronic, remaining essentially unchanged.",
+                            Email = "moderator@gmail.com",
+                            Gender = false,
+                            IconURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiWMxxTKJB-4WptJQP94DgYzLQJMZ4U69ASOnDvNMmvEZJwwvHx7LVXg7iwQvpK6eAeHQ&usqp=CAU",
+                            Password = "NVB3ZZEK+rqseACtraFR+RHK4sdReGavKt5IE7mw7gQ=",
+                            Salt = "jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=",
+                            UserName = "moderator"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Birthday = new DateTimeOffset(new DateTime(1999, 3, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            Country = "Ukraine",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                            Email = "artist3@gmail.com",
+                            Gender = true,
+                            IconURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiWMxxTKJB-4WptJQP94DgYzLQJMZ4U69ASOnDvNMmvEZJwwvHx7LVXg7iwQvpK6eAeHQ&usqp=CAU",
+                            Password = "2w4tdavyRWnzPwjhzJJseAcm3kkrRQaTvuzAXBloRZs=",
+                            Salt = "2W+y0GwQIbcSl5vUC6DAyo6I+opkO3E9NlSa+hU7huA=",
+                            UserName = "Ed Sheeran"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Birthday = new DateTimeOffset(new DateTime(1940, 10, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Country = "Great Britain",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                            Email = "artist4@gmail.com",
+                            Gender = true,
+                            IconURL = "https://cdn.ananasposter.ru/image/cache/catalog/poster/music/85/8817-1000x830.jpg",
+                            Password = "xNzTPir2trd17vYgGnQyv6xs6tKVoFbloHMN9wXSi2E=",
+                            Salt = "K2M0pMRA8JCJmVqY69nhwbEW7cXnFvqhj3K8A9WqpCo=",
+                            UserName = "Paloma Mami"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Birthday = new DateTimeOffset(new DateTime(1942, 6, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Country = "Great Britain",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "It was popularised in the 1960s.",
+                            Email = "artist5@gmail.com",
+                            Gender = true,
+                            GroupId = 1,
+                            IconURL = "https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg",
+                            Password = "xldj0m3IAZ/yYdH+eaWN5FmdSCqMNxPEk4CxgbrxbXk=",
+                            Salt = "n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=",
+                            UserName = "Adam Levine"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Birthday = new DateTimeOffset(new DateTime(1996, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 2, 0, 0, 0)),
+                            Country = "Poland",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "It has survived not only five centuries, but also the leap into electronic, remaining essentially unchanged.",
+                            Email = "artist6@gmail.com",
+                            Gender = false,
+                            GroupId = 2,
+                            IconURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiWMxxTKJB-4WptJQP94DgYzLQJMZ4U69ASOnDvNMmvEZJwwvHx7LVXg7iwQvpK6eAeHQ&usqp=CAU",
+                            Password = "NVB3ZZEK+rqseACtraFR+RHK4sdReGavKt5IE7mw7gQ=",
+                            Salt = "jdEeMqVH6VdFQjdzLTWNT4+vHS2B3MWNQQTUYm9o984=",
+                            UserName = "Dan Reynolds"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Birthday = new DateTimeOffset(new DateTime(1942, 6, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Country = "Great Britain",
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
+                            Description = "It was popularised in the 1960s.",
+                            Email = "artist7@gmail.com",
+                            Gender = true,
+                            IconURL = "https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg",
+                            Password = "xldj0m3IAZ/yYdH+eaWN5FmdSCqMNxPEk4CxgbrxbXk=",
+                            Salt = "n7EefMTF/qz4DSlCLhz6SvvfaNZ5J9drrVtoYBUD15I=",
+                            UserName = "Oxxxymiron"
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.UserSettings", b =>
@@ -438,6 +1151,28 @@ namespace Perflow.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("RoleUser");
+
+                    b.HasData(
+                        new
+                        {
+                            RolesId = 3,
+                            UsersId = 1
+                        },
+                        new
+                        {
+                            RolesId = 2,
+                            UsersId = 2
+                        },
+                        new
+                        {
+                            RolesId = 2,
+                            UsersId = 3
+                        },
+                        new
+                        {
+                            RolesId = 1,
+                            UsersId = 4
+                        });
                 });
 
             modelBuilder.Entity("Perflow.Domain.Album", b =>

@@ -9,6 +9,11 @@ namespace Perflow.Common.MappingProfiles
         public SongProfile()
         {
             CreateMap<Song, SongReadDTO>();
+            CreateMap<Song, SongViewDTO>()
+                .ForMember("Artist", opt => opt.MapFrom(c => c.Artist.UserName))
+                .ForMember("Group", opt => opt.MapFrom(c => c.Group.Name));
+
+            CreateMap<SongViewDTO, Song>();
         }
     }
 }
