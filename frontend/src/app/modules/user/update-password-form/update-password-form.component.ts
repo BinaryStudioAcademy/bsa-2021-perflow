@@ -27,14 +27,10 @@ export class UpdatePasswordFormComponent implements OnInit {
       currentPassword: new FormControl('', Validators.required),
       newPassword: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(20),
         Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{6,20}$')
       ]),
       newPasswordConfirmation: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(20),
         Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{6,20}$')
       ])
     }, { validators: this._checkPasswords });

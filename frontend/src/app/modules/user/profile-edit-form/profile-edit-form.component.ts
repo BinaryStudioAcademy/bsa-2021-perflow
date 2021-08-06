@@ -22,7 +22,7 @@ export class ProfileEditFormComponent implements OnInit {
   form!: FormGroup;
   genders: { key: boolean; text: string; }[] = [{ key: false, text: 'Male' }, { key: true, text: 'Female' }];
   countries: Country[] = countries;
-  standartIcon: string = 'src/assets/images/standartIcon.png';
+  standartIcon: string = '../../../../assets/images/standartIcon.png';
   user: User;
 
   @Output()
@@ -34,8 +34,6 @@ export class ProfileEditFormComponent implements OnInit {
     this.form = new FormGroup({
       userName: new FormControl(this.user.userName, [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(20),
         Validators.pattern('[A-Za-z0-9.-_]{6,20}')
       ]),
       email: new FormControl(this.user.email, [
