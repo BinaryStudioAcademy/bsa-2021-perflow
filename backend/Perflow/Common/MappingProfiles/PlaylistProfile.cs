@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Perflow.Common.DTO.Playlist;
+using Perflow.Common.DTO.Playlists;
 using Perflow.Domain;
 
 namespace Perflow.Common.MappingProfiles

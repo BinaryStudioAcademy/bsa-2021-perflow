@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Perflow.Common.DTO.User;
+using Perflow.Common.DTO.Users;
 using Perflow.Domain;
 
 namespace Perflow.Common.MappingProfiles
@@ -8,9 +8,10 @@ namespace Perflow.Common.MappingProfiles
     {
         public UserProfile()
         {
-            CreateMap<User, UserDTO>();
+            CreateMap<User, UserReadDTO>();
+            CreateMap<User, ArtistReadDTO>();
 
-            CreateMap<UserDTO, User>();
+            CreateMap<UserReadDTO, User>();
         }
     }
 }

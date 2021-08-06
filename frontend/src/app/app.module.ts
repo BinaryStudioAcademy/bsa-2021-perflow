@@ -1,27 +1,34 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { SongImageComponent } from './components/shared/upload/song-image/song-image.component';
-import { DragDropDirective } from './directives/shared/upload/song-image/drag-drop.directive';
-import { AuthModule } from './moduls/auth/auth.module';
+import { AppRoutingModule } from './app-routing.module';
+import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
+import { FireBaseModule } from './modules/fire-base/fire-base.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SongImageComponent,
-    DragDropDirective
+    AppComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthModule
+    FireBaseModule,
+    HttpClientModule
   ],
-  exports: [],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }

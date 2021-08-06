@@ -1,0 +1,4 @@
+<div class="song-list">
+  <app-songs-list-header (sortTypeChanged)="setSortType($event)"></app-songs-list-header>
+  <app-song-row *ngFor="let song of songs | sortSongs:sortType; let i = index" [number]="i+1" [song]="song"></app-song-row>
+</div>
