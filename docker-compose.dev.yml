@@ -10,7 +10,7 @@ services:
      - ./env/frontend.env
 
   gateway:
-    image: gateway
+    image: krasnovnikita/bsa2021-perflow-gateway
     ports:
       - '4201:4201'
     environment: 
