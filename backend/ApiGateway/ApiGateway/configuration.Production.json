@@ -1,61 +1,73 @@
 {
-    "Routes": [
-      //perflow
-      {
-        "DownstreamPathTemplate": "/api/Playlists",
-        "DownstreamScheme": "http",
-        "DownstreamHostandPorts": [
-          {
-            "Host": "perflow",
-            "Port": "4202"
-          }
-  
-        ],
-        "UpstreamPathTemplate": "/api/Playlists",
-        "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
-      },
-      {
-        "DownstreamPathTemplate": "/api/Playlists/{id}",
-        "DownstreamScheme": "http",
-        "DownstreamHostandPorts": [
-          {
-            "Host": "perflow",
-            "Port": "4202"
-          }
-  
-        ],
-        "UpstreamPathTemplate": "/api/Playlists/{id}",
-        "UpstreamHttpMethod": [ "GET", "DELETE" ]
-      },
-      //perflow.studio
-      {
-        "DownstreamPathTemplate": "/api/songs",
-        "DownstreamScheme": "http",
-        "DownstreamHostandPorts": [
-          {
-            "Host": "perflow",
-            "Port": "4202"
-          }
-        ],
-        "UpstreamPathTemplate": "/api/songs",
-        "UpstreamHttpMethod": [ "GET", "POST" ]
-      },
-      {
-        "DownstreamPathTemplate": "/api/songs/{id}",
-        "DownstreamScheme": "http",
-        "DownstreamHostandPorts": [
-          {
-            "Host": "perflow",
-            "Port": "4202"
-          }
-        ],
-        "UpstreamPathTemplate": "/api/songs/{id}",
-        "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
-      }
-    ],
-    "GlobalConfiguration": {
-      "BaseUrl": "http://perflow:4202/api"
+  "Routes": [
+    //perflow
+    {
+      "DownstreamPathTemplate": "/api/Playlists",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Playlists",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Playlists/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Playlists/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Albums/new-releases",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Albums/new-releases",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //perflow.studio
+    {
+      "DownstreamPathTemplate": "/api/songs",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/songs",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/songs/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/songs/{id}",
+      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
     }
-  }  
-  
-  
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://perflow:4202/api"
+  }
+}  
+
