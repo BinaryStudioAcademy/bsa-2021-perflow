@@ -1,7 +1,6 @@
 <div class="playlist-container">
     <div class="hat">
       <img class="bg-hat-image" src="{{playlist.iconURL}}">
-  
       <!-- Paylist info -->
       <div class="playlist-information">
         <div class="fader" (click)="showEditPlaylistModal()">
@@ -17,12 +16,11 @@
           <p class="playlist-title">{{playlist.name}}</p>
           <div class="playlist-description">
             <span class="author">You</span> | 
-            <span class="amount">{{ playlistSongs.length }} songs</span> | 
+            <span class="amount">{{ playlistSongs.length }} songs </span>
             <span class="duration">{{ playlistSongs | songDuration }}</span>
           </div>
           <div class="buttons">
             <button class="button-play btn-full">Play</button>
-            <i class="heart outline icon reaction"></i>
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon"></i>
               <div class="right menu">
@@ -38,91 +36,12 @@
         </div>
       </div>
     </div>
-  
-    <!-- Modal window -->
-    <div class="bg-modal-fader" *ngIf="isModalShown"> <!--    -->
-      <div class="ui modal modal-upload" style="display: block;">
-        <!-- Modal Header -->
-        <div class="ui icon header">
-          Edit playlist
-        </div>
-        <!-- Modal Content -->
-        <div class="content">
-          <!-- Form -->
-          <form #form="ngForm" class="ui form">
-            <div class="ui two column divided equal height grid">
-              <!-- Input Row -->
-              <div class="row">
-                <!-- Image Column -->
-                <div class="column">
-                  <div class="image-upload-cont">
-                    <div class="hover-content">
-                      <img id="image" src="{{previousDataObject.iconURL}}">
-                      <i class="edit outline icon"></i>
-                      <input type="file" name="iconURL" (change)="loadIcon($event)" accept=".jpeg,.png,.jpg">
-                    </div>
-                  </div>
-                </div>
-                <!-- Input Column -->
-                <div class="column">
-                  <div class="field">
-                    <input type="text" [(ngModel)]="previousDataObject.name" name="name" #name="ngModel" class="input-modal" 
-                      reqired maxlength="50" pattern="^[a-zA-Z0-9 _.-]*$" placeholder="Playlist title"> 
-                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
-                      <div *ngIf="name.errors?.required">
-                        This is required field
-                      </div>
-                      <div *ngIf="name.errors?.maxlength">
-                        The maximum length must be less than 50 characters.
-                      </div>
-                      <div *ngIf="name.errors?.pattern">
-                        There can be following characters: a-z, A-Z, 0-9 and .-_
-                      </div>
-                    </div>     
-                  </div>
-                  <div class="field">
-                    <textarea [(ngModel)]="previousDataObject.description" form="form" name="description" #description="ngModel" 
-                      maxlength="200" pattern="^[a-zA-Z0-9 _.-]*$" placeholder="Add playlist decription"></textarea>
-                    <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert">
-                      <div *ngIf="description.errors?.pattern">
-                        There can be following characters: a-z, A-Z, 0-9 and .-_
-                      </div>
-                      <div *ngIf="description.errors?.maxlength">
-                        The maximum length must be less than 200 characters.
-                      </div>
-                    </div> 
-                  </div>
-                  <div class="field">
-                    <select class="ui dropdown dropdown-input" name="accessType" id="accessType" form="form" [ngModel]="previousDataObject.accessType" 
-                      (ngModelChange)="previousDataObject.accessType=$event" required #accessType="ngModel">
-                      <option selected *ngFor="let accessType of selectControlValues" [ngValue]="accessType">{{accessType | accessType}}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-  
-              <!-- Buttons Row -->
-              <div class="row buttons-row">
-                <div id="field" class="field">
-                  <button type="submit" class="ui btn-full submit button" [disabled]="form.invalid" (click)="editPlaylist(form)">Save</button>
-                  <button class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  
-  
     <!-- Added Songs -->
     <div class="song-container">
       <div class="search-result">
         <app-songs-list (clickMenuItem)="clickMenuHandler($event)" [songs]="playlistSongs" *ngIf="playlistSongs.length"></app-songs-list>
       </div>
     </div>
-  
-  
     <!-- Search Songs -->
     <h5 class="search-header">Find something new for your playlist</h5>
     <div class="ui search">
@@ -136,8 +55,6 @@
       </div>
     </div>
 
-
-    
-  
-   
+    <!-- Modal window -->
+    <app-edit-playlist-modal [editedPlaylist]="previousPlaylistData" *ngIf="isModalShown" (editPlaylist)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-playlist-modal>
   </div>

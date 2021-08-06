@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { CalmRhythmsCardComponent } from './cards/calm-rhythms-card/calm-rhythms-card.component';
 import { NewReleasesCardComponent } from './cards/new-releases-card/new-releases-card.component';
@@ -16,6 +15,7 @@ import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { SharedModule } from '../shared/shared.module';
 import { CreateEditPlaylistComponent } from './playlists/create-edit-playlist/create-edit-playlist.component';
+import { EditPlaylistModalComponent } from './playlists/edit-playlist-modal/edit-playlist-modal.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +30,15 @@ import { CreateEditPlaylistComponent } from './playlists/create-edit-playlist/cr
     RecentlyPlayedCardComponent,
     TopSongsCardComponent,
     YourMixCardComponent,
-    CreateEditPlaylistComponent
+    CreateEditPlaylistComponent,
+    EditPlaylistModalComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     MainRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports: [ProfileMenuComponent]
 })

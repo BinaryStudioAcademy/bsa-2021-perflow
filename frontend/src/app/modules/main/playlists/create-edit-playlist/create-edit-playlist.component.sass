@@ -1,395 +1,260 @@
 @import "../../../../../styles.sass"
 
 *
-    padding: 0px
-    margin: 0px
-    text-decoration: none
+  padding: 0px
+  margin: 0px
+  text-decoration: none
 
 img[src='']
-    display: none
+  display: none
 
 .playlist-container
+  position: relative
+  background: $drk-gray
+  height: 100vh
+  overflow-y: scroll 
+  overflow-x: hidden
+  .hat
     position: relative
-    background: $drk-gray
-    height: 100vh
-    overflow-y: scroll 
-    &::-webkit-scrollbar 
-        width: 0px
-        height: 0px
-    .hat
-        position: relative
-        width: 100%
-        height: 401px
-        border-radius: 5px
-        display: grid
-        grid-template-columns: 100%
-        grid-template-rows: 66px auto
-        background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)    
-        .bg-hat-image
-            width: 100%
-            height: 100%
-            position: absolute
-            top: 0px
-            left: 0px
-            border-radius: 5px
-            text-indent: 200rem
-            object-fit: cover
-            z-index: 0
-            opacity: 0.15
-        .playlist-information
-            grid-column: 1
-            grid-row: 2
-            position: relative
-            left: 160px
-            top: 38px
-            width: 70%    
-            height: 245px
-            display: grid
-            grid-template-columns: 245px auto
-            grid-template-row: 100%
-            gap: 0px 0px
-            @media (max-width: 1300px)
-                left: 150px
-            @media (max-width: 1200px)
-                width: 750px
-            @media (max-width: 1050px)
-                transform: scale(0.9)
-                left: 100px
-            @media (max-width: 1000px)
-                left: 80px
-            @media (max-width: 900px)
-                left: 50px   
-            @media (max-width: 800px)
-                grid-template-columns: 100% 
-                width: 600px
-            @media (max-width: 600px)
-                left: 30px 
-                width: 500px  
-            @media (max-width: 500px)
-                left: 0px 
-                width: 400px     
-            @media (max-width: 500px)
-                transform: scale(0.9)  
-            @media (max-width: 400px)
-                transform: scale(0.8)  
-            .fader
-                position: relative
-                grid-column: 1
-                grid-row: 1
-                width: 245px
-                height: 245px
-                background: rgba(70, 65, 146, 0.25)
-                border-radius: 50%
-                box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
-                cursor: pointer
-                &:hover
-                    .hover-content
-                        display: grid
-                        background: rgba(0, 0, 0, 0.5)
-                        box-shadow: 0px 37px 46px 8px rgba(33, 41, 45, 0.25)
-                    .placeholder-icon
-                        display: none
-                .hover-content
-                    display: none
-                    position: relative
-                    justify-content: center
-                    align-content: center
-                    color: #A3A6B1
-                    width: 100%
-                    height: 100%
-                    border-radius: 50%
-                    z-index: 1
-                    i
-                        display: block
-                        font-size: 3rem
-                        width: fit-content
-                        position: relative
-                        top: 50%
-                        left: 50%
-                        transform: translate(-40%, -30%)
-                    span
-                        display: block
-                        margin-top: 10px
-                        font-size: 1.3rem 
-                        font-family: Rubik
-                        font-style: normal 
-                .placeholder-icon
-                    font-size: 4rem
-                    color: $drk-gray
-                    font-weight: normal 
-                    color: #A3A6B1           
-                    position: absolute
-                    top: 50%
-                    left: 50%
-                    transform: translate(-45%, -25%)
-                .album-icon
-                    z-index: 0
-                    display: block
-                    width: 100%
-                    height: 100%
-                    position: absolute
-                    top: 50%
-                    left: 50%
-                    transform: translate(-50%, -50%)
-                    border-radius: 50%
-                    object-fit: cover
-                    background: #C4C4C4
-                    box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
-                    @media (max-width: 800px)
-                        display: none     
-            .playlist-info
-                grid-column: 2
-                grid-row: 1
-                margin-left: 35px
-                height: 245px
-                @media (max-width: 800px)
-                    grid-column: 1
-                @media (max-width: 500px)
-                    margin-left: 0px
-                .type
-                    margin-top: 20px
-                    font-family: Rubik
-                    font-style: normal
-                    font-weight: 300
-                    font-size: 18px
-                    line-height: 21px
-                    color: $text
-                    height: fit-content
-                .playlist-title
-                    margin-top: 10px
-                    font-family: Rubik
-                    font-style: normal
-                    font-weight: 700
-                    font-size: 40px
-                    line-height: 47px
-                    color: $text
-                    height: fit-content
-                    text-overflow: ellipsis
-                .playlist-description
-                    margin-top: 22px
-                    font-family: Rubik
-                    font-style: normal
-                    font-weight: 300
-                    font-size: 14px
-                    line-height: 17px
-                    color: #A3A6B1                 
-                    width: 100%
-                    max-height: 42px
-                    overflow: hidden
-                    text-overflow: ellipsis
-                    .author
-                        color: $text           
-                .buttons
-                    margin-top: 20px
-                    width: fit-content
-                    min-width: 180px 
-                    .button-play
-                        display: inline-block
-                        padding: 12px 22px
-                        width: 79px
-                        height: 43px
-                        max-height: 43px
-                        border: none
-                        border-radius: 50px             
-                        color: $text
-                        font-family: Rubik
-                        font-style: normal
-                        font-weight: 700
-                        font-size: 16px
-                        line-height: 19px
-                        &:hover
-                            cursor: pointer
-                            background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                            color: #000000bb 
-                        &:active
-                            border: 3px solid $medium-orange 
-                            padding: 9px 19px
-                    .reaction
-                        display: inline-block
-                        font-size: 20px
-                        margin-left:  25px
-                        color: $text
-                        cursor: pointer
-                    .menu
-                        display: inline-block
-                        font-size: 20px
-                        margin-left:  20px
-                        color: $text
-                        cursor: pointer
-
-        
-
-// Upload Modal Window
-.bg-modal-fader
-    position: fixed
-    top: 0px
-    left: 0px
     width: 100%
-    height: 100vh
-    background: #00000060
-    z-index: 1000
-
-.modal-upload
-    display: block
-    width: 600px
-    position: relative
-    top: 50%
-    left: 50%
-    transform: translate(-50%, -50%)
-    border-radius: 10px
-    background: $drk-gray !important
-    .header
-        border-radius: 10px 10px 0px 0px
-        color: $login-text-color
-        font-family: Rubik
-        background: $drk-gray !important
-    .content
-        font-family: Rubik
-        background: $drk-gray !important
-        border-radius: 0px 0px 10px 10px
-        .image-upload-cont
+    height: 401px
+    border-radius: 5px
+    display: grid
+    grid-template-columns: 100%
+    grid-template-rows: 66px auto
+    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)    
+    .bg-hat-image
+      width: 100%
+      height: 100%
+      position: absolute
+      top: 0px
+      left: 0px
+      border-radius: 5px
+      text-indent: 200rem
+      object-fit: cover
+      z-index: 0
+      opacity: 0.15
+    .playlist-information
+      grid-column: 1
+      grid-row: 2
+      position: relative
+      left: 160px
+      top: 38px
+      width: 70%    
+      height: 245px
+      display: grid
+      grid-template-columns: 245px auto
+      grid-template-row: 100%
+      gap: 0px 0px
+      @media (max-width: 1300px)
+          left: 150px
+      @media (max-width: 1200px)
+          width: 750px
+      @media (max-width: 1050px)
+          transform: scale(0.9)
+          left: 100px
+      @media (max-width: 1000px)
+          left: 80px
+      @media (max-width: 900px)
+          left: 50px   
+      @media (max-width: 800px)
+          left: 0px           
+      .fader
+        position: relative
+        grid-column: 1
+        grid-row: 1
+        width: 245px
+        height: 245px
+        background: rgba(70, 65, 146, 0.25)
+        border-radius: 50%
+        box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
+        cursor: pointer  
+        &:hover
+          .hover-content
+            display: grid
+            background: rgba(0, 0, 0, 0.5)
+            box-shadow: 0px 37px 46px 8px rgba(33, 41, 45, 0.25)
+          .placeholder-icon
+            display: none
+        .hover-content
+          display: none
+          position: relative
+          justify-content: center
+          align-content: center
+          color: #A3A6B1
+          width: 100%
+          height: 100%
+          border-radius: 50%
+          z-index: 1
+          i
+            display: block
+            font-size: 3rem
+            width: fit-content
             position: relative
-            height: 215px
-            width: 215px
-            margin-left: 30px
-            box-shadow: 0px 2px 126px 2px #00000050
-            border-radius: 50%
-            .hover-content
-                position: relative
-                display: grid
-                justify-content: center
-                align-content: center
-                background: none
-                color: #A3A6B1
-                width: 100%
-                height: 100%
-                border-radius: 50%
-                i
-                    display: block
-                    font-size: 3rem
-                    width: fit-content
-                    position: relative
-                    top: 50%
-                    left: 50%
-                    transform: translate(-40%, -60%)
-                input[type='file']
-                    position: absolute
-                    top: 0
-                    left: 0
-                    height: 100%
-                    width: 100%
-                    border-radius: 50%
-                    background: none
-                    text-indent: 100em
-                    cursor: pointer
-            #image
-                display: block
-                position: absolute
-                height: 215px
-                width: 215px
-                object-fit: cover
-                border-radius: 50% 
-                border: none
-                background: $drk-rain
-                text-indent: 100rem
+            top: 50%
+            left: 50%
+            transform: translate(-40%, -30%)
+          span
+            display: block
+            margin-top: 10px
+            font-size: 1.3rem 
+            font-family: Rubik
+            font-style: normal 
+        .placeholder-icon
+          font-size: 4rem
+          color: $drk-gray
+          font-weight: normal 
+          color: #A3A6B1           
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translate(-45%, -15%)
+        .album-icon
+          z-index: 0
+          display: block
+          width: 100%
+          height: 100%
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translate(-50%, -50%)
+          border-radius: 50%
+          object-fit: cover
+          background: #C4C4C4
+          box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)  
+      .playlist-info
+        width: fit-content
+        grid-column: 2
+        grid-row: 1
+        margin-left: 35px
+        height: 245px
+        @media (max-width: 500px)
+            margin-left: 0px
+        .type
+          margin-top: 20px
+          font-family: Rubik
+          font-style: normal
+          font-weight: 300
+          font-size: 18px
+          line-height: 21px
+          color: $text
+          height: fit-content
+        .playlist-title
+          max-width: 600px
+          margin-top: 10px
+          white-space: nowrap
+          text-overflow: ellipsis
+          font-family: Rubik
+          font-style: normal
+          font-weight: 700
+          font-size: 40px
+          line-height: 47px
+          color: $text
+          height: fit-content
+          overflow: hidden
+          @media (max-width: 1300px)
+              max-width: 500px
+          @media (max-width: 1000px)
+              max-width: 400px
+        .playlist-description
+          margin-top: 22px
+          font-family: Rubik
+          font-style: normal
+          font-weight: 300
+          font-size: 14px
+          line-height: 17px
+          color: #A3A6B1                 
+          width: 100%
+          max-height: 42px
+          overflow: hidden
+          text-overflow: ellipsis
+          .author
+            color: $text           
+        .buttons
+          margin-top: 20px
+          width: fit-content
+          min-width: 180px 
+          .button-play
+            display: inline-block
+            padding: 12px 22px
+            width: 79px
+            height: 43px
+            max-height: 43px
+            border: none
+            color: $text
+            font-family: Rubik
+            font-style: normal
+            font-weight: 700
+            font-size: 16px
+            line-height: 19px
+          .reaction
+            display: inline-block
+            font-size: 20px
+            margin-left:  25px
+            color: $text
+            cursor: pointer
+          .menu
+            display: inline-block
+            font-size: 20px
+            margin-left:  20px
+            color: $text
+            cursor: pointer
 
-        input[type='text']
-            background: $drk-rain
-            border-radius: 50px
-            color: $text
-            font-family: Rubik
-        textarea
-            height: 100px
-            background: $drk-rain
-            border-radius: 20px
-            color: $text
-            font-family: Rubik
-        select
-            background: $drk-rain
-            border-radius: 50px
-            color: $text
-            font-family: Rubik
-                    
-        .buttons-row
-            display: flex
-            justify-content: center
-            .btn-cancel
-                border-radius: 50px
-                margin-left: 20px
 
-// Song container
+// Playlist's songs' container
 .song-container
-    padding: 20px 10px
-    border-bottom: 1px solid #55555599
-    height: fit-content
+  padding: 20px 10px
+  border-bottom: 1px solid #55555599
+  height: fit-content
+
 
 // Search songs
 .search-header
-    margin: 15px 0px 5px 0px
-    color: $text
-
+  margin: 15px 0px 5px 0px
+  color: $text
 
 .search
-    .input
-        color: $text !important 
-        width: 500px !important
-        padding: 10px 0px 20px 0px
-    input
-        width: 500px !important
-        background: $drk-rain !important
-        border-radius: 50px
-        border: 1p solid $drk-gray
-        color: $text !important
-        font-size: 1.2rem 
-        font-family: Rubik
-        font-style: normal 
-        &:focus
-            border: 1px solid #55555599
-
-.search-result
-    ul
-        color: $text
-        font-size: 1rem
-        font-family: Rubik
-        font-weight: normal
-        line-height: 2rem
-        padding: 0px 10px
-        li
-            display: block
-            padding: 10px 15px
-            button
-                float: right
-                border-radius: 50px
-            &:hover
-                background: $drk-rain
-                cursor: pointer
-                border-radius: 50px
+  .input
+    color: $text !important 
+    width: 500px !important
+    padding: 10px 0px 20px 0px
+  input
+    width: 500px !important
+    background: $drk-rain !important
+    border-radius: 50px
+    border: 1p solid $drk-gray
+    color: $text !important
+    font-size: 1.2rem 
+    font-family: Rubik
+    font-style: normal 
+    &:focus
+      border: 1px solid #55555599
 
 
-
+// Dropdown menu near button 'Play'
 .menu
-    border: 0.5px solid #373C43 !important
-    border-radius: 2px
+  border: 0.5px solid #373C43 !important
+  border-radius: 2px
 
 .ui.floating.dropdown
-    i
-        color: $text
-        margin-left: 13px 
-    .menu
-        display: none !important
-        box-shadow: none !important
-        .item.first
-            padding-top: 18px !important
-        .item.last
-            padding-bottom: 18px !important
+  i
+    color: $text
+    margin-left: 13px 
+  .menu
+    display: none !important
+    box-shadow: none !important
+    .item.first
+      padding-top: 18px !important
+    .item.last
+      padding-bottom: 18px !important
 
 .item
-    background-color: $light-gray !important
-    font-weight: $normal-weight !important
-    color: $text !important
-    font-family: 'Rubik' !important
-    &:hover
-        background-color: $drk-gray !important
-    &:active
-        color: #aaaaaa !important
+  background-color: $light-gray !important
+  font-weight: $normal-weight !important
+  color: $text !important
+  font-family: 'Rubik' !important
+  &:hover
+    background-color: $drk-gray !important
+  &:active
+    color: #aaaaaa !important
  

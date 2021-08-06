@@ -37,11 +37,14 @@
                             <img class="playlist" src="../../../../assets/images/playlist.svg" />
                         </div>Add to queue
                     </div>
+                    <div class="item" (click)="clickItem('Remove from queue')">
+                        <i class="trash icon"></i>Remove from queue
+                    </div>
                     <div class="item" (click)="clickItem('Add to playlist')">
                         <i class="list icon"></i>Add to playlist
                     </div>
-                    <div class="item" (click)="clickItem('Remove from queue')">
-                        <i class="trash icon"></i>Remove from queue
+                    <div class="item" (click)="clickItem('Remove from playlist')">
+                        <i class="list icon"></i>Remove from playlist
                     </div>
                     <div class="item last" (click)="clickItem('Share')">
                         <i class="share alternate icon"></i>Share

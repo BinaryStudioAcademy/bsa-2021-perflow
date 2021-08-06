@@ -1,17 +1,25 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TimeConverter } from 'src/app/helpers/TimeConverter';
 
 @Pipe({
   name: 'songDuration'
 })
 export class SongDurationPipe implements PipeTransform {
   transform = (value: any, ...args: any[]): string => {
-    let result = 0;
+    let ticks = 0;
     const array = [...value];
 
     array.forEach((song) => {
-      result += song.duration;
+      ticks += song.duration;
     });
-    return TimeConverter.secondsToMMSS(result);
+
+    const hours = Math.floor(ticks / 3600);
+    const minutes = Math.floor((ticks % 3600) / 60);
+    const seconds = ticks % 3600 % 60;
+
+    const h = hours === 0 ? '' : `${hours} hr`;
+    const m = minutes === 0 ? '' : `${minutes} min`;
+    const s = seconds === 0 ? '' : `${seconds} sec`;
+
+    return `| ${h} ${m} ${s}` === '|   ' ? '' : `| ${h} ${m} ${s}`;
   };
 }
