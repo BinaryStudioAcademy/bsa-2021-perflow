@@ -1,1 +1,12 @@
-<p>playlist-card works!</p>
+<div class="ui card ts-card">
+    <div class="image">
+        <button class="play-icon">
+            <i class="play icon"></i>
+        </button>
+        <img [src]="playlist.iconURL">    
+    </div>
+    <div class="content">
+        <div class="card-name"> {{playlist.name}} </div>
+        <div class="card-desc"> {{playlist.description}} </div>
+    </div>
+</div>
