@@ -6,6 +6,8 @@ WORKDIR /app
 
 COPY frontend .
 
+ENV FIREBASE_KEY $FIREBASE_KEY
+
 RUN npm install && \
     npm run build
 
