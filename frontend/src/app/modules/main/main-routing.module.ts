@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ArtistsComponent } from './artists/artists.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
+import { ArtistsComponent } from './artists/artists.component';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { PlaylistComponent } from './playlist/playlist.component';
@@ -28,7 +28,8 @@ const routes: Routes = [{
         { path: '**', redirectTo: 'all' }
       ]
     },
-    { path: 'songs', component: SongsComponent }
+    { path: 'songs', component: SongsComponent },
+    { path: '**', redirectTo: '../login', pathMatch: 'full' }
   ]
 }];
 

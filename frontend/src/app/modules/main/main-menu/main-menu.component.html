@@ -1,45 +1,44 @@
 <div class="ui visible sidebar vertical menu">
-  <div id="logo">
+  <div class="logo">
     <a class="ui logo icon image" routerLink="/main">
       <i class="circle icon"></i>
-      <span id="name-logo">LOGO</span>
+      <span class="name-logo">LOGO</span>
     </a>
   </div>
-  <div id="routers" >
+  <div class="routers" >
     <div>
       <a routerLink="./main" routerLinkActive="active-link" >
-        <span id="circle"> <i id="icon" class="fire icon"></i></span>
-        <h5 id="name-route">Home</h5>
+        <span class="circle-fire"> <i class="fire icon"></i></span>
+        <h5 class="name-route">Home</h5>
       </a>
     </div>
     <div>
       <a routerLink="./search" routerLinkActive="active-link" >
-        <span id="circle"> <i id="icon" class="search icon"></i></span>
-        <h5 id="name-route">Search</h5>
+        <span class="circle-fire"> <i class="search icon"></i></span>
+        <h5 class="name-route">Search</h5>
       </a>
     </div>
     <div>
       <a routerLink="./playlists" [routerLinkActive]="['active-link']" >
-        <span id="circle"> <i id="icon" class="music icon"></i></span>
-        <h5 id="name-route">My playlists</h5>
+        <span class="circle-fire"> <i class="music icon"></i></span>
+        <h5 class="name-route">My playlists</h5>
       </a>
     </div>
     <div>
       <a routerLink="./songs" routerLinkActive="active-link" >
-        <span id="circle"> <i id="icon" class="heart icon"></i></span>
-        <h5 id="name-route">Liked songs</h5>
+        <span class="circle-fire"> <i class="heart icon"></i></span>
+        <h5 class="name-route">Liked songs</h5>
       </a>
     </div>
   </div>
-  <div id="playlists-menu">
-    <span id="title" *ngIf="playlists.length > 0">
+  <div class="playlists-menu">
+    <span class="title" *ngIf="playlists.length > 0">
       <h6>Created playlists</h6>
     </span>
     <li *ngFor="let playlist of playlists">
-      <span id="playlist">{{ playlist }}</span>
+      <span class="playlist">{{ playlist }}</span>
     </li>
-    <button
-      class="ui button" id="btn-create-playlist" (click)="createPlaylist()">
+    <button class="btn-create-playlist" (click)="createPlaylist()">
       <h6>Create Playlist</h6>
     </button>
   </div>  

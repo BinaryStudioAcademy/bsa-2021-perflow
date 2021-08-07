@@ -6,7 +6,7 @@
     padding-left: 40px
     background: $dark-gray
     border-right: 1.5px solid #373C43
-    &::-webkit-scrollbar 
+    &::-webkit-scrollbar
         width: 0px
         height: 0px
 
@@ -15,7 +15,7 @@
     width: auto
     background: $dark-gray
 
-#logo
+.logo
     padding: 0
     position: relative
     display: flex
@@ -27,27 +27,27 @@
     color: #CDCDCD
     opacity: 50%
 
-#name-logo
+.name-logo
     padding-left: 5px
     font-family: "Montserrat", sans-serif
     font-style: normal
     font-weight: $medium-weight
     letter-spacing: 0.01em
 
-#name-route
+.name-route
     padding-left: 20px
     color: $text
 
-#routers
+.routers
     position: relative
     top: 125px
     width: max-content
     border-bottom: 1.5px solid #373C43
 
-#routers > div
+.routers > div
     margin-bottom: 40px
 
-#playlists-menu
+.playlists-menu
     position: relative
     top: 100px
     width: max-content
@@ -61,7 +61,7 @@ li
 li > span
     color: $default-white
 
-.ui.button
+.btn-create-playlist
     margin-top: 25px
     padding: 10px 20px
     width: 160px
@@ -69,13 +69,11 @@ li > span
     background: $fire-orange
     border-radius: 50px
     color: $default-white
-
-#btn-create-playlist
-        &:hover
-            cursor: pointer
-            color: $black 
-        &:active
-            border: 3px solid $medium-orange
+    &:hover
+        cursor: pointer
+        color: $black
+    &:active
+        border: 3px solid $medium-orange
 
 i
     color: $default-white
@@ -86,27 +84,26 @@ a
     flex-direction: row
     align-items: center
 
-#playlist
+.playlist
     font-weight: $light-weight
 
-#circle
+.circle-fire
     width: 30px
     height: 30px
     border-radius: 100%
     position: relative
     transition: .3s
     background: $dark-gray
+    i
+        position: absolute
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        font-size: 16px
+        transition: .3s
 
-#icon
-    position: absolute
-    left: 50%
-    top: 50%
-    transform: translate(-50%, -50%)
-    font-size: 16px
-    transition: .3s
-
-.active-link > #circle
+.active-link > .circle-fire
     background: $fire-orange
-        
-.active-link > #name-route
+
+.active-link > .name-route
     color: $medium-orange

@@ -1,39 +1,53 @@
 <!-- Profile icon in top right corner -->
-<h4 class="ui header profile" (click)="showProfileMenu()" (clickOutside)="onClickOutsideProfileMenu($event)">
+<h4
+  class="ui header profile"
+  (click)="showProfileMenu()"
+  (clickOutside)="onClickOutsideProfileMenu($event)"
+>
   <!-- TODO:  Here, insert links to your account profile pages, etc. -->
-  <div id="profile">
-    <img src="./../../../../assets/tepolary-images/photo-user-in-my-playlists-35x35.png" />
-    <div class="ui simple dropdown item">
-      <div class="text" id="profile-user-name">
+  <div class="profile">
+    <img
+      src="./../../../../assets/tempolary-images/castle-big-image.jpeg"
+    />
+    <div class="ui simple dropdown icon">
+      <div class="profile-user-name">
         <h5>marc_dorwart</h5>
+        <i class="dropdown icon"></i>
       </div>
-      <i class="dropdown icon"></i>
-      <div class="menu" id="profile-menu">
+      <div class="menu">
         <div class="item">
           <a routerLink="/">
-            <img src="./../../../../assets/button-icon-images/user-profile-13x13.png" />
+            <img
+              src="./../../../../assets/button-icon-images/user-profile-13x13.png"
+            />
             View account
           </a>
         </div>
         <div class="item">
           <a routerLink="/">
-            <img src="./../../../../assets/button-icon-images/cog-profile-13x13.png"  />
+            <img
+              src="./../../../../assets/button-icon-images/cog-profile-13x13.png"
+            />
             Account Settings
           </a>
         </div>
         <div class="item">
           <a routerLink="/">
-            <img src="./../../../../assets/button-icon-images/pencil-profile-13x13.png" />
+            <img
+              src="./../../../../assets/button-icon-images/pencil-profile-13x13.png"
+            />
             Edit profile
           </a>
         </div>
-        <div class="item" id="log-out">
+        <div class="item">
           <a (click)="logout()" routerLink="/">
-            <img src="./../../../../assets/button-icon-images/log-out-profile-13x13.png" />
+            <img
+              src="./../../../../assets/button-icon-images/log-out-profile-13x13.png"
+            />
             Log out
           </a>
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </h4>

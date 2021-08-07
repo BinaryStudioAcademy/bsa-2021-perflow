@@ -1,10 +1,10 @@
 <div id="album-card">
-    <div id="fader">
-        <button id="play-icon"><i class="miny play inverted icon"></i></button>
+    <div class="fader">
+        <button class="play-icon"><i class="miny play inverted icon"></i></button>
         <img src="{{album.titleImage}}" alt="Artist Avatar">    
     </div>
-    <h6 id="card-name">{{album.nameAlbum}}</h6>
-    <div class="text" id="card-desc" > 
+    <h6 class="card-name">{{album.nameAlbum}}</h6>
+    <div class="text" class="card-desc" > 
         {{album.songs.join(', ')}} 
     </div>
 </div>

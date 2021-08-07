@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 // use auth.guard for prevent unauthorized users
 
@@ -10,13 +11,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./modules/main/main.module').then((m) => m.MainModule)
+    loadChildren: () => import('./modules/main/main.module').then((m) => m.MainModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'register',
     loadChildren: () => import('./modules/register/user-registration.module').then((m) => m.UserRegistrationModule)
   },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({

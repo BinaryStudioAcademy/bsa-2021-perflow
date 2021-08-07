@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist';
-import { Album } from '../../../models/album';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { Album } from '../../../models/album';
 
 @Component({
   selector: 'app-main-home',
