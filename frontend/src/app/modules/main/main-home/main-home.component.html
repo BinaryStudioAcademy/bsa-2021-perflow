@@ -38,7 +38,9 @@
       </div>
     </div>
   </div>
-  <div class="header-songs">
+
+  <!-- Top songs and podcasts -->
+  <div class="header-main-home-content">
     <h4>Recently played</h4>
   </div>
   <div class="recently-played">
@@ -54,7 +56,53 @@
       </div>
     </div>
   </div>
+
+  <!-- New releases albums -->
+  <div class="header-main-home-content"> 
+    <h4>New releases</h4>
+  </div>
+  <div class="main-content-releases">
+    <div class="ui icon button">
+      <i class="large angle left icon"></i>
+    </div>
+    <div class="ui container">
+      <div class="ui segment" *ngFor="let album of albums">
+          <app-album-card
+            [image]="album.image"
+            [name]="album.name"
+            [songs]="album.songs"
+          >
+          </app-album-card>
+      </div>
+    </div>
+    <div class="ui icon button">
+      <i class="large angle right icon"></i>
+    </div>
+  </div>
+
+  <!-- Calm rhythms -->
+  <div class="header-main-home-content"> 
+    <h4>Calm rhythms</h4>
+  </div>
+  <div class="main-content-rhythms">
+    <div class="ui icon button">
+      <i class="large angle left icon"></i>
+    </div>
+    <div class="ui container">
+      <div class="ui segment" *ngFor="let playlist of playlists">
+        <app-playlist-card
+        [image]="playlist.image"
+        [name]="playlist.name"
+        [songs]="playlist.songs">
+        </app-playlist-card>
+      </div>
+    </div>
+    <div class="ui icon button">
+      <i class="large angle right icon"></i>
+    </div>
+  </div>
 </main>
+
 <!-- New Releases 
     <div class="ui sixteen column row new-releases">
       <div class="header">New Releases</div>

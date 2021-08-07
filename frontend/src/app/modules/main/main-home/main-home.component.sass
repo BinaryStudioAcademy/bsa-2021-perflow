@@ -205,123 +205,6 @@ main
                         border: 3px solid $text
                         padding: 9px 19px
 
-// Recently played
-.recently-played
-    margin-left: 25px
-
-.recently-played .ui.row
-    display: flex
-    align-items: baseline
-    flex-wrap: wrap
-
-// New Releases
-.new-releases
-    position: relative
-    height: 328px
-    margin: 0 38px 53px 38px
-    overflow: hidden
-    &::-webkit-scrollbar
-        width: 0px
-        height: 0px
-    @media (max-width: 800px)
-        margin-bottom: 10px !important
-        height: 350px
-    .new-releases-cont
-        position: relative
-        display: flex
-        width: 100%
-        height: 270px
-        min-height: 270px
-        overflow-y: scroll
-        margin-top: 30px
-        @media (max-width: 800px)
-            justify-content: center
-        &::-webkit-scrollbar
-            width: 0px
-            height: 0px
-    .scroll-box
-        bottom: 38px
-
-// Calm rhythms & Top 100 songs
-.calm-rhythms
-    height: 286px
-    width: 100%
-    margin: 0 38px 53px 38px
-    overflow: hidden
-    @media (max-width: 800px)
-        margin-bottom: 20px !important
-        height: 306px
-    .calm-rhythms-cont
-        position: relative
-        display: flex
-        width: 100%
-        height: fit-content
-        min-height: 228px
-        overflow-y: scroll
-        margin-top: 30px
-        @media (max-width: 800px)
-            justify-content: center
-        &::-webkit-scrollbar
-            width: 0px
-            height: 0px
-
-// Your mix
-.your-mix
-    height: 271px
-    width: 100%
-    margin: 0 38px 53px 38px
-    @media (max-width: 800px)
-        margin-bottom: 20px !important
-        height: 291px
-    .your-mix-cont
-        overflow: hidden
-        height: 220px
-        width: 100%
-        margin-top: 30px
-        align-content: stretch
-        justify-content: start
-        @media (max-width: 800px)
-            justify-content: center
-        &::-webkit-scrollbar
-            width: 0px
-            height: 0px
-
-// Styles for horizontal scrolling           
-.scroll-box
-    width: 44px
-    height: calc(100% - 53px)
-    position: absolute
-    right: 0px
-    bottom: 0px
-    display: flex
-    align-items: center
-    justify-content: center
-    background: $dark-gray
-    .scroll-button
-        width: 33px
-        height: 33px
-        font-size: 1.2rem
-        color: $text
-        border: none
-        border-radius: 3px
-        background: $light-gray
-        cursor: pointer
-        &:hover
-            background: $light-gray
-
-.header
-    width: 100%
-    height: fit-content
-    margin-top: -15px
-    font-family: Rubik
-    font-style: normal
-    font-weight: bold
-    font-size: 24px
-    line-height: 28px
-    color: $text
-    @media (max-width: 800px)
-        margin-top: -15px
-
 // #btn-scroll-data
 //     width: 33px
 //     height: 33px
@@ -339,14 +222,73 @@ main
 //     display: flex
 //     width: 100%
 //     align-items: center
+// Recently played
 
-.ui.segment
+.recently-played
+    margin-left: 25px
+
+.recently-played .ui.row
+    margin-top: 30px
+    margin-left: 55px
+    display: flex
+    align-items: baseline
+    flex-wrap: wrap
+
+.recently-played .ui.segment
     padding: 0
     margin: 0
     background: $dark-gray
 
-.header-songs
-    margin-left: 35px
+.header-main-home-content
+    margin-left: 85px
     margin-top: 50px
     font-size: $bold-weight
     color: $default-white
+
+.main-content-releases
+    margin: 30px 0
+    display: flex
+    overflow-x: scroll
+    overflow-y: hidden
+    align-items: center
+
+.main-content-releases
+    .ui.icon.button
+        margin: 10px
+        width: 45px
+        height: 45px
+        display: flex
+        align-items: center
+    .ui.container
+        margin: 0
+        padding: 0
+        width: 90%
+        display: flex
+        align-items: baseline
+        overflow-y: scroll
+        .ui.segment
+            background: $dark-gray
+
+.main-content-rhythms
+    margin: 30px 0
+    display: flex
+    overflow-x: scroll
+    overflow-y: hidden
+    align-items: center
+    .ui.icon.button
+        margin: 10px
+        width: 45px
+        height: 45px
+        display: flex
+        align-items: center
+    .ui.container
+        margin: 0
+        padding: 0
+        width: 95%
+        display: flex
+        align-items: baseline
+        overflow-y: scroll
+        .ui.segment
+            margin: 0
+            padding: 10px 0
+            background: $dark-gray

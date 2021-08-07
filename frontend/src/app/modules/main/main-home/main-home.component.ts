@@ -30,7 +30,7 @@ export class MainHomeComponent implements OnInit {
   allAlbums: Album[] = [
     {
       id: 1,
-      image: './../../../../assets/tepolary-images/castle-big-image.jpeg',
+      image: './../../../../assets/tempolary-images/castle-big-image.jpeg',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -50,7 +50,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 2,
-      image: './../../../../assets/tepolary-images/card-title-2.png',
+      image: './../../../../assets/tempolary-images/card-title-2.png',
       name: 'Imagine Dragons',
       songs: [
         'Believer',
@@ -73,7 +73,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 3,
-      image: './../../../../assets/tepolary-images/card-title-3.png',
+      image: './../../../../assets/tempolary-images/card-title-3.png',
       name: 'Tropical chaos',
       songs: [
         'Ed Sheeran',
@@ -96,7 +96,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 4,
-      image: './../../../../assets/tepolary-images/card-title-4.png',
+      image: './../../../../assets/tempolary-images/card-title-4.png',
       name: 'Relax work',
       songs: [
         'Ed Sheeran',
@@ -119,7 +119,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 5,
-      image: './../../../../assets/tepolary-images/my-playlists-1.png',
+      image: './../../../../assets/tempolary-images/my-playlists-1.png',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -142,7 +142,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 6,
-      image: './../../../../assets/tepolary-images/my-playlists-2.png',
+      image: './../../../../assets/tempolary-images/my-playlists-2.png',
       name: 'Imagine Dragons',
       songs: [
         'Believer',
@@ -165,7 +165,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 7,
-      image: './../../../../assets/tepolary-images/my-playlists-3.png',
+      image: './../../../../assets/tempolary-images/my-playlists-3.png',
       name: 'Tropical chaos',
       songs: [
         'Ed Sheeran',
@@ -188,7 +188,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 8,
-      image: './../../../../assets/tepolary-images/my-playlists-4.png',
+      image: './../../../../assets/tempolary-images/my-playlists-4.png',
       name: 'Relax work',
       songs: [
         'Ed Sheeran',
@@ -211,7 +211,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 9,
-      image: './../../../../assets/tepolary-images/my-playlists-1.png',
+      image: './../../../../assets/tempolary-images/my-playlists-1.png',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -234,7 +234,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 10,
-      image: './../../../../assets/tepolary-images/my-playlists-2.png',
+      image: './../../../../assets/tempolary-images/my-playlists-2.png',
       name: 'Imagine Dragons',
       songs: [
         'Believer',
@@ -257,7 +257,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 11,
-      image: './../../../../assets/tepolary-images/my-playlists-3.png',
+      image: './../../../../assets/tempolary-images/my-playlists-3.png',
       name: 'Tropical chaos',
       songs: [
         'Ed Sheeran',
@@ -280,7 +280,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 12,
-      image: './../../../../assets/tepolary-images/my-playlists-1.png',
+      image: './../../../../assets/tempolary-images/my-playlists-1.png',
       name: 'Relax work',
       songs: [
         'Ed Sheeran',
@@ -303,7 +303,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 13,
-      image: './../../../../assets/tepolary-images/my-playlists-2.png',
+      image: './../../../../assets/tempolary-images/my-playlists-2.png',
       name: 'Imagine Dragons',
       songs: [
         'Believer',
@@ -326,7 +326,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 14,
-      image: './../../../../assets/tepolary-images/my-playlists-3.png',
+      image: './../../../../assets/tempolary-images/my-playlists-3.png',
       name: 'Tropical chaos',
       songs: [
         'Ed Sheeran',
@@ -349,7 +349,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 15,
-      image: './../../../../assets/tepolary-images/my-playlists-4.png',
+      image: './../../../../assets/tempolary-images/my-playlists-4.png',
       name: 'Relax work',
       songs: [
         'Ed Sheeran',
@@ -372,7 +372,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 16,
-      image: './../../../../assets/tepolary-images/my-playlists-1.png',
+      image: './../../../../assets/tempolary-images/my-playlists-1.png',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -395,7 +395,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 17,
-      image: './../../../../assets/tepolary-images/my-playlists-2.png',
+      image: './../../../../assets/tempolary-images/my-playlists-2.png',
       name: 'Imagine Dragons',
       songs: [
         'Believer',
@@ -418,7 +418,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 18,
-      image: './../../../../assets/tepolary-images/my-playlists-3.png',
+      image: './../../../../assets/tempolary-images/my-playlists-3.png',
       name: 'Tropical chaos',
       songs: [
         'Ed Sheeran',
@@ -441,7 +441,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 19,
-      image: './../../../../assets/tepolary-images/my-playlists-1.png',
+      image: './../../../../assets/tempolary-images/my-playlists-1.png',
       name: 'I last album in group',
       songs: [
         'Ed Sheeran',
@@ -466,7 +466,7 @@ export class MainHomeComponent implements OnInit {
   allPlaylists: Playlist[] = [
     {
       id: 1,
-      image: './../../../../assets/tepolary-images/castle-big-image.jpeg',
+      image: './../../../../assets/tempolary-images/castle-big-image.jpeg',
       name: 'Fresh & Chill. When I home or work',
       songs: [
         'Ed Sheeran',
@@ -486,7 +486,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 2,
-      image: './../../../../assets/tepolary-images/my-playlists-1.png',
+      image: './../../../../assets/tempolary-images/my-playlists-1.png',
       name: 'Tropical chaos',
       songs: [
         'Ed Sheeran',
@@ -506,7 +506,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 3,
-      image: './../../../../assets/tepolary-images/my-playlists-7.png',
+      image: './../../../../assets/tempolary-images/my-playlists-7.png',
       name: 'Hot mood',
       songs: [
         'Ed Sheeran',
@@ -526,7 +526,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 4,
-      image: './../../../../assets/tepolary-images/my-playlists-8.jpeg',
+      image: './../../../../assets/tempolary-images/my-playlists-8.jpeg',
       name: 'Beautiful People',
       songs: [
         'Ed Sheeran',
@@ -546,7 +546,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 5,
-      image: './../../../../assets/tepolary-images/my-playlists-4.png',
+      image: './../../../../assets/tempolary-images/my-playlists-4.png',
       name: 'Beautiful People',
       songs: [
         'Ed Sheeran',
@@ -566,7 +566,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 6,
-      image: './../../../../assets/tepolary-images/my-playlists-5.png',
+      image: './../../../../assets/tempolary-images/my-playlists-5.png',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -586,7 +586,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 7,
-      image: './../../../../assets/tepolary-images/my-playlists-6.png',
+      image: './../../../../assets/tempolary-images/my-playlists-6.png',
       name: 'Beautiful People',
       songs: [
         'Ed Sheeran',
@@ -606,7 +606,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 8,
-      image: './../../../../assets/tepolary-images/my-playlists-2.png',
+      image: './../../../../assets/tempolary-images/my-playlists-2.png',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -626,7 +626,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 9,
-      image: './../../../../assets/tepolary-images/my-playlists-1.png',
+      image: './../../../../assets/tempolary-images/my-playlists-1.png',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -646,7 +646,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 10,
-      image: './../../../../assets/tepolary-images/my-playlists-5.png',
+      image: './../../../../assets/tempolary-images/my-playlists-5.png',
       name: 'Tropical chaos',
       songs: [
         'Ed Sheeran',
@@ -666,7 +666,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 11,
-      image: './../../../../assets/tepolary-images/my-playlists-6.png',
+      image: './../../../../assets/tempolary-images/my-playlists-6.png',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -686,7 +686,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 12,
-      image: './../../../../assets/tepolary-images/my-playlists-2.png',
+      image: './../../../../assets/tempolary-images/my-playlists-2.png',
       name: 'OneRepublic',
       songs: [
         'Ed Sheeran',
@@ -706,7 +706,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 13,
-      image: './../../../../assets/tepolary-images/castle-big-image.jpeg',
+      image: './../../../../assets/tempolary-images/castle-big-image.jpeg',
       name: 'Tropical chaos',
       songs: [
         'Ed Sheeran',
@@ -726,7 +726,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 14,
-      image: './../../../../assets/tepolary-images/my-playlists-7.png',
+      image: './../../../../assets/tempolary-images/my-playlists-7.png',
       name: 'OneRepublic',
       songs: [
         'Ed Sheeran',
@@ -746,7 +746,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 15,
-      image: './../../../../assets/tepolary-images/my-playlists-8.jpeg',
+      image: './../../../../assets/tempolary-images/my-playlists-8.jpeg',
       name: 'Hot mood',
       songs: [
         'Ed Sheeran',
@@ -766,7 +766,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 16,
-      image: './../../../../assets/tepolary-images/my-playlists-2.png',
+      image: './../../../../assets/tempolary-images/my-playlists-2.png',
       name: 'Fresh & Chill',
       songs: [
         'Ed Sheeran',
@@ -786,7 +786,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 17,
-      image: './../../../../assets/tepolary-images/my-playlists-4.png',
+      image: './../../../../assets/tempolary-images/my-playlists-4.png',
       name: 'OneRepublic',
       songs: [
         'Ed Sheeran',
@@ -806,7 +806,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 18,
-      image: './../../../../assets/tepolary-images/castle-big-image.jpeg',
+      image: './../../../../assets/tempolary-images/castle-big-image.jpeg',
       name: 'Hot mood',
       songs: [
         'Ed Sheeran',
@@ -826,7 +826,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 19,
-      image: './../../../../assets/tepolary-images/my-playlists-1.png',
+      image: './../../../../assets/tempolary-images/my-playlists-1.png',
       name: 'Beautiful People',
       songs: [
         'Ed Sheeran',
@@ -846,7 +846,7 @@ export class MainHomeComponent implements OnInit {
     },
     {
       id: 20,
-      image: './../../../../assets/tepolary-images/my-playlists-7.png',
+      image: './../../../../assets/tempolary-images/my-playlists-7.png',
       name: 'OneRepublic',
       songs: [
         'Ed Sheeran',
@@ -915,13 +915,10 @@ export class MainHomeComponent implements OnInit {
       podcast: 'Positions'
     }
   ];
+  albums = this.allAlbums;
   playlists = this.allPlaylists;
-  cashedAlbums: Album[] = [];
-  cashedPlaylists: Playlist[] = [];
 
   // TODO: seetings without registration
-  adjusterAlbums: number = 6;
-  adjusterPlaylists: number = 6;
 
   constructor(private _authService: AuthService) {}
 
@@ -932,29 +929,27 @@ export class MainHomeComponent implements OnInit {
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
-    this.cashedAlbums = this.allAlbums;
-    this.cashedPlaylists = this.allPlaylists;
   }
 
-  nextAlbums(pressingButton: HTMLElement) {
-    this.adjusterAlbums += 1;
-    pressingButton.scrollBy({ left: this._scrollingSizeAlbums, behavior: 'smooth' });
-  }
+  // nextAlbums(pressingButton: HTMLElement) {
+  //   this.adjusterAlbums += 1;
+  //   pressingButton.scrollBy({ left: this._scrollingSizeAlbums, behavior: 'smooth' });
+  // }
 
-  prevAlbums(pressingButton: HTMLElement) {
-    this.adjusterAlbums -= 1;
-    pressingButton.scrollBy({ left: -this._scrollingSizeAlbums, behavior: 'smooth' });
-  }
+  // prevAlbums(pressingButton: HTMLElement) {
+  //   this.adjusterAlbums -= 1;
+  //   pressingButton.scrollBy({ left: -this._scrollingSizeAlbums, behavior: 'smooth' });
+  // }
 
-  nextPlaylists(pressingButton: HTMLElement) {
-    this.adjusterPlaylists += 1;
-    pressingButton.scrollBy({ left: this._scrollingSizePlaylists, behavior: 'smooth' });
-  }
+  // nextPlaylists(pressingButton: HTMLElement) {
+  //   this.adjusterPlaylists += 1;
+  //   pressingButton.scrollBy({ left: this._scrollingSizePlaylists, behavior: 'smooth' });
+  // }
 
-  prevPlaylists(pressingButton: HTMLElement) {
-    this.adjusterPlaylists -= 1;
-    pressingButton.scrollBy({ left: -this._scrollingSizePlaylists, behavior: 'smooth' });
-  }
+  // prevPlaylists(pressingButton: HTMLElement) {
+  //   this.adjusterPlaylists -= 1;
+  //   pressingButton.scrollBy({ left: -this._scrollingSizePlaylists, behavior: 'smooth' });
+  // }
 
   playAlbum = () => {
     // Ability to play album
@@ -1009,8 +1004,8 @@ export class MainHomeComponent implements OnInit {
       });
   };
 
-  scroll = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
+  scroll = () => {
+    // const element = document.getElementById();
+    // element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   };
 }
