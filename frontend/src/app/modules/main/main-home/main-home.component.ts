@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { AlbumView } from 'src/app/models/album/album-view';
 import { Mix } from 'src/app/models/mix/mix';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { SongTest } from 'src/app/models/tempolary-folder/song-test';
+import { AlbumService } from 'src/app/services/album.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Album } from '../../../models/album/album';
 
@@ -10,7 +15,7 @@ import { Album } from '../../../models/album/album';
   templateUrl: './main-home.component.html',
   styleUrls: ['./main-home.component.sass']
 })
-export class MainHomeComponent implements OnInit {
+export class MainHomeComponent implements OnInit, OnDestroy {
   private _newestCounter: number = 1;
   private _newestAlbums = new Array<object>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
 
@@ -19,10 +24,11 @@ export class MainHomeComponent implements OnInit {
 
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
-  public newReleases = new Array<object>();
+  public newReleases: AlbumView[] = [];
   public calmRhythms = new Array<object>();
   public yourMix = new Array<object>();
   public top100Songs = new Array<object>();
+  private _unsubscribe$ = new Subject<void>();
 
   // TODO: tempolary albums and seetings
   allAlbums: Album[] = [
@@ -945,15 +951,22 @@ export class MainHomeComponent implements OnInit {
 
   // TODO: seetings without registration
 
-  constructor(private _authService: AuthService) {}
+  constructor(private _authService: AuthService,
+    private _albumService: AlbumService) {
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     this._newestAlbums = this.getNewestFiveAlbums();
     this.recentlyPlayed = this.getRecentlyPlayed();
-    this.newReleases = this.getNewReleases();
+    this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
+  }
+
+  public ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 
   playAlbum = () => {
@@ -971,7 +984,16 @@ export class MainHomeComponent implements OnInit {
   getRecentlyPlayed = (): Array<object> => new Array<object>();
 
   // User should be able to play New Releases - songs/albums which was added to system during last month
-  getNewReleases = (): Array<object> => new Array<object>();
+  public getNewReleases() {
+    this._albumService
+      .getNewReleases()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp: HttpResponse<AlbumView[]>) => {
+          this.newReleases = resp.body!;
+        }
+      );
+  }
 
   // User should be able to play Calm rhythms - the newest playlists which moderator creates
   getCalmRhythms = (): Array<object> => new Array<object>();
