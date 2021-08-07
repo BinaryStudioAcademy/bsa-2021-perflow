@@ -1,5 +1,5 @@
 import {
-  Component, EventEmitter, OnInit, Output
+  Component, EventEmitter, OnInit, Output, Input
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -23,6 +23,8 @@ export class ProfileEditFormComponent implements OnInit {
   genders: { key: boolean; text: string; }[] = [{ key: false, text: 'Male' }, { key: true, text: 'Female' }];
   countries: Country[] = countries;
   standartIcon: string = '../../../../assets/images/standartIcon.png';
+
+  @Input()
   user: User;
 
   @Output()

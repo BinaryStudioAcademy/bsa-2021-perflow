@@ -1,11 +1,11 @@
 import {
-  Component, EventEmitter, OnInit, Output
+  Component, EventEmitter, OnInit, Output, Input
 } from '@angular/core';
 import {
   AbstractControl, FormControl, FormGroup, ValidatorFn, Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/shared/user.model';
+import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
 
 @Component({
@@ -15,6 +15,8 @@ import { UserChangePassword } from 'src/app/models/user/user-change-password';
 })
 export class UpdatePasswordFormComponent implements OnInit {
   form!: FormGroup;
+
+  @Input()
   user: User;
 
   @Output()

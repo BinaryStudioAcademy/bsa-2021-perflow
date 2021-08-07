@@ -1,11 +1,11 @@
 <main>
     <div>
         <div>
-            <app-profile-edit-form (updatedUser)="onSubmitUser($event)"></app-profile-edit-form>
+            <app-profile-edit-form [user]=user (updatedUser)="onSubmitUser($event)"></app-profile-edit-form>
         </div>
         <div class="container">
             <div class="form">
-                <app-update-password-form (updatedUserPassword)="onSubmitPassword($event)"></app-update-password-form>
+                <app-update-password-form [user]=user (updatedUserPassword)="onSubmitPassword($event)"></app-update-password-form>
             </div>
         </div>
     </div>

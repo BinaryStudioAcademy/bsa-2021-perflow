@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
@@ -10,9 +10,11 @@ import { UpdatePasswordFormComponent } from '../update-password-form/update-pass
   templateUrl: './user-profile-edit.component.html',
   styleUrls: ['./user-profile-edit.component.sass']
 })
-export class UserProfileEditComponent {
+export class UserProfileEditComponent implements OnInit {
   @ViewChild(UpdatePasswordFormComponent, { static: false })
   private _updatePasswordFormComponent: UpdatePasswordFormComponent | undefined;
+
+  user: User;
   updatedUser: User;
   updatedUserPassword: UserChangePassword;
   isSuccess: boolean = false;
@@ -20,15 +22,29 @@ export class UserProfileEditComponent {
 
   constructor(private _userService: UserService) { }
 
+  ngOnInit() {
+    //TODO: get user from authService
+    this.user = {
+      id: 1,
+      email: "some@gmail.com",
+      iconURL: "",
+      gender: true,
+      userName: "someName",
+      description: "someText",
+      birthday: new Date(),
+      country: "Ukraine"
+    };
+  }
+
   onSubmitUser(updatedUser: User) {
     this.updatedUser = updatedUser;
     this._userService.updateUser(updatedUser)
       .subscribe(() => {
         this.isSuccess = true;
       },
-      () => {
-        this.isError = true;
-      });
+        () => {
+          this.isError = true;
+        });
   }
 
   onSubmitPassword(updatedUserPassword: UserChangePassword) {
@@ -42,8 +58,8 @@ export class UserProfileEditComponent {
       .subscribe(() => {
         this.isSuccess = true;
       },
-      () => {
-        this.isError = true;
-      });
+        () => {
+          this.isError = true;
+        });
   }
 }
