@@ -23,16 +23,16 @@ export class UserProfileEditComponent implements OnInit {
   constructor(private _userService: UserService) { }
 
   ngOnInit() {
-    //TODO: get user from authService
+    // TODO: get user from authService
     this.user = {
       id: 1,
-      email: "some@gmail.com",
-      iconURL: "",
+      email: 'some@gmail.com',
+      iconURL: '',
       gender: true,
-      userName: "someName",
-      description: "someText",
+      userName: 'someName',
+      description: 'someText',
       birthday: new Date(),
-      country: "Ukraine"
+      country: 'Ukraine'
     };
   }
 
@@ -42,9 +42,9 @@ export class UserProfileEditComponent implements OnInit {
       .subscribe(() => {
         this.isSuccess = true;
       },
-        () => {
-          this.isError = true;
-        });
+      () => {
+        this.isError = true;
+      });
   }
 
   onSubmitPassword(updatedUserPassword: UserChangePassword) {
@@ -58,8 +58,8 @@ export class UserProfileEditComponent implements OnInit {
       .subscribe(() => {
         this.isSuccess = true;
       },
-        () => {
-          this.isError = true;
-        });
+      () => {
+        this.isError = true;
+      });
   }
 }
