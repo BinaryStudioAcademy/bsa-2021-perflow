@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Album } from '../../../../models/album';
 
 @Component({
   selector: 'app-album-card',
@@ -7,5 +6,7 @@ import { Album } from '../../../../models/album';
   styleUrls: ['./album-card.component.sass']
 })
 export class AlbumCardComponent {
-  @Input() album! : Album;
+  @Input() image! : string;
+  @Input() name! : string;
+  @Input() songs! : string[];
 }

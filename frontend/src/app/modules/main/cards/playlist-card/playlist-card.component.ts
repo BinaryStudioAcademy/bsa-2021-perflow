@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Playlist } from '../../../../models/playlist';
 
 @Component({
   selector: 'app-playlist-card',
@@ -7,5 +6,7 @@ import { Playlist } from '../../../../models/playlist';
   styleUrls: ['./playlist-card.component.sass']
 })
 export class PlaylistCardComponent {
-  @Input() playlist! : Playlist;
+  @Input() image! : string;
+  @Input() name! : string;
+  @Input() songs! : string[];
 }

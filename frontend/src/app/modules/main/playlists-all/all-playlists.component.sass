@@ -1,20 +1,16 @@
 @import "../../../../styles.sass"
 
-#all-playlists
+.ui.grid
     padding: 0 0 0 247px
     height: auto
     min-height: 100vh
     background: $dark-gray
 
-#row-1
-    margin-top: 50px
-    padding: 0 50px
-    flex-wrap: nowrap
-
-#liked-songs
-    padding: 0 30px
+.ui.button
+    margin-right: 10px
+    padding: 0 20px
     display: flex
-    width: 32%
+    width: 495px
     border-radius: 5px
     line-height: 47px
     flex-direction: column
@@ -23,24 +19,34 @@
     background: $fire-orange
     color: $text
 
-#like-count
+.like-count
     font-weight: normal
     font-size: 18px
     line-height: 21px
     color: $text
 
-#cards
+.hat.albums.and.playlist
+    margin: 30px 50px 0 30px
+    height: max-content
     display: flex
-    overflow: hidden
+    flex-wrap: nowrap
 
-#row-2
-    height: 100%
-    margin: 38px 8px 0 50px
-    overflow: hidden
-
-#playlist-card
-    margin: 10px 0px
-
-#playlist-cards
+.ui.segment
+    padding: 0
+    height: max-content
     display: flex
-    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    background: $dark-gray
+
+.cards
+    display: flex
+
+.ui.row
+    margin: 0
+    padding: 30px 0 0 40px
+    align-items: baseline
+
+.last.albums
+    margin: 0 20px
+    display: flex

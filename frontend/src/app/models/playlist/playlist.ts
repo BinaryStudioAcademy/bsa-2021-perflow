@@ -1,7 +1,7 @@
 // TODO: temp object for testing and presentation. Work on Playlist and Main
-export interface Album {
+export interface Playlist {
   id: number;
-  titleImage: string;
-  nameAlbum: string;
+  image: string;
+  name: string;
   songs: string[];
 }

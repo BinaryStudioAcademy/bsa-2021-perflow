@@ -1,24 +1,29 @@
 <div class="description">
-  <div class="ui grid" id="all-playlists">
-    <div class="ui row" id="row-1">
-      <div class="ui button" id="liked-songs">
+  <div class="ui grid">
+    <div class="hat albums and playlist">
+      <div class="ui button">
         <h3>Liked songs</h3>
-        <div class="text" id="like-count">{{ likedSongs }} songs</div>
+        <div class="like-count">{{ likedSongs }} songs</div>
       </div>
-      <div id="cards">
-        <div *ngFor="let album of albums; let i; index">
-          <app-album-card [album]="i"></app-album-card>
+      <div class="ui segment" *ngFor="let album of albums">
+        <div class="last albums">
+          <app-album-card
+            [image]="album.image"
+            [name]="album.name"
+            [songs]="album.songs"
+          >
+          </app-album-card>
         </div>
       </div>
     </div>
-
-    <div class="row" id="row-2">
-      <div id="playlist-cards">
-        <div *ngFor="let playlist of playlists; let i; index">
-          <div class="three wide column" id="playlist-card">
-            <app-playlist-card [playlist]="i"></app-playlist-card>
-          </div>
-        </div>
+    <div class="ui row">
+      <div class="ui segment" *ngFor="let playlist of playlists">
+        <app-playlist-card
+          [image]="playlist.image"
+          [name]="playlist.name"
+          [songs]="playlist.songs"
+        >
+        </app-playlist-card>
       </div>
     </div>
   </div>

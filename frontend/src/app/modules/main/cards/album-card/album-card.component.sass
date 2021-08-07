@@ -1,28 +1,30 @@
 @import "../../../../../styles.sass"
 
+img
+    width: 160px
+    height: 160px
+    margin: 0 auto
+    overflow: hidden
+    border-radius: 50%
+
 .album-card
-    width: 215px
-    margin: 0 20px
+    margin: 0 10px
+    width: 200px
     display: flex
     flex-direction: column
     align-items: center
+    background: $dark-gray
     .fader
-        width: 190px
-        height: 190px
-        border-radius: 50%
-        position: relative
-        transition: .3s
-        overflow: hidden
         display: flex
         justify-content: center
 
         &:hover
-            #play-icon
+            .play-icon
                 opacity: 0.7
         .play-icon
             position: absolute
             left: 50%
-            top: 50%
+            top: 35%
             transform: translate(-50%, -50%)
             font-size: 16px
             transition: .3s
@@ -34,11 +36,6 @@
             transition: opacity 0.4s ease
             i
                 margin: 5px
-
-        img
-            width: 100%
-            height: 100%
-            object-fit: cover
 
     .card-name
         margin-top: 10px

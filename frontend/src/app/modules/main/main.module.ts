@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.component';
-import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
-import { TopSongsCardComponent } from './cards/top-songs-card/top-songs-card.component';
-import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
 import { MainRoutingModule } from './main-routing.module';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { MainHomeComponent } from './main-home/main-home.component';
@@ -30,10 +27,7 @@ import { SharedModule } from '../shared/shared.module';
     SongsComponent,
     ProfileMenuComponent,
     PlaylistCardComponent,
-    AlbumCardComponent,
-    RecentlyPlayedCardComponent,
-    TopSongsCardComponent,
-    YourMixCardComponent
+    AlbumCardComponent
   ],
   imports: [
     CommonModule,
