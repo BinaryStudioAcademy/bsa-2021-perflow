@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-your-mix-card',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./your-mix-card.component.sass']
 })
 export class YourMixCardComponent {
-
+  @Input() iconURL! : string;
+  @Input() style! : string;
 }

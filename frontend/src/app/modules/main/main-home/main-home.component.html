@@ -101,6 +101,21 @@
       <i class="large angle right icon"></i>
     </div>
   </div>
+
+  <!-- Your mix -->
+  <div class="header-main-home-content"> 
+    <h4>Your mix</h4>
+  </div>
+  <div class="recently-played">
+    <div class="ui row">
+      <div class="ui segment" *ngFor="let mix of allMix">
+        <app-your-mix-card
+          [iconURL]="mix.iconURL"
+          [style]="mix.style" >
+        </app-your-mix-card>
+      </div>
+    </div>
+  </div>
 </main>
 
 <!-- New Releases 

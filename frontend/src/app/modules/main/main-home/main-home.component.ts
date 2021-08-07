@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Mix } from 'src/app/models/mix/mix';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { SongTest } from 'src/app/models/tempolary-folder/song-test';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -913,6 +914,33 @@ export class MainHomeComponent implements OnInit {
       iconURL: '../../../../assets/tempolary-images/madonna.jpg',
       artist: 'Madonna',
       podcast: 'Positions'
+    }
+  ];
+  allMix: Mix[] = [
+    {
+      iconURL: '../../../../assets/tempolary-images/mix-1.jpg',
+      style: 'Today’s top'
+    },
+    {
+      iconURL: '../../../../assets/tempolary-images/mix-2.jpg',
+      style: 'Rock mix'
+    },
+    {
+      iconURL: '../../../../assets/tempolary-images/mix-3.jpg',
+      style: 'Club'
+    },
+    {
+      iconURL: '../../../../assets/tempolary-images/mix-4.jpg',
+      style: 'Electro'
+    },
+    {
+      iconURL: '../../../../assets/tempolary-images/mix-5.png',
+      style: 'Relax'
+
+    },
+    {
+      iconURL: '../../../../assets/tempolary-images/mix-6.png',
+      style: 'Work'
     }
   ];
   albums = this.allAlbums;
