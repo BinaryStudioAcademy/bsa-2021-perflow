@@ -38,29 +38,24 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="ui grid">
-    Recently played 
-    <div class="ui sixteen column row recently-played">
-      <div class="header">Recently played</div>
-      <div class="ui grid recently-played-cont">
-         Demonstration cards (delete them) 
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        Work component 
-        <app-recently-played-card
-          *ngFor="let card of recentlyPlayed"
-        ></app-recently-played-card>
+  <div class="header-songs">
+    <h4>Recently played</h4>
+  </div>
+  <div class="recently-played">
+    <div class="ui row">
+      <div class="ui segment" *ngFor="let song of allSongs">
+        <app-song-card
+          [iconURL]="song.iconURL"
+          [name]="song.name"
+          [artist]="song.artist"
+          [podcast]="song.podcast"
+        >
+        </app-song-card>
       </div>
     </div>
-
-     New Releases 
+  </div>
+</main>
+<!-- New Releases 
     <div class="ui sixteen column row new-releases">
       <div class="header">New Releases</div>
       <div id="newReleases">
@@ -164,4 +159,3 @@
       </div>
     </div>
   </div> -->
-</main>

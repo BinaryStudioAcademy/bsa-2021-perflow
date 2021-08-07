@@ -1,0 +1,57 @@
+@import "../../../../../styles.sass"
+
+*
+    padding: 0
+    margin: 0
+    text-decoration: none
+    list-style: none
+    box-sizing: border-box
+
+.rp-card
+    margin: 10px
+    width: 380px
+    display: flex
+    background: $dark-gray
+    .fader
+        height: 65px
+        img
+            height: 65px
+            width: 95px
+            object-fit: cover
+            background: linear-gradient(0deg, rgba(55, 71, 79, 0.16), rgba(55, 71, 79, 0.16))
+            border-radius: 3px
+        &:hover
+            .play-icon
+                opacity: 0.7
+        .play-icon
+            position: absolute
+            top: 15px
+            left: 31px
+            height: 28px
+            width: 28px
+            border: none
+            border-radius: 2px
+            background: $bg-gradient
+            opacity: 0
+            cursor: pointer
+            transition: opacity 0.4s ease
+            i
+                position: relative
+                font-size: 28px
+                top: -1px
+                left: -1px
+                color: #DADDDE
+
+.card-description
+    margin: 0 20px
+    display: flex
+    font-size: 14px
+    flex-direction: column
+    justify-content: center
+    font-weight: $light-weight
+    color: $text-color-gray
+
+.card-name
+    font-size: 14px
+    font-weight: $normal-weight
+    color: $default-white

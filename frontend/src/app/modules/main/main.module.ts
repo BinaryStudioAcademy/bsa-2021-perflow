@@ -14,6 +14,7 @@ import { ArtistsComponent } from './artists/artists.component';
 import { AlbumsComponent } from './albums/albums.component';
 import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { SharedModule } from '../shared/shared.module';
+import { SongCardComponent } from './cards/song-card/song-card.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SharedModule } from '../shared/shared.module';
     SongsComponent,
     ProfileMenuComponent,
     PlaylistCardComponent,
-    AlbumCardComponent
+    AlbumCardComponent,
+    SongCardComponent
   ],
   imports: [
     CommonModule,

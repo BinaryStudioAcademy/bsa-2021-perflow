@@ -29,14 +29,14 @@ main
     // Navigation arrows   
 .arrows
     display: flex
- 
+
 .arrow-left
     background: $pink
     border-radius: 2px
     width: 28px
     height: 28px
     border: 0px solid
-    color: $text   
+    color: $text
 
 .arrow-left:hover
     background: $pink
@@ -52,7 +52,7 @@ main
     height: 28px
     border: 0px solid
     color: $text
-    margin-left: 15px    
+    margin-left: 15px
 
 .arrow-right:hover
     background: $pink
@@ -65,24 +65,24 @@ main
     padding: 35px 0 0 35px
     display: flex
     align-items: center
-    justify-content: space-between  
+    justify-content: space-between
 
     // Accordion Information
 .accordion > .accordion-information
-        grid-column: 1
-        grid-row: 2
-        position: relative
-        left: 160px
-        top: 38px
-        width: 70%
-        height: 245px
-        overflow: hidden
-        display: grid
-        grid-template-columns: 245px auto
-        grid-template-row: 100%
-        gap: 0px 0px
-        @media (max-width: 1300px)
-            left: 150px
+    grid-column: 1
+    grid-row: 2
+    position: relative
+    left: 160px
+    top: 38px
+    width: 70%
+    height: 245px
+    overflow: hidden
+    display: grid
+    grid-template-columns: 245px auto
+    grid-template-row: 100%
+    gap: 0px 0px
+    @media (max-width: 1300px)
+        left: 150px
         @media (max-width: 1200px)
             width: 750px
         @media (max-width: 1050px)
@@ -207,22 +207,12 @@ main
 
 // Recently played
 .recently-played
-    height: 199px
-    margin: 53px 38px
-    @media (max-width: 800px)
-        margin-bottom: 10px !important
-        height: 220px
-    .recently-played-cont
-        overflow: hidden
-        max-height: 155px
-        align-content: stretch
-        margin-top: 30px
-        justify-content: start
-        @media (max-width: 800px)
-            justify-content: center
-        &::-webkit-scrollbar
-            width: 0px
-            height: 0px
+    margin-left: 25px
+
+.recently-played .ui.row
+    display: flex
+    align-items: baseline
+    flex-wrap: wrap
 
 // New Releases
 .new-releases
@@ -230,7 +220,7 @@ main
     height: 328px
     margin: 0 38px 53px 38px
     overflow: hidden
-    &::-webkit-scrollbar 
+    &::-webkit-scrollbar
         width: 0px
         height: 0px
     @media (max-width: 800px)
@@ -332,20 +322,31 @@ main
     @media (max-width: 800px)
         margin-top: -15px
 
-#btn-scroll-data
-    width: 33px
-    height: 33px
-    display: flex
-    background: $light-gray
-    i
-        margin: 0
+// #btn-scroll-data
+//     width: 33px
+//     height: 33px
+//     display: flex
+//     background: $light-gray
+//     i
+//         margin: 0
 
-#newReleases
-    display: flex
-    width: 100%
-    align-items: center
+// #newReleases
+//     display: flex
+//     width: 100%
+//     align-items: center
 
-#calmRhythms
-    display: flex
-    width: 100%
-    align-items: center
+// #calmRhythms
+//     display: flex
+//     width: 100%
+//     align-items: center
+
+.ui.segment
+    padding: 0
+    margin: 0
+    background: $dark-gray
+
+.header-songs
+    margin-left: 35px
+    margin-top: 50px
+    font-size: $bold-weight
+    color: $default-white

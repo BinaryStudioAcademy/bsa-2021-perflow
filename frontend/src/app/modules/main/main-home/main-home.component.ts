@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist/playlist';
+import { SongTest } from 'src/app/models/tempolary-folder/song-test';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Album } from '../../../models/album/album';
 
@@ -862,6 +863,56 @@ export class MainHomeComponent implements OnInit {
         'Bad Liar',
         'SigalaPink'
       ]
+    }
+  ];
+  allSongs: SongTest[] = [
+    {
+      name: 'your broke me first',
+      iconURL: '../../../../assets/tempolary-images/madonna.jpg',
+      artist: 'Madonna',
+      podcast: 'Rain on me'
+    },
+    {
+      name: 'Therefore I am',
+      iconURL: '../../../../assets/tempolary-images/crazy.jpg',
+      artist: 'Madonna',
+      podcast: 'Motivation'
+    },
+    {
+      name: 'Positions',
+      iconURL: '../../../../assets/tempolary-images/other.jpg',
+      artist: 'Madonna',
+      podcast: 'Rain on me'
+    },
+    {
+      name: 'your broke me first',
+      iconURL: '../../../../assets/tempolary-images/alien.jpg',
+      artist: 'Madonna',
+      podcast: 'Positions'
+    },
+    {
+      name: 'your broke me first',
+      iconURL: '../../../../assets/tempolary-images/madonna.jpg',
+      artist: 'Madonna',
+      podcast: 'Rain on me'
+    },
+    {
+      name: 'Therefore I am',
+      iconURL: '../../../../assets/tempolary-images/crazy.jpg',
+      artist: 'Madonna',
+      podcast: 'Motivation'
+    },
+    {
+      name: 'Positions',
+      iconURL: '../../../../assets/tempolary-images/other.jpg',
+      artist: 'Madonna',
+      podcast: 'Rain on me'
+    },
+    {
+      name: 'your broke me first',
+      iconURL: '../../../../assets/tempolary-images/madonna.jpg',
+      artist: 'Madonna',
+      podcast: 'Positions'
     }
   ];
   playlists = this.allPlaylists;
