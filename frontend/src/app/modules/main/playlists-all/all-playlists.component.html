@@ -1,10 +1,10 @@
 <div class="description">
   <div class="ui grid">
     <div class="hat albums and playlist">
-      <div class="ui button">
+      <a class="ui button" routerLink="../../songs">
         <h3>Liked songs</h3>
         <div class="like-count">{{ likedSongs }} songs</div>
-      </div>
+    </a>
       <div class="ui segment" *ngFor="let album of albums">
         <div class="last albums">
           <app-album-card
