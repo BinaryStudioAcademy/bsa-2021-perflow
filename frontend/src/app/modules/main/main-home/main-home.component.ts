@@ -16,9 +16,6 @@ export class MainHomeComponent implements OnInit {
 
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
-  private readonly _scrollingSizeAlbums: number = 255;
-  private readonly _scrollingSizePlaylists: number = 258;
-  private readonly _scrollingSize: number = 270;
 
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
@@ -959,26 +956,6 @@ export class MainHomeComponent implements OnInit {
     this.top100Songs = this.getTop100Songs();
   }
 
-  // nextAlbums(pressingButton: HTMLElement) {
-  //   this.adjusterAlbums += 1;
-  //   pressingButton.scrollBy({ left: this._scrollingSizeAlbums, behavior: 'smooth' });
-  // }
-
-  // prevAlbums(pressingButton: HTMLElement) {
-  //   this.adjusterAlbums -= 1;
-  //   pressingButton.scrollBy({ left: -this._scrollingSizeAlbums, behavior: 'smooth' });
-  // }
-
-  // nextPlaylists(pressingButton: HTMLElement) {
-  //   this.adjusterPlaylists += 1;
-  //   pressingButton.scrollBy({ left: this._scrollingSizePlaylists, behavior: 'smooth' });
-  // }
-
-  // prevPlaylists(pressingButton: HTMLElement) {
-  //   this.adjusterPlaylists -= 1;
-  //   pressingButton.scrollBy({ left: -this._scrollingSizePlaylists, behavior: 'smooth' });
-  // }
-
   playAlbum = () => {
     // Ability to play album
   };
@@ -1032,8 +1009,27 @@ export class MainHomeComponent implements OnInit {
       });
   };
 
-  scroll = () => {
-    // const element = document.getElementById();
-    // element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
+  scrollRight = (id: string) => {
+    const element = document.getElementById(id);
+    let scrollingSize: number = 0;
+    if (id === 'album') {
+      scrollingSize = 250;
+    }
+    if (id === 'playlist' || id === 'song' || id === 'repeat') {
+      scrollingSize = 257;
+    }
+    element?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+  };
+
+  scrollLeft = (id: string) => {
+    const element = document.getElementById(id);
+    let scrollingSize: number = 0;
+    if (id === 'album') {
+      scrollingSize = 250;
+    }
+    if (id === 'playlist' || id === 'song' || id === 'repeat') {
+      scrollingSize = 257;
+    }
+    element?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
   };
 }

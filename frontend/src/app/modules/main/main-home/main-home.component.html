@@ -58,15 +58,16 @@
     </div>
   </div>
 
+  <!-- // TODO:  id tempolary for scroll -->
   <!-- New releases albums -->
   <div class="header-main-home-content"> 
     <h4>New releases</h4>
   </div>
   <div class="main-content-releases">
-    <div class="ui icon button">
+    <div class="ui icon button" (click)="scrollLeft('album')">
       <i class="large angle left icon"></i>
     </div>
-    <div class="ui container">
+    <div class="ui container" id="album">
       <div class="ui segment" *ngFor="let album of albums">
           <app-album-card
             [image]="album.image"
@@ -76,20 +77,21 @@
           </app-album-card>
       </div>
     </div>
-    <div class="ui icon button">
+    <div class="ui icon button" (click)="scrollRight('album')">
       <i class="large angle right icon"></i>
     </div>
   </div>
 
+  <!-- // TODO:  id tempolary for scroll -->
   <!-- Calm rhythms -->
   <div class="header-main-home-content"> 
     <h4>Calm rhythms</h4>
   </div>
   <div class="main-content-rhythms">
-    <div class="ui icon button">
+    <div class="ui icon button" (click)="scrollLeft('playlist')">
       <i class="large angle left icon"></i>
     </div>
-    <div class="ui container">
+    <div class="ui container" id="playlist">
       <div class="ui segment" *ngFor="let playlist of playlists">
         <app-playlist-card
         [image]="playlist.image"
@@ -98,7 +100,7 @@
         </app-playlist-card>
       </div>
     </div>
-    <div class="ui icon button">
+    <div class="ui icon button" (click)="scrollRight('playlist')">
       <i class="large angle right icon"></i>
     </div>
   </div>
@@ -119,16 +121,16 @@
     </div>
   </div>
 
-  <!-- // TODO: need model -->
+  <!-- // TODO: need model. id tempolary for scroll -->
    <!-- Top 100 songs  -->
    <div class="header-main-home-content"> 
     <h4>Top 100 songs </h4>
   </div>
   <div class="main-content-rhythms">
-    <div class="ui icon button">
+    <div class="ui icon button" (click)="scrollLeft('song')">
       <i class="large angle left icon"></i>
     </div>
-    <div class="ui container">
+    <div class="ui container" id="song">
       <div class="ui segment" *ngFor="let playlist of playlists">
         <app-playlist-card
         [image]="playlist.image"
@@ -137,21 +139,21 @@
         </app-playlist-card>
       </div>
     </div>
-    <div class="ui icon button">
+    <div class="ui icon button" (click)="scrollRight('song')">
       <i class="large angle right icon"></i>
     </div>
   </div>
 
-  <!-- // TODO: need model -->
+  <!-- // TODO: need model. id tempolary for scroll -->
   <!-- Recently played  -->
   <div class="header-main-home-content"> 
     <h4>Recently played </h4>
   </div>
   <div class="main-content-rhythms">
-    <div class="ui icon button">
+    <div class="ui icon button" (click)="scrollLeft('repeat')">
       <i class="large angle left icon"></i>
     </div>
-    <div class="ui container">
+    <div class="ui container" id="repeat">
       <div class="ui segment" *ngFor="let playlist of playlists">
         <app-playlist-card
         [image]="playlist.image"
@@ -160,7 +162,7 @@
         </app-playlist-card>
       </div>
     </div>
-    <div class="ui icon button">
+    <div class="ui icon button" (click)="scrollRight('repeat')">
       <i class="large angle right icon"></i>
     </div>
   </div>
