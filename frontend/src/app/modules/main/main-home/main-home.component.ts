@@ -1013,10 +1013,10 @@ export class MainHomeComponent implements OnInit {
     const element = document.getElementById(id);
     let scrollingSize: number = 0;
     if (id === 'album') {
-      scrollingSize = 250;
+      scrollingSize = 239;
     }
     if (id === 'playlist' || id === 'song' || id === 'repeat') {
-      scrollingSize = 257;
+      scrollingSize = 256;
     }
     element?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
   };
@@ -1025,10 +1025,10 @@ export class MainHomeComponent implements OnInit {
     const element = document.getElementById(id);
     let scrollingSize: number = 0;
     if (id === 'album') {
-      scrollingSize = 250;
+      scrollingSize = 239;
     }
     if (id === 'playlist' || id === 'song' || id === 'repeat') {
-      scrollingSize = 257;
+      scrollingSize = 256;
     }
     element?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
   };
