@@ -105,125 +105,107 @@ main
             transform: scale(0.9)
         @media (max-width: 400px)
             transform: scale(0.8)
-        .album-icon
+    .album-icon
+        grid-column: 1
+        grid-row: 1
+        width: 245px
+        height: 245px
+        border-radius: 50%
+        object-fit: cover
+        background: #C4C4C4
+        box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
+        @media (max-width: 800px)
+            display: none
+    .album-info
+        grid-column: 2
+        grid-row: 1
+        margin-left: 35px
+        height: 245px
+        @media (max-width: 800px)
             grid-column: 1
-            grid-row: 1
-            width: 245px
-            height: 245px
-            border-radius: 50%
-            object-fit: cover
-            background: #C4C4C4
-            box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
-            @media (max-width: 800px)
-                display: none
-        .album-info
-            grid-column: 2
-            grid-row: 1
-            margin-left: 35px
-            height: 245px
-            @media (max-width: 800px)
-                grid-column: 1
-            @media (max-width: 500px)
-                margin-left: 0px
-            .type
-                margin-top: 20px
-                font-family: Rubik
-                font-style: normal
-                font-weight: $light-weight
-                font-size: 18px
-                line-height: 21px
+        @media (max-width: 500px)
+            margin-left: 0px
+        .type
+            margin-top: 20px
+            font-family: Rubik
+            font-style: normal
+            font-weight: $light-weight
+            font-size: 18px
+            line-height: 21px
+            color: $text
+            height: fit-content
+        .album-title
+            margin-top: 10px
+            font-family: Rubik
+            font-style: normal
+            font-weight: $bold-weight
+            font-size: 40px
+            line-height: 47px
+            color: $text
+            height: fit-content
+            text-overflow: ellipsis
+        .album-description
+            margin-top: 22px
+            font-family: Rubik
+            font-style: normal
+            font-weight: $light-weight
+            font-size: 18px
+            line-height: 21px
+            color: $text
+            width: 100%
+            max-height: 42px
+            overflow: hidden
+            text-overflow: ellipsis
+        .buttons
+            margin-top: 20px
+            width: 180px
+            min-width: 180px
+            .button-play
+                display: inline-block
+                padding: 12px 22px
+                width: 79px
+                height: 43px
+                max-height: 43px
+                background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+                border: none
+                border-radius: 50px
                 color: $text
-                height: fit-content
-            .album-title
-                margin-top: 10px
                 font-family: Rubik
                 font-style: normal
                 font-weight: $bold-weight
-                font-size: 40px
-                line-height: 47px
+                font-size: 16px
+                line-height: 19px
+                &:hover
+                    cursor: pointer
+                    background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+                    color: $black
+                &:active
+                    border: 3px solid $medium-orange
+                    padding: 9px 19px
+            .button-save
+                display: inline-block
+                margin-left: 20px
+                padding: 11px 21px
+                width: 79px
+                height: 43px
+                background: none
                 color: $text
-                height: fit-content
-                text-overflow: ellipsis
-            .album-description
-                margin-top: 22px
                 font-family: Rubik
                 font-style: normal
-                font-weight: $light-weight
-                font-size: 18px
-                line-height: 21px
-                color: $text
-                width: 100%
-                max-height: 42px
-                overflow: hidden
-                text-overflow: ellipsis
-            .buttons
-                margin-top: 20px
-                width: 180px
-                min-width: 180px
-                .button-play
-                    display: inline-block
-                    padding: 12px 22px
-                    width: 79px
-                    height: 43px
-                    max-height: 43px
-                    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                    border: none
-                    border-radius: 50px
-                    color: $text
-                    font-family: Rubik
-                    font-style: normal
-                    font-weight: $bold-weight
-                    font-size: 16px
-                    line-height: 19px
-                    &:hover
-                        cursor: pointer
-                        background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                        color: $black
-                    &:active
-                        border: 3px solid $medium-orange
-                        padding: 9px 19px
-                .button-save
-                    display: inline-block
-                    margin-left: 20px
-                    padding: 11px 21px
-                    width: 79px
-                    height: 43px
-                    background: none
-                    color: $text
-                    font-family: Rubik
-                    font-style: normal
-                    font-weight: $bold-weight
-                    font-size: 16px
-                    line-height: 19px
-                    border: 1px solid $text
-                    border-radius: 50px
-                    &:hover
-                        cursor: pointer
-                        background: #864099d0
-                        color: $black
-                    &:active
-                        border: 3px solid $text
-                        padding: 9px 19px
+                font-weight: $bold-weight
+                font-size: 16px
+                line-height: 19px
+                border: 1px solid $text
+                border-radius: 50px
+                &:hover
+                    cursor: pointer
+                    background: #864099d0
+                    color: $black
+                &:active
+                    border: 3px solid $text
+                    padding: 9px 19px
 
-// #btn-scroll-data
-//     width: 33px
-//     height: 33px
-//     display: flex
-//     background: $light-gray
-//     i
-//         margin: 0
-
-// #newReleases
-//     display: flex
-//     width: 100%
-//     align-items: center
-
-// #calmRhythms
-//     display: flex
-//     width: 100%
-//     align-items: center
-// Recently played
-
+// Rows
 .recently-played
     margin-left: 25px
 
