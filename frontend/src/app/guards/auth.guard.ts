@@ -26,16 +26,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   checkLogin(url: string): boolean {
-    // this._authService.currentUser$.pipe(
-    //   map((user) => {
-    //     if (user) {
-    //       return true;
-    //     }
-    //     this._router.navigate(['/login']);
-    //     return false;
-    //   })
-    // );
-    // return false;
-    return true;
+    this._authService.currentUser$.pipe(
+      map((user) => {
+        if (user) {
+          return true;
+        }
+        this._router.navigate(['/login']);
+        return false;
+      })
+    );
+    return false;
   }
 }

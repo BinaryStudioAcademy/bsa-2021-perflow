@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
 
 // use auth.guard for prevent unauthorized users
 
@@ -11,8 +10,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./modules/main/main.module').then((m) => m.MainModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./modules/main/main.module').then((m) => m.MainModule)
   },
   {
     path: 'register',
