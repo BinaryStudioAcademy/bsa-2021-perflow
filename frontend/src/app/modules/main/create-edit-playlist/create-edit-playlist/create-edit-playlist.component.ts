@@ -66,10 +66,14 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         });
     }
     else {
-      this.playlist.id = 0;
-      this.playlist.name = 'Playlist title';
-      this.playlist.accessType = AccessType.default;
-      this.playlist.author = { id: 1 } as User; // must be current auth user here
+      this.playlist = {
+        ...this.playlist,
+        id: 0,
+        name: 'Playlist title',
+        accessType: AccessType.default,
+        author: { id: 1 } as User // must be current auth user here
+      };
+
       this.createPlaylist();
     }
 
@@ -105,9 +109,14 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.playlist.name = editedPlaylist.name;
     }
 
-    this.playlist.description = editedPlaylist.description;
-    this.playlist.iconURL = editedPlaylist.iconURL;
-    this.playlist.accessType = editedPlaylist.accessType;
+    this.playlist = {
+      ...this.playlist,
+      description: editedPlaylist.description,
+      iconURL: editedPlaylist.iconURL,
+      accessType: editedPlaylist.accessType,
+      name: editedPlaylist.name.trim() !== '' ? editedPlaylist.name : this.playlist.name,
+      songs: {} as Song[]
+    };
 
     this._playlistService.editPlaylist(this.playlist)
       .pipe(takeUntil(this._unsubscribe$))
@@ -136,8 +145,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.foundSongs = this.foundSongs.filter((s) => s.id !== song.id);
-            this.playlistSongs.push(song);
-            this.playlistSongs = this.playlistSongs.filter((s) => s); // this is needed to restore array for pipe in html page
+            this.playlistSongs = [...this.playlistSongs, song];
             this.playlist.songs = this.playlistSongs;
           }
         });

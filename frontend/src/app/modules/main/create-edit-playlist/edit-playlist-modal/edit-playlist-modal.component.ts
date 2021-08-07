@@ -1,9 +1,6 @@
 import {
   Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
-import {
-  FormControl, FormGroup, Validators
-} from '@angular/forms';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 
@@ -14,84 +11,26 @@ import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 })
 export class EditPlaylistModalComponent implements OnInit {
   file: File;
-  public editPlaylistForm!: FormGroup;
   public selectControlValues: AccessType[] = [AccessType.secret, AccessType.collaborative, AccessType.default];
-
   public tempIconURL: string;
 
   @Input() editedPlaylist: EditedPlaylist;
 
-  @Output()
-  isClosed = new EventEmitter<void>();
+  @Output() isClosed = new EventEmitter<void>();
 
-  @Output()
-  editPlaylist = new EventEmitter<EditedPlaylist>();
+  @Output() editPlaylist = new EventEmitter<EditedPlaylist>();
 
   ngOnInit() {
-    this.editPlaylistForm = new FormGroup({
-      name: new FormControl(
-        this.editedPlaylist.name,
-        [
-          Validators.required,
-          Validators.maxLength(50)
-        ]
-      ),
-      description: new FormControl(
-        this.editedPlaylist.description,
-        [
-          Validators.maxLength(200)
-        ]
-      ),
-      iconURL: new FormControl(''),
-      accessType: new FormControl(
-        this.editedPlaylist.accessType,
-        [Validators.required]
-      )
-    });
-
     this.tempIconURL = this.editedPlaylist.iconURL;
   }
 
-  get name() {
-    return this.editPlaylistForm.get('name')!;
-  }
-
-  get description() {
-    return this.editPlaylistForm.get('description')!;
-  }
-
-  get iconURL() {
-    return this.editPlaylistForm.get('iconURL')!;
-  }
-
-  get accessType() {
-    return this.editPlaylistForm.get('accessType')!;
-  }
-
   public onSubmit() {
-    this.editedPlaylist = this.editPlaylistForm.value;
     this.editedPlaylist.iconURL = this.tempIconURL;
     this.editPlaylist.emit(this.editedPlaylist);
-    this.editPlaylistForm.reset();
-  }
-
-  changeAccessType() {
-    this.editedPlaylist.accessType = this.editPlaylistForm.get('accessType')?.value;
   }
 
   cancelModal() {
     this.isClosed.emit();
-  }
-
-  public onValidate() {
-    if (this.editPlaylistForm.invalid
-      && (
-        this.editPlaylistForm.controls.name.hasError('required')
-        || this.editPlaylistForm.controls.accessType.hasError('required')
-      )) {
-      return false;
-    }
-    return true;
   }
 
   loadIcon = (event: Event) => {

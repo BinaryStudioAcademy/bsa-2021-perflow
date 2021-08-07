@@ -29,7 +29,10 @@ namespace Perflow.Services.Implementations
 
         public async Task<PlaylistDTO> GetEntityAsync(int id)
         {
-            var entity = await context.Playlists.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+            var entity = await context.Playlists
+                .Include(p => p.Author)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             return mapper.Map<PlaylistDTO>(entity);
         }
@@ -62,14 +65,6 @@ namespace Perflow.Services.Implementations
 
             var playlist = mapper.Map<Playlist>(playlistDTO);
 
-            var author = await context.Playlists
-                .Where(playlist => playlist.Id == playlistDTO.Id)
-                .Include(playlist => playlist.Author)
-                .Select(playlist => playlist.Author)
-                .FirstOrDefaultAsync();
-
-            playlist.Author = author;
-
             context.Entry(playlist).State = EntityState.Modified;
 
             await context.SaveChangesAsync();
@@ -93,8 +88,7 @@ namespace Perflow.Services.Implementations
         public async Task<PlaylistSongDTO> AddSongAsync(PlaylistSongDTO playlistSongDTO)
         {
             var playlist = await context.Playlists
-                .Where(playlist => playlist.Id == playlistSongDTO.PlaylistId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(playlist => playlist.Id == playlistSongDTO.PlaylistId);
 
             var song = await context.Songs
                 .FirstOrDefaultAsync(song => song.Id == playlistSongDTO.SongId);
@@ -114,8 +108,7 @@ namespace Perflow.Services.Implementations
         public async Task<PlaylistSongDTO> DeleteSongAsync(PlaylistSongDTO playlistSongDTO)
         {
             var playlistSong = await context.PlaylistSong
-                .Where(p => p.PlaylistId == playlistSongDTO.PlaylistId && p.SongId == playlistSongDTO.SongId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(p => p.PlaylistId == playlistSongDTO.PlaylistId && p.SongId == playlistSongDTO.SongId);
 
             context.Entry(playlistSong).State = EntityState.Deleted;
 
