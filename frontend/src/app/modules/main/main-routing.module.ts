@@ -6,7 +6,9 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
-import { CreateEditPlaylistComponent } from './playlists/create-edit-playlist/create-edit-playlist.component';
+import {
+  CreateEditPlaylistComponent
+} from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 
 const routes: Routes = [{
   path: '',
@@ -23,7 +25,8 @@ const routes: Routes = [{
           path: 'playlists',
           children: [
             { path: '', component: PlaylistComponent },
-            { path: 'create', component: CreateEditPlaylistComponent }
+            { path: 'create', component: CreateEditPlaylistComponent },
+            { path: 'edit/:id', component: CreateEditPlaylistComponent }
           ]
         },
         { path: 'songs', component: SongsComponent }

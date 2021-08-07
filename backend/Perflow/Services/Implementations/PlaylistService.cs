@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Playlists;
+using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
@@ -42,9 +43,8 @@ namespace Perflow.Services.Implementations
 
             var playlist = mapper.Map<Playlist>(playlistDTO);
 
-            // These two lines are needed for create/edit playlist component while there is no ability to get currnt auth user 
-            var randomUser = await context.Users.FirstOrDefaultAsync();
-            playlist.Author = randomUser;
+            var author = await context.Users.FirstOrDefaultAsync(user => user.Id == playlistDTO.Author.Id);
+            playlist.Author = author;
 
             await context.Playlists.AddAsync(playlist);
 
@@ -104,7 +104,7 @@ namespace Perflow.Services.Implementations
                 Song = song
             };
 
-            context.PlaylistSong.Add(playlistSong);
+            await context.PlaylistSong.AddAsync(playlistSong);
 
             await context.SaveChangesAsync();
 
@@ -117,12 +117,28 @@ namespace Perflow.Services.Implementations
                 .Where(p => p.PlaylistId == playlistSongDTO.PlaylistId && p.SongId == playlistSongDTO.SongId)
                 .FirstOrDefaultAsync();
 
-            // context.PlaylistSong.Remove(playlistSong);
             context.Entry(playlistSong).State = EntityState.Deleted;
 
             await context.SaveChangesAsync();
 
             return playlistSongDTO;
+        }
+
+        public async Task<ICollection<SongReadDTO>> GetSongsAsync(int id)
+        {
+            var songs = await context.PlaylistSong
+                .Where(ps => ps.PlaylistId == id)
+                .Include(ps => ps.Song)
+                    .ThenInclude(s => s.Album)
+                .Include(ps => ps.Song)
+                    .ThenInclude(s => s.Artist)
+                .Include(ps => ps.Song)
+                    .ThenInclude(s => s.Group)
+                .Select(ps => ps.Song)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return mapper.Map<ICollection<SongReadDTO>>(songs);
         }
     }
 }

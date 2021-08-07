@@ -14,8 +14,12 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { SharedModule } from '../shared/shared.module';
-import { CreateEditPlaylistComponent } from './playlists/create-edit-playlist/create-edit-playlist.component';
-import { EditPlaylistModalComponent } from './playlists/edit-playlist-modal/edit-playlist-modal.component';
+import {
+  CreateEditPlaylistComponent
+} from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
+import {
+  EditPlaylistModalComponent
+} from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
 
 @NgModule({
   declarations: [

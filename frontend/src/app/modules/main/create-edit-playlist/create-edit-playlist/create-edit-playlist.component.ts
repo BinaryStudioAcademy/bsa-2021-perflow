@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, OnDestroy, Input
+  Component, OnInit, OnDestroy
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
@@ -10,8 +10,9 @@ import { AccessType } from 'src/app/models/playlist/accessType';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
+import { User } from 'src/app/models/user/user';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -25,7 +26,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   public previousPlaylistData: EditedPlaylist;
   public playlist = {} as Playlist;
 
-  @Input() givenPlaylist = {} as Playlist;
+  private _id: number | undefined;
 
   private _searchTerms = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
@@ -33,17 +34,43 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   constructor(
     private _playlistService: PlaylistsService,
     private _songService: SongsService,
-    private _router: Router
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    if (!this.givenPlaylist.name) {
-      this.playlist.name = 'Playlist title';
-      this.playlist.accessType = AccessType.default;
-      this.createPlaylist();
+    this._activatedRoute.paramMap.pipe(
+      switchMap((params) => params.getAll('id'))
+    ).subscribe((data) => {
+      this._id = +data;
+    });
+
+    if (this._id) {
+      this._playlistService.getPlaylist(this._id)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe({
+          next: (data) => {
+            this.playlist = data;
+          },
+          error: (err) => {
+            this._router.navigateByUrl('/playlists');
+          }
+        });
+
+      this._playlistService.getPlaylistSongs(this._id)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe({
+          next: (data) => {
+            this.playlistSongs = data;
+          }
+        });
     }
     else {
-      this.playlist = this.givenPlaylist;
+      this.playlist.id = 0;
+      this.playlist.name = 'Playlist title';
+      this.playlist.accessType = AccessType.default;
+      this.playlist.author = { id: 1 } as User; // must be current auth user here
+      this.createPlaylist();
     }
 
     this._searchTerms.pipe(
@@ -64,7 +91,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   }
 
   createPlaylist() {
-    this._playlistService.savePlaylist(this.playlist)
+    this._playlistService.createPlaylist(this.playlist)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
@@ -110,7 +137,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
           next: () => {
             this.foundSongs = this.foundSongs.filter((s) => s.id !== song.id);
             this.playlistSongs.push(song);
-            this.playlistSongs = this.playlistSongs.filter((s) => s);
+            this.playlistSongs = this.playlistSongs.filter((s) => s); // this is needed to restore array for pipe in html page
+            this.playlist.songs = this.playlistSongs;
           }
         });
     }
@@ -124,6 +152,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (data) => {
             this.playlistSongs = this.playlistSongs.filter((s) => s.id !== data.songId);
+            this.playlist.songs = this.playlistSongs;
           }
         });
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Playlists;
 using Perflow.Services.Implementations;
+using Perflow.Common.DTO.Songs;
 
 namespace Perflow.Controllers
 {
@@ -19,13 +20,11 @@ namespace Perflow.Controllers
             _playlistService = playlistService;
         }
 
-
         [HttpGet]
         public async Task<ActionResult<ICollection<PlaylistDTO>>> Get()
         {
             return Ok(await _playlistService.GetEntitiesAsync());
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PlaylistDTO>> Get(int id)
@@ -41,7 +40,6 @@ namespace Perflow.Controllers
             return Ok(playlist);
         }
 
-
         [HttpPost]
         public async Task<ActionResult> PostAsync([FromBody] PlaylistDTO playlistDTO)
         {
@@ -53,6 +51,11 @@ namespace Perflow.Controllers
             return CreatedAtAction(nameof(Get), new { Id = playlist.Id }, playlist);
         }
 
+        [HttpGet("songs/{id}")]
+        public async Task<ActionResult> GetPlaylistSongsAsync(int id)
+        {
+            return Ok(await _playlistService.GetSongsAsync(id));
+        }
 
         [HttpPost("songs")]
         public async Task<ActionResult> AddSongToPlaylistAsync([FromBody] PlaylistSongDTO playlistSongDTO)
@@ -82,7 +85,6 @@ namespace Perflow.Controllers
 
             return Ok(playlist);
         }
-
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
