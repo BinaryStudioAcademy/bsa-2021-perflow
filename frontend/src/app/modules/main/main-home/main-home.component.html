@@ -116,109 +116,48 @@
       </div>
     </div>
   </div>
+
+   <!-- Top 100 songs  -->
+   <div class="header-main-home-content"> 
+    <h4>Top 100 songs </h4>
+  </div>
+  <div class="main-content-rhythms">
+    <div class="ui icon button">
+      <i class="large angle left icon"></i>
+    </div>
+    <div class="ui container">
+      <div class="ui segment" *ngFor="let playlist of playlists">
+        <app-playlist-card
+        [image]="playlist.image"
+        [name]="playlist.name"
+        [songs]="playlist.songs">
+        </app-playlist-card>
+      </div>
+    </div>
+    <div class="ui icon button">
+      <i class="large angle right icon"></i>
+    </div>
+  </div>
+
+  <!-- Recently played  -->
+  <div class="header-main-home-content"> 
+    <h4>Recently played </h4>
+  </div>
+  <div class="main-content-rhythms">
+    <div class="ui icon button">
+      <i class="large angle left icon"></i>
+    </div>
+    <div class="ui container">
+      <div class="ui segment" *ngFor="let playlist of playlists">
+        <app-playlist-card
+        [image]="playlist.image"
+        [name]="playlist.name"
+        [songs]="playlist.songs">
+        </app-playlist-card>
+      </div>
+    </div>
+    <div class="ui icon button">
+      <i class="large angle right icon"></i>
+    </div>
+  </div>
 </main>
-
-<!-- New Releases 
-    <div class="ui sixteen column row new-releases">
-      <div class="header">New Releases</div>
-      <div id="newReleases">
-        <div
-          class="ui icon button"
-          [style.visibility]="adjusterAlbums > 6 ? 'visible' : 'hidden'"
-          id="btn-scroll-data"
-          (click)="prevAlbums(nextalbum)"
-        >
-          <i class="chevron inverted left icon"></i>
-        </div>
-        <div #nextalbum class="new-releases-cont">
-          <div *ngFor="let album of cashedAlbums; let i; index">
-            <app-album-card [album]="i"></app-album-card>
-          </div>
-        </div>
-        <div
-          class="ui icon button"
-          [style.visibility]="
-            adjusterAlbums !== allAlbums.length ? 'visible' : 'hidden'
-          "
-          id="btn-scroll-data"
-          (click)="nextAlbums(nextalbum)"
-        >
-          <i class="chevron inverted right icon"></i>
-        </div>
-      </div>
-    </div>
-
-     Calm rhythms 
-    <div class="sixteen column row calm-rhythms">
-      <div class="header">Calm rhythms</div>
-      <div id="calmRhythms">
-        <div class="ui icon button"
-          [style.visibility]="adjusterPlaylists > 6 ? 'visible' : 'hidden'"
-          id="btn-scroll-data"
-          (click)="prevPlaylists(nextPlaylist)" >
-          <i class="chevron inverted left icon"></i>
-        </div>
-        <div #nextPlaylist  class="calm-rhythms-cont">
-          <div *ngFor="let playlist of cashedPlaylists; let i; index">
-            <app-playlist-card [playlist]="i"></app-playlist-card>
-          </div>
-        </div>
-        <div class="ui icon button"
-          [style.visibility]="
-          adjusterPlaylists !== allPlaylists.length ? 'visible' : 'hidden' "
-          id="btn-scroll-data" (click)="nextPlaylists(nextPlaylist)">
-          <i class="chevron inverted right icon"></i>
-        </div>
-      </div>
-    </div>
-
-    Your mix 
-    <div class="sixteen column row your-mix">
-      <div class="header">Your mix</div>
-      <div id="yourMix" class="ui grid your-mix-cont">
-         Demonstration cards (delete them) 
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-         Work component 
-        <app-your-mix-card *ngFor="let card of yourMix"></app-your-mix-card>
-      </div>
-    </div>
-
-     Top 100 songs 
-    <div class="sixteen column row calm-rhythms">
-      <div class="header">Top 100 songs</div>
-      <div id="top100Songs" class="calm-rhythms-cont">
-         Demonstration cards (delete them) 
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-         Work component 
-        <app-top-songs-card
-          *ngFor="let card of top100Songs"
-        ></app-top-songs-card>
-      </div>
-      <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('top100Songs')">
-          <i class="chevron right icon"></i>
-        </button>
-      </div>
-    </div>
-  </div> -->
