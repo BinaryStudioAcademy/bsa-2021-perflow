@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './square-info-card.component.html',
   styleUrls: ['./square-info-card.component.sass']
 })
-export class SquareInfoCardComponent  {
+export class SquareInfoCardComponent {
   @Input() name: string;
   @Input() description: string;
   @Input() iconUrl: string;
