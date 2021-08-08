@@ -6,7 +6,7 @@ export const environment = {
   production: false,
 
   firebase: {
-    apiKey:process.env.apiKey,
+    apiKey: process.env.apiKey,
     authDomain: "",
     databaseURL: "",
     projectId: "",

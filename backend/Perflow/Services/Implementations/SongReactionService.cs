@@ -8,7 +8,7 @@ using Perflow.Domain;
 using Perflow.Services.Abstract;
 
 
-namespace Perflow.Services
+namespace Perflow.Services.Implementations
 {
     public class SongReactionService : BaseService
     {

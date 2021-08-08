@@ -21,7 +21,7 @@ namespace ApiGateway
             {
                 config
                 .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                .AddJsonFile("configuration.json", optional: false, reloadOnChange: true);
+                .AddJsonFile($"configuration.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: false, reloadOnChange: true);
             });
     }
 }
