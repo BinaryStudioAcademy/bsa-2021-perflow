@@ -20,6 +20,7 @@ namespace Processor.ConsoleApp.Implementations
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("properties.json", optional: false)
+                .AddEnvironmentVariables()
                 .Build();
 
             services.AddSingleton<IConfiguration>(configuration);
