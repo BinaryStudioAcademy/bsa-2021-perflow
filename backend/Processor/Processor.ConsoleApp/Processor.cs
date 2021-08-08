@@ -26,17 +26,9 @@ namespace Processor.ConsoleApp
 
             _messageHandler.StartAsync(_cancellationTokenSource.Token);
 
-            _logger.LogInformation("Press [Q] to exit");
-
             while(true)
             {
-                var keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Q)
-                {
-                    _cancellationTokenSource.Cancel();
-                    _cancellationTokenSource.Dispose();
-                    break;
-                }
+               
             }
         }
     }
