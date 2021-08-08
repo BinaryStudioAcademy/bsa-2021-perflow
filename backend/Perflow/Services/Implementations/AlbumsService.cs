@@ -45,7 +45,9 @@ namespace Perflow.Services.Implementations
                                             .OrderByDescending(a => a.CreatedAt)
                                             .Select(a => new AlbumViewDTO
                                             {
+                                                Id = a.Id,
                                                 Name = a.Name,
+                                                Description = a.Description,
                                                 IconURL = a.IconURL,
                                                 IsSingle = a.IsSingle,
                                                 Reactions = a.Reactions.Count,
