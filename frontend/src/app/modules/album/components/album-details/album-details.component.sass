@@ -1,5 +1,7 @@
 @import '../../../../../styles'
 
+$image-size: 245px
+
 main
     background: $drk-gray
     width: 100%
@@ -7,73 +9,119 @@ main
     overflow-y: scroll
 
 .album
-    position: relative
     width: 100%
     height: 401px
     border-radius: 5px
     display: grid
-    grid-template-columns: 100%
-    grid-template-rows: 66px auto
-    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%) 
+    grid-template-areas: "left-col album-details right-col"
+    grid-template-columns: 1fr 6fr 1fr
+    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+    margin-bottom: 1rem
     .album-details
-        grid-column: 1
-        grid-row: 2
-        position: relative
-        left: 160px
-        top: 38px
-        width: 70%    
-        height: 245px
-        overflow: hidden 
+        grid-area: album-details
+        width: 100%
         display: grid
-        grid-template-columns: 245px auto
-        grid-template-row: 100%
-        gap: 0px 0px
-        .album-icon
-            grid-column: 1
-            grid-row: 1
-            width: 245px
-            height: 245px
-            border-radius: 50%
-            object-fit: cover   
-        .album-info
-            grid-column: 2
-            grid-row: 1
+        grid-template-areas: "album-image album-info"
+        grid-template-columns: $image-size 1fr
+        .album-image
+            grid-area: album-image
+            text-align: center
+            padding-top: 104px
+            .image
+                width: $image-size
+                height: $image-size
+                border-radius: 50%
+                box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
+                object-fit: cover
+        .album-info 
+            grid-area: album-info
+            padding-top: 104px
+            display: flex
+            flex-direction: column
+            justify-content: left
+            align-items: left
             margin-left: 35px
-            height: 245px
+            color: $text
             .type
-                margin-top: 20px
-                font-weight: 300
+                margin-top: 2rem
+                font-weight: $light-weight
                 font-size: 18px
                 line-height: 21px
-                color: $text
-                height: fit-content
             .album-title
                 margin-top: 10px
-                font-weight: 700
+                font-weight: $bold-weight
                 font-size: 40px
                 line-height: 47px
-                color: $text
-                height: fit-content
-                text-overflow: ellipsis
             .album-description
-                %ellipsis-overflow
-                margin-top: 22px
-                font-weight: 300
-                font-size: 18px
+                margin-top: 1.2rem
+                padding-bottom: 1rem
+                font-weight: $light-weight
+                font-size: 16px
                 line-height: 21px
-                color: $text                 
-                width: 100%
-                max-height: 42px
-                overflow: hidden
-                text-overflow: ellipsis
+                .info
+                    opacity: 0.8
+                .divider
+                    padding-left: 10px
+                    padding-right: 10px
             .buttons
                 margin-top: 20px
-                width: 180px
-                min-width: 180px 
                 .button-play
                     padding: 12px 22px
                     font-weight: $bold-weight
                     border: none
+                    margin-right: 10px
                     &:hover
                         cursor: pointer
-                        color: black 
+                        color: black
+                .action-icon
+                    display: inline-block
+                    margin-left: 10px
+                    margin-right: 10px
+                    .icons
+                        font-size: 18px
+                        &:hover
+                            cursor: pointer
+
+.menu
+    border: 0.5px solid #373C43 !important
+    border-radius: 2px
+
+.ui.dropdown
+    background-color: transparent !important
+
+.ui.floating.dropdown
+    >.menu
+        box-shadow: none !important
+        >.item.first
+            padding-top: 18px !important
+        >.item.last
+            padding-bottom: 18px !important
+
+.item
+    background-color: $light-gray
+    color: $text !important
+    font-family: 'Montserrat' !important
+    font-style: normal !important
+    &:hover
+        background-color: $drk-gray !important
+        cursor: pointer
+    &:active
+        background-color: $drk-gray !important
+        font-weight: $medium-weight !important
+    >i, >.img-wrapper
+        margin-right: 1rem !important
+
+.item.active.selected
+    background-color: $light-gray !important
+    font-weight: $normal-weight !important
+    &:hover
+        background-color: $drk-gray !important
+
+.anotherAlbums
+    .header
+        margin-top: 2rem
+        padding-left: 1rem
+        font-weight: $medium-weight
+        font-size: 32px
+        line-height: 48px
+        color: $text

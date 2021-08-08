@@ -4,9 +4,9 @@ using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
-using Perflow.Domain.Enums;
 using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
+using Shared.ExceptionsHandler.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +32,34 @@ namespace Perflow.Services.Implementations
             var entity = await context.Albums.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
 
             return mapper.Map<Album>(entity);
+        }
+
+        public async Task<AlbumFullDTO> GetAlbumFullAsync(int id)
+        {
+            var album = await context.Albums.Include(a => a.Songs)
+                                                .ThenInclude(s => s.Artist)
+                                            .Include(a => a.Author)
+                                            .Include(a => a.Group)
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (album == null)
+            {
+                throw new NotFoundExcepion($"{nameof(Album)} not found");
+            }
+
+            return mapper.Map<AlbumFullDTO>(album);
+        }
+
+        public async Task<ICollection<AlbumReadDTO>> GetAlbumsByArtist(int artistId)
+        {
+            var albums = await context.Albums
+                                        .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
+                                        .Include(a => a.Author)
+                                        .Include(a => a.Group)
+                                        .ToListAsync();
+
+            return mapper.Map<ICollection<AlbumReadDTO>>(albums);
         }
 
         public async Task<ICollection<AlbumViewDTO>> GetNewReleases()
@@ -78,7 +106,7 @@ namespace Perflow.Services.Implementations
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
-             var album = mapper.Map<Album>(albumDTO);
+            var album = mapper.Map<Album>(albumDTO);
 
             context.Entry(album).State = EntityState.Modified;
 
@@ -95,7 +123,7 @@ namespace Perflow.Services.Implementations
 
             context.Albums.Remove(deletedAlbum);
 
-             await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return entityId;
         }

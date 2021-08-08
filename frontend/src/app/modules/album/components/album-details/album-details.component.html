@@ -1,21 +1,52 @@
 <main>
     <div class="album">
         <div class="album-details">
-            <img class="album-icon" alt="Album"
-                src="https://s3-alpha-sig.figma.com/img/d75c/1009/f21231d6f5d9480e4025fca6081aa434?Expires=1628467200&Signature=OTjTRmC-15s41yTDgmE8aKF5q6CnBmJAo55dQRIG7K0XOj8A9L3ENDn6dN4EmFOukNiA7DkyXDUXbf3bAjngVFLV7yUgxTssDto6jzNDJGShiDViBnpZAvV6BSpHRuQYIkGj4vTtKJZLeNtDQXQgnMrNLLz8LA1m1XHxLhvug7dLrmXAO2hxHhJk4PUqXplBNEnxyPSZjs-sY44I--97FKwspfh1eyjIlEIdj9eowU4WNh52N-mrnShdCdKJpbaIzE5-mJkpug91XKth-IWB5iHnotKb88bARs1rCFiMaZlp5-Xxi6jpJdOeYIriyilk9~obp6ItPZK-3t2OxS7tag__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
+            <div class="album-image">
+                <img class="image" alt="Album" [src]="album.iconURL">
+            </div>
             <div class="album-info">
                 <p class="type">Album</p>
-                <p class="album-title">Perfect Morning</p>
-                <div class="album-description">          
-                    <span class="username">UserName</span>
-                    <span class="count"> · Length songs</span>
-                    <span class="count"> · Year</span>
-                    <span class="count"> · duration</span>
+                <p class="album-title">
+                    {{album.name}}
+                </p>
+                <div class="album-description">
+                    <span *ngIf="album?.artist || album?.group">{{album?.artist?.userName ?? album?.group?.name
+                        }}</span>
+                    <span class="info" *ngIf="album.songs">
+                        <span class="divider">|</span> {{album.songs.length}} songs
+                    </span>
+                    <span class="info">
+                        <span class="divider">|</span> {{album.releaseYear}}
+                    </span>
+                    <span class="info" *ngIf="album.songs">
+                        <span class="divider">|</span> {{ album.songs | itemsSum:'duration' | albumDuration }}
+                    </span>
                 </div>
                 <div class="buttons">
                     <button class="btn-full button-play">Play</button>
-                  </div>
+                    <div class="action-icon">
+                        <i class="heart outline icon icons"></i>
+                    </div>
+                    <div class="action-icon">
+                        <div class="ui floating dropdown icon" appSmDropdown>
+                            <i class="ellipsis vertical icon icons"></i>
+                            <div class="right menu">
+                                <div class="item first last">
+                                    <i class="share alternate icon"></i>Share
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <app-songs-list [songs]="album.songs"></app-songs-list>
+
+    <!-- TODO: Add albums cards -->
+    <!-- <div class="anotherAlbums" *ngIf="anotherAlbums">
+        <div class="header">
+            Another albums
+        </div>
+    </div> -->
 </main>

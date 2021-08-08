@@ -19,7 +19,11 @@ const routes: Routes = [{
         { path: 'main', component: MainHomeComponent },
         { path: 'search', component: SearchComponent },
         { path: 'playlists', component: PlaylistComponent },
-        { path: 'songs', component: SongsComponent }
+        { path: 'songs', component: SongsComponent },
+        {
+          path: 'albums',
+          loadChildren: () => import('../album/album.module').then((m) => m.AlbumModule)
+        }
       ]
     }]
 }];
