@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ValidateEqualModule } from 'ng-validate-equal';
 import { UserRoutingModule } from './user-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
@@ -19,9 +20,11 @@ import { UploadImageModalComponent } from './upload-image-modal/upload-image-mod
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     UserRoutingModule,
-    SharedModule
+    SharedModule,
+    ValidateEqualModule
   ]
 })
 

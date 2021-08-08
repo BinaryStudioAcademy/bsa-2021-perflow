@@ -15,6 +15,6 @@ export class SemanticMessageDirective implements AfterViewInit {
 
   ngAfterViewInit() {
     const element = $(this._message.nativeElement);
-    element.on('click', () => element.closest('.message').transition('fade'));
+    element.click(() => element.closest('.message').transition('fade'));
   }
 }

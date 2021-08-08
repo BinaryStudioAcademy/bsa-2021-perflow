@@ -13,6 +13,8 @@ namespace Perflow.Common.MappingProfiles
         {
             CreateMap<Album, AlbumViewDTO>();
             CreateMap<Album, AlbumReadDTO>();
+            CreateMap<Album, AlbumForListDTO>();
+            CreateMap<AlbumForListDTO, Album>();
 
             CreateMap<Album, AlbumFullDTO>()
             .AfterMap((src, dest, context) => dest.Songs = context.Mapper.Map<ICollection<Song>, ICollection<SongReadDTO>>(src.Songs))
