@@ -25,7 +25,7 @@ namespace Perflow.Common.Security
             return HashPassword(password, Convert.FromBase64String(salt)) == hash;
         }
 
-        public static byte[] GetRandomBytes(int length = 32)
+        public static byte[] GetRandomBytes(int length = KeyLength)
         {
             using (var randomNumberGenerator = new RNGCryptoServiceProvider())
             {
