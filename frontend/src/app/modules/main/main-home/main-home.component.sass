@@ -1,4 +1,4 @@
-@import "../../../../styles.sass"
+@import "src/styles.sass"
 
 $minimumColumnWidth: 230px    
 
@@ -160,52 +160,11 @@ main
                 text-overflow: ellipsis
             .buttons
                 margin-top: 20px
-                width: 180px
-                min-width: 180px 
+                .button-play, .button-save
+                    width: 80px
+                    height: 43px
                 .button-play
-                    display: inline-block
-                    padding: 12px 22px
-                    width: 79px
-                    height: 43px
-                    max-height: 43px
-                    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                    border: none
-                    border-radius: 50px             
-                    color: $text
-                    font-family: Rubik
-                    font-style: normal
-                    font-weight: 700
-                    font-size: 16px
-                    line-height: 19px
-                    &:hover
-                        cursor: pointer
-                        background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                        color: #000000 
-                    &:active
-                        border: 3px solid $medium-orange 
-                        padding: 9px 19px
-                .button-save
-                    display: inline-block
-                    margin-left: 20px 
-                    padding: 11px 21px
-                    width: 79px
-                    height: 43px
-                    background: none
-                    color: $text
-                    font-family: Rubik
-                    font-style: normal
-                    font-weight: 700
-                    font-size: 16px
-                    line-height: 19px   
-                    border: 1px solid $text
-                    border-radius: 50px
-                    &:hover
-                        cursor: pointer
-                        background: #864099d0
-                        color: #000000
-                    &:active
-                        border: 3px solid $text
-                        padding: 9px 19px
+                    margin-right: 20px
 
 // Recently played
 .recently-played
