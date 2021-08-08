@@ -49,25 +49,9 @@
     <!-- New Releases -->
     <div class="ui sixteen column row new-releases">
       <div class="header">New Releases</div>
-      <div id="newReleases" class="new-releases-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
+      <div  id="newReleases" class="new-releases-cont">
         <!-- Work component -->
-        <app-new-releases-card *ngFor="let card of newReleases"></app-new-releases-card>
+        <app-new-releases-card *ngFor="let card of newReleases" [card]="card"></app-new-releases-card>
       </div>
       <div class="scroll-box">
         <button class="scroll-button" (click)="scroll('newReleases')">

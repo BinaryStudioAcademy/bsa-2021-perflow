@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Perflow.Domain;
+using System;
 using System.Collections.Generic;
 
 namespace Perflow.Common.DTO.Users
@@ -11,9 +12,6 @@ namespace Perflow.Common.DTO.Users
         public string Email { get; set; }
         public DateTimeOffset Birthday { get; set; }
         public bool Gender { get; set; }
-        public string Description { get; set; }
-        public string Country { get; set; }
-        public int? GroupId { get; set; }
-        public ICollection<ArtistFollowerDTO> Subscriptions { get; set; }
+        public ICollection<ArtistFollower> Subscriptions { get; set; }
     }
 }
