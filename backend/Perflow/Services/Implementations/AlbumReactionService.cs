@@ -38,22 +38,20 @@ namespace Perflow.Services.Implementations
             var reactions = context.AlbumReactions.Where(x =>
                 x.UserId == reaction.UserId && x.AlbumId == reaction.AlbumId);
 
-            if (!reactions.Any())
-            {
-                var albumReaction = new AlbumReaction()
-                {
-                    AlbumId = reaction.AlbumId,
-                    UserId = reaction.UserId
-                };
-
-                await context.AlbumReactions.AddAsync(albumReaction);
-
-                await context.SaveChangesAsync();
-            }
-            else
+            if (reactions.Any())
             {
                 throw new ArgumentException("Reaction already exists");
             }
+
+            var albumReaction = new AlbumReaction()
+            {
+                AlbumId = reaction.AlbumId,
+                UserId = reaction.UserId
+            };
+
+            await context.AlbumReactions.AddAsync(albumReaction);
+
+            await context.SaveChangesAsync();
         }
 
         public async Task RemoveAlbumReaction(NewAlbumReactionDTO reaction)
@@ -64,16 +62,15 @@ namespace Perflow.Services.Implementations
             var reactions = context.AlbumReactions.Where(x =>
                 x.UserId == reaction.UserId && x.AlbumId == reaction.AlbumId);
 
-            if (reactions.Any())
+            if (!reactions.Any())
             {
-                context.AlbumReactions.RemoveRange(reactions);
+                throw new ArgumentException("Reaction already exists");
+            }
 
-                await context.SaveChangesAsync();
-            }
-            else
-            {
-                throw new ArgumentException("Reaction does not exist");
-            }
+            context.AlbumReactions.RemoveRange(reactions);
+
+            await context.SaveChangesAsync();
+
         }
 
     }

@@ -26,7 +26,6 @@ namespace Perflow.DataAccess.Context
             modelBuilder.ApplyConfiguration(new UserSettingsConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             modelBuilder.ApplyConfiguration(new ArtistFollowerConfiguration());
-            Seed(modelBuilder);
         }
 
         public static void Seed(this ModelBuilder modelBuilder)
@@ -61,7 +60,6 @@ namespace Perflow.DataAccess.Context
                     new { UsersId = users[3].Id, RolesId = roles[0].Id }
                     )
                 );
-
         }
 
         public static IList<Role> GenerateRoles() =>

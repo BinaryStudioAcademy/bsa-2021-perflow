@@ -13,8 +13,6 @@ namespace Perflow.Common.DTO.Users
         public bool Gender { get; set; }
         public string Description { get; set; }
         public string Country { get; set; }
-        public string Password { get; set; }
-        public string Salt { get; set; }
         public int? GroupId { get; set; }
         public ICollection<ArtistFollowerDTO> Subscriptions { get; set; }
     }
