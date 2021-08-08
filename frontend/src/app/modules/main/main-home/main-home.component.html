@@ -31,9 +31,9 @@
   </div>
 
 
-  <div class="ui grid">
+  <div class="">
     <!-- Recently played -->
-    <div class="ui sixteen column row recently-played">
+    <div class="recently-played">
       <div class="header">Recently played</div>
       <div class="ui grid recently-played-cont">
         <!-- Demonstration cards (delete them) -->
@@ -52,7 +52,7 @@
 
 
     <!-- New Releases -->
-    <div class="ui sixteen column row new-releases">
+    <div class="new-releases">
       <div class="header">New Releases</div>
       <div  id="newReleases" class="new-releases-cont">
         <!-- Work component -->
@@ -66,27 +66,27 @@
     </div>
 
 
-        <!-- Calm rhythms -->
-    <div class="sixteen column row calm-rhythms">
+    <!-- Calm rhythms -->
+    <div class="items-scroll-box calmRhythms">
       <div class="header">Calm rhythms</div>
-      <div id="calmRhythms" class="calm-rhythms-cont">
-        <app-square-info-card *ngFor="let playlist of calmRhythms"
-        [name]="playlist.name"
-        [description]="playlist.description"
-        [iconUrl]="playlist.iconURL"
-        >
-        </app-square-info-card>
-      </div>
-      <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('calmRhythms')">
+      <div class="list-of-items">
+        <div id="calmRhythms" class="items">
+          <app-square-info-card *ngFor="let playlist of calmRhythms"
+          [name]="playlist.name"
+          [description]="playlist.description"
+          [iconUrl]="playlist.iconURL"
+          >
+          </app-square-info-card>
+        </div>
+        <div class="scroll-button" (click)="scroll('calmRhythms')">
           <i class="chevron right icon"></i>
-        </button>
+        </div>
       </div>
     </div>
 
 
     <!-- Your mix -->
-    <div class="sixteen column row your-mix">
+    <div class="your-mix">
       <div class="header">Your mix</div>
       <div id="yourMix"  class="ui grid your-mix-cont">
         <!-- Demonstration cards (delete them) -->
@@ -103,21 +103,21 @@
 
 
     <!-- Top 100 songs -->
-    <div class="sixteen column row calm-rhythms">
-      <div class="header">Top 100 songs</div>
-      <div id="top100Songs" class="calm-rhythms-cont">
-        <app-square-info-card *ngFor="let playlist of top100Songs"
-        [name]="playlist.name"
-        [description]="playlist.description"
-        [iconUrl]="playlist.iconURL"
-        >
-        </app-square-info-card>
-      </div>
-      <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('top100Songs')">
+    <div class="items-scroll-box calmRhythms">
+      <div class="header">Calm rhythms</div>
+      <div class="list-of-items">
+        <div id="top100Songs" class="items">
+          <app-square-info-card *ngFor="let song of top100Songs"
+          [name]="song.name"
+          [description]="song.description"
+          [iconUrl]="song.iconURL"
+          >
+          </app-square-info-card>
+        </div>
+        <div class="scroll-button" (click)="scroll('top100Songs')">
           <i class="chevron right icon"></i>
-        </button>
-      </div> 
+        </div>
+      </div>
     </div>
   </div>
 </main>
