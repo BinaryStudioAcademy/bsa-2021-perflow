@@ -52,12 +52,19 @@
     margin-top: 40px
     color: #FFFFFF
 
-li
-    margin-top: 18px
-    color: #FD5D34
-
-li > span
-    color: #fff
+ul
+    list-style: none
+    li
+        display: flex
+        align-items: center
+        margin-top: 20px
+        font-weight: $light-weight
+        &::before
+            content:"•"
+            color: #FD5D34
+            font-size: 35px
+            margin-right: 15px
+        
 
 .create-playlist
     margin-top: 25px
@@ -70,12 +77,6 @@ a
     text-align: center
     flex-direction: row
     align-items: center
-
-#playlist
-    font-style: normal
-    font-weight: 300
-    font-size: 14px
-    line-height: 17px
 
 #title
     font-style: normal
