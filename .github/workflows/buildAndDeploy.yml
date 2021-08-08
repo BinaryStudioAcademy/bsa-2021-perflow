@@ -2,7 +2,7 @@ name: Build and deploy
 
 on:
   push:
-    branches: [ feature/ci ]
+    branches: [ develop ]
 
   workflow_dispatch:
 
@@ -101,8 +101,6 @@ jobs:
       
       - name: Build frontend
         uses: docker/build-push-action@v2.6.1
-        # env:
-        #   FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
         with:
           context: .
           file: .docker/Frontend.Dockerfile
