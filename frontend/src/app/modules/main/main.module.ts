@@ -14,7 +14,7 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { SharedModule } from '../shared/shared.module';
-import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.component';
+import { SquareInfoCardComponent } from './cards/square-info-card/square-info-card.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.compo
     RecentlyPlayedCardComponent,
     TopSongsCardComponent,
     YourMixCardComponent,
-    PlaylistCardComponent
+    SquareInfoCardComponent
   ],
   imports: [
     CommonModule,
