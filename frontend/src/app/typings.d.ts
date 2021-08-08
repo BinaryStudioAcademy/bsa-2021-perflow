@@ -1,11 +1,15 @@
-declare let process:Process;
+/* eslint-disable no-var */
+
+declare var process:Process;
 
 interface Process{
-  env:Env
+  env: Env
 }
+
 interface Env{
-  apiKey:string;
+  apiKey: string;
 }
+
 interface GlobalEnvironment{
-  process:Process
+  process: Process
 }
