@@ -20,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { AlbumCardComponent } from './cards/album-card/album-card.component';
+import { UserModule } from '../user/user.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AlbumCardComponent } from './cards/album-card/album-card.component';
     CommonModule,
     MainRoutingModule,
     ClickOutsideModule,
+    UserModule,
     SharedModule
   ],
   exports: [ProfileMenuComponent]

@@ -40,6 +40,8 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<ISongsService, SongsService>();
             services.AddScoped<AlbumsService>();
+
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

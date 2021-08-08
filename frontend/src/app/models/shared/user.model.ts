@@ -1,10 +1,11 @@
 export interface User {
   id: number;
   userName: string;
-  iconURL: string;
+  iconURL?: string;
   email: string;
-  birthday: Date;
-  gender: boolean;
   description: string;
+  gender: boolean;
+  birthday: Date;
   country: string;
+  password: string;
 }
