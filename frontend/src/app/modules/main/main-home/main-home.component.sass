@@ -1,5 +1,8 @@
 @import "../../../../styles.sass"
 
+$minimumColumnWidth: 230px    
+
+
 *
     padding: 0
     margin: 0
@@ -223,25 +226,6 @@ main
             width: 0px
             height: 0px
 
-
-// New Releases
-.new-releases
-    position: relative
-    height: 328px
-    .new-releases-cont
-        position: relative
-        display: flex
-        width: 100%
-        height: 270px
-        min-height: 270px
-        overflow-y: scroll
-        margin-top: 30px
-        &::-webkit-scrollbar 
-            width: 0px
-            height: 0px
-    .scroll-box
-        bottom: 38px
-
 // Your mix
 .your-mix
     height: 271px
@@ -266,45 +250,13 @@ main
 
 // This is for profile menu
 .show
-    display: block !important    
-
-
-// Styles for horizontal scrolling           
-.scroll-box
-    width: 44px
-    height: calc(100% - 53px)
-    position: absolute
-    right: 0px
-    bottom: 0px
-    display: flex
-    align-items: center
-    justify-content: center
-    background: $drk-gray
-    .scroll-button
-        width: 33px
-        height: 33px
-        font-size: 1.2rem
-        color: $text
-        border: none
-        border-radius: 3px
-        background: $light-gray
-        cursor: pointer
-        &:hover
-            background: #373C43
+    display: block !important
 
 .header
-    width: 100%
-    height: fit-content
-    margin-top: -15px 
-    font-family: Rubik
-    font-style: normal
     font-weight: bold
     font-size: 24px
     line-height: 28px
     color: $text
-    @media (max-width: 800px)
-        margin-top: -15px 
-
 
 .items-scroll-box
     min-width: 100%

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewReleasesCardComponent } from './new-releases-card.component';
+import { CircleInfoCardComponent } from './circle-info-card.component';
 
-describe('NewReleasesCardComponent', () => {
-  let component: NewReleasesCardComponent;
-  let fixture: ComponentFixture<NewReleasesCardComponent>;
+describe('CircleInfoCardComponent', () => {
+  let component: CircleInfoCardComponent;
+  let fixture: ComponentFixture<CircleInfoCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NewReleasesCardComponent]
+      declarations: [CircleInfoCardComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewReleasesCardComponent);
+    fixture = TestBed.createComponent(CircleInfoCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

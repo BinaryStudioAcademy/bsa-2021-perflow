@@ -3,23 +3,28 @@
 .card
     padding: 16px
     border-radius: 4px
-    background: $light-gray
+    background: transparent
     color: $text
     box-shadow: none
     width: 100%
     &>div
         height: 100%
-        position: relative
         .image
             width: 100%
-            border-radius: 3px !important
+            padding-bottom: 100%
             margin-bottom: 15px
-        .play-icon
-            top: 12px
-            right: 12px
-        img
-            height: 100%
-            width: 100%
+            position: relative
+            border-radius: 50%
+            overflow: hidden
+            img
+                position: absolute
+                height: 100%
+                width: 100%
+                object-fit: cover
+            .play-icon
+                top: 50%
+                right: 50%
+                transform: translate(50%, -50%)
         &:hover
             .play-icon
                  opacity: 1
@@ -29,12 +34,12 @@
                 text-overflow: ellipsis
                 white-space: nowrap
                 overflow: hidden
+                text-align: center
             .card-name  
                 font-weight: $medium-weight
             .card-desc
                 margin-top: 5px
                 font-weight: $light-weight
-                text-align: left
                 white-space: normal
                 display: -webkit-box
                 -webkit-line-clamp: 2 
