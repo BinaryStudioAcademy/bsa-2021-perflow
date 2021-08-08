@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Artist } from 'src/app/models/shared/artist.model';
 import { Song } from 'src/app/models/song/song';
+import { ArtistsService } from 'src/app/services/artists/artist.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -11,16 +13,17 @@ export class UserProfileComponent implements OnInit {
   public isProfileMenuShown: boolean = false;
 
   private readonly _scrollingSize: number = 270;
-  public topArtists = new Array<object>();
 
-  songs: Song[] = [];
+  topArtists : Artist[] = [];
+  topSongs: Song[] = [];
 
   constructor(
-    private _songService: SongsService
+    private _songService: SongsService,
+    private _artistService: ArtistsService
   ) {}
 
   ngOnInit(): void {
-    this.topArtists = this.getTopArtists();
+    this.getTopArtists();
     this.loadTopSongs();
   }
 
@@ -45,6 +48,7 @@ export class UserProfileComponent implements OnInit {
   isRightRole = () => {
 
   };
+
   nextSlide = () => {
 
   };
@@ -61,7 +65,15 @@ export class UserProfileComponent implements OnInit {
   loadTopSongs() {
     this._songService.getTopSongs().subscribe(
       (songs) => {
-        this.songs = songs;
+        this.topSongs = songs;
+      }
+    );
+  }
+
+  loadTopArtists() {
+    this._artistService.getTopArtists().subscribe(
+      (artists) => {
+        this.topArtists = artists;
       }
     );
   }
