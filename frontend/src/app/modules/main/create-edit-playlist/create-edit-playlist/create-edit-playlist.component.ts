@@ -46,37 +46,60 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     });
 
     if (this._id) {
-      this._playlistService.getPlaylist(this._id)
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe({
-          next: (data) => {
-            this.playlist = data;
-          },
-          error: (err) => {
-            this._router.navigateByUrl('/playlists');
-          }
-        });
-
-      this._playlistService.getPlaylistSongs(this._id)
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe({
-          next: (data) => {
-            this.playlistSongs = data;
-          }
-        });
+      this.startEditMode();
     }
     else {
-      this.playlist = {
-        ...this.playlist,
-        id: 0,
-        name: 'Playlist title',
-        accessType: AccessType.default,
-        author: { id: 1 } as User // must be current auth user here
-      };
-
       this.createPlaylist();
     }
 
+    this.setSearch();
+  }
+
+  public ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
+  }
+
+  startEditMode() {
+    this._playlistService.getPlaylist(this._id!)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.playlist = data;
+        },
+        error: (err) => {
+          this._router.navigateByUrl('/playlists');
+        }
+      });
+
+    this._playlistService.getPlaylistSongs(this._id!)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.playlistSongs = data;
+        }
+      });
+  }
+
+  createPlaylist() {
+    this.playlist = {
+      ...this.playlist,
+      id: 0,
+      name: 'Playlist title',
+      accessType: AccessType.default,
+      author: { id: 1 } as User // must be current auth user here
+    };
+
+    this._playlistService.createPlaylist(this.playlist)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.playlist = data;
+        }
+      });
+  }
+
+  setSearch() {
     this._searchTerms.pipe(
       takeUntil(this._unsubscribe$),
       debounceTime(500),
@@ -87,21 +110,6 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         this.foundSongs = data;
       }
     });
-  }
-
-  public ngOnDestroy() {
-    this._unsubscribe$.next();
-    this._unsubscribe$.complete();
-  }
-
-  createPlaylist() {
-    this._playlistService.createPlaylist(this.playlist)
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: (data) => {
-          this.playlist = data;
-        }
-      });
   }
 
   editPlaylist = (editedPlaylist: EditedPlaylist) => {
