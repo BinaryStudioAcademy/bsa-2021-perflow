@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\DTO\Song\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 

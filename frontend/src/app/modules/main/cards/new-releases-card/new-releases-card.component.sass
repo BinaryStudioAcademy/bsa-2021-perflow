@@ -44,6 +44,7 @@
         text-align: center
         color: $text
     .card-desc
+        display: -webkit-box
         margin-top: 5px
         font-family: Rubik
         font-style: normal
@@ -51,5 +52,8 @@
         font-size: 14px
         line-height: 17px
         text-overflow: ellipsis
+        overflow: hidden
         text-align: center
         color: $text
+        -webkit-line-clamp: 2
+        -webkit-box-orient: vertical
