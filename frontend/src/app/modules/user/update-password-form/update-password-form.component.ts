@@ -1,11 +1,9 @@
 import {
-  Component, EventEmitter, OnInit, Output
+  Component, EventEmitter, OnInit, Output, Input
 } from '@angular/core';
-import {
-  AbstractControl, FormControl, FormGroup, ValidatorFn, Validators
-} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/shared/user.model';
+import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
 
 @Component({
@@ -14,7 +12,10 @@ import { UserChangePassword } from 'src/app/models/user/user-change-password';
   styleUrls: ['./update-password-form.component.sass']
 })
 export class UpdatePasswordFormComponent implements OnInit {
-  form!: FormGroup;
+  public userChangePassword: UserChangePassword;
+  newPasswordConfirmation: string = '';
+
+  @Input()
   user: User;
 
   @Output()
@@ -23,51 +24,15 @@ export class UpdatePasswordFormComponent implements OnInit {
   constructor(private _router: Router) { }
 
   ngOnInit() {
-    this.form = new FormGroup({
-      currentPassword: new FormControl('', Validators.required),
-      newPassword: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{6,20}$')
-      ]),
-      newPasswordConfirmation: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9@$!%*#?&-_])[A-Za-z0-9@$!%*#?&-_]{6,20}$')
-      ])
-    }, { validators: this._checkPasswords });
-  }
-
-  get currentPassword() {
-    return this.form.get('currentPassword')!;
-  }
-
-  get newPassword() {
-    return this.form.get('newPassword')!;
-  }
-
-  get newPasswordConfirmation() {
-    return this.form.get('newPasswordConfirmation')!;
+    this.userChangePassword = { currentPassword: '', newPassword: '', id: this.user.id };
   }
 
   redirect(route: string) {
     this._router.navigate([route]);
   }
 
-  public reset() {
-    this.form.reset();
+  public onSubmit(form: NgForm) {
+    this.updatedUserPassword.emit(this.userChangePassword);
+    form.reset();
   }
-
-  public onSubmit() {
-    const updatedUserPassword: UserChangePassword = {
-      currentPassword: this.form.get('currentPassword')!.value,
-      newPassword: this.form.get('newPassword')!.value,
-      id: this.user.id
-    };
-    this.updatedUserPassword.emit(updatedUserPassword);
-  }
-
-  private _checkPasswords: ValidatorFn = (group: AbstractControl) => {
-    const pass = group.get('newPassword')!.value;
-    const confirmPass = group.get('newPasswordConfirmation')!.value;
-    return pass === confirmPass ? null : { notSame: true };
-  };
 }

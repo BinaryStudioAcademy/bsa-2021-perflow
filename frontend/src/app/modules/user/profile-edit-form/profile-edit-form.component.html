@@ -1,8 +1,11 @@
-<form [formGroup]="form" class="ui form error">
-  <div class="avatar">
+<form name="form" #form="ngForm" class="ui form error">
+  <div class="avatar-background">
     <div class="user-icon">
-      <input hidden #file type="file" id="iconURL" accept=".png, .jpg, .jpeg" (change)="onSelect($event)">
-      <img class="image" alt="avatar" [src]="user.iconURL === '' ? standartIcon : user.iconURL">
+      <input hidden #file type="file" id="iconURL" accept=".png, .jpg, .jpeg" (change)="handleFileInput($event)">
+      <img class="image" alt="avatar" [src]="user.iconURL" *ngIf="user.iconURL !== ''">
+      <div class="icon-background" *ngIf="user.iconURL === ''">
+        <i class="user icon"></i>
+      </div>
       <button class="btn-full btn-edit bottom-right-corner" (click)="file.click()">
         <i class="fitted pencil alternate icon"></i>
       </button>
@@ -19,11 +22,11 @@
 
           <div class="form-group">
             <div class="field">
-              <input type="text" placeholder="User Name" id="userName" class="form-control input-dark"
-                formControlName="userName">
+              <input type="text" placeholder="User Name" class="form-control input-dark" [(ngModel)]="user.userName"
+                name="userName" #userName="ngModel" required pattern="[A-Za-z0-9.-_]{6,20}">
               <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="ui error message">
                 <div *ngIf="userName.invalid">
-                  Username should consist of min 6 characters. There is can contain Latin letters, digits and
+                  Username should consist of 6-20 characters. There is can contain Latin letters, digits and
                   special characters.
                 </div>
               </div>
@@ -32,8 +35,8 @@
 
           <div class="form-group">
             <div class="field">
-              <input type="email" placeholder="Email" id="email" class="form-control input-dark"
-                formControlName="email">
+              <input type="email" placeholder="Email" class="form-control input-dark" name="email"
+                [(ngModel)]="user.email" #email="ngModel" required email>
               <div *ngIf="email.invalid && (email.dirty || email.touched)" class="ui error message">
                 <div *ngIf="email.invalid">
                   Email address should be according to standard for the email format.
@@ -44,8 +47,8 @@
 
           <div class="form-group">
             <div class="field">
-              <input type="text" placeholder="Description" id="description" class="form-control input-dark"
-                formControlName="description">
+              <input type="text" placeholder="Description" class="form-control input-dark" name="description"
+                [(ngModel)]="user.description" #description="ngModel" pattern="[\w\[\]`!@#$%\^&*()={}:;\<>+'-]{0,150}">
               <div *ngIf="description.invalid && (description.dirty || description.touched)" class="ui error message">
                 <div *ngIf="description.invalid">
                   Description should consist of max 150 characters. There is can contain letters, digits and
@@ -56,9 +59,8 @@
           </div>
 
           <div class="form-group">
-            <div class="field">
-              <select class="ui floating dropdown labeled search icon" id="gender" formControlName="gender"
-                appSmDropdown>
+            <div class="field" [formGroup]="userForm">
+              <select class="ui floating dropdown" formControlName="gender" [(ngModel)]="user.gender" appSmDropdown>
                 <option *ngFor="let gender of genders" [ngValue]="gender.key">
                   {{gender.text}}
                 </option>
@@ -68,18 +70,20 @@
 
           <div class="form-group">
             <div class="field">
-              <div class="ui inverted calendar" appSmCalendar calendarType="date">
+              <div class="ui inverted calendar" appSmCalendar dateId="bday" calendarType="date">
                 <div class="ui input right icon">
                   <i class="calendar icon white"></i>
-                  <input readonly id="birthday" class="form-control input-dark" formControlName="birthday">
+                  <!-- Fomantic UI calendar doesn't work with ngModel. -->
+                  <input class="form-control input-dark" id="bday" name="birthday" (change)="updateBirthday($event)"
+                    [ngModel]="user.birthday | date:'yyyy-MM-dd'" />
                 </div>
               </div>
             </div>
           </div>
 
           <div class="form-group">
-            <div class="field">
-              <select class="ui floating dropdown" id="country" formControlName="country" appSmDropdown>
+            <div class="field" [formGroup]="userForm">
+              <select class="ui floating dropdown" formControlName="country" [(ngModel)]="user.country" appSmDropdown>
                 <option *ngFor="let country of countries" [ngValue]="country.name">
                   <i [class]=country.icon></i> {{country.name}}
                 </option>

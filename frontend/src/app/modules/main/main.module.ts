@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ClickOutsideModule } from 'ng-click-outside';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { CalmRhythmsCardComponent } from './cards/calm-rhythms-card/calm-rhythms-card.component';
 import { NewReleasesCardComponent } from './cards/new-releases-card/new-releases-card.component';
@@ -13,7 +14,12 @@ import { MainHomeComponent } from './main-home/main-home.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
+import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
+import { ArtistCardComponent } from './cards/artist-card/artist-card.component';
 import { SharedModule } from '../shared/shared.module';
+import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
+import { AlbumListComponent } from './playlist/album-list/album-list.component';
+import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { UserModule } from '../user/user.module';
 
 @NgModule({
@@ -28,11 +34,17 @@ import { UserModule } from '../user/user.module';
     NewReleasesCardComponent,
     RecentlyPlayedCardComponent,
     TopSongsCardComponent,
-    YourMixCardComponent
+    YourMixCardComponent,
+    ArtistListComponent,
+    ArtistCardComponent,
+    MainMenuProfileComponent,
+    AlbumListComponent,
+    AlbumCardComponent
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
+    ClickOutsideModule,
     UserModule,
     SharedModule
   ],

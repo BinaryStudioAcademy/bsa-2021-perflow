@@ -1,11 +1,13 @@
 import {
-  Component, EventEmitter, OnInit, Output
+  Component, EventEmitter, OnInit, Output, Input
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../../models/user/user';
 import { countries } from '../data/countries';
+import { genders } from '../data/genders';
 import { Country } from '../models/country';
+import { Gender } from '../models/gender';
 
 declare global {
   interface JQuery {
@@ -18,11 +20,13 @@ declare global {
   templateUrl: './profile-edit-form.component.html',
   styleUrls: ['./profile-edit-form.component.sass']
 })
+
 export class ProfileEditFormComponent implements OnInit {
-  form!: FormGroup;
-  genders: { key: boolean; text: string; }[] = [{ key: false, text: 'Male' }, { key: true, text: 'Female' }];
+  userForm!: FormGroup;
+  genders: Gender[] = genders;
   countries: Country[] = countries;
-  standartIcon: string = '../../../../assets/images/standartIcon.png';
+
+  @Input()
   user: User;
 
   @Output()
@@ -31,45 +35,21 @@ export class ProfileEditFormComponent implements OnInit {
   constructor(private _router: Router) { }
 
   ngOnInit() {
-    this.form = new FormGroup({
-      userName: new FormControl(this.user.userName, [
-        Validators.required,
-        Validators.pattern('[A-Za-z0-9.-_]{6,20}')
-      ]),
-      email: new FormControl(this.user.email, [
-        Validators.required,
-        Validators.email
-      ]),
-      description: new FormControl(this.user.description, [
-        Validators.required,
-        Validators.maxLength(150)
-      ]),
-      birthday: new FormControl(this.user.birthday),
-      iconURL: new FormControl(this.user.iconURL),
+    this.userForm = new FormGroup({
       gender: new FormControl(this.user.gender),
       country: new FormControl(this.user.country)
     });
   }
 
-  get email() {
-    return this.form.get('email')!;
+  updateBirthday(event: Event) {
+    this.user.birthday = new Date((<HTMLInputElement>event.target).value);
   }
 
-  get userName() {
-    return this.form.get('userName')!;
-  }
-
-  get description() {
-    return this.form.get('description')!;
-  }
-
-  onSelect(event: Event) {
-    const file = (<HTMLInputElement>event.target).files![0];
+  handleFileInput(event: Event) {
+    const file: File = (<HTMLInputElement>event.target).files![0];
 
     if (['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)) {
-      this.form.patchValue({ iconURL: file });
-      this.form.get('iconURL')!.updateValueAndValidity();
-      const reader = new FileReader();
+      const reader: FileReader = new FileReader();
       reader.onload = () => {
         this.user.iconURL = reader.result!.toString();
       };

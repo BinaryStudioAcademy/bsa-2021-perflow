@@ -1,0 +1,10 @@
+<div class="infolist">
+    <div class="artistlist">
+        <div class="artistslabel">
+            <h4>Artists</h4>
+        </div>
+        <div *ngFor="let artist of artists" class="artist-card">
+            <app-artist-card [artist]="artist" (delete)="deleteArtist($event)"></app-artist-card>
+        </div>    
+    </div>    
+</div>

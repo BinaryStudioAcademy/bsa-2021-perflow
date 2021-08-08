@@ -4,9 +4,8 @@ import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.
 
 const routes: Routes = [
   {
-    path: '',
-    component: UserProfileEditComponent,
-    children: []
+    path: 'edit',
+    component: UserProfileEditComponent
   }
 ];
 

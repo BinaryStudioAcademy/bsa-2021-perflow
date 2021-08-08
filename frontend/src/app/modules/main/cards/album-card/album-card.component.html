@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="image-block">
+        <div class="image">
+            <img [attr.src]="album.iconURL" alt="Album">    
+        </div>
+        <div class="remove" (click)="onDeleteClick(album)">
+            <i class="like icon ui"></i>
+        </div>
+    </div>
+    <div class="info-block">
+        <div class="album-name tub">
+            <h5>{{album.name}}</h5>
+        </div>
+        <div class="album-author tub">
+            <span>{{album.author.userName}}</span>
+        </div>
+        <div class="album-year tub">
+            <span>{{album.releaseYear}}</span>
+        </div>
+    </div>
+</div>

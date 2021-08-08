@@ -12,11 +12,25 @@ using Perflow.Studio.DataAccess.Implementations;
 using Perflow.Studio.DataAccess.Repositories;
 using Perflow.Studio.Domain.Entities;
 using Shared.ExceptionsHandler.Filters;
+using Microsoft.Extensions.Configuration;
 
 namespace Perflow.Studio
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+        public Startup(IWebHostEnvironment hostingEnvironment)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostingEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDateProvider, DateProvider>();
