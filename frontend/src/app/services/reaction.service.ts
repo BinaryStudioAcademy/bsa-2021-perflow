@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AlbumForReadDTO } from '../models/album/albumForReadDTO';
+import { ArtistReadDTO } from '../models/user/ArtistReadDTO';
 import { HttpInternalService } from './http-internal.service';
 
 @Injectable({
@@ -12,18 +14,52 @@ export class ReactionService {
   }
 
   likeSong(songId: number, userId: number) {
-    const response = this.httpService.postClearRequest(
+    return this.httpService.postClearRequest(
       '/api/SongReaction/like',
       { userId, songId }
     );
-    return response;
   }
 
   removeLike(songId: number, userId: number) {
-    const response = this.httpService.postClearRequest(
+    return this.httpService.postClearRequest(
       '/api/SongReaction/removeLike',
       { userId, songId }
     );
-    return response;
+  }
+
+  getArtistsByUserId(userId: number) {
+    return this.httpService.getRequest<ArtistReadDTO[]>(`/api/ArtistReaction/${userId}`);
+  }
+
+  addArtistReaction(artistId: number, userId: number) {
+    return this.httpService.postClearRequest(
+      '/api/ArtistReaction/like',
+      { artistId, userId }
+    );
+  }
+
+  removeArtistReaction(artistId: number, userId: number) {
+    return this.httpService.postClearRequest(
+      '/api/ArtistReaction/removeLike',
+      { artistId, userId }
+    );
+  }
+
+  getAlbumsByUserId(userId: number) {
+    return this.httpService.getRequest<AlbumForReadDTO[]>(`/api/AlbumReaction/${userId}`);
+  }
+
+  addAlbumReaction(albumId: number, userId: number) {
+    return this.httpService.postClearRequest(
+      '/api/AlbumReaction/like',
+      { albumId, userId }
+    );
+  }
+
+  removeAlbumReaction(albumId: number, userId: number) {
+    return this.httpService.postClearRequest(
+      '/api/AlbumReaction/removeLike',
+      { albumId, userId }
+    );
   }
 }

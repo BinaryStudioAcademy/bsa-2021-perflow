@@ -17,6 +17,7 @@ namespace Perflow.Domain
         public string Salt { get; set; }
         public int? GroupId { get; set; }
         public Group Group { get; set; }
+        public ICollection<Album> Albums { get; set; }
         public ICollection<Role> Roles { get; set; }
         public ICollection<ArtistFollower> Followers { get; set; }
         public ICollection<ArtistFollower> Subscriptions { get; set; }
