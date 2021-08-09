@@ -21,7 +21,7 @@
   color: $text
   padding-left: 0.5rem
   padding-right: 0.5rem
-  // border-radius: 50px
+  border-radius: 50px
   &:hover
     background-color: $light-gray
 
@@ -29,7 +29,7 @@
   width: 100%
   display: grid
   grid-template-areas: "song-icon song-name album-name button"
-  grid-template-columns: 50px 6fr 4fr 100px
+  grid-template-columns: 50px 6fr 4fr 105px
   align-items: center
   padding: 0.5rem 0
 
@@ -42,7 +42,7 @@
   width: 40px
   height: 40px
   img
-    //border-radius: 50%
+    border-radius: 50%
     object-fit: cover
     width: 40px
     height: 40px
@@ -56,12 +56,16 @@
   text-decoration: none
   grid-area: album-name
   cursor: pointer
+  font-style: 0.9em
   a
     color: #afafaf
+    &:hover
+      text-decoration: underline
+      color: $text
 
 .button
   grid-area: button
-  justify-self: center
+  justify-self: start
   button
     @extend %font
     cursor: pointer
