@@ -1,3 +1,4 @@
+import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
 import { UserService } from 'src/app/services/user.service';
