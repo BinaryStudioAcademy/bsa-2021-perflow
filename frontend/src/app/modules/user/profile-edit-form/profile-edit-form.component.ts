@@ -25,6 +25,7 @@ export class ProfileEditFormComponent implements OnInit {
   userForm!: FormGroup;
   genders: Gender[] = genders;
   countries: Country[] = countries;
+  standartIcon: string = '../../../../assets/images/standartIcon.png';
 
   @Input()
   user: User;
