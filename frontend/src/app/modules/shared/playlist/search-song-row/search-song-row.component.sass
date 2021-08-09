@@ -1,0 +1,78 @@
+@import ../../../../../styles
+
+%ellipsis-overflow
+  text-overflow: ellipsis
+  white-space: nowrap
+  overflow: hidden
+
+%font
+  color: $text
+  font-family: Rubik
+  font-style: normal
+
+.text
+  @extend %font
+  text-overflow: ellipsis
+  white-space: nowrap
+  overflow: hidden
+
+.song
+  background-color: $drk-gray
+  color: $text
+  padding-left: 0.5rem
+  padding-right: 0.5rem
+  // border-radius: 50px
+  &:hover
+    background-color: $light-gray
+
+.song-row
+  width: 100%
+  display: grid
+  grid-template-areas: "song-icon song-name album-name button"
+  grid-template-columns: 50px 6fr 4fr 100px
+  align-items: center
+  padding: 0.5rem 0
+
+.column
+  padding-right: 0.5rem
+  padding-left: 0.5rem
+
+.song-icon
+  grid-area: song-icon
+  width: 40px
+  height: 40px
+  img
+    //border-radius: 50%
+    object-fit: cover
+    width: 40px
+    height: 40px
+    background: none
+
+.song-name
+  grid-area: song-name
+  padding-left: 1rem 
+
+.album-name
+  text-decoration: none
+  grid-area: album-name
+  cursor: pointer
+  a
+    color: #afafaf
+
+.button
+  grid-area: button
+  justify-self: center
+  button
+    @extend %font
+    cursor: pointer
+    width: 90px
+    height: 35px
+    background: none
+    border: 1px solid #afafaf
+    border-radius: 50px
+    &:hover
+      transform: scale(1.05)
+      border: 1px solid $text
+      color: $text
+    &:active
+      transform: scale(1)
