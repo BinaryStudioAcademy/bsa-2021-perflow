@@ -7,9 +7,9 @@
             </div>
         </div>
         <app-circle-info-card *ngFor="let k of [].constructor(8); let i = index"
-        [name]="playlists[i%3].name"
-        [description]="playlists[i%3].description"
-        [iconUrl]="playlists[i%3].iconURL"
+        [name]="albums[i%3].name"
+        [description]="albums[i%3].description"
+        [iconUrl]="albums[i%3].iconURL"
         >
         </app-circle-info-card>
     </div>

@@ -19,11 +19,11 @@ namespace Perflow.Services.Implementations
     : base(context, mapper)
         { }
 
-        public async Task<ICollection<Album>> GetEntitiesAsync()
+        public async Task<ICollection<AlbumViewDTO>> GetAllAlbums()
         {
             var entities = await context.Albums.AsNoTracking().ToListAsync();
 
-            return mapper.Map<ICollection<Album>>(entities);
+            return mapper.Map<ICollection<AlbumViewDTO>>(entities);
         }
 
         public async Task<Album> GetEntityAsync(int id)

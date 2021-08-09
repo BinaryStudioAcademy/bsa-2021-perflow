@@ -12,6 +12,10 @@ export class AlbumService {
 
   constructor(private _httpService: HttpInternalService) { }
 
+  public getAllAlbums() {
+    return this._httpService.getRequest<AlbumView[]>(`${this.routePrefix}`);
+  }
+
   public getNewReleases() {
     return this._httpService.getFullRequest<AlbumView[]>(`${this.routePrefix}/new-releases`);
   }

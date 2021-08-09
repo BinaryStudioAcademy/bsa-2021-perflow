@@ -67,4 +67,8 @@ export class ReactionService {
   getLikedPlaylistsByTheUser(userId: number) {
     return this.httpService.getRequest<Playlist[]>(`api/PlaylistReaction/liked/${userId}`);
   }
+
+  getLikedAlbumssByTheUser(userId: number) {
+    return this.httpService.getRequest<Playlist[]>(`api/AlbumReaction/liked/${userId}`);
+  }
 }

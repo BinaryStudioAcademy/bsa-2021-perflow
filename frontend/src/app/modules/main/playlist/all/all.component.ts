@@ -2,8 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Album } from 'src/app/models/album/album';
+import { AlbumView } from 'src/app/models/album/album-view';
 import { Playlist } from 'src/app/models/playlist';
+import { AlbumService } from 'src/app/services/album.service';
 import { PlaylistService } from 'src/app/services/playlist-service.service';
 
 @Component({
@@ -13,10 +14,12 @@ import { PlaylistService } from 'src/app/services/playlist-service.service';
 })
 export class AllComponent {
   playlists: Playlist[] = [];
-  albums: Album[] = [];
+  albums: AlbumView[] = [];
 
-  constructor(private _playlistService: PlaylistService) {
+  constructor(private _playlistService: PlaylistService,
+              private _albumService: AlbumService) {
     this.loadPlaylist();
+    this.loadAlbums();
   }
 
   loadPlaylist() {
@@ -24,6 +27,14 @@ export class AllComponent {
       .pipe(catchError(this._handleError))
       .subscribe((ps) => {
         this.playlists = ps;
+      });
+  }
+
+  loadAlbums() {
+    this._albumService.getAllAlbums()
+      .pipe(catchError(this._handleError))
+      .subscribe((as) => {
+        this.albums = as;
       });
   }
 
