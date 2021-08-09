@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="image-block">
+        <div class="image">
+            <img [attr.src]="artist.iconURL" alt="Artist">    
+        </div>
+        <div class="remove" (click)="onDeleteClick(artist)">
+            <i class="like icon ui"></i>
+        </div>
+    </div>
+    <div class="info-block">
+        <div class="artist-name tub">
+            <h5>{{artist.userName}}</h5>
+        </div>
+        <span>Artist</span>
+    </div>
+</div>

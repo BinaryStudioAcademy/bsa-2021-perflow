@@ -26,7 +26,8 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "experimentalDecorators": true
   },
   "parserOptions": {
     "project": "./tsconfig.json",

@@ -1,0 +1,25 @@
+@import '../../../../styles'
+
+%base
+    background-color: $light-gray !important
+    color: $text !important
+
+.header
+    @extend %base
+
+.content
+    @extend %base
+
+.actions
+    @extend %base
+    .buttons
+        display: flex
+        justify-content: flex-end
+
+.btn-full
+    padding: 12px 22px
+    font-weight: $bold-weight
+    border: none
+    &:hover
+        color: black
+        cursor: pointer

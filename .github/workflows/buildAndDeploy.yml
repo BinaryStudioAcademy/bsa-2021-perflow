@@ -1,0 +1,133 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [ develop ]
+
+  workflow_dispatch:
+
+jobs:
+  build-gateway:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build Gateway
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Gateway.Dockerfile
+          push: true
+          tags: krasnovnikita/bsa2021-perflow-gateway:latest
+
+  build-perflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build Perflow
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Perflow.Dockerfile
+          push: true
+          tags: krasnovnikita/bsa2021-perflow-api:latest
+
+  build-perflow-studio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build Perflow Studio
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Perflow.Studio.Dockerfile
+          push: true
+          tags: krasnovnikita/bsa2021-perflow-studio-api:latest
+
+  build-processor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build Processor
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Processor.Dockerfile
+          push: true
+          tags: krasnovnikita/bsa2021-perflow-processor:latest
+
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build frontend
+        uses: docker/build-push-action@v2.6.1
+        with:
+          context: .
+          file: .docker/Frontend.Dockerfile
+          build-args: |
+            FIREBASE_KEY=${{ secrets.FIREBASE_KEY }}
+          push: true
+          tags: krasnovnikita/bsa2021-perflow-frontend:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ build-gateway, build-perflow, build-perflow-studio, build-processor, build-frontend ]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Update compose
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PERFLOW_VM_HOST }}
+          username: ${{ secrets.PERFLOW_VM_USERNAME }}
+          password: ${{ secrets.PERFLOW_VM_PASSWORD }}
+          source: "docker-compose.prod.yml"
+          target: "."
+
+      - name: Update VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PERFLOW_VM_HOST }}
+          username: ${{ secrets.PERFLOW_VM_USERNAME }}
+          password: ${{ secrets.PERFLOW_VM_PASSWORD }}
+          script: sudo docker-compose -f docker-compose.prod.yml stop && docker-compose -f docker-compose.prod.yml pull && docker system prune -f && docker-compose -f docker-compose.prod.yml up -d
