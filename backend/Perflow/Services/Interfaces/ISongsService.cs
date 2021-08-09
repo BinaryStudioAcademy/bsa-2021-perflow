@@ -7,5 +7,6 @@ namespace Perflow.Services.Interfaces
     public interface ISongsService
     {
         public Task<IEnumerable<SongReadDTO>> GetLikedSongsAsync(int userId);
+        public Task<IEnumerable<SongReadDTO>> FindSongsByNameAsync(string searchTerm);
     }
 }

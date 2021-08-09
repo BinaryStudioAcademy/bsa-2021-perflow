@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Playlists;
+using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
@@ -27,7 +29,10 @@ namespace Perflow.Services.Implementations
 
         public async Task<PlaylistDTO> GetEntityAsync(int id)
         {
-            var entity = await context.Playlists.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+            var entity = await context.Playlists
+                .Include(p => p.Author)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             return mapper.Map<PlaylistDTO>(entity);
         }
@@ -40,6 +45,9 @@ namespace Perflow.Services.Implementations
             playlistDTO.Id = 0;
 
             var playlist = mapper.Map<Playlist>(playlistDTO);
+
+            var author = await context.Users.FirstOrDefaultAsync(user => user.Id == playlistDTO.Author.Id);
+            playlist.Author = author;
 
             await context.Playlists.AddAsync(playlist);
 
@@ -75,6 +83,55 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
 
             return entityId;
+        }
+
+        public async Task<PlaylistSongDTO> AddSongAsync(PlaylistSongDTO playlistSongDTO)
+        {
+            var playlist = await context.Playlists
+                .FirstOrDefaultAsync(playlist => playlist.Id == playlistSongDTO.PlaylistId);
+
+            var song = await context.Songs
+                .FirstOrDefaultAsync(song => song.Id == playlistSongDTO.SongId);
+
+            var playlistSong = new PlaylistSong {
+                Playlist = playlist,
+                Song = song
+            };
+
+            await context.PlaylistSong.AddAsync(playlistSong);
+
+            await context.SaveChangesAsync();
+
+            return playlistSongDTO;
+        }
+
+        public async Task<PlaylistSongDTO> DeleteSongAsync(PlaylistSongDTO playlistSongDTO)
+        {
+            var playlistSong = await context.PlaylistSong
+                .FirstOrDefaultAsync(p => p.PlaylistId == playlistSongDTO.PlaylistId && p.SongId == playlistSongDTO.SongId);
+
+            context.Entry(playlistSong).State = EntityState.Deleted;
+
+            await context.SaveChangesAsync();
+
+            return playlistSongDTO;
+        }
+
+        public async Task<ICollection<SongReadDTO>> GetSongsAsync(int id)
+        {
+            var songs = await context.PlaylistSong
+                .Where(ps => ps.PlaylistId == id)
+                .Include(ps => ps.Song)
+                    .ThenInclude(s => s.Album)
+                .Include(ps => ps.Song)
+                    .ThenInclude(s => s.Artist)
+                .Include(ps => ps.Song)
+                    .ThenInclude(s => s.Group)
+                .Select(ps => ps.Song)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return mapper.Map<ICollection<SongReadDTO>>(songs);
         }
     }
 }

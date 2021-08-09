@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ClickOutsideModule } from 'ng-click-outside';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
@@ -21,6 +22,12 @@ import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { UserModule } from '../user/user.module';
 import { AllComponent } from './playlist/all/all.component';
+import {
+  CreateEditPlaylistComponent
+} from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
+import {
+  EditPlaylistModalComponent
+} from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
 
 @NgModule({
   declarations: [
@@ -34,20 +41,23 @@ import { AllComponent } from './playlist/all/all.component';
     YourMixCardComponent,
     SquareInfoCardComponent,
     CircleInfoCardComponent,
-    YourMixCardComponent,
     ArtistListComponent,
     ArtistCardComponent,
     MainMenuProfileComponent,
     AlbumListComponent,
     AlbumCardComponent,
-    AllComponent
+    AllComponent,
+    CreateEditPlaylistComponent,
+    EditPlaylistModalComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MainRoutingModule,
     ClickOutsideModule,
     UserModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports: [ProfileMenuComponent]
 })
