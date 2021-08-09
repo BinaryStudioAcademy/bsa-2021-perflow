@@ -1,4 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component, ElementRef, OnInit, ViewChild
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from 'src/app/models/album/album';
 import { AlbumFull } from 'src/app/models/album/album-full';
@@ -46,5 +48,5 @@ export class AlbumDetailsComponent implements OnInit {
 
   scroll() {
     this.albumsElement.nativeElement?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
-  };
+  }
 }
