@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { AuthService } from '../../../services/auth/auth.service';
 import { UserRoles } from '../../../models/enums/user-roles.enum';
 
 @Component({
