@@ -17,7 +17,7 @@ export class AllComponent {
   albums: AlbumView[] = [];
 
   constructor(private _playlistService: PlaylistService,
-              private _albumService: AlbumService) {
+    private _albumService: AlbumService) {
     this.loadPlaylist();
     this.loadAlbums();
   }
