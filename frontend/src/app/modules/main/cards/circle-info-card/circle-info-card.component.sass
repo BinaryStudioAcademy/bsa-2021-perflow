@@ -7,40 +7,39 @@
     color: $text
     box-shadow: none
     width: 100%
-    &>div
-        height: 100%
-        .image
+    height: 100%
+    .image
+        width: 100%
+        padding-bottom: 100%
+        margin-bottom: 15px
+        position: relative
+        border-radius: 50%
+        overflow: hidden
+        img
+            position: absolute
+            height: 100%
             width: 100%
-            padding-bottom: 100%
-            margin-bottom: 15px
-            position: relative
-            border-radius: 50%
+            object-fit: cover
+        .play-icon
+            top: 50%
+            right: 50%
+            transform: translate(50%, -50%)
+    &:hover
+        .play-icon
+                opacity: 1
+    .content
+        min-height: 64px
+        .card-name, .card-desc
+            text-overflow: ellipsis
+            white-space: nowrap
             overflow: hidden
-            img
-                position: absolute
-                height: 100%
-                width: 100%
-                object-fit: cover
-            .play-icon
-                top: 50%
-                right: 50%
-                transform: translate(50%, -50%)
-        &:hover
-            .play-icon
-                 opacity: 1
-        .content
-            min-height: 64px
-            .card-name, .card-desc
-                text-overflow: ellipsis
-                white-space: nowrap
-                overflow: hidden
-                text-align: center
-            .card-name  
-                font-weight: $medium-weight
-            .card-desc
-                margin-top: 5px
-                font-weight: $light-weight
-                white-space: normal
-                display: -webkit-box
-                -webkit-line-clamp: 2 
-                -webkit-box-orient: vertical
+            text-align: center
+        .card-name  
+            font-weight: $medium-weight
+        .card-desc
+            margin-top: 5px
+            font-weight: $light-weight
+            white-space: normal
+            display: -webkit-box
+            -webkit-line-clamp: 2 
+            -webkit-box-orient: vertical
