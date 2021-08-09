@@ -20,6 +20,7 @@ import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { UserModule } from '../user/user.module';
+import { AllComponent } from './playlist/all/all.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { UserModule } from '../user/user.module';
     ArtistCardComponent,
     MainMenuProfileComponent,
     AlbumListComponent,
-    AlbumCardComponent
+    AlbumCardComponent,
+    AllComponent
   ],
   imports: [
     CommonModule,
