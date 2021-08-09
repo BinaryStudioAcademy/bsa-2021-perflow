@@ -15,7 +15,7 @@
             {{song.artist.userName}}
         </div>
         <div class="column album-name text">
-            {{song.album.name}}
+            <a class="link" [routerLink]="['/albums', song.album.id]">{{song.album.name}}</a>
         </div>
         <div class="column added text">
             {{song.createdAt | date:'yyyy-MM-dd'}}

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdown.directive';
 import { SemanticCalendarDirective } from './directives/calendar/semantic-calendar.directive';
 import { SemanticMessageDirective } from './directives/message/semantic-message.directive';
@@ -14,6 +15,8 @@ import { SongsListHeaderComponent } from './songs-list-header/songs-list-header.
 import { SongsListComponent } from './songs-list/songs-list.component';
 import { AccessTypePipe } from './pipes/access-type.pipe';
 import { SongDurationPipe } from './pipes/song-duration.pipe';
+import { ItemsSumPipe } from './pipes/items-sum.pipe';
+import { AlbumDurationPipe } from './pipes/album-duration.pipe';
 
 @NgModule({
   declarations: [
@@ -31,10 +34,13 @@ import { SongDurationPipe } from './pipes/song-duration.pipe';
     SongsListHeaderComponent,
     SongsListComponent,
     AccessTypePipe,
-    SongDurationPipe
+    SongDurationPipe,
+    ItemsSumPipe,
+    AlbumDurationPipe
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     SemanticDropdownDirective,
@@ -51,7 +57,9 @@ import { SongDurationPipe } from './pipes/song-duration.pipe';
     SongsListHeaderComponent,
     SongsListComponent,
     AccessTypePipe,
-    SongDurationPipe
+    SongDurationPipe,
+    ItemsSumPipe,
+    AlbumDurationPipe
   ]
 })
 
