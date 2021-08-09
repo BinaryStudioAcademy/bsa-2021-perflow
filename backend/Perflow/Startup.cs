@@ -5,9 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Perflow.Extensions;
 using Perflow.Services.Extensions;
 using Perflow.DataAccess.Context;
+using Shared.Auth.Extensions;
 using Shared.ExceptionsHandler.Filters;
 
 namespace Perflow
@@ -34,6 +34,8 @@ namespace Perflow
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
+            services.AddAuth();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Perflow", Version = "v1" });
@@ -50,21 +52,18 @@ namespace Perflow
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Perflow v1"));
             }
+
             app.UseCors(builder => builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials()
-                .WithOrigins(Configuration["AngularAppURL"]));
+                .AllowAnyOrigin());
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {

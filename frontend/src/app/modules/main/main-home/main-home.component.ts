@@ -4,7 +4,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumView } from 'src/app/models/album/album-view';
 import { AlbumService } from 'src/app/services/album.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-main-home',
@@ -27,8 +26,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   public top100Songs = new Array<object>();
   private _unsubscribe$ = new Subject<void>();
 
-  constructor(private _authService: AuthService,
-    private _albumService: AlbumService) {
+  constructor(private _albumService: AlbumService) {
   }
 
   async ngOnInit() {

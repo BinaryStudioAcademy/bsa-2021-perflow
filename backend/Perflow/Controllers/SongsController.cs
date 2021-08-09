@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
 using Perflow.Services.Interfaces;
+using Shared.Auth.Constants;
+using Shared.Auth.Extensions;
 
 namespace Perflow.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Policy = Policies.IsUser)]
     public class SongsController : ControllerBase
     {
         private readonly ISongsService _songsService;
@@ -20,8 +24,7 @@ namespace Perflow.Controllers
         [HttpGet("liked")]
         public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetLikedSongs()
         {
-            // TODO Use authenticated user id
-            var songs = await _songsService.GetLikedSongsAsync(1);
+            var songs = await _songsService.GetLikedSongsAsync(User.GetId());
 
             return Ok(songs);
         }

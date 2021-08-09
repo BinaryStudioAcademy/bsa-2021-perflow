@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Perflow.Studio.Common.Interfaces.Repositories;
 using Perflow.Studio.Domain.Entities;
+using Perflow.Studio.Services.Interfaces.Repositories;
 
 namespace Perflow.Studio.DataAccess.Extensions
 {

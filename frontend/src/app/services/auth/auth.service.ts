@@ -1,90 +1,184 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
-import { UserRecord } from 'src/app/models/user/user-record';
+import { Router } from '@angular/router';
+import { skip, take } from 'rxjs/operators';
+import { AuthUser } from '../../models/auth/auth-user';
+import { LoginData } from '../../models/auth/login-data';
+import { HttpInternalService } from '../http-internal.service';
+import { RegisterData } from '../../models/auth/register-data';
+
+type AuthState = AuthUser | null;
+
+interface RegisterWithEmailParams {
+  registerData: RegisterData;
+  redirect?: string;
+}
+
+interface SignInWithEmailParams {
+  email: string;
+  password: string;
+  remember?: boolean;
+  redirect?: string;
+}
+
+interface SignInWithSocialsParams {
+  remember?: boolean;
+  redirect?: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
-  private _currentUserSource = new ReplaySubject<UserRecord>();
-  currentUser$ = this._currentUserSource.asObservable();
+  private _currentAuthState: AuthState = null;
+  private _authStateSubject: ReplaySubject<AuthState> = new ReplaySubject<AuthState>(1);
 
-  constructor(private _afs: AngularFirestore, private _afAuth: AngularFireAuth, private _router: Router) {
-    this.init();
+  constructor(
+    private _httpService: HttpInternalService,
+    private _fireAuth: AngularFireAuth,
+    private _router: Router
+  ) {
+    this._fireAuth.authState.subscribe(
+      (firebaseUser) => this._updateAuthState(firebaseUser)
+    );
   }
 
-  init() {
-    const user = JSON.parse(localStorage.getItem('user')!);
-    if (user) {
-      this._currentUserSource.next(user);
+  get authenticated() {
+    return this._currentAuthState !== null;
+  }
+
+  getAuthStateObservable() {
+    return this._authStateSubject.asObservable();
+  }
+
+  getCurrentTokenObservable() {
+    return this._fireAuth.idToken;
+  }
+
+  async registerWithEmail({ registerData }: RegisterWithEmailParams) {
+    const response = await this._httpService.postFullRequest(
+      '/api/auth/register', registerData
+    ).toPromise();
+
+    if (!response.ok) {
+      return;
+    }
+
+    await this.signInWithEmail({
+      email: registerData.email,
+      password: registerData.password
+    });
+  }
+
+  async signInWithEmail({
+    email,
+    password,
+    remember,
+    redirect
+  }: SignInWithEmailParams) {
+    await this._setPersistence(remember ?? true);
+    await this._fireAuth.signInWithEmailAndPassword(email, password);
+
+    if (redirect !== undefined) {
+      this._redirectAfterAuthUpdate(redirect);
     }
   }
 
-  signIn(email: string, password: string) {
-    return this._afAuth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        if (result.user) {
-          this.setUserData(result.user);
-        }
-      }).catch((error) => {});
+  async signInWithGoogle({ remember, redirect }: SignInWithSocialsParams) {
+    await this._setPersistence(remember ?? true);
+
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
+    await this._fireAuth.signInWithPopup(provider);
+
+    if (redirect !== undefined) {
+      this._redirectAfterAuthUpdate(redirect);
+    }
   }
 
-  signUp(email: string, password: string) {
-    return this._afAuth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.setUserData(result.user);
-      }).catch((error) => { });
-  }
+  signInWithApple = () => {
+    // TODO Implement
+  };
 
-  facebookAuth() {
-    return this.authLogin(new firebase.auth.FacebookAuthProvider());
-  }
-
-  refreshToken = () => firebase.auth().currentUser?.getIdToken(true);
-
-  authLogin(provider: any) {
-    return this._afAuth.signInWithPopup(provider)
-      .then((result) => {
-        this.setUserData(result.user);
-      }).catch((error) => {});
-  }
-
-  async setUserData(user: any) {
-    const userRef: AngularFirestoreDocument<UserRecord> = this._afs.doc(`users/${user.uid}`);
-    const curentToken: string = await this.getCurrentToken()!;
-    const userData: UserRecord = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-      token: curentToken
-    };
-
-    this._currentUserSource.next(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-    return userRef.set(userData, {
-      merge: true
-    });
-  }
-
-  getCurrentToken = () => firebase.auth().currentUser?.getIdToken(false)
-    .then((result) => result);
+  signInWithFacebook = () => {
+    // TODO Implement
+  };
 
   signOut() {
-    return this._afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this._currentUserSource.next(undefined);
-    });
+    return this._fireAuth.signOut()
+      .then(() => this._router.navigateByUrl('/login'));
   }
 
-  isLoggedIn = (): boolean => {
-    const user = JSON.parse(localStorage.getItem('user')!);
-    return (user !== null);
-  };
+  private async _updateAuthState(firebaseUser: firebase.User | null) {
+    if (!firebaseUser) {
+      this._setAuthState(null);
+      return;
+    }
+
+    if (!AuthService.validateFirebaseUser(firebaseUser)) {
+      await this.signOut();
+      return;
+    }
+
+    const loginData: LoginData = {
+      accessToken: await firebaseUser.getIdToken(),
+      firebaseId: firebaseUser.uid,
+      userName: firebaseUser.displayName!,
+      email: firebaseUser.email!
+    };
+
+    const response = await this._httpService.postFullRequest(
+      '/api/auth/login', loginData
+    ).toPromise();
+
+    if (!response.ok) {
+      await this.signOut();
+      return;
+    }
+
+    const tokenResult = await firebaseUser.getIdTokenResult(true);
+
+    const authUser: AuthUser = {
+      id: tokenResult.claims.id,
+      firebaseId: firebaseUser.uid,
+      role: tokenResult.claims.role,
+      userName: firebaseUser.displayName!,
+      email: firebaseUser.email!,
+      accessToken: tokenResult.token,
+      refreshToken: firebaseUser.refreshToken
+    };
+
+    this._setAuthState(authUser);
+  }
+
+  static validateFirebaseUser(firebaseUser: firebase.User) {
+    return firebaseUser.email !== undefined && firebaseUser.displayName !== undefined;
+  }
+
+  private _setAuthState(authState: AuthState) {
+    this._currentAuthState = authState;
+    this._authStateSubject.next(authState);
+  }
+
+  private _setPersistence(value: boolean) {
+    return this._fireAuth.setPersistence(value ? 'local' : 'session');
+  }
+
+  private _redirectAfterAuthUpdate(url: string) {
+    return this.getAuthStateObservable()
+      .pipe(
+        skip(1), // skip current authState
+        take(1)
+      )
+      .subscribe(
+        (authState) => {
+          if (authState !== null) {
+            this._router.navigateByUrl(url);
+          }
+        }
+      );
+  }
 }

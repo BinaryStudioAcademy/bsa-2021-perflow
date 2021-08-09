@@ -30,11 +30,18 @@ namespace Perflow.Services.Extensions
 
         public static void RegisterCustomServices(this IServiceCollection services)
         {
+            services.AddSingleton<IFirebaseService, FirebaseService>();
+
+            services.AddScoped<IAuthService, AuthService>();
+
+            services.AddScoped<IUsersService, UsersService>();
+
             services.AddScoped<IService<PlaylistDTO>, PlaylistService>();
 
             services.AddScoped<SongReactionService>();
 
             services.AddScoped<ISongsService, SongsService>();
+
             services.AddScoped<AlbumsService>();
         }
     }

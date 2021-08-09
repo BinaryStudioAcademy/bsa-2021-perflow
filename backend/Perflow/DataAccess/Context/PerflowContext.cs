@@ -17,7 +17,6 @@ namespace Perflow.DataAccess.Context
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<PlaylistReaction> PlaylistReactions { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<SongReaction> SongReactions { get; set; }
         public DbSet<User> Users { get; set; }
@@ -43,6 +42,7 @@ namespace Perflow.DataAccess.Context
             SetAuditValues();
             return base.SaveChanges();
         }
+
         private void SetAuditValues()
         {
             var entries = ChangeTracker.Entries<AuditEntity>().ToList();

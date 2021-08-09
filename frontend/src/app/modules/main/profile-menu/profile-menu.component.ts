@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -8,8 +9,13 @@ import { Component } from '@angular/core';
 export class ProfileMenuComponent {
   public isProfileMenuShown: boolean = false;
 
-  logout = () => {
-  };
+  constructor(
+    private _authService: AuthService
+  ) {}
+
+  logout() {
+    this._authService.signOut();
+  }
 
   onClickOutsideProfileMenu = (event: Event) => {
     this.isProfileMenuShown = false;
