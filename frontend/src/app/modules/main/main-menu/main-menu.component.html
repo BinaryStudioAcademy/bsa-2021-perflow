@@ -8,36 +8,46 @@
   <div id="routers">
     <div>
       <a routerLink="./main">
-        <span id="circle"> <i id="icon" class="fire icon"></i></span>
+        <span id="circle"> 
+          <i id="icon" class="fire icon"> </i>
+        </span>
         <span id="name-route">Home</span>
       </a>
     </div>
     <div>
       <a routerLink="./search">
-        <span id="circle"> <i id="icon" class="search icon"></i></span>
+        <span id="circle">
+          <i id="icon" class="search icon"></i>
+        </span>
         <span id="name-route">Search</span>
       </a>
     </div>
     <div>
       <a routerLink="./playlists">
-        <span id="circle"> <i id="icon" class="music icon"></i></span>
+        <span id="circle"> 
+          <i id="icon" class="music icon"></i>
+        </span>
         <span id="name-route">My playlists</span>
       </a>
     </div>
     <div>
       <a routerLink="./songs">
-        <span id="circle"> <i id="icon" class="heart icon"></i></span>
+        <span id="circle"> 
+          <i id="icon" class="heart icon"></i>
+        </span>
         <span id="name-route">Liked songs</span>
       </a>
     </div>
   </div>
   <div id="playlists-menu">
     <span id="title" *ngIf="playlists.length > 0">Created playlists</span>
-    <li *ngFor="let playlist of playlists">
-      <span id="playlist">{{ playlist }}</span>
-    </li>
-    <button class="ui button active" id="create-playlist" routerLink="/playlists/create"  (click)="createPlaylist()">
-      <strong>Create Playlist</strong>
+    <ul>
+      <li *ngFor="let playlist of playlists">
+        {{ playlist }}
+      </li>
+    </ul>
+    <button class="ui btn-full button create-playlist" (click)="createPlaylist()">
+      Create Playlist
     </button>
   </div>
 </div>

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
+import { AllComponent } from './playlist/all/all.component';
 import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
@@ -34,6 +35,7 @@ const routes: Routes = [{
         { path: 'songs', component: SongsComponent },
         { path: 'playlists/artists', component: ArtistListComponent },
         { path: 'playlists/albums', component: AlbumListComponent },
+        { path: 'playlists/all', component: AllComponent },
 
         {
           path: 'albums',
