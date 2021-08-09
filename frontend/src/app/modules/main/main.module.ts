@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ClickOutsideModule } from 'ng-click-outside';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { CalmRhythmsCardComponent } from './cards/calm-rhythms-card/calm-rhythms-card.component';
 import { NewReleasesCardComponent } from './cards/new-releases-card/new-releases-card.component';
@@ -21,6 +22,12 @@ import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { UserModule } from '../user/user.module';
+import {
+  CreateEditPlaylistComponent
+} from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
+import {
+  EditPlaylistModalComponent
+} from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
 
@@ -43,14 +50,19 @@ import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-ca
     ArtistCardComponent,
     MainMenuProfileComponent,
     AlbumListComponent,
-    AlbumCardComponent
+    AlbumCardComponent,
+    YourMixCardComponent,
+    CreateEditPlaylistComponent,
+    EditPlaylistModalComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MainRoutingModule,
     ClickOutsideModule,
     UserModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports: [
     ClickOutsideModule,

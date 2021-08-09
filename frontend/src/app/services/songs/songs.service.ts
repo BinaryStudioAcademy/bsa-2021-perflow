@@ -20,4 +20,8 @@ export class SongsService {
   public getTopSongs(): Observable<Song[]> {
     return of(this.topSongs);
   }
+  getSongsByName = (searchTerm: string): Observable<Song[]> => {
+    const httpParams = { searchTerm: `${searchTerm}` };
+    return this._httpService.getRequest<Song[]>('/api/songs/search', httpParams);
+  };
 }
