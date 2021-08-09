@@ -12,7 +12,7 @@ namespace Perflow.Services.Implementations
 {
     public class PlaylistReactionService : BaseService
     {
-        public PlaylistReactionService(PerflowContext context, IMapper mapper) : base(context, mapper){}
+        public PlaylistReactionService(PerflowContext context, IMapper mapper) : base(context, mapper) {}
 
         public async Task<IEnumerable<PlaylistDTO>> GetLikedPlaylistsByTheUser(int userId)
         {

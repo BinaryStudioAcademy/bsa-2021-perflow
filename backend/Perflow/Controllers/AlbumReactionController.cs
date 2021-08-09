@@ -54,7 +54,6 @@ namespace Perflow.Controllers
             if (userId <= 0)
                 throw new ArgumentException("User ID cannot be less than or equal to zero");
 
-
             return Ok(await _albumReactionService.GetLikedAlbumsByTheUser(userId));
         }
     }
