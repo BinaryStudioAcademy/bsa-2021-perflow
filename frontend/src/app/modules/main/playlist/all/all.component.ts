@@ -36,5 +36,4 @@ export class AllComponent {
       'Something bad happened; please try again later.'
     );
   };
-
 }
