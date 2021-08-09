@@ -2,13 +2,36 @@
     
 $minimumColumnWidth: 180px   
 
-.playlist
+.main-content
+    padding: 40px 80px 40px 40px
     background: $drk-gray
-    display: grid
-    gap: 35px 25px
-    grid-template-columns: repeat(auto-fill, minmax($minimumColumnWidth, 1fr))
-
-@media (max-width:770px)
-    .playlist 
-        grid-template-columns: repeat(2, minmax(230px, 1fr))
+    .saved-albums
+        display: grid
+        column-gap: 60px
+        margin-bottom: 60px
+        grid-template-columns: repeat(auto-fill, minmax($minimumColumnWidth, 1fr))
+        overflow-y: hidden
+        grid-auto-rows: 0
+        grid-template-rows: 1fr
+        overflow: hidden
+        .liked-songs-banner
+            width: 100%
+            grid-column: span 2
+            background: $orange-gradient
+            padding: 30px
+            height: inherit
+            border-radius: 5px
+            .content-conteiner
+                height: 100%
+                color: white
+                display: flex
+                flex-direction: column
+                justify-content: center
+                h5
+                    font-weight: normal
+                    margin-top: 5px
+    .liked-playlists
+        display: grid
+        gap: 35px 25px
+        grid-template-columns: repeat(auto-fill, minmax($minimumColumnWidth, 1fr))
   
