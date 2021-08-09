@@ -1,0 +1,80 @@
+<div class="bg-modal-fader" (click)="cancelModal()">
+  <div class="ui modal modal-upload" (click)="clickOnModal($event)">
+    <div class="ui icon header">
+      Edit playlist
+    </div>
+    <!-- Modal Content -->
+    <div class="content">
+      <form #formEdit="ngForm" (ngSubmit)="onSubmit()" class="ui form error">
+        <div class="cross-validation" [class.cross-validation-error]="formEdit.errors?.identityRevealed && (formEdit.touched || formEdit.dirty)">
+          <div class="ui two column divided equal height grid">
+            <!-- Inputs Row -->
+            <div class="row">
+              <!-- Image Column -->
+              <div class="column">
+                <div class="image-upload-cont" >
+                  <div class="hover-content">
+                    <img id="image" src="{{tempIconURL}}">
+                    <i class="edit outline icon"></i>
+                    <input pattern="\S*.jpg$|\S*.png$|\S*.jpeg$" type="file" (change)="loadIcon($event)" name="iconURL" 
+                      [ngModel] #iconURL="ngModel" accept=".jpeg,.png,.jpg">
+                    <div *ngIf="iconURL.invalid && (iconURL.dirty || iconURL.touched)" class="ui error message">
+                      <div *ngIf="iconURL.errors?.pattern">
+                        Invalid file type.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+              <div class="column">
+                <div class="form-group">
+                  <div class="field">
+                    <input type="text" maxlength="50" placeholder="Playlist title" class="form-control" [(ngModel)]="editedPlaylist.name" 
+                      required #name="ngModel" pattern="[^<>^@]*" name="name">
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="ui error message" autocomplete="off">
+                      <div *ngIf="name.errors?.required">
+                        Name is required!
+                      </div>
+                      <div *ngIf="name.errors?.pattern">
+                        Symbols '< > ^ @' are prohibited
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="field">
+                    <textarea form="formEdit" placeholder="Playlist description" class="form-control input-modal" maxlength="200"
+                      [(ngModel)]="editedPlaylist.description" #description="ngModel" name="description" pattern="[^<>^@]*"></textarea>
+                    <div *ngIf="description.invalid && (description.dirty || description.touched)" class="ui error message">
+                      <div *ngIf="description.errors?.maxLength">
+                        Description should be less than 200 characters.
+                      </div>
+                      <div *ngIf="description.errors?.pattern">
+                        Symbols '< > ^ @' are prohibited
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="field">
+                    <select class="ui dropdown dropdown-input" name="accessType" [ngModel]="editedPlaylist.accessType" 
+                      (ngModelChange)="editedPlaylist.accessType=$event"  #accessType="ngModel" required>
+                      <option *ngFor="let accessType of selectControlValues" [ngValue]="accessType">{{accessType | accessType}}</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- Buttons Row -->
+                <div class="row buttons-row">
+                  <div class="form-group">
+                    <button type="submit" class="ui btn-full submit button" [disabled]="formEdit.form.invalid">Save</button>
+                    <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
