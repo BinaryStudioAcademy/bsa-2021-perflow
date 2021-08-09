@@ -23,7 +23,12 @@ const routes: Routes = [{
         { path: 'playlists', component: PlaylistComponent },
         { path: 'songs', component: SongsComponent },
         { path: 'playlists/artists', component: ArtistListComponent },
-        { path: 'playlists/albums', component: AlbumListComponent }
+        { path: 'playlists/albums', component: AlbumListComponent },
+
+        {
+          path: 'albums',
+          loadChildren: () => import('../album/album.module').then((m) => m.AlbumModule)
+        }
       ]
     }]
 }];
