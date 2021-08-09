@@ -1,0 +1,131 @@
+@import ./../../../../styles
+
+$image-size: 245px
+
+%user-avatar
+    width: $image-size
+    height: $image-size
+    border-radius: 50%
+
+=flex-container($align-items, $justify-content)
+    display: flex
+    align-items: $align-items
+    justify-content: $justify-content
+
+form
+    width: 100%
+    display: grid
+    grid-template-areas: "avatar""info"
+    grid-template-rows: 401px 1fr
+    .avatar-background
+        grid-area: avatar
+        color: $text
+        width: 100%
+        height: 100%
+        border-radius: 5px
+        display: grid
+        grid-template-areas: "left-col user-icon right-col"
+        grid-template-columns: 1fr $image-size 1fr
+        background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+        .user-icon
+            grid-area: user-icon
+            position: relative
+            text-align: center
+            padding-top: 104px
+            .image
+                @extend %user-avatar
+                object-fit: cover
+            .icon-background
+                @extend %user-avatar
+                +flex-container(center, center)
+                background: linear-gradient(90deg, rgba(20, 20, 23, 0.45) 0%, #282F37 100%)
+                box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
+                i
+                    font-size: 64px
+                    margin-top: 3rem
+                    margin-right: 0 !important
+            .btn-edit
+                width: 38px
+                height: 38px
+                border: none
+                &:hover
+                    color: black
+                    cursor: pointer
+    .info
+        grid-area: info
+        width: 100%
+        display: grid
+        grid-template-areas: "left-col form-fields right-col"
+        grid-template-columns: 1fr 1fr 1fr
+        .form-fields
+            grid-area: form-fields
+            .fields
+                +flex-container(center, center)
+                padding: 20px
+                text-align: center
+                .cross-validation
+                    width: 450px
+                    .field
+                        margin-bottom: 15px !important
+                        .input-dark
+                            background-color: $drk-rain
+                            color: $text
+                            border-radius: 100px
+                            caret-color: white
+                            &::placeholder
+                                color: #717477
+                            &:-webkit-autofill,
+                            &:-webkit-autofill:focus,
+                            &:-webkit-autofill:hover
+                                -webkit-box-shadow: 0 0 0 100px $drk-gray inset !important
+                                -webkit-text-fill-color: $text
+                    .button-cancel
+                        margin-left: 15px
+                        padding: 12px 22px
+                        font-weight: $bold-weight
+                        color: white
+                        background: none
+                        border: 1px solid white
+                        border-radius: 50px
+                        &:hover
+                            cursor: pointer
+                            border-color: $medium-orange
+                    .btn-save
+                        padding: 12px 22px
+                        font-weight: $bold-weight
+                        border: none
+                        &:hover
+                            color: black
+                        &:disabled
+                            color: white
+                    button:hover
+                        cursor: pointer
+                    .buttons
+                        +flex-container(left, left)
+
+.ui.error.message
+    border-radius: 25px !important
+
+.header
+    font-weight: $bold-weight
+    font-size: 24px
+    line-height: 28px
+    color: $text
+    padding: 20px
+    padding-top: 40px
+
+.sub-header
+    font-weight: $medium-weight
+    font-size: 18px
+    line-height: 21px
+    color: $text
+    padding: 20px
+    padding-bottom: 0px
+
+.bottom-right-corner
+    position: absolute
+    bottom: 20%
+    right: 5%
+
+.white
+    color: white !important

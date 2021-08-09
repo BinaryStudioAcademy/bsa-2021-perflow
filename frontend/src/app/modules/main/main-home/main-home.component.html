@@ -10,11 +10,6 @@
       </button>
     </div>
 
-
-    <!-- Profile icon in top right corner -->
-    <app-profile-menu class="profile-menu"></app-profile-menu> 
-
-
     <!-- Accordion Information -->
     <div class="accordion-information">
       <img class="album-icon" alt="Album" src="https://s3-alpha-sig.figma.com/img/d75c/1009/f21231d6f5d9480e4025fca6081aa434?Expires=1628467200&Signature=OTjTRmC-15s41yTDgmE8aKF5q6CnBmJAo55dQRIG7K0XOj8A9L3ENDn6dN4EmFOukNiA7DkyXDUXbf3bAjngVFLV7yUgxTssDto6jzNDJGShiDViBnpZAvV6BSpHRuQYIkGj4vTtKJZLeNtDQXQgnMrNLLz8LA1m1XHxLhvug7dLrmXAO2hxHhJk4PUqXplBNEnxyPSZjs-sY44I--97FKwspfh1eyjIlEIdj9eowU4WNh52N-mrnShdCdKJpbaIzE5-mJkpug91XKth-IWB5iHnotKb88bARs1rCFiMaZlp5-Xxi6jpJdOeYIriyilk9~obp6ItPZK-3t2OxS7tag__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
@@ -54,25 +49,9 @@
     <!-- New Releases -->
     <div class="ui sixteen column row new-releases">
       <div class="header">New Releases</div>
-      <div id="newReleases" class="new-releases-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
-        <app-new-releases-card></app-new-releases-card>
+      <div  id="newReleases" class="new-releases-cont">
         <!-- Work component -->
-        <app-new-releases-card *ngFor="let card of newReleases"></app-new-releases-card>
+        <app-new-releases-card *ngFor="let card of newReleases" [card]="card"></app-new-releases-card>
       </div>
       <div class="scroll-box">
         <button class="scroll-button" (click)="scroll('newReleases')">

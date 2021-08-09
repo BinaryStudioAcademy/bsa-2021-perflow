@@ -5,4 +5,6 @@ export interface User {
   email: string;
   birthday: Date;
   gender: boolean;
+  description: string;
+  country: string;
 }

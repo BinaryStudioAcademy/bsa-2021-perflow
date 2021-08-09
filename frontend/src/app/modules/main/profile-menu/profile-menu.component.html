@@ -1,16 +1,39 @@
 <!-- Profile icon in top right corner -->
 <h4 class="ui header profile" (click)="showProfileMenu()" (clickOutside)="onClickOutsideProfileMenu($event)">
-  <img class="ui avatar image" src="https://s3-alpha-sig.figma.com/img/5ba6/3340/8981907adb4cdc9c14be2ac429a30ff6?Expires=1628467200&Signature=F0KRMuqseJflr9PZvKCf6GeWuVkI9hxAeXrvKSVMPdGcHY98Sltas2~pAn~wNyFkRV3Inyn-qL1f5-k~HLx58EeYG75xZSwBIpWNZVOUp8vrB2jKl9ojIT557f7OPVQ0yYGx6vjTCGB8uPbaGp9DWR9JJVuzpuyR0kn~eRTmaO8cveSQDC9rDf-rizQ3JeupdUS-KBv-InGcQ5u7tQLjD1QsUFXLtLg7AB-ZNxPpy6xB9bZKK44HUOu8G6NZIpZOY6cLILsfKwGx-ULoGo8jubwtNrspmAf8N0Zi-JrQmuq1c0JeNdankoH8Mp0CR0b~N~7~voG7LGo16pKRTjJHMg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
-  <div class="content">
-    marc_dorwart
-    <div class="ui inline dropdown">
-      <i class="dropdown icon"></i>
-      <div class="left menu dropdown-content" *ngIf="isProfileMenuShown">
-        <a routerLink="/profile" class="item"><i class="user icon"></i> My Profile</a>
-        <a routerLink="/" class="item"><i class="setting icon"></i> Settings</a>
-        <a routerLink="/" class="item" *ngIf="isRightRole()"><i class="external alternate icon"></i> Perflow Studio</a>
-        <a (click)="logout()" routerLink="/" class="item"><i class="sign-out icon"></i> Log Out</a>
+  <!-- TODO:  Here, insert links to your account profile pages, etc. -->
+  <div id="profile">
+    <img src="https://s3-alpha-sig.figma.com/img/5ba6/3340/8981907adb4cdc9c14be2ac429a30ff6?Expires=1628467200&Signature=F0KRMuqseJflr9PZvKCf6GeWuVkI9hxAeXrvKSVMPdGcHY98Sltas2~pAn~wNyFkRV3Inyn-qL1f5-k~HLx58EeYG75xZSwBIpWNZVOUp8vrB2jKl9ojIT557f7OPVQ0yYGx6vjTCGB8uPbaGp9DWR9JJVuzpuyR0kn~eRTmaO8cveSQDC9rDf-rizQ3JeupdUS-KBv-InGcQ5u7tQLjD1QsUFXLtLg7AB-ZNxPpy6xB9bZKK44HUOu8G6NZIpZOY6cLILsfKwGx-ULoGo8jubwtNrspmAf8N0Zi-JrQmuq1c0JeNdankoH8Mp0CR0b~N~7~voG7LGo16pKRTjJHMg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" />
+    <div>
+      <div class="text" id="profile-user-name">
+        <span>marc_dorwart</span>
+        <i class="caret down icon"></i>
+      </div>
+      <div class="menu" id="profile-menu" [ngClass]="isProfileMenuShown ? 'active' : ''">
+        <div class="item" routerLink="/profile">
+          <span>
+            <i class="user icon"></i>
+            View account
+          </span>
+        </div>
+        <div class="item" routerLink="/">
+          <span>
+            <i class="setting icon"></i>
+            Account Settings
+          </span>
+        </div>
+        <div class="item" routerLink="/" *ngIf="isRightRole()">
+          <span>
+            <i class="external alternate icon"></i>
+            Studio
+          </span>
+        </div>
+        <div class="item" id="log-out" routerLink="/" (click)="logout()">
+          <span>
+            <i class="sign-out icon"></i>
+            Log out
+          </span>
+        </div>
       </div>
     </div>
-  </div>
+  </div> 
 </h4>

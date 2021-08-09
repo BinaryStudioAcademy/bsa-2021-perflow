@@ -14,7 +14,13 @@ import { MainHomeComponent } from './main-home/main-home.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
+import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
+import { ArtistCardComponent } from './cards/artist-card/artist-card.component';
 import { SharedModule } from '../shared/shared.module';
+import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
+import { AlbumListComponent } from './playlist/album-list/album-list.component';
+import { AlbumCardComponent } from './cards/album-card/album-card.component';
+import { UserModule } from '../user/user.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
 
@@ -32,11 +38,18 @@ import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-ca
     TopSongsCardComponent,
     YourMixCardComponent,
     UserProfileComponent,
-    TopArtistsCardComponent
+    TopArtistsCardComponent,
+    ArtistListComponent,
+    ArtistCardComponent,
+    MainMenuProfileComponent,
+    AlbumListComponent,
+    AlbumCardComponent
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
+    ClickOutsideModule,
+    UserModule,
     SharedModule
   ],
   exports: [
