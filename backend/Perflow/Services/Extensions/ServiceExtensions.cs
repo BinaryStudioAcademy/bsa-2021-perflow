@@ -36,13 +36,18 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<IUsersService, UsersService>();
 
-            services.AddScoped<IService<PlaylistDTO>, PlaylistService>();
+            services.AddScoped<PlaylistService>();
 
             services.AddScoped<SongReactionService>();
+            services.AddScoped<ArtistReactionService>();
+            services.AddScoped<AlbumReactionService>();
+            services.AddScoped<PlaylistReactionService>();
 
             services.AddScoped<ISongsService, SongsService>();
 
             services.AddScoped<AlbumsService>();
+
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

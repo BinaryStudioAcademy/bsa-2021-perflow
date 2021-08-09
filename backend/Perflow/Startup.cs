@@ -14,9 +14,15 @@ namespace Perflow
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment hostingEnvironment)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostingEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -52,11 +58,11 @@ namespace Perflow
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Perflow v1"));
             }
-
             app.UseCors(builder => builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowAnyOrigin());
+                .AllowCredentials()
+                .WithOrigins(Configuration["AngularAppURL"]));
 
             app.UseHttpsRedirection();
 

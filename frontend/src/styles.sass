@@ -17,7 +17,7 @@ $light-gray: #282F37
 $gray: #777
 $light-orange: #FD9122
 $medium-orange: #FD5D34
-$button-ghost-border: 1px solid #FF792A
+$button-ghost-border: 1px solid white
 $login-text-color: #FF792A
 $text-color-gray: #717477
 $input-background-color: #282F37
@@ -25,7 +25,6 @@ $drk-rain: #282F37
 $orange-gradient: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
 $reversed-orange-gradient: linear-gradient(90deg, $medium-orange 0%, $light-orange 100%)
 $text: #FAFBFF
-$orange-gradient: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
 
 $song-row-areas: "song-number like song-name artist-name album-name added duration settings"
 $song-row-columns: 32px 32px 6fr 4fr 4fr 3fr 2fr 32px
@@ -36,15 +35,16 @@ $song-row-columns: 32px 32px 6fr 4fr 4fr 3fr 2fr 32px
   font-family: 'Rubik','sans-serif'
 
   &::-webkit-scrollbar
-    width: 5px
-    opacity: 0.7
-    border-radius: 5px
+    width: 5px !important
+    height: 5px !important
+    opacity: 0.7 !important
 
   &::-webkit-scrollbar-track
-    background-color: transparent
+    background-color: $light-gray !important
 
   &::-webkit-scrollbar-thumb
     background-color: #FD6333 !important
+    border-radius: 4px !important
 
 
 body
@@ -88,32 +88,44 @@ h6
 .btn-full
   background: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
   border-radius: 50px
-  color: #fff
-
-.btn-full:hover
-  background: linear-gradient(90deg, darken($light-orange, 5%) 0%, darken($medium-orange, 5%) 100%)
-
-.btn-full:active
-  background: linear-gradient(90deg, darken($light-orange, 15%) 0%, darken($medium-orange, 15%) 100%)
-
-.btn-full:hover
-  background: linear-gradient(90deg, darken($light-orange, 5%) 0%, darken($medium-orange, 5%) 100%)
-
-.btn-full:active
-  background: linear-gradient(90deg, darken($light-orange, 8%) 0%, darken($medium-orange, 8%) 100%)
+  color: white
+  font-size: 16px
+  &:hover
+    background: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
+  &:active
+    background: linear-gradient(90deg, darken($light-orange, 10%) 0%, darken($medium-orange, 10%) 100%)
 
 
 .btn-ghost
-  border: $button-ghost-border
-  box-sizing: border-box
-  border-radius: 50px
+  font-size: 16px
+  border-radius: 50px !important
+  font-weight: $bold-weight !important
+    
 
 
 .input-dark
   background: $drk-rain
   border-radius: 50px
 
-
+.play-icon
+  background: $bg-gradient
+  opacity: 0
+  transition: opacity 0.4s ease
+  position: absolute
+  border: none
+  border-radius: 2px
+  padding: 5px
+  height: 28px
+  width: 28px
+  color: $text
+  display: flex
+  align-items: center
+  &:hover
+      cursor: pointer
+  i
+      margin: 0
+      height: auto
+      font-size: 15px
 card
   background-color: $drk-rain
   border-radius: 4px

@@ -1,0 +1,30 @@
+@import "../../../../styles"
+
+main
+    background: $drk-gray
+    width: 100%
+    height: 100vh
+    overflow-y: scroll
+
+.container
+    width: 100%
+    display: grid
+    grid-template-areas: "left-col form right-col"
+    grid-template-columns: 1fr 1fr 1fr
+    .form
+        grid-area: form
+
+%message
+    position: fixed
+    text-align: center
+    bottom: 0px
+    left: 0px
+    right: 0px
+    z-index: 1000
+    margin-bottom: 0px
+
+.ui.success.message
+    @extend %message
+
+.ui.warning.message
+    @extend %message

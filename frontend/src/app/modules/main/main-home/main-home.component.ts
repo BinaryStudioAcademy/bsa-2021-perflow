@@ -1,9 +1,10 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Playlist } from 'src/app/models/playlist';
+import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumView } from 'src/app/models/album/album-view';
 import { AlbumService } from 'src/app/services/album.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-main-home',
@@ -21,9 +22,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
   public newReleases: AlbumView[] = [];
-  public calmRhythms = new Array<object>();
+  public calmRhythms = new Array<Playlist>();
   public yourMix = new Array<object>();
-  public top100Songs = new Array<object>();
+  public top100Songs = new Array<Playlist>();
+
   private _unsubscribe$ = new Subject<void>();
 
   constructor(private _albumService: AlbumService) {
@@ -32,7 +34,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this._newestAlbums = this.getNewestFiveAlbums();
     this.recentlyPlayed = this.getRecentlyPlayed();
-    this.getNewReleases();
+    this.newReleases = this.getFakeNewReleases();
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
@@ -69,14 +71,44 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       );
   }
 
+  getFakeNewReleases = (): Array<AlbumView> => new Array<AlbumView>(15).fill(
+    {
+      id: 0,
+      name: 'Imaging Dragons',
+      description: '47.9 million users subscribed',
+      iconURL: '../../../../../assets/images/album1.png',
+      isSingle: true,
+      reactions: 0,
+      songs: []
+    }
+  );
+
   // User should be able to play Calm rhythms - the newest playlists which moderator creates
-  getCalmRhythms = (): Array<object> => new Array<object>();
+  getCalmRhythms = (): Array<Playlist> => new Array<Playlist>(15).fill(
+    {
+      id: 0,
+      createdAt: new Date(),
+      name: 'Fresh & Chill',
+      description: 'Ed Sheeran, Paloma Mami Maroon 5, SigalaPink, Oximer',
+      iconURL: '../../../../../assets/images/playlist1.png',
+      author: undefined
+    }
+  );
 
   // User should be able to play Your mix - take songs from all playlists plus liked songs and show in random order
   getYourMix = (): Array<object> => new Array<object>();
 
   // User should be able to play Top 100 songs - 100 song ordering by amount of likes by all users
-  getTop100Songs = (): Array<object> => new Array<object>();
+  getTop100Songs = (): Array<Playlist> => new Array<Playlist>(15).fill(
+    {
+      id: 0,
+      createdAt: new Date(),
+      name: 'Fresh & Chill',
+      description: 'Ed Sheeran, Paloma Mami Maroon 5, SigalaPink, Oximer',
+      iconURL: '../../../../../assets/images/playlist2.png',
+      author: undefined
+    }
+  );
 
   nextSlide = () => {
     this.accordionAnimation();

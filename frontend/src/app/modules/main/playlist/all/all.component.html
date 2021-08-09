@@ -1,0 +1,24 @@
+<div class="main-content">
+    <div class="saved-albums">
+        <div class="liked-songs-banner">
+            <div class="content-conteiner">
+                <h3>Liked Songs</h3>
+                <h5>256 songs</h5>
+            </div>
+        </div>
+        <app-circle-info-card *ngFor="let k of [].constructor(8); let i = index"
+        [name]="albums[i%3].name"
+        [description]="albums[i%3].description"
+        [iconUrl]="albums[i%3].iconURL"
+        >
+        </app-circle-info-card>
+    </div>
+    <div class="liked-playlists">
+        <app-square-info-card *ngFor="let k of [].constructor(30); let i = index"
+        [name]="playlists[i%3].name"
+        [description]="playlists[i%3].description"
+        [iconUrl]="playlists[i%3].iconURL"
+        >
+        </app-square-info-card>
+    </div>
+</div>

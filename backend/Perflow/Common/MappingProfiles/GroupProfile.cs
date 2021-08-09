@@ -9,6 +9,7 @@ namespace Perflow.Common.MappingProfiles
         public GroupProfile()
         {
             CreateMap<Group, GroupReadDTO>();
+            CreateMap<Group, GroupForAlbumDTO>();
         }
     }
 }
