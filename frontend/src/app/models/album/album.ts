@@ -1,7 +1,11 @@
-// TODO: Work on Playlist and Main. Base property for testing
+import { User } from '../user/user';
+
 export interface Album {
   id: number;
-  image: string;
   name: string;
-  songs: string[];
+  iconURL: string;
+  artist: User;
+  releaseYear: number;
+
+  // TODO: add fields
 }

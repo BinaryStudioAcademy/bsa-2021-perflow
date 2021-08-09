@@ -29,5 +29,18 @@ namespace Perflow.Services.Implementations
 
             return mapper.Map<IEnumerable<SongReadDTO>>(songs);
         }
+
+        public async Task<IEnumerable<SongReadDTO>> FindSongsByNameAsync(string searchTerm)
+        {
+            var songs = await context.Songs
+                .Where(song => song.Name.Contains(searchTerm.Trim()))
+                .Include(song => song.Artist)
+                .Include(song => song.Group)
+                .Include(song => song.Album)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+        }
     }
 }

@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
+import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 
 @Component({
   selector: 'app-album-card',
@@ -6,7 +9,12 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./album-card.component.sass']
 })
 export class AlbumCardComponent {
-  @Input() image! : string;
-  @Input() name! : string;
-  @Input() songs! : string[];
+  @Input()
+  album: AlbumForReadDTO;
+  @Output()
+  delete = new EventEmitter<AlbumForReadDTO>();
+
+  onDeleteClick(album: AlbumForReadDTO) {
+    this.delete.emit(album);
+  }
 }

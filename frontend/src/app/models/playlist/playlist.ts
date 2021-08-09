@@ -1,7 +1,14 @@
-// TODO: temp object for testing and presentation. Work on Playlist and Main
+import { AccessType } from './accessType';
+import { User } from '../user/user';
+import { Song } from '../song/song';
+
 export interface Playlist {
   id: number;
-  image: string;
+  createdAt: Date;
   name: string;
-  songs: string[];
+  description: string;
+  iconURL: string;
+  author: User;
+  accessType: AccessType;
+  songs: Song[]
 }

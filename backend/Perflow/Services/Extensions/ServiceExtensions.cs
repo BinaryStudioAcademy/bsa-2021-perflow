@@ -30,12 +30,18 @@ namespace Perflow.Services.Extensions
 
         public static void RegisterCustomServices(this IServiceCollection services)
         {
-            services.AddScoped<IService<PlaylistDTO>, PlaylistService>();
+            services.AddScoped<PlaylistService>();
 
             services.AddScoped<SongReactionService>();
 
+            services.AddScoped<ArtistReactionService>();
+
+            services.AddScoped<AlbumReactionService>();
+
             services.AddScoped<ISongsService, SongsService>();
             services.AddScoped<AlbumsService>();
+
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

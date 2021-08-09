@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter
+} from '@angular/core';
 import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type';
 
@@ -10,9 +12,15 @@ import { SongSortType } from '../../../models/song/song-sort-type';
 export class SongsListComponent {
   @Input() songs: Song[];
 
+  @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
+
   sortType: SongSortType | null = null;
 
   setSortType(sortType: SongSortType | null) {
     this.sortType = sortType;
   }
+
+  rowMenuClick = (data: { menuItem: string, song: Song }) => {
+    this.clickMenuItem.emit(data);
+  };
 }
