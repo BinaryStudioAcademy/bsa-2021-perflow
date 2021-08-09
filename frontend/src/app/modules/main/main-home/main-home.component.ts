@@ -1035,10 +1035,12 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     const element = document.getElementById(id);
     let scrollingSize: number = 0;
     if (id === 'album') {
-      scrollingSize = 239;
+      const move = 239 * 6;
+      scrollingSize = move;
     }
     if (id === 'playlist' || id === 'song' || id === 'repeat') {
-      scrollingSize = 256;
+      const move = 256 * 6;
+      scrollingSize = move;
     }
     element?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
   };
@@ -1047,10 +1049,12 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     const element = document.getElementById(id);
     let scrollingSize: number = 0;
     if (id === 'album') {
-      scrollingSize = 239;
+      const move = 239 * 6;
+      scrollingSize = move;
     }
     if (id === 'playlist' || id === 'song' || id === 'repeat') {
-      scrollingSize = 256;
+      const move = 256 * 6;
+      scrollingSize = move;
     }
     element?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
   };
