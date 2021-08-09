@@ -13,6 +13,8 @@ import { SortSongsPipe } from './pipes/sort-songs.pipe';
 import { SortOrderIconComponent } from './songs-list-header/sort-order-icon/sort-order-icon.component';
 import { SongsListHeaderComponent } from './songs-list-header/songs-list-header.component';
 import { SongsListComponent } from './songs-list/songs-list.component';
+import { AccessTypePipe } from './pipes/access-type.pipe';
+import { SongDurationPipe } from './pipes/song-duration.pipe';
 import { ItemsSumPipe } from './pipes/items-sum.pipe';
 import { AlbumDurationPipe } from './pipes/album-duration.pipe';
 
@@ -31,6 +33,8 @@ import { AlbumDurationPipe } from './pipes/album-duration.pipe';
     SortOrderIconComponent,
     SongsListHeaderComponent,
     SongsListComponent,
+    AccessTypePipe,
+    SongDurationPipe,
     ItemsSumPipe,
     AlbumDurationPipe
   ],
@@ -52,6 +56,8 @@ import { AlbumDurationPipe } from './pipes/album-duration.pipe';
     SortOrderIconComponent,
     SongsListHeaderComponent,
     SongsListComponent,
+    AccessTypePipe,
+    SongDurationPipe,
     ItemsSumPipe,
     AlbumDurationPipe
   ]

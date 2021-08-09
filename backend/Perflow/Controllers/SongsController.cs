@@ -25,5 +25,13 @@ namespace Perflow.Controllers
 
             return Ok(songs);
         }
+        
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetSongsByNameAsync([FromQuery] string searchTerm)
+        {
+            var songs = await _songsService.FindSongsByNameAsync(searchTerm);
+
+            return Ok(songs);
+        }
     }
 }

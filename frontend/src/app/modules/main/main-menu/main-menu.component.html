@@ -36,7 +36,7 @@
     <li *ngFor="let playlist of playlists">
       <span id="playlist">{{ playlist }}</span>
     </li>
-    <button class="ui button active" id="create-playlist" (click)="createPlaylist()">
+    <button class="ui button active" id="create-playlist" routerLink="/playlists/create"  (click)="createPlaylist()">
       <strong>Create Playlist</strong>
     </button>
   </div>
