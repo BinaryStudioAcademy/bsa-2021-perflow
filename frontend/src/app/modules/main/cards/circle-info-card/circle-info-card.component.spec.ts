@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TopSongsCardComponent } from './top-songs-card.component';
+import { CircleInfoCardComponent } from './circle-info-card.component';
 
-describe('TopSongsCardComponent', () => {
-  let component: TopSongsCardComponent;
-  let fixture: ComponentFixture<TopSongsCardComponent>;
+describe('CircleInfoCardComponent', () => {
+  let component: CircleInfoCardComponent;
+  let fixture: ComponentFixture<CircleInfoCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TopSongsCardComponent]
+      declarations: [CircleInfoCardComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TopSongsCardComponent);
+    fixture = TestBed.createComponent(CircleInfoCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

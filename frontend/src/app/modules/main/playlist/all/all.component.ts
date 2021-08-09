@@ -2,26 +2,39 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AlbumView } from 'src/app/models/album/album-view';
 import { Playlist } from 'src/app/models/playlist';
-import { HttpInternalService } from 'src/app/services/http-internal.service';
+import { AlbumService } from 'src/app/services/album.service';
+import { PlaylistService } from 'src/app/services/playlist-service.service';
 
 @Component({
-  selector: 'app-playlist',
-  templateUrl: './playlist.component.html',
-  styleUrls: ['./playlist.component.sass']
+  selector: 'app-all',
+  templateUrl: './all.component.html',
+  styleUrls: ['./all.component.sass']
 })
-export class PlaylistComponent {
+export class AllComponent {
   playlists: Playlist[] = [];
+  albums: AlbumView[] = [];
 
-  constructor(private _httpService: HttpInternalService) {
+  constructor(private _playlistService: PlaylistService,
+    private _albumService: AlbumService) {
     this.loadPlaylist();
+    this.loadAlbums();
   }
 
   loadPlaylist() {
-    this._httpService.getRequest<Playlist[]>('/api/playlists')
+    this._playlistService.getAllPlaylists()
       .pipe(catchError(this._handleError))
       .subscribe((ps) => {
         this.playlists = ps;
+      });
+  }
+
+  loadAlbums() {
+    this._albumService.getAllAlbums()
+      .pipe(catchError(this._handleError))
+      .subscribe((as) => {
+        this.albums = as;
       });
   }
 

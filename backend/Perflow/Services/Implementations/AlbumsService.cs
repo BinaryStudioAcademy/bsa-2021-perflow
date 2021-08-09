@@ -5,7 +5,6 @@ using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
-using Perflow.Services.Interfaces;
 using Shared.ExceptionsHandler.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -14,17 +13,17 @@ using System.Threading.Tasks;
 
 namespace Perflow.Services.Implementations
 {
-    public class AlbumsService : BaseService, IService<Album>
+    public class AlbumsService : BaseService
     {
         public AlbumsService(PerflowContext context, IMapper mapper)
     : base(context, mapper)
         { }
 
-        public async Task<ICollection<Album>> GetEntitiesAsync()
+        public async Task<ICollection<AlbumViewDTO>> GetAllAlbums()
         {
             var entities = await context.Albums.AsNoTracking().ToListAsync();
 
-            return mapper.Map<ICollection<Album>>(entities);
+            return mapper.Map<ICollection<AlbumViewDTO>>(entities);
         }
 
         public async Task<Album> GetEntityAsync(int id)
@@ -73,7 +72,9 @@ namespace Perflow.Services.Implementations
                                             .OrderByDescending(a => a.CreatedAt)
                                             .Select(a => new AlbumViewDTO
                                             {
+                                                Id = a.Id,
                                                 Name = a.Name,
+                                                Description = a.Description,
                                                 IconURL = a.IconURL,
                                                 IsSingle = a.IsSingle,
                                                 Reactions = a.Reactions.Count,
