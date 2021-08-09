@@ -41,16 +41,6 @@ namespace Perflow.Controllers
             return Ok(playlist);
         }
 
-        [HttpGet("liked/{userId}")]
-        public async Task<ActionResult<ICollection<PlaylistDTO>>> GetLikedPlaylistsByTheUser(int userId)
-        {
-            if (userId <= 0)
-                throw new ArgumentException("User ID cannot be less than or equal to zero");
-
-
-            return Ok(await _playlistService.GetLikedPlaylistsByTheUser(userId));
-        }
-
 
         [HttpPost]
         public async Task<ActionResult> PostAsync([FromBody] PlaylistDTO playlistDTO)

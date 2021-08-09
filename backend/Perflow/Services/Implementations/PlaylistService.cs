@@ -32,17 +32,6 @@ namespace Perflow.Services.Implementations
             return mapper.Map<PlaylistDTO>(entity);
         }
 
-        public async Task<IEnumerable<PlaylistDTO>> GetLikedPlaylistsByTheUser(int userId)
-        {
-            var likedPlaylists = await context.Playlists
-                                        .Include(playlist => playlist.Reactions
-                                                                     .Where(r => r.UserId == userId))
-                                        .Where(playlist => playlist.Reactions.Any())
-                                        .ToListAsync();
-            
-            return mapper.Map<IEnumerable<PlaylistDTO>>(likedPlaylists.ToList());
-        }
-
         public async Task<PlaylistDTO> AddEntityAsync(PlaylistDTO playlistDTO)
         {
             if (playlistDTO == null)

@@ -2,8 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Album } from 'src/app/models/album/album';
 import { Playlist } from 'src/app/models/playlist';
-import { PlaylistServiceService } from 'src/app/services/playlist-service.service';
+import { PlaylistService } from 'src/app/services/playlist-service.service';
 
 @Component({
   selector: 'app-all',
@@ -12,13 +13,14 @@ import { PlaylistServiceService } from 'src/app/services/playlist-service.servic
 })
 export class AllComponent {
   playlists: Playlist[] = [];
+  albums: Album[] = [];
 
-  constructor(private _service: PlaylistServiceService) {
+  constructor(private _playlistService: PlaylistService) {
     this.loadPlaylist();
   }
 
   loadPlaylist() {
-    this._service.getAllPlaylists()
+    this._playlistService.getAllPlaylists()
       .pipe(catchError(this._handleError))
       .subscribe((ps) => {
         this.playlists = ps;
