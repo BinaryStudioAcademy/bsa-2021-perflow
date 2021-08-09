@@ -65,7 +65,7 @@ export class ProfileEditFormComponent implements OnInit {
     this._router.navigate([route]);
   }
 
-  public onSubmit() {
+  onSubmit() {
     this.updatedUser.emit(this.user);
   }
 }

@@ -4,7 +4,7 @@ export interface Album {
   id: number;
   name: string;
   iconURL: string;
-  artist: User;
+  author: User;
   releaseYear: number;
 
   // TODO: add fields
