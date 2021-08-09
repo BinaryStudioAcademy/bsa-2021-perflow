@@ -4,7 +4,7 @@ using Perflow.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Playlists;
-
+using Perflow.Services.Implementations;
 
 namespace Perflow.Controllers
 {
@@ -12,9 +12,9 @@ namespace Perflow.Controllers
     [ApiController]
     public class PlaylistsController : ControllerBase
     {
-        private readonly IService<PlaylistDTO> _playlistService;
+        private readonly PlaylistService _playlistService;
 
-        public PlaylistsController(IService<PlaylistDTO> playlistService)
+        public PlaylistsController(PlaylistService playlistService)
         {
             _playlistService = playlistService;
         }
@@ -39,6 +39,16 @@ namespace Perflow.Controllers
                 return NotFound("There are no playlist with this Id");
 
             return Ok(playlist);
+        }
+
+        [HttpGet("liked/{userId}")]
+        public async Task<ActionResult<ICollection<PlaylistDTO>>> GetLikedPlaylistsByTheUser(int userId)
+        {
+            if (userId <= 0)
+                throw new ArgumentException("User ID cannot be less than or equal to zero");
+
+
+            return Ok(await _playlistService.GetLikedPlaylistsByTheUser(userId));
         }
 
 

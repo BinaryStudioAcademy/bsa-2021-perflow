@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Playlist } from 'src/app/models/playlist';
-import { HttpInternalService } from 'src/app/services/http-internal.service';
+import { PlaylistServiceService } from 'src/app/services/playlist-service.service';
 
 @Component({
   selector: 'app-all',
@@ -13,12 +13,12 @@ import { HttpInternalService } from 'src/app/services/http-internal.service';
 export class AllComponent {
   playlists: Playlist[] = [];
 
-  constructor(private _httpService: HttpInternalService) {
+  constructor(private _service: PlaylistServiceService) {
     this.loadPlaylist();
   }
 
   loadPlaylist() {
-    this._httpService.getRequest<Playlist[]>('/api/playlists')
+    this._service.getAllPlaylists()
       .pipe(catchError(this._handleError))
       .subscribe((ps) => {
         this.playlists = ps;

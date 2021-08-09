@@ -5,7 +5,6 @@ using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
-using Perflow.Services.Interfaces;
 using Shared.ExceptionsHandler.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Perflow.Services.Implementations
 {
-    public class AlbumsService : BaseService, IService<Album>
+    public class AlbumsService : BaseService
     {
         public AlbumsService(PerflowContext context, IMapper mapper)
     : base(context, mapper)

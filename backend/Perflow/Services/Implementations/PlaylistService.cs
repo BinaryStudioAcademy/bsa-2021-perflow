@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -7,11 +8,10 @@ using Perflow.Common.DTO.Playlists;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
-using Perflow.Services.Interfaces;
 
 namespace Perflow.Services.Implementations
 {
-    public class PlaylistService : BaseService, IService<PlaylistDTO>
+    public class PlaylistService : BaseService
     {
 
         public PlaylistService(PerflowContext context, IMapper mapper) : base(context, mapper)
@@ -30,6 +30,17 @@ namespace Perflow.Services.Implementations
             var entity = await context.Playlists.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
 
             return mapper.Map<PlaylistDTO>(entity);
+        }
+
+        public async Task<IEnumerable<PlaylistDTO>> GetLikedPlaylistsByTheUser(int userId)
+        {
+            var likedPlaylists = await context.Playlists
+                                        .Include(playlist => playlist.Reactions
+                                                                     .Where(r => r.UserId == userId))
+                                        .Where(playlist => playlist.Reactions.Any())
+                                        .ToListAsync();
+            
+            return mapper.Map<IEnumerable<PlaylistDTO>>(likedPlaylists.ToList());
         }
 
         public async Task<PlaylistDTO> AddEntityAsync(PlaylistDTO playlistDTO)
