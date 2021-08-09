@@ -5,7 +5,7 @@
     <img src="https://s3-alpha-sig.figma.com/img/5ba6/3340/8981907adb4cdc9c14be2ac429a30ff6?Expires=1628467200&Signature=F0KRMuqseJflr9PZvKCf6GeWuVkI9hxAeXrvKSVMPdGcHY98Sltas2~pAn~wNyFkRV3Inyn-qL1f5-k~HLx58EeYG75xZSwBIpWNZVOUp8vrB2jKl9ojIT557f7OPVQ0yYGx6vjTCGB8uPbaGp9DWR9JJVuzpuyR0kn~eRTmaO8cveSQDC9rDf-rizQ3JeupdUS-KBv-InGcQ5u7tQLjD1QsUFXLtLg7AB-ZNxPpy6xB9bZKK44HUOu8G6NZIpZOY6cLILsfKwGx-ULoGo8jubwtNrspmAf8N0Zi-JrQmuq1c0JeNdankoH8Mp0CR0b~N~7~voG7LGo16pKRTjJHMg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" />
     <div>
       <div class="text" id="profile-user-name">
-        <span>marc_dorwart</span>
+        <span>{{ userName }}</span>
         <i class="caret down icon"></i>
       </div>
       <div class="menu" id="profile-menu" [ngClass]="isProfileMenuShown ? 'active' : ''">
@@ -21,7 +21,7 @@
             Account Settings
           </span>
         </div>
-        <div class="item" routerLink="/" *ngIf="isRightRole()">
+        <div class="item" routerLink="/" *ngIf="isRightRole">
           <span>
             <i class="external alternate icon"></i>
             Studio
@@ -35,5 +35,5 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </h4>

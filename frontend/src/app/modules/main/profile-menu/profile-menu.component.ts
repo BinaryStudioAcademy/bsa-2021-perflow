@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
+import { filter } from 'rxjs/operators';
+import { UserRoles } from '../../../models/enums/user-roles.enum';
 
 @Component({
   selector: 'app-profile-menu',
@@ -7,11 +9,26 @@ import { AuthService } from '../../../services/auth/auth.service';
   styleUrls: ['./profile-menu.component.sass']
 })
 export class ProfileMenuComponent {
-  public isProfileMenuShown: boolean = false;
+  isProfileMenuShown: boolean = false;
+
+  userName: string = 'user';
+
+  // Determines if the menu item 'Perflow Studio' will be shown in Profile menu
+  // 'Perflow Studio' - available only for artists and moderators
+  isRightRole: boolean = false;
 
   constructor(
     private _authService: AuthService
-  ) {}
+  ) {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => state !== null))
+      .subscribe((authState) => {
+        this.userName = authState!.userName;
+
+        const { role } = authState!;
+        this.isRightRole = role === UserRoles.artist || role === UserRoles.moderator;
+      });
+  }
 
   logout() {
     this._authService.signOut();
@@ -24,8 +41,4 @@ export class ProfileMenuComponent {
   showProfileMenu = () => {
     this.isProfileMenuShown = !this.isProfileMenuShown;
   };
-
-  // Determines if the menu item 'Perflow Studio' will be shown in Profile menu
-  // 'Perflow Studio' - available only for artists and moderators
-  isRightRole = (): boolean => false;
 }
