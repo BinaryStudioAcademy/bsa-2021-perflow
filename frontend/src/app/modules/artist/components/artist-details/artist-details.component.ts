@@ -10,5 +10,4 @@ import { User } from 'src/app/models/user/user';
 export class ArtistDetailsComponent {
   artist: User = {} as User;
   albums: Album[] = [];
-
 }
