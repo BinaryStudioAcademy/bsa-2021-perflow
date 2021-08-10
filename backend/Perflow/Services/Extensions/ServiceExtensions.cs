@@ -2,11 +2,7 @@
 using Perflow.Services.Interfaces;
 using Perflow.Common.MappingProfiles;
 using System.Reflection;
-using Azure.Storage.Blobs;
-using Perflow.Common.DTO.Playlists;
 using Perflow.Services.Implementations;
-using Shared.AzureBlobStorage.Interfaces;
-using Shared.AzureBlobStorage.Services;
 
 namespace Perflow.Services.Extensions
 {
@@ -48,7 +44,7 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<ISongsService, SongsService>();
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUsersService, UsersService>();
 
             services.AddScoped<AlbumsService>();
         }
