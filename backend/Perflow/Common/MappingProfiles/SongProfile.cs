@@ -14,6 +14,9 @@ namespace Perflow.Common.MappingProfiles
                 .ForMember("Group", opt => opt.MapFrom(c => c.Group.Name));
 
             CreateMap<SongViewDTO, Song>();
+
+            CreateMap<SongWriteDTO, Song>();
+            CreateMap<Song, SongWriteDTO>();
         }
     }
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component, OnInit, Output, EventEmitter
+} from '@angular/core';
 import { Song } from '../../../models/song/song';
 import { SongsService } from '../../../services/songs/songs.service';
 
@@ -10,6 +12,9 @@ import { SongsService } from '../../../services/songs/songs.service';
 
 export class SongsComponent implements OnInit {
   songs: Song[] = [];
+
+  @Output()
+  tt = new EventEmitter();
 
   constructor(
     private _songService: SongsService

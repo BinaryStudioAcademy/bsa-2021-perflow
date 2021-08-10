@@ -28,13 +28,12 @@ const routes: Routes = [{
           children: [
             { path: '', component: PlaylistComponent },
             { path: 'create', component: CreateEditPlaylistComponent },
-            { path: 'edit/:id', component: CreateEditPlaylistComponent }
+            { path: 'edit/:id', component: CreateEditPlaylistComponent },
+            { path: 'artists', component: ArtistListComponent },
+            { path: 'albums', component: AlbumListComponent }
           ]
         },
         { path: 'songs', component: SongsComponent },
-        { path: 'playlists/artists', component: ArtistListComponent },
-        { path: 'playlists/albums', component: AlbumListComponent },
-
         {
           path: 'albums',
           loadChildren: () => import('../album/album.module').then((m) => m.AlbumModule)
@@ -47,4 +46,6 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MainRoutingModule { }
+export class MainRoutingModule {
+
+}

@@ -17,10 +17,9 @@ import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
 import { ArtistCardComponent } from './cards/artist-card/artist-card.component';
+import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
-import { AlbumListComponent } from './playlist/album-list/album-list.component';
-import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { UserModule } from '../user/user.module';
 import {
   CreateEditPlaylistComponent
@@ -28,6 +27,7 @@ import {
 import {
   EditPlaylistModalComponent
 } from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
+import { AlbumListComponent } from './playlist/album-list/album-list.component';
 
 @NgModule({
   declarations: [
@@ -45,11 +45,11 @@ import {
     ArtistListComponent,
     ArtistCardComponent,
     MainMenuProfileComponent,
-    AlbumListComponent,
-    AlbumCardComponent,
     YourMixCardComponent,
     CreateEditPlaylistComponent,
-    EditPlaylistModalComponent
+    EditPlaylistModalComponent,
+    AlbumCardComponent,
+    AlbumListComponent
   ],
   imports: [
     CommonModule,
@@ -62,4 +62,6 @@ import {
   ],
   exports: [ProfileMenuComponent]
 })
-export class MainModule { }
+export class MainModule {
+
+}
