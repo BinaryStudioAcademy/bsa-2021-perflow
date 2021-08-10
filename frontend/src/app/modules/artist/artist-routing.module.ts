@@ -5,7 +5,7 @@ import { ArtistDetailsComponent } from './components/artist-details/artist-detai
 const routes: Routes = [{
   path: ':id',
   component: ArtistDetailsComponent
-}]
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
