@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
 using Perflow.Studio.Business.Songs.DTOs;
-using Perflow.Studio.Common.Interfaces;
-using Perflow.Studio.Common.Interfaces.Repositories;
 using Perflow.Studio.Domain.Entities;
+using Perflow.Studio.Services.Interfaces;
+using Perflow.Studio.Services.Interfaces.Repositories;
 
 namespace Perflow.Studio.DataAccess.Repositories
 {

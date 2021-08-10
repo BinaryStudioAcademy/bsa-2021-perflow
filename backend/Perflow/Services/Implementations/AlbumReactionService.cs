@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Reactions;
+using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
@@ -21,13 +22,35 @@ namespace Perflow.Services.Implementations
 
         public async Task<ICollection<AlbumForListDTO>> GetAlbumsByUserId(int userId)
         {
-            var albums = context.AlbumReactions
+            var albums = await context.AlbumReactions
                 .Include(ar => ar.Album)
                 .ThenInclude(al => al.Author)
                 .Where(r => r.UserId == userId)
-                .Select(albumReaction => albumReaction.Album);
+                .Select(albumReaction => albumReaction.Album)
+                .ToListAsync();
 
             return mapper.Map<ICollection<AlbumForListDTO>>(albums);
+        }
+
+        public async Task<IEnumerable<AlbumViewDTO>> GetLikedAlbumsByTheUser(int userId)
+        {
+            var likedPlaylists = await context.Albums
+                .Include(album => album.Reactions
+                    .Where(r => r.UserId == userId))
+                .Where(album => album.Reactions.Any())
+                .Select(a => new AlbumViewDTO
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    IconURL = a.IconURL,
+                    IsSingle = a.IsSingle,
+                    Reactions = a.Reactions.Count,
+                    Songs = mapper.Map<ICollection<SongViewDTO>>(a.Songs)
+                })
+                .ToListAsync();
+
+            return likedPlaylists;
         }
 
         public async Task AddAlbumReaction(NewAlbumReactionDTO reaction)

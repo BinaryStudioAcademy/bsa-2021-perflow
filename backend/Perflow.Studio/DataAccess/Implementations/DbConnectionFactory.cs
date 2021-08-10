@@ -1,7 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Perflow.Studio.Common.Interfaces;
+using Perflow.Studio.Services.Interfaces;
 
 namespace Perflow.Studio.DataAccess.Implementations
 {
