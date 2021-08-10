@@ -15,8 +15,7 @@ namespace Perflow.Services.Implementations
 {
     public class AlbumsService : BaseService
     {
-        public AlbumsService(PerflowContext context, IMapper mapper)
-    : base(context, mapper)
+        public AlbumsService(PerflowContext context, IMapper mapper) : base(context, mapper)
         { }
 
         public async Task<ICollection<AlbumViewDTO>> GetAllAlbums()
@@ -66,22 +65,22 @@ namespace Perflow.Services.Implementations
         {
             var firstDay = DateTime.Today.AddDays(-30);
             var entities = await context.Albums
-                                            .Include(a => a.Songs).ThenInclude(s => s.Artist)
-                                            .Include(a => a.Songs).ThenInclude(s => s.Group)
-                                            .AsNoTracking()
-                                            .Where(a => a.CreatedAt >= firstDay && a.IsPublished)
-                                            .OrderByDescending(a => a.CreatedAt)
-                                            .Select(a => new AlbumViewDTO
-                                            {
-                                                Id = a.Id,
-                                                Name = a.Name,
-                                                Description = a.Description,
-                                                IconURL = a.IconURL,
-                                                IsSingle = a.IsSingle,
-                                                Reactions = a.Reactions.Count,
-                                                Songs = mapper.Map<ICollection<SongViewDTO>>(a.Songs.Take(10))
-                                            })
-                                            .ToListAsync();
+                .Include(a => a.Songs).ThenInclude(s => s.Artist)
+                .Include(a => a.Songs).ThenInclude(s => s.Group)
+                .AsNoTracking()
+                .Where(a => a.CreatedAt >= firstDay && a.IsPublished)
+                .OrderByDescending(a => a.CreatedAt)
+                .Select(a => new AlbumViewDTO
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    IconURL = a.IconURL,
+                    IsSingle = a.IsSingle,
+                    Reactions = a.Reactions.Count,
+                    Songs = mapper.Map<ICollection<SongViewDTO>>(a.Songs)
+                })
+                .ToListAsync();
             return entities;
         }
 
