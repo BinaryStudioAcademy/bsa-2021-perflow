@@ -69,23 +69,46 @@ main
     top: 38px
     width: 70%    
     height: 245px
-    overflow: hidden 
+    overflow: visible 
     display: grid
     grid-template-columns: 245px auto
     grid-template-row: 100%
     gap: 0px 0px
-    .user-avatar
-        left: 428px
-        top: 104px
-        object-fit: cover
-        background: #C4C4C4
-        @media (max-width: 800px)
-            display: none   
-    img  
+    @media (max-width: 1300px)
+        left: 150px
+    @media (max-width: 1200px)
+        width: 750px
+    @media (max-width: 1050px)
+        transform: scale(0.9)
+        left: 100px
+    @media (max-width: 1000px)
+        left: 80px
+    @media (max-width: 900px)
+        left: 50px   
+    @media (max-width: 800px)
+        grid-template-columns: 100% 
+        width: 600px
+    @media (max-width: 600px)
+        left: 30px 
+        width: 500px  
+    @media (max-width: 500px)
+        left: 0px 
+        width: 400px     
+    @media (max-width: 500px)
+        transform: scale(0.9)  
+    @media (max-width: 400px)
+        transform: scale(0.8)  
+    .user-avatar  
+        grid-column: 1
+        grid-row: 1
         width: 245px
         height: 245px
         border-radius: 50%
+        object-fit: cover
+        background: #C4C4C4
         box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
+        @media (max-width: 800px)
+            display: none 
     .dropdown-content
         display: block
         top: -70px
