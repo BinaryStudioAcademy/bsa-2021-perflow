@@ -7,5 +7,5 @@ export interface AlbumView {
   description: string,
   isSingle: boolean,
   reactions: number,
-  songs: Array<SongView>
+  authors: Array<string>
 }

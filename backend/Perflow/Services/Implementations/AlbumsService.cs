@@ -77,7 +77,7 @@ namespace Perflow.Services.Implementations
                     IconURL = a.IconURL,
                     IsSingle = a.IsSingle,
                     Reactions = a.Reactions.Count,
-                    Songs = mapper.Map<ICollection<SongViewDTO>>(a.Songs)
+                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? s.Artist.UserName : s.Group.Name).ToList()
                 })
                 .ToListAsync();
             return entities;
