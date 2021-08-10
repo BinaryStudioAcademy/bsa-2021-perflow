@@ -12,7 +12,7 @@ import { UserChangePassword } from 'src/app/models/user/user-change-password';
   styleUrls: ['./update-password-form.component.sass']
 })
 export class UpdatePasswordFormComponent implements OnInit {
-  public userChangePassword: UserChangePassword;
+  userChangePassword: UserChangePassword;
   newPasswordConfirmation: string = '';
 
   @Input()
@@ -31,7 +31,7 @@ export class UpdatePasswordFormComponent implements OnInit {
     this._router.navigate([route]);
   }
 
-  public onSubmit(form: NgForm) {
+  onSubmit(form: NgForm) {
     this.updatedUserPassword.emit(this.userChangePassword);
     form.reset();
   }
