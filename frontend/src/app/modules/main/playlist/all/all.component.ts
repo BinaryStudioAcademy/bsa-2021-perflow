@@ -4,8 +4,7 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AlbumView } from 'src/app/models/album/album-view';
 import { Playlist } from 'src/app/models/playlist';
-import { AlbumService } from 'src/app/services/album.service';
-import { PlaylistService } from 'src/app/services/playlist-service.service';
+import { ReactionService } from 'src/app/services/reaction.service';
 
 @Component({
   selector: 'app-all',
@@ -15,15 +14,15 @@ import { PlaylistService } from 'src/app/services/playlist-service.service';
 export class AllComponent {
   playlists: Playlist[] = [];
   albums: AlbumView[] = [];
+  userId: number = 1;
 
-  constructor(private _playlistService: PlaylistService,
-    private _albumService: AlbumService) {
+  constructor(private _reactionService: ReactionService) {
     this.loadPlaylist();
     this.loadAlbums();
   }
 
   loadPlaylist() {
-    this._playlistService.getAllPlaylists()
+    this._reactionService.getLikedPlaylistsByTheUser(this.userId)
       .pipe(catchError(this._handleError))
       .subscribe((ps) => {
         this.playlists = ps;
@@ -31,7 +30,7 @@ export class AllComponent {
   }
 
   loadAlbums() {
-    this._albumService.getAllAlbums()
+    this._reactionService.getLikedAlbumssByTheUser(this.userId)
       .pipe(catchError(this._handleError))
       .subscribe((as) => {
         this.albums = as;

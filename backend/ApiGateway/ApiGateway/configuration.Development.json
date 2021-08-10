@@ -40,6 +40,32 @@
       "UpstreamPathTemplate": "/api/Albums/new-releases",
       "UpstreamHttpMethod": [ "GET" ]
     },
+    {
+      "DownstreamPathTemplate": "/api/AlbumReaction/liked/{userId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/AlbumReaction/liked/{userId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/PlaylistReaction/liked/{userId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/PlaylistReaction/liked/{userId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
     //perflow.studio
     {
       "DownstreamPathTemplate": "/api/songs",
