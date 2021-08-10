@@ -19,17 +19,23 @@ const routes: Routes = [{
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard],
   children: [
-    { path: '', component: MainHomeComponent },
+    { path: 'main', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
     {
       path: 'playlists',
       children: [
-        { path: '', component: PlaylistComponent },
+        {
+          path: '',
+          component: PlaylistComponent,
+          children: [
+            { path: '', component: AllComponent },
+            { path: 'artists', component: ArtistListComponent },
+            { path: 'albums', component: AlbumListComponent },
+            { path: 'all', component: AllComponent }
+          ]
+        },
         { path: 'create', component: CreateEditPlaylistComponent },
-        { path: 'edit/:id', component: CreateEditPlaylistComponent },
-        { path: 'artists', component: ArtistListComponent },
-        { path: 'albums', component: AlbumListComponent },
-        { path: 'all', component: AllComponent }
+        { path: 'edit/:id', component: CreateEditPlaylistComponent }
       ]
     },
     { path: 'songs', component: SongsComponent },

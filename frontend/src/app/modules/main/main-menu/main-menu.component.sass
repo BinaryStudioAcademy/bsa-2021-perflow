@@ -1,76 +1,77 @@
-@import "src/styles.sass"
-    
-.ui.visible.sidebar.inverted.vertical.menu
+@import "../../../../styles.sass"
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap')
+
+.ui.visible.sidebar.vertical.menu
     width: 247px
-    height: 100vh
     padding-left: 40px
-    background: #21292D
+    background: $drk-gray
+    border-right: 1.5px solid #373C43
+    &::-webkit-scrollbar
+        width: 0px
+        height: 0px
 
-.pusher
-    margin-left: 247px
+.container
+    height: 100vh
+    width: auto
+    background: $drk-gray
 
-#logo
+.logo
+    margin-top: 25px
     padding: 0
-    position: absolute
-    display: flex
-    width: 100px
-    top: 1.86%
 
 .ui.logo.icon.image
-    font-size: 22px
+    font-size: 20px
     color: #CDCDCD
     opacity: 50%
 
-#name-logo
-    padding-left: 4px
-    font-family: Montserrat
+.name-logo
+    padding-left: 5px
+    font-family: "Montserrat", sans-serif
     font-style: normal
-    font-weight: 500
-    font-size: 15.6024px
-    line-height: 19px
+    font-weight: $medium-weight
     letter-spacing: 0.01em
-    color: #CDCDCD
 
-#name-route
-    padding-left: 17.5px
-    font-size: 18px
-    color: #FAFBFF
+.name-route
+    padding-left: 20px
+    color: $text
 
-#routers
-    position: relative
-    top: 125px
+.routers
+    margin-top: 50px
     width: max-content
     border-bottom: 1.5px solid #373C43
 
-#routers > div
-    margin-bottom: 41px
+.routers > div
+    margin-bottom: 40px
 
-#playlists-menu
-    position: relative
-    top: 100px
+.playlists-menu
     width: max-content
     margin-top: 40px
-    color: #FFFFFF
+    color: $text
 
-ul
-    list-style: none
-    li
-        display: flex
-        align-items: center
-        margin-top: 20px
-        font-weight: $light-weight
-        &::before
-            content:"•"
-            color: #FD5D34
-            font-size: 35px
-            margin-right: 15px
-        
+li
+    line-height: 1.5
+    margin-top: 20px
+    color: $medium-orange
 
-.create-playlist
+li > span
+    color: $text
+
+.btn-create-playlist
     margin-top: 25px
+    padding: 10px 20px
+    width: 160px
+    height: 40px
+    background: $fire-orange
+    border-radius: 50px
+    color: $text
+    &:hover
+        cursor: pointer
+        color: #000
+    &:active
+        border: 3px solid $medium-orange
 
 i
-    color: #FFFFFF
+    color: $text
 
 a
     display: flex
@@ -78,32 +79,26 @@ a
     flex-direction: row
     align-items: center
 
-#title
-    font-style: normal
-    font-weight: 500
-    font-size: 16px
-    line-height: 19px
+.playlist
+    font-weight: $light-weight
 
-#circle
-    background-color: darkcyan
-    width: 28px
-    height: 28px
+.circle-fire
+    width: 30px
+    height: 30px
     border-radius: 100%
     position: relative
     transition: .3s
-    background: #21292D
+    background: $drk-gray
+    i
+        position: absolute
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        font-size: 16px
+        transition: .3s
 
-#icon
-    position: absolute
-    left: 50%
-    top: 50%
-    transform: translate(-50%, -50%)
-    font-size: 16px
-    transition: .3s
+.active-link > .circle-fire
+    background: $fire-orange
 
-a:hover
-    #name-route
-        color: #fe6c2f
-    #circle
-        background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-        cursor: pointer
+.active-link > .name-route
+    color: $medium-orange
