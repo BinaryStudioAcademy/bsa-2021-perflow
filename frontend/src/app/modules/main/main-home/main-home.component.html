@@ -12,23 +12,24 @@
 
     <!-- Accordion Information -->
     <div class="accordion-information">
-      <img class="album-icon" alt="Album" src="https://s3-alpha-sig.figma.com/img/d75c/1009/f21231d6f5d9480e4025fca6081aa434?Expires=1628467200&Signature=OTjTRmC-15s41yTDgmE8aKF5q6CnBmJAo55dQRIG7K0XOj8A9L3ENDn6dN4EmFOukNiA7DkyXDUXbf3bAjngVFLV7yUgxTssDto6jzNDJGShiDViBnpZAvV6BSpHRuQYIkGj4vTtKJZLeNtDQXQgnMrNLLz8LA1m1XHxLhvug7dLrmXAO2hxHhJk4PUqXplBNEnxyPSZjs-sY44I--97FKwspfh1eyjIlEIdj9eowU4WNh52N-mrnShdCdKJpbaIzE5-mJkpug91XKth-IWB5iHnotKb88bARs1rCFiMaZlp5-Xxi6jpJdOeYIriyilk9~obp6ItPZK-3t2OxS7tag__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
-        <div class="album-info">
-          <p class="type">Album</p>
-          <p class="album-title">Perfect Morning</p>
-          <p class="album-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores facilis deleniti quidem atque obcaecati eaque quod tenetur odit laborum ex explicabo iste placeat, repellendus aliquid alias voluptatibus, quos incidunt? Quos.</p>
+      <img class="album-icon" alt="Album" src="../../../../assets/images/Sunset.jpg">
+      <div class="album-info">
+        <p class="type">Album</p>
+        <p class="album-title">Perfect Morning</p>
+        <p class="album-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores facilis deleniti quidem atque obcaecati eaque quod tenetur odit laborum ex explicabo iste placeat, repellendus aliquid alias voluptatibus, quos incidunt? Quos.</p>
+      
         <div class="buttons">
-          <button class="button-play">Play</button>
-          <button class="button-save">Save</button>
+        <button class="ui btn-full button button-play">Play</button> 
+        <button class="ui inverted basic button btn-ghost button-save">Save</button>
         </div>
       </div>
     </div>
   </div>
 
 
-  <div class="ui grid">
+  <div class="main-content">
     <!-- Recently played -->
-    <div class="ui sixteen column row recently-played">
+    <div class="recently-played">
       <div class="header">Recently played</div>
       <div class="ui grid recently-played-cont">
         <!-- Demonstration cards (delete them) -->
@@ -47,52 +48,43 @@
 
 
     <!-- New Releases -->
-    <div class="ui sixteen column row new-releases">
-      <div class="header">New Releases</div>
-      <div  id="newReleases" class="new-releases-cont">
-        <!-- Work component -->
-        <app-new-releases-card *ngFor="let card of newReleases" [card]="card"></app-new-releases-card>
-      </div>
-      <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('newReleases')">
-        <i class="chevron right icon"></i>
-        </button>
-      </div>
-    </div>
-
-
-        <!-- Calm rhythms -->
-    <div class="sixteen column row calm-rhythms">
-      <div class="header">Calm rhythms</div>
-      <div id="calmRhythms" class="calm-rhythms-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>  
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>  
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <app-calm-rhythms-card></app-calm-rhythms-card>
-        <!-- Work component -->
-        <app-calm-rhythms-card *ngFor="let card of calmRhythms"></app-calm-rhythms-card>
-      </div>
-      <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('calmRhythms')">
+    <div class="items-scroll-box calmRhythms">
+      <div class="header">New releases</div>
+      <div class="list-of-items">
+        <div id="newReleases" class="items">
+          <app-circle-info-card *ngFor="let album of newReleases"
+          [name]="album.name"
+          [description]="album.description"
+          [iconUrl]="album.iconURL"
+          >
+          </app-circle-info-card>
+        </div>
+        <div class="scroll-button" (click)="scroll('newReleases')">
           <i class="chevron right icon"></i>
-        </button>
+        </div>
       </div>
     </div>
 
+    <!-- Calm rhythms -->
+    <div class="items-scroll-box calmRhythms">
+      <div class="header">Calm rhythms</div>
+      <div class="list-of-items">
+        <div id="calmRhythms" class="items">
+          <app-square-info-card *ngFor="let playlist of calmRhythms"
+          [name]="playlist.name"
+          [description]="playlist.description"
+          [iconUrl]="playlist.iconURL"
+          >
+          </app-square-info-card>
+        </div>
+        <div class="scroll-button" (click)="scroll('calmRhythms')">
+          <i class="chevron right icon"></i>
+        </div>
+      </div>
+    </div>
 
     <!-- Your mix -->
-    <div class="sixteen column row your-mix">
+    <div class="your-mix">
       <div class="header">Your mix</div>
       <div id="yourMix"  class="ui grid your-mix-cont">
         <!-- Demonstration cards (delete them) -->
@@ -109,34 +101,20 @@
 
 
     <!-- Top 100 songs -->
-    <div class="sixteen column row calm-rhythms">
-      <div class="header">Top 100 songs</div>
-      <div id="top100Songs" class="calm-rhythms-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <app-top-songs-card></app-top-songs-card>
-        <!-- Work component -->
-        <app-top-songs-card *ngFor="let card of top100Songs"></app-top-songs-card>
-      </div>
-      <div class="scroll-box">
-        <button class="scroll-button" (click)="scroll('top100Songs')">
+    <div class="items-scroll-box calmRhythms">
+      <div class="header">Calm rhythms</div>
+      <div class="list-of-items">
+        <div id="top100Songs" class="items">
+          <app-square-info-card *ngFor="let song of top100Songs"
+          [name]="song.name"
+          [description]="song.description"
+          [iconUrl]="song.iconURL"
+          >
+          </app-square-info-card>
+        </div>
+        <div class="scroll-button" (click)="scroll('top100Songs')">
           <i class="chevron right icon"></i>
-        </button>
+        </div>
       </div>
     </div>
   </div>

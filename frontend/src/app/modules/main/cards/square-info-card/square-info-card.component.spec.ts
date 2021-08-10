@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CalmRhythmsCardComponent } from './calm-rhythms-card.component';
+import { SquareInfoCardComponent } from './square-info-card.component';
 
-describe('CalmRhythmsCardComponent', () => {
-  let component: CalmRhythmsCardComponent;
-  let fixture: ComponentFixture<CalmRhythmsCardComponent>;
+describe('SquareInfoCardComponent', () => {
+  let component: SquareInfoCardComponent;
+  let fixture: ComponentFixture<SquareInfoCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CalmRhythmsCardComponent]
+      declarations: [SquareInfoCardComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CalmRhythmsCardComponent);
+    fixture = TestBed.createComponent(SquareInfoCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

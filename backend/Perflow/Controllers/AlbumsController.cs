@@ -18,6 +18,12 @@ namespace Perflow.Controllers
             _albumsService = albumsService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<AlbumViewDTO>> GetAllAlbums()
+        {
+            return Ok(await _albumsService.GetAllAlbums());
+        }
+
         [HttpGet("new-releases")]
         public async Task<ActionResult<ICollection<Album>>> Get()
         {
