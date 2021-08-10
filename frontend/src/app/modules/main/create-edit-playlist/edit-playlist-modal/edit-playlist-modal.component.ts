@@ -36,7 +36,7 @@ export class EditPlaylistModalComponent implements OnInit {
   loadIcon = (event: Event) => {
     const [file] = Array.from((event.target as HTMLInputElement).files as FileList);
 
-    const pattern = /\S*.jpg$|\S*.png$|\S*.jpeg$/i;
+    const pattern = /.*(.jpg$|.png$|.jpeg$)/i;
     if (pattern.test(file.name)) {
       this.file = file;
       const reader = new FileReader();
