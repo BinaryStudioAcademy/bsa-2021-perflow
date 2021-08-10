@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Users;
 using Perflow.Domain;
+using System.Collections.Generic;
 
 namespace Perflow.Common.MappingProfiles
 {
@@ -10,9 +12,13 @@ namespace Perflow.Common.MappingProfiles
         {
             CreateMap<User, UserReadDTO>();
             CreateMap<User, ArtistReadDTO>();
-            CreateMap <User, ArtistForAlbumDTO>();
+            CreateMap<User, ArtistForAlbumDTO>();
 
             CreateMap<UserReadDTO, User>();
+
+            CreateMap<User, ArtistDTO>()
+                .AfterMap((src, dest, context) => dest.Albums = context.Mapper
+                                                                       .Map<ICollection<Album>, ICollection<AlbumForArtistDTO>>(src.Albums));
         }
     }
 }
