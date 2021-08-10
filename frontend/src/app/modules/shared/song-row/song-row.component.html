@@ -12,7 +12,7 @@
             {{song.name}}
         </div>
         <div class="column artist-name text">
-            {{song.artist.userName}}
+            <a class="link" [routerLink]="['/artists', song.artist.id]">{{song.artist.userName}}</a>
         </div>
         <div class="column album-name text">
             <a class="link" [routerLink]="['/albums', song.album.id]">{{song.album.name}}</a>

@@ -1,1 +1,36 @@
-<p>artist-details works!</p>
+<main>
+    <div class="artist">
+        <div class="artist-details">
+            <div class="artist-image">
+                <img class="image" alt="Artist" [src]="artist.iconURL">
+            </div>
+            <div class="artist-info">
+                <p class="artist-title">
+                    {{artist.userName}}
+                </p>
+                <div class="artist-description">
+                    {{artist.description}}
+                </div>
+                <div class="buttons">
+                    <button class="btn-full button-play">Play</button>
+                    <div class="action-icon">
+                        <i class="heart outline icon icons"></i>
+                    </div>
+                    <div class="action-icon">
+                        <div class="ui floating dropdown icon" appSmDropdown>
+                            <i class="ellipsis vertical icon icons"></i>
+                            <div class="right menu">
+                                <div class="item first">
+                                    <i class="bell icon"></i>Subscribe
+                                </div>
+                                <div class="item last">
+                                    <i class="share alternate icon"></i>Share
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
