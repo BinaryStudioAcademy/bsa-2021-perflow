@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AlbumView } from '../models/album/album-view';
 import { AlbumForReadDTO } from '../models/album/albumForReadDTO';
 import { Playlist } from '../models/playlist';
 import { ArtistReadDTO } from '../models/user/ArtistReadDTO';
@@ -65,10 +66,10 @@ export class ReactionService {
   }
 
   getLikedPlaylistsByTheUser(userId: number) {
-    return this.httpService.getRequest<Playlist[]>(`api/PlaylistReaction/liked/${userId}`);
+    return this.httpService.getRequest<Playlist[]>(`/api/PlaylistReaction/liked/${userId}`);
   }
 
   getLikedAlbumssByTheUser(userId: number) {
-    return this.httpService.getRequest<Playlist[]>(`api/AlbumReaction/liked/${userId}`);
+    return this.httpService.getRequest<AlbumView[]>(`/api/AlbumReaction/liked/${userId}`);
   }
 }
