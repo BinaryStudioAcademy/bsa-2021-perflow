@@ -14,6 +14,7 @@ using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
 using Shared.AzureBlobStorage.Interfaces;
 using Shared.AzureBlobStorage.Models;
+using Shared.AzureBlobStorage.Helpers;
 
 namespace Perflow.Services.Implementations
 {
@@ -57,12 +58,11 @@ namespace Perflow.Services.Implementations
         public async Task<SongReadDTO> FindSongsByIdAsync(int id)
         {
             var songs = await context.Songs
-                .Where(song => song.Id == id)
                 .Include(song => song.Artist)
                 .Include(song => song.Group)
                 .Include(song => song.Album)
                 .AsNoTracking()
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(song => song.Id == id);
 
             return mapper.Map<SongReadDTO>(songs);
         }
@@ -90,14 +90,6 @@ namespace Perflow.Services.Implementations
             if (songInfo == null)
                 throw new ArgumentNullException(nameof(songInfo), "Argument cannot be null");
 
-            var songs = context.Songs.Where(x =>
-                x.Id == songInfo.Id);
-
-            if (songs.Any())
-            {
-                throw new ArgumentException("Song already exists");
-            }
-
             await context.Songs.AddAsync(mapper.Map<Song>(songInfo));
 
             await context.SaveChangesAsync();
@@ -109,14 +101,8 @@ namespace Perflow.Services.Implementations
         public async Task<FileContentResult> GetSongFileAsync(int id)
         {
             var blob = await _blobService.DownloadFileBlobAsync("songs", id);
-            byte[] file;
+            var file = await FileTransformer.BlobToByteArrayAsync(blob);
 
-            await using (MemoryStream ms = new MemoryStream())
-            {
-                await blob.Content.CopyToAsync(ms);
-                file = ms.ToArray();
-            }
-                
             return new FileContentResult(file, blob.ContentType);
         }
 
