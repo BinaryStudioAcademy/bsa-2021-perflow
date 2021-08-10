@@ -9,7 +9,7 @@ import { Album } from 'src/app/models/album/album';
 })
 export class AlbumCardComponent {
   @Input()
-  album: Album;
+  album: Album = {} as Album;
 
   constructor(private _router: Router) { }
 

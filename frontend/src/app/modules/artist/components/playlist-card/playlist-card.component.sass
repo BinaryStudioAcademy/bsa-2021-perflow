@@ -1,0 +1,40 @@
+@import "../../../../../styles"
+
+.card
+    padding: 16px
+    border-radius: 4px
+    background: $light-gray
+    color: $text
+    box-shadow: none
+    width: 200px
+    height: 100%
+    position: relative
+    .image
+        width: 100%
+        border-radius: 3px !important
+        margin-bottom: 15px
+    .play-icon
+        top: 28px
+        right: 28px
+    img
+        height: 100%
+        width: 100%
+    &:hover
+        .play-icon
+                opacity: 1
+    .content
+        min-height: 64px
+        .card-name, .card-desc
+            text-overflow: ellipsis
+            white-space: nowrap
+            overflow: hidden
+        .card-name  
+            font-weight: $medium-weight
+        .card-desc
+            margin-top: 5px
+            font-weight: $light-weight
+            text-align: left
+            white-space: normal
+            display: -webkit-box
+            -webkit-line-clamp: 2 
+            -webkit-box-orient: vertical

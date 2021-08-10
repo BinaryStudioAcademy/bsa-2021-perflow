@@ -23,7 +23,7 @@ namespace Perflow.Common.MappingProfiles
                 .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupForAlbumDTO>(src.Group));
 
             CreateMap<Album, AlbumForArtistDTO>()
-                .AfterMap((src, dest, context) => dest.Artist = context.Mapper.Map<User, ArtistForAlbumDTO>(src.Author))
+                .AfterMap((src, dest, context) => dest.Author = context.Mapper.Map<User, ArtistForAlbumDTO>(src.Author))
                 .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupForAlbumDTO>(src.Group));
         }
     }

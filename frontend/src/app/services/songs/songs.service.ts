@@ -19,4 +19,9 @@ export class SongsService {
     const httpParams = { searchTerm: `${searchTerm}` };
     return this._httpService.getRequest<Song[]>('/api/songs/search', httpParams);
   };
+
+  getTopSongsByAuthorId(id: number, count: number) {
+    const httpParams = { count };
+    return this._httpService.getRequest<Song[]>(`/api/songs/topSongs/${id}`, httpParams);
+  }
 }
