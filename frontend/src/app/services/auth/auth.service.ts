@@ -57,7 +57,7 @@ export class AuthService {
     return this._fireAuth.idToken;
   }
 
-  async registerWithEmail({ registerData }: RegisterWithEmailParams) {
+  async registerWithEmail({ registerData, redirect }: RegisterWithEmailParams) {
     const response = await this._httpService.postFullRequest(
       '/api/auth/register', registerData
     ).toPromise();
@@ -70,6 +70,10 @@ export class AuthService {
       email: registerData.email,
       password: registerData.password
     });
+
+    if (redirect !== undefined) {
+      this._redirectAfterAuthUpdate(redirect);
+    }
   }
 
   async signInWithEmail({
