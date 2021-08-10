@@ -6,6 +6,8 @@ import { AlbumView } from 'src/app/models/album/album-view';
 import { Playlist } from 'src/app/models/playlist';
 import { ReactionService } from 'src/app/services/reaction.service';
 
+/* eslint-disable no-console */
+
 @Component({
   selector: 'app-all',
   templateUrl: './all.component.html',

@@ -4,7 +4,6 @@ import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumView } from 'src/app/models/album/album-view';
 import { AlbumService } from 'src/app/services/album.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -29,8 +28,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   private _unsubscribe$ = new Subject<void>();
 
-  constructor(private _authService: AuthService,
-    private _albumService: AlbumService) {
+  constructor(private _albumService: AlbumService) {
   }
 
   async ngOnInit() {

@@ -9,10 +9,13 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Playlists",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/Playlists/{id}",
@@ -22,10 +25,12 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Playlists/{id}",
-      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "DELETE"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/Albums/new-releases",
@@ -35,10 +40,68 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Albums/new-releases",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    // Auth
+    {
+      "DownstreamPathTemplate": "/api/auth/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/register",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/login",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/role",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/role",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/{id}",
+      "UpstreamHttpMethod": [
+        "DELETE"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/AlbumReaction/liked/{userId}",
@@ -77,7 +140,10 @@
         }
       ],
       "UpstreamPathTemplate": "/api/songs",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/songs/{id}",
@@ -89,11 +155,14 @@
         }
       ],
       "UpstreamPathTemplate": "/api/songs/{id}",
-      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "PUT",
+        "DELETE"
+      ]
     }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://perflow:4202/api"
   }
-}  
-
+}
