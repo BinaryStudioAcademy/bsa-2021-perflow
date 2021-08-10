@@ -1,10 +1,10 @@
-import { Album } from "../album/album";
+import { Album } from '../album/album';
 
 export interface Artist {
-    id: number;
-    userName: string;
-    iconURL: string;
-    description: string;
-    country: string;
-    albums: Album[];
-  }
+  id: number;
+  userName: string;
+  iconURL: string;
+  description: string;
+  country: string;
+  albums: Album[];
+}
