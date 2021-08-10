@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Reactions;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
@@ -19,9 +20,10 @@ namespace Perflow.Services.Implementations
 
         public async Task<ICollection<ArtistReadDTO>> GetArtistsByUserId(int userId)
         {
-            var artists = context.ArtistReactions
+            var artists = await context.ArtistReactions
                 .Where(r => r.UserId == userId)
-                .Select(userReaction => userReaction.Artist);
+                .Select(userReaction => userReaction.Artist)
+                .ToListAsync();
             return mapper.Map<ICollection<ArtistReadDTO>>(artists);
         }
 

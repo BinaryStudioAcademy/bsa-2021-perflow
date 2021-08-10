@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { UserRegister } from 'src/app/models/auth/user-register';
-import { UserService } from 'src/app/services/user.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { RegisterData } from '../../../models/auth/register-data';
 
 @Component({
   selector: 'app-user-registration-page',
@@ -9,16 +9,16 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserRegistrationPageComponent {
   isSuccess: boolean = false;
-  newUser!: UserRegister;
 
   @Input()
   isRequiredError: boolean = false;
 
-  constructor(private _userService: UserService) { }
+  constructor(
+    private _authService: AuthService
+  ) { }
 
-  onSubmit(newUser: UserRegister) {
-    this.newUser = newUser;
-    this._userService.createUser(newUser); // to implement on backend
+  async onSubmit(newUser: RegisterData) {
+    await this._authService.registerWithEmail({ registerData: newUser, redirect: '/' });
     this.isSuccess = true;
   }
 }

@@ -33,23 +33,9 @@ export class UserProfileEditComponent implements OnInit {
 
   onSubmitUser(updatedUser: User) {
     this.updatedUser = updatedUser;
-    this._userService.updateUser(updatedUser)
-      .subscribe(() => {
-        this.isSuccess = true;
-      },
-      () => {
-        this.isError = true;
-      });
   }
 
   onSubmitPassword(updatedUserPassword: UserChangePassword) {
     this.updatedUserPassword = updatedUserPassword;
-    this._userService.updateUserPassword(updatedUserPassword)
-      .subscribe(() => {
-        this.isSuccess = true;
-      },
-      () => {
-        this.isError = true;
-      });
   }
 }

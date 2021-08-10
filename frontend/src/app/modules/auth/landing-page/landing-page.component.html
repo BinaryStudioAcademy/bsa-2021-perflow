@@ -21,15 +21,15 @@
               <div class="login-form gray-text">
                 <!-- Login start -->
                 <h4>Log In</h4>
-                <p>Don't have an account? <a class="sign-up-link">Sign up</a></p>
+                <p>Don't have an account? <a class="sign-up-link" routerLink="/register">Sign up</a></p>
                 <form class="ui form error" method="POST" [formGroup]="loginForm">
                   <div class="field">
-                    <input formControlName="login" type="text" placeholder="Email address or username"
+                    <input formControlName="email" type="text" placeholder="Email address or username"
                       autocomplete="email">
-                    <div *ngIf="loginForm.get('login')!.invalid &&
-                                                    (loginForm.get('login')!.dirty || loginForm.get('login')!.touched)"
+                    <div *ngIf="loginForm.get('email')!.invalid &&
+                                                    (loginForm.get('email')!.dirty || loginForm.get('email')!.touched)"
                       class="ui error message">
-                      Invalid email address or user name
+                      Invalid email address
                     </div>
                   </div>
                   <div class="field">
@@ -45,7 +45,7 @@
                       class="ui error message">
                       Invalid password
                     </div>
-                    <div *ngIf="(!loginForm.get('password')!.value || !loginForm.get('login')!.value) && isLogInClicked"
+                    <div *ngIf="(!loginForm.get('password')!.value || !loginForm.get('email')!.value) && isLogInClicked"
                       class="ui error message">
                       Fill in fields
                     </div>
@@ -56,17 +56,17 @@
                 </p>
                 <div class="checkbox-container">
                   <div class="ui checkbox remember-me">
-                    <input type="checkbox" name="example">
-                    <label>Remember me</label>
+                    <input type="checkbox" id="remember" name="remember" [checked]="rememberMe" (change)="rememberMe = !rememberMe">
+                    <label for="remember">Remember me</label>
                   </div>
-                  <button class="ui btn-full button log-in-btn" (click)="logInOnClick()">
+                  <button class="ui btn-full button log-in-btn" (click)="logInWithEmail()">
                     Log In
                   </button>
                 </div>
                 <div class="ui divider login-form-devider"></div>
                 <div class="social-media-buttons">
                   <div class="sphere">
-                    <button class="ui circular icon button">
+                    <button class="ui circular icon button" (click)="logInWithGoogle()">
                       <i class="google icon"></i>
                     </button>
                   </div>

@@ -4,9 +4,9 @@ using AutoMapper;
 using MediatR;
 using Perflow.Studio.Business.Songs.Commands;
 using Perflow.Studio.Business.Songs.DTOs;
-using Perflow.Studio.Common.Interfaces;
-using Perflow.Studio.Common.Interfaces.Repositories;
 using Perflow.Studio.Domain.Entities;
+using Perflow.Studio.Services.Interfaces;
+using Perflow.Studio.Services.Interfaces.Repositories;
 
 namespace Perflow.Studio.Business.Songs.Handlers
 {
