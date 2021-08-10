@@ -16,7 +16,7 @@
                   <div class="hover-content">
                     <img id="image" src="{{tempIconURL}}">
                     <i class="edit outline icon"></i>
-                    <input pattern=".*(.jpg$|.png$|.jpeg$)" type="file" (change)="loadIcon($event)" name="iconURL" 
+                    <input pattern="{{pattern}}" type="file" (change)="loadIcon($event)" name="iconURL" 
                       [ngModel] #iconURL="ngModel" accept=".jpeg,.png,.jpg">
                     <div *ngIf="iconURL.invalid && (iconURL.dirty || iconURL.touched)" class="ui error message">
                       <div *ngIf="iconURL.errors?.pattern">
