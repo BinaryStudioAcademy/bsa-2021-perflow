@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,8 +10,13 @@ import { Router } from '@angular/router';
 export class LandingPageComponent {
   showPassword: boolean = false;
   isLogInClicked: boolean = false;
+  rememberMe: boolean = true;
+
   loginForm = new FormGroup({
-    login: new FormControl('', [Validators.required]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
@@ -20,14 +24,38 @@ export class LandingPageComponent {
     ])
   });
 
-  constructor(private _authService: AuthService, private _router: Router) {
+  constructor(
+    private _authService: AuthService
+  ) {
     this.loginForm.valueChanges.subscribe((changes) => {
       this.isLogInClicked = false;
     });
   }
 
-  logInOnClick() {
+  logInWithEmail() {
     this.isLogInClicked = true;
+
+    if (!this.loginForm.valid) {
+      return;
+    }
+
+    this.loginForm.markAsPristine();
+
+    const { email, password } = this.loginForm.value;
+
+    this._authService.signInWithEmail({
+      email,
+      password,
+      remember: this.rememberMe,
+      redirect: '/'
+    });
+  }
+
+  logInWithGoogle() {
+    this._authService.signInWithGoogle({
+      remember: this.rememberMe,
+      redirect: '/'
+    });
   }
 
   toggleShowPassword() {

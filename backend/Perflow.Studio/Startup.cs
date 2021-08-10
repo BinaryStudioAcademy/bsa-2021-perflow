@@ -4,13 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MediatR;
-using Perflow.Studio.Common.Implementations;
-using Perflow.Studio.Common.Interfaces;
-using Perflow.Studio.Common.Interfaces.Repositories;
-using Perflow.Studio.DataAccess.Extensions;
-using Perflow.Studio.DataAccess.Implementations;
-using Perflow.Studio.DataAccess.Repositories;
-using Perflow.Studio.Domain.Entities;
+using Perflow.Studio.Services.Extensions;
+using Shared.Auth.Extensions;
 using Shared.ExceptionsHandler.Filters;
 using Microsoft.Extensions.Configuration;
 
@@ -20,28 +15,20 @@ namespace Perflow.Studio
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IWebHostEnvironment hostingEnvironment)
+        public Startup(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(hostingEnvironment.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDateProvider, DateProvider>();
-
-            services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
-
-            services.AddRepository<Song, ISongsRepository, SongsRepository>();
+            services.AddCustomServices();
 
             services.AddAutoMapper(typeof(Startup));
 
             services.AddMediatR(typeof(Startup));
+
+            services.AddAuth();
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
@@ -64,6 +51,7 @@ namespace Perflow.Studio
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

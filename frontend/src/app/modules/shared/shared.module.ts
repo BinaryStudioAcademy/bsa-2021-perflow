@@ -17,6 +17,7 @@ import { AccessTypePipe } from './pipes/access-type.pipe';
 import { SongDurationPipe } from './pipes/song-duration.pipe';
 import { ItemsSumPipe } from './pipes/items-sum.pipe';
 import { AlbumDurationPipe } from './pipes/album-duration.pipe';
+import { SearchSongRowComponent } from './playlist/search-song-row/search-song-row.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AlbumDurationPipe } from './pipes/album-duration.pipe';
     AccessTypePipe,
     SongDurationPipe,
     ItemsSumPipe,
-    AlbumDurationPipe
+    AlbumDurationPipe,
+    SearchSongRowComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +61,8 @@ import { AlbumDurationPipe } from './pipes/album-duration.pipe';
     AccessTypePipe,
     SongDurationPipe,
     ItemsSumPipe,
-    AlbumDurationPipe
+    AlbumDurationPipe,
+    SearchSongRowComponent
   ]
 })
 

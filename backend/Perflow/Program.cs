@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Perflow
@@ -12,9 +13,10 @@ namespace Perflow
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+                .ConfigureAppConfiguration(configurationBuilder => configurationBuilder
+                    .AddJsonFile("perflow-bsa-firebase-credentials.json", optional: true)
+                    .AddEnvironmentVariables()
+                );
     }
 }

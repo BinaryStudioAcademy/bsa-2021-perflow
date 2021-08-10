@@ -118,10 +118,46 @@ main
         background-color: $drk-gray !important
 
 .anotherAlbums
+    margin-top: 2rem
+    margin-bottom: 2rem
     .header
-        margin-top: 2rem
         padding-left: 1rem
         font-weight: $medium-weight
-        font-size: 32px
-        line-height: 48px
+        font-size: 26px
+        line-height: 32px
         color: $text
+    .albums
+        position: relative
+        margin: 1rem
+        overflow: hidden
+        .albums-cards
+            position: relative
+            display: flex
+            width: 100%
+            height: 280px
+            overflow-y: scroll
+            &::-webkit-scrollbar 
+                display: none  
+            .card
+                margin-right: 42px       
+    .scroll-box
+        width: 40px
+        position: absolute
+        right: 0px
+        top: 0px
+        bottom: 0px
+        display: flex
+        align-items: center
+        justify-content: center
+        background: $drk-gray
+        .scroll-button
+            width: 30px
+            height: 30px
+            font-size: 1.2rem
+            color: $text
+            border: none
+            border-radius: 3px
+            background: $light-gray
+            cursor: pointer
+            &:hover
+                background: #373C43

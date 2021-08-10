@@ -43,15 +43,15 @@
       </div>
     </div>
     <!-- Search Songs -->
-    <h5 class="search-header">Find something new for your playlist</h5>
     <div class="ui search">
+      <h5 class="search-header">Find something new for your playlist</h5>
       <div class="ui icon input">
-        <input #searchBox name="search" (input)="findSongsByName(searchBox.value)" class="prompt" 
-          type="text" autocomplete="sss"  aria-autocomplete="none" placeholder="Search for songs...">
         <i class="search icon"></i>
+        <input #searchBox name="search" [(ngModel)]="searchValue" (input)="findSongsByName()" class="prompt" 
+          type="text" autocomplete="sss"  aria-autocomplete="none" placeholder="Search for songs..." (keyup)="clearSearch($event)">
       </div>
       <div class="search-result" *ngIf="foundSongs.length" >
-        <app-songs-list (clickMenuItem)="clickMenuHandler($event)"  [songs]="foundSongs"></app-songs-list>
+        <app-search-song-row *ngFor="let song of foundSongs"  (clickButton)="addSongToPlaylist($event)"  [song]="song"></app-search-song-row>
       </div>
     </div>
 

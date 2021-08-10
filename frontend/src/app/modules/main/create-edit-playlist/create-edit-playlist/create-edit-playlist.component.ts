@@ -20,11 +20,12 @@ import { User } from 'src/app/models/user/user';
   styleUrls: ['./create-edit-playlist.component.sass']
 })
 export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
-  public isModalShown = false;
-  public foundSongs: Array<Song> = new Array<Song>();
-  public playlistSongs: Array<Song> = new Array<Song>();
-  public previousPlaylistData: EditedPlaylist;
-  public playlist = {} as Playlist;
+  isModalShown = false;
+  foundSongs: Array<Song> = new Array<Song>();
+  playlistSongs: Array<Song> = new Array<Song>();
+  previousPlaylistData: EditedPlaylist;
+  playlist = {} as Playlist;
+  searchValue: string;
 
   private _id: number | undefined;
 
@@ -94,7 +95,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
-          this.playlist = data;
+          this._router.navigateByUrl(`/playlists/edit/${data.id}`);
         }
       });
   }
@@ -201,9 +202,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     };
   }
 
-  findSongsByName(term: string) {
-    if (term.trim() !== '') {
-      this._searchTerms.next(term);
+  findSongsByName() {
+    if (this.searchValue.trim() !== '') {
+      this._searchTerms.next(this.searchValue);
     }
     else {
       this.foundSongs = [];
@@ -220,6 +221,13 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         break;
       default:
         break;
+    }
+  }
+
+  clearSearch(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.searchValue = '';
+      this.foundSongs = new Array<Song>();
     }
   }
 }
