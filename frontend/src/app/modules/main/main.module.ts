@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ClickOutsideModule } from 'ng-click-outside';
+import { ClipboardModule } from 'ngx-clipboard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
@@ -60,7 +61,8 @@ import { AlbumListComponent } from './playlist/album-list/album-list.component';
     ClickOutsideModule,
     UserModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ClipboardModule
   ],
   exports: [ProfileMenuComponent]
 })

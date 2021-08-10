@@ -11,7 +11,7 @@
             <span class="e" *ngIf="song.hasCensorship">E</span>
             {{song.name}}
         </div>
-        <div class="column artist-name text">
+        <div class="column artist-name text" *ngIf="song.artist">
             {{song.artist.userName}}
         </div>
         <div class="column album-name text">
