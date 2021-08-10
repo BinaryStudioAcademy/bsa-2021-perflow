@@ -67,25 +67,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         (resp: HttpResponse<AlbumView[]>) => {
           this.newReleases = resp.body!;
-          console.log(this.newReleases);
-          this.newReleases.forEach((nr) => nr.authors = [...new Set(nr.authors)]);
-          this.newReleases.forEach((nr) => console.log(nr.authors));
         }
       );
-
   }
-
-  /*getFakeNewReleases = (): Array<AlbumView> => new Array<AlbumView>(15).fill(
-    {
-      id: 0,
-      name: 'Imaging Dragons',
-      description: '47.9 million users subscribed',
-      iconURL: '../../../../../assets/images/album1.png',
-      isSingle: true,
-      reactions: 0,
-      songs: []
-    }
-  );*/
 
   // User should be able to play Calm rhythms - the newest playlists which moderator creates
   getCalmRhythms = (): Array<Playlist> => new Array<Playlist>(15).fill(

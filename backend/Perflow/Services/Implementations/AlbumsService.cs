@@ -80,6 +80,10 @@ namespace Perflow.Services.Implementations
                     Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? s.Artist.UserName : s.Group.Name).ToList()
                 })
                 .ToListAsync();
+            foreach(var entity in entities)
+            {
+                entity.Authors = entity.Authors.Distinct();
+            }
             return entities;
         }
 

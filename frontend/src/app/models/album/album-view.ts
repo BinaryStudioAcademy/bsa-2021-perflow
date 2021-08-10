@@ -1,5 +1,3 @@
-import { SongView } from '../song/song-view';
-
 export interface AlbumView {
   id: number,
   name: string,
