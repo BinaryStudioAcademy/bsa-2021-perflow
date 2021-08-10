@@ -50,20 +50,5 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
         }
-
-        public async Task<ArtistDTO> GetArtistAsync(int id) 
-        {
-            var user = await context.Users.Include(u=>u.Albums)
-                                          .AsNoTracking()
-                                          .FirstOrDefaultAsync(u => u.Id == id);
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user), "Argument cannot be null");
-            }
-
-            return mapper.Map<ArtistDTO>(user);
-
-        }
     }
 }

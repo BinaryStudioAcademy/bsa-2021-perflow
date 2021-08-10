@@ -8,7 +8,5 @@ namespace Perflow.Services.Interfaces
         Task ChangePasswordAsync(UserChangePasswordDTO user);
 
         Task UpdateUserAsync(UserReadDTO user);
-
-        Task<ArtistDTO> GetArtistAsync(int id);
     }
 }

@@ -9,17 +9,17 @@ namespace Perflow.Controllers
     [ApiController]
     public class ArtistsController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IArtistService _artistService;
 
-        public ArtistsController(IUserService userService)
+        public ArtistsController(IArtistService artistService)
         {
-            _userService = userService;
+            _artistService = artistService;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ArtistDTO>> GetById(int id)
         {
-            return Ok(await _userService.GetArtistAsync(id));
+            return Ok(await _artistService.GetArtistAsync(id));
         }
     }
 }
