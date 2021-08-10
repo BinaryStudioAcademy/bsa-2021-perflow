@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
 import { UserRegistrationFormComponent }
   from './user-registration-form/user-registration-form/user-registration-form.component';
 import { UserRegistrationPageComponent } from './user-registration-page/user-registration-page.component';
@@ -19,6 +18,6 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     SharedModule
   ],
-  providers: [UserService]
+  providers: []
 })
 export class UserRegistrationModule { }

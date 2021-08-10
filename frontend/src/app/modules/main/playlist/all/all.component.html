@@ -6,18 +6,18 @@
                 <h5>256 songs</h5>
             </div>
         </div>
-        <app-circle-info-card *ngFor="let k of [].constructor(8); let i = index"
-        [name]="albums[i%3].name"
-        [description]="albums[i%3].description"
-        [iconUrl]="albums[i%3].iconURL"
+        <app-circle-info-card *ngFor="let album of albums"
+        [name]="album.name"
+        [description]="album.description"
+        [iconUrl]="album.iconURL"
         >
         </app-circle-info-card>
     </div>
     <div class="liked-playlists">
-        <app-square-info-card *ngFor="let k of [].constructor(30); let i = index"
-        [name]="playlists[i%3].name"
-        [description]="playlists[i%3].description"
-        [iconUrl]="playlists[i%3].iconURL"
+        <app-square-info-card *ngFor="let playlist of playlists"
+        [name]="playlist.name"
+        [description]="playlist.description"
+        [iconUrl]="playlist.iconURL"
         >
         </app-square-info-card>
     </div>

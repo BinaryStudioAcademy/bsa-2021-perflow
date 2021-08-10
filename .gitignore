@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 
 env/
+
+perflow-bsa-firebase-credentials.json

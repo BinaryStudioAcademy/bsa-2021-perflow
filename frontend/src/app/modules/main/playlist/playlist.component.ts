@@ -5,6 +5,8 @@ import { catchError } from 'rxjs/operators';
 import { Playlist } from 'src/app/models/playlist';
 import { HttpInternalService } from 'src/app/services/http-internal.service';
 
+/* eslint-disable no-console */
+
 @Component({
   selector: 'app-playlist',
   templateUrl: './playlist.component.html',

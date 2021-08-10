@@ -4,7 +4,7 @@ import {
 import {
   AbstractControl, FormControl, FormGroup, ValidatorFn, Validators
 } from '@angular/forms';
-import { UserRegister } from 'src/app/models/auth/user-register';
+import { RegisterData } from '../../../../models/auth/register-data';
 
 @Component({
   selector: 'app-user-registration-form',
@@ -21,7 +21,7 @@ export class UserRegistrationFormComponent implements OnInit {
   isRequiredError = new EventEmitter<boolean>();
 
   @Output()
-  newUser = new EventEmitter<UserRegister>();
+  newUser = new EventEmitter<RegisterData>();
 
   ngOnInit() {
     this.registrationForm = new FormGroup({
@@ -65,7 +65,7 @@ export class UserRegistrationFormComponent implements OnInit {
     return this.registrationForm.get('passwordConfirmation')!;
   }
 
-  public onSubmit(newUser: UserRegister) {
+  public onSubmit(newUser: RegisterData) {
     this.isSuccess.emit(true);
     this.newUser.emit(newUser);
     this.registrationForm.reset();
