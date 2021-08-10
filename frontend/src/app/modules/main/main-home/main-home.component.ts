@@ -34,7 +34,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this._newestAlbums = this.getNewestFiveAlbums();
     this.recentlyPlayed = this.getRecentlyPlayed();
-    this.newReleases = this.getFakeNewReleases();
+    this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
@@ -67,11 +67,15 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         (resp: HttpResponse<AlbumView[]>) => {
           this.newReleases = resp.body!;
+          console.log(this.newReleases);
+          this.newReleases.forEach((nr) => nr.authors = [...new Set(nr.authors)]);
+          this.newReleases.forEach((nr) => console.log(nr.authors));
         }
       );
+
   }
 
-  getFakeNewReleases = (): Array<AlbumView> => new Array<AlbumView>(15).fill(
+  /*getFakeNewReleases = (): Array<AlbumView> => new Array<AlbumView>(15).fill(
     {
       id: 0,
       name: 'Imaging Dragons',
@@ -81,7 +85,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       reactions: 0,
       songs: []
     }
-  );
+  );*/
 
   // User should be able to play Calm rhythms - the newest playlists which moderator creates
   getCalmRhythms = (): Array<Playlist> => new Array<Playlist>(15).fill(
