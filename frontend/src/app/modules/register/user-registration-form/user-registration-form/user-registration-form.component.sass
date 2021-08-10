@@ -1,15 +1,25 @@
 @import ./../../../../../styles
-    
+
 h3
-    text-align: center
-    color: #FF792A
+  text-align: center
+  color: #FF792A
+
+h5
+  padding-top: 16px
+  text-align: center
+  color: $text-color-gray
+
+.log-in-link
+  color: $login-text-color
+  &:hover
+    text-decoration: underline
+    cursor: pointer
 
 form
     display: flex
     justify-content: center
     align-items: center
-    padding: 20px
-    padding-bottom: 0
+    padding: 20px 20px 0
     text-align: center
     height: 100%
     .cross-validation
@@ -17,11 +27,6 @@ form
     .field
         margin-bottom: 15px !important
         .input-dark
-            #display: inline-block !important
-            #background: $drk-rain !important
-            #border-radius: 50px !important
-            #min-width: 200px !important
-            #width: 100% !important
             background-color: #282F37
             color: $text
             border-radius: 100px
@@ -31,7 +36,7 @@ form
             &:-webkit-autofill,
             &:-webkit-autofill:focus,
             &:-webkit-autofill:hover
-                -webkit-box-shadow:0 0 0 100px  $drk-gray inset !important 
+                -webkit-box-shadow: 0 0 0 100px  $drk-gray inset !important
                 -webkit-text-fill-color: $text
     button:disabled
         color: white
@@ -46,7 +51,7 @@ form
     font-weight: $bold-weight
     color: white
 
-.social-media-buttons 
+.social-media-buttons
     text-align: center
     .sphere
         border-radius: 50%

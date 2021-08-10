@@ -5,7 +5,7 @@
     <img src="../../../../assets/images/ProfileImage.jpg" />
     <div>
       <div class="text" id="profile-user-name">
-        <span>marc_dorwart</span>
+        <span>{{ userName }}</span>
         <i class="caret down icon"></i>
       </div>
       <div class="menu" id="profile-menu" [ngClass]="isProfileMenuShown ? 'active' : ''">
@@ -21,7 +21,7 @@
             Account Settings
           </span>
         </div>
-        <div class="item" routerLink="/" *ngIf="isRightRole()">
+        <div class="item" routerLink="/" *ngIf="isRightRole">
           <span>
             <i class="external alternate icon"></i>
             Studio
@@ -35,5 +35,5 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </h4>

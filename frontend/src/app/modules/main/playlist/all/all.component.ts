@@ -7,6 +7,8 @@ import { Playlist } from 'src/app/models/playlist';
 import { AlbumService } from 'src/app/services/album.service';
 import { PlaylistService } from 'src/app/services/playlist-service.service';
 
+/* eslint-disable no-console */
+
 @Component({
   selector: 'app-all',
   templateUrl: './all.component.html',

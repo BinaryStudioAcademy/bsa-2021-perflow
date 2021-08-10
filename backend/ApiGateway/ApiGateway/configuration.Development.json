@@ -9,10 +9,13 @@
           "Host": "localhost",
           "Port": "5001"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Playlists",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/Playlists/{id}",
@@ -22,10 +25,12 @@
           "Host": "localhost",
           "Port": "5001"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Playlists/{id}",
-      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "DELETE"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/Albums/new-releases",
@@ -35,10 +40,68 @@
           "Host": "localhost",
           "Port": "5001"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Albums/new-releases",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    // Auth
+    {
+      "DownstreamPathTemplate": "/api/auth/register",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/register",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/login",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/login",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/role",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/role",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/{id}",
+      "UpstreamHttpMethod": [
+        "DELETE"
+      ]
     },
     //perflow.studio
     {
@@ -51,7 +114,10 @@
         }
       ],
       "UpstreamPathTemplate": "/api/songs",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/songs/{id}",
@@ -63,11 +129,14 @@
         }
       ],
       "UpstreamPathTemplate": "/api/songs/{id}",
-      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "PUT",
+        "DELETE"
+      ]
     }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:44328"
   }
-}  
-
+}

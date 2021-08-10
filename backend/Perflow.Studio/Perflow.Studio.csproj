@@ -21,8 +21,7 @@
     <Folder Include="Business\Users\Queries" />
     <Folder Include="Domain\" />
     <Folder Include="DataAccess\" />
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Common\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

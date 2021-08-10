@@ -5,15 +5,13 @@
 export const environment = {
   production: false,
 
-  firebase: {
-    apiKey: process.env.apiKey,
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-  },
   apiUrl: 'https://localhost:5001',
+
+  firebaseConfig: {
+    apiKey: 'AIzaSyBauXSgwcLf4JxzspTn2_y9SNJsrWJVrIs',
+    authDomain: "perflow-bsa.firebaseapp.com",
+    projectId: 'perflow-bsa',
+  }
 };
 
 /*
