@@ -72,6 +72,19 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownstreamPathTemplate": "/api/songs/liked",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/songs/liked",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Albums/new-releases",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
@@ -167,6 +180,32 @@
       ],
       "UpstreamPathTemplate": "/api/PlaylistReaction/liked/{userId}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/SongReaction/like",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/SongReaction/like",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/SongReaction/removeLike",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/SongReaction/removeLike",
+      "UpstreamHttpMethod": [ "POST" ]
     },
     //perflow.studio
     {

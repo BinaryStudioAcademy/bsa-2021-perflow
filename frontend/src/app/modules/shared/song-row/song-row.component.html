@@ -4,8 +4,8 @@
             <span class="number">{{number}}</span>
             <i class="play icon"></i>
         </div>
-        <div class="column like">
-            <i class="heart outline icon"></i>
+        <div class="column like" >
+            <i class="heart outline icon" (click)="clickLikeIcon(song.id)"></i>
         </div>
         <div class="column song-name text">
             <span class="e" *ngIf="song.hasCensorship">E</span>
