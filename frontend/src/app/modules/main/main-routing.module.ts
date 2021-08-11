@@ -1,21 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-<<<<<<< HEAD
-import { AuthGuard } from 'src/app/guards/auth.guard';
-import { ArtistsComponent } from './artists/artists.component';
-// import { AuthGuard } from 'src/app/guards/auth.guard';
-=======
->>>>>>> merge
 import { MainHomeComponent } from './main-home/main-home.component';
 import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { AllComponent } from './playlist/all/all.component';
 import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
 import { PlaylistComponent } from './playlist/playlist.component';
-import { AllPlaylistsComponent } from './playlists-all/all-playlists.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
-import { AlbumsComponent } from './albums/albums.component';
 import {
   CreateEditPlaylistComponent
 } from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
@@ -27,11 +19,7 @@ const routes: Routes = [{
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard],
   children: [
-<<<<<<< HEAD
-    { path: 'main', component: MainHomeComponent },
-=======
     { path: '', component: MainHomeComponent },
->>>>>>> merge
     { path: 'search', component: SearchComponent },
     {
       path: 'playlists',
@@ -51,14 +39,10 @@ const routes: Routes = [{
       ]
     },
     { path: 'songs', component: SongsComponent },
-<<<<<<< HEAD
-    { path: '**', redirectTo: '../login', pathMatch: 'full' }
-=======
     {
       path: 'albums',
       loadChildren: () => import('../album/album.module').then((m) => m.AlbumModule)
     }
->>>>>>> merge
   ]
 }];
 
