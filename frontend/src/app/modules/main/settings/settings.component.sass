@@ -7,12 +7,14 @@
     padding: 104px 20px
     display: flex
     justify-content: center
+    min-width: 530px
     .main-content
         width: 60%
         display: flex
         flex-direction: column
         justify-content: left
         color: $text
+        min-width: 430px
         h4
             margin-bottom: 40px
         .settings-group
@@ -26,6 +28,7 @@
                 margin-bottom: 12px
                 .name
                     color: $text-color-gray
+                    min-width: 300px
                 .value
                     width: 100%
                     max-width: 250px
@@ -57,7 +60,6 @@
                 background: $text-color-gray
         input:checked~label:before
             background: rgba($checkbox-color, 0.38) !important
-        
         input:checked~label:after
             left: 1.15rem
             background: $checkbox-color
