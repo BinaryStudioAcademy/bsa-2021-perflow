@@ -21,7 +21,7 @@ namespace Perflow.Services.Implementations
 
         public async Task<ICollection<PlaylistDTO>> GetEntitiesAsync()
         {
-            var entities = await context.Playlists.AsNoTracking().ToListAsync();
+            var entities = await context.Playlists.Include((pl) => pl.Author).AsNoTracking().ToListAsync();
 
             return mapper.Map<ICollection<PlaylistDTO>>(entities);
         }
