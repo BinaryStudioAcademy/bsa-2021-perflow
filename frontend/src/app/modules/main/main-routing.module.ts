@@ -8,6 +8,7 @@ import { ArtistListComponent } from './playlist/artist-list/artist-list.componen
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import {
   CreateEditPlaylistComponent
 } from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
@@ -22,6 +23,7 @@ const routes: Routes = [{
   children: [
     { path: '', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
+    { path: 'profile', component: UserProfileComponent },
     {
       path: 'playlists',
       children: [
