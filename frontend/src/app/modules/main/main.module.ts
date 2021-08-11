@@ -28,6 +28,7 @@ import {
 import {
   EditPlaylistModalComponent
 } from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
+import { SettingsComponent } from './settings/settings.component';
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
@@ -50,12 +51,11 @@ import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-ca
     ArtistCardComponent,
     MainMenuProfileComponent,
     YourMixCardComponent,
-    AlbumListComponent,
     AlbumCardComponent,
     AllComponent,
     CreateEditPlaylistComponent,
     EditPlaylistModalComponent,
-    AlbumCardComponent,
+    SettingsComponent,
     AlbumListComponent
   ],
   imports: [

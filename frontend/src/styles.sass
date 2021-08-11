@@ -26,6 +26,7 @@ $drk-rain: #282F37
 $orange-gradient: linear-gradient(90deg, $light-orange 0%, $medium-orange 100%)
 $reversed-orange-gradient: linear-gradient(90deg, $medium-orange 0%, $light-orange 100%)
 $text: #FAFBFF
+$checkbox-color: #FD6831
 
 $song-row-areas: "song-number like song-name artist-name album-name added duration settings"
 $song-row-columns: 32px 32px 6fr 4fr 4fr 3fr 2fr 32px
@@ -137,3 +138,18 @@ h6
 card
   background-color: $drk-rain
   border-radius: 4px
+
+.sphere
+    border-radius: 50%
+    display: inline-block
+    background: $orange-gradient
+    padding: 1px 1px 1px 1px
+    .ui.circular.button
+        margin-right: 0px
+        box-shadow: 0 0 0 0px $login-text-color inset !important
+        background: $drk-gray
+        &:active .icon
+            color: white
+    i.icon
+        color: $login-text-color
+        font-size: 16px !important
