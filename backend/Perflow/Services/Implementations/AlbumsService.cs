@@ -55,6 +55,7 @@ namespace Perflow.Services.Implementations
                                         .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
+                                        .AsNoTracking()
                                         .ToListAsync();
 
             return mapper.Map<ICollection<AlbumReadDTO>>(albums);
