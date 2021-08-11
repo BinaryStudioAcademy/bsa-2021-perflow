@@ -1,54 +1,53 @@
 @import "../../../../styles.sass"
 
 // Profile icon in top right corner
-.profile
-    padding-right: 20px
-    display: flex
-    align-items: center
-    justify-content: space-between
-    color: $text
-
-.ui.dropdown.item
-    margin-left: 15px
-    display: flex
-    align-items: center
-    padding: 20px 0 20px 0
-
-#profile-menu-user
+#profile
+    position: fixed
     top: 20px
     right: 20px
-    left: auto
-    background: $dark-gray
-    border: 0.5px solid #373C43
-    border-radius: 2px
-
-.profile-user-name
-    width: 160px
-    display: flex
-    margin-left: 15px
-    justify-content: space-between
-
-.profile > img
-    width: 40px
-    height: 40px
-    margin: 0 auto
-    overflow: hidden
-    border-radius: 100%
-
-.menu > .item > a
-    font-family: "Montserrat", sans-serif
-    font-size: 18px
-    margin: 0 15px
-    display: flex
+    border-radius: 25px
+    display: grid
+    grid-template-columns: 40px 1fr
     align-items: center
     color: $text
-
-.menu > .item > a > img
-    margin: 8px 0 8px 0
-    padding: 0 16px 0 0
-
-.item > a > .log-out 
-    color: $light-orange
-
-.menu > .item:hover
-    background: $light-gray
+    width: fit-content
+    min-width: 140px
+    height: 50px
+    padding: 0 5px
+    font-weight: $normal-weight
+    font-size: 18px
+    background-color: $light-gray
+    border: 1px solid darken($gray, 15%)
+    .text
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        margin: 0 5px
+        span
+            margin: 0 10px
+    img
+        object-fit: cover
+        width: 40px
+        height: 40px
+        border-radius: 50%
+    #profile-menu
+        &.active
+            visibility: visible
+        visibility: hidden
+        position: absolute
+        right: 0
+        top: 60px
+        width: 200px
+        background: $drk-gray
+        border: 1px solid #373C43
+        border-radius: 4px
+        >.item
+            padding: 12px
+            > span
+                font-weight: $thin-weight
+                font-size: 15px
+            &:hover
+                background-color: $light-gray
+                cursor: pointer
+                > span
+                    color: $light-orange

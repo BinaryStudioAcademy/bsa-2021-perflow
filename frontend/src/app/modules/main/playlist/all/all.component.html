@@ -1,65 +1,33 @@
-<main>
-  <div>
-    <div class="hat-playlists">
-      <div class="nav-link">
-        <a
-          routerLink="./../playlists/all"
-          class="link"
-          routerLinkActive="active-link"
-        >
-          <h5>All</h5>
-        </a>
-        <a
-          routerLink="./../playlists/artists"
-          class="link"
-          routerLinkActive="active-link"
-        >
-          <h5>Artists</h5>
-        </a>
-        <a
-          routerLink="./../playlists/albums"
-          class="link"
-          routerLinkActive="active-link"
-        >
-          <h5>Albums</h5>
-        </a>
-      </div>
-    </div>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-  <div class="description">
-    <div class="ui grid">
-      <div class="hat albums and playlist">
-        <a class="ui button" routerLink="../../songs">
-          <h3>Liked songs</h3>
-          <div class="like-count">{{ likedSongs }} songs</div>
-        </a>
-        <div class="ui segment" *ngFor="let mock of mockAlbums">
-          <div class="last albums">
-            <app-mock-album-card
-              [iconURL]="mock.iconURL"
-              [name]="mock.name"
-              [description]="mock.description"
-            >
-            </app-mock-album-card>
-          </div>
-        </div>
-      </div>
-      <div class="ui row">
-        <div class="ui segment" *ngFor="let playlist of mockPlaylist">
-          <app-square-info-card
-            [name]="playlist.name"
-            [description]="playlist.description"
-            [iconUrl]="playlist.iconURL"
+<div class="description">
+  <div class="ui grid">
+    <div class="hat albums and playlist">
+      <a class="ui button" routerLink="../../songs">
+        <h3>Liked songs</h3>
+        <div class="like-count">{{ likedSongs }} songs</div>
+      </a>
+      <div class="ui segment" *ngFor="let mock of mockAlbums">
+        <div class="last albums">
+          <app-mock-album-card
+            [iconURL]="mock.iconURL"
+            [name]="mock.name"
+            [description]="mock.description"
           >
-          </app-square-info-card>
+          </app-mock-album-card>
         </div>
       </div>
     </div>
+    <div class="ui row">
+      <div class="ui segment" *ngFor="let playlist of mockPlaylist">
+        <app-square-info-card
+          [name]="playlist.name"
+          [description]="playlist.description"
+          [iconUrl]="playlist.iconURL"
+        >
+        </app-square-info-card>
+      </div>
+    </div>
   </div>
-</main>
+</div>
 
 <!-- <div class="main-content">
     <div class="saved-albums">

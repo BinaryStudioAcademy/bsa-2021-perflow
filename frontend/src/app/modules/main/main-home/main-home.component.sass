@@ -6,11 +6,7 @@
     text-decoration: none
 
 main
-<<<<<<< HEAD
-    background: $dark-gray
-=======
     padding-left: 247px
->>>>>>> merge
     width: 100%
     height: 100%
 
@@ -23,68 +19,7 @@ main
     grid-template-columns: 100%
     grid-template-rows: 66px auto
     background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
-<<<<<<< HEAD
-    border-radius: 0
-
-    // Navigation arrows   
-.arrows
-    display: flex
-
-.arrow-left
-    background: $pink
-    border-radius: 2px
-    width: 28px
-    height: 28px
-    border: 0px solid
-    color: $text
-
-.arrow-left:hover
-    background: $pink
-    cursor: pointer
-
-.arrow-left:active
-    border: 2px solid $pink
-
-.arrow-right
-    background: $pink
-    border-radius: 2px
-    width: 28px
-    height: 28px
-    border: 0px solid
-    color: $text
-    margin-left: 15px
-
-.arrow-right:hover
-    background: $pink
-    cursor: pointer
-
-.arrow-right:active
-    border: 2px solid $pink
-
-.hat-main-home
-    padding: 35px 0 0 35px
-    display: flex
-    align-items: center
-    justify-content: space-between
-
-    // Accordion Information
-.accordion > .accordion-information
-    grid-column: 1
-    grid-row: 2
-    position: relative
-    left: 160px
-    top: 38px
-    width: 70%
-    height: 245px
-    overflow: hidden
-    display: grid
-    grid-template-columns: 245px auto
-    grid-template-row: 100%
-    gap: 0px 0px
-    @media (max-width: 1300px)
-        left: 150px
-=======
-
+    
     // Navigation arrows
     .arrows
         grid-column: 1
@@ -148,7 +83,6 @@ main
         gap: 0px 0px
         @media (max-width: 1300px)
             left: 150px
->>>>>>> merge
         @media (max-width: 1200px)
             width: 750px
         @media (max-width: 1050px)
@@ -171,72 +105,6 @@ main
             transform: scale(0.9)
         @media (max-width: 400px)
             transform: scale(0.8)
-<<<<<<< HEAD
-    .album-icon
-        grid-column: 1
-        grid-row: 1
-        width: 245px
-        height: 245px
-        border-radius: 50%
-        object-fit: cover
-        background: #C4C4C4
-        box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
-        @media (max-width: 800px)
-            display: none
-    .album-info
-        grid-column: 2
-        grid-row: 1
-        margin-left: 35px
-        height: 245px
-        @media (max-width: 800px)
-            grid-column: 1
-        @media (max-width: 500px)
-            margin-left: 0px
-        .type
-            margin-top: 20px
-            font-family: Rubik
-            font-style: normal
-            font-weight: $light-weight
-            font-size: 18px
-            line-height: 21px
-            color: $text
-            height: fit-content
-        .album-title
-            margin-top: 10px
-            font-family: Rubik
-            font-style: normal
-            font-weight: $bold-weight
-            font-size: 40px
-            line-height: 47px
-            color: $text
-            height: fit-content
-            text-overflow: ellipsis
-        .album-description
-            margin-top: 22px
-            font-family: Rubik
-            font-style: normal
-            font-weight: $light-weight
-            font-size: 18px
-            line-height: 21px
-            color: $text
-            width: 100%
-            max-height: 42px
-            overflow: hidden
-            text-overflow: ellipsis
-        .buttons
-            margin-top: 20px
-            width: 180px
-            min-width: 180px
-            .button-play
-                display: inline-block
-                padding: 12px 22px
-                width: 79px
-                height: 43px
-                max-height: 43px
-                background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                border: none
-                border-radius: 50px
-=======
         .album-icon
             grid-column: 1
             grid-row: 1
@@ -264,69 +132,22 @@ main
                 font-weight: 300
                 font-size: 18px
                 line-height: 21px
->>>>>>> merge
                 color: $text
+                height: fit-content
+            .album-title
+                margin-top: 10px
                 font-family: Rubik
                 font-style: normal
-                font-weight: $bold-weight
-                font-size: 16px
-                line-height: 19px
-                &:hover
-                    cursor: pointer
-                    background: linear-gradient(180deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
-                    color: $black
-                &:active
-                    border: 3px solid $medium-orange
-                    padding: 9px 19px
-            .button-save
-                display: inline-block
-                margin-left: 20px
-                padding: 11px 21px
-                width: 79px
-                height: 43px
-                background: none
+                font-weight: 700
+                font-size: 40px
+                line-height: 47px
                 color: $text
+                height: fit-content
+                text-overflow: ellipsis
+            .album-description
+                margin-top: 22px
                 font-family: Rubik
                 font-style: normal
-<<<<<<< HEAD
-                font-weight: $bold-weight
-                font-size: 16px
-                line-height: 19px
-                border: 1px solid $text
-                border-radius: 50px
-                &:hover
-                    cursor: pointer
-                    background: #864099d0
-                    color: $black
-                &:active
-                    border: 3px solid $text
-                    padding: 9px 19px
-
-// Rows
-.recently-played
-    height: 199px
-    margin: 53px 38px  
-    @media (max-width: 800px)
-        margin-bottom: 10px !important
-        height: 220px
-    .recently-played-cont
-        overflow: hidden
-        max-height: 155px
-        align-content: stretch
-        margin-top: 30px
-        justify-content: start
-        @media (max-width: 800px)
-            justify-content: center
-        &::-webkit-scrollbar 
-            display: none
-
-.recently-played .ui.row
-    margin-top: 30px
-    margin-left: 55px
-    display: flex
-    align-items: baseline
-    flex-wrap: wrap
-=======
                 font-weight: 300
                 font-size: 18px
                 line-height: 21px
@@ -346,141 +167,13 @@ main
 .main-content
     padding: 50px 30px 50px 40px
 
-// Recently played
-// .recently-played
-//     height: 199px
-//     margin-bottom: 50px
-//     @media (max-width: 800px)
-//         margin-bottom: 10px !important
-//         height: 220px
-//     .recently-played-cont
-//         overflow: hidden
-//         max-height: 155px
-//         align-content: stretch
-//         margin-top: 30px
-//         justify-content: start
-//         @media (max-width: 800px)
-//             justify-content: center
-//         &::-webkit-scrollbar 
-//             display: none
-
-// Your mix
-// .your-mix
-//     height: 271px
-//     width: 100%
-//     margin-bottom: 50px
-//     margin-top: 50px
-//     @media (max-width: 800px)
-//         margin-bottom: 20px !important
-//         height: 291px
-//     .your-mix-cont 
-//         overflow: hidden
-//         height: 220px
-//         width: 100%
-//         margin-top: 30px
-//         align-content: stretch
-//         justify-content: start
-//         @media (max-width: 800px)
-//             justify-content: center
-//         &::-webkit-scrollbar 
-//             display: none
->>>>>>> merge
-
-// This is for profile menu
-// .show
-//     display: block !important
-
-<<<<<<< HEAD
-.header-main-home-content
-    margin-left: 85px
-    margin-top: 50px
-    font-size: $bold-weight
-    color: $default-white
-=======
-// .header
-//     font-weight: bold
-//     font-size: 24px
-//     line-height: 28px
-//     color: $text
->>>>>>> merge
-
-// .items-scroll-box
-//     min-width: 100%
-//     position: relative
-//     margin: 25px 0px
-//     .header
-//         margin-bottom: 30px
-//     .list-of-items
-//         display: flex
-//         align-items: center
-//         .items
-//             display: grid
-//             overflow-x: auto
-//             grid-gap: 25px
-//             grid-auto-flow: column
-//             grid-template-columns: repeat(auto-fill, minmax(230px , 1fr))
-//             grid-auto-columns: minmax(230px , 1fr)
-//             scrollbar-width: none
-//             &::-webkit-scrollbar
-//                 display: none
-//         .scroll-button
-//             width: 33px
-//             height: 33px
-//             background: $drk-rain
-//             color: white
-//             padding: 5px
-//             margin: 10px
-//             display: flex
-//             align-items: center
-//             transition: background 0.4s ease
-//             font-size: 1.2rem
-//             &:hover
-//                 cursor: pointer
-//                 background: lighten($drk-rain, 8%)
-
-<<<<<<< HEAD
-.main-content-releases
-    .ui.icon.button
-        margin: 10px
-        width: 33px
-        height: 33px
-        display: flex
-        align-items: center
-        background: $light-gray
-    .ui.container
-        margin: 0
-        padding: 0
-        width: 90%
-        display: flex
-        align-items: baseline
-        overflow: hidden
-        height: 220px
-        width: 100%
-        margin-top: 30px
-        align-content: stretch
-        justify-content: start
-        @media (max-width: 800px)
-            justify-content: center
-        &::-webkit-scrollbar 
-            display: none
-=======
 // Rows
->>>>>>> merge
 
 .ui.segment.main-home-content-body
     margin: 0
     padding: 0
     background: $drk-gray
 
-<<<<<<< HEAD
-.main-content-rhythms
-    padding: 0 10px
-    margin: 30px 0
-    display: flex
-    align-items: center
-    .ui.icon.button
-        margin: 12.5px
-=======
 .recently-played
     margin-left: 15px
 
@@ -511,7 +204,6 @@ main
 .main-content-releases
     .ui.icon.button
         margin: 10px
->>>>>>> merge
         width: 33px
         height: 33px
         display: flex
@@ -520,8 +212,6 @@ main
     .ui.container
         margin: 0
         padding: 0
-<<<<<<< HEAD
-=======
         width: 90%
         display: flex
         align-items: baseline
@@ -545,7 +235,6 @@ main
     .ui.container
         margin: 0
         padding: 0
->>>>>>> merge
         width: 95%
         display: flex
         align-items: baseline
@@ -553,8 +242,4 @@ main
         .ui.segment
             margin: 0
             padding: 10px 0
-<<<<<<< HEAD
-            background: $dark-gray
-=======
             background: $drk-gray
->>>>>>> merge

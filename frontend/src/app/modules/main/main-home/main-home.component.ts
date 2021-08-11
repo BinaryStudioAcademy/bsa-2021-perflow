@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Playlist } from 'src/app/models/playlist';
 import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumView } from 'src/app/models/album/album-view';
-import { Playlist } from 'src/app/models/playlist/playlist';
 import { AlbumService } from 'src/app/services/album.service';
 import { Subject } from 'rxjs';
 
@@ -17,6 +17,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
+  private readonly _scrollingSize: number = 270;
 
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
@@ -117,39 +118,17 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   };
 
   accordionAnimation = () => {
-    document
-      .getElementsByClassName('accordion-information')[0]
-      ?.animate([{ opacity: '0' }, { opacity: '1' }], {
-        duration: this._animationDuration
-      });
+    document.getElementsByClassName('accordion-information')[0]?.animate([
+      { opacity: '0' },
+      { opacity: '1' }
+    ], {
+      duration: this._animationDuration
+    });
   };
 
-  scrollRight = (id: string) => {
+  scroll = (id: string) => {
     const element = document.getElementById(id);
-    let scrollingSize: number = 0;
-    if (id === 'album') {
-      const move = 239 * 6;
-      scrollingSize = move;
-    }
-    if (id === 'playlist' || id === 'song' || id === 'repeat') {
-      const move = 256 * 6;
-      scrollingSize = move;
-    }
-    element?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
-  };
-
-  scrollLeft = (id: string) => {
-    const element = document.getElementById(id);
-    let scrollingSize: number = 0;
-    if (id === 'album') {
-      const move = 239 * 6;
-      scrollingSize = move;
-    }
-    if (id === 'playlist' || id === 'song' || id === 'repeat') {
-      const move = 256 * 6;
-      scrollingSize = move;
-    }
-    element?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
+    element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   };
 
   scrollRight = (id: string) => {

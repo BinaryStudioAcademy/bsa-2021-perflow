@@ -7,11 +7,7 @@
   </div>
   <div class="routers" >
     <div>
-<<<<<<< HEAD
-      <a routerLink="./main" routerLinkActive="active-link" >
-=======
       <a routerLink="/" routerLinkActive="active-link" >
->>>>>>> merge
         <span class="circle-fire"> <i class="fire icon"></i></span>
         <h5 class="name-route">Home</h5>
       </a>
@@ -42,11 +38,7 @@
     <li *ngFor="let playlist of playlists">
       <span class="playlist">{{ playlist }}</span>
     </li>
-<<<<<<< HEAD
-    <button class="btn-create-playlist" routerLink="/playlists/create" (click)="createPlaylist()">
-=======
-    <button class="btn-create-playlist" (click)="createPlaylist()">
->>>>>>> merge
+    <button class="btn-create-playlist" routerLink="./../playlists/create" (click)="createPlaylist()">
       <h6>Create Playlist</h6>
     </button>
   </div>  

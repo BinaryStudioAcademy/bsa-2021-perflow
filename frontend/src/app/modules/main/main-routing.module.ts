@@ -28,10 +28,10 @@ const routes: Routes = [{
           path: '',
           component: PlaylistComponent,
           children: [
-            { path: '', component: AllComponent },
             { path: 'artists', component: ArtistListComponent },
             { path: 'albums', component: AlbumListComponent },
-            { path: 'all', component: AllComponent }
+            { path: 'all', component: AllComponent },
+            { path: '**', redirectTo: 'all' }
           ]
         },
         { path: 'create', component: CreateEditPlaylistComponent },
