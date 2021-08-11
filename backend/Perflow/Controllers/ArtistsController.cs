@@ -21,5 +21,11 @@ namespace Perflow.Controllers
         {
             return Ok(await _artistService.GetArtistAsync(id));
         }
+
+        [HttpGet]
+        public async Task<ActionResult<ArtistForAlbumDTO>> GetAllArtistsAsync()
+        {
+            return Ok(await _artistService.GetAllArtistsAsync());
+        }
     }
 }

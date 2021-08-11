@@ -1,0 +1,97 @@
+<div class="bg-modal-fader" (click)="cancelModal()">
+  <div class="ui modal modal-upload" (click)="clickOnModal($event)">
+    <div class="ui icon header">
+      Edit album
+    </div>
+    <!-- Modal Content -->
+    <div class="content">
+      <form #formEdit="ngForm" class="ui form error" >
+        <!-- Image -->
+        <div class="ui field image">
+          <img src="https://klike.net/uploads/posts/2019-06/1559370578_1.jpg" alt="">
+        </div>
+
+        <!-- Name -->
+        <div class="ui field name">
+          <input type="text" maxlength="50" placeholder="Album title" [(ngModel)]="editedAlbum.name" 
+            required #name="ngModel" pattern="[^<>^@]*" name="name">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="ui error message" autocomplete="off">
+            <div *ngIf="name.errors?.required">
+              Name is required!
+            </div>
+            <div *ngIf="name.errors?.pattern">
+              Symbols '< > ^ @' are prohibited
+            </div>
+          </div>       
+        </div>
+
+        <!-- Description -->
+        <div class="ui field description">
+          <textarea form="formEdit" placeholder="Album description" maxlength="200"
+            [(ngModel)]="editedAlbum.description" #description="ngModel" name="description" pattern="[^<>^@]*"></textarea>
+          <div *ngIf="description.invalid && (description.dirty || description.touched)" class="ui error message">
+            <div *ngIf="description.errors?.maxLength">
+              Description should be less than 200 characters.
+            </div>
+            <div *ngIf="description.errors?.pattern">
+              Symbols '< > ^ @' are prohibited
+            </div>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <div class="options">
+          <div class="option ui checkbox">
+            <input type="checkbox" form="formEdit" [(ngModel)]="editedAlbum.isPublished" #isPublished="ngModel" name="isPublished">
+            <label for="isPublished">Published Album</label>
+          </div>
+
+          <div class="option ui checkbox">
+            <input type="checkbox" form="formEdit" [(ngModel)]="editedAlbum.isSingle" #isSingle="ngModel" name="isSingle">
+            <label for="isSingle">Single</label>
+          </div>
+        </div>
+
+        <div class="region-artist-type">
+          <!-- Select Region -->
+          <div class="ui field">
+            <select class="ui dropdown dropdown-input" name="albumRegion" [ngModel]="editedAlbum.albumRegion"  
+              (ngModelChange)="editedAlbum.albumRegion=$event" #albumRegion="ngModel" required>
+              <option *ngFor="let albumRegion of albumRegionValues" [ngValue]="albumRegion">{{albumRegion | albumRegion}}</option>
+            </select>
+          </div>
+
+          <!-- Select Author Type -->
+          <div class="ui field">
+            <select class="ui dropdown dropdown-input" name="authorType" [ngModel]="editedAlbum.authorType"  
+              (ngModelChange)="editedAlbum.authorType=$event;isGroup=!isGroup" #authorType="ngModel" required>
+              <option *ngFor="let authorType of albumAuthorTypeValues" [ngValue]="authorType">{{authorType | authorType }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Select Artist Or Group -->
+        <div class="artist-group">
+          <div class="ui field" *ngIf="!isGroup">
+            <select class="ui dropdown dropdown-input" name="artistId"  [ngModel]="editedAlbum.artistId"  
+              (ngModelChange)="editedAlbum.artistId=$event" #artistId="ngModel" required>
+              <option *ngFor="let artist of artists" [ngValue]="artist.id">{{artist.userName}}</option>
+            </select>
+          </div>
+
+          <div class="ui field artist-group" *ngIf="isGroup">
+            <select class="ui dropdown dropdown-input" name="groupId" name="groupId" [ngModel]="editedAlbum.groupId"  
+              (ngModelChange)="editedAlbum.groupId=$event" #groupId="ngModel" required>
+              <option selected *ngFor="let group of groups" [ngValue]="group.id">{{group.name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Year -->
+        <div class="ui field year">
+          <input type="number" class="ui number-input" placeholder="Release year">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

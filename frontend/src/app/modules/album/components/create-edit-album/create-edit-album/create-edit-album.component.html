@@ -1,0 +1,53 @@
+<main>
+  <div class="album">
+    <div class="album-details">
+      <div class="album-image">
+        <div class="fader" (click)="showEditAlbumModal()">
+          <i class="image outline icon placeholder-icon"></i>
+          <div class="hover-content">
+            <i class="edit outline icon"></i>
+            <span class="mute">Load image</span>
+          </div>
+          <img class="ui medium circular image album-icon" alt="Album" src="{{album.iconURL}}" *ngIf="album.iconURL">
+        </div>
+      </div>
+      <div class="album-info">
+        <p class="type">Album</p>
+        <p class="album-title">
+            {{album.name}}
+        </p>
+        <div class="album-description">
+          <span *ngIf="album?.artist || album?.group"></span>
+          <span class="info" *ngIf="album.songs">
+              <span class="divider">|</span>  songs
+          </span>
+          <span class="info">
+              <span class="divider">|</span> {{album.releaseYear}}
+          </span>
+          <span class="info" *ngIf="album.songs">
+              <span class="divider">|</span> 
+          </span>
+        </div>
+        <div class="buttons">
+          <button class="btn-full button-play">Play</button>
+          <div class="action-icon">
+            <i class="heart outline icon icons"></i>
+          </div>
+          <div class="action-icon">
+            <div class="ui floating dropdown icon" appSmDropdown>
+              <i class="ellipsis vertical icon icons"></i>
+              <div class="right menu">
+                <div class="item first last">
+                  <i class="share alternate icon"></i>Share
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-edit-album-modal *ngIf="!isModalShown" (isClosed)="closeModal()"></app-edit-album-modal>
+
+</main>

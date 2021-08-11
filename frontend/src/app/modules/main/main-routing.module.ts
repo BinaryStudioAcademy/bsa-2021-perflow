@@ -12,13 +12,13 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import {
   CreateEditPlaylistComponent
 } from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
-import { AuthGuard } from '../../guards/auth.guard';
+// import { AuthGuard } from '../../guards/auth.guard';
 
 const routes: Routes = [{
   path: '',
   component: MainMenuProfileComponent,
-  canActivate: [AuthGuard],
-  canActivateChild: [AuthGuard],
+  // canActivate: [AuthGuard],
+  // canActivateChild: [AuthGuard],
   children: [
     { path: '', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
