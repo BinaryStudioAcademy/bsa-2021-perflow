@@ -29,6 +29,8 @@ import {
 import {
   EditPlaylistModalComponent
 } from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import {
     ProfileMenuComponent,
     RecentlyPlayedCardComponent,
     YourMixCardComponent,
+    UserProfileComponent,
+    TopArtistsCardComponent,
     SquareInfoCardComponent,
     CircleInfoCardComponent,
     ArtistListComponent,
@@ -61,6 +65,9 @@ import {
     ReactiveFormsModule,
     ClipboardModule
   ],
-  exports: [ProfileMenuComponent]
+  exports: [
+    ClickOutsideModule,
+    ProfileMenuComponent
+  ]
 })
 export class MainModule { }
