@@ -59,6 +59,19 @@
       "UpstreamHttpMethod": [ "POST", "DELETE" ]
     },
     {
+      "DownstreamPathTemplate": "/api/Playlists/byAuthor/{authorId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Playlists/byAuthor/{authorId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Songs/search?searchTerm={searchTerm}",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
@@ -141,6 +154,21 @@
         "GET"
       ]
     },
+    {
+      "DownstreamPathTemplate": "/api/Artists/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Artists/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    // Auth
     {
       "DownstreamPathTemplate": "/api/Albums",
       "DownstreamScheme": "https",

@@ -10,6 +10,7 @@ import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
   styleUrls: ['./edit-playlist-modal.component.sass']
 })
 export class EditPlaylistModalComponent implements OnInit {
+  readonly pattern = '.*(.jpg$|.png$|.jpeg$)';
   file: File;
   public selectControlValues: AccessType[] = [AccessType.secret, AccessType.collaborative, AccessType.default];
   public tempIconURL: string;
@@ -36,8 +37,7 @@ export class EditPlaylistModalComponent implements OnInit {
   loadIcon = (event: Event) => {
     const [file] = Array.from((event.target as HTMLInputElement).files as FileList);
 
-    const pattern = /\S*.jpg$|\S*.png$|\S*.jpeg$/i;
-    if (pattern.test(file.name)) {
+    if (RegExp(this.pattern).test(file.name)) {
       this.file = file;
       const reader = new FileReader();
 
