@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
 import { SongInfo } from 'src/app/models/song/song-info';
+import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 
 @Component({
   selector: 'app-song-toolbar',
@@ -34,6 +35,14 @@ export class SongToolbarComponent implements OnInit {
   seekSlider! : HTMLInputElement | null;
   volumeSlider! : HTMLInputElement | null;
   audio! : HTMLAudioElement | null;
+
+  constructor(toolbarService: SongToolbarService) {
+    toolbarService.songUpdated$.subscribe(
+      (song) => {
+        this.updateSong(song);
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.playPauseButton = <HTMLButtonElement>document.getElementById('playbutton');

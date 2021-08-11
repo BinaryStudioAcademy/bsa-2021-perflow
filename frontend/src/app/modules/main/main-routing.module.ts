@@ -13,6 +13,7 @@ import {
   CreateEditPlaylistComponent
 } from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 import { AuthGuard } from '../../guards/auth.guard';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [{
   path: '',
@@ -41,6 +42,7 @@ const routes: Routes = [{
       ]
     },
     { path: 'songs', component: SongsComponent },
+    { path: 'settings', component: SettingsComponent },
     {
       path: 'albums',
       loadChildren: () => import('../album/album.module').then((m) => m.AlbumModule)
@@ -56,4 +58,6 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MainRoutingModule { }
+export class MainRoutingModule {
+
+}

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Perflow.Common.DTO.Playlists;
 using Perflow.Services.Implementations;
 using Perflow.Common.DTO.Songs;
+using Shared.Auth.Extensions;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Perflow.Controllers
 {
@@ -38,6 +41,22 @@ namespace Perflow.Controllers
                 return NotFound("There are no playlist with this Id");
 
             return Ok(playlist);
+        }
+
+        [HttpGet("created")]
+        public async Task<ActionResult<ICollection<PlaylistDTO>>> GetCreated()
+        {
+            var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
+            var playlists = await _playlistService.GetEntitiesAsync();
+            var sortedPlaylist = new List<PlaylistDTO>();
+            foreach(var pl in playlists)
+            {
+                if(pl.Author.Email == email)
+                {
+                    sortedPlaylist.Add(pl);
+                }
+            }
+            return Ok(sortedPlaylist);
         }
 
         [HttpPost]
