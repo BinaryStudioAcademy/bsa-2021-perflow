@@ -29,6 +29,7 @@ import {
 import {
   EditPlaylistModalComponent
 } from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {
     AlbumCardComponent,
     AllComponent,
     CreateEditPlaylistComponent,
-    EditPlaylistModalComponent
+    EditPlaylistModalComponent,
+    SettingsComponent
   ],
   imports: [
     CommonModule,
