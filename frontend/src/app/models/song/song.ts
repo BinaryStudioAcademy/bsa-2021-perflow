@@ -12,6 +12,7 @@ export interface Song {
   album: Album;
   artist: User;
   authorType: AuthorType;
+  blobId: string;
 
   // TODO: add fields
 }

@@ -7,8 +7,8 @@ export class SongWriteDTO {
   public artistId: number;
   public groupId?: number;
   public albumId: number;
-  public iconURL: string;
   public duration: number;
   public hasCensorship: boolean;
   public createdAt: Date;
+  public blobId: string;
 }

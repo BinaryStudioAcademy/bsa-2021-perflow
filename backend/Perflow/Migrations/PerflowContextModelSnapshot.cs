@@ -276,6 +276,9 @@ namespace Perflow.Migrations
                     b.Property<int>("AuthorType")
                         .HasColumnType("int");
 
+                    b.Property<string>("BlobId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 

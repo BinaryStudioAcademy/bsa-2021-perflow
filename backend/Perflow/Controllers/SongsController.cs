@@ -53,22 +53,23 @@ namespace Perflow.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult<SongWriteDTO>> DeleteSongInfo(int id)
         {
-            await _songsService.RemoveSongInfoAsync(id);
+            await _songsService.RemoveSongAsync(id);
             return Ok();
         }
 
-        [HttpPost("upload/{id}")]
-        public async Task<ActionResult> AddSongFile(int id)
+        [HttpPost("file/upload")]
+        public async Task<ActionResult<object>> AddSongFile()
         {
             var files = Request.Form.Files;
-            await _songsService.UploadSongAsync(files.First(), id);   
-            return Ok();
+            var result = await _songsService.UploadSongAsync(files.First());   
+            return Ok(new { blobId = result });
         }
 
-        [HttpGet("file/{id}")]
-        public async Task<FileResult> GetSongFile(int id)
+        [AllowAnonymous]
+        [HttpGet("file")]
+        public async Task<FileResult> GetSongFile([FromQuery] string blobId)
         {
-            var result = (FileResult) await _songsService.GetSongFileAsync(id);
+            var result = (FileResult) await _songsService.GetSongFileAsync(blobId);
             result.EnableRangeProcessing = true;
             return result;
         }
