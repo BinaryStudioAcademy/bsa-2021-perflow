@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Songs;
 using Perflow.Common.DTO.Users;
 using Perflow.Domain;
@@ -17,8 +18,13 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<AlbumForListDTO, Album>();
 
             CreateMap<Album, AlbumFullDTO>()
-            .AfterMap((src, dest, context) => dest.Songs = context.Mapper.Map<ICollection<Song>, ICollection<SongReadDTO>>(src.Songs))
-            .AfterMap((src, dest, context) => dest.Artist = context.Mapper.Map<User, ArtistForAlbumDTO>(src.Author));
+                .AfterMap((src, dest, context) => dest.Songs = context.Mapper.Map<ICollection<Song>, ICollection<SongReadDTO>>(src.Songs))
+                .AfterMap((src, dest, context) => dest.Artist = context.Mapper.Map<User, ArtistForAlbumDTO>(src.Author))
+                .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupForAlbumDTO>(src.Group));
+
+            CreateMap<Album, AlbumForArtistDTO>()
+                .AfterMap((src, dest, context) => dest.Author = context.Mapper.Map<User, ArtistForAlbumDTO>(src.Author))
+                .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupForAlbumDTO>(src.Group));
         }
     }
 }

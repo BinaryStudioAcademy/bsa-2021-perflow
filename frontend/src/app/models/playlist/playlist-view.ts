@@ -1,6 +1,5 @@
-// TODO: mock object
-
-export interface MockAlbum {
+export interface PlaylistView {
+  id: number;
   name: string;
   description: string;
   iconURL: string;

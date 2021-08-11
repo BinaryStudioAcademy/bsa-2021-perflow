@@ -35,11 +35,13 @@
     <span class="title" *ngIf="playlists.length > 0">
       <h6>Created playlists</h6>
     </span>
-    <li *ngFor="let playlist of playlists">
-      <span class="playlist">{{ playlist }}</span>
-    </li>
-    <button class="btn-create-playlist" routerLink="./../playlists/create" (click)="createPlaylist()">
-      <h6>Create Playlist</h6>
+    <ul>
+      <li *ngFor="let playlist of playlists">
+        {{ playlist }}
+      </li>
+    </ul>
+    <button class="ui btn-full button create-playlist" routerLink="playlists/create" (click)="createPlaylist()">
+      Create Playlist
     </button>
   </div>  
 </div>

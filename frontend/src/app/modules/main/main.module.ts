@@ -29,7 +29,8 @@ import {
 import {
   EditPlaylistModalComponent
 } from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
-import { MOCKAlbumCardComponent } from './playlist/all/mock-album-card/mock-album-card.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,8 @@ import { MOCKAlbumCardComponent } from './playlist/all/mock-album-card/mock-albu
     ProfileMenuComponent,
     RecentlyPlayedCardComponent,
     YourMixCardComponent,
+    UserProfileComponent,
+    TopArtistsCardComponent,
     SquareInfoCardComponent,
     CircleInfoCardComponent,
     ArtistListComponent,
@@ -50,8 +53,7 @@ import { MOCKAlbumCardComponent } from './playlist/all/mock-album-card/mock-albu
     AlbumCardComponent,
     AllComponent,
     CreateEditPlaylistComponent,
-    EditPlaylistModalComponent,
-    MOCKAlbumCardComponent
+    EditPlaylistModalComponent
   ],
   imports: [
     CommonModule,
@@ -63,6 +65,9 @@ import { MOCKAlbumCardComponent } from './playlist/all/mock-album-card/mock-albu
     ReactiveFormsModule,
     ClipboardModule
   ],
-  exports: [ProfileMenuComponent]
+  exports: [
+    ClickOutsideModule,
+    ProfileMenuComponent
+  ]
 })
 export class MainModule { }
