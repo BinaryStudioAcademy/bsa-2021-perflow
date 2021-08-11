@@ -34,7 +34,7 @@ export class EditAlbumModalComponent implements OnInit {
 
   @Input() editedAlbum: AlbumEdit = {
     albumRegion: AlbumRegion.cis,
-    artistId: 0,
+    artistId: 1,
     authorType: AuthorType.artist,
     createdAt: new Date(),
     description: '',

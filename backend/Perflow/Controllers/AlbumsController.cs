@@ -41,5 +41,23 @@ namespace Perflow.Controllers
         {
             return Ok(await _albumsService.GetAlbumsByArtist(artistId));
         }
+
+        [HttpPost]
+        public async Task<ActionResult<AlbumEditDTO>> AddAlbumAsync(AlbumEditDTO albumEditDTO)
+        {
+            return Ok(await _albumsService.AddEntityAsync(albumEditDTO));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<AlbumEditDTO>> UpdateAlbumAsync(AlbumEditDTO albumEditDTO)
+        {
+            return Ok(await _albumsService.UpdateEntityAsync(albumEditDTO));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<AlbumEditDTO>> DeleteAlbumAsync(int id)
+        {
+            return Ok(await _albumsService.DeleteEntityAsync(id));
+        }
     }
 }

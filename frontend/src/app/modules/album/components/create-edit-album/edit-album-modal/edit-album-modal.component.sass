@@ -32,7 +32,7 @@ $image-size: 245px
     .form
       display: grid
       grid-template-columns: 245px auto
-      grid-template-rows: 35px 150px 35px 35px 35px
+      grid-template-rows: 35px 150px 35px 35px 35px 50px
       gap: 15px 15px
       align-content: center
       .image
@@ -80,21 +80,31 @@ $image-size: 245px
           font-family: Rubik
       .options
         grid-column: 2
-        grid-row: 5
+        grid-row: 3
+        background: $drk-rain
+        border-radius: 50px
         display: flex
         align-items: center
         justify-content: space-around
       .region-artist-type
         grid-column: 2
-        grid-row: 3
+        grid-row: 4
         display: flex
         justify-content: space-between
         div
           width: 49%
       .artist-group
         grid-column: 2
-        grid-row: 4
-
+        grid-row: 5
+      .buttons-row
+        grid-column: 1 / span 2
+        grid-row: 6
+        display: flex
+        align-self: center
+        justify-content: center
+        .btn-cancel
+          border-radius: 50px
+          margin-left: 20px
 
   select
     background: $drk-rain
@@ -138,3 +148,53 @@ $image-size: 245px
 
 .ui.error.message
   z-index: 1
+
+
+.image-upload-cont
+  position: relative
+  height: 215px
+  width: 215px
+  margin-left: 30px
+  margin-top: 16px
+  box-shadow: 0px 2px 12px 2px #00000050
+  border-radius: 50%
+  .hover-content
+    position: relative
+    display: grid
+    justify-content: center
+    align-content: center
+    background: none
+    color: #A3A6B1
+    width: 100%
+    height: 100%
+    border-radius: 50%
+    i
+      display: block
+      font-size: 3rem
+      width: fit-content
+      position: relative
+      top: 50%
+      left: 50%
+      transform: translate(-40%, -60%)
+    input[type='file']
+      position: absolute
+      top: 0
+      left: 0
+      height: 100%
+      width: 100%
+      border-radius: 50%
+      background: none
+      text-indent: 100em
+      cursor: pointer
+  #image
+    display: block
+    position: absolute
+    height: 215px
+    width: 215px
+    object-fit: cover
+    border-radius: 50% 
+    border: none
+    background: $drk-rain
+    text-indent: 100rem
+
+    

@@ -8,7 +8,19 @@
       <form #formEdit="ngForm" class="ui form error" >
         <!-- Image -->
         <div class="ui field image">
-          <img src="https://klike.net/uploads/posts/2019-06/1559370578_1.jpg" alt="">
+          <div class="image-upload-cont" >
+            <div class="hover-content">
+              <img id="image" src="{{tempIconURL}}">
+              <i class="edit outline icon"></i>
+              <input pattern="{{pattern}}" type="file" (change)="loadIcon($event)" name="iconURL" 
+                [ngModel] #iconURL="ngModel" accept=".jpeg,.png,.jpg">
+              <div *ngIf="iconURL.invalid && (iconURL.dirty || iconURL.touched)" class="ui error message">
+                <div *ngIf="iconURL.errors?.pattern">
+                  Invalid file type.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Name -->
@@ -90,6 +102,14 @@
         <!-- Year -->
         <div class="ui field year">
           <input type="number" class="ui number-input" placeholder="Release year">
+        </div>
+
+        <!-- Buttons -->
+        <div class="ui field buttons-row">
+          <div class="form-group">
+            <button type="submit" class="ui button submit btn-full" [disabled]="formEdit.form.invalid">Save</button>
+            <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
+          </div>
         </div>
       </form>
     </div>

@@ -88,7 +88,7 @@ namespace Perflow.Services.Implementations
             return entities;
         }
 
-        public async Task<Album> AddEntityAsync(Album albumDTO)
+        public async Task<AlbumEditDTO> AddEntityAsync(AlbumEditDTO albumDTO)
         {
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
@@ -103,10 +103,10 @@ namespace Perflow.Services.Implementations
 
             var createdAlbum = await GetEntityAsync(album.Id);
 
-            return mapper.Map<Album>(createdAlbum);
+            return mapper.Map<AlbumEditDTO>(createdAlbum);
         }
 
-        public async Task<Album> UpdateEntityAsync(Album albumDTO)
+        public async Task<AlbumEditDTO> UpdateEntityAsync(AlbumEditDTO albumDTO)
         {
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
@@ -119,7 +119,7 @@ namespace Perflow.Services.Implementations
 
             var updatedAlbum = await GetEntityAsync(album.Id);
 
-            return mapper.Map<Album>(updatedAlbum);
+            return mapper.Map<AlbumEditDTO>(updatedAlbum);
         }
 
         public async Task<int> DeleteEntityAsync(int entityId)
