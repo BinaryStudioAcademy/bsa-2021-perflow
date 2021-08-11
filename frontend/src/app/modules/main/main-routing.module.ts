@@ -27,12 +27,18 @@ const routes: Routes = [{
     {
       path: 'playlists',
       children: [
-        { path: '', component: PlaylistComponent },
+        {
+          path: '',
+          component: PlaylistComponent,
+          children: [
+            { path: 'artists', component: ArtistListComponent },
+            { path: 'albums', component: AlbumListComponent },
+            { path: 'all', component: AllComponent },
+            { path: '**', redirectTo: 'all' }
+          ]
+        },
         { path: 'create', component: CreateEditPlaylistComponent },
-        { path: 'edit/:id', component: CreateEditPlaylistComponent },
-        { path: 'artists', component: ArtistListComponent },
-        { path: 'albums', component: AlbumListComponent },
-        { path: 'all', component: AllComponent }
+        { path: 'edit/:id', component: CreateEditPlaylistComponent }
       ]
     },
     { path: 'songs', component: SongsComponent },

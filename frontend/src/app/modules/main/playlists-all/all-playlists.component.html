@@ -1,0 +1,28 @@
+<div class="description">
+  <div class="ui grid">
+    <div class="hat albums and playlist">
+      <a class="ui button" routerLink="../../songs">
+        <h3>Liked songs</h3>
+        <div class="like-count">{{ likedSongs }} songs</div>
+    </a>
+      <div class="ui segment" *ngFor="let album of albums">
+        <div class="last albums">
+          <app-album-card
+            [image]="album.image"
+            [name]="album.name"
+            [songs]="album.songs">
+          </app-album-card>
+        </div>
+      </div>
+    </div>
+    <div class="ui row">
+      <div class="ui segment" *ngFor="let playlist of playlists">
+        <app-playlist-card
+          [image]="playlist.image"
+          [name]="playlist.name"
+          [songs]="playlist.songs">
+        </app-playlist-card>
+      </div>
+    </div>
+  </div>
+</div>
