@@ -18,7 +18,6 @@ import { SongDurationPipe } from './pipes/song-duration.pipe';
 import { ItemsSumPipe } from './pipes/items-sum.pipe';
 import { AlbumDurationPipe } from './pipes/album-duration.pipe';
 import { SearchSongRowComponent } from './playlist/search-song-row/search-song-row.component';
-import { UIDropdownDirective } from './directives/ui-dropdown/uidropdown.directive';
 
 @NgModule({
   declarations: [
@@ -39,8 +38,7 @@ import { UIDropdownDirective } from './directives/ui-dropdown/uidropdown.directi
     SongDurationPipe,
     ItemsSumPipe,
     AlbumDurationPipe,
-    SearchSongRowComponent,
-    UIDropdownDirective
+    SearchSongRowComponent
   ],
   imports: [
     CommonModule,
@@ -64,8 +62,7 @@ import { UIDropdownDirective } from './directives/ui-dropdown/uidropdown.directi
     SongDurationPipe,
     ItemsSumPipe,
     AlbumDurationPipe,
-    SearchSongRowComponent,
-    UIDropdownDirective
+    SearchSongRowComponent
   ]
 })
 
