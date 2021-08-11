@@ -108,8 +108,7 @@ namespace Perflow.Services.Implementations
 
         public async Task RemoveSongInfoAsync(int id)
         {
-            var songs = context.Songs.Where(x =>
-                x.Id == id);
+            var songs = context.Songs.Where(x => x.Id == id);
 
             if (!songs.Any())
             {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -60,7 +61,7 @@ namespace Perflow.Controllers
         public async Task<ActionResult> AddSongFile(int id)
         {
             var files = Request.Form.Files;
-            await _songsService.UploadSongAsync(files[0], id);   
+            await _songsService.UploadSongAsync(files.First(), id);   
             return Ok();
         }
 
