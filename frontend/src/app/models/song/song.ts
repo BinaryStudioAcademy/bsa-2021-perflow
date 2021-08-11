@@ -14,4 +14,5 @@ export interface Song {
   authorType: AuthorType;
 
   // TODO: add fields
+  podcast: string;
 }
