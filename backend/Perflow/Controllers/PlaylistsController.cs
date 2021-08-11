@@ -8,6 +8,7 @@ using Perflow.Services.Implementations;
 using Perflow.Common.DTO.Songs;
 using Shared.Auth.Extensions;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Perflow.Controllers
 {
@@ -42,14 +43,15 @@ namespace Perflow.Controllers
             return Ok(playlist);
         }
 
-        [HttpGet("created/{token}")]
-        public async Task<ActionResult<ICollection<PlaylistDTO>>> GetCreated(string token)
+        [HttpGet("created")]
+        public async Task<ActionResult<ICollection<PlaylistDTO>>> GetCreated()
         {
+            var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
             var playlists = await _playlistService.GetEntitiesAsync();
             var sortedPlaylist = new List<PlaylistDTO>();
             foreach(var pl in playlists)
             {
-                if(pl.Author.Id == userId)
+                if(pl.Author.Email == email)
                 {
                     sortedPlaylist.Add(pl);
                 }

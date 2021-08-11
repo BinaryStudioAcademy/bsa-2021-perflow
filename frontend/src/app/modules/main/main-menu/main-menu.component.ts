@@ -33,21 +33,12 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   }
 
   public async getUserCreatedPlaylists() {
-    let token: string;
-    this._authService.getAuthStateObservable()
+    this._playlistsService
+      .getUserCreatedPlaylists()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
-        (resp) => {
-          token = resp!.firebaseId;
-          console.log(token);
-          this._playlistsService
-            .getUserCreatedPlaylists(token)
-            .pipe(takeUntil(this._unsubscribe$))
-            .subscribe(
-              (resp1: HttpResponse<Playlist[]>) => {
-                this.playlists = resp1.body!.map((el) => el.name);
-              }
-            );
+        (resp: HttpResponse<Playlist[]>) => {
+          this.playlists = resp.body!.map((el) => el.name);
         }
       );
   }

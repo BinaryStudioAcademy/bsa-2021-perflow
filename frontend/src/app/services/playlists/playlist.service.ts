@@ -16,8 +16,8 @@ export class PlaylistsService {
     return this._httpService.getFullRequest<Playlist[]>(`${this._endpoint}`);
   }
 
-  getUserCreatedPlaylists(token: string) {
-    return this._httpService.getFullRequest<Playlist[]>(`${this._endpoint}/created/${token}`);
+  getUserCreatedPlaylists() {
+    return this._httpService.getFullRequest<Playlist[]>(`${this._endpoint}/created`);
   }
 
   getPlaylist(id: number): Observable<Playlist> {
