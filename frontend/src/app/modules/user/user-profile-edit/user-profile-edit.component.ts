@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,27 +17,46 @@ export class UserProfileEditComponent implements OnInit {
   isSuccess: boolean = false;
   isError: boolean = false;
 
-  constructor(private _userService: UserService) { }
+  constructor(private _userService: UserService, private _authService: AuthService) { }
 
   ngOnInit() {
-    // TODO: get user from authService
-    this.user = {
-      id: 1,
-      email: 'some@gmail.com',
-      iconURL: '',
-      gender: true,
-      userName: 'someName',
-      description: 'someText',
-      birthday: new Date(),
-      country: 'Ukraine'
-    };
+    this.getUser();
+  }
+
+  getUser() {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => state !== null))
+      .subscribe((authState) => {
+        const id = authState!.id;
+
+        this._userService.getUser(id)
+          .subscribe((result) => {
+            this.user = result;
+          });
+      });
   }
 
   onSubmitUser(updatedUser: User) {
     this.updatedUser = updatedUser;
+
+    this._userService.updateUser(updatedUser)
+      .subscribe(() => {
+        this.isSuccess = true;
+      },
+        () => {
+          this.isError = true;
+        });
   }
 
   onSubmitPassword(updatedUserPassword: UserChangePassword) {
     this.updatedUserPassword = updatedUserPassword;
+
+    this._userService.updateUserPassword(updatedUserPassword)
+      .subscribe(() => {
+        this.isSuccess = true;
+      },
+        () => {
+          this.isError = true;
+        });
   }
 }

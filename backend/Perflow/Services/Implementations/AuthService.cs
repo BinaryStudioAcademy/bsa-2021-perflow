@@ -109,6 +109,19 @@ namespace Perflow.Services.Implementations
             return new Success();
         }
 
+        public async Task<OneOf<Success, AuthServiceError>> UpdateUserAsync(UserRecordArgs args)
+        {
+            var updateResult = await _firebase.AuthApp.TryUpdateUserAsync(args);
+
+            return updateResult.Match<OneOf<Success, AuthServiceError>>(
+                success => success,
+                authException => new AuthServiceError
+                {
+                    FirebaseException = authException
+                }
+            );
+        }
+
         public async Task<OneOf<Success, NotFound, AuthServiceError>> DeleteUserAsync(int userId)
         {
             var user = await _usersService.GetUserAsync(userId);
