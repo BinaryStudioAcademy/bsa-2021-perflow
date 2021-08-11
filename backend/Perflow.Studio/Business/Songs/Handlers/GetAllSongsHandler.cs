@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Perflow.Studio.Business.Songs.DTOs;
 using Perflow.Studio.Business.Songs.Queries;
-using Perflow.Studio.Common.Interfaces.Repositories;
+using Perflow.Studio.Services.Interfaces.Repositories;
 
 namespace Perflow.Studio.Business.Songs.Handlers
 {

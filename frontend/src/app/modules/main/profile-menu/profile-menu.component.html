@@ -1,6 +1,7 @@
 <!-- Profile icon in top right corner -->
 <h4 class="ui header profile" (click)="showProfileMenu()" (clickOutside)="onClickOutsideProfileMenu($event)">
   <!-- TODO:  Here, insert links to your account profile pages, etc. -->
+<<<<<<< HEAD
   <div class="profile">
     <img src="./../../../../assets/tempolary-images/castle-big-image.jpeg" />
     <div class="ui simple dropdown item">
@@ -10,6 +11,19 @@
         <div class="item">
           <a routerLink="/">
             <img src="./../../../../assets/button-icon-images/user-profile-13x13.png" />
+=======
+  <div id="profile">
+    <img src="../../../../assets/images/ProfileImage.jpg" />
+    <div>
+      <div class="text" id="profile-user-name">
+        <span>{{ userName }}</span>
+        <i class="caret down icon"></i>
+      </div>
+      <div class="menu" id="profile-menu" [ngClass]="isProfileMenuShown ? 'active' : ''">
+        <div class="item" routerLink="/">
+          <span>
+            <i class="user icon"></i>
+>>>>>>> merge
             View account
           </a>
         </div>
@@ -19,11 +33,19 @@
             Account Settings
           </a>
         </div>
+<<<<<<< HEAD
         <div class="item">
           <a routerLink="/">
             <img src="./../../../../assets/button-icon-images/pencil-profile-13x13.png" />
             Edit profile
           </a>
+=======
+        <div class="item" routerLink="/" *ngIf="isRightRole">
+          <span>
+            <i class="external alternate icon"></i>
+            Studio
+          </span>
+>>>>>>> merge
         </div>
         <div class="item">
           <a (click)="logout()" routerLink="/">
@@ -33,5 +55,9 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
   </div> 
+=======
+  </div>
+>>>>>>> merge
 </h4>

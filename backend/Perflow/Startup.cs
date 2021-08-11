@@ -5,24 +5,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Perflow.Extensions;
 using Perflow.Services.Extensions;
 using Perflow.DataAccess.Context;
+using Shared.Auth.Extensions;
 using Shared.ExceptionsHandler.Filters;
 
 namespace Perflow
 {
     public class Startup
     {
-        public Startup(IWebHostEnvironment hostingEnvironment)
+        public Startup(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(hostingEnvironment.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -39,6 +33,8 @@ namespace Perflow
             services.RegisterCustomServices();
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
+
+            services.AddAuth();
 
             services.AddSwaggerGen(c =>
             {
@@ -66,11 +62,8 @@ namespace Perflow
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {

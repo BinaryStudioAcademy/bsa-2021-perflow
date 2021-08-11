@@ -1,0 +1,17 @@
+<div class="ui padded grid song">
+  <div class="song-row">
+      <div class="column song-icon">
+        <img src="{{song.iconURL}}">
+      </div>
+      <div class="column song-name text">
+        <span class="e" *ngIf="song.hasCensorship">E</span>
+        {{song.name}}
+      </div>
+      <div class="column album-name">
+        <a class="link text" [routerLink]="['/albums', song.album.id]">{{song.album.name}}</a>
+      </div>
+      <div class="column button">
+        <button type="button" (click)="clickAddButon()">ADD</button>
+      </div>
+  </div>
+</div>

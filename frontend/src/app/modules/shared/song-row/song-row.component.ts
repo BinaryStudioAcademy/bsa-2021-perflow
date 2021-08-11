@@ -14,8 +14,13 @@ export class SongRowComponent {
   @Input() number: number;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
+  @Output() clickLike = new EventEmitter<number>();
 
   clickItem(menu: string) {
     this.clickMenuItem.emit({ menuItem: menu, song: this.song });
+  }
+
+  clickLikeIcon(songId: number) {
+    this.clickLike.emit(songId);
   }
 }

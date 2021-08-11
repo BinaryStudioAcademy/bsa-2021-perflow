@@ -20,7 +20,11 @@
       <img
         class="album-icon"
         alt="Album"
+<<<<<<< HEAD
         src="https://s3-alpha-sig.figma.com/img/d75c/1009/f21231d6f5d9480e4025fca6081aa434?Expires=1628467200&Signature=OTjTRmC-15s41yTDgmE8aKF5q6CnBmJAo55dQRIG7K0XOj8A9L3ENDn6dN4EmFOukNiA7DkyXDUXbf3bAjngVFLV7yUgxTssDto6jzNDJGShiDViBnpZAvV6BSpHRuQYIkGj4vTtKJZLeNtDQXQgnMrNLLz8LA1m1XHxLhvug7dLrmXAO2hxHhJk4PUqXplBNEnxyPSZjs-sY44I--97FKwspfh1eyjIlEIdj9eowU4WNh52N-mrnShdCdKJpbaIzE5-mJkpug91XKth-IWB5iHnotKb88bARs1rCFiMaZlp5-Xxi6jpJdOeYIriyilk9~obp6ItPZK-3t2OxS7tag__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+=======
+        src="../../../../assets/images/Sunset.jpg"
+>>>>>>> merge
       />
       <div class="album-info">
         <p class="type">Album</p>
@@ -31,14 +35,21 @@
           laborum ex explicabo iste placeat, repellendus aliquid alias
           voluptatibus, quos incidunt? Quos.
         </p>
+<<<<<<< HEAD
+=======
+
+>>>>>>> merge
         <div class="buttons">
-          <button class="button-play">Play</button>
-          <button class="button-save">Save</button>
+          <button class="ui btn-full button button-play">Play</button>
+          <button class="ui inverted basic button btn-ghost button-save">
+            Save
+          </button>
         </div>
       </div>
     </div>
   </div>
 
+<<<<<<< HEAD
   <!-- // TODO: need model -->
   <!-- Top songs and podcasts -->
   <div class="header-main-home-content">
@@ -75,6 +86,43 @@
             [songs]="album.songs"
           >
           </app-album-card>
+=======
+  <div class="ui segment main-home-content-body">
+    <!-- // TODO: need model -->
+    <!-- Top songs and podcasts -->
+    <div class="header-main-home-content">
+      <h4>Recently played</h4>
+    </div>
+    <div class="recently-played">
+      <div class="ui row">
+        <!-- Work component -->
+        <div class="ui segment" *ngFor="let card of recentlyPlayed"></div>
+        <!-- Demonstration cards (delete them) -->
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+>>>>>>> merge
       </div>
     </div>
     <div class="ui icon button" (click)="scrollRight('album')">
@@ -82,6 +130,7 @@
     </div>
   </div>
 
+<<<<<<< HEAD
   <!-- // TODO:  id tempolary for scroll -->
   <!-- Calm rhythms -->
   <div class="header-main-home-content"> 
@@ -166,4 +215,111 @@
       <i class="large inverted angle right icon"></i>
     </div>
   </div>
+=======
+    <!-- // TODO:  id tempolary for scroll -->
+    <!-- New releases albums -->
+    <!-- <div class="header-main-home-content">
+      <h4>New releases</h4>
+    </div>
+    <div class="main-content-releases">
+      <div class="ui icon button" (click)="scrollLeft('album')">
+        <i class="large inverted angle left icon"></i>
+      </div>
+      <div class="ui container" id="album">
+        <div class="ui segment" *ngFor="let album of newReleases">
+          <app-circle-info-card
+            [name]="album.name"
+            [description]="album.authors.join(', ')"
+            [iconUrl]="album.iconURL" >
+          </app-circle-info-card>
+        </div>
+        <div class="ui icon button" (click)="scrollRight('album')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div> -->
+
+      <!-- // TODO:  id tempolary for scroll -->
+      <!-- Calm rhythms -->
+      <div class="header-main-home-content">
+        <h4>Calm rhythms</h4>
+      </div>
+      <div class="main-content-rhythms">
+        <div class="ui icon button" (click)="scrollLeft('playlist')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div class="ui container" id="playlist">
+          <div class="ui segment" *ngFor="let playlist of calmRhythms">
+            <app-square-info-card
+              [name]="playlist.name"
+              [description]="playlist.description"
+              [iconUrl]="playlist.iconURL"
+            >
+            </app-square-info-card>
+          </div>
+        </div>
+        <div class="ui icon button" (click)="scrollRight('playlist')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+
+      <!-- // TODO: need model -->
+      <!-- Your mix -->
+      <div class="header-main-home-content">
+        <h4>Your mix</h4>
+      </div>
+      <div class="recently-played">
+        <div class="ui row">
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+        </div>
+      </div>
+
+      <!-- // TODO: need model. id tempolary for scroll -->
+      <!-- Top 100 songs  -->
+      <div class="header-main-home-content">
+        <h4>Top 100 songs</h4>
+      </div>
+      <div class="main-content-rhythms">
+        <div class="ui icon button" (click)="scrollLeft('song')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div class="ui container" id="song">
+          <div class="ui segment" *ngFor="let playlist of calmRhythms">
+            <app-square-info-card
+              [name]="playlist.name"
+              [description]="playlist.description"
+              [iconUrl]="playlist.iconURL"
+            >
+            </app-square-info-card>
+          </div>
+        </div>
+        <div class="ui icon button" (click)="scrollRight('song')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+>>>>>>> merge
 </main>

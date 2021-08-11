@@ -1,14 +1,18 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Playlist } from 'src/app/models/playlist';
+import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumView } from 'src/app/models/album/album-view';
 import { Mix } from 'src/app/models/mix/mix';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { SongTest } from 'src/app/models/tempolary-folder/song-test';
 import { AlbumService } from 'src/app/services/album.service';
+<<<<<<< HEAD
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Album } from '../../../models/album/album';
+=======
+import { Subject } from 'rxjs';
+>>>>>>> merge
 
 @Component({
   selector: 'app-main-home',
@@ -25,11 +29,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
   public newReleases: AlbumView[] = [];
-  public calmRhythms = new Array<object>();
+  public calmRhythms = new Array<Playlist>();
   public yourMix = new Array<object>();
-  public top100Songs = new Array<object>();
+  public top100Songs = new Array<Playlist>();
+
   private _unsubscribe$ = new Subject<void>();
 
+<<<<<<< HEAD
   // TODO: tempolary albums and seetings
   allAlbums: Album[] = [
     {
@@ -953,6 +959,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   constructor(private _authService: AuthService,
     private _albumService: AlbumService) {
+=======
+  constructor(private _albumService: AlbumService) {
+>>>>>>> merge
   }
 
   async ngOnInit() {
@@ -996,13 +1005,31 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   // User should be able to play Calm rhythms - the newest playlists which moderator creates
-  getCalmRhythms = (): Array<object> => new Array<object>();
+  getCalmRhythms = (): Array<Playlist> => new Array<Playlist>(12).fill(
+    {
+      id: 0,
+      createdAt: new Date(),
+      name: 'Fresh & Chill',
+      description: 'Ed Sheeran, Paloma Mami Maroon 5, SigalaPink, Oximer, Paloma Mami Maroon 5, SigalaPink, Oximer',
+      iconURL: '../../../../../assets/images/playlist1.png',
+      author: undefined
+    }
+  );
 
   // User should be able to play Your mix - take songs from all playlists plus liked songs and show in random order
   getYourMix = (): Array<object> => new Array<object>();
 
   // User should be able to play Top 100 songs - 100 song ordering by amount of likes by all users
-  getTop100Songs = (): Array<object> => new Array<object>();
+  getTop100Songs = (): Array<Playlist> => new Array<Playlist>(15).fill(
+    {
+      id: 0,
+      createdAt: new Date(),
+      name: 'Fresh & Chill',
+      description: 'Ed Sheeran, Paloma Mami Maroon 5, SigalaPink, Oximer',
+      iconURL: '../../../../../assets/images/playlist2.png',
+      author: undefined
+    }
+  );
 
   nextSlide = () => {
     this.accordionAnimation();
@@ -1054,6 +1081,34 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     }
     if (id === 'playlist' || id === 'song' || id === 'repeat') {
       const move = 256 * 6;
+      scrollingSize = move;
+    }
+    element?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
+  };
+
+  scrollRight = (id: string) => {
+    const element = document.getElementById(id);
+    let scrollingSize: number = 0;
+    if (id === 'album') {
+      const move = 239 * 6;
+      scrollingSize = move;
+    }
+    if (id === 'playlist' || id === 'song' || id === 'repeat') {
+      const move = 260 * 6;
+      scrollingSize = move;
+    }
+    element?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+  };
+
+  scrollLeft = (id: string) => {
+    const element = document.getElementById(id);
+    let scrollingSize: number = 0;
+    if (id === 'album') {
+      const move = 239 * 6;
+      scrollingSize = move;
+    }
+    if (id === 'playlist' || id === 'song' || id === 'repeat') {
+      const move = 260 * 6;
       scrollingSize = move;
     }
     element?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
