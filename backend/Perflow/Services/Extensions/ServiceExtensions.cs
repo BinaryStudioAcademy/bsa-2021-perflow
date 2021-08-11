@@ -2,7 +2,6 @@
 using Perflow.Services.Interfaces;
 using Perflow.Common.MappingProfiles;
 using System.Reflection;
-using Perflow.Common.DTO.Playlists;
 using Perflow.Services.Implementations;
 
 namespace Perflow.Services.Extensions
@@ -44,6 +43,8 @@ namespace Perflow.Services.Extensions
             services.AddScoped<PlaylistReactionService>();
 
             services.AddScoped<ISongsService, SongsService>();
+
+            services.AddScoped<IUsersService, UsersService>();
 
             services.AddScoped<AlbumsService>();
 

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component, OnInit
+} from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactionService } from 'src/app/services/reaction.service';
@@ -13,7 +15,6 @@ import { SongsService } from '../../../services/songs/songs.service';
 
 export class SongsComponent implements OnInit {
   songs: Song[] = [];
-
   private _userId: number;
 
   constructor(
