@@ -31,7 +31,6 @@ const routes: Routes = [{
         { path: 'edit', component: UserProfileEditComponent }
       ]
     },
-    // { path: 'profile/edit', component: UserProfileEditComponent },
     {
       path: 'playlists',
       children: [
