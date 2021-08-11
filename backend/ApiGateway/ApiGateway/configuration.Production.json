@@ -76,8 +76,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
 
       ],
@@ -89,8 +89,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
 
       ],
@@ -102,8 +102,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
 
       ],
@@ -119,8 +119,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
 
       ],
@@ -146,8 +146,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/Albums",
@@ -160,8 +160,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/Albums/{id}",
@@ -174,8 +174,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/Albums/byArtist/{artistId}",
@@ -188,8 +188,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/AlbumReaction/{id}",
@@ -202,8 +202,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/AlbumReaction/like",
@@ -216,8 +216,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/AlbumReaction/removeLike",
@@ -230,8 +230,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
 
       ],
@@ -243,8 +243,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
 
       ],
@@ -256,8 +256,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/ArtistReaction/{id}",
@@ -270,8 +270,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/ArtistReaction/like",
@@ -284,8 +284,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/ArtistReaction/removeLike",
@@ -298,8 +298,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/SongReaction/like",
@@ -312,8 +312,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/SongReaction/removeLike",
@@ -326,8 +326,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
-          "Host": "localhost",
-          "Port": "5001"
+          "Host": "perflow",
+          "Port": "4202"
         }
       ],
       "UpstreamPathTemplate": "/api/users/changePassword",
