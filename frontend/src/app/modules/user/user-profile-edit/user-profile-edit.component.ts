@@ -27,7 +27,7 @@ export class UserProfileEditComponent implements OnInit {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => state !== null))
       .subscribe((authState) => {
-        const id = authState!.id;
+        const { id } = authState!;
 
         this._userService.getUser(id)
           .subscribe((result) => {
@@ -43,9 +43,9 @@ export class UserProfileEditComponent implements OnInit {
       .subscribe(() => {
         this.isSuccess = true;
       },
-        () => {
-          this.isError = true;
-        });
+      () => {
+        this.isError = true;
+      });
   }
 
   onSubmitPassword(updatedUserPassword: UserChangePassword) {
@@ -55,8 +55,8 @@ export class UserProfileEditComponent implements OnInit {
       .subscribe(() => {
         this.isSuccess = true;
       },
-        () => {
-          this.isError = true;
-        });
+      () => {
+        this.isError = true;
+      });
   }
 }
