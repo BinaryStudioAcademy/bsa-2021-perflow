@@ -121,5 +121,20 @@ namespace Perflow.Services.Implementations
         }
 
 
+                
+        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count)
+        {
+            var songs = await context.Songs
+                .Where(song => song.ArtistId == id || song.GroupId == id)
+                .OrderByDescending(song => song.Reactions.Count)
+                .Take(count)
+                .Include(song => song.Artist)
+                .Include(song => song.Group)
+                .Include(song => song.Album)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+        }
     }
 }

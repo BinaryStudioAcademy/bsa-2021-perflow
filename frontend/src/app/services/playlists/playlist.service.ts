@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
+import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { PlaylistSongDTO } from 'src/app/models/playlist/playlistSongDTO';
 import { Song } from 'src/app/models/song/song';
 import { HttpInternalService } from '../http-internal.service';
@@ -38,5 +39,9 @@ export class PlaylistsService {
 
   deletePlaylist(id: number): Observable<number> {
     return this._httpService.deleteRequest<number>(`${this._endpoint}/${id}`);
+  }
+
+  getPlaylistsByAuthorId(authorId: number) {
+    return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/byAuthor/${authorId}`);
   }
 }

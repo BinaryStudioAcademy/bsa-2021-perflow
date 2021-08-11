@@ -95,7 +95,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
-          this.playlist = data;
+          this._router.navigateByUrl(`/playlists/edit/${data.id}`);
         }
       });
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Song } from 'src/app/models/song/song';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
 import { HttpInternalService } from '../http-internal.service';
@@ -9,6 +9,8 @@ import { HttpInternalService } from '../http-internal.service';
   providedIn: 'root'
 })
 export class SongsService {
+  topSongs: Song[] = [];
+
   constructor(
     private _httpService: HttpInternalService
   ) { }
@@ -17,6 +19,9 @@ export class SongsService {
     return this._httpService.getRequest<Song[]>('/api/songs/liked');
   }
 
+  public getTopSongs(): Observable<Song[]> {
+    return of(this.topSongs);
+  }
   getSongsByName = (searchTerm: string): Observable<Song[]> => {
     const httpParams = { searchTerm: `${searchTerm}` };
     return this._httpService.getRequest<Song[]>('/api/songs/search', httpParams);
@@ -47,4 +52,8 @@ export class SongsService {
   deleteSongInfo = (id: number) => this._httpService.deleteRequest(
     `/api/Songs/delete/${id}`
   );
+  getTopSongsByAuthorId(id: number, count: number) {
+    const httpParams = { count };
+    return this._httpService.getRequest<Song[]>(`/api/songs/topSongs/${id}`, httpParams);
+  }
 }

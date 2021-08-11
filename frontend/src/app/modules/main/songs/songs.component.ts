@@ -1,6 +1,9 @@
 import {
-  Component, OnInit, Output, EventEmitter
+  Component, OnInit
 } from '@angular/core';
+import { filter } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { ReactionService } from 'src/app/services/reaction.service';
 import { Song } from '../../../models/song/song';
 import { SongsService } from '../../../services/songs/songs.service';
 
@@ -12,16 +15,18 @@ import { SongsService } from '../../../services/songs/songs.service';
 
 export class SongsComponent implements OnInit {
   songs: Song[] = [];
-
-  @Output()
-  tt = new EventEmitter();
+  private _userId: number;
 
   constructor(
-    private _songService: SongsService
+    private _songService: SongsService,
+    private _authService: AuthService,
+    private _reactionService: ReactionService
   ) {}
 
   ngOnInit(): void {
     this.loadLikedSongs();
+
+    this.getUserId();
   }
 
   loadLikedSongs() {
@@ -30,5 +35,22 @@ export class SongsComponent implements OnInit {
         this.songs = songs;
       }
     );
+  }
+
+  getUserId() {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => state !== null))
+      .subscribe((authState) => {
+        this._userId = authState!.id;
+      });
+  }
+
+  dislikeSong(songId: number) {
+    this._reactionService.removeLike(songId, this._userId)
+      .subscribe({
+        next: () => {
+          this.songs = this.songs.filter((s) => s.id !== songId);
+        }
+      });
   }
 }
