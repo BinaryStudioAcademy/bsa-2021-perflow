@@ -128,7 +128,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   scrollRight = (id: string) => {
     const element = document.getElementById(id);
-    element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });    
+    element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   };
 
   scrollLeft = (id: string) => {

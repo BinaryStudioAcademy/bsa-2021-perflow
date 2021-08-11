@@ -6,12 +6,12 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./song-card.component.sass']
 })
 export class SongCardComponent {
-  @Input() 
+  @Input()
   iconURL : string;
-  @Input() 
+  @Input()
   name : string;
-  @Input() 
+  @Input()
   artist : string;
-  @Input() 
+  @Input()
   podcast : string;
 }
