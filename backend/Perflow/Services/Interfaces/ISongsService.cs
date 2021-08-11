@@ -8,5 +8,6 @@ namespace Perflow.Services.Interfaces
     {
         public Task<IEnumerable<SongReadDTO>> GetLikedSongsAsync(int userId);
         public Task<IEnumerable<SongReadDTO>> FindSongsByNameAsync(string searchTerm);
+        public Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count);
     }
 }
