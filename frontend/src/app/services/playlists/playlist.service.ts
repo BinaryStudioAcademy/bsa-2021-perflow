@@ -10,7 +10,6 @@ import { HttpInternalService } from '../http-internal.service';
   providedIn: 'root'
 })
 export class PlaylistsService {
-  [x: string]: any;
   private readonly _endpoint: string = '/api/Playlists';
   constructor(private _httpService: HttpInternalService) { }
 

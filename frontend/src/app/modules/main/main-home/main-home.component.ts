@@ -17,7 +17,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
-  private readonly _scrollingSize: number = 270;
+  private readonly _scrollingSize: number = 1530;
 
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
@@ -126,28 +126,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     });
   };
 
-  scroll = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
-  };
-
   scrollRight = (id: string) => {
     const element = document.getElementById(id);
-    let scrollingSize: number = 0;
-    if (id === 'album' || id === 'repeat' || id === 'playlist') {
-      const move = 255 * 6;
-      scrollingSize = move;
-    }
-    element?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+    element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });    
   };
 
   scrollLeft = (id: string) => {
     const element = document.getElementById(id);
-    let scrollingSize: number = 0;
-    if (id === 'album' || id === 'repeat' || id === 'playlist') {
-      const move = 255 * 6;
-      scrollingSize = move;
-    }
-    element?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
+    element?.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
   };
 }
