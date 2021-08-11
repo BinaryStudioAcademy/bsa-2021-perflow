@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -25,14 +25,12 @@ export class UserProfileEditComponent implements OnInit {
 
   getUser() {
     this._authService.getAuthStateObservable()
-      .pipe(filter((state) => state !== null))
-      .subscribe((authState) => {
-        const { id } = authState!;
-
-        this._userService.getUser(id)
-          .subscribe((result) => {
-            this.user = result;
-          });
+      .pipe(
+        filter((state) => state !== null),
+        switchMap((state) => this._userService.getUser(state!.id))
+      )
+      .subscribe((result) => {
+        this.user = result;
       });
   }
 
