@@ -13,6 +13,14 @@ export class PlaylistsService {
   private readonly _endpoint: string = '/api/Playlists';
   constructor(private _httpService: HttpInternalService) { }
 
+  getPlaylists() {
+    return this._httpService.getFullRequest<Playlist[]>(`${this._endpoint}`);
+  }
+
+  getUserCreatedPlaylists() {
+    return this._httpService.getFullRequest<Playlist[]>(`${this._endpoint}/created`);
+  }
+
   getPlaylist(id: number): Observable<Playlist> {
     return this._httpService.getRequest<Playlist>(`${this._endpoint}/${id}`);
   }
