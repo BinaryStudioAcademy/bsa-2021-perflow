@@ -12,110 +12,172 @@
 
     <!-- Accordion Information -->
     <div class="accordion-information">
-      <img class="album-icon" alt="Album" src="../../../../assets/images/Sunset.jpg">
+      <img
+        class="album-icon"
+        alt="Album"
+        src="../../../../assets/images/Sunset.jpg"
+      />
       <div class="album-info">
         <p class="type">Album</p>
         <p class="album-title">Perfect Morning</p>
-        <p class="album-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores facilis deleniti quidem atque obcaecati eaque quod tenetur odit laborum ex explicabo iste placeat, repellendus aliquid alias voluptatibus, quos incidunt? Quos.</p>
-      
+        <p class="album-description">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
+          facilis deleniti quidem atque obcaecati eaque quod tenetur odit
+          laborum ex explicabo iste placeat, repellendus aliquid alias
+          voluptatibus, quos incidunt? Quos.
+        </p>
+
         <div class="buttons">
-        <button class="ui btn-full button button-play">Play</button> 
-        <button class="ui inverted basic button btn-ghost button-save">Save</button>
+          <button class="ui btn-full button button-play">Play</button>
+          <button class="ui inverted basic button btn-ghost button-save">
+            Save
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-
-  <div class="main-content">
-    <!-- Recently played -->
+  <div class="ui segment main-home-content-body">
+    <!-- // TODO: need model -->
+    <!-- Top songs and podcasts -->
+    <div class="header-main-home-content">
+      <h4>Recently played</h4>
+    </div>
     <div class="recently-played">
-      <div class="header">Recently played</div>
-      <div class="ui grid recently-played-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
+      <div class="ui row">
         <!-- Work component -->
-        <app-recently-played-card *ngFor="let card of recentlyPlayed"></app-recently-played-card>
+        <div class="ui segment" *ngFor="let card of recentlyPlayed"></div>
+        <!-- Demonstration cards (delete them) -->
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
+        <div class="ui segment">
+          <app-recently-played-card></app-recently-played-card>
+        </div>
       </div>
     </div>
 
-
-    <!-- New Releases -->
-    <div class="items-scroll-box calmRhythms">
-      <div class="header">New releases</div>
-      <div class="list-of-items">
-        <div id="newReleases" class="items">
-          <app-circle-info-card *ngFor="let album of newReleases"
-          [name]="album.name"
-          [description]="album.authors.join(', ')"
-          [iconUrl]="album.iconURL"
-          >
+    <!-- // TODO:  id tempolary for scroll -->
+    <!-- New releases albums -->
+    <!-- <div class="header-main-home-content">
+      <h4>New releases</h4>
+    </div>
+    <div class="main-content-releases">
+      <div class="ui icon button" (click)="scrollLeft('album')">
+        <i class="large inverted angle left icon"></i>
+      </div>
+      <div class="ui container" id="album">
+        <div class="ui segment" *ngFor="let album of newReleases">
+          <app-circle-info-card
+            [name]="album.name"
+            [description]="album.authors.join(', ')"
+            [iconUrl]="album.iconURL" >
           </app-circle-info-card>
         </div>
-        <div class="scroll-button" (click)="scroll('newReleases')">
-          <i class="chevron right icon"></i>
+        <div class="ui icon button" (click)="scrollRight('album')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div> -->
+
+      <!-- // TODO:  id tempolary for scroll -->
+      <!-- Calm rhythms -->
+      <div class="header-main-home-content">
+        <h4>Calm rhythms</h4>
+      </div>
+      <div class="main-content-rhythms">
+        <div class="ui icon button" (click)="scrollLeft('playlist')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div class="ui container" id="playlist">
+          <div class="ui segment" *ngFor="let playlist of calmRhythms">
+            <app-square-info-card
+              [name]="playlist.name"
+              [description]="playlist.description"
+              [iconUrl]="playlist.iconURL"
+            >
+            </app-square-info-card>
+          </div>
+        </div>
+        <div class="ui icon button" (click)="scrollRight('playlist')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+
+      <!-- // TODO: need model -->
+      <!-- Your mix -->
+      <div class="header-main-home-content">
+        <h4>Your mix</h4>
+      </div>
+      <div class="recently-played">
+        <div class="ui row">
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+          <div class="ui segment">
+            <app-your-mix-card></app-your-mix-card>
+          </div>
+        </div>
+      </div>
+
+      <!-- // TODO: need model. id tempolary for scroll -->
+      <!-- Top 100 songs  -->
+      <div class="header-main-home-content">
+        <h4>Top 100 songs</h4>
+      </div>
+      <div class="main-content-rhythms">
+        <div class="ui icon button" (click)="scrollLeft('song')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div class="ui container" id="song">
+          <div class="ui segment" *ngFor="let playlist of calmRhythms">
+            <app-square-info-card
+              [name]="playlist.name"
+              [description]="playlist.description"
+              [iconUrl]="playlist.iconURL"
+            >
+            </app-square-info-card>
+          </div>
+        </div>
+        <div class="ui icon button" (click)="scrollRight('song')">
+          <i class="large inverted angle right icon"></i>
         </div>
       </div>
     </div>
-
-    <!-- Calm rhythms -->
-    <div class="items-scroll-box calmRhythms">
-      <div class="header">Calm rhythms</div>
-      <div class="list-of-items">
-        <div id="calmRhythms" class="items">
-          <app-square-info-card *ngFor="let playlist of calmRhythms"
-          [name]="playlist.name"
-          [description]="playlist.description"
-          [iconUrl]="playlist.iconURL"
-          >
-          </app-square-info-card>
-        </div>
-        <div class="scroll-button" (click)="scroll('calmRhythms')">
-          <i class="chevron right icon"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- Your mix -->
-    <div class="your-mix">
-      <div class="header">Your mix</div>
-      <div id="yourMix"  class="ui grid your-mix-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <!-- Work component -->
-        <app-your-mix-card *ngFor="let card of yourMix"></app-your-mix-card>
-      </div>
-    </div>
-
-
-    <!-- Top 100 songs -->
-    <div class="items-scroll-box calmRhythms">
-      <div class="header">Calm rhythms</div>
-      <div class="list-of-items">
-        <div id="top100Songs" class="items">
-          <app-square-info-card *ngFor="let song of top100Songs"
-          [name]="song.name"
-          [description]="song.description"
-          [iconUrl]="song.iconURL"
-          >
-          </app-square-info-card>
-        </div>
-        <div class="scroll-button" (click)="scroll('top100Songs')">
-          <i class="chevron right icon"></i>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- </div> -->
 </main>

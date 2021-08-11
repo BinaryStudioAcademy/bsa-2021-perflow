@@ -9,8 +9,13 @@ import { HttpInternalService } from '../http-internal.service';
   providedIn: 'root'
 })
 export class PlaylistsService {
+  [x: string]: any;
   private readonly _endpoint: string = '/api/Playlists';
   constructor(private _httpService: HttpInternalService) { }
+
+  getPlaylists(): Observable<Playlist[]> {
+    return this._httpService.getRequest<Playlist[]>(`${this._endpoint}`);
+  }
 
   getPlaylist(id: number): Observable<Playlist> {
     return this._httpService.getRequest<Playlist>(`${this._endpoint}/${id}`);
