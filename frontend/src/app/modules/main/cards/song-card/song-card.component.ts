@@ -7,11 +7,11 @@ import { Component, Input } from '@angular/core';
 })
 export class SongCardComponent {
   @Input()
-  iconURL : string;
+  iconURL: string;
   @Input()
-  name : string;
+  name: string;
   @Input()
-  artist : string;
+  artist: string;
   @Input()
-  podcast : string;
+  podcast: string;
 }
