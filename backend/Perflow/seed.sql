@@ -15,7 +15,12 @@ IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Birt
 INSERT INTO [Users] ([Id], [Birthday], [Country], [CreatedAt], [Description], [Email], [FirebaseId], [Gender], [GroupId], [IconURL], [Role], [UserName])
 VALUES (1, '1999-03-02T00:00:00.0000000+02:00', N'Ukraine', '2021-07-29T00:00:00.0000000+03:00', N'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', N'user@mail.com', N'Y6sm8RLdUQQZG0FPfUYQz5OoxG53', CAST(1 AS bit), NULL, N'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiWMxxTKJB-4WptJQP94DgYzLQJMZ4U69ASOnDvNMmvEZJwwvHx7LVXg7iwQvpK6eAeHQ&usqp=CAU', 0, N'user'),
 (2, '1940-10-09T00:00:00.0000000+03:00', N'Great Britain', '2021-07-28T00:00:00.0000000+03:00', N' Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s.', N'artist@mail.com', N'cPknpzguENTOBGdc7LMO5t84ABj2', CAST(1 AS bit), NULL, N'https://cdn.ananasposter.ru/image/cache/catalog/poster/music/85/8817-1000x830.jpg', 1, N'artist'),
-(3, '1942-06-18T00:00:00.0000000+03:00', N'Great Britain', '2021-07-27T00:00:00.0000000+03:00', N'It was popularised in the 1960s.', N'moderator@mail.com', N'w7Ww4Ep1sxRKpu73CuiMZDM3bjr2', CAST(1 AS bit), NULL, N'https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg', 2, N'moderator');
+(3, '1942-06-18T00:00:00.0000000+03:00', N'Great Britain', '2021-07-27T00:00:00.0000000+03:00', N'It was popularised in the 1960s.', N'moderator@mail.com', N'w7Ww4Ep1sxRKpu73CuiMZDM3bjr2', CAST(1 AS bit), NULL, N'https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg', 2, N'moderator'),
+(4, '1942-06-18T00:00:00.0000000+03:00', N'Great Britain', '2021-07-27T00:00:00.0000000+03:00', N'It was popularised in the 1960s.', N'sheeran@gmail.com', N'w7Ww4Ep1sxRKpu73CuiMZDM3bjr2', CAST(1 AS bit), NULL, N'https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg', 1, N'Ed Sheeran'),
+(5, '1942-06-18T00:00:00.0000000+03:00', N'Great Britain', '2021-07-27T00:00:00.0000000+03:00', N'It was popularised in the 1960s.', N'palomaMami@mail.ru', N'w7Ww4Ep1sxRKpu73CuiMZDM3bjr2', CAST(1 AS bit), NULL, N'https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg', 1, N'Paloma Mami'),
+(6, '1942-06-18T00:00:00.0000000+03:00', N'Great Britain', '2021-07-27T00:00:00.0000000+03:00', N'It was popularised in the 1960s.', N'maroon@gmail.com', N'w7Ww4Ep1sxRKpu73CuiMZDM3bjr2', CAST(1 AS bit), 1, N'https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg', 1, N'Adam Levine'),
+(7, '1942-06-18T00:00:00.0000000+03:00', N'Great Britain', '2021-07-27T00:00:00.0000000+03:00', N'It was popularised in the 1960s.', N'danReynolds@gmail.com', N'w7Ww4Ep1sxRKpu73CuiMZDM3bjr2', CAST(1 AS bit), 2, N'https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg', 1, N'Dan Reynolds'),
+(8, '1942-06-18T00:00:00.0000000+03:00', N'Great Britain', '2021-07-27T00:00:00.0000000+03:00', N'It was popularised in the 1960s.', N'oxxymiron@gmail.com', N'w7Ww4Ep1sxRKpu73CuiMZDM3bjr2', CAST(1 AS bit), NULL, N'https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg', 1, N'Oxxymiron');
 IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Birthday', N'Country', N'CreatedAt', N'Description', N'Email', N'FirebaseId', N'Gender', N'GroupId', N'IconURL', N'Role', N'UserName') AND [object_id] = OBJECT_ID(N'[Users]'))
     SET IDENTITY_INSERT [Users] OFF;
 GO
@@ -47,14 +52,38 @@ IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Acce
     SET IDENTITY_INSERT [Playlists] OFF;
 GO
 
-IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'IconURL', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
     SET IDENTITY_INSERT [Songs] ON;
-INSERT INTO [Songs] ([Id], [AlbumId], [ArtistId], [AuthorType], [CreatedAt], [Duration], [GroupId], [HasCensorship], [IconURL], [Name])
-VALUES (1, 1, 3, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg', N'That Would Be Something'),
-(2, 2, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg', N'Mind Games'),
-(3, 2, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg', N'Imagine'),
-(4, 3, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg', N'Only People');
-IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'IconURL', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
+INSERT INTO [Songs] ([Id], [AlbumId], [ArtistId], [AuthorType], [CreatedAt], [Duration], [GroupId], [HasCensorship], [Name])
+VALUES (1, 1, 3, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'That Would Be Something'),
+(2, 2, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(1 AS bit), N'Mind Games'),
+(3, 2, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Imagine'),
+(4, 3, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Only People'),
+(5, 4, 4, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Shape Of You'),
+(6, 5, 4, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(1 AS bit), N'Perfect'),
+(7, 6, 4, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Thinking Out Loud'),
+(8, 7, 4, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Photograph'),
+(9, 8, 5, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'Fingías'),
+(10, 9, 5, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'For Ya'),
+(11, 10, 5, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'No Te Enamores'),
+(12, 4, 5, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit),  N'Not Steady'),
+(13, 5, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 2, 1, CAST(0 AS bit), N'Payphone'),
+(14, 6, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 4, 1, CAST(0 AS bit), N'This Love'),
+(15, 7, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 2, 1, CAST(1 AS bit), N'Animals'),
+(16, 8, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 3, 1, CAST(0 AS bit), N'Sugar'),
+(17, 9, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 2, 2, CAST(0 AS bit), N'Believer'),
+(18, 10, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 4, 2, CAST(0 AS bit), N'Bad Liar'),
+(19, 4, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 2, 2, CAST(0 AS bit), N'Thunder'),
+(20, 5, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 3, 2, CAST(1 AS bit), N'Radioactive'),
+(21, 6, 8, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'KONSTRUKT'),
+(22, 7, 8, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Fata Morgana'),
+(23, 8, 8, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Russky Cockney'),
+(24, 9, 8, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(1 AS bit), N'XXX Shop'),
+(25, 10, 8, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'REALITY'),
+(26, 4, 4, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Happier'),
+(27, 5, 5, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'No Te Debí Besar'),
+(28, 6, NULL, 1, '2020-09-09T00:00:00.0000000+03:00', 3, 1, CAST(0 AS bit), N'Wait');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
     SET IDENTITY_INSERT [Songs] OFF;
 GO
 

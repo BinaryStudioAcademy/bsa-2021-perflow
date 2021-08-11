@@ -92,7 +92,8 @@ namespace Perflow.Services.Implementations
             var song = await context.Songs
                 .FirstOrDefaultAsync(song => song.Id == playlistSongDTO.SongId);
 
-            var playlistSong = new PlaylistSong {
+            var playlistSong = new PlaylistSong
+            {
                 Playlist = playlist,
                 Song = song
             };
@@ -131,6 +132,16 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             return mapper.Map<ICollection<SongReadDTO>>(songs);
+        }
+
+        public async Task<IEnumerable<PlaylistViewDTO>> GetPlaylistsByAuthorIdAsync(int authorId)
+        {
+            var playlists = await context.Playlists
+                .Where(p => p.AuthorId == authorId)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<PlaylistViewDTO>>(playlists);
         }
     }
 }

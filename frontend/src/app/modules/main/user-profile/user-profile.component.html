@@ -1,0 +1,44 @@
+<main>
+  <div class="accordion">
+    <!-- Accordion Information -->
+    <div class="accordion-information">
+        <img class="user-avatar" alt="Avatar" src="https://s3-alpha-sig.figma.com/img/5ba6/3340/8981907adb4cdc9c14be2ac429a30ff6?Expires=1628467200&Signature=F0KRMuqseJflr9PZvKCf6GeWuVkI9hxAeXrvKSVMPdGcHY98Sltas2~pAn~wNyFkRV3Inyn-qL1f5-k~HLx58EeYG75xZSwBIpWNZVOUp8vrB2jKl9ojIT557f7OPVQ0yYGx6vjTCGB8uPbaGp9DWR9JJVuzpuyR0kn~eRTmaO8cveSQDC9rDf-rizQ3JeupdUS-KBv-InGcQ5u7tQLjD1QsUFXLtLg7AB-ZNxPpy6xB9bZKK44HUOu8G6NZIpZOY6cLILsfKwGx-ULoGo8jubwtNrspmAf8N0Zi-JrQmuq1c0JeNdankoH8Mp0CR0b~N~7~voG7LGo16pKRTjJHMg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
+        <div class="user-info">
+          <div class="user-profile">Profile</div>
+          <div class="ui dropdown" (click)="showProfileMenu()" (clickOutside)="onClickOutsideProfileMenu($event)">
+            <i class="ellipsis vertical icon"></i>
+            <div class="right menu dropdown-content" *ngIf="isProfileMenuShown">
+              <a routerLink="/" class="item"><i class="edit icon"></i> Edit Profile</a>
+              <a routerLink="/" class="item"><i class="share alternate icon"></i> Share Profile</a>
+            </div>
+          </div>
+          <p class="user-name">marc_dorwart</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="ui grid">
+      <!-- Top artists -->
+      <div class="sixteen column row top-artists">
+        <div class="header">Top artists this month</div>
+        <div id="topArtists" class="top-artists-cont">
+          <!-- Demonstration cards (delete them) -->
+          <app-top-artists-card></app-top-artists-card>
+          <app-top-artists-card></app-top-artists-card>
+          <app-top-artists-card></app-top-artists-card>
+          <!-- Work component -->
+          <app-top-artists-card *ngFor="let card of topArtists"></app-top-artists-card>
+        </div>
+        <div class="scroll-box">
+          <button class="scroll-button" (click)="scroll('topArtists')">
+            <i class="chevron right icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="sixteen column row top-songs">
+        <div class="header">Top songs this month</div>
+        <app-songs-list [songs]="topSongs"></app-songs-list>
+      </div>
+    </div>
+</main>

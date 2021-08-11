@@ -54,7 +54,7 @@
         <div id="newReleases" class="items">
           <app-circle-info-card *ngFor="let album of newReleases"
           [name]="album.name"
-          [description]="album.description"
+          [description]="album.authors.join(', ')"
           [iconUrl]="album.iconURL"
           >
           </app-circle-info-card>

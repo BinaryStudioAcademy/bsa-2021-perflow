@@ -118,5 +118,11 @@ namespace Perflow.Controllers
 
             return Ok(await _playlistService.DeleteEntityAsync(id));
         }
+
+        [HttpGet("byAuthor/{authorId}")]
+        public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetPlaylistsByAuthorIdAsync(int authorId)
+        {
+            return Ok(await _playlistService.GetPlaylistsByAuthorIdAsync(authorId));
+        }
     }
 }
