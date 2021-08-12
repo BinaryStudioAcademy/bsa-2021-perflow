@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -29,17 +31,20 @@ export class SongsService {
 
   getSongById = (id: number) => this._httpService.getRequest<Song>(`/api/songs/${id}`);
 
-  uploadSong = (songForWrite: SongWriteDTO, song: File) => this._uploadSongInfo(songForWrite).pipe(
-    map((response) => ({ response, obs: this._uploadSongFile(song, response.id) }))
+  uploadSong = (songForWrite: SongWriteDTO, song: File) => this._uploadSongFile(song).pipe(
+    map((response) => {
+      songForWrite.blobId = response.blobId;
+      return this._uploadSongInfo(songForWrite);
+    })
   );
 
-  private _uploadSongFile = (song: File, id: number) => {
+  private _uploadSongFile = (song: File) => {
     const formData = new FormData();
 
     formData.append('file', song, song.name);
 
-    return this._httpService.postClearRequest<SongWriteDTO>(
-      `/api/Songs/upload/${id}`,
+    return this._httpService.postRequest<{ blobId: string }>(
+      '/api/Songs/file/upload',
       formData
     );
   };
@@ -49,9 +54,10 @@ export class SongsService {
     songInfo
   );
 
-  deleteSongInfo = (id: number) => this._httpService.deleteRequest(
+  deleteSong = (id: number) => this._httpService.deleteRequest(
     `/api/Songs/delete/${id}`
   );
+
   getTopSongsByAuthorId(id: number, count: number) {
     const httpParams = { count };
     return this._httpService.getRequest<Song[]>(`/api/songs/topSongs/${id}`, httpParams);

@@ -16,18 +16,18 @@ namespace Shared.AzureBlobStorage.Services
             _blobServiceClient = blobServiceClient;
         }
 
-        public async Task<bool> DeleteFileBlobAsync(string blobContainerName, int id)
+        public async Task<bool> DeleteFileBlobAsync(string blobContainerName, string blobId)
         {
             var containerClient = GetContainerClient(blobContainerName);
-            var blobClient = containerClient.GetBlobClient(id.ToString());
+            var blobClient = containerClient.GetBlobClient(blobId);
 
             return await blobClient.DeleteIfExistsAsync();
         }
 
-        public async Task<BlobDto> DownloadFileBlobAsync(string blobContainerName, int id)
+        public async Task<BlobDto> DownloadFileBlobAsync(string blobContainerName, string blobId)
         {
             var containerClient = GetContainerClient(blobContainerName);
-            var blobClient = containerClient.GetBlobClient(id.ToString());
+            var blobClient = containerClient.GetBlobClient(blobId);
 
             if (await blobClient.ExistsAsync())
             {
@@ -40,7 +40,7 @@ namespace Shared.AzureBlobStorage.Services
         public async Task<Uri> UploadFileBlobAsync(string blobContainerName, BlobDto file)
         {
             var containerClient = GetContainerClient(blobContainerName);
-            var blobClient = containerClient.GetBlobClient(file.Id.ToString());
+            var blobClient = containerClient.GetBlobClient(file.Guid);
 
             await blobClient.UploadAsync(file.Content, new BlobHttpHeaders { ContentType = file.ContentType });
 

@@ -18,6 +18,7 @@ namespace Perflow.Common.DTO.Songs
         AlbumReadDTO Album,
         int Duration,
         bool HasCensorship,
+        string BlobId,
         DateTimeOffset CreatedAt
     );
 }
