@@ -29,6 +29,11 @@ namespace Shared.Auth.Extensions
             return HandleAuthTaskAsync(auth.DeleteUserAsync(uid));
         }
 
+        public static Task<OneOf<Success, FirebaseAuthException>> TryUpdateUserAsync(this FirebaseAuth auth, UserRecordArgs args)
+        {
+            return HandleAuthTaskAsync(auth.UpdateUserAsync(args));
+        }
+
         private static async Task<OneOf<Success, FirebaseAuthException>> HandleAuthTaskAsync(Task task)
         {
             try
