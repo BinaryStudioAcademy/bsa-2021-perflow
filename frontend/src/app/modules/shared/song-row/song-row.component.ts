@@ -51,9 +51,10 @@ export class SongRowComponent {
     const testSong = new SongInfo(
       this.song.name,
       this.song.artist.userName,
-      links.find((s) => s.id === this.song.id)!.link,
+      links.find((s) => s.id === 1)!.link,
       this.song.iconURL
     );
+
     this._toolbarService.updateSong(testSong);
   };
 }
