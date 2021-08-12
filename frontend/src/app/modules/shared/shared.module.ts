@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdown.directive';
 import { SemanticCalendarDirective } from './directives/calendar/semantic-calendar.directive';
 import { SemanticMessageDirective } from './directives/message/semantic-message.directive';
@@ -18,6 +19,7 @@ import { SongDurationPipe } from './pipes/song-duration.pipe';
 import { ItemsSumPipe } from './pipes/items-sum.pipe';
 import { AlbumDurationPipe } from './pipes/album-duration.pipe';
 import { SearchSongRowComponent } from './playlist/search-song-row/search-song-row.component';
+import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 
 @NgModule({
   declarations: [
@@ -38,11 +40,13 @@ import { SearchSongRowComponent } from './playlist/search-song-row/search-song-r
     SongDurationPipe,
     ItemsSumPipe,
     AlbumDurationPipe,
-    SearchSongRowComponent
+    SearchSongRowComponent,
+    ImageCropperComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ImageCropperModule
   ],
   exports: [
     SemanticDropdownDirective,
