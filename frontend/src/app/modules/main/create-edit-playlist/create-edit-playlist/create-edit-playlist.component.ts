@@ -97,7 +97,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       id: 0,
       name: 'Playlist title',
       accessType: AccessType.default,
-      author: { id: this.userId } as User // must be current auth user here
+      author: { id: this.userId } as User
     };
 
     this._playlistService.createPlaylist(this.playlist)
