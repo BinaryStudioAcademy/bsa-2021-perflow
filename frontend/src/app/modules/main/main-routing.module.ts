@@ -34,6 +34,8 @@ const routes: Routes = [{
     {
       path: 'playlists',
       children: [
+        { path: 'edit/:id', component: CreateEditPlaylistComponent },
+        { path: 'create', component: CreateEditPlaylistComponent },
         {
           path: '',
           component: PlaylistComponent,
@@ -43,9 +45,7 @@ const routes: Routes = [{
             { path: 'all', component: AllComponent },
             { path: '**', redirectTo: 'all' }
           ]
-        },
-        { path: 'create', component: CreateEditPlaylistComponent },
-        { path: 'edit/:id', component: CreateEditPlaylistComponent }
+        }
       ]
     },
     { path: 'songs', component: SongsComponent },
