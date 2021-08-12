@@ -18,10 +18,10 @@ export class AlbumsPageComponent {
     private _authService: AuthService
   ) {
     this._authService.getAuthStateObservable().subscribe(
-      value => {
+      (value) => {
         this.userId = value!.id;
       }
-    )
+    );
   }
 
   ngOnInit(): void {

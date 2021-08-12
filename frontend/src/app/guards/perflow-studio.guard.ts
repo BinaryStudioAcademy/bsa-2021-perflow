@@ -10,8 +10,8 @@ export class PerflowStudioGuard extends AuthGuard {
   protected canActivateObservable() {
     return this.authService.getAuthStateObservable().pipe(
       map((value) => {
-        if (value?.role === UserRoles.artist || 
-            value?.role === UserRoles.moderator) {
+        if (value?.role === UserRoles.artist
+            || value?.role === UserRoles.moderator) {
           return true;
         }
         return this.router.parseUrl('/');
