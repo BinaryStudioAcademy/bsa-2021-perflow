@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, switchMap, takeUntil
+  debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
 } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { AccessType } from 'src/app/models/playlist/accessType';
@@ -13,6 +13,7 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 import { User } from 'src/app/models/user/user';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -26,6 +27,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   previousPlaylistData: EditedPlaylist;
   playlist = {} as Playlist;
   searchValue: string;
+  userId: number;
 
   private _id: number | undefined;
 
@@ -36,8 +38,15 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _playlistService: PlaylistsService,
     private _songService: SongsService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
-  ) { }
+    private _activatedRoute: ActivatedRoute,
+    private _authService: AuthService
+  ) {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe((authState) => {
+        this.userId = authState!.id;
+      });
+  }
 
   ngOnInit() {
     this._activatedRoute.paramMap.pipe(
@@ -88,7 +97,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       id: 0,
       name: 'Playlist title',
       accessType: AccessType.default,
-      author: { id: 1 } as User // must be current auth user here
+      author: { id: this.userId } as User
     };
 
     this._playlistService.createPlaylist(this.playlist)
