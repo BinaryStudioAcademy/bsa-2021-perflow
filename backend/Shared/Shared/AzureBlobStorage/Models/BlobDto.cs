@@ -8,6 +8,6 @@ namespace Shared.AzureBlobStorage.Models
     {
         public Stream Content { get; set; }
         public string ContentType { get; set; }
-        public int Id { get; set; }
+        public string Guid { get; set; }
     }
 }

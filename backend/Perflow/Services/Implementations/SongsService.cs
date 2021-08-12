@@ -67,8 +67,10 @@ namespace Perflow.Services.Implementations
             return mapper.Map<SongReadDTO>(songs);
         }
 
-        public async Task UploadSongAsync(IFormFile song, int id)
+        public async Task<string> UploadSongAsync(IFormFile song)
         {
+            var guid = Guid.NewGuid().ToString();
+
             if (song == null)
                 throw new ArgumentNullException(nameof(song), "Argument cannot be null");
 
@@ -81,8 +83,10 @@ namespace Perflow.Services.Implementations
             {
                 Content = song.OpenReadStream(),
                 ContentType = song.ContentType,
-                Id = id
+                Guid = guid
             });
+
+            return guid;
         }
 
         public async Task<SongWriteDTO> AddSongInfoAsync(SongWriteDTO songInfo)
@@ -98,24 +102,26 @@ namespace Perflow.Services.Implementations
             return mapper.Map<SongWriteDTO>(result);
         }
 
-        public async Task<FileContentResult> GetSongFileAsync(int id)
+        public async Task<FileContentResult> GetSongFileAsync(string blobId)
         {
-            var blob = await _blobService.DownloadFileBlobAsync("songs", id);
+            var blob = await _blobService.DownloadFileBlobAsync("songs", blobId);
             var file = await FileTransformer.BlobToByteArrayAsync(blob);
 
             return new FileContentResult(file, blob.ContentType);
         }
 
-        public async Task RemoveSongInfoAsync(int id)
+        public async Task RemoveSongAsync(int id)
         {
-            var songs = context.Songs.Where(x => x.Id == id);
+            var song = context.Songs.First(x => x.Id == id);
 
-            if (!songs.Any())
+            if (song == null)
             {
                 throw new ArgumentException("Song does not exist");
             }
 
-            context.Songs.RemoveRange(songs);
+            await _blobService.DeleteFileBlobAsync("songs", song.BlobId);
+
+            context.Songs.Remove(song);
 
             await context.SaveChangesAsync();
         }

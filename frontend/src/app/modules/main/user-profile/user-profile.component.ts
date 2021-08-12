@@ -18,7 +18,7 @@ export class UserProfileComponent implements OnInit {
 
   private readonly _scrollingSize: number = 270;
 
-  user: User;
+  user: User = {} as User;
   topArtists: Artist[] = [];
   topSongs: Song[] = [];
 

@@ -2,7 +2,7 @@
     <div class="sm-row">
         <div class="column song-number">
             <span class="number">{{number}}</span>
-            <i class="play icon"></i>
+            <i class="play icon" (click)="playSong(song.id)"></i>
         </div>
         <div class="column like" >
             <i class="heart outline icon" (click)="clickLikeIcon(song.id)"></i>

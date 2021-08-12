@@ -1,9 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Playlist } from 'src/app/models/playlist';
 import { HttpInternalService } from 'src/app/services/http-internal.service';
+import { SongToolbarService } from 'src/app/services/song-toolbar.service';
+import { SongsService } from 'src/app/services/songs/songs.service';
+import { SongImageComponent } from '../../shared/upload/song-image/song-image.component';
 
 /* eslint-disable no-console */
 
@@ -14,6 +17,12 @@ import { HttpInternalService } from 'src/app/services/http-internal.service';
 })
 export class PlaylistComponent {
   playlists: Playlist[] = [];
+
+  toolbarService: SongToolbarService;
+  songsService: SongsService;
+
+  @ViewChild(SongImageComponent)
+  upload: SongImageComponent;
 
   constructor(private _httpService: HttpInternalService) {
     this.loadPlaylist();
