@@ -59,7 +59,6 @@
             <input type="checkbox" form="formEdit" [(ngModel)]="editedAlbum.isPublished" #isPublished="ngModel" name="isPublished">
             <label for="isPublished">Published Album</label>
           </div>
-
           <div class="option ui checkbox">
             <input type="checkbox" form="formEdit" [(ngModel)]="editedAlbum.isSingle" #isSingle="ngModel" name="isSingle">
             <label for="isSingle">Single</label>
@@ -71,10 +70,10 @@
           <div class="ui field">
             <select class="ui dropdown dropdown-input" name="authorType" [ngModel]="editedAlbum.authorType"  
               (ngModelChange)="editedAlbum.authorType=$event;" (ngModelChange)="authorTypeChange()" #authorType="ngModel" required>
-              <option [hidden]="!groups?.length && authorType===1" *ngFor="let authorType of albumAuthorTypeValues" [ngValue]="authorType">{{authorType | authorType }}</option>
+              <option [ngValue]="albumAuthorTypeValues[0]">{{ userName }}</option>
+              <option [hidden]="!groups?.length" [ngValue]="albumAuthorTypeValues[1]">Ghoose a group...</option>
             </select>
           </div>
-
           <!-- Select Region -->
           <div class="ui field">
             <select class="ui dropdown dropdown-input" name="albumRegion" [ngModel]="editedAlbum.region"  
@@ -82,7 +81,6 @@
               <option *ngFor="let albumRegion of albumRegionValues" [ngValue]="albumRegion">{{albumRegion | albumRegion}}</option>
             </select>
           </div>
-        
           <!-- Year -->
           <div class="ui field year">
             <input type="number" class="ui number-input"  name="releaseYear" [(ngModel)]="editedAlbum.releaseYear"  
@@ -99,7 +97,7 @@
             </select>
           </div>
         </div>
-
+        
         <!-- Buttons -->
         <div class="ui field buttons-row">
           <div class="form-group">

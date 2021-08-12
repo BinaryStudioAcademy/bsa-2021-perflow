@@ -6,9 +6,8 @@ import { AlbumRegion } from 'src/app/models/album/album-region';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { AlbumService } from 'src/app/services/album.service';
 import { Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-create-edit-album',
@@ -33,8 +32,6 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
 
   editedAlbum: AlbumEdit = {} as AlbumEdit;
   albumSongs: Array<Song> = new Array<Song>();
-  currentUser: { id: number, userName: string };
-
   isModalShown = false;
 
   private _unsubscribe$ = new Subject<void>();
@@ -44,9 +41,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   constructor(
     private _albumService: AlbumService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute,
-    private _authService: AuthService
-  ) {}
+    private _activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this._activatedRoute.paramMap.pipe(
@@ -54,8 +50,6 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     ).subscribe((data) => {
       this._id = +data;
     });
-
-    this.getCurrentUser();
 
     if (this._id) {
       this.startEditMode();
@@ -84,37 +78,17 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
           this._router.navigateByUrl('/albums');
         }
       });
-
-    // Get albums songs here
-  }
-
-  createPlaylist(album: AlbumEdit) {
-    this._albumService.createAlbum(album)
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: (data) => {
-          this._router.navigateByUrl(`/albums/edit/${data.id}`);
-        }
-      });
   }
 
   showEditAlbumModal = () => {
     this.editedAlbum = {
       ...this.album,
-      authorId: this.currentUser?.id,
+      authorId: this.album.id,
       groupId: this.album.group?.id,
-      createdAt: new Date() // delete this
+      createdAt: new Date()
     };
 
     this.isModalShown = !this.isModalShown;
-  };
-
-  getCurrentUser = () => {
-    this._authService.getAuthStateObservable()
-      .pipe(filter((state) => state !== null))
-      .subscribe((authState) => {
-        this.currentUser = { id: authState!.id, userName: authState!.userName };
-      });
   };
 
   onSubmitModal = (data: AlbumEdit) => {
@@ -128,11 +102,20 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     }
   };
 
+  createPlaylist(album: AlbumEdit) {
+    this._albumService.createAlbum(album)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this._router.navigateByUrl(`/albums/edit/${data.id}`);
+        }
+      });
+  }
+
   editAlbum = (album: AlbumEdit) => {
     this.editedAlbum = {
       ...this.editedAlbum,
-      name: album.name.trim() === '' ? 'Album name' : album.name,
-      authorId: this.editedAlbum.authorType === AuthorType.artist ? this.currentUser.id : undefined
+      name: album.name.trim() === '' ? 'Album name' : album.name
     };
 
     this._albumService.editAlbum(this.editedAlbum)

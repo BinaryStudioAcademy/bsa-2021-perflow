@@ -6,8 +6,6 @@ import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumRegion } from 'src/app/models/album/album-region';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { Group } from 'src/app/models/group/group';
-import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
-import { ArtistsService } from 'src/app/services/artists/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GroupService } from 'src/app/services/group.service';
 
@@ -29,8 +27,8 @@ export class EditAlbumModalComponent implements OnInit {
   ];
 
   groups: Group[];
-  artists: ArtistReadDTO[];
   userId: number;
+  userName: string;
   tempIconURL: string;
 
   @Input() editedAlbum: AlbumEdit = { } as AlbumEdit;
@@ -39,7 +37,6 @@ export class EditAlbumModalComponent implements OnInit {
   @Output() editAlbum = new EventEmitter<AlbumEdit>();
 
   constructor(
-    private _artistService: ArtistsService,
     private _groupService: GroupService,
     private _authService: AuthService
   ) {
@@ -47,13 +44,13 @@ export class EditAlbumModalComponent implements OnInit {
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;
+        this.userName = authState!.userName;
         this.getGroups();
       });
   }
 
   ngOnInit() {
     this.tempIconURL = this.editedAlbum.iconURL;
-    this.getArtists();
   }
 
   getGroups = () => {
@@ -65,23 +62,14 @@ export class EditAlbumModalComponent implements OnInit {
       });
   };
 
-  getArtists = () => {
-    this._artistService.getAllArtists()
-      .subscribe({
-        next: (data) => {
-          this.artists = data;
-        }
-      });
-  };
-
   public onSubmit() {
     this.editedAlbum.iconURL = this.tempIconURL;
-    this.editedAlbum.authorId = this.userId;
-    this.editAlbum.emit(this.editedAlbum);
-  }
 
-  cancelModal() {
-    this.isClosed.emit();
+    if (this.editedAlbum.authorType === AuthorType.artist) {
+      this.editedAlbum.authorId = this.userId;
+    }
+
+    this.editAlbum.emit(this.editedAlbum);
   }
 
   loadIcon = (event: Event) => {
@@ -102,6 +90,10 @@ export class EditAlbumModalComponent implements OnInit {
   clickOnModal = (event: Event) => {
     event.stopPropagation();
   };
+
+  cancelModal() {
+    this.isClosed.emit();
+  }
 
   authorTypeChange = () => {
     if (this.editedAlbum.authorType === AuthorType.group) {
