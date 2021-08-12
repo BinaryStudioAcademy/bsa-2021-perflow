@@ -7,6 +7,9 @@ import { Album } from 'src/app/models/album/album';
 import { AlbumFull } from 'src/app/models/album/album-full';
 import { AlbumService } from 'src/app/services/album.service';
 import { ClipboardService } from 'ngx-clipboard';
+import { ReactionService } from 'src/app/services/reaction.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-album-details',
@@ -15,18 +18,21 @@ import { ClipboardService } from 'ngx-clipboard';
 })
 export class AlbumDetailsComponent implements OnInit {
   private readonly _scrollingSize: number = 240;
+  private _userId: number;
 
   @ViewChild('albums') albumsElement: ElementRef;
   album: AlbumFull = {} as AlbumFull;
   anotherAlbums: Album[] = [];
 
   constructor(private _clipboardApi: ClipboardService, private _route: ActivatedRoute, private _service: AlbumService,
-    private _router: Router, private _location: PlatformLocation) {
+    private _reactionService: ReactionService, private _router: Router, private _location: PlatformLocation,
+    private _authService: AuthService) {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit() {
     this.loadData();
+    this.getUserId();
   }
 
   loadData() {
@@ -37,6 +43,15 @@ export class AlbumDetailsComponent implements OnInit {
           this.loadAnotherAlbums();
         }
       );
+  }
+
+  getUserId() {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe(
+        (state) => {
+          this._userId = state!.id
+        });
   }
 
   loadAnotherAlbums() {
@@ -51,6 +66,32 @@ export class AlbumDetailsComponent implements OnInit {
           this.anotherAlbums.splice(index, 1);
         }
       );
+  }
+
+  likeAlbum() {
+    this._reactionService.addAlbumReaction(this.album.id, this._userId)
+      .subscribe(
+        () => {
+          this.album.isLiked = true;
+        }
+      );
+  }
+
+  dislikeAlbum() {
+    this._reactionService.removeAlbumReaction(this.album.id, this._userId)
+      .subscribe(
+        () => {
+          this.album.isLiked = false;
+        }
+      );
+  }
+
+  dislikeSong(songId: number) {
+    this._reactionService.removeLike(songId, this._userId).subscribe();
+  }
+
+  likeSong(songId: number) {
+    this._reactionService.likeSong(songId, this._userId).subscribe();
   }
 
   scroll() {

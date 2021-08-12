@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Songs;
+using Perflow.Common.DTO.Users;
+using Perflow.Common.Helpers;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
@@ -32,13 +35,31 @@ namespace Perflow.Services.Implementations
             return mapper.Map<Album>(entity);
         }
 
-        public async Task<AlbumFullDTO> GetAlbumFullAsync(int id)
+        public async Task<AlbumFullDTO> GetAlbumFullAsync(int id, int userId)
         {
             var album = await context.Albums.Include(a => a.Songs)
                                                 .ThenInclude(s => s.Artist)
+                                            .Include(a => a.Songs)
+                                                .ThenInclude(s => s.Album)
+                                            .Include(a => a.Songs)
+                                                .ThenInclude(s => s.Group)
                                             .Include(a => a.Author)
                                             .Include(a => a.Group)
                                             .AsNoTracking()
+                                            .Select(a => new AlbumFullDTO
+                                            {
+                                                Id = a.Id,
+                                                Name = a.Name,
+                                                ReleaseYear = a.ReleaseYear,
+                                                IconURL = a.IconURL,
+                                                Songs = a.Songs
+                                                .Select(s =>
+                                                mapper.Map<LikedSong, SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
+                                                ),
+                                                Artist = mapper.Map<User, ArtistForAlbumDTO>(a.Author),
+                                                Group = mapper.Map<Group, GroupForAlbumDTO>(a.Group),
+                                                IsLiked = a.Reactions.Any(r => r.UserId == userId)
+                                            })
                                             .FirstOrDefaultAsync(e => e.Id == id);
 
             if (album == null)
@@ -46,7 +67,7 @@ namespace Perflow.Services.Implementations
                 throw new NotFoundExcepion($"{nameof(Album)} not found");
             }
 
-            return mapper.Map<AlbumFullDTO>(album);
+            return album;
         }
 
         public async Task<ICollection<AlbumReadDTO>> GetAlbumsByArtist(int artistId)
@@ -81,7 +102,7 @@ namespace Perflow.Services.Implementations
                     Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? s.Artist.UserName : s.Group.Name).ToList()
                 })
                 .ToListAsync();
-            foreach(var entity in entities)
+            foreach (var entity in entities)
             {
                 entity.Authors = entity.Authors.Distinct();
             }

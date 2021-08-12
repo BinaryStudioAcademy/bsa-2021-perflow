@@ -19,6 +19,7 @@ export class SongRowComponent {
   @Input() number: number;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
+  @Output() clickDislike = new EventEmitter<number>();
   @Output() clickLike = new EventEmitter<number>();
 
   constructor(
@@ -31,8 +32,14 @@ export class SongRowComponent {
     this.clickMenuItem.emit({ menuItem: menu, song: this.song });
   }
 
+  clickDislikeIcon(songId: number) {
+    this.clickDislike.emit(songId);
+    this.song.isLiked = false;
+  }
+
   clickLikeIcon(songId: number) {
     this.clickLike.emit(songId);
+    this.song.isLiked = true;
   }
 
   playSong = (id: number) => {
