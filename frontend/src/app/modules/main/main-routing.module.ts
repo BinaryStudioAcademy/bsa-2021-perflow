@@ -22,7 +22,8 @@ const routes: Routes = [{
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard],
   children: [
-    { path: '', component: MainHomeComponent },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'home', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
     {
       path: 'profile',

@@ -70,7 +70,8 @@ import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-ca
   ],
   exports: [
     ClickOutsideModule,
-    ProfileMenuComponent
+    ProfileMenuComponent,
+    AlbumCardComponent
   ]
 })
 export class MainModule {
