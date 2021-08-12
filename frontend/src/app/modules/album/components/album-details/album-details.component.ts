@@ -50,8 +50,9 @@ export class AlbumDetailsComponent implements OnInit {
       .pipe(filter((state) => !!state))
       .subscribe(
         (state) => {
-          this._userId = state!.id
-        });
+          this._userId = state!.id;
+        }
+      );
   }
 
   loadAnotherAlbums() {

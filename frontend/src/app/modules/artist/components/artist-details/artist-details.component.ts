@@ -34,7 +34,7 @@ export class ArtistDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
-    this. getUserId();
+    this.getUserId();
   }
 
   loadData() {
@@ -55,8 +55,9 @@ export class ArtistDetailsComponent implements OnInit {
       .pipe(filter((state) => !!state))
       .subscribe(
         (state) => {
-          this._userId = state!.id
-        });
+          this._userId = state!.id;
+        }
+      );
   }
 
   loadTopSongs() {

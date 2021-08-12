@@ -61,7 +61,7 @@ export class SongRowComponent {
       links.find((s) => s.id === 1)!.link,
       this.song.album.iconURL
     );
-    
+
     this._toolbarService.updateSong(testSong);
   };
 }
