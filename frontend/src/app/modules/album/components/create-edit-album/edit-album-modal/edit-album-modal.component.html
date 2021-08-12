@@ -71,7 +71,7 @@
             <select class="ui dropdown dropdown-input" name="authorType" [ngModel]="editedAlbum.authorType"  
               (ngModelChange)="editedAlbum.authorType=$event;" (ngModelChange)="authorTypeChange()" #authorType="ngModel" required>
               <option [ngValue]="albumAuthorTypeValues[0]">{{ userName }}</option>
-              <option [hidden]="!groups?.length" [ngValue]="albumAuthorTypeValues[1]">Ghoose a group...</option>
+              <option [hidden]="!groups?.length" [ngValue]="albumAuthorTypeValues[1]">Group</option>
             </select>
           </div>
           <!-- Select Region -->
