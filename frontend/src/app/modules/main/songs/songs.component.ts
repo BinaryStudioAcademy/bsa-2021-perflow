@@ -15,6 +15,8 @@ import { SongsService } from '../../../services/songs/songs.service';
 
 export class SongsComponent implements OnInit {
   songs: Song[] = [];
+  userName: string;
+
   private _userId: number;
 
   constructor(
@@ -26,7 +28,7 @@ export class SongsComponent implements OnInit {
   ngOnInit(): void {
     this.loadLikedSongs();
 
-    this.getUserId();
+    this.getUserData();
   }
 
   loadLikedSongs() {
@@ -37,11 +39,12 @@ export class SongsComponent implements OnInit {
     );
   }
 
-  getUserId() {
+  getUserData() {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => state !== null))
       .subscribe((authState) => {
         this._userId = authState!.id;
+        this.userName = authState!.userName;
       });
   }
 
