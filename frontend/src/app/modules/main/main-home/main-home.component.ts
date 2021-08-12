@@ -17,7 +17,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
-  private readonly _scrollingSize: number = 270;
+  private readonly _scrollingSize: number = 1530;
 
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
@@ -72,12 +72,12 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   // User should be able to play Calm rhythms - the newest playlists which moderator creates
-  getCalmRhythms = (): Array<Playlist> => new Array<Playlist>(15).fill(
+  getCalmRhythms = (): Array<Playlist> => new Array<Playlist>(12).fill(
     {
       id: 0,
       createdAt: new Date(),
       name: 'Fresh & Chill',
-      description: 'Ed Sheeran, Paloma Mami Maroon 5, SigalaPink, Oximer',
+      description: 'Ed Sheeran, Paloma Mami Maroon 5, SigalaPink, Oximer, Paloma Mami Maroon 5, SigalaPink, Oximer',
       iconURL: '../../../../../assets/images/playlist1.png',
       author: undefined
     }
@@ -126,8 +126,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     });
   };
 
-  scroll = (id: string) => {
+  scrollRight = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
+  };
+
+  scrollLeft = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
   };
 }

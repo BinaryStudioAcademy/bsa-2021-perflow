@@ -21,6 +21,7 @@ namespace Perflow.Domain
         public int Duration { get; set; }
 
         public bool HasCensorship { get; set; }
+        public string BlobId { get; set; }
 
         public ICollection<PlaylistSong> Playlists { get; set; }
 

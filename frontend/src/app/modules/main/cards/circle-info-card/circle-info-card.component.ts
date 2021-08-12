@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./circle-info-card.component.sass']
 })
 export class CircleInfoCardComponent {
+  @Input() id: number;
   @Input() name: string;
   @Input() description: string;
   @Input() iconUrl: string;

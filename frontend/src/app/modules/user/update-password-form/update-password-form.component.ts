@@ -33,6 +33,8 @@ export class UpdatePasswordFormComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.updatedUserPassword.emit(this.userChangePassword);
-    form.reset();
+    this.updatedUserPassword.subscribe(
+      () => form.reset()
+    );
   }
 }

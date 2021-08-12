@@ -15,12 +15,11 @@ import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
 import { ArtistCardComponent } from './cards/artist-card/artist-card.component';
+import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { SquareInfoCardComponent } from './cards/square-info-card/square-info-card.component';
 import { CircleInfoCardComponent } from './cards/circle-info-card/circle-info-card.component';
 import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
-import { AlbumListComponent } from './playlist/album-list/album-list.component';
-import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { UserModule } from '../user/user.module';
 import { AllComponent } from './playlist/all/all.component';
 import {
@@ -29,6 +28,8 @@ import {
 import {
   EditPlaylistModalComponent
 } from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
+import { SettingsComponent } from './settings/settings.component';
+import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
 
@@ -49,11 +50,13 @@ import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-ca
     ArtistListComponent,
     ArtistCardComponent,
     MainMenuProfileComponent,
-    AlbumListComponent,
+    YourMixCardComponent,
     AlbumCardComponent,
     AllComponent,
     CreateEditPlaylistComponent,
-    EditPlaylistModalComponent
+    EditPlaylistModalComponent,
+    SettingsComponent,
+    AlbumListComponent
   ],
   imports: [
     CommonModule,
@@ -70,4 +73,6 @@ import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-ca
     ProfileMenuComponent
   ]
 })
-export class MainModule { }
+export class MainModule {
+
+}

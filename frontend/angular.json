@@ -33,7 +33,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [             
+            "styles": [
               "src/styles.sass",
               "node_modules/semantic-ui-css/semantic.min.css",
               "src/assets/semantic-styles/dropdown.css",
@@ -51,7 +51,6 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb"
-                 
                 },
                 {
                   "type": "anyComponentStyle",
