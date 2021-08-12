@@ -1,1 +1,10 @@
-<p>albums-page works!</p>
+<div class="info-list">
+    <div class="albums-list">
+        <div class="albums-label">
+            <h4>Albums</h4>
+        </div>
+        <div *ngFor="let album of albums" class="album-card">
+            <app-album-card [album]="album" (delete)="deleteAlbum($event)"></app-album-card>
+        </div>    
+    </div>    
+</div>
