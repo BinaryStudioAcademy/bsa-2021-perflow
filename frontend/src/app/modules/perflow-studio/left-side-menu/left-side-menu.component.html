@@ -1,0 +1,26 @@
+<div class="ui visible sidebar vertical menu">
+  <div class="logo">
+    <a class="ui logo icon image" routerLink="./">
+      <i class="circle icon"></i>
+      <span class="name-logo">LOGO</span>
+    </a>
+  </div>
+  <div class="routers" >
+    <div class="router-link">
+      <a routerLink="./playlists" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+        <span class="circle-fire"> <i class="music icon"></i></span>
+        <h5 class="route-name">Playlists</h5>
+      </a>
+    </div>
+    <div class="router-link">
+      <a routerLink="./albums" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+        <span class="circle-fire"> <i class="gem outline icon"></i></span>
+        <h5 class="route-name">Albums</h5>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="router-container">
+  <router-outlet></router-outlet>
+</div>
