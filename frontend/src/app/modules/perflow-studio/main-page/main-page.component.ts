@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.sass']
 })
-export class MainPageComponent  {
+export class MainPageComponent {
 
 }

@@ -4,8 +4,6 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { PerflowStudioRoutingModule } from './perflow-studio-routing.module';
 import { MainModule } from '../main/main.module';
 
-
-
 @NgModule({
   declarations: [
     MainPageComponent
