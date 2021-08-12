@@ -14,12 +14,13 @@ import {
 } from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { SettingsComponent } from './settings/settings.component';
+import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 
 const routes: Routes = [{
   path: '',
   component: MainMenuProfileComponent,
-  canActivate: [AuthGuard],
-  canActivateChild: [AuthGuard],
+  // canActivate: [AuthGuard],
+  // canActivateChild: [AuthGuard],
   children: [
     { path: '', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
@@ -27,6 +28,9 @@ const routes: Routes = [{
     {
       path: 'playlists',
       children: [
+        { path: 'view-playlist', component: ViewPlaylistComponent },
+        { path: 'edit/:id', component: CreateEditPlaylistComponent },
+        { path: 'create', component: CreateEditPlaylistComponent },
         {
           path: '',
           component: PlaylistComponent,
@@ -36,9 +40,7 @@ const routes: Routes = [{
             { path: 'all', component: AllComponent },
             { path: '**', redirectTo: 'all' }
           ]
-        },
-        { path: 'create', component: CreateEditPlaylistComponent },
-        { path: 'edit/:id', component: CreateEditPlaylistComponent }
+        }
       ]
     },
     { path: 'songs', component: SongsComponent },

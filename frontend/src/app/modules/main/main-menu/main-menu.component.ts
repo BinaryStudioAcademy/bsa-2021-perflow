@@ -13,7 +13,12 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 })
 export class MainMenuComponent implements OnDestroy, OnInit {
   // TODO: Tempolary array
-  playlists: string[] = [];
+  playlists: string[] = [
+    'Home playlist',
+    'Wife playlist',
+    'Playlist for run',
+    'For work'
+  ];
 
   private _unsubscribe$ = new Subject<void>();
 
