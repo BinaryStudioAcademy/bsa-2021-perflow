@@ -15,4 +15,5 @@ export interface Song {
   blobId: string;
 
   // TODO: add fields
+  podcast: string;
 }

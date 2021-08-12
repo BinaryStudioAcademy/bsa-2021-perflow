@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { filter, switchMap } from 'rxjs/operators';
 import { Artist } from 'src/app/models/shared/artist.model';
 import { Song } from 'src/app/models/song/song';
+import { User } from 'src/app/models/user/user';
 import { ArtistsService } from 'src/app/services/artists/artist.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,17 +18,32 @@ export class UserProfileComponent implements OnInit {
 
   private readonly _scrollingSize: number = 270;
 
-  topArtists : Artist[] = [];
+  user: User;
+  topArtists: Artist[] = [];
   topSongs: Song[] = [];
 
   constructor(
     private _songService: SongsService,
-    private _artistService: ArtistsService
-  ) {}
+    private _artistService: ArtistsService,
+    private _authService: AuthService,
+    private _userService: UserService
+  ) { }
 
   ngOnInit(): void {
+    this.getUser();
     this.getTopArtists();
     this.loadTopSongs();
+  }
+
+  getUser() {
+    this._authService.getAuthStateObservable()
+      .pipe(
+        filter((state) => state !== null),
+        switchMap((state) => this._userService.getUser(state!.id))
+      )
+      .subscribe((result) => {
+        this.user = result;
+      });
   }
 
   getTopArtists = (): Array<object> => new Array<object>();

@@ -2,8 +2,8 @@
   <div class="avatar-background">
     <div class="user-icon">
       <input hidden #file type="file" id="iconURL" accept=".png, .jpg, .jpeg" (change)="handleFileInput($event)">
-      <img class="image" alt="avatar" [src]="user.iconURL" *ngIf="user.iconURL !== ''">
-      <div class="icon-background" *ngIf="user.iconURL === ''">
+      <img class="image" alt="avatar" [src]="user.iconURL" *ngIf="user.iconURL">
+      <div class="icon-background" *ngIf="!user.iconURL">
         <i class="user icon"></i>
       </div>
       <button class="btn-full btn-edit bottom-right-corner" (click)="file.click()">
@@ -48,7 +48,7 @@
           <div class="form-group">
             <div class="field">
               <input type="text" placeholder="Description" class="form-control input-dark" name="description"
-                [(ngModel)]="user.description" #description="ngModel" pattern="[\w\[\]`!@#$%\^&*()={}:;\<>+'-]{0,150}">
+                [(ngModel)]="user.description" #description="ngModel" pattern="[\d\s\w\[\]`.,_|!@#$%\^&*()={}:;\<>+'-]{0,150}">
               <div *ngIf="description.invalid && (description.dirty || description.touched)" class="ui error message">
                 <div *ngIf="description.invalid">
                   Description should consist of max 150 characters. There is can contain letters, digits and
@@ -84,6 +84,7 @@
           <div class="form-group">
             <div class="field" [formGroup]="userForm">
               <select class="ui floating dropdown" formControlName="country" [(ngModel)]="user.country" appSmDropdown>
+                <option value="" disabled selected>Country</option>
                 <option *ngFor="let country of countries" [ngValue]="country.name">
                   <i [class]=country.icon></i> {{country.name}}
                 </option>
