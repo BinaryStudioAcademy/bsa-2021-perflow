@@ -20,12 +20,6 @@ namespace Perflow.Controllers
             _groupService = groupService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<GroupForAlbumDTO>> GetAllGroupsAsync()
-        {
-            return Ok(await _groupService.GetAllGroupsAsync());
-        }
-
         [HttpGet("artist/{id}")]
         public async Task<ActionResult<GroupForAlbumDTO>> GetGroupsByArtistAsync(int id)
         {

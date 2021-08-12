@@ -115,10 +115,10 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
 
             var createdAlbum = await context.Albums
-                .Include(album => album.Author)
-                .Include(album => album.Group)
+                .Include(a => a.Author)
+                .Include(a => a.Group)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(album => album.Id == album.Id);
+                .FirstOrDefaultAsync(a => a.Id == album.Id);
 
             return mapper.Map<AlbumEditDTO>(createdAlbum);
         }

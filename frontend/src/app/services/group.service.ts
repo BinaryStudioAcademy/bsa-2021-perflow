@@ -11,10 +11,6 @@ export class GroupService {
 
   constructor(private _httpService: HttpInternalService) { }
 
-  getAllGroups(): Observable<Group[]> {
-    return this._httpService.getRequest<Group[]>(this.routePrefix);
-  }
-
   getGroupsByArtist(id: number): Observable<Group[]> {
     return this._httpService.getRequest<Group[]>(`${this.routePrefix}/artist/${id}`);
   }
