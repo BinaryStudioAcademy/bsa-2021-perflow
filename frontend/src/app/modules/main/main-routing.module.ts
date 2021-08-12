@@ -14,7 +14,6 @@ import {
 } from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { SettingsComponent } from './settings/settings.component';
-import { UserProfileEditComponent } from '../user/user-profile-edit/user-profile-edit.component';
 
 const routes: Routes = [{
   path: '',
@@ -24,16 +23,12 @@ const routes: Routes = [{
   children: [
     { path: '', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
-    {
-      path: 'profile',
-      children: [
-        { path: '', component: UserProfileComponent },
-        { path: 'edit', component: UserProfileEditComponent }
-      ]
-    },
+    { path: 'profile', component: UserProfileComponent },
     {
       path: 'playlists',
       children: [
+        { path: 'edit/:id', component: CreateEditPlaylistComponent },
+        { path: 'create', component: CreateEditPlaylistComponent },
         {
           path: '',
           component: PlaylistComponent,
@@ -43,9 +38,7 @@ const routes: Routes = [{
             { path: 'all', component: AllComponent },
             { path: '**', redirectTo: 'all' }
           ]
-        },
-        { path: 'create', component: CreateEditPlaylistComponent },
-        { path: 'edit/:id', component: CreateEditPlaylistComponent }
+        }
       ]
     },
     { path: 'songs', component: SongsComponent },
