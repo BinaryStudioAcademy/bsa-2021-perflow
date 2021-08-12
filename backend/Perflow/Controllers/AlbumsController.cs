@@ -55,7 +55,7 @@ namespace Perflow.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<AlbumEditDTO>> DeleteAlbumAsync(int id)
+        public async Task<ActionResult<int>> DeleteAlbumAsync(int id)
         {
             return Ok(await _albumsService.DeleteEntityAsync(id));
         }

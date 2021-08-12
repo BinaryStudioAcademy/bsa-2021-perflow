@@ -5,13 +5,13 @@ export interface AlbumEdit {
   id: number,
   createdAt: Date,
   name: string,
-  releaseYear: number,
+  releaseYear: number | undefined,
   iconURL: string,
   description: string,
-  albumRegion: AlbumRegion,
+  region: AlbumRegion,
   isPublished: boolean,
   authorType: AuthorType,
-  artistId: number | undefined,
+  authorId: number | undefined,
   groupId: number | undefined,
   isSingle: boolean
 }

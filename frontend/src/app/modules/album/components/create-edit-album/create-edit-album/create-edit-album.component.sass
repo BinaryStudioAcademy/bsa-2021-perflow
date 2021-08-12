@@ -12,68 +12,68 @@ main
     overflow-y: scroll
 
 .album
+  width: 100%
+  height: 401px
+  border-radius: 5px
+  display: grid
+  grid-template-areas: "left-col album-details right-col"
+  grid-template-columns: 1fr 6fr 1fr
+  background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+  margin-bottom: 1rem
+  .album-details
+    grid-area: album-details
     width: 100%
-    height: 401px
-    border-radius: 5px
     display: grid
-    grid-template-areas: "left-col album-details right-col"
-    grid-template-columns: 1fr 6fr 1fr
-    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
-    margin-bottom: 1rem
-    .album-details
-        grid-area: album-details
-        width: 100%
-        display: grid
-        grid-template-areas: "album-image album-info"
-        grid-template-columns: $image-size 1fr
-        .album-info 
-            grid-area: album-info
-            padding-top: 104px
-            display: flex
-            flex-direction: column
-            justify-content: left
-            align-items: left
-            margin-left: 35px
-            color: $text
-            .type
-                margin-top: 2rem
-                font-weight: $light-weight
-                font-size: 18px
-                line-height: 21px
-            .album-title
-                margin-top: 10px
-                font-weight: $bold-weight
-                font-size: 40px
-                line-height: 47px
-            .album-description
-                margin-top: 1.2rem
-                padding-bottom: 1rem
-                font-weight: $light-weight
-                font-size: 16px
-                line-height: 21px
-                .info
-                    opacity: 0.8
-                .divider
-                    padding-left: 10px
-                    padding-right: 10px
-            .buttons
-                margin-top: 20px
-                .button-play
-                    padding: 12px 22px
-                    font-weight: $bold-weight
-                    border: none
-                    margin-right: 10px
-                    &:hover
-                        cursor: pointer
-                        color: black
-                .action-icon
-                    display: inline-block
-                    margin-left: 10px
-                    margin-right: 10px
-                    .icons
-                        font-size: 18px
-                        &:hover
-                            cursor: pointer
+    grid-template-areas: "album-image album-info"
+    grid-template-columns: $image-size 1fr
+    .album-info 
+      grid-area: album-info
+      padding-top: 104px
+      display: flex
+      flex-direction: column
+      justify-content: left
+      align-items: left
+      margin-left: 35px
+      color: $text
+      .type
+        margin-top: 2rem
+        font-weight: $light-weight
+        font-size: 18px
+        line-height: 21px
+      .album-title
+        margin-top: 10px
+        font-weight: $bold-weight
+        font-size: 40px
+        line-height: 47px
+      .album-description
+        margin-top: 1.2rem
+        padding-bottom: 1rem
+        font-weight: $light-weight
+        font-size: 16px
+        line-height: 21px
+        .info
+          opacity: 0.8
+        .divider
+          padding-left: 10px
+          padding-right: 10px
+      .buttons
+        margin-top: 20px
+        .button-play
+          padding: 12px 22px
+          font-weight: $bold-weight
+          border: none
+          margin-right: 10px
+          &:hover
+            cursor: pointer
+            color: black
+        .action-icon
+          display: inline-block
+          margin-left: 10px
+          margin-right: 10px
+          .icons
+            font-size: 18px
+            &:hover
+              cursor: pointer
 
 
 .album-image

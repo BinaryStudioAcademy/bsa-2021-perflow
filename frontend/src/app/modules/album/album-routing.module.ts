@@ -5,6 +5,7 @@ import { CreateEditAlbumComponent } from './components/create-edit-album/create-
 
 const routes: Routes = [
   { path: 'create', component: CreateEditAlbumComponent },
+  { path: 'edit/:id', component: CreateEditAlbumComponent },
   { path: ':id', component: AlbumDetailsComponent }
 ];
 

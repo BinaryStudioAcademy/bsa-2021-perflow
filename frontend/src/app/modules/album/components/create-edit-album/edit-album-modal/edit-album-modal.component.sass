@@ -32,7 +32,7 @@ $image-size: 245px
     .form
       display: grid
       grid-template-columns: 245px auto
-      grid-template-rows: 35px 150px 35px 35px 35px 50px
+      grid-template-rows: 35px 150px 35px 35px 50px
       gap: 15px 15px
       align-content: center
       .image
@@ -92,19 +92,20 @@ $image-size: 245px
         display: flex
         justify-content: space-between
         div
-          width: 49%
+          width: 32%
       .artist-group
-        grid-column: 2
-        grid-row: 5
+        grid-column: 1
+        grid-row: 4
       .buttons-row
         grid-column: 1 / span 2
-        grid-row: 6
+        grid-row: 5
         display: flex
         align-self: center
         justify-content: center
         .btn-cancel
           border-radius: 50px
           margin-left: 20px
+          height: 40px
 
   select
     background: $drk-rain
@@ -125,13 +126,12 @@ $image-size: 245px
 
 .option.ui.checkbox 
   label
-    color: $text
+    color: $text-color-gray
     font-family: Rubik
     &::before
-      background:  $orange-gradient
-      border: none
-    &:hover::before
-      border: none
+      background:  $drk-gray
+      opacity: 1
+      border: 1px solid #ffffff35
     &:active
       color: $text-color-gray
       &::before
@@ -142,7 +142,7 @@ $image-size: 245px
     &:active~label
       color: $text-color-gray
     &:checked~label
-      color: $text-color-gray
+      color: $text
       &::before, &::after
         color: white
 

@@ -5,7 +5,9 @@
     </div>
     <!-- Modal Content -->
     <div class="content">
-      <form #formEdit="ngForm" class="ui form error" >
+      <form #formEdit="ngForm" (ngSubmit)="onSubmit()" class="ui form error" >
+        <!-- Hidden -->
+        <input type="hidden" [(ngModel)]="editedAlbum.id" required name="id" #id="ngModel">
         <!-- Image -->
         <div class="ui field image">
           <div class="image-upload-cont" >
@@ -65,43 +67,37 @@
         </div>
 
         <div class="region-artist-type">
-          <!-- Select Region -->
-          <div class="ui field">
-            <select class="ui dropdown dropdown-input" name="albumRegion" [ngModel]="editedAlbum.albumRegion"  
-              (ngModelChange)="editedAlbum.albumRegion=$event" #albumRegion="ngModel" required>
-              <option *ngFor="let albumRegion of albumRegionValues" [ngValue]="albumRegion">{{albumRegion | albumRegion}}</option>
-            </select>
-          </div>
-
           <!-- Select Author Type -->
           <div class="ui field">
             <select class="ui dropdown dropdown-input" name="authorType" [ngModel]="editedAlbum.authorType"  
-              (ngModelChange)="editedAlbum.authorType=$event;isGroup=!isGroup" #authorType="ngModel" required>
-              <option *ngFor="let authorType of albumAuthorTypeValues" [ngValue]="authorType">{{authorType | authorType }}</option>
+              (ngModelChange)="editedAlbum.authorType=$event;" (ngModelChange)="authorTypeChange()" #authorType="ngModel" required>
+              <option [hidden]="!groups?.length && authorType===1" *ngFor="let authorType of albumAuthorTypeValues" [ngValue]="authorType">{{authorType | authorType }}</option>
             </select>
+          </div>
+
+          <!-- Select Region -->
+          <div class="ui field">
+            <select class="ui dropdown dropdown-input" name="albumRegion" [ngModel]="editedAlbum.region"  
+              (ngModelChange)="editedAlbum.region=$event" #albumRegion="ngModel" required>
+              <option *ngFor="let albumRegion of albumRegionValues" [ngValue]="albumRegion">{{albumRegion | albumRegion}}</option>
+            </select>
+          </div>
+        
+          <!-- Year -->
+          <div class="ui field year">
+            <input type="number" class="ui number-input"  name="releaseYear" [(ngModel)]="editedAlbum.releaseYear"  
+              #releaseYear="ngModel" placeholder="Release year">
           </div>
         </div>
 
-        <!-- Select Artist Or Group -->
+        <!-- Select Group -->
         <div class="artist-group">
-          <div class="ui field" *ngIf="!isGroup">
-            <select class="ui dropdown dropdown-input" name="artistId"  [ngModel]="editedAlbum.artistId"  
-              (ngModelChange)="editedAlbum.artistId=$event" #artistId="ngModel" required>
-              <option *ngFor="let artist of artists" [ngValue]="artist.id">{{artist.userName}}</option>
-            </select>
-          </div>
-
-          <div class="ui field artist-group" *ngIf="isGroup">
-            <select class="ui dropdown dropdown-input" name="groupId" name="groupId" [ngModel]="editedAlbum.groupId"  
-              (ngModelChange)="editedAlbum.groupId=$event" #groupId="ngModel" required>
+          <div class="ui field artist-group" *ngIf="editedAlbum.authorType===1 && groups?.length">
+            <select class="ui dropdown dropdown-input" name="groupId" [ngModel]="editedAlbum.groupId"  
+              (ngModelChange)="editedAlbum.groupId=$event" #groupId="ngModel" [required]="true">
               <option selected *ngFor="let group of groups" [ngValue]="group.id">{{group.name}}</option>
             </select>
           </div>
-        </div>
-
-        <!-- Year -->
-        <div class="ui field year">
-          <input type="number" class="ui number-input" placeholder="Release year">
         </div>
 
         <!-- Buttons -->
@@ -111,6 +107,7 @@
             <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
           </div>
         </div>
+
       </form>
     </div>
   </div>

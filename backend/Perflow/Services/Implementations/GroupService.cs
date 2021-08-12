@@ -21,5 +21,15 @@ namespace Perflow.Services.Implementations
 
             return mapper.Map<ICollection<GroupForAlbumDTO>>(groups);
         }
+
+        public async Task<ICollection<GroupForAlbumDTO>> GetGroupsByArtistAsync(int id)
+        {
+            var groups = await context.Groups
+                .Where(group => group.Users.Any(user => user.Id == id))
+                .AsNoTracking()
+                .ToListAsync();
+
+            return mapper.Map<ICollection<GroupForAlbumDTO>>(groups);
+        }
     }
 }

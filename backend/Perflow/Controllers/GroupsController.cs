@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Groups;
 using Perflow.Services.Implementations;
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Perflow.Controllers
@@ -24,6 +24,12 @@ namespace Perflow.Controllers
         public async Task<ActionResult<GroupForAlbumDTO>> GetAllGroupsAsync()
         {
             return Ok(await _groupService.GetAllGroupsAsync());
+        }
+
+        [HttpGet("artist/{id}")]
+        public async Task<ActionResult<GroupForAlbumDTO>> GetGroupsByArtistAsync(int id)
+        {
+            return Ok(await _groupService.GetGroupsByArtistAsync(id));
         }
     }
 }

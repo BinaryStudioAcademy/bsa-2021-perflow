@@ -95,13 +95,30 @@ namespace Perflow.Services.Implementations
 
             albumDTO.Id = 0;
 
+            User artist = null;
+            Group group = null;
             var album = mapper.Map<Album>(albumDTO);
+
+            if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
+            {
+                artist = await context.Users.FirstOrDefaultAsync(user => user.Id == albumDTO.AuthorId);
+                album.Author = artist;
+            }
+            else
+            {
+                group = await context.Groups.FirstOrDefaultAsync(group => group.Id == albumDTO.GroupId);
+                album.Group = group;
+            }
 
             await context.Albums.AddAsync(album);
 
             await context.SaveChangesAsync();
 
-            var createdAlbum = await GetEntityAsync(album.Id);
+            var createdAlbum = await context.Albums
+                .Include(album => album.Author)
+                .Include(album => album.Group)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(album => album.Id == album.Id);
 
             return mapper.Map<AlbumEditDTO>(createdAlbum);
         }
@@ -111,7 +128,21 @@ namespace Perflow.Services.Implementations
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
+            User artist = null;
+            Group group = null;
+
             var album = mapper.Map<Album>(albumDTO);
+
+            if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
+            {
+                artist = await context.Users.FirstOrDefaultAsync(u => u.Id == albumDTO.AuthorId);
+                album.Author = artist;
+            }
+            else
+            {
+                group = await context.Groups.FirstOrDefaultAsync(g => g.Id == albumDTO.GroupId);
+                album.Group = group;
+            }
 
             context.Entry(album).State = EntityState.Modified;
 
@@ -124,7 +155,9 @@ namespace Perflow.Services.Implementations
 
         public async Task<int> DeleteEntityAsync(int entityId)
         {
-            var deletedAlbum = await context.Albums.FirstOrDefaultAsync(p => p.Id == entityId);
+            var deletedAlbum = await context.Albums
+                .Include(album => album.Songs)
+                .FirstOrDefaultAsync(album => album.Id == entityId);
 
             context.Albums.Remove(deletedAlbum);
 
