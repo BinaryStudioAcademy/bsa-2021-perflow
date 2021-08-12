@@ -68,6 +68,7 @@
         <div id="album" class="items">
           <app-circle-info-card
             *ngFor="let album of newReleases"
+            [id]="album.id"
             [name]="album.name"
             [description]="album.authors.join(', ')"
             [iconUrl]="album.iconURL"

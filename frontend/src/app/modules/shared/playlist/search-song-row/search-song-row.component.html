@@ -1,7 +1,10 @@
 <div class="ui padded grid song">
   <div class="song-row">
       <div class="column song-icon">
-        <img src="{{song.iconURL}}">
+        <img [src]="song.album.iconURL" *ngIf="song.album.iconURL">
+        <div class="icon-background" *ngIf="!song.album.iconURL">
+          <i class="itunes note icon"></i>
+        </div>
       </div>
       <div class="column song-name text">
         <span class="e" *ngIf="song.hasCensorship">E</span>

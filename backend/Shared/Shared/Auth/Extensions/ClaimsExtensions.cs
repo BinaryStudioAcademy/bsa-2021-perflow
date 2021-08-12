@@ -17,5 +17,10 @@ namespace Shared.Auth.Extensions
             var roleString = user.Claims.First(claim => claim.Type == ClaimTypes.Role).Value;
             return (UserRole)int.Parse(roleString);
         }
+
+        public static string GetFirebaseId(this ClaimsPrincipal user)
+        {
+            return user.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+        }
     }
 }

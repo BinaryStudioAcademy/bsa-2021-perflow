@@ -2,6 +2,7 @@
 using FirebaseAdmin.Auth;
 using OneOf;
 using OneOf.Types;
+using Perflow.Domain;
 using Shared.Auth;
 using Shared.Auth.Models;
 
@@ -18,5 +19,7 @@ namespace Perflow.Services.Interfaces
         public Task<OneOf<Success, NotFound, AuthServiceError>> SetRoleAsync(int userId, UserRole role);
 
         public Task<OneOf<Success, NotFound, AuthServiceError>> DeleteUserAsync(int userId);
+
+        public Task<OneOf<Success, AuthServiceError>> UpdateUserAsync(UserRecordArgs args);
     }
 }
