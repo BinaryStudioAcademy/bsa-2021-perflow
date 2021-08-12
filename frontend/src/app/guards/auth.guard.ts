@@ -30,15 +30,14 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private _canActivateObservable() {
-    // return this._authService.getAuthStateObservable().pipe(
-    //   map((value) => {
-    //     if (value !== null) {
-    //       return true;
-    //     }
+    return this._authService.getAuthStateObservable().pipe(
+      map((value) => {
+        if (value !== null) {
+          return true;
+        }
 
-    //     return this._router.parseUrl('/login');
-    //   })
-    // );
-    return true;
+        return this._router.parseUrl('/login');
+      })
+    );
   }
 }

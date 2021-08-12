@@ -19,8 +19,8 @@ import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 const routes: Routes = [{
   path: '',
   component: MainMenuProfileComponent,
-  // canActivate: [AuthGuard],
-  // canActivateChild: [AuthGuard],
+  canActivate: [AuthGuard],
+  canActivateChild: [AuthGuard],
   children: [
     { path: '', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
