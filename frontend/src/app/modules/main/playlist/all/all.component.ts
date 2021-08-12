@@ -21,13 +21,14 @@ export class AllComponent {
   likedSongs: number = 256;
 
   constructor(private _reactionService: ReactionService, private _authService: AuthService) {
-    this.loadPlaylist();
-    this.loadAlbums();
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;
       });
+
+    this.loadPlaylist();
+    this.loadAlbums();
   }
 
   loadPlaylist() {
