@@ -1,4 +1,4 @@
-package com.bsa2021.mobile
+package com.example.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

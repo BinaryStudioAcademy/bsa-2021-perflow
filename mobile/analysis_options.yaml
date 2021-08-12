@@ -13,6 +13,7 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "**/*.config.dart"
 
   strong-mode:
     implicit-dynamic: false
