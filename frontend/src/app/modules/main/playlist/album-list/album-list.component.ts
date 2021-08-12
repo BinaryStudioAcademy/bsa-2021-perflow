@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 
 @Component({
@@ -13,8 +15,15 @@ export class AlbumListComponent implements OnInit {
   albums!: AlbumForReadDTO[];
 
   constructor(
-    private _reactionService: ReactionService
-  ) { }
+    private _reactionService: ReactionService,
+    private _authService: AuthService
+  ) {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => state !== null))
+      .subscribe((authState) => {
+        this.userId = authState!.id;
+      });
+  }
 
   ngOnInit(): void {
     this._reactionService.getAlbumsByUserId(this.userId).subscribe(

@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 
 @Component({
@@ -12,9 +14,13 @@ export class ArtistListComponent implements OnInit {
   userId: number = 1; // Temporary value
   artists!: ArtistReadDTO[];
 
-  constructor(
-    private _reactionService: ReactionService
-  ) { }
+  constructor(private _reactionService: ReactionService, private _authService: AuthService) {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => state !== null))
+      .subscribe((authState) => {
+        this.userId = authState!.id;
+      });
+  }
 
   ngOnInit(): void {
     this._reactionService.getArtistsByUserId(this.userId).subscribe(

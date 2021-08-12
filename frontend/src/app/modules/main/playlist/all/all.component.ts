@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
 import { throwError } from 'rxjs';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AlbumView } from 'src/app/models/album/album-view';
-import { catchError } from 'rxjs/operators';
+import { catchError, filter } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 /* eslint-disable no-console */
 
@@ -19,9 +20,14 @@ export class AllComponent {
   userId: number = 1;
   likedSongs: number = 256;
 
-  constructor(private _reactionService: ReactionService) {
+  constructor(private _reactionService: ReactionService, private _authService: AuthService) {
     this.loadPlaylist();
     this.loadAlbums();
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => state !== null))
+      .subscribe((authState) => {
+        this.userId = authState!.id;
+      });
   }
 
   loadPlaylist() {
