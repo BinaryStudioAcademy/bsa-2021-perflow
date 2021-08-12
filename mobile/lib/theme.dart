@@ -4,10 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 class Perflow {
   Perflow._();
 
-  void t() {
-
-  }
-
   static const title = 'Perflow';
 
   static const primaryColor = Color(0xFFFD5D34);
