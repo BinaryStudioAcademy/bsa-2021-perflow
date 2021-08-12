@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () => import('./modules/register/user-registration.module').then((m) => m.UserRegistrationModule)
   },
   {
+    path: 'perflowstudio',
+    loadChildren: () => import('./modules/perflow-studio/perflow-studio.module').then((m) => m.PerflowStudioModule),
+    canLoad: [AuthGuard]
+  },
+  {
     path: '',
     loadChildren: () => import('./modules/main/main.module').then((m) => m.MainModule),
     canLoad: [AuthGuard]
