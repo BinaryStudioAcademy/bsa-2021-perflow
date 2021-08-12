@@ -15,16 +15,16 @@
             View account
           </span>
         </div>
+        <div class="item" routerLink="../perflowstudio" *ngIf="isRightRole">
+          <span>
+            <i class="external alternate icon"></i>
+            Perflow Studio
+          </span>
+        </div>
         <div class="item" routerLink="/settings">
           <span>
             <i class="setting icon"></i>
             Account Settings
-          </span>
-        </div>
-        <div class="item" routerLink="/" *ngIf="isRightRole">
-          <span>
-            <i class="external alternate icon"></i>
-            Studio
           </span>
         </div>
         <div class="item" id="log-out" routerLink="/" (click)="logout()">
