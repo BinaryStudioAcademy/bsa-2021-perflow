@@ -16,7 +16,7 @@ export class ArtistListComponent implements OnInit {
 
   constructor(private _reactionService: ReactionService, private _authService: AuthService) {
     this._authService.getAuthStateObservable()
-      .pipe(filter((state) => state !== null))
+      .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;
       });
