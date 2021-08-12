@@ -25,7 +25,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("new-releases")]
-        public async Task<ActionResult<ICollection<Album>>> Get()
+        public async Task<ActionResult<ICollection<AlbumViewDTO>>> Get()
         {
             return Ok(await _albumsService.GetNewReleases());
         }

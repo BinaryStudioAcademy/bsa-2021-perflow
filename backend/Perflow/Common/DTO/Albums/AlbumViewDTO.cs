@@ -11,6 +11,7 @@ namespace Perflow.Common.DTO.Albums
         public string IconURL { get; set; }
         public bool IsSingle { get; set; }
         public int Reactions { get; set; }
-        public IEnumerable<string> Authors { get; set; }
+        //public IEnumerable<string> Authors { get; set; }
+        public IEnumerable<AlbumViewAuthorsDTO> Authors { get; set; }
     }
 }
