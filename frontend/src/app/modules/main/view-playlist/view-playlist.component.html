@@ -1,15 +1,66 @@
 <main>
-    <div class="hat-view-playlist">
-        <div class="arrows">
-            <button class="ui icon button arrow" (click)="nextSlide()">
-                <i class="chevron inverted left icon"></i>
-            </button>
-            <button class="ui icon button arrow" (click)="previousSlide()">
-                <i class="chevron inverted right icon"></i>
-            </button>
+  <div class="hat-view-playlist">
+    <div class="arrows">
+      <button class="ui icon button arrow" (click)="nextSlide()">
+        <i class="chevron inverted left icon"></i>
+      </button>
+      <button class="ui icon button arrow" (click)="previousSlide()">
+        <i class="chevron inverted right icon"></i>
+      </button>
+    </div>
+    <div class="menu-view-playlist">
+      <div class="ui image">
+        <img src="./../../../../assets/images/playlist2.png" />
+      </div>
+      <div class="view-playlist-toolbar">
+        <div>Playlist</div>
+        <div>My favorite songs</div>
+        <div>You | 53 songs | 3 h 33 min</div>
+        <div>
+          <button class="ui btn-full button" (click)="play()">Play</button>
+          <i class="heart outline icon"></i>
+          <span class="menu">
+            <div class="ui simple dropdown item ellipsis-button">
+              <i class="ellipsis vertical icon"></i>
+              <div class="menu">
+                <div class="item" routerLink="/">
+                  <span>
+                    <i class="outdent icon"></i>
+                    Add to queue
+                  </span>
+                </div>
+                <div class="item" routerLink="/">
+                  <span>
+                    <i class="podcast icon"></i>
+                    Start playlist radio
+                  </span>
+                </div>
+                <div class="item" routerLink="/">
+                  <span>
+                    <i class="share alternate icon"></i>
+                    Share
+                  </span>
+                </div>
+                <div class="item" routerLink="/">
+                  <span>
+                    <i class="star sicon"></i>
+                    About recommendations
+                  </span>
+                </div>
+              </div>
+            </div>
+          </span>
         </div>
+      </div>
     </div>
-    <div class="ui segment search">
-        <p>view-playlist works!</p>
-    </div>
+  </div>
+  <div>
+    <app-songs-list
+      [songs]="songs"
+      (clickLike)="dislikeSong($event)"
+    ></app-songs-list>
+  </div>
+  <div class="ui segment search">
+    <p>view-playlist works!</p>
+  </div>
 </main>

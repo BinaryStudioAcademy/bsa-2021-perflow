@@ -16,12 +16,12 @@ main
     background-image: url('/../../../../../assets/images/view-playlists.png')
     background-position: center center
     background-size: cover
-    .arrows 
+    .arrows
         display: flex
         padding: 28px
         .arrow
             display: flex
-            margin: 10px  
+            margin: 10px
             background: #A859C0
             border-radius: 2px
             width: 28px
@@ -33,6 +33,30 @@ main
                 background: #A859C0aa
             &:active
                 border: 2px solid #A859C0
+    .menu-view-playlist
+        margin-left: 20%
+        height: 240px
+        width: 50%
+        display: flex
+        background: #A859C0
+        .ui.image
+            height: 240px
+            width: 240px
+            object-fit: cover            
+            img
+                margin: 0 auto
+                height: 100%
+                width: 100%
+                border-radius: 50%
+        .view-playlist-toolbar
+            display: flex
+            flex-direction: column
+            color: $text
+            .ellipsis-button
+                background: transparent
+                
+
+
 
 .search
     height: auto
@@ -40,6 +64,5 @@ main
     background: $drk-gray
 
     p
-        margin: 200px
         font-size: 100px
         color: white
