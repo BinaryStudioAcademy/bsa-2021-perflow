@@ -55,6 +55,7 @@ namespace Perflow.Services.Implementations
                                         .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
+                                        .AsNoTracking()
                                         .ToListAsync();
 
             return mapper.Map<ICollection<AlbumReadDTO>>(albums);
@@ -77,9 +78,13 @@ namespace Perflow.Services.Implementations
                     IconURL = a.IconURL,
                     IsSingle = a.IsSingle,
                     Reactions = a.Reactions.Count,
-                    Songs = mapper.Map<ICollection<SongViewDTO>>(a.Songs)
+                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? s.Artist.UserName : s.Group.Name).ToList()
                 })
                 .ToListAsync();
+            foreach(var entity in entities)
+            {
+                entity.Authors = entity.Authors.Distinct();
+            }
             return entities;
         }
 

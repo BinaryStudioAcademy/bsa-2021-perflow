@@ -8,10 +8,13 @@ import { ArtistListComponent } from './playlist/artist-list/artist-list.componen
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import {
   CreateEditPlaylistComponent
 } from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 import { AuthGuard } from '../../guards/auth.guard';
+import { SettingsComponent } from './settings/settings.component';
+import { UserProfileEditComponent } from '../user/user-profile-edit/user-profile-edit.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,20 +25,38 @@ const routes: Routes = [{
     { path: '', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
     {
+      path: 'profile',
+      children: [
+        { path: '', component: UserProfileComponent },
+        { path: 'edit', component: UserProfileEditComponent }
+      ]
+    },
+    {
       path: 'playlists',
       children: [
-        { path: '', component: PlaylistComponent },
-        { path: 'create', component: CreateEditPlaylistComponent },
         { path: 'edit/:id', component: CreateEditPlaylistComponent },
-        { path: 'artists', component: ArtistListComponent },
-        { path: 'albums', component: AlbumListComponent },
-        { path: 'all', component: AllComponent }
+        { path: 'create', component: CreateEditPlaylistComponent },
+        {
+          path: '',
+          component: PlaylistComponent,
+          children: [
+            { path: 'artists', component: ArtistListComponent },
+            { path: 'albums', component: AlbumListComponent },
+            { path: 'all', component: AllComponent },
+            { path: '**', redirectTo: 'all' }
+          ]
+        }
       ]
     },
     { path: 'songs', component: SongsComponent },
+    { path: 'settings', component: SettingsComponent },
     {
       path: 'albums',
       loadChildren: () => import('../album/album.module').then((m) => m.AlbumModule)
+    },
+    {
+      path: 'artists',
+      loadChildren: () => import('../artist/artist.module').then((m) => m.ArtistModule)
     }
   ]
 }];
@@ -44,4 +65,6 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MainRoutingModule { }
+export class MainRoutingModule {
+
+}

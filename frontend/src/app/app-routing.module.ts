@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { PerflowStudioGuard } from './guards/perflow-studio.guard';
 
 const routes: Routes = [
   {
@@ -10,6 +11,11 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./modules/register/user-registration.module').then((m) => m.UserRegistrationModule)
+  },
+  {
+    path: 'perflowstudio',
+    loadChildren: () => import('./modules/perflow-studio/perflow-studio.module').then((m) => m.PerflowStudioModule),
+    canLoad: [PerflowStudioGuard]
   },
   {
     path: '',

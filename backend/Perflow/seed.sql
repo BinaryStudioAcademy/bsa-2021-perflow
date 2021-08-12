@@ -26,7 +26,7 @@ INSERT INTO [Albums] ([Id], [AuthorId], [AuthorType], [CreatedAt], [Description]
 VALUES (1, 2, 0, '2020-09-09T00:00:00.0000000+03:00', N'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', NULL, N'https://upload.wikimedia.org/wikipedia/ru/6/69/ImagineCover.jpg', CAST(1 AS bit), CAST(1 AS bit), N'Imagine', 1, 1971),
 (2, 2, 0, '2020-09-09T00:00:00.0000000+03:00', N'Lorem printing and typesetting industry.', NULL, N'https://upload.wikimedia.org/wikipedia/ru/2/2a/MindGames.jpg', CAST(1 AS bit), CAST(0 AS bit), N'Mind Games', 1, 1973),
 (3, 3, 0, '2020-09-09T00:00:00.0000000+03:00', N'Lorem text of the printing and typesetting industry.', NULL, N'https://upload.wikimedia.org/wikipedia/ru/thumb/e/eb/Mccartney_album.jpg/274px-Mccartney_album.jpg', CAST(1 AS bit), CAST(1 AS bit), N'McCartney', 1, 1970),
-(4, 3, 0, '2021-07-29T00:00:00.0000000+03:00', N'Lorem text of the printing and typesetting industry.', NULL, N'https://s3-alpha-sig.figma.com/img/1fb9/07df/8cb83fc1826b60e1ac4136f907838260?Expires=1628467200&Signature=AYz434YZD2rEyIIGCCPLssB3aItrqVCktB59iue5-RQ68UQyUM~Vc5ek7Lc-yoItOaPgcw7r1J6eLz82wSA5zqTI9Hh7Bp7LzgD5uIM5P90QWdpYmgeCxW5u66n~~VxMy51WfAcGL8VQ2C1PTT9OpChOhrT4r9jpzFwfmJCShPZbqdRQslmU3b8oyInIdnR~XFUdf2Demw5X0NbSF4esMgkkWvT5gDdR19Q5RNyDcdG8nh5rQY~LSXRBVFmEcd5aDr8-bRMjdr36BJ0ntsF2CeUaJ1y3tJB64rgZrCZO11deVRMl6XGAlwT3I~BF~wo4vM~-qyGn4HghkFFHh~sxxw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA', CAST(1 AS bit), CAST(1 AS bit), N'Fresh & Chill', 1, 2015),
+(4, 3, 0, '2021-07-29T00:00:00.0000000+03:00', N'Lorem text of the printing and typesetting industry.', NULL, N'https://i.ibb.co/XbxfLQ9/Ellipse-42-5.png', CAST(1 AS bit), CAST(1 AS bit), N'Fresh & Chill', 1, 2015),
 (5, 3, 0, '2021-07-27T00:00:00.0000000+03:00', N'Lorem text of the printing and typesetting industry.', NULL, N'https://i.ibb.co/4SHq8NX/Ellipse-42-3.png', CAST(1 AS bit), CAST(1 AS bit), N'Relax Work', 1, 2015),
 (6, 3, 0, '2021-07-28T00:00:00.0000000+03:00', N'Lorem text of the printing and typesetting industry.', NULL, N'https://i.ibb.co/7r5Ft4n/Ellipse-42.png', CAST(1 AS bit), CAST(1 AS bit), N'Tropical chaos', 1, 2015),
 (7, 3, 0, '2021-07-26T00:00:00.0000000+03:00', N'Lorem text of the printing and typesetting industry.', NULL, N'https://i.ibb.co/sK5hcbn/Ellipse-42-4.png', CAST(1 AS bit), CAST(1 AS bit), N'Beautiful People', 1, 2015),
@@ -47,14 +47,38 @@ IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Acce
     SET IDENTITY_INSERT [Playlists] OFF;
 GO
 
-IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'IconURL', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
     SET IDENTITY_INSERT [Songs] ON;
-INSERT INTO [Songs] ([Id], [AlbumId], [ArtistId], [AuthorType], [CreatedAt], [Duration], [GroupId], [HasCensorship], [IconURL], [Name])
-VALUES (1, 1, 3, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg', N'That Would Be Something'),
-(2, 2, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg', N'Mind Games'),
-(3, 2, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg', N'Imagine'),
-(4, 3, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg', N'Only People');
-IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'IconURL', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
+INSERT INTO [Songs] ([Id], [AlbumId], [ArtistId], [AuthorType], [CreatedAt], [Duration], [GroupId], [HasCensorship], [Name])
+VALUES (1, 1, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'That Would Be Something'),
+(2, 2, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(1 AS bit), N'Mind Games'),
+(3, 2, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Imagine'),
+(4, 3, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Only People'),
+(5, 4, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Shape Of You'),
+(6, 5, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(1 AS bit), N'Perfect'),
+(7, 6, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Thinking Out Loud'),
+(8, 7, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Photograph'),
+(9, 8, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'Fingías'),
+(10, 9, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'For Ya'),
+(11, 10, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'No Te Enamores'),
+(12, 4, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit),  N'Not Steady'),
+(13, 5, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Payphone'),
+(14, 6, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'This Love'),
+(15, 7, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'Animals'),
+(16, 8, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Sugar'),
+(17, 9, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Believer'),
+(18, 10, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Bad Liar'),
+(19, 4, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Thunder'),
+(20, 5, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(1 AS bit), N'Radioactive'),
+(21, 6, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'KONSTRUKT'),
+(22, 7, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Fata Morgana'),
+(23, 8, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Russky Cockney'),
+(24, 9, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(1 AS bit), N'XXX Shop'),
+(25, 10, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'REALITY'),
+(26, 4, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Happier'),
+(27, 5, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'No Te Debí Besar'),
+(28, 6, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Wait');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
     SET IDENTITY_INSERT [Songs] OFF;
 GO
 

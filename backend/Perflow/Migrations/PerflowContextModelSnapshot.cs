@@ -276,6 +276,9 @@ namespace Perflow.Migrations
                     b.Property<int>("AuthorType")
                         .HasColumnType("int");
 
+                    b.Property<string>("BlobId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -287,9 +290,6 @@ namespace Perflow.Migrations
 
                     b.Property<bool>("HasCensorship")
                         .HasColumnType("bit");
-
-                    b.Property<string>("IconURL")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -413,7 +413,7 @@ namespace Perflow.Migrations
             modelBuilder.Entity("Perflow.Domain.Album", b =>
                 {
                     b.HasOne("Perflow.Domain.User", "Author")
-                        .WithMany()
+                        .WithMany("Albums")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("Perflow.Domain.Group", "Group")
@@ -630,6 +630,8 @@ namespace Perflow.Migrations
 
             modelBuilder.Entity("Perflow.Domain.User", b =>
                 {
+                    b.Navigation("Albums");
+
                     b.Navigation("Followers");
 
                     b.Navigation("Reactions");

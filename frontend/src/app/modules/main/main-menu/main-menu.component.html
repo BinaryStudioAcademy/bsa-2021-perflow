@@ -1,56 +1,51 @@
-<div class="ui visible sidebar inverted vertical menu">
-  <div id="logo">
-    <a class="ui logo icon image" routerLink="/">
+<div class="ui visible sidebar vertical menu">
+  <div class="logo">
+    <a class="ui logo icon image" routerLink="/main">
       <i class="circle icon"></i>
-      <span id="name-logo">LOGO</span>
+      <span class="name-logo">LOGO</span>
     </a>
   </div>
-  <div id="routers">
+  <div class="routers" >
     <div>
-      <a routerLink="/">
-        <span id="circle">
-          <i id="icon" class="fire icon"> </i>
-        </span>
-        <span id="name-route">Home</span>
+      <a routerLink="/" routerLinkActive="active-link" >
+        <span class="circle-fire"> <i class="fire icon"></i></span>
+        <h5 class="name-route">Home</h5>
       </a>
     </div>
     <div>
-      <a routerLink="/search">
-        <span id="circle">
-          <i id="icon" class="search icon"></i>
-        </span>
-        <span id="name-route">Search</span>
+      <a routerLink="./search" routerLinkActive="active-link" >
+        <span class="circle-fire"> <i class="search icon"></i></span>
+        <h5 class="name-route">Search</h5>
       </a>
     </div>
     <div>
-      <a routerLink="/playlists">
-        <span id="circle">
-          <i id="icon" class="music icon"></i>
-        </span>
-        <span id="name-route">My playlists</span>
+      <a routerLink="./playlists" [routerLinkActive]="['active-link']" >
+        <span class="circle-fire"> <i class="music icon"></i></span>
+        <h5 class="name-route">My playlists</h5>
       </a>
     </div>
     <div>
-      <a routerLink="/songs">
-        <span id="circle">
-          <i id="icon" class="heart icon"></i>
-        </span>
-        <span id="name-route">Liked songs</span>
+      <a routerLink="./songs" routerLinkActive="active-link" >
+        <span class="circle-fire"> <i class="heart icon"></i></span>
+        <h5 class="name-route">Liked songs</h5>
       </a>
     </div>
   </div>
-  <div id="playlists-menu">
-    <span id="title" *ngIf="playlists.length > 0">Created playlists</span>
+  <div class="playlists-menu">
+    <span class="title" *ngIf="playlists.length > 0">
+      <h6>Created playlists</h6>
+    </span>
     <ul>
       <li *ngFor="let playlist of playlists">
         {{ playlist }}
       </li>
     </ul>
-    <button class="ui btn-full button create-playlist" (click)="createPlaylist()">
+    <button class="ui btn-full button create-playlist" routerLink="playlists/create" (click)="createPlaylist()">
       Create Playlist
     </button>
-  </div>
+  </div>  
 </div>
-<div class="pusher">
+
+<div class="container">
   <router-outlet></router-outlet>
 </div>

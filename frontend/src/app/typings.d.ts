@@ -1,15 +1,15 @@
-/* eslint-disable no-var */
+/* eslint-disable no-var, @typescript-eslint/naming-convention */
 
-declare var process:Process;
+declare var process: Process;
 
-interface Process{
+interface Process {
   env: Env
 }
 
-interface Env{
-  apiKey: string;
+interface Env {
+  FIREBASE_KEY: string;
 }
 
-interface GlobalEnvironment{
+interface GlobalEnvironment {
   process: Process
 }

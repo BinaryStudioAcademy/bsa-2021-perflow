@@ -18,12 +18,10 @@ namespace Perflow.Domain
 
         public int? AlbumId { get; set; }
         public Album Album { get; set; }
-
-        public string IconURL { get; set; }
-
         public int Duration { get; set; }
 
         public bool HasCensorship { get; set; }
+        public string BlobId { get; set; }
 
         public ICollection<PlaylistSong> Playlists { get; set; }
 

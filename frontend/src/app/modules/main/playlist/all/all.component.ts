@@ -1,10 +1,10 @@
+import { Playlist } from 'src/app/models/playlist';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { AlbumView } from 'src/app/models/album/album-view';
-import { Playlist } from 'src/app/models/playlist';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { AlbumView } from 'src/app/models/album/album-view';
+import { catchError } from 'rxjs/operators';
 
 /* eslint-disable no-console */
 
@@ -17,6 +17,7 @@ export class AllComponent {
   playlists: Playlist[] = [];
   albums: AlbumView[] = [];
   userId: number = 1;
+  likedSongs: number = 256;
 
   constructor(private _reactionService: ReactionService) {
     this.loadPlaylist();

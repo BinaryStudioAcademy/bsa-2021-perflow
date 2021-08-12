@@ -279,8 +279,7 @@ namespace Perflow.DataAccess.Context
             };
 
         public static IList<Song> GenerateSongs(IList<Album> albums)
-        {
-            var icon = "https://images.saymedia-content.com/.image/t_share/MTc0NDkxNzgyMzYzNDg5NjQw/vinyl-to-paper-how-to-write-an-album-review.jpg";
+        { 
 
             return new List<Song>
             {
@@ -294,7 +293,6 @@ namespace Perflow.DataAccess.Context
                     Duration = 2,
                     GroupId = null,
                     HasCensorship = false,
-                    IconURL = icon,
                     AlbumId = 1,
                 },
                 new Song
@@ -307,7 +305,6 @@ namespace Perflow.DataAccess.Context
                     Duration = 4,
                     GroupId = null,
                     HasCensorship = false,
-                    IconURL = icon,
                     AlbumId = 2
                 },
                 new Song
@@ -320,7 +317,6 @@ namespace Perflow.DataAccess.Context
                     Duration = 2,
                     GroupId = null,
                     HasCensorship = false,
-                    IconURL = icon,
                     AlbumId = 2
                 },
                 new Song
@@ -333,7 +329,6 @@ namespace Perflow.DataAccess.Context
                     Duration = 3,
                     GroupId = null,
                     HasCensorship = false,
-                    IconURL = icon,
                     AlbumId = 3
                 }
             };

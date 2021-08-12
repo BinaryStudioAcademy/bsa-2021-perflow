@@ -32,13 +32,13 @@ namespace Perflow.Services.Implementations
             return mapper.Map<ICollection<AlbumForListDTO>>(albums);
         }
 
-        public async Task<IEnumerable<AlbumViewDTO>> GetLikedAlbumsByTheUser(int userId)
+        public async Task<IEnumerable<AlbumLikedDTO>> GetLikedAlbumsByTheUser(int userId)
         {
             var likedPlaylists = await context.Albums
                 .Include(album => album.Reactions
                     .Where(r => r.UserId == userId))
                 .Where(album => album.Reactions.Any())
-                .Select(a => new AlbumViewDTO
+                .Select(a => new AlbumLikedDTO
                 {
                     Id = a.Id,
                     Name = a.Name,

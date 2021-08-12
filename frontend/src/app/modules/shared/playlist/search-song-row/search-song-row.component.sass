@@ -1,9 +1,21 @@
 @import ../../../../../styles
 
+$image-size: 40px
+
+=flex-container($align-items, $justify-content)
+  display: flex
+  align-items: $align-items
+  justify-content: $justify-content
+
 %ellipsis-overflow
   text-overflow: ellipsis
   white-space: nowrap
   overflow: hidden
+
+%album-cover
+  width: $image-size
+  height: $image-size
+  border-radius: 50%
 
 %font
   color: $text
@@ -12,9 +24,7 @@
 
 .text
   @extend %font
-  text-overflow: ellipsis
-  white-space: nowrap
-  overflow: hidden
+  @extend %ellipsis-overflow
 
 .song
   background-color: $drk-gray
@@ -39,18 +49,20 @@
 
 .song-icon
   grid-area: song-icon
-  width: 40px
-  height: 40px
   img
-    border-radius: 50%
+    @extend %album-cover
     object-fit: cover
-    width: 40px
-    height: 40px
-    background: none
+  .icon-background
+    @extend %album-cover
+    +flex-container(center, center)
+    background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+    i
+      font-size: 18px
+      margin-right: 0 !important
 
 .song-name
   grid-area: song-name
-  padding-left: 1rem 
+  padding-left: 1rem
 
 .album-name
   text-decoration: none
