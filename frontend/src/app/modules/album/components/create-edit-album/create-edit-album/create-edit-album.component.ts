@@ -15,20 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./create-edit-album.component.sass']
 })
 export class CreateEditAlbumComponent implements OnInit, OnDestroy {
-  album: AlbumFull = {
-    id: 0,
-    authorType: AuthorType.artist,
-    description: '',
-    iconURL: '',
-    isPublished: false,
-    isSingle: false,
-    name: 'Album name',
-    region: AlbumRegion.usa,
-    releaseYear: new Date().getFullYear(),
-    artist: undefined,
-    group: undefined,
-    songs: {} as Song[]
-  };
+  album: AlbumFull = {} as AlbumFull;
 
   editedAlbum: AlbumEdit = {} as AlbumEdit;
   albumSongs: Array<Song> = new Array<Song>();
@@ -45,6 +32,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.album = this.getBasicAlbumFull();
+
     this._activatedRoute.paramMap.pipe(
       switchMap((params) => params.getAll('id'))
     ).subscribe((data) => {
@@ -96,10 +85,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
 
     if (this._isEditMode) {
       this.editAlbum(data);
+      return;
     }
-    else {
-      this.createPlaylist(data);
-    }
+
+    this.createPlaylist(data);
   };
 
   createPlaylist(album: AlbumEdit) {
@@ -142,18 +131,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     }
 
     this.editedAlbum = {
-      iconURL: '',
-      id: 0,
-      name: '',
-      releaseYear: undefined,
-      description: '',
+      ...this.getBasicAlbumFull(),
       authorId: undefined,
       groupId: undefined,
-      region: AlbumRegion.usa,
-      authorType: AuthorType.artist,
-      createdAt: new Date(),
-      isPublished: true,
-      isSingle: false
+      createdAt: new Date()
     };
   }
 
@@ -165,4 +146,19 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
         }
       });
   }
+
+  getBasicAlbumFull = () => ({
+    id: 0,
+    authorType: AuthorType.artist,
+    description: '',
+    iconURL: '',
+    isPublished: false,
+    isSingle: false,
+    name: 'Album name',
+    region: AlbumRegion.usa,
+    releaseYear: new Date().getFullYear(),
+    artist: undefined,
+    group: undefined,
+    songs: {} as Song[]
+  });
 }

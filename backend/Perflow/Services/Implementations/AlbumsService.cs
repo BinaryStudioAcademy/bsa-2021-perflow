@@ -95,19 +95,15 @@ namespace Perflow.Services.Implementations
 
             albumDTO.Id = 0;
 
-            User artist = null;
-            Group group = null;
             var album = mapper.Map<Album>(albumDTO);
 
             if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
             {
-                artist = await context.Users.FirstOrDefaultAsync(user => user.Id == albumDTO.AuthorId);
-                album.Author = artist;
+                album.Author = await context.Users.FirstOrDefaultAsync(user => user.Id == albumDTO.AuthorId);
             }
             else
             {
-                group = await context.Groups.FirstOrDefaultAsync(group => group.Id == albumDTO.GroupId);
-                album.Group = group;
+                album.Group = await context.Groups.FirstOrDefaultAsync(group => group.Id == albumDTO.GroupId);
             }
 
             await context.Albums.AddAsync(album);
@@ -128,20 +124,15 @@ namespace Perflow.Services.Implementations
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
-            User artist = null;
-            Group group = null;
-
             var album = mapper.Map<Album>(albumDTO);
 
             if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
             {
-                artist = await context.Users.FirstOrDefaultAsync(u => u.Id == albumDTO.AuthorId);
-                album.Author = artist;
+                album.Author = await context.Users.FirstOrDefaultAsync(u => u.Id == albumDTO.AuthorId);
             }
             else
             {
-                group = await context.Groups.FirstOrDefaultAsync(g => g.Id == albumDTO.GroupId);
-                album.Group = group;
+                album.Group = await context.Groups.FirstOrDefaultAsync(g => g.Id == albumDTO.GroupId);
             }
 
             context.Entry(album).State = EntityState.Modified;
