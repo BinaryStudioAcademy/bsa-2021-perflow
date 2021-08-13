@@ -6,7 +6,7 @@ import { AlbumAuthor } from 'src/app/models/user/album-author';
   templateUrl: './new-release-card.component.html',
   styleUrls: ['./new-release-card.component.sass']
 })
-export class NewReleaseCardComponent{
+export class NewReleaseCardComponent {
   @Input() name: string;
   @Input() authors: Array<AlbumAuthor>;
   @Input() iconUrl: string;
