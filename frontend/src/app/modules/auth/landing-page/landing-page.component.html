@@ -60,7 +60,8 @@
                     <label for="remember">Remember me</label>
                   </div>
                   <button class="ui btn-full button log-in-btn" (click)="logInWithEmail()">
-                    Log In
+                    <div *ngIf="isLogInClicked" class="ui active inline loader"></div>
+                    <span *ngIf="!isLogInClicked">Log In</span>
                   </button>
                 </div>
                 <div class="ui divider login-form-devider"></div>

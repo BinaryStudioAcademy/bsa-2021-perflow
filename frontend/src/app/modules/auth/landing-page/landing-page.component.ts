@@ -11,6 +11,7 @@ export class LandingPageComponent {
   showPassword: boolean = false;
   isLogInClicked: boolean = false;
   rememberMe: boolean = true;
+  loading: boolean = false;
 
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -33,12 +34,12 @@ export class LandingPageComponent {
   }
 
   logInWithEmail() {
-    this.isLogInClicked = true;
 
     if (!this.loginForm.valid) {
       return;
     }
-
+    
+    this.isLogInClicked = true;
     this.loginForm.markAsPristine();
 
     const { email, password } = this.loginForm.value;
