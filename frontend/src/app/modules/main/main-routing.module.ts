@@ -15,6 +15,7 @@ import {
 import { AuthGuard } from '../../guards/auth.guard';
 import { SettingsComponent } from './settings/settings.component';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
+import { UserProfileEditComponent } from '../user/user-profile-edit/user-profile-edit.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,9 +23,16 @@ const routes: Routes = [{
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard],
   children: [
-    { path: '', component: MainHomeComponent },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'home', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
-    { path: 'profile', component: UserProfileComponent },
+    {
+      path: 'profile',
+      children: [
+        { path: '', component: UserProfileComponent },
+        { path: 'edit', component: UserProfileEditComponent }
+      ]
+    },
     {
       path: 'playlists',
       children: [

@@ -66,13 +66,14 @@
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="album" class="items">
-          <app-circle-info-card
+          <app-new-release-card
             *ngFor="let album of newReleases"
+            [id]="album.id"
             [name]="album.name"
-            [description]="album.authors.join(', ')"
+            [authors]="album.authors"
             [iconUrl]="album.iconURL"
           >
-          </app-circle-info-card>
+          </app-new-release-card>
         </div>
         <div class="ui icon button scroll-button" (click)="scrollRight('album')">
           <i class="large inverted angle right icon"></i>

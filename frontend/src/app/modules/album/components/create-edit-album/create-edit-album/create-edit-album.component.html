@@ -1,0 +1,58 @@
+<main>
+  <div class="album">
+    <div class="album-details">
+      <div class="album-image">
+        <div class="fader" (click)="showEditAlbumModal()">
+          <i class="image outline icon placeholder-icon"></i>
+          <div class="hover-content">
+            <i class="edit outline icon"></i>
+            <span class="mute">Load image</span>
+          </div>
+          <img class="ui medium circular image album-icon" alt="Album" src="{{album.iconURL}}" *ngIf="album.iconURL">
+        </div>
+      </div>
+      <div class="album-info">
+        <p class="type">Album</p>
+        <p class="album-title">
+            {{album.name}}
+        </p>
+        <div class="album-description">
+          <span *ngIf="album?.artist || album?.group">{{album?.artist?.userName ?? album?.group?.name}}</span>
+          <span class="info" *ngIf="album.songs">
+              <span class="divider">|</span> {{album.songs.length}} songs
+          </span>
+          <span class="info">
+              <span class="divider">|</span> {{album.releaseYear}}
+          </span>
+          <span class="info" *ngIf="album.songs.length">
+              <span class="divider">|</span> {{ album.songs | itemsSum:'duration' | albumDuration }}
+          </span>
+        </div>
+        <div class="buttons">
+          <button class="btn-full button-play">Play</button>
+          <div class="action-icon">
+            <i class="heart outline icon icons"></i>
+          </div>
+          <div class="action-icon">
+            <div class="ui floating dropdown icon" appSmDropdown>
+              <i class="ellipsis vertical icon icons"></i>
+              <div class="right menu">
+                <div class="item first">
+                  <i class="share alternate icon"></i>Share
+                </div>
+                <div class="item last" (click)="removeAlbum()">
+                  <i class="trash icon"></i>Remove album
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-songs-list *ngIf="album.songs.length" [songs]="album.songs"></app-songs-list>
+
+  <app-edit-album-modal [editedAlbum]="editedAlbum" *ngIf="isModalShown" (editAlbum)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-album-modal>
+
+</main>

@@ -13,30 +13,30 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
-    private _authService: AuthService,
-    private _router: Router
+    protected authService: AuthService,
+    protected router: Router
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this._canActivateObservable();
+    return this.canActivateObservable();
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this._canActivateObservable();
+    return this.canActivateObservable();
   }
 
   canLoad(route: Route, segments: UrlSegment[]) {
-    return this._canActivateObservable();
+    return this.canActivateObservable();
   }
 
-  private _canActivateObservable() {
-    return this._authService.getAuthStateObservable().pipe(
+  protected canActivateObservable() {
+    return this.authService.getAuthStateObservable().pipe(
       map((value) => {
         if (value !== null) {
           return true;
         }
 
-        return this._router.parseUrl('/login');
+        return this.router.parseUrl('/login');
       })
     );
   }

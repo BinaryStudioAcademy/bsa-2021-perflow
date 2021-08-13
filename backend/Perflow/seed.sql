@@ -62,14 +62,14 @@ VALUES (1, 1, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit)
 (10, 9, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'For Ya'),
 (11, 10, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'No Te Enamores'),
 (12, 4, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit),  N'Not Steady'),
-(13, 5, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Payphone'),
-(14, 6, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'This Love'),
-(15, 7, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'Animals'),
-(16, 8, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Sugar'),
-(17, 9, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Believer'),
-(18, 10, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Bad Liar'),
-(19, 4, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Thunder'),
-(20, 5, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(1 AS bit), N'Radioactive'),
+(13, 5, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Payphone'),
+(14, 6, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'This Love'),
+(15, 7, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'Animals'),
+(16, 8, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Sugar'),
+(17, 9, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Believer'),
+(18, 10, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Bad Liar'),
+(19, 4, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Thunder'),
+(20, 5, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(1 AS bit), N'Radioactive'),
 (21, 6, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'KONSTRUKT'),
 (22, 7, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Fata Morgana'),
 (23, 8, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Russky Cockney'),
@@ -77,7 +77,7 @@ VALUES (1, 1, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit)
 (25, 10, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'REALITY'),
 (26, 4, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(0 AS bit), N'Happier'),
 (27, 5, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(1 AS bit), N'No Te Debí Besar'),
-(28, 6, 1, 1, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Wait');
+(28, 6, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Wait');
 IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AlbumId', N'ArtistId', N'AuthorType', N'CreatedAt', N'Duration', N'GroupId', N'HasCensorship', N'Name') AND [object_id] = OBJECT_ID(N'[Songs]'))
     SET IDENTITY_INSERT [Songs] OFF;
 GO

@@ -1,0 +1,65 @@
+@import "src/styles.sass"
+
+a
+    display: flex
+    text-align: center
+    align-items: center
+
+.ui.visible.sidebar.vertical.menu
+    width: 247px
+    padding-left: 40px
+    background: $drk-gray
+    border-right: 1.5px solid #373C43
+    &::-webkit-scrollbar
+        width: 0px
+        height: 0px
+    .ui.divider
+        margin-right: 43px
+
+.logo
+    margin-top: 25px
+    padding: 0
+    &>a
+        font-size: 20px
+        color: #CDCDCD
+        opacity: 50%
+        .name-logo
+            padding-left: 5px
+            font-family: "Montserrat", sans-serif
+            font-style: normal
+            font-weight: $medium-weight
+            letter-spacing: 0.01em
+
+.routers
+    margin-top: 50px
+    width: max-content
+    .router-link
+        margin-bottom: 40px
+        &>*
+            color: $text
+        .route-name
+            padding-left: 20px
+        .active-link 
+            &>.circle-fire
+                background: $fire-orange
+            &>.route-name
+                color: $medium-orange
+
+.circle-fire
+    width: 30px
+    height: 30px
+    border-radius: 100%
+    position: relative
+    transition: .3s
+    background: $drk-gray
+    i
+        position: absolute
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        font-size: 16px
+        transition: .3s
+
+.router-container
+    margin-left: 247px
+    height: 100%

@@ -33,6 +33,7 @@ import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
+import { NewReleaseCardComponent } from './cards/new-release-card/new-release-card/new-release-card.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
     EditPlaylistModalComponent,
     SettingsComponent,
     AlbumListComponent,
-    ViewPlaylistComponent
+    ViewPlaylistComponent,
+    NewReleaseCardComponent
   ],
   imports: [
     CommonModule,
@@ -72,7 +74,8 @@ import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
   ],
   exports: [
     ClickOutsideModule,
-    ProfileMenuComponent
+    ProfileMenuComponent,
+    AlbumCardComponent
   ]
 })
 export class MainModule {

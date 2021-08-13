@@ -1,0 +1,21 @@
+@import 'src/styles'
+    
+.info-list
+    height: 100%
+    padding-top: 90px
+    .albums-list
+        border-top: $light-gray 1px solid
+        display: grid
+        grid-template-columns: repeat(auto-fill, 200px)
+        grid-column-gap: 30px
+        grid-row-gap: 30px
+        justify-content: center
+        padding: 0 20px
+        .albums-label
+            color: $text
+            padding-top: 20px
+            width: 100%
+            display: flex
+            grid-column: 1/-1
+        .create-album-btn
+            margin-top: 15px
