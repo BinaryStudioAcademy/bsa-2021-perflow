@@ -47,8 +47,10 @@ export class ViewPlaylistComponent implements OnInit {
         this._totalTimeSongs = songs
           .filter((s) => s.duration > 0)
           .reduce((sum, current) => sum + current.duration, 0);
-        this.hours = Math.floor(this._totalTimeSongs / 3600);
-        this.minutes = Math.floor(((this._totalTimeSongs % 3600) / 60));
+        const hour = 3600;
+        const minute = 60;
+        this.hours = Math.floor(this._totalTimeSongs / hour);
+        this.minutes = Math.floor(((this._totalTimeSongs % hour) / minute));
       });
   }
 
