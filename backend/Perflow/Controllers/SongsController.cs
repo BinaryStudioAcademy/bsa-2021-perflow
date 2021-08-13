@@ -1,15 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
 using Perflow.Services.Interfaces;
-using System.Web;
-using Microsoft.AspNetCore.Http;
-using Shared.AzureBlobStorage.Interfaces;
-using Shared.AzureBlobStorage.Models;
 using Shared.Auth.Constants;
 using Shared.Auth.Extensions;
 
@@ -79,10 +74,11 @@ namespace Perflow.Controllers
         {
             return Ok(await _songsService.FindSongsByIdAsync(id));
         }
+
         [HttpGet("topSongs/{authorId}")]
         public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByAuthorIdAsync(int authorId, [FromQuery] int count)
         {
-            var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count);
+            var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count, User.GetId());
 
             return Ok(songs);
         }

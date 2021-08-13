@@ -13,7 +13,7 @@ export class SongsListComponent {
   @Input() songs: Song[];
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
-  @Output() clickLike = new EventEmitter<number>();
+  @Output() clickDislike = new EventEmitter<number>();
 
   sortType: SongSortType | null = null;
 
@@ -25,7 +25,7 @@ export class SongsListComponent {
     this.clickMenuItem.emit(data);
   };
 
-  clickLikeIcon(songId: number) {
-    this.clickLike.emit(songId);
+  clickDislikeIcon(songId: number) {
+    this.clickDislike.emit(songId);
   }
 }

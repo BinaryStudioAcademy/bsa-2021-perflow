@@ -3,7 +3,6 @@ import {
 } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { ReactionService } from 'src/app/services/reaction.service';
 import { Song } from '../../../models/song/song';
 import { SongsService } from '../../../services/songs/songs.service';
 
@@ -21,9 +20,8 @@ export class SongsComponent implements OnInit {
 
   constructor(
     private _songService: SongsService,
-    private _authService: AuthService,
-    private _reactionService: ReactionService
-  ) {}
+    private _authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loadLikedSongs();
@@ -49,11 +47,6 @@ export class SongsComponent implements OnInit {
   }
 
   dislikeSong(songId: number) {
-    this._reactionService.removeLike(songId, this._userId)
-      .subscribe({
-        next: () => {
-          this.songs = this.songs.filter((s) => s.id !== songId);
-        }
-      });
+    this.songs = this.songs.filter((s) => s.id !== songId);
   }
 }

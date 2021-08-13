@@ -5,7 +5,8 @@
             <i class="play icon" (click)="playSong(song.id)"></i>
         </div>
         <div class="column like" >
-            <i class="heart outline icon" (click)="clickLikeIcon(song.id)"></i>
+            <i class="heart outline icon" (click)="likeSong(song.id)" *ngIf="!song.isLiked"></i>
+            <i class="heart icon orange" (click)="dislikeSong(song.id)" *ngIf="song.isLiked"></i>
         </div>
         <div class="column song-name text">
             <span class="e" *ngIf="song.hasCensorship">E</span>
