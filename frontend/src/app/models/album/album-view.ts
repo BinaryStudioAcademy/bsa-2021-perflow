@@ -1,3 +1,5 @@
+import { AlbumAuthor } from '../user/album-author';
+
 export interface AlbumView {
   id: number,
   name: string,
@@ -5,5 +7,5 @@ export interface AlbumView {
   description: string,
   isSingle: boolean,
   reactions: number,
-  authors: Array<string>
+  authors: Array<AlbumAuthor>
 }

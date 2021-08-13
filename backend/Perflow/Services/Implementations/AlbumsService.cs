@@ -78,7 +78,7 @@ namespace Perflow.Services.Implementations
                     IconURL = a.IconURL,
                     IsSingle = a.IsSingle,
                     Reactions = a.Reactions.Count,
-                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? s.Artist.UserName : s.Group.Name).ToList()
+                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false)).ToList()
                 })
                 .ToListAsync();
             foreach(var entity in entities)
