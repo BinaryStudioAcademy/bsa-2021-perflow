@@ -28,7 +28,7 @@ const routes: Routes = [{
     {
       path: 'playlists',
       children: [
-        { path: 'view-playlist', component: ViewPlaylistComponent },
+        { path: 'view-playlist/:id', component: ViewPlaylistComponent },
         { path: 'edit/:id', component: CreateEditPlaylistComponent },
         { path: 'create', component: CreateEditPlaylistComponent },
         {

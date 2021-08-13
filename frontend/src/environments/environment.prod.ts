@@ -2,8 +2,8 @@ export const environment = {
   production: true,
   apiUrl: '',
   firebaseConfig: {
-    apiKey: 'AIzaSyBauXSgwcLf4JxzspTn2_y9SNJsrWJVrIs',
-    authDomain: "perflow-bsa.firebaseapp.com",
-    projectId: 'perflow-bsa',
+    apiKey: process.env.FIREBASE_KEY,
+    authDomain: "perflow-bsa-42a8b.firebaseapp.com",
+    projectId: 'perflow-bsa-42a8b',
   }
 };

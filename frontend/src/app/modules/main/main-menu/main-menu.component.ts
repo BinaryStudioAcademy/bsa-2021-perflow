@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { MOCKPLAYLIST } from './mock-playlist';
 
 @Component({
   selector: 'app-main-menu',
@@ -13,12 +14,22 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 })
 export class MainMenuComponent implements OnDestroy, OnInit {
   // TODO: Tempolary array
-  playlists: string[] = [
-    'Home playlist',
-    'Wife playlist',
-    'Playlist for run',
-    'For work'
+  mockPlaylists: MOCKPLAYLIST[] = [
+    {
+      id: 1,
+      name: 'Rock'
+    },
+    {
+      id: 2,
+      name: 'Almost the Beatles'
+    },
+    {
+      id: 3,
+      name: 'JohnLennon'
+    }
   ];
+
+  playlists: string[] = [];
 
   private _unsubscribe$ = new Subject<void>();
 

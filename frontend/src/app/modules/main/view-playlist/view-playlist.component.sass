@@ -18,6 +18,7 @@ main
     background-size: cover
 
 .hat-view-playlist
+    margin-bottom: 15px
     height: 400px
     border-radius: 0
     background: linear-gradient(90deg, rgba(134, 64, 153, 0.9) 0%, rgba(70, 65, 146, 0.855) 100%)
@@ -54,13 +55,14 @@ main
                 border-radius: 50%
         .menu-view-playlist
             padding-left: 35px
-            padding-top: 45px
+            padding-top: 25px
             color: $text
             .text
                 font-weight: $light-weight
                 font-size: 18px
                 line-height: 21px
             h3
+                margin: 15px 0
                 font-weight: bold
                 line-height: 47px
             .total-all
@@ -73,7 +75,7 @@ main
                 .total-time-songs
                     padding: 0 10px
             .view-button-toolbar
-                margin-top: 20px
+                margin-top: 30px
                 i
                     padding: 0 15px
                     margin-bottom: 10px
@@ -81,26 +83,21 @@ main
                     color: #FAFBFF
                 .ui.simple.dropdown .menu
                     left: 20px
-                    background: $drk-gray
+                    background: $light-gray
                 .ellipsis-button
                     padding: 0 15px
                     background: transparent
                     .menu
                         .item
                             i
-                                margin: 10px 20px 10px 5px
+                                margin: 5px 5px 5px 0
                                 padding: 0
+                                font-size: 14px
                             span
                                 font-family: Montserrat
-                                font-weight: $medium-weight
-                                font-size: 14px
                                 line-height: 135%
                         .item:hover
-                            background: $light-gray
-                            i
-                                color: $light-orange
-                            span
-                                color: $light-orange
+                            background: $drk-gray
             .view-playlist-toolbar
                 display: flex
                 flex-direction: column

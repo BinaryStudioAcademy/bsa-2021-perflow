@@ -7,6 +7,8 @@ interface Process{
 }
 
 interface Env{
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  FIREBASE_KEY: string;
   apiKey: string;
 }
 
