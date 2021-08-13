@@ -1,16 +1,15 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Groups;
 using Perflow.Services.Implementations;
-using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Shared.Auth.Constants;
 
 namespace Perflow.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = Policies.IsUser)]
     public class GroupsController : ControllerBase
     {
         private readonly GroupService _groupService;

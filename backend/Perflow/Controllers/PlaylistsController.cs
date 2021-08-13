@@ -9,11 +9,14 @@ using Perflow.Common.DTO.Songs;
 using Shared.Auth.Extensions;
 using System.Linq;
 using System.Security.Claims;
+using Shared.Auth.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Perflow.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = Policies.IsUser)]
     public class PlaylistsController : ControllerBase
     {
         private readonly PlaylistService _playlistService;

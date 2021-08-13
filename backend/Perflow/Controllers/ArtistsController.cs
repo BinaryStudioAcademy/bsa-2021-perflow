@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Users;
 using Perflow.Services.Interfaces;
+using Shared.Auth.Constants;
 using System.Threading.Tasks;
 
 namespace Perflow.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = Policies.IsUser)]
     public class ArtistsController : ControllerBase
     {
         private readonly IArtistService _artistService;
