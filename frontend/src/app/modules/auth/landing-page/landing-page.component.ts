@@ -50,12 +50,11 @@ export class LandingPageComponent {
       remember: this.rememberMe,
       redirect: '/'
     })
-    .catch((e) => 
-    {
-      this.isLogInClicked = false;
-      this.failure = true;
-      this.failMessage = e;
-    });
+      .catch((e) => {
+        this.isLogInClicked = false;
+        this.failure = true;
+        this.failMessage = e;
+      });
   }
 
   logInWithGoogle() {
