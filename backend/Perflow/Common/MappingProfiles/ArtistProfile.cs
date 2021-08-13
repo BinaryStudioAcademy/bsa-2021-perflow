@@ -10,6 +10,9 @@ namespace Perflow.Common.MappingProfiles
         {
             CreateMap<User, ArtistReadDTO>();
             CreateMap<ArtistReadDTO, User>();
+
+            CreateMap<User, ArtistForAlbumDTO>();
+
         }
         
     }

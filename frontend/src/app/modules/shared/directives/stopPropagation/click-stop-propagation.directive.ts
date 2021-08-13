@@ -1,4 +1,4 @@
-/*eslint class-methods-use-this: ["error", { "exceptMethods": ["onClick"] }] */
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["onClick"] }] */
 
 import { Directive, HostListener } from '@angular/core';
 

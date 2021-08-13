@@ -88,7 +88,7 @@ namespace Perflow.Services.Implementations
             return entities;
         }
 
-        public async Task<Album> AddEntityAsync(Album albumDTO)
+        public async Task<AlbumEditDTO> AddEntityAsync(AlbumEditDTO albumDTO)
         {
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
@@ -97,21 +97,43 @@ namespace Perflow.Services.Implementations
 
             var album = mapper.Map<Album>(albumDTO);
 
+            if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
+            {
+                album.Author = await context.Users.FirstOrDefaultAsync(user => user.Id == albumDTO.AuthorId);
+            }
+            else
+            {
+                album.Group = await context.Groups.FirstOrDefaultAsync(group => group.Id == albumDTO.GroupId);
+            }
+
             await context.Albums.AddAsync(album);
 
             await context.SaveChangesAsync();
 
-            var createdAlbum = await GetEntityAsync(album.Id);
+            var createdAlbum = await context.Albums
+                .Include(a => a.Author)
+                .Include(a => a.Group)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Id == album.Id);
 
-            return mapper.Map<Album>(createdAlbum);
+            return mapper.Map<AlbumEditDTO>(createdAlbum);
         }
 
-        public async Task<Album> UpdateEntityAsync(Album albumDTO)
+        public async Task<AlbumEditDTO> UpdateEntityAsync(AlbumEditDTO albumDTO)
         {
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
             var album = mapper.Map<Album>(albumDTO);
+
+            if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
+            {
+                album.Author = await context.Users.FirstOrDefaultAsync(u => u.Id == albumDTO.AuthorId);
+            }
+            else
+            {
+                album.Group = await context.Groups.FirstOrDefaultAsync(g => g.Id == albumDTO.GroupId);
+            }
 
             context.Entry(album).State = EntityState.Modified;
 
@@ -119,12 +141,14 @@ namespace Perflow.Services.Implementations
 
             var updatedAlbum = await GetEntityAsync(album.Id);
 
-            return mapper.Map<Album>(updatedAlbum);
+            return mapper.Map<AlbumEditDTO>(updatedAlbum);
         }
 
         public async Task<int> DeleteEntityAsync(int entityId)
         {
-            var deletedAlbum = await context.Albums.FirstOrDefaultAsync(p => p.Id == entityId);
+            var deletedAlbum = await context.Albums
+                .Include(album => album.Songs)
+                .FirstOrDefaultAsync(album => album.Id == entityId);
 
             context.Albums.Remove(deletedAlbum);
 
