@@ -14,6 +14,7 @@ import {
 } from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { SettingsComponent } from './settings/settings.component';
+import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 import { UserProfileEditComponent } from '../user/user-profile-edit/user-profile-edit.component';
 
 const routes: Routes = [{
@@ -35,6 +36,7 @@ const routes: Routes = [{
     {
       path: 'playlists',
       children: [
+        { path: 'view-playlist/:id', component: ViewPlaylistComponent },
         { path: 'edit/:id', component: CreateEditPlaylistComponent },
         { path: 'create', component: CreateEditPlaylistComponent },
         {

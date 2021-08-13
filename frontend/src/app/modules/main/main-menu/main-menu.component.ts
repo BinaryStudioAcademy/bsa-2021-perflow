@@ -12,8 +12,7 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
   styleUrls: ['./main-menu.component.sass']
 })
 export class MainMenuComponent implements OnDestroy, OnInit {
-  // TODO: Tempolary array
-  playlists: string[] = [];
+  playlists: Playlist[] = [];
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -38,7 +37,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (resp: HttpResponse<Playlist[]>) => {
-          this.playlists = resp.body!.map((el) => el.name);
+          this.playlists = resp.body!;
         }
       );
   }
