@@ -8,13 +8,17 @@ import { SharedModule } from '../shared/shared.module';
 import { AlbumCardComponent } from './components/album-card/album-card.component';
 import { CreateEditAlbumComponent } from './components/create-edit-album/create-edit-album/create-edit-album.component';
 import { EditAlbumModalComponent } from './components/create-edit-album/edit-album-modal/edit-album-modal.component';
+import {
+  SongsUploadModalComponent
+} from './components/create-edit-album/songs-upload-modal/songs-upload-modal.component';
 
 @NgModule({
   declarations: [
     AlbumDetailsComponent,
     AlbumCardComponent,
     CreateEditAlbumComponent,
-    EditAlbumModalComponent
+    EditAlbumModalComponent,
+    SongsUploadModalComponent
   ],
   imports: [
     CommonModule,

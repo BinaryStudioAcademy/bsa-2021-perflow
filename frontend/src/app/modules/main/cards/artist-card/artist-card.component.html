@@ -1,9 +1,9 @@
-<div class="card">
+<div class="card" [routerLink]="['/artists', artist.id]">
     <div class="image-block">
         <div class="image">
             <img [attr.src]="artist.iconURL" alt="Artist">    
         </div>
-        <div class="remove" (click)="onDeleteClick(artist)">
+        <div class="remove" (click)="onDeleteClick(artist)" appClickStopPropagation>
             <i class="like icon ui"></i>
         </div>
     </div>

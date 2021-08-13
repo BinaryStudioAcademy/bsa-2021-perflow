@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
@@ -42,6 +43,16 @@ namespace Perflow.Services.Implementations
         public async Task DeleteUserAsync(User user)
         {
             _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateUserIconAsync(UserChangeIconDTO userChangeIconDTO)
+        {
+            var updatedUser = await _context.Users.FirstOrDefaultAsync(user => user.Id == userChangeIconDTO.Id);
+            updatedUser.IconURL = userChangeIconDTO.IconURL;
+
+            _context.Entry(updatedUser).State = EntityState.Modified;
+
             await _context.SaveChangesAsync();
         }
     }
