@@ -218,6 +218,34 @@
         "GET"
       ]
     },
+    {
+      "DownstreamPathTemplate": "/api/Upload",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Upload",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/file/Upload",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/file/Upload",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
     // Auth
     {
       "DownstreamPathTemplate": "/api/AlbumReaction/{id}",
