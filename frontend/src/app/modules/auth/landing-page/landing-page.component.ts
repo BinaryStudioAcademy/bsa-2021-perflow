@@ -11,6 +11,9 @@ export class LandingPageComponent {
   showPassword: boolean = false;
   isLogInClicked: boolean = false;
   rememberMe: boolean = true;
+  loading: boolean = false;
+  failure: boolean = false;
+  failMessage: string = '';
 
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -33,22 +36,25 @@ export class LandingPageComponent {
   }
 
   logInWithEmail() {
-    this.isLogInClicked = true;
-
     if (!this.loginForm.valid) {
       return;
     }
-
+    this.failure = false;
+    this.isLogInClicked = true;
     this.loginForm.markAsPristine();
 
     const { email, password } = this.loginForm.value;
-
     this._authService.signInWithEmail({
       email,
       password,
       remember: this.rememberMe,
       redirect: '/'
-    });
+    })
+      .catch((e) => {
+        this.isLogInClicked = false;
+        this.failure = true;
+        this.failMessage = e;
+      });
   }
 
   logInWithGoogle() {
