@@ -87,14 +87,6 @@ export class AlbumDetailsComponent implements OnInit {
       );
   }
 
-  dislikeSong(songId: number) {
-    this._reactionService.removeLike(songId, this._userId).subscribe();
-  }
-
-  likeSong(songId: number) {
-    this._reactionService.likeSong(songId, this._userId).subscribe();
-  }
-
   scroll() {
     this.albumsElement.nativeElement?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   }

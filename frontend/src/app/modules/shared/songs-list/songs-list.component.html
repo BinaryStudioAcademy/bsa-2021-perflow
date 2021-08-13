@@ -2,6 +2,5 @@
   <app-songs-list-header (sortTypeChanged)="setSortType($event)"></app-songs-list-header>
   <app-song-row *ngFor="let song of songs | sortSongs:sortType; let i = index" [number]="i+1" [song]="song"
     (clickMenuItem)="rowMenuClick($event)" 
-    (clickDislike)="clickDislikeIcon($event)"
-    (clickLike)="clickLikeIcon($event)"></app-song-row>
+    (clickDislike)="clickDislikeIcon($event)"></app-song-row>
 </div>

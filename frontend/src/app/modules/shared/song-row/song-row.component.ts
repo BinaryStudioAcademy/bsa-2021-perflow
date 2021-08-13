@@ -1,9 +1,12 @@
 import {
-  Component, Input, Output, EventEmitter
+  Component, Input, Output, EventEmitter, OnInit
 } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { SongInfo } from 'src/app/models/song/song-info';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { HttpInternalService } from 'src/app/services/http-internal.service';
+import { ReactionService } from 'src/app/services/reaction.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { links } from '../mock-audio/links';
@@ -14,32 +17,59 @@ import { links } from '../mock-audio/links';
   styleUrls: ['./song-row.component.sass']
 })
 
-export class SongRowComponent {
+export class SongRowComponent implements OnInit {
+  private _userId: number;
+
   @Input() song: Song;
   @Input() number: number;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
-  @Output() clickLike = new EventEmitter<number>();
 
   constructor(
     private _songService: SongsService,
     private _toolbarService: SongToolbarService,
-    private _httpService: HttpInternalService
+    private _httpService: HttpInternalService,
+    private _reactionService: ReactionService,
+    private _authService: AuthService
   ) { }
+
+  ngOnInit(): void {
+    this.getUserId();
+  }
+
+  getUserId() {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe(
+        (state) => {
+          this._userId = state!.id;
+        }
+      );
+  }
 
   clickItem(menu: string) {
     this.clickMenuItem.emit({ menuItem: menu, song: this.song });
   }
 
-  clickDislikeIcon(songId: number) {
+  dislikeSong(songId: number) {
     this.clickDislike.emit(songId);
-    this.song.isLiked = false;
+
+    this._reactionService.removeLike(songId, this._userId)
+      .subscribe(
+        () => {
+          this.song.isLiked = false;
+        }
+      );
   }
 
-  clickLikeIcon(songId: number) {
-    this.clickLike.emit(songId);
-    this.song.isLiked = true;
+  likeSong(songId: number) {
+    this._reactionService.likeSong(songId, this._userId)
+      .subscribe(
+        () => {
+          this.song.isLiked = true;
+        }
+      );
   }
 
   playSong = (id: number) => {

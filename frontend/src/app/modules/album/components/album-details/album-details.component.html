@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <app-songs-list [songs]="album.songs" (clickLike)="likeSong($event)" (clickDislike)="dislikeSong($event)"></app-songs-list>
+    <app-songs-list [songs]="album.songs"></app-songs-list>
 
     <div class="anotherAlbums" *ngIf="anotherAlbums.length > 0">
         <div class="header">

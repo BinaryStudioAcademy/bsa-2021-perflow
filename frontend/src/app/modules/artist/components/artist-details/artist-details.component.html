@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <app-songs-list [songs]="topSongs" (clickLike)="likeSong($event)" (clickDislike)="dislikeSong($event)"></app-songs-list>
+    <app-songs-list [songs]="topSongs"></app-songs-list>
 
     <div class="artistAlbums" *ngIf="artist.albums && artist.albums.length > 0">
         <div class="header">
