@@ -1,5 +1,4 @@
-import { PlatformLocation } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AlbumAuthor } from 'src/app/models/user/album-author';
 
 @Component({
@@ -7,20 +6,8 @@ import { AlbumAuthor } from 'src/app/models/user/album-author';
   templateUrl: './new-release-card.component.html',
   styleUrls: ['./new-release-card.component.sass']
 })
-export class NewReleaseCardComponent implements OnInit{
+export class NewReleaseCardComponent{
   @Input() name: string;
   @Input() authors: Array<AlbumAuthor>;
   @Input() iconUrl: string;
-
-  public baseUrl: string;
-
-  constructor(
-    private _location: PlatformLocation 
-  ) {
-  };
-
-  public ngOnInit(){
-    this.baseUrl = `${this._location.hostname}:${this._location.port}/`;
-    console.log(`${this.baseUrl}artists/${this.authors[0].id}`);
-  }
 }
