@@ -28,7 +28,7 @@ namespace Perflow.Studio
 
             services.AddMediatR(typeof(Startup));
 
-            services.AddAuth();
+            services.AddAuth(Configuration["FirebaseProjectId"]);
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
