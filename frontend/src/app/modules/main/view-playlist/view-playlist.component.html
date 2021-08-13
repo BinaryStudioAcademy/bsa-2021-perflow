@@ -1,0 +1,70 @@
+<main>
+  <div class="fon-view-playlist">
+    <div class="hat-view-playlist">
+      <div class="arrows">
+        <button class="ui icon button arrow" (click)="nextSlide()">
+          <i class="chevron inverted left icon"></i>
+        </button>
+        <button class="ui icon button arrow" (click)="previousSlide()">
+          <i class="chevron inverted right icon"></i>
+        </button>
+      </div>
+      <div class="content-view-playlist">
+        <div class="ui image">
+          <img src="{{playlist.iconURL}}" alt="Avatar playlist" />
+        </div>
+        <div class="menu-view-playlist">
+          <div class="text">Playlist</div>
+          <h3>{{playlist.name}}</h3>
+          <div>
+            <span class="total-all"> {{playlist.author.userName}} </span>
+            <span class="menu-view-playlist-description">
+              | <span class="total-count-songs">{{totalCountSongs}} songs </span> |
+              <span class="total-time-songs">{{hours}} h {{minutes}} min</span>
+            </span>
+          </div>
+          <div class="view-button-toolbar">
+            <button class="ui btn-full button" (click)="play()">Play</button>
+            <i class="heart outline icon"></i>
+            <span class="menu">
+              <div class="ui simple dropdown item ellipsis-button">
+                <i class="ellipsis vertical icon"></i>
+                <div class="menu">
+                  <div class="item" routerLink="/">
+                    <span>
+                      <i class="outdent icon"></i>
+                      Add to queue
+                    </span>
+                  </div>
+                  <div class="item" routerLink="/">
+                    <span>
+                      <i class="podcast icon"></i>
+                      Start playlist radio
+                    </span>
+                  </div>
+                  <div class="item" routerLink="/">
+                    <span>
+                      <i class="share alternate icon"></i>
+                      Share
+                    </span>
+                  </div>
+                  <div class="item" routerLink="/">
+                    <span>
+                      <i class="hand peace outline icon"></i>
+                      About recommendations
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <app-songs-list
+      [songs]="songs"
+    ></app-songs-list>
+  </div>
+</main>
