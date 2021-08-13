@@ -1,11 +1,8 @@
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
-import { ReactionService } from 'src/app/services/reaction.service';
 
 @Component({
   selector: 'app-view-playlist',
@@ -24,8 +21,6 @@ export class ViewPlaylistComponent implements OnInit {
 
   constructor(
     private _activateRoute: ActivatedRoute,
-    private _authService: AuthService,
-    private _reactionService: ReactionService,
     private _playlistsService: PlaylistsService
   ) { }
 
@@ -35,29 +30,11 @@ export class ViewPlaylistComponent implements OnInit {
       this.loadPlaylistSongs();
       this.loadPlaylist();
     });
-    this.getUserId();
   }
 
   nextSlide = () => {};
 
   previousSlide = () => {};
-
-  getUserId() {
-    this._authService
-      .getAuthStateObservable()
-      .pipe(filter((state) => state !== null))
-      .subscribe((authState) => {
-        this.userId = authState!.id;
-      });
-  }
-
-  dislikeSong(songId: number) {
-    this._reactionService.removeLike(songId, this.userId).subscribe({
-      next: () => {
-        this.songs = this.songs.filter((s) => s.id !== songId);
-      }
-    });
-  }
 
   play = () => {};
 
