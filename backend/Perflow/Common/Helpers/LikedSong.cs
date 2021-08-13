@@ -12,15 +12,5 @@ namespace Perflow.Common.Helpers
             Song = s;
             IsLiked = isLiked;
         }
-
-        public static implicit operator (Song s, bool)(LikedSong value)
-        {
-            return (value.Song, value.IsLiked);
-        }
-
-        public static implicit operator LikedSong((Song s, bool) value)
-        {
-            return new LikedSong(value.s, value.Item2);
-        }
     }
 }

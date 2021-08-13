@@ -37,7 +37,7 @@ namespace Perflow.Services.Implementations
                 .Include(songReaction => songReaction.Song)
                     .ThenInclude(song => song.Album)
                 .Select(songReaction =>
-                  mapper.Map<LikedSong, SongReadDTO>(new LikedSong(songReaction.Song, true))
+                    mapper.Map<LikedSong, SongReadDTO>(new LikedSong(songReaction.Song, true))
                  )
                 .ToListAsync();
 

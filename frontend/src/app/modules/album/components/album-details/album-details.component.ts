@@ -24,9 +24,15 @@ export class AlbumDetailsComponent implements OnInit {
   album: AlbumFull = {} as AlbumFull;
   anotherAlbums: Album[] = [];
 
-  constructor(private _clipboardApi: ClipboardService, private _route: ActivatedRoute, private _service: AlbumService,
-    private _reactionService: ReactionService, private _router: Router, private _location: PlatformLocation,
-    private _authService: AuthService) {
+  constructor(
+    private _clipboardApi: ClipboardService,
+    private _route: ActivatedRoute,
+    private _service: AlbumService,
+    private _reactionService: ReactionService,
+    private _router: Router,
+    private _location: PlatformLocation,
+    private _authService: AuthService
+  ) {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 

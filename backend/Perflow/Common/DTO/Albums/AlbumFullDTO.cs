@@ -15,7 +15,6 @@ namespace Perflow.Common.DTO.Albums
         public bool IsPublished { get; set; }
         public AlbumRegion Region { get; set; }
         public bool IsSingle { get; set; }
-
         public string Name { get; set; }
         public string IconURL { get; set; }
         public ArtistForAlbumDTO Artist { get; set; }
