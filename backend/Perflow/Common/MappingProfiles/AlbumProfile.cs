@@ -25,6 +25,11 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<Album, AlbumForArtistDTO>()
                 .AfterMap((src, dest, context) => dest.Author = context.Mapper.Map<User, ArtistForAlbumDTO>(src.Author))
                 .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupForAlbumDTO>(src.Group));
+
+            CreateMap<AlbumEditDTO, Album>();
+            CreateMap<Album, AlbumEditDTO>()
+                .ForMember(p => p.AuthorId, opt => opt.MapFrom(c => c.AuthorId))
+                .ForMember(p => p.GroupId, opt => opt.MapFrom(c => c.GroupId));
         }
     }
 }

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Album } from '../models/album/album';
+import { AlbumEdit } from '../models/album/album-edit';
 import { AlbumFull } from '../models/album/album-full';
 import { AlbumView } from '../models/album/album-view';
 import { HttpInternalService } from './http-internal.service';
@@ -26,5 +28,21 @@ export class AlbumService {
 
   public getAlbumsByArtist(artistId: number) {
     return this._httpService.getRequest<Album[]>(`${this.routePrefix}/byArtist/${artistId}`);
+  }
+
+  public createAlbum(album: AlbumEdit): Observable<AlbumEdit> {
+    return this._httpService.postRequest<AlbumEdit>(this.routePrefix, album);
+  }
+
+  public getEditedAlbum(id: number): Observable<AlbumEdit> {
+    return this._httpService.getRequest<AlbumEdit>(`${this.routePrefix}/${id}`);
+  }
+
+  public editAlbum(album: AlbumEdit): Observable<AlbumEdit> {
+    return this._httpService.putRequest<AlbumEdit>(`${this.routePrefix}`, album);
+  }
+
+  public removeAlbum(id: number): Observable<number> {
+    return this._httpService.deleteRequest<number>(`${this.routePrefix}/${id}`);
   }
 }

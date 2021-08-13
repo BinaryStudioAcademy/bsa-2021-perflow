@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Auth.Constants;
@@ -12,20 +13,20 @@ namespace Shared.Auth.Extensions
 {
     public static class AddAuthExtension
     {
-        public static void AddAuth(this IServiceCollection services)
+        public static void AddAuth(this IServiceCollection services, string firebaseProjectId)
         {
             services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://securetoken.google.com/perflow-bsa";
+                    options.Authority = $"https://securetoken.google.com/{firebaseProjectId}";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/perflow-bsa",
+                        ValidIssuer = $"https://securetoken.google.com/{firebaseProjectId}",
                         ValidateAudience = true,
-                        ValidAudience = "perflow-bsa",
+                        ValidAudience = firebaseProjectId,
                         ValidateLifetime = true
                     };
                 });
