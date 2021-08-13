@@ -89,10 +89,13 @@ namespace Perflow.Services.Implementations
             return guid;
         }
 
-        public async Task<SongReadDTO> AddSongInfoAsync(SongWriteDTO songInfo)
+        public async Task<SongReadDTO> AddSongInfoAsync(SongWriteDTO songInfo, int artistId)
         {
             if (songInfo == null)
                 throw new ArgumentNullException(nameof(songInfo), "Argument cannot be null");
+
+            songInfo.CreatedAt = DateTimeOffset.Now;
+            songInfo.ArtistId = artistId;
 
             await context.Songs.AddAsync(mapper.Map<Song>(songInfo));
 

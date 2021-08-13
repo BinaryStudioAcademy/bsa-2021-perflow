@@ -140,9 +140,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (time: number) => {
             songForWrite.albumId = this.album.id;
-            songForWrite.artistId = this.album.artist!.id;
             songForWrite.authorType = this.album.authorType;
-            songForWrite.createdAt = new Date(Date.now());
             songForWrite.duration = Math.floor(time);
             songForWrite.hasCensorship = false;
             songForWrite.name = s.name.split('.').slice(0, -1).join('.');
