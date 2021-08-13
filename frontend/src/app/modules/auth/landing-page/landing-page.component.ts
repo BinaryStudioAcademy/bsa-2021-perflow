@@ -34,11 +34,10 @@ export class LandingPageComponent {
   }
 
   logInWithEmail() {
-
     if (!this.loginForm.valid) {
       return;
     }
-    
+
     this.isLogInClicked = true;
     this.loginForm.markAsPristine();
 
