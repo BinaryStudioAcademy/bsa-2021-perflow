@@ -31,9 +31,9 @@ export function getCompareFunctionFromSortType(sortType: SongSortType): SongsCom
     case SongSortProperty.name:
       return (a, b) => compareStrings(a.name, b.name, sortType.order);
     case SongSortProperty.artist:
-      return (a, b) => compareStrings((a?.artist?.userName ?? a?.group?.name)!, 
-                                      (b?.artist?.userName ?? b?.group?.name)!, 
-                                      sortType.order);
+      return (a, b) => compareStrings((a?.artist?.userName ?? a?.group?.name)!,
+        (b?.artist?.userName ?? b?.group?.name)!,
+        sortType.order);
     case SongSortProperty.album:
       return (a, b) => compareStrings(a.album.name, b.album.name, sortType.order);
     case SongSortProperty.time:
