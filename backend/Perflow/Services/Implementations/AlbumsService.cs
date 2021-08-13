@@ -30,7 +30,10 @@ namespace Perflow.Services.Implementations
 
         public async Task<Album> GetEntityAsync(int id)
         {
-            var entity = await context.Albums.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+            var entity = await context.Albums
+                .Include(album => album.Author)
+                .Include(album => album.Group)
+                .AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
 
             return mapper.Map<Album>(entity);
         }

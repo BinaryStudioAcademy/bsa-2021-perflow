@@ -72,8 +72,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   showEditAlbumModal = () => {
     this.editedAlbum = {
       ...this.album,
-      authorId: this.album.id,
-      groupId: this.album.group?.id,
+      authorId: this.album.authorType === AuthorType.artist ? this.album.artist?.id : undefined,
+      groupId: this.album.authorType === AuthorType.group ? this.album.group?.id : undefined,
       createdAt: new Date()
     };
 

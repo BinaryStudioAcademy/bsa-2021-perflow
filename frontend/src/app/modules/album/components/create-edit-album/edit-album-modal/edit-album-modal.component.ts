@@ -1,5 +1,5 @@
 import {
-  Component, EventEmitter, Input, OnInit, Output
+  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild
 } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { AlbumEdit } from 'src/app/models/album/album-edit';
@@ -30,11 +30,14 @@ export class EditAlbumModalComponent implements OnInit {
   userId: number;
   userName: string;
   tempIconURL: string;
+  isAuthorHidden: boolean = true;
 
   @Input() editedAlbum: AlbumEdit = { } as AlbumEdit;
 
   @Output() isClosed = new EventEmitter<void>();
   @Output() editAlbum = new EventEmitter<AlbumEdit>();
+
+  @ViewChild('author') selectElement: ElementRef<HTMLSelectElement>;
 
   constructor(
     private _groupService: GroupService,
@@ -58,8 +61,31 @@ export class EditAlbumModalComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.groups = data;
+
+          if (this.groups?.length) {
+            this.fillAuthors(this.groups);
+          }
         }
       });
+  };
+
+  fillAuthors = (groups: Group[]) => {
+    const element = this.selectElement.nativeElement;
+
+    $(element).append($('<option></option>').val(0).text(this.userName));
+
+    groups.forEach((group) => {
+      $(element).append($('<option></option>').val(group.id).text(group?.name));
+    });
+
+    if (this.editedAlbum.authorType === AuthorType.artist) {
+      $(element).val(0);
+    }
+    else {
+      $(element).val(this.editedAlbum.groupId!);
+    }
+
+    this.isAuthorHidden = false;
   };
 
   public onSubmit() {
@@ -67,6 +93,10 @@ export class EditAlbumModalComponent implements OnInit {
 
     if (this.editedAlbum.authorType === AuthorType.artist) {
       this.editedAlbum.authorId = this.userId;
+      this.editedAlbum.groupId = undefined;
+    }
+    else {
+      this.editedAlbum.authorId = undefined;
     }
 
     this.editAlbum.emit(this.editedAlbum);
@@ -96,13 +126,17 @@ export class EditAlbumModalComponent implements OnInit {
   }
 
   authorTypeChange = () => {
-    if (this.editedAlbum.authorType === AuthorType.group) {
-      this.editedAlbum.groupId = this.groups[0].id;
-      this.editedAlbum.authorId = undefined;
-    }
-    else {
+    const index = +this.selectElement.nativeElement.value;
+
+    if (index === 0) {
+      this.editedAlbum.authorType = AuthorType.artist;
       this.editedAlbum.authorId = this.userId;
       this.editedAlbum.groupId = undefined;
+    }
+    else {
+      this.editedAlbum.authorType = AuthorType.group;
+      this.editedAlbum.groupId = index;
+      this.editedAlbum.authorId = undefined;
     }
   };
 }
