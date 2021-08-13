@@ -4,6 +4,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
+import { UserService } from 'src/app/services/user.service';
 import { User } from '../../../models/user/user';
 import { countries } from '../data/countries';
 import { genders } from '../data/genders';
@@ -36,7 +37,8 @@ export class ProfileEditFormComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _profileService: ProfileService
+    private _profileService: ProfileService,
+    private _userService: UserService
   ) { }
 
   ngOnInit() {
@@ -57,7 +59,8 @@ export class ProfileEditFormComponent implements OnInit {
       const reader: FileReader = new FileReader();
       reader.onload = () => {
         this.user.iconURL = reader.result!.toString();
-        this._profileService.updateProfileIcon(this.user.iconURL);
+
+        this.updateUserIcon();
       };
       reader.readAsDataURL(file);
     }
@@ -72,5 +75,14 @@ export class ProfileEditFormComponent implements OnInit {
 
   onSubmit() {
     this.updatedUser.emit(this.user);
+  }
+
+  updateUserIcon() {
+    this._userService.updateUserIcon({ id: this.user.id, iconURL: this.user.iconURL })
+      .subscribe({
+        next: () => {
+          this._profileService.updateProfileIcon(this.user.iconURL);
+        }
+      });
   }
 }
