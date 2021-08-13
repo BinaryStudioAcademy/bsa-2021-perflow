@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactionService } from 'src/app/services/reaction.service';
@@ -8,7 +8,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
   templateUrl: './albums-page.component.html',
   styleUrls: ['./albums-page.component.sass']
 })
-export class AlbumsPageComponent {
+export class AlbumsPageComponent implements OnInit{
   @Input()
   userId: number;
   albums!: AlbumForReadDTO[];

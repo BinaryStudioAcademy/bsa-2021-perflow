@@ -6,6 +6,8 @@ using Perflow.Domain;
 using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
 using Shared.ExceptionsHandler.Exceptions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Perflow.Services.Implementations
@@ -27,5 +29,26 @@ namespace Perflow.Services.Implementations
 
             return mapper.Map<ArtistDTO>(user);
         }
+
+        public async Task<IEnumerable<ArtistReadDTO>> GetTopArtistsByLikes(int amount)
+        {
+            var artists = await context.ArtistReactions
+                                    .GroupBy(
+                                        r => r.ArtistId,
+                                        (key, group) => new { ArtistId = key, Count = group.Count() }
+                                    )
+                                    .OrderByDescending(group => group.Count)
+                                    .Take(amount)
+                                    .Join(
+                                        context.Users,
+                                        group => group.ArtistId,
+                                        artist => artist.Id,
+                                        (group, artist) => artist
+                                     )
+                                    .ToListAsync();
+
+            return mapper.Map<IEnumerable<ArtistReadDTO>>(artists);
+        }
+            
     }
 }
