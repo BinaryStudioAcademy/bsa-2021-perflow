@@ -22,11 +22,10 @@ export class AllComponent {
   likedSongs: number;
 
   constructor(
-    private _reactionService: ReactionService, 
-    private _authService: AuthService, 
+    private _reactionService: ReactionService,
+    private _authService: AuthService,
     private _songsService: SongsService
-    ) 
-    {
+  ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
