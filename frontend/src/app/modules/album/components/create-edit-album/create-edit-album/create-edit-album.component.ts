@@ -8,6 +8,9 @@ import { AlbumService } from 'src/app/services/album.service';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AudioFileDuration } from 'src/app/helpers/AudioFileDuration';
+import { SongsService } from 'src/app/services/songs/songs.service';
+import { SongWriteDTO } from 'src/app/models/song/song-write';
 
 @Component({
   selector: 'app-create-edit-album',
@@ -20,6 +23,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   editedAlbum: AlbumEdit = {} as AlbumEdit;
   albumSongs: Array<Song> = new Array<Song>();
   isModalShown = false;
+  isSongUploadShown = false;
 
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
@@ -28,7 +32,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   constructor(
     private _albumService: AlbumService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _songsService: SongsService
   ) { }
 
   ngOnInit() {
@@ -80,6 +85,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     this.isModalShown = !this.isModalShown;
   };
 
+  showUploadSongsModal = () => {
+    this.isSongUploadShown = !this.isSongUploadShown;
+  };
+
   onSubmitModal = (data: AlbumEdit) => {
     this.isModalShown = !this.isModalShown;
 
@@ -124,6 +133,38 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       });
   };
 
+  uploadSongs = (songs: File[]) => {
+    songs.map((s) => {
+      const songForWrite = new SongWriteDTO();
+
+      const subscription = AudioFileDuration.getDuration(s)
+        .subscribe({
+          next: (time: number) => {
+            songForWrite.albumId = this.album.id;
+            songForWrite.authorType = this.album.authorType;
+            songForWrite.duration = Math.floor(time);
+            songForWrite.hasCensorship = false;
+            songForWrite.name = s.name.split('.').slice(0, -1).join('.');
+
+            this._songsService.uploadSong(songForWrite, s).subscribe((uploadInfoObservable) => {
+              uploadInfoObservable.subscribe((addedSong) => {
+                this.album.songs.push(addedSong);
+              });
+            });
+
+            subscription.unsubscribe();
+          }
+        });
+      return subscription;
+    });
+
+    this.closeUpload();
+  };
+
+  closeUpload() {
+    this.isSongUploadShown = !this.isSongUploadShown;
+  }
+
   closeModal() {
     this.isModalShown = !this.isModalShown;
 
@@ -163,4 +204,27 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     songs: {} as Song[],
     isLiked: false
   });
+
+  clickMenuHandler(data: { menuItem: string, song: Song }) {
+    switch (data.menuItem) {
+      case 'Remove from playlist':
+        this.deleteSongFromPlaylist(data.song);
+        break;
+      default:
+        break;
+    }
+  }
+
+  deleteSongFromPlaylist = (song: Song) => {
+    if (this.album.songs.find((s) => s.id === song.id)) {
+      this._songsService.deleteSong(song.id)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe({
+          next: () => {
+            this.albumSongs = this.album.songs.filter((s) => s.id !== song.id);
+            this.album.songs = this.albumSongs;
+          }
+        });
+    }
+  };
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user/user';
+import { UserChangeIcon } from '../models/user/user-change-icon';
 import { UserChangePassword } from '../models/user/user-change-password';
 import { HttpInternalService } from './http-internal.service';
 
@@ -22,5 +23,9 @@ export class UserService {
   updateUserPassword(userChangePassword: UserChangePassword) {
     const route = `${this.routePrefix}/changePassword`;
     return this._httpService.putFullRequest<UserChangePassword>(route, userChangePassword);
+  }
+
+  updateUserIcon(user: UserChangeIcon) {
+    return this._httpService.putRequest<UserChangeIcon>(`${this.routePrefix}/changeIcon`, user);
   }
 }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllPlaylistsComponent } from './all-playlists.component';
+import { SongsUploadModalComponent } from './songs-upload-modal.component';
 
-describe('PlaylistComponent', () => {
-  let component: AllPlaylistsComponent;
-  let fixture: ComponentFixture<AllPlaylistsComponent>;
+describe('SongsUploadModalComponent', () => {
+  let component: SongsUploadModalComponent;
+  let fixture: ComponentFixture<SongsUploadModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AllPlaylistsComponent]
+      declarations: [SongsUploadModalComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AllPlaylistsComponent);
+    fixture = TestBed.createComponent(SongsUploadModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

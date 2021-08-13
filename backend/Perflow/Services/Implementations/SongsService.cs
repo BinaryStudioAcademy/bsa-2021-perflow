@@ -71,6 +71,7 @@ namespace Perflow.Services.Implementations
 
         public async Task<string> UploadSongAsync(IFormFile song)
         {
+            Console.WriteLine("----------------------------Upload song async started.");
             var guid = Guid.NewGuid().ToString();
 
             if (song == null)
@@ -91,17 +92,26 @@ namespace Perflow.Services.Implementations
             return guid;
         }
 
-        public async Task<SongWriteDTO> AddSongInfoAsync(SongWriteDTO songInfo)
+        public async Task<SongReadDTO> AddSongInfoAsync(SongWriteDTO songInfo, int artistId)
         {
             if (songInfo == null)
                 throw new ArgumentNullException(nameof(songInfo), "Argument cannot be null");
 
+            songInfo.CreatedAt = DateTimeOffset.Now;
+            songInfo.ArtistId = artistId;
+
             await context.Songs.AddAsync(mapper.Map<Song>(songInfo));
 
             await context.SaveChangesAsync();
-            var result = await context.Songs.FirstOrDefaultAsync(s => s.ArtistId == songInfo.ArtistId && s.Name == songInfo.Name);
 
-            return mapper.Map<SongWriteDTO>(result);
+            var result = await context.Songs
+                .Include(song => song.Artist)
+                .Include(song => song.Group)
+                .Include(song => song.Album)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.ArtistId == songInfo.ArtistId && s.Name == songInfo.Name);
+
+            return mapper.Map<SongReadDTO>(result);
         }
 
         public async Task<FileContentResult> GetSongFileAsync(string blobId)

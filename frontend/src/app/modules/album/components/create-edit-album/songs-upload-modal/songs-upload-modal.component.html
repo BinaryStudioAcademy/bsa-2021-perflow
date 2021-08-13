@@ -1,0 +1,15 @@
+<div class="upload-songs-outside" (click)="cancelModal()">
+    <div class="upload-songs-inside" (click)="clickOnModal($event)">
+      <div class="header">
+        Upload songs
+      </div>
+      <div class="upload-block">
+        <app-song-image></app-song-image>
+      </div>
+      <div class="save-block">
+        <button class="ui button submit btn-full" (click)="uploadSongs()">Save</button>
+        <button class="ui btn-cancel inverted button" (click)="cancelModal()">Cancel</button>
+      </div>
+    </div>
+</div>
+

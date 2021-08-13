@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Albums;
-using Perflow.Domain;
 using Perflow.Services.Implementations;
 using Shared.Auth.Constants;
 using Shared.Auth.Extensions;
