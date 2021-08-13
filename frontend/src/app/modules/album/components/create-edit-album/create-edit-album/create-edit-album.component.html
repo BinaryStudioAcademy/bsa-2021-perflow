@@ -30,6 +30,7 @@
         </div>
         <div class="buttons">
           <button class="btn-full button-play">Play</button>
+          <button class="ui button-upload button" (click)="showUploadSongsModal()">Upload songs</button>
           <div class="action-icon">
             <i class="heart outline icon icons"></i>
           </div>
@@ -51,7 +52,9 @@
     </div>
   </div>
 
-  <app-songs-list *ngIf="album.songs.length" [songs]="album.songs"></app-songs-list>
+  <app-songs-upload-modal *ngIf="isSongUploadShown" (isClosed)="closeUpload()" (isFilesSaved)="uploadSongs($event)"></app-songs-upload-modal>
+
+  <app-songs-list *ngIf="album.songs.length" [songs]="album.songs" (clickMenuItem)="clickMenuHandler($event)"></app-songs-list>
 
   <app-edit-album-modal [editedAlbum]="editedAlbum" *ngIf="isModalShown" (editAlbum)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-album-modal>
 

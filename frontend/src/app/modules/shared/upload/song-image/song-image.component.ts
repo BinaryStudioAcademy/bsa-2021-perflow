@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { FileSizeConverter } from 'src/app/helpers/FileSizeConverter';
 import { FileUploadType } from 'src/app/models/common/file-upload-type';
 
@@ -10,6 +10,7 @@ import { FileUploadType } from 'src/app/models/common/file-upload-type';
 export class SongImageComponent {
   @Input()
   fileType: FileUploadType = FileUploadType.audio;
+  @Output()
   files: File[] = [];
 
   filesDropped(files: File[]): void {

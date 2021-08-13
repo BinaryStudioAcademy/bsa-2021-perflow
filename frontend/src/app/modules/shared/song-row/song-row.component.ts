@@ -9,7 +9,6 @@ import { HttpInternalService } from 'src/app/services/http-internal.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
-import { links } from '../mock-audio/links';
 
 @Component({
   selector: 'app-song-row',
@@ -75,23 +74,14 @@ export class SongRowComponent implements OnInit {
   playSong = (id: number) => {
     // This code works, it is commented temporary
 
-    // this._songService.getSongById(id).subscribe((song) => {
-    //   const testSong = new SongInfo(
-    //     song.name,
-    //     song.artist.userName,
-    //     this._httpService.buildUrl(`/api/Songs/file?blobId=${song.blobId}`),
-    //     song.iconURL
-    //   );
-    //   this._toolbarService.updateSong(testSong);
-    // });
-
-    const testSong = new SongInfo(
-      this.song.name,
-      this.song.artist.userName,
-      links.find((s) => s.id === 1)!.link,
-      this.song.album.iconURL
-    );
-
-    this._toolbarService.updateSong(testSong);
+    this._songService.getSongById(id).subscribe((song) => {
+      const testSong = new SongInfo(
+        song.name,
+        song.artist.userName,
+        this._httpService.buildUrl(`/api/Songs/file?blobId=${song.blobId}`),
+        song.iconURL
+      );
+      this._toolbarService.updateSong(testSong);
+    });
   };
 }

@@ -116,6 +116,8 @@ namespace Perflow.Services.Implementations
 
             albumDTO.Id = 0;
 
+            User artist = null;
+            Group group = null;
             var album = mapper.Map<Album>(albumDTO);
 
             if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
@@ -144,6 +146,9 @@ namespace Perflow.Services.Implementations
         {
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
+
+            User artist = null;
+            Group group = null;
 
             var album = mapper.Map<Album>(albumDTO);
 
