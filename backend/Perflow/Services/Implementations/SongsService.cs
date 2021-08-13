@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,6 +14,7 @@ using Perflow.Services.Interfaces;
 using Shared.AzureBlobStorage.Interfaces;
 using Shared.AzureBlobStorage.Models;
 using Shared.AzureBlobStorage.Helpers;
+using Perflow.Common.Helpers;
 
 namespace Perflow.Services.Implementations
 {
@@ -36,10 +36,12 @@ namespace Perflow.Services.Implementations
                     .ThenInclude(song => song.Group)
                 .Include(songReaction => songReaction.Song)
                     .ThenInclude(song => song.Album)
-                .Select(songReaction => songReaction.Song)
+                .Select(songReaction =>
+                    mapper.Map<LikedSong, SongReadDTO>(new LikedSong(songReaction.Song, true))
+                 )
                 .ToListAsync();
 
-            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+            return songs;
         }
 
         public async Task<IEnumerable<SongReadDTO>> FindSongsByNameAsync(string searchTerm)
@@ -126,9 +128,7 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
-
-                
-        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count)
+        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count, int userId)
         {
             var songs = await context.Songs
                 .Where(song => song.ArtistId == id || song.GroupId == id)
@@ -138,9 +138,12 @@ namespace Perflow.Services.Implementations
                 .Include(song => song.Group)
                 .Include(song => song.Album)
                 .AsNoTracking()
+                .Select(s =>
+                  mapper.Map<LikedSong, SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
+                 )
                 .ToListAsync();
 
-            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+            return songs;
         }
     }
 }

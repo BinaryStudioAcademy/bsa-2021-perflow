@@ -17,4 +17,5 @@ export interface AlbumFull {
   group?: Group;
   releaseYear: number;
   songs: Song[];
+  isLiked: boolean;
 }

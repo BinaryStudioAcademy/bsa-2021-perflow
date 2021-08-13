@@ -13,6 +13,7 @@ export interface Song {
   artist: User;
   authorType: AuthorType;
   blobId: string;
+  isLiked: boolean;
 
   // TODO: add fields
   podcast: string;
