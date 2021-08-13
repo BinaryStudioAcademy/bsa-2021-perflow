@@ -11,7 +11,7 @@ $gray: #999
 
 .dropZone
     position: relative
-    height: 270px
+    height: 220px
     width: 100%
     background-color: $drk-gray
     border: dashed $gray
@@ -19,9 +19,6 @@ $gray: #999
     box-sizing: border-box
     margin: auto
     text-align: center
-
-.upload.icon
-    margin-top: 15px
 
 .filepicker
     position: absolute
@@ -36,7 +33,8 @@ $gray: #999
     transform: translate(50%,-50%)
 
 .upload-button
-    margin: 15px 0
+    font-size: 18px !important
+    margin: 18px 0
 
 .dropZone
     .labeled
@@ -48,38 +46,38 @@ $gray: #999
 
 .uploaded-file
     box-sizing: border-box
-    height: 70px
+    height: 60px
     border-bottom: 1px solid $gray
     display: grid
     grid-template-columns: 70px 1fr 50px
-    grid-template-rows: repeat(2, 35px)
+    grid-template-rows: repeat(2, 30px)
     align-items: center
 
 .filelist
     position: relative
     min-height: 120px
-    height: calc( 100% - 270px - 5px )
+    height: calc( 100% - 220px - 5px )
     margin-top: 5px 
     background-color: $drk-gray
     border-radius: 10px
     border: solid $gray 1px
     color: $gray
-    font-weight: $light-weight
     overflow-y: scroll
-    .filename
+    h6
         overflow: hidden
         white-space: nowrap
         text-overflow: ellipsis
+        font-weight: $normal-weight
     .typeicon
         grid-row: 1/-1
         grid-column: 1
         justify-self: center
-        font-size: 25px
+        font-size: 20px
     .removeicon
         grid-row: 1/-1
         grid-column: 3
         justify-self: center
-        font-size: 25px
+        font-size: 20px
         &:hover
             color: $medium-orange
             cursor: pointer

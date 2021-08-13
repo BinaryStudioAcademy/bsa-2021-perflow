@@ -1,8 +1,8 @@
 <div class="uploadblock">
     <div class="dropZone ui container" appDragDrop [type]="fileType" [addedFiles]="files" (files)="filesDropped($event)">
         <h4 class="drag-text"><i class="cloud upload icon"></i></h4>
-        <h4 class="drag-text body-regular">Drag and drop file here</h4>
-        <h5 class="drag-text body-regular">or you can</h5>
+        <h5 class="drag-text body-regular">Drag and drop file here</h5>
+        <h6 class="drag-text body-regular">or you can</h6>
         <div class="huge ui labeled icon button btn-full upload-button">
             <i class="upload icon" aria-hidden="true"></i>
             <span>Upload</span>
@@ -13,8 +13,8 @@
         <div *ngFor="let file of files" class="uploaded-file">
             <i *ngIf="fileType==='images'" class="file image icon typeicon"></i>
             <i *ngIf="fileType==='audio'" class="file audio icon typeicon"></i>
-            <h5 class="filename">{{file.name}}</h5>
-            <h5 class="filesize">{{bytesToSize(file.size)}}</h5>
+            <h6 class="filename">{{file.name}}</h6>
+            <h6 class="filesize">{{bytesToSize(file.size)}}</h6>
             <i class="trash alternate icon removeicon" (click)="delete(file)"></i>
         </div>
     </div>

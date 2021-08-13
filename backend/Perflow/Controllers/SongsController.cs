@@ -44,7 +44,7 @@ namespace Perflow.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<ActionResult<SongWriteDTO>> AddSongInfo(SongWriteDTO songInfo)
+        public async Task<ActionResult<SongReadDTO>> AddSongInfo(SongWriteDTO songInfo)
         {
             var result = await _songsService.AddSongInfoAsync(songInfo);   
             return Ok(result);
