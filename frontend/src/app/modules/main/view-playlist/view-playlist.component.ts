@@ -27,18 +27,15 @@ export class ViewPlaylistComponent implements OnInit {
     private _authService: AuthService,
     private _reactionService: ReactionService,
     private _playlistsService: PlaylistsService
-  ) {
-    // this._playlistId = _activateRoute.snapshot.params.id;
-  }
+  ) { }
 
   ngOnInit() {
     this._activateRoute.params.subscribe((params: Params) => {
       this._playlistId = params.id;
+      this.loadPlaylistSongs();
+      this.loadPlaylist();
     });
-
     this.getUserId();
-    this.loadPlaylistSongs();
-    this.loadPlaylist();
   }
 
   nextSlide = () => {};
