@@ -81,7 +81,6 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       groupId: this.album.group ? this.album.group?.id : undefined,
       createdAt: new Date()
     };
-
     this.isModalShown = !this.isModalShown;
   };
 
@@ -112,7 +111,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
 
   editAlbum = (album: AlbumEdit) => {
     this.editedAlbum = {
-      ...this.editedAlbum,
+      ...album,
       name: album.name.trim() === '' ? 'Album name' : album.name
     };
 
@@ -120,15 +119,12 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
-          this.editedAlbum = data;
-          this.album = {
-            ...this.editedAlbum,
-            songs: this.album.songs,
-            artist: this.album.artist,
-            group: this.album.group,
-            releaseYear: data.releaseYear!,
-            isLiked: false
-          };
+          this._albumService.getAlbum(data.id)
+            .subscribe({
+              next: (result) => {
+                this.album = result;
+              }
+            });
         }
       });
   };

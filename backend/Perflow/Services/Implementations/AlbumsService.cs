@@ -61,7 +61,12 @@ namespace Perflow.Services.Implementations
                                                 ),
                                                 Artist = mapper.Map<User, ArtistForAlbumDTO>(a.Author),
                                                 Group = mapper.Map<Group, GroupForAlbumDTO>(a.Group),
-                                                IsLiked = a.Reactions.Any(r => r.UserId == userId)
+                                                IsLiked = a.Reactions.Any(r => r.UserId == userId),
+                                                IsSingle = a.IsSingle,
+                                                Region = a.Region,
+                                                AuthorType = a.AuthorType,
+                                                Description = a.Description,
+                                                IsPublished = a.IsPublished
                                             })
                                             .FirstOrDefaultAsync(e => e.Id == id);
 
@@ -119,8 +124,6 @@ namespace Perflow.Services.Implementations
 
             albumDTO.Id = 0;
 
-            User artist = null;
-            Group group = null;
             var album = mapper.Map<Album>(albumDTO);
 
             if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
@@ -149,9 +152,6 @@ namespace Perflow.Services.Implementations
         {
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
-
-            User artist = null;
-            Group group = null;
 
             var album = mapper.Map<Album>(albumDTO);
 
