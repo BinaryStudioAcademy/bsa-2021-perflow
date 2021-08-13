@@ -35,8 +35,8 @@
     <span class="title" *ngIf="playlists.length > 0">
       <h6>Created playlists</h6>
     </span>
-    <ul>
-      <li *ngFor="let playlist of playlists">
+    <ul *ngFor="let playlist of playlists">
+      <li >
         <a  [routerLink]="['/playlists/view-playlist', playlist.id]" routerLinkActive="active-link" >{{ playlist.name }} </a>
       </li>
     </ul>
