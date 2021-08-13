@@ -18,6 +18,7 @@ import { SongDurationPipe } from './pipes/song-duration.pipe';
 import { ItemsSumPipe } from './pipes/items-sum.pipe';
 import { AlbumDurationPipe } from './pipes/album-duration.pipe';
 import { SearchSongRowComponent } from './playlist/search-song-row/search-song-row.component';
+import { ClickStopPropagationDirective } from './directives/stopPropagation/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SearchSongRowComponent } from './playlist/search-song-row/search-song-r
     SongDurationPipe,
     ItemsSumPipe,
     AlbumDurationPipe,
-    SearchSongRowComponent
+    SearchSongRowComponent,
+    ClickStopPropagationDirective
   ],
   imports: [
     CommonModule,
@@ -62,7 +64,8 @@ import { SearchSongRowComponent } from './playlist/search-song-row/search-song-r
     SongDurationPipe,
     ItemsSumPipe,
     AlbumDurationPipe,
-    SearchSongRowComponent
+    SearchSongRowComponent,
+    ClickStopPropagationDirective
   ]
 })
 
