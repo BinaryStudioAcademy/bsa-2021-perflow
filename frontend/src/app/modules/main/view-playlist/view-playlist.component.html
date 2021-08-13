@@ -17,7 +17,7 @@
           <div class="text">Playlist</div>
           <h3>{{playlist.name}}</h3>
           <div>
-            <span class="total-all"> {{playlist.author.userName}} </span>
+            <span class="total-all" *ngIf="playlist.author"> {{playlist.author.userName}} </span>
             <span class="menu-view-playlist-description">
               | <span class="total-count-songs">{{totalCountSongs}} songs </span> |
               <span class="total-time-songs">{{hours}} h {{minutes}} min</span>
@@ -25,7 +25,8 @@
           </div>
           <div class="view-button-toolbar">
             <button class="ui btn-full button" (click)="play()">Play</button>
-            <i class="heart outline icon"></i>
+            <i class="heart outline icon" (click)="likePlaylist(playlist.id)" *ngIf="!playlist.isLiked"></i>
+            <i class="heart icon" (click)="dislikePlaylist(playlist.id)" *ngIf="playlist.isLiked"></i>
             <span class="menu">
               <div class="ui simple dropdown item ellipsis-button">
                 <i class="ellipsis vertical icon"></i>
