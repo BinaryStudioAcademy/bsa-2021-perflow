@@ -532,6 +532,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5001"
+    "BaseUrl": "https://localhost:44328"
   }
 }
