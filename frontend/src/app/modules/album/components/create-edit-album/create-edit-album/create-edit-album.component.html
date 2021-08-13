@@ -51,6 +51,10 @@
     </div>
   </div>
 
+  <button (click)="showUploadSongsModal()">Upload songs</button>
+
+  <app-songs-upload-modal *ngIf="isSongUploadShown" (isClosed)="closeUpload()"></app-songs-upload-modal>
+
   <app-songs-list *ngIf="album.songs.length" [songs]="album.songs"></app-songs-list>
 
   <app-edit-album-modal [editedAlbum]="editedAlbum" *ngIf="isModalShown" (editAlbum)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-album-modal>

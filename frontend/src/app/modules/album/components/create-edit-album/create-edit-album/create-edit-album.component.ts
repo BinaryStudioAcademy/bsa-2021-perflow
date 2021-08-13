@@ -33,6 +33,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   editedAlbum: AlbumEdit = {} as AlbumEdit;
   albumSongs: Array<Song> = new Array<Song>();
   isModalShown = false;
+  isSongUploadShown = false;
 
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
@@ -91,6 +92,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     this.isModalShown = !this.isModalShown;
   };
 
+  showUploadSongsModal = () => {
+    this.isSongUploadShown = !this.isSongUploadShown;
+  };
+
   onSubmitModal = (data: AlbumEdit) => {
     this.isModalShown = !this.isModalShown;
 
@@ -133,6 +138,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
         }
       });
   };
+
+  closeUpload() {
+    this.isSongUploadShown = !this.isSongUploadShown;
+  }
 
   closeModal() {
     this.isModalShown = !this.isModalShown;
