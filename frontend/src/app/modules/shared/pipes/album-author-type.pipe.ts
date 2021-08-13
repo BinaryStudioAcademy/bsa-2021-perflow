@@ -6,20 +6,9 @@ import { AuthorType } from 'src/app/models/enums/author-type.enum';
 })
 export class AuthorTypePipe implements PipeTransform {
   transform = (value: any, ...args: any[]): string => {
-    let authorType: string;
-
     switch (value as AuthorType) {
-      case AuthorType.artist:
-        authorType = 'Artist';
-        break;
-      case AuthorType.group:
-        authorType = 'Group';
-        break;
-      default:
-        authorType = 'Artist';
-        break;
+      case AuthorType.group: return 'Group';
+      default: return 'Artist';
     }
-
-    return authorType;
   };
 }

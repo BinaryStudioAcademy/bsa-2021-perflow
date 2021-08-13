@@ -78,7 +78,7 @@ namespace Perflow.Services.Implementations
                     IconURL = a.IconURL,
                     IsSingle = a.IsSingle,
                     Reactions = a.Reactions.Count,
-                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? s.Artist.UserName : s.Group.Name).ToList()
+                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false)).ToList()
                 })
                 .ToListAsync();
             foreach(var entity in entities)
@@ -101,13 +101,11 @@ namespace Perflow.Services.Implementations
 
             if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
             {
-                artist = await context.Users.FirstOrDefaultAsync(user => user.Id == albumDTO.AuthorId);
-                album.Author = artist;
+                album.Author = await context.Users.FirstOrDefaultAsync(user => user.Id == albumDTO.AuthorId);
             }
             else
             {
-                group = await context.Groups.FirstOrDefaultAsync(group => group.Id == albumDTO.GroupId);
-                album.Group = group;
+                album.Group = await context.Groups.FirstOrDefaultAsync(group => group.Id == albumDTO.GroupId);
             }
 
             await context.Albums.AddAsync(album);
@@ -135,13 +133,11 @@ namespace Perflow.Services.Implementations
 
             if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
             {
-                artist = await context.Users.FirstOrDefaultAsync(u => u.Id == albumDTO.AuthorId);
-                album.Author = artist;
+                album.Author = await context.Users.FirstOrDefaultAsync(u => u.Id == albumDTO.AuthorId);
             }
             else
             {
-                group = await context.Groups.FirstOrDefaultAsync(g => g.Id == albumDTO.GroupId);
-                album.Group = group;
+                album.Group = await context.Groups.FirstOrDefaultAsync(g => g.Id == albumDTO.GroupId);
             }
 
             context.Entry(album).State = EntityState.Modified;

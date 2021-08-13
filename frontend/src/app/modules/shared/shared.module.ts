@@ -20,6 +20,7 @@ import { AlbumDurationPipe } from './pipes/album-duration.pipe';
 import { SearchSongRowComponent } from './playlist/search-song-row/search-song-row.component';
 import { AlbumRegionTypePipe } from './pipes/album-region-type.pipe';
 import { AuthorTypePipe } from './pipes/album-author-type.pipe';
+import { ClickStopPropagationDirective } from './directives/stopPropagation/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AuthorTypePipe } from './pipes/album-author-type.pipe';
     ItemsSumPipe,
     AlbumDurationPipe,
     SearchSongRowComponent,
+    ClickStopPropagationDirective,
     AlbumRegionTypePipe,
     AuthorTypePipe
   ],
@@ -67,6 +69,7 @@ import { AuthorTypePipe } from './pipes/album-author-type.pipe';
     ItemsSumPipe,
     AlbumDurationPipe,
     SearchSongRowComponent,
+    ClickStopPropagationDirective,
     AlbumRegionTypePipe,
     AuthorTypePipe
   ]

@@ -7,6 +7,7 @@
             </div>
         </div>
         <app-circle-info-card *ngFor="let album of albums"
+        [id]="album.id"
         [name]="album.name"
         [description]="album.description"
         [iconUrl]="album.iconURL"
