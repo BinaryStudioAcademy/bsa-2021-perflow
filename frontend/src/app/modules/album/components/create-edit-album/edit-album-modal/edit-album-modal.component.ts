@@ -78,12 +78,7 @@ export class EditAlbumModalComponent implements OnInit {
       $(element).append($('<option></option>').val(group.id).text(group?.name));
     });
 
-    if (this.editedAlbum.authorType === AuthorType.artist) {
-      $(element).val(0);
-    }
-    else {
-      $(element).val(this.editedAlbum.groupId!);
-    }
+    $(element).val(this.editedAlbum.groupId ?? 0);
 
     this.isAuthorHidden = false;
   };
