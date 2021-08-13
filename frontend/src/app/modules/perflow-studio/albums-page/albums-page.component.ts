@@ -8,7 +8,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
   templateUrl: './albums-page.component.html',
   styleUrls: ['./albums-page.component.sass']
 })
-export class AlbumsPageComponent implements OnInit{
+export class AlbumsPageComponent implements OnInit {
   @Input()
   userId: number;
   albums!: AlbumForReadDTO[];
