@@ -2,7 +2,7 @@
 <h4 class="ui header profile" (click)="showProfileMenu()" (clickOutside)="onClickOutsideProfileMenu($event)">
   <!-- TODO:  Here, insert links to your account profile pages, etc. -->
   <div id="profile">
-    <img src="../../../../assets/images/ProfileImage.jpg" />
+    <img src="{{userIconURL}}" />
     <div>
       <div class="text" id="profile-user-name">
         <span>{{ userName }}</span>
