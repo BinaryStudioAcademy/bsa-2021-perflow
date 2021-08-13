@@ -39,11 +39,15 @@ namespace Shared.AzureBlobStorage.Services
 
         public async Task<Uri> UploadFileBlobAsync(string blobContainerName, BlobDto file)
         {
+            Console.WriteLine("----------------------------UploadFileBlobAsync started.");
+            Console.WriteLine(blobContainerName);
             var containerClient = GetContainerClient(blobContainerName);
             var blobClient = containerClient.GetBlobClient(file.Guid);
+            Console.WriteLine(blobClient.Uri);
 
             await blobClient.UploadAsync(file.Content, new BlobHttpHeaders { ContentType = file.ContentType });
 
+            Console.WriteLine("----------------Finished");
             return blobClient.Uri;
         }
 
