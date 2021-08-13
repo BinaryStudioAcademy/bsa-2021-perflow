@@ -69,7 +69,9 @@
         </div>
       </div>
       <button type="button" class="btn-full" [disabled]="registrationForm.invalid"
-        (click)="onSubmit(registrationForm.value)">Sign Up</button>
+        (click)="onSubmit(registrationForm.value)">                    
+        <div *ngIf="loading" class="ui active inline loader"></div>
+        <span *ngIf="!loading">Sign Up</span></button>
     </div>
   </div>
 </form>
