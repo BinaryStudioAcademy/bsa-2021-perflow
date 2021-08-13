@@ -117,7 +117,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
             songs: this.album.songs,
             artist: this.album.artist,
             group: this.album.group,
-            releaseYear: data.releaseYear!
+            releaseYear: data.releaseYear!,
+            isLiked: false
           };
         }
       });
@@ -159,6 +160,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     releaseYear: new Date().getFullYear(),
     artist: undefined,
     group: undefined,
-    songs: {} as Song[]
+    songs: {} as Song[],
+    isLiked: false
   });
 }
