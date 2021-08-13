@@ -1,7 +1,7 @@
 <div class="card">
-  <div class="image">
+  <div class="image" [routerLink]="['/albums', id]">
       <img [src]="iconUrl">  
-      <button class="play-icon">
+      <button class="play-icon" appClickStopPropagation>
           <i class="play icon"></i>
       </button>  
   </div>
@@ -9,7 +9,7 @@
       <div class="card-name"> {{name}} </div>
       <div class="card-desc">
         <span *ngFor="let author of authors; let last = last">
-          <span *ngIf="author.isArtist"><i routerLink="artists/{{author.id}}">{{author.name}}</i><span class="separator" [ngClass]="{'last-child': last}">, </span></span>
+          <span *ngIf="author.isArtist"><i routerLink="/artists/{{author.id}}">{{author.name}}</i><span class="separator" [ngClass]="{'last-child': last}">, </span></span>
           <span *ngIf="!author.isArtist"><i *ngIf="!author.isArtist" routerLink="groups/{{author.id}}">{{author.name}}</i><span class="separator" [ngClass]="{'last-child': last}">, </span></span>
          </span> 
       </div>
