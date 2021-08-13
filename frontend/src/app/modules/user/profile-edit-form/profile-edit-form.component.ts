@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProfileService } from 'src/app/services/profile.service';
 import { User } from '../../../models/user/user';
 import { countries } from '../data/countries';
 import { genders } from '../data/genders';
@@ -33,7 +34,10 @@ export class ProfileEditFormComponent implements OnInit {
   @Output()
   updatedUser = new EventEmitter<User>();
 
-  constructor(private _router: Router) { }
+  constructor(
+    private _router: Router,
+    private _profileService: ProfileService
+  ) { }
 
   ngOnInit() {
     this.userForm = new FormGroup({
@@ -53,6 +57,7 @@ export class ProfileEditFormComponent implements OnInit {
       const reader: FileReader = new FileReader();
       reader.onload = () => {
         this.user.iconURL = reader.result!.toString();
+        this._profileService.updateProfileIcon(this.user.iconURL);
       };
       reader.readAsDataURL(file);
     }

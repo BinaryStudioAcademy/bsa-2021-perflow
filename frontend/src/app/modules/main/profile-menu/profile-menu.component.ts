@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserRoles } from '../../../models/enums/user-roles.enum';
 
@@ -20,7 +21,8 @@ export class ProfileMenuComponent {
 
   constructor(
     private _authService: AuthService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _profileService: ProfileService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => state !== null))
@@ -42,6 +44,13 @@ export class ProfileMenuComponent {
           this.userIconURL = user.iconURL;
         }
       });
+
+    this._profileService.profileIconUpdated$
+      .subscribe(
+        (icon) => {
+          this.userIconURL = icon;
+        }
+      );
   }
 
   logout() {
