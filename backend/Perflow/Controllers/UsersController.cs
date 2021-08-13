@@ -71,5 +71,13 @@ namespace Perflow.Controllers
             );
         }
 
+        [HttpPut("changeIcon")]
+        public async Task<ActionResult> Put([FromBody] UserChangeIconDTO userChangeIconDTO)
+        {
+
+            await _usersService.UpdateUserIconAsync(userChangeIconDTO);
+
+            return Ok();
+        }
     }
 }
