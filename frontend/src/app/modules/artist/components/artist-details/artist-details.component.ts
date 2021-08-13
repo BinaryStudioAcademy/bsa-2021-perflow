@@ -25,8 +25,8 @@ export class ArtistDetailsComponent implements OnInit {
   artistPlaylists: PlaylistView[] = [];
 
   constructor(
-    private _route: ActivatedRoute, 
-    private _artistService: ArtistService, 
+    private _route: ActivatedRoute,
+    private _artistService: ArtistService,
     private _songService: SongsService,
     private _playlistsService: PlaylistsService
   ) { }
