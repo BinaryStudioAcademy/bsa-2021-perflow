@@ -1,0 +1,178 @@
+@import '../../../../../../styles'
+
+$image-size: 245px
+
+img[src='']
+  display: none
+
+main
+    background: $drk-gray
+    width: 100%
+    height: 100vh
+    overflow-y: scroll
+
+.album
+  width: 100%
+  height: 401px
+  border-radius: 5px
+  display: grid
+  grid-template-areas: "left-col album-details right-col"
+  grid-template-columns: 1fr 6fr 1fr
+  background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+  margin-bottom: 1rem
+  .album-details
+    grid-area: album-details
+    width: 100%
+    display: grid
+    grid-template-areas: "album-image album-info"
+    grid-template-columns: $image-size 1fr
+    .album-info 
+      grid-area: album-info
+      padding-top: 104px
+      display: flex
+      flex-direction: column
+      justify-content: left
+      align-items: left
+      margin-left: 35px
+      color: $text
+      .type
+        margin-top: 2rem
+        font-weight: $light-weight
+        font-size: 18px
+        line-height: 21px
+      .album-title
+        margin-top: 10px
+        font-weight: $bold-weight
+        font-size: 40px
+        line-height: 47px
+      .album-description
+        margin-top: 1.2rem
+        padding-bottom: 1rem
+        font-weight: $light-weight
+        font-size: 16px
+        line-height: 21px
+        .info
+          opacity: 0.8
+        .divider
+          padding-left: 10px
+          padding-right: 10px
+      .buttons
+        margin-top: 20px
+        .button-play
+          padding: 12px 22px
+          font-weight: $bold-weight
+          border: none
+          margin-right: 10px
+          &:hover
+            cursor: pointer
+            color: black
+        .action-icon
+          display: inline-block
+          margin-left: 10px
+          margin-right: 10px
+          .icons
+            font-size: 18px
+            &:hover
+              cursor: pointer
+
+
+.album-image
+  grid-area: album-image
+  text-align: center
+  padding-top: 104px
+  .fader
+    width: $image-size
+    height: $image-size
+    border-radius: 50%
+    box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
+    position: relative
+    background: rgba(70, 65, 146, 0.25)
+    cursor: pointer
+    &:hover
+      .hover-content
+        display: grid
+        background: rgba(0, 0, 0, 0.5)
+        box-shadow: 0px 37px 46px 8px rgba(33, 41, 45, 0.25)
+      .placeholder-icon
+        display: none
+    .hover-content
+      display: none
+      position: relative
+      justify-content: center
+      align-content: center
+      color: #A3A6B1
+      width: 100%
+      height: 100%
+      border-radius: 50%
+      z-index: 1
+      i
+        display: block
+        font-size: 3rem
+        width: fit-content
+        position: relative
+        top: 50%
+        left: 50%
+        transform: translate(-40%, -30%)
+      span
+        display: block
+        margin-top: 10px
+        font-size: 1.3rem 
+        font-family: Rubik
+        font-style: normal 
+    .placeholder-icon
+      font-size: 4rem
+      color: $drk-gray
+      font-weight: normal 
+      color: #A3A6B1           
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-45%, -15%)  
+    .album-icon
+      z-index: 0
+      display: block
+      width: 100%
+      height: 100%
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      border-radius: 50%
+      object-fit: cover
+      background: #C4C4C4
+      box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)  
+
+.menu
+    border: 0.5px solid #373C43 !important
+    border-radius: 2px
+
+.ui.dropdown
+    background-color: transparent !important
+
+.ui.floating.dropdown
+    >.menu
+        box-shadow: none !important
+        >.item.first
+            padding-top: 18px !important
+        >.item.last
+            padding-bottom: 18px !important
+
+.item
+    background-color: $light-gray
+    color: $text !important
+    font-family: 'Montserrat' !important
+    font-style: normal !important
+    &:hover
+        background-color: $drk-gray !important
+        cursor: pointer
+    &:active
+        background-color: $drk-gray !important
+        font-weight: $medium-weight !important
+    >i, >.img-wrapper
+        margin-right: 1rem !important
+
+.item.active.selected
+    background-color: $light-gray !important
+    font-weight: $normal-weight !important
+    &:hover
+        background-color: $drk-gray !important
