@@ -90,5 +90,12 @@
         <div class="fake"></div>
       </div>
     </div>
+  <div *ngIf="failure" class="ui negative message">
+    <i class="close icon" (click)="failure = false"></i>
+    <div class="header">
+      Login Failed!
+    </div>
+    <p>{{ failMessage }}</p>
+  </div>
   </div>
 </div>
