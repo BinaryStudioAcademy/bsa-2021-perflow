@@ -1,6 +1,6 @@
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 
@@ -21,7 +21,9 @@ export class ViewPlaylistComponent implements OnInit {
 
   constructor(
     private _activateRoute: ActivatedRoute,
-    private _playlistsService: PlaylistsService
+    private _playlistsService: PlaylistsService,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -59,6 +61,16 @@ export class ViewPlaylistComponent implements OnInit {
       .getPlaylist(this._playlistId)
       .subscribe((playlist) => {
         this.playlist = playlist;
+      });
+  }
+
+  deletePlaylist() {
+    this._playlistsService.deletePlaylist(this.playlist.id)
+      .subscribe({
+        next: (data) => {
+          this._router.navigateByUrl('/playlists/all');
+          this._router.dispose();
+        }
       });
   }
 }
