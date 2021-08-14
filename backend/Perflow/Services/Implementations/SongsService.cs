@@ -142,5 +142,29 @@ namespace Perflow.Services.Implementations
 
             return mapper.Map<IEnumerable<SongReadDTO>>(songs);
         }
+
+        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByLikes(int amount)
+        {
+            var songs = await context.SongReactions
+                                    .GroupBy(
+                                        r => r.SongId,
+                                        (key, group) => new { SongId = key, Count = group.Count() }
+                                    )
+                                    .OrderByDescending(group => group.Count)
+                                    .Take(amount)
+                                    .Join(
+                                        context.Songs,
+                                        group => group.SongId,
+                                        song => song.Id,
+                                        (group, song) => song
+                                     )
+                                    .Include(song => song.Album)
+                                    .Include(song => song.Artist)
+                                    .Include(song => song.Group)
+                                    .AsNoTracking()
+                                    .ToListAsync();
+
+            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+        }
     }
 }

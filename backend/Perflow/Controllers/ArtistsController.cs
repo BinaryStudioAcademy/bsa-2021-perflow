@@ -24,7 +24,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("top/{amount}")]
-        public async Task<ActionResult<IEnumerable<ArtistReadDTO>>> GetTop20ArtistsByLikes(int amount)
+        public async Task<ActionResult<IEnumerable<ArtistReadDTO>>> GetTopArtistsByLikes(int amount)
         {
             return Ok(await _artistService.GetTopArtistsByLikes(amount));
         }

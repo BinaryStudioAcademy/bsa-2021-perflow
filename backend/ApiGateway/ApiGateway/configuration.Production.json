@@ -141,6 +141,19 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownstreamPathTemplate": "/api/Songs/top/{amount}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Songs/top/{amount}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Albums/new-releases",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
@@ -167,6 +180,19 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Artists/top/{amount}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Artists/top/{amount}",
+      "UpstreamHttpMethod": [ "GET" ]
     },
     // Auth
     {
@@ -349,7 +375,7 @@
         "POST"
       ]
     },
-{
+    {
       "DownstreamPathTemplate": "/api/users/changePassword",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [

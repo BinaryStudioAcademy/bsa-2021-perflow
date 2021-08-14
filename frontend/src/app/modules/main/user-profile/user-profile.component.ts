@@ -32,7 +32,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.getTop20Artists();
-    this.loadTopSongs();
+    this.getTop20Songs();
   }
 
   getUser() {
@@ -108,8 +108,8 @@ export class UserProfileComponent implements OnInit {
     grid?.scrollBy({ left: -(this.getGridScrollWidth(selector) * 3), behavior: 'smooth' });
   };
 
-  loadTopSongs() {
-    this._songService.getTopSongs().subscribe(
+  getTop20Songs() {
+    this._songService.getTopSongsByLikes(20).subscribe(
       (songs) => {
         this.topSongs = songs;
       }
