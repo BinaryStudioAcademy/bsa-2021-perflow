@@ -59,9 +59,8 @@
                     <input type="checkbox" id="remember" name="remember" [checked]="rememberMe" (change)="rememberMe = !rememberMe">
                     <label for="remember">Remember me</label>
                   </div>
-                  <button class="ui btn-full button log-in-btn" (click)="logInWithEmail()">
-                    <div *ngIf="isLogInClicked" class="ui active inline loader"></div>
-                    <span *ngIf="!isLogInClicked">Log In</span>
+                  <button id="log-in-btn" class="ui btn-full button" (click)="logInWithEmail()">
+                    <span>Log In</span>
                   </button>
                 </div>
                 <div class="ui divider login-form-devider"></div>
