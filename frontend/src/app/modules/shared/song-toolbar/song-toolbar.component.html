@@ -3,11 +3,15 @@
 </audio>
 
 <div class="toolbar" appShowHide [show]="show">
-    <input type="range" id="seek-slider" class="seekrange" max="100" value="0" (change)="getSeekSliderValue($event)" (mousedown)="setTimeChanging(true)" (mouseup)="setTimeChanging(false)">
+    <input type="range" id="seek-slider" class="seekrange" max="100" value="0" (change)="getSeekSliderValue($event)"
+        (mousedown)="setTimeChanging(true)" (mouseup)="setTimeChanging(false)">
     <div class="infocontrol">
         <div class="leftpart">
             <div class="songicon">
-                <img [attr.src]="songForPlay.imageURL">
+                <img [attr.src]="songForPlay.imageURL" *ngIf="songForPlay.imageURL">
+                <div class="icon-background" *ngIf="!songForPlay.imageURL">
+                    <i class="itunes note icon"></i>
+                </div>
             </div>
             <h6 class="songname">{{songForPlay.name}}</h6>
             <span class="artistname body-light">{{songForPlay.artistName}}</span>
@@ -16,7 +20,8 @@
             </div>
         </div>
         <div class="midpart">
-            <div class="shufflebutton" id="shufflebutton" (click)="toggleShuffle()" [ngClass]="isShuffling ? 'active' : ''">
+            <div class="shufflebutton" id="shufflebutton" (click)="toggleShuffle()"
+                [ngClass]="isShuffling ? 'active' : ''">
                 <i class="random icon"></i>
             </div>
             <div class="backwardbutton">
@@ -28,7 +33,8 @@
             <div class="forwardbutton">
                 <i class="step forward icon"></i>
             </div>
-            <div class="repeatbutton" id="repeatbutton" (click)="toggleRepeat()" [ngClass]="isRepeating ? 'active' : ''">
+            <div class="repeatbutton" id="repeatbutton" (click)="toggleRepeat()"
+                [ngClass]="isRepeating ? 'active' : ''">
                 <i class="undo alternate icon"></i>
             </div>
         </div>
@@ -44,7 +50,8 @@
             <div class="mutebutton" (click)="muteUnmute()">
                 <i class="volume up icon"></i>
             </div>
-            <input type="range" id="volume-slider" class="volumerange" max="100" value="100" (input)="getVolumeSliderValue($event)">
+            <input type="range" id="volume-slider" class="volumerange" max="100" value="100"
+                (input)="getVolumeSliderValue($event)">
         </div>
     </div>
 </div>

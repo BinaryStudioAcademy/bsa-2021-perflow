@@ -10,5 +10,6 @@ export interface Playlist {
   iconURL: string;
   author: User;
   accessType: AccessType;
-  songs: Song[]
+  songs: Song[];
+  isLiked: boolean;
 }

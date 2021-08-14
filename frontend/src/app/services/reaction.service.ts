@@ -65,6 +65,20 @@ export class ReactionService {
     );
   }
 
+  addPlaylistReaction(playlistId: number, userId: number) {
+    return this.httpService.postClearRequest(
+      '/api/PlaylistReaction/like',
+      { playlistId, userId }
+    );
+  }
+
+  removePlaylistReaction(playlistId: number, userId: number) {
+    return this.httpService.postClearRequest(
+      '/api/PlaylistReaction/removeLike',
+      { playlistId, userId }
+    );
+  }
+
   getLikedPlaylistsByTheUser(userId: number) {
     return this.httpService.getRequest<Playlist[]>(`/api/PlaylistReaction/liked/${userId}`);
   }
