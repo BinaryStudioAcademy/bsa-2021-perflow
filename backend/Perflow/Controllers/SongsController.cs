@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
 using Perflow.Services.Interfaces;
-using System.Web;
-using Microsoft.AspNetCore.Http;
-using Shared.AzureBlobStorage.Interfaces;
-using Shared.AzureBlobStorage.Models;
 using Shared.Auth.Constants;
 using Shared.Auth.Extensions;
 
@@ -44,9 +40,9 @@ namespace Perflow.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<ActionResult<SongWriteDTO>> AddSongInfo(SongWriteDTO songInfo)
+        public async Task<ActionResult<SongReadDTO>> AddSongInfo(SongWriteDTO songInfo)
         {
-            var result = await _songsService.AddSongInfoAsync(songInfo);   
+            var result = await _songsService.AddSongInfoAsync(songInfo, User.GetId());   
             return Ok(result);
         }
 
@@ -60,6 +56,7 @@ namespace Perflow.Controllers
         [HttpPost("file/upload")]
         public async Task<ActionResult<object>> AddSongFile()
         {
+            Console.WriteLine("----------------------------Add song file method started.");
             var files = Request.Form.Files;
             var result = await _songsService.UploadSongAsync(files.First());   
             return Ok(new { blobId = result });
@@ -79,10 +76,11 @@ namespace Perflow.Controllers
         {
             return Ok(await _songsService.FindSongsByIdAsync(id));
         }
+
         [HttpGet("topSongs/{authorId}")]
         public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByAuthorIdAsync(int authorId, [FromQuery] int count)
         {
-            var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count);
+            var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count, User.GetId());
 
             return Ok(songs);
         }

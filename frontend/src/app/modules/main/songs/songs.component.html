@@ -7,11 +7,11 @@
       <div class="column">
         <p class="title">Liked Songs</p>
         <p class="subtitle">
-          <span class="username">UserName</span>
+          <span class="username">{{userName}}</span>
           <span class="count"> · {{songs.length}} songs</span>
         </p>
       </div>
     </div>
   </div>
-  <app-songs-list [songs]="songs" (clickLike)="dislikeSong($event)"></app-songs-list>
+  <app-songs-list [songs]="songs" (clickDislike)="dislikeSong($event)"></app-songs-list>
 </main>

@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
   getUser() {
     this._authService.getAuthStateObservable()
       .pipe(
-        filter((state) => state !== null),
+        filter((state) => !!state),
         switchMap((state) => this._userService.getUser(state!.id))
       )
       .subscribe((result) => {

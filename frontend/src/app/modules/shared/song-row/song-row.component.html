@@ -4,15 +4,21 @@
             <span class="number">{{number}}</span>
             <i class="play icon" (click)="playSong(song.id)"></i>
         </div>
-        <div class="column like" >
-            <i class="heart outline icon" (click)="clickLikeIcon(song.id)"></i>
+        <div class="column like">
+            <i class="heart outline icon" (click)="likeSong(song.id)" *ngIf="!song.isLiked"></i>
+            <i class="heart icon orange" (click)="dislikeSong(song.id)" *ngIf="song.isLiked"></i>
         </div>
         <div class="column song-name text">
             <span class="e" *ngIf="song.hasCensorship">E</span>
             {{song.name}}
         </div>
         <div class="column artist-name text">
-            <a class="link" *ngIf="song.artist" [routerLink]="['/artists', song.artist.id]">{{song.artist.userName}}</a>
+            <a class="link" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">
+                {{song?.artist?.userName}}
+            </a>
+            <a class="link" [routerLink]="['/groups', song?.group?.id]" *ngIf="song?.group">
+                {{song?.group?.name}}
+            </a>
         </div>
         <div class="column album-name text">
             <a class="link" *ngIf="song.album" [routerLink]="['/albums', song.album.id]">{{song.album.name}}</a>

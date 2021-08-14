@@ -5,7 +5,10 @@ using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
+using Shared.Auth;
 using Shared.ExceptionsHandler.Exceptions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Perflow.Services.Implementations
@@ -26,6 +29,16 @@ namespace Perflow.Services.Implementations
             }
 
             return mapper.Map<ArtistDTO>(user);
+        }
+
+        public async Task<ICollection<ArtistForAlbumDTO>> GetAllArtistsAsync()
+        {
+            var artists = await context.Users
+                .AsNoTracking()
+                .Where(user => user.Role == UserRole.Artist)
+                .ToListAsync();
+
+            return mapper.Map<ICollection<ArtistForAlbumDTO>>(artists);
         }
     }
 }

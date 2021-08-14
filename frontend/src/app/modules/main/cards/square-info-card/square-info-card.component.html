@@ -1,7 +1,7 @@
-<div class="card">
+<div class="card" routerLink='/playlists/view-playlist/{{id}}'>
   <div class="image">
       <img [src]="iconUrl">  
-      <button class="play-icon">
+      <button class="play-icon" appClickStopPropagation>
           <i class="play icon"></i>
       </button>  
   </div>

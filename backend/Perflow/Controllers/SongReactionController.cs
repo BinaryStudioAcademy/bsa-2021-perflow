@@ -3,12 +3,14 @@ using System;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Reactions;
 using Perflow.Services.Implementations;
-
+using Shared.Auth.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Perflow.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = Policies.IsUser)]
     public class SongReactionController : ControllerBase
     {
         private readonly SongReactionService _songReactionService;

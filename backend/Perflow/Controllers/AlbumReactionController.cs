@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Reactions;
 using Perflow.Services.Implementations;
+using Shared.Auth.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Perflow.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = Policies.IsUser)]
     public class AlbumReactionController : Controller
     {
         private readonly AlbumReactionService _albumReactionService;

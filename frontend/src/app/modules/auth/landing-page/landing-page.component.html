@@ -6,7 +6,7 @@
     <div class="eleven wide column">
       <div class="main-content-container">
         <div class="logo">
-          <h4>Logo</h4>
+          <img src="../../../../assets/Logo.png">
         </div>
         <div class="main-content">
           <div class="ui grid">
@@ -60,7 +60,8 @@
                     <label for="remember">Remember me</label>
                   </div>
                   <button class="ui btn-full button log-in-btn" (click)="logInWithEmail()">
-                    Log In
+                    <div *ngIf="isLogInClicked" class="ui active inline loader"></div>
+                    <span *ngIf="!isLogInClicked">Log In</span>
                   </button>
                 </div>
                 <div class="ui divider login-form-devider"></div>
@@ -89,5 +90,12 @@
         <div class="fake"></div>
       </div>
     </div>
+  <div *ngIf="failure" class="ui negative message">
+    <i class="close icon" (click)="failure = false"></i>
+    <div class="header">
+      Login Failed!
+    </div>
+    <p>{{ failMessage }}</p>
+  </div>
   </div>
 </div>

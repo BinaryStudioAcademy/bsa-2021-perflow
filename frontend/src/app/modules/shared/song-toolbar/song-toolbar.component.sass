@@ -2,6 +2,11 @@
 
 $secondarybuttonsize: 30px
 
+=flex-container($align-items, $justify-content)
+    display: flex
+    align-items: $align-items
+    justify-content: $justify-content
+
 #audio
     display: none
 
@@ -33,14 +38,14 @@ $secondarybuttonsize: 30px
         border-radius: 50%
         cursor: pointer
         margin-top: -5px
-        
+
 .seekrange
     position: absolute
     height: 5px
     width: 100vw
     &:hover
         height: 8px
-        
+
 .volumerange
     height: 4px
     width: 150px
@@ -49,7 +54,7 @@ $secondarybuttonsize: 30px
 
 .infocontrol
     height: calc(100px - 10px)
-    margin: 8px 25px 0px 
+    margin: 8px 25px 0px
     display: grid
     grid-template-columns: 450px 1fr 450px
     .leftpart,
@@ -79,6 +84,14 @@ $secondarybuttonsize: 30px
         height: 100%
         width: 100%
         object-fit: cover
+    .icon-background
+        height: 100%
+        width: 100%
+        +flex-container(center, center)
+        background: $fire-orange
+    i
+        font-size: 18px
+        margin-right: 0 !important
 
 .songname
     grid-row: 1
@@ -105,7 +118,7 @@ $secondarybuttonsize: 30px
     width: $secondarybuttonsize
     border-radius: 50%
     font-size: 20px
-    margin-left: 10px    
+    margin-left: 10px
     padding: 6px 3px
     color: $gray
     &:hover
