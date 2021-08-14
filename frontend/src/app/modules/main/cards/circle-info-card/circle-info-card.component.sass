@@ -15,6 +15,10 @@
         position: relative
         border-radius: 50%
         overflow: hidden
+        &:hover
+            cursor: pointer
+            .play-icon
+                    opacity: 1
         img
             position: absolute
             height: 100%
@@ -24,9 +28,6 @@
             top: 50%
             right: 50%
             transform: translate(50%, -50%)
-    &:hover
-        .play-icon
-                opacity: 1
     .content
         min-height: 64px
         .card-name, .card-desc
