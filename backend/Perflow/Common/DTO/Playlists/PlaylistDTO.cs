@@ -16,5 +16,7 @@ namespace Perflow.Common.DTO.Playlists
         public UserReadDTO Author { get; set; }
 
         public AccessTypeDTO AccessType { get; set; }
+
+        public bool IsLiked { get; set; }
     }
 }

@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { ReactionService } from 'src/app/services/reaction.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-playlist',
@@ -15,13 +18,15 @@ export class ViewPlaylistComponent implements OnInit {
   public totalCountSongs: number;
   public hours: number;
   public minutes: number;
-  public playlist: Playlist;
+  public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
 
   constructor(
     private _activateRoute: ActivatedRoute,
-    private _playlistsService: PlaylistsService
+    private _playlistsService: PlaylistsService,
+    private _reactionService: ReactionService,
+    private _authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -30,13 +35,24 @@ export class ViewPlaylistComponent implements OnInit {
       this.loadPlaylist();
       this.loadPlaylistSongs();
     });
+    this.getUserId();
   }
 
-  nextSlide = () => {};
+  nextSlide = () => { };
 
-  previousSlide = () => {};
+  previousSlide = () => { };
 
-  play = () => {};
+  play = () => { };
+
+  getUserId() {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe(
+        (state) => {
+          this.userId = state!.id;
+        }
+      );
+  }
 
   loadPlaylistSongs() {
     this._playlistsService
@@ -60,5 +76,23 @@ export class ViewPlaylistComponent implements OnInit {
       .subscribe((playlist) => {
         this.playlist = playlist;
       });
+  }
+
+  dislikePlaylist(playlistId: number) {
+    this._reactionService.removePlaylistReaction(playlistId, this.userId)
+      .subscribe(
+        () => {
+          this.playlist.isLiked = false;
+        }
+      );
+  }
+
+  likePlaylist(playlistId: number) {
+    this._reactionService.addPlaylistReaction(playlistId, this.userId)
+      .subscribe(
+        () => {
+          this.playlist.isLiked = true;
+        }
+      );
   }
 }

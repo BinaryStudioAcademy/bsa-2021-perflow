@@ -79,7 +79,7 @@ export class SongRowComponent implements OnInit {
         song.name,
         (song?.artist?.userName ?? song?.group?.name)!,
         this._httpService.buildUrl(`/api/Songs/file?blobId=${song.blobId}`),
-        song.iconURL
+        song.album.iconURL
       );
       this._toolbarService.updateSong(testSong);
     });
