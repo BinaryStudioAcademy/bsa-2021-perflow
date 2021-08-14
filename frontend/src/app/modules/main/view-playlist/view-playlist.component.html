@@ -10,17 +10,23 @@
         </button>
       </div>
       <div class="content-view-playlist">
-        <div class="ui image">
-          <img src="{{playlist.iconURL}}" alt="Avatar playlist" />
+        <div class="image">
+          <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" />
         </div>
         <div class="menu-view-playlist">
           <div class="text">Playlist</div>
-          <h3>{{playlist.name}}</h3>
+          <h3>{{ playlist?.name }}</h3>
           <div>
-            <span class="total-all"> {{playlist.author.userName}} </span>
+            <span class="total-all"> {{ playlist?.author?.userName }} </span>
             <span class="menu-view-playlist-description">
-              | <span class="total-count-songs">{{totalCountSongs}} songs </span> |
-              <span class="total-time-songs">{{hours}} h {{minutes}} min</span>
+              |
+              <span class="total-count-songs"
+                >{{ totalCountSongs }} songs
+              </span>
+              |
+              <span class="total-time-songs"
+                >{{ hours }} h {{ minutes }} min</span
+              >
             </span>
           </div>
           <div class="view-button-toolbar">
@@ -63,8 +69,6 @@
     </div>
   </div>
   <div>
-    <app-songs-list
-      [songs]="songs"
-    ></app-songs-list>
+    <app-songs-list [songs]="songs"></app-songs-list>
   </div>
 </main>
