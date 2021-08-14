@@ -44,7 +44,7 @@ namespace Shared.AzureBlobStorage.Services
         public async Task<Uri> UploadFileBlobAsync(string blobContainerName, BlobDto file)
         {
 
-            string connString = _configuration.GetConnectionString("BlobStorage");
+            string connString = _configuration.GetSection("ConnectionStrings:BlobStorage").Value;
 
 
             //Possibly can become useful in future
