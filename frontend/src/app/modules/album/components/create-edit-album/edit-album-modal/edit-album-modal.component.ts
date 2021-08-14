@@ -9,6 +9,11 @@ import { Group } from 'src/app/models/group/group';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GroupService } from 'src/app/services/group.service';
 
+interface Author {
+  name: string,
+  value: number
+}
+
 @Component({
   selector: 'app-edit-album-modal',
   templateUrl: './edit-album-modal.component.html',
@@ -30,7 +35,9 @@ export class EditAlbumModalComponent implements OnInit {
   userId: number;
   userName: string;
   tempIconURL: string;
+  authors = [] as Author[];
   isAuthorHidden: boolean = true;
+  selectedIndex: number;
 
   @Input() editedAlbum: AlbumEdit = { } as AlbumEdit;
 
@@ -70,15 +77,13 @@ export class EditAlbumModalComponent implements OnInit {
   };
 
   fillAuthors = (groups: Group[]) => {
-    const element = this.selectElement.nativeElement;
-
-    $(element).append($('<option></option>').val(0).text(this.userName));
+    this.authors.push({ name: this.userName, value: 0 });
 
     groups.forEach((group) => {
-      $(element).append($('<option></option>').val(group.id).text(group?.name));
+      this.authors.push({ name: group?.name, value: group.id });
     });
 
-    $(element).val(this.editedAlbum.groupId ?? 0);
+    this.selectedIndex = this.editedAlbum.groupId ?? 0;
 
     this.isAuthorHidden = false;
   };
@@ -124,14 +129,20 @@ export class EditAlbumModalComponent implements OnInit {
     const index = +this.selectElement.nativeElement.value;
 
     if (index === 0) {
-      this.editedAlbum.authorType = AuthorType.artist;
-      this.editedAlbum.authorId = this.userId;
-      this.editedAlbum.groupId = undefined;
+      this.editedAlbum = {
+        ...this.editedAlbum,
+        authorType: AuthorType.artist,
+        authorId: this.userId,
+        groupId: undefined
+      };
     }
     else {
-      this.editedAlbum.authorType = AuthorType.group;
-      this.editedAlbum.groupId = index;
-      this.editedAlbum.authorId = undefined;
+      this.editedAlbum = {
+        ...this.editedAlbum,
+        authorType: AuthorType.group,
+        groupId: index,
+        authorId: undefined
+      };
     }
   };
 }

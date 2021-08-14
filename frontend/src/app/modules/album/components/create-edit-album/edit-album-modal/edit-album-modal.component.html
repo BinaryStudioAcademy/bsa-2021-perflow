@@ -61,11 +61,12 @@
           </div>
         </div>
 
-        <div class="region-artist-type">
+        <div class="region-artist-type" [ngClass]="{toggle:!isAuthorHidden}">
           <!-- Select Author Type -->
           <div class="ui field" [hidden]="isAuthorHidden">
             <select class="ui dropdown dropdown-input" name="author" (change)="authorTypeChange()" #author>
-
+              <option *ngFor="let author of authors" [selected]="editedAlbum.groupId===selectedIndex" 
+                value="{{author.value}}">{{author.name}}</option>
             </select>
           </div>
           <!-- Select Region -->
