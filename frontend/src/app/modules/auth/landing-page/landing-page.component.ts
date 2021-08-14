@@ -41,7 +41,6 @@ export class LandingPageComponent {
     }
     this.failure = false;
     this.isLogInClicked = true;
-    document.getElementById('log-in-btn')?.classList.add('loading');
     this.loginForm.markAsPristine();
 
     const { email, password } = this.loginForm.value;
@@ -53,7 +52,6 @@ export class LandingPageComponent {
     })
       .catch((e) => {
         this.isLogInClicked = false;
-        document.getElementById('log-in-btn')?.classList.remove('loading');
         this.failure = true;
         this.failMessage = e;
       });
