@@ -38,7 +38,7 @@ namespace Perflow.Controllers
             if (id <= 0)
                 throw new ArgumentException("Playlist ID cannot be less than or equal to zero");
 
-            var playlist = await _playlistService.GetEntityAsync(id);
+            var playlist = await _playlistService.GetLikedPlaylistAsync(id, User.GetId());
 
             if (playlist == null)
                 return NotFound("There are no playlist with this Id");
@@ -76,7 +76,9 @@ namespace Perflow.Controllers
         [HttpGet("songs/{id}")]
         public async Task<ActionResult> GetPlaylistSongsAsync(int id)
         {
-            return Ok(await _playlistService.GetSongsAsync(id));
+            var songs = await _playlistService.GetSongsAsync(id, User.GetId());
+
+            return Ok(songs);
         }
 
         [HttpPost("songs")]

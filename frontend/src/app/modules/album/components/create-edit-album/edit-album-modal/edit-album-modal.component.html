@@ -56,22 +56,17 @@
         <!-- Options -->
         <div class="options">
           <div class="option ui checkbox">
-            <input type="checkbox" form="formEdit" [(ngModel)]="editedAlbum.isPublished" #isPublished="ngModel" name="isPublished">
-            <label for="isPublished">Published Album</label>
-          </div>
-          <div class="option ui checkbox">
             <input type="checkbox" form="formEdit" [(ngModel)]="editedAlbum.isSingle" #isSingle="ngModel" name="isSingle">
-            <label for="isSingle">Single</label>
+            <label for="isSingle">This album is a single</label>
           </div>
         </div>
 
-        <div class="region-artist-type">
+        <div class="region-artist-type" [ngClass]="{toggle:!isAuthorHidden}">
           <!-- Select Author Type -->
-          <div class="ui field">
-            <select class="ui dropdown dropdown-input" name="authorType" [ngModel]="editedAlbum.authorType"  
-              (ngModelChange)="editedAlbum.authorType=$event;" (ngModelChange)="authorTypeChange()" #authorType="ngModel" required>
-              <option [ngValue]="albumAuthorTypeValues[0]">{{ userName }}</option>
-              <option [hidden]="!groups?.length" [ngValue]="albumAuthorTypeValues[1]">Group</option>
+          <div class="ui field" [hidden]="isAuthorHidden">
+            <select class="ui dropdown dropdown-input" name="author" (change)="authorTypeChange()" #author>
+              <option *ngFor="let author of authors" [selected]="editedAlbum.groupId===selectedIndex" 
+                value="{{author.value}}">{{author.name}}</option>
             </select>
           </div>
           <!-- Select Region -->
@@ -87,17 +82,7 @@
               #releaseYear="ngModel" placeholder="Release year">
           </div>
         </div>
-
-        <!-- Select Group -->
-        <div class="artist-group">
-          <div class="ui field artist-group" *ngIf="editedAlbum.authorType===1 && groups?.length">
-            <select class="ui dropdown dropdown-input" name="groupId" [ngModel]="editedAlbum.groupId"  
-              (ngModelChange)="editedAlbum.groupId=$event" #groupId="ngModel" [required]="true">
-              <option selected *ngFor="let group of groups" [ngValue]="group.id">{{group.name}}</option>
-            </select>
-          </div>
-        </div>
-        
+      
         <!-- Buttons -->
         <div class="ui field buttons-row">
           <div class="form-group">
