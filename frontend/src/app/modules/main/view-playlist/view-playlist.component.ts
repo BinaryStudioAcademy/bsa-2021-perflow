@@ -32,8 +32,8 @@ export class ViewPlaylistComponent implements OnInit {
   ngOnInit() {
     this._activateRoute.params.subscribe((params: Params) => {
       this._playlistId = params.id;
-      this.loadPlaylistSongs();
       this.loadPlaylist();
+      this.loadPlaylistSongs();
     });
     this.getUserId();
   }
