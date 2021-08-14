@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
 import {
-  Dimensions, ImageCroppedEvent, ImageTransform
+  Component, EventEmitter, Input, OnInit, Output
+} from '@angular/core';
+import {
+  Dimensions, ImageCroppedEvent, ImageTransform, base64ToFile
 } from 'ngx-image-cropper';
+import { CroppedImageData } from 'src/app/models/shared/cropped.model';
 
 @Component({
-  selector: 'app-image-cropper',
-  templateUrl: './image-cropper.component.html',
-  styleUrls: ['./image-cropper.component.sass']
+  selector: 'app-crop-image',
+  templateUrl: './crop-image.component.html',
+  styleUrls: ['./crop-image.component.sass']
 })
-export class ImageCropperComponent {
+export class CropImageComponent implements OnInit {
   imageChangedEvent: any = '';
+  imageFile: File;
   croppedImage: any = '';
   canvasRotation = 0;
   rotation = 0;
@@ -21,9 +25,33 @@ export class ImageCropperComponent {
   imageURL: string;
   loading = false;
 
+  @Input() file: File;
+
+  @Output() isClosed = new EventEmitter<void>();
+  @Output() croppedFile = new EventEmitter<CroppedImageData>();
+
+  ngOnInit(): void {
+    this.imageFile = this.file;
+  }
+  public onSubmit() {
+    const tempFile: any = base64ToFile(this.croppedImage);
+    tempFile.lastModifiedDate = new Date();
+    tempFile.name = this.file.name;
+    const result: any = {};
+    result.croppedImage = this.croppedImage;
+    result.croppedFile = tempFile;
+    this.croppedFile.emit(result as CroppedImageData);
+  }
+  cancelModal() {
+    this.isClosed.emit();
+  }
+
+  clickOnModal = (event: Event) => {
+    event.stopPropagation();
+  };
+
   fileChangeEvent(event: any): void {
     this.loading = true;
-    this.imageChangedEvent = event;
   }
 
   imageCropped(event: ImageCroppedEvent) {

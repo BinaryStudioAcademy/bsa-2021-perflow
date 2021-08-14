@@ -19,7 +19,6 @@ import { SongDurationPipe } from './pipes/song-duration.pipe';
 import { ItemsSumPipe } from './pipes/items-sum.pipe';
 import { AlbumDurationPipe } from './pipes/album-duration.pipe';
 import { SearchSongRowComponent } from './playlist/search-song-row/search-song-row.component';
-import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 
 @NgModule({
   declarations: [
@@ -40,8 +39,8 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
     SongDurationPipe,
     ItemsSumPipe,
     AlbumDurationPipe,
-    SearchSongRowComponent,
-    ImageCropperComponent
+    SearchSongRowComponent
+
   ],
   imports: [
     CommonModule,
