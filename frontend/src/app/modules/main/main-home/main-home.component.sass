@@ -26,34 +26,28 @@ main
         position: relative
         height: 30px
         min-height: 30px
-        width: 73px
+        width: 71px
         min-width: 73px
         max-width: 73px
         position: relative
         top: 38px
         left: 37px
-        .arrow-left
+        display: flex
+        justify-content: space-between
+        &>.arrow
             background: #A859C0
-            border-radius: 2px
+            border: 0px
             width: 28px
             height: 28px
-            border: 0px solid
-            color: $text
-            cursor: pointer
-            &:hover
-                background: #A859C0aa
-            &:active
-                border: 2px solid #A859C0
-        .arrow-right
-            background: #A859C0
             border-radius: 2px
-            width: 28px
-            height: 28px
-            border: 0px solid
             color: $text
-            margin-left: 15px
-            cursor: pointer
+            display: flex
+            justify-content: center
+            align-items: center
+            &>i
+                margin: 0px
             &:hover
+                cursor: pointer
                 background: #A859C0aa
             &:active
                 border: 2px solid #A859C0
