@@ -34,7 +34,7 @@ namespace Perflow
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
-            services.AddAuth();
+            services.AddAuth(Configuration["GOOGLE_CREDENTIALS:project_id"]);
 
             services.AddSwaggerGen(c =>
             {

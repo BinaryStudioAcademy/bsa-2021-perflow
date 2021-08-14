@@ -17,13 +17,12 @@
     background: $drk-gray
 
 .logo
+    position: relative
+    right: 8px 
+    bottom: 10px
     margin-top: 25px
     padding: 0
-
-.ui.logo.icon.image
-    font-size: 20px
-    color: #CDCDCD
-    opacity: 50%
+    width: 90px
 
 .name-logo
     padding-left: 5px
@@ -52,13 +51,15 @@
 li
     display: flex
     align-items: center
-    margin-top: 20px
-    font-weight: $light-weight
+    margin-top: 20px    
+    a
+        font-weight: $light-weight
+        color: $text
     &::before
         content: "•"
         color: #FD5D34
         font-size: 35px
-        margin-right: 15px
+        margin-right: 15px 
 i
     color: $text
 

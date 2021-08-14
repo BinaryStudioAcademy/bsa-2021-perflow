@@ -8,5 +8,7 @@ namespace Perflow.Services.Interfaces
     {
         Task<ArtistDTO> GetArtistAsync(int id);
         Task<IEnumerable<ArtistReadDTO>> GetTopArtistsByLikes(int amount);
+
+        Task<ICollection<ArtistForAlbumDTO>> GetAllArtistsAsync();
     }
 }

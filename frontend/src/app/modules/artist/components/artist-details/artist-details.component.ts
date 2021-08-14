@@ -24,8 +24,12 @@ export class ArtistDetailsComponent implements OnInit {
   topSongs: Song[] = [];
   artistPlaylists: PlaylistView[] = [];
 
-  constructor(private _route: ActivatedRoute, private _artistService: ArtistService, private _songService: SongsService,
-    private _playlistsService: PlaylistsService) { }
+  constructor(
+    private _route: ActivatedRoute,
+    private _artistService: ArtistService,
+    private _songService: SongsService,
+    private _playlistsService: PlaylistsService
+  ) { }
 
   ngOnInit() {
     this.loadData();

@@ -23,6 +23,7 @@ namespace Perflow.Services.Extensions
                 cfg.AddProfile<SongReactionProfile>();
                 cfg.AddProfile<UserProfile>();
                 cfg.AddProfile<UserSettingsProfile>();
+                cfg.AddProfile<ArtistProfile>();
             },
             Assembly.GetExecutingAssembly());
         }
@@ -36,7 +37,7 @@ namespace Perflow.Services.Extensions
             services.AddScoped<IUsersService, UsersService>();
 
             services.AddScoped<PlaylistService>();
-
+            services.AddScoped<GroupService>();
             services.AddScoped<SongReactionService>();
             services.AddScoped<ArtistReactionService>();
             services.AddScoped<AlbumReactionService>();

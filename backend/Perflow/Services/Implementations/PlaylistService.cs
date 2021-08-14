@@ -9,6 +9,9 @@ using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
+using Perflow.Common.Helpers;
+using Shared.ExceptionsHandler.Exceptions;
+using Perflow.Common.DTO.Users;
 
 namespace Perflow.Services.Implementations
 {
@@ -34,6 +37,32 @@ namespace Perflow.Services.Implementations
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             return mapper.Map<PlaylistDTO>(entity);
+        }
+
+        public async Task<PlaylistDTO> GetLikedPlaylistAsync(int id, int userId)
+        {
+            var playlist = await context.Playlists
+                .Include(p => p.Author)
+                .AsNoTracking()
+                .Select(p => new PlaylistDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    IconURL = p.IconURL,
+                    AccessType = (AccessTypeDTO)p.AccessType,
+                    CreatedAt = p.CreatedAt,
+                    Description = p.Description,
+                    Author = mapper.Map<User, UserReadDTO>(p.Author),
+                    IsLiked = p.Reactions.Any(r => r.UserId == userId)
+                })
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (playlist == null)
+            {
+                throw new NotFoundExcepion($"{nameof(Playlist)} not found");
+            }
+
+            return playlist;
         }
 
         public async Task<PlaylistDTO> AddEntityAsync(PlaylistDTO playlistDTO)
@@ -117,7 +146,7 @@ namespace Perflow.Services.Implementations
             return playlistSongDTO;
         }
 
-        public async Task<ICollection<SongReadDTO>> GetSongsAsync(int id)
+        public async Task<ICollection<SongReadDTO>> GetSongsAsync(int id, int userId)
         {
             var songs = await context.PlaylistSong
                 .Where(ps => ps.PlaylistId == id)
@@ -127,8 +156,10 @@ namespace Perflow.Services.Implementations
                     .ThenInclude(s => s.Artist)
                 .Include(ps => ps.Song)
                     .ThenInclude(s => s.Group)
-                .Select(ps => ps.Song)
                 .AsNoTracking()
+                .Select(ps =>
+                    mapper.Map<LikedSong, SongReadDTO>(new LikedSong(ps.Song, ps.Song.Reactions.Any(r=> r.UserId == userId)))
+                )
                 .ToListAsync();
 
             return mapper.Map<ICollection<SongReadDTO>>(songs);

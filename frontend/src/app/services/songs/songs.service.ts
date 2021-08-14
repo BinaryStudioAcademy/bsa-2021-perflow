@@ -49,7 +49,7 @@ export class SongsService {
     );
   };
 
-  private _uploadSongInfo = (songInfo: SongWriteDTO) => this._httpService.postRequest<SongWriteDTO>(
+  private _uploadSongInfo = (songInfo: SongWriteDTO) => this._httpService.postRequest<Song>(
     '/api/Songs/upload',
     songInfo
   );

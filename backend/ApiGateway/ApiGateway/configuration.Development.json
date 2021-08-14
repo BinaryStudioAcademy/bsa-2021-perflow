@@ -168,7 +168,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/api/Artists/{id}",
+      "DownstreamPathTemplate": "/api/Albums",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
@@ -176,10 +176,8 @@
           "Port": "5001"
         }
       ],
-      "UpstreamPathTemplate": "/api/Artists/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      "UpstreamPathTemplate": "/api/Albums",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/Artists/top/{amount}",
@@ -196,20 +194,6 @@
     },
     // Auth
     {
-      "DownstreamPathTemplate": "/api/Albums",
-      "DownstreamScheme": "https",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "localhost",
-          "Port": "5001"
-        }
-      ],
-      "UpstreamPathTemplate": "/api/Albums",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
-    },
-    {
       "DownstreamPathTemplate": "/api/Albums/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
@@ -219,9 +203,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Albums/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
     {
       "DownstreamPathTemplate": "/api/Albums/byArtist/{artistId}",
@@ -237,6 +219,33 @@
         "GET"
       ]
     },
+    {
+      "DownstreamPathTemplate": "/api/Groups/artist/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Groups/artist/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Artists/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Artists/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    // Auth
     {
       "DownstreamPathTemplate": "/api/AlbumReaction/{id}",
       "DownstreamScheme": "https",
@@ -415,6 +424,48 @@
       "UpstreamPathTemplate": "/api/users/{id}",
       "UpstreamHttpMethod": [
         "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Users/changeIcon",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Users/changeIcon",
+      "UpstreamHttpMethod": [
+        "PUT"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Upload",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Upload",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/file/Upload",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/file/Upload",
+      "UpstreamHttpMethod": [
+        "POST"
       ]
     },
     // Auth

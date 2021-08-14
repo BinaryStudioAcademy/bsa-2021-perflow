@@ -13,6 +13,7 @@ import { RegisterData } from '../../../../models/auth/register-data';
 })
 export class UserRegistrationFormComponent implements OnInit {
   public registrationForm!: FormGroup;
+  public loading: boolean = false;
 
   @Output()
   isSuccess = new EventEmitter<boolean>();
@@ -66,6 +67,7 @@ export class UserRegistrationFormComponent implements OnInit {
   }
 
   public onSubmit(newUser: RegisterData) {
+    this.loading = true;
     this.isSuccess.emit(true);
     this.newUser.emit(newUser);
     this.registrationForm.reset();

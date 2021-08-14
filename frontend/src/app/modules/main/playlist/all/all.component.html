@@ -2,11 +2,12 @@
     <div class="saved-albums">
         <div class="liked-songs-banner" routerLink="/songs">
             <div class="content-conteiner">
-                <h3>Liked Songs</h3>
-                <h5>256 songs</h5>
+                <a routerLink="../../songs"><h3>Liked Songs</h3></a>
+                <h5>{{ likedSongs }} songs</h5>
             </div>
         </div>
         <app-circle-info-card *ngFor="let album of albums"
+        [id]="album.id"
         [name]="album.name"
         [description]="album.description"
         [iconUrl]="album.iconURL"
@@ -15,6 +16,7 @@
     </div>
     <div class="liked-playlists">
         <app-square-info-card *ngFor="let playlist of playlists"
+        [id]="playlist.id"
         [name]="playlist.name"
         [description]="playlist.description"
         [iconUrl]="playlist.iconURL"

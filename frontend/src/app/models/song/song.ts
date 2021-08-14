@@ -1,6 +1,7 @@
 import { Album } from '../album/album';
 import { User } from '../user/user';
 import { AuthorType } from '../enums/author-type.enum';
+import { Group } from '../group/group';
 
 export interface Song {
   id: number;
@@ -10,10 +11,10 @@ export interface Song {
   duration: number;
   hasCensorship: boolean;
   album: Album;
-  artist: User;
+  artist?: User;
   authorType: AuthorType;
   blobId: string;
-
-  // TODO: add fields
+  isLiked: boolean;
+  group?: Group;
   podcast: string;
 }
