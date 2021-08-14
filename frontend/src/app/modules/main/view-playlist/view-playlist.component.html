@@ -32,7 +32,7 @@
           <div class="view-button-toolbar">
             <button class="ui btn-full button" (click)="play()">Play</button>
             <i class="heart outline icon" (click)="likePlaylist(playlist.id)" *ngIf="!playlist.isLiked"></i>
-            <i class="heart icon" (click)="dislikePlaylist(playlist.id)" *ngIf="playlist.isLiked"></i>
+            <i class="heart icon is-liked" (click)="dislikePlaylist(playlist.id)" *ngIf="playlist.isLiked"></i>
             <span class="menu">
               <div class="ui simple dropdown item ellipsis-button">
                 <i class="ellipsis vertical icon"></i>
