@@ -37,7 +37,7 @@ export class CropImageComponent implements OnInit {
     const tempFile: any = base64ToFile(this.croppedImage);
     tempFile.lastModifiedDate = new Date();
     tempFile.name = this.file.name;
-    const result: any = {};
+    const result = {} as CroppedImageData;
     result.croppedImage = this.croppedImage;
     result.croppedFile = tempFile;
     this.croppedFile.emit(result as CroppedImageData);
@@ -66,13 +66,6 @@ export class CropImageComponent implements OnInit {
     this.loading = false;
   }
 
-  flipVertical() {
-    this.transform = {
-      ...this.transform,
-      flipV: !this.transform.flipV
-    };
-  }
-
   resetImage() {
     this.scale = 1;
     this.rotation = 0;
@@ -80,34 +73,7 @@ export class CropImageComponent implements OnInit {
     this.transform = {};
   }
 
-  zoomOut() {
-    this.scale -= 0.1;
-    this.transform = {
-      ...this.transform,
-      scale: this.scale
-    };
-  }
-
-  zoomIn() {
-    this.scale += 0.1;
-    this.transform = {
-      ...this.transform,
-      scale: this.scale
-    };
-  }
-
   toggleContainWithinAspectRatio() {
     this.containWithinAspectRatio = !this.containWithinAspectRatio;
-  }
-
-  updateRotation() {
-    this.transform = {
-      ...this.transform,
-      rotate: this.rotation
-    };
-  }
-
-  toggleAspectRatio() {
-    this.aspectRatio = this.aspectRatio === 4 / 3 ? 16 / 9 : 4 / 3;
   }
 }

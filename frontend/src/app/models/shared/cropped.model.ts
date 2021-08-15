@@ -1,4 +1,4 @@
 export interface CroppedImageData {
   croppedImage: string;
-  cropedFile: File;
+  croppedFile: File;
 }

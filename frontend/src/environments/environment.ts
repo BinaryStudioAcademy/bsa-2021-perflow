@@ -8,7 +8,7 @@ export const environment = {
   apiUrl: 'https://localhost:44339',
 
   firebaseConfig: {
-    apiKey: 'AIzaSyAKn_l4nDV5vrCyl9RfIJpcLmWuJ-8Lwcw',
+    apiKey: 'process.env.FIREBASE_KEY',
     authDomain: "perflow-bsa.firebaseapp.com",
     projectId: 'perflow-bsa',
   }

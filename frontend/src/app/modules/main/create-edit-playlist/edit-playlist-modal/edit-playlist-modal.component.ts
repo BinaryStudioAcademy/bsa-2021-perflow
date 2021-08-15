@@ -33,11 +33,7 @@ export class EditPlaylistModalComponent implements OnInit {
     this.editPlaylist.emit(this.editedPlaylist);
   }
 
-  showCropModal = () => {
-    this.isCropperModalShown = !this.isCropperModalShown;
-  };
-
-  closeModal() {
+  switchModal() {
     this.isCropperModalShown = !this.isCropperModalShown;
   }
 
@@ -68,7 +64,7 @@ export class EditPlaylistModalComponent implements OnInit {
 
   onSubmitModal = (croppedFile: CroppedImageData) => {
     this.isCropperModalShown = !this.isCropperModalShown;
-    this.file = croppedFile.cropedFile;
+    this.file = croppedFile.croppedFile;
     this.tempIconURL = croppedFile.croppedImage;
   };
 }
