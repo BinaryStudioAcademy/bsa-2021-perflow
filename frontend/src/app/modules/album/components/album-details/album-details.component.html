@@ -26,7 +26,7 @@
                     <button class="btn-full button-play">Play</button>
                     <div class="action-icon">
                         <i class="heart outline icon icons" (click)="likeAlbum()" *ngIf="!album.isLiked"></i>
-                        <i class="heart icon icons is-liked" (click)="dislikeAlbum()" *ngIf="album.isLiked"></i>
+                        <i class="heart icon icons" (click)="dislikeAlbum()" *ngIf="album.isLiked"></i>
                     </div>
                     <div class="action-icon">
                         <div class="ui floating dropdown icon" appSmDropdown>
