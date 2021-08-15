@@ -9,6 +9,7 @@ import { HttpInternalService } from 'src/app/services/http-internal.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
+import { links } from '../mock-audio/links';
 
 @Component({
   selector: 'app-song-row',
@@ -78,7 +79,8 @@ export class SongRowComponent implements OnInit {
       const testSong = new SongInfo(
         song.name,
         (song?.artist?.userName ?? song?.group?.name)!,
-        this._httpService.buildUrl(`/api/Songs/file?blobId=${song.blobId}`),
+        // this._httpService.buildUrl(`/api/Songs/file?blobId=${song.blobId}`),
+        links.find((l) => l.id === 1)!.link,
         song.album.iconURL
       );
       this._toolbarService.updateSong(testSong);

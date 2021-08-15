@@ -15,29 +15,35 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: child,
-      bottomNavigationBar: BlocBuilder<MainNavigationCubit, MainNavigationState>(
-        builder: (context, state) {
-          return BottomNavigationBar(
-            backgroundColor: Perflow.surfaceColor,
-            selectedItemColor: Perflow.primaryLightColor,
-            currentIndex: _getCurrentIndex(state),
-            onTap: (index) => _handleNav(index, context.read<MainNavigationCubit>()),
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.local_fire_department_rounded),
-                label: 'Home'
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: 'Search'
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.music_note),
-                  label: 'Playlists'
-              ),
-            ],
-          );
-        }
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(15.0),
+          topRight: Radius.circular(15.0),
+        ),
+        child: BlocBuilder<MainNavigationCubit, MainNavigationState>(
+          builder: (context, state) {
+            return BottomNavigationBar(
+              backgroundColor: Perflow.surfaceColor,
+              selectedItemColor: Perflow.primaryLightColor,
+              currentIndex: _getCurrentIndex(state),
+              onTap: (index) => _handleNav(index, context.read<MainNavigationCubit>()),
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.local_fire_department),
+                  label: 'Home'
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.search),
+                    label: 'Search'
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.music_note),
+                    label: 'Library'
+                ),
+              ],
+            );
+          }
+        ),
       ),
     );
   }
@@ -46,7 +52,7 @@ class MainScreen extends StatelessWidget {
     return state.map(
       home: (_) => 0,
       search: (_) => 1,
-      playlists: (_) => 2
+      library: (_) => 2
     );
   }
 
@@ -56,7 +62,7 @@ class MainScreen extends StatelessWidget {
         navCubit.goToSearch();
         break;
       case 2:
-        navCubit.goToPlaylists();
+        navCubit.goToLibrary();
         break;
       default:
         navCubit.goToHome();

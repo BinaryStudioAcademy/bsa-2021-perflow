@@ -4,6 +4,7 @@
 .ui.visible.sidebar.vertical.menu
     width: 247px
     padding-left: 40px
+    padding-bottom: calc(100px + 40px)
     background: $drk-gray
     border-right: 1.5px solid #373C43
     &::-webkit-scrollbar
@@ -12,24 +13,16 @@
 
 .container
     margin-left: 247px
-    height: 100vh
+    padding-bottom: 100px !important
+    height: auto
     width: auto
     background: $drk-gray
 
 .logo
-    position: relative
-    right: 8px 
-    bottom: 10px
     margin-top: 25px
     padding: 0
-    width: 90px
-
-.name-logo
-    padding-left: 5px
-    font-family: "Montserrat", sans-serif
-    font-style: normal
-    font-weight: $medium-weight
-    letter-spacing: 0.01em
+    &>a
+        font-size: 20px
 
 .name-route
     padding-left: 20px

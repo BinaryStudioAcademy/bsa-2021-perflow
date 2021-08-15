@@ -24,8 +24,8 @@ class _$MainNavigationStateTearOff {
     return MainNavigationSearch();
   }
 
-  MainNavigationPlaylists playlists() {
-    return MainNavigationPlaylists();
+  MainNavigationLibrary library() {
+    return MainNavigationLibrary();
   }
 }
 
@@ -38,14 +38,14 @@ mixin _$MainNavigationState {
   TResult when<TResult extends Object?>({
     required TResult Function() home,
     required TResult Function() search,
-    required TResult Function() playlists,
+    required TResult Function() library,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? home,
     TResult Function()? search,
-    TResult Function()? playlists,
+    TResult Function()? library,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -53,14 +53,14 @@ mixin _$MainNavigationState {
   TResult map<TResult extends Object?>({
     required TResult Function(MainNavigationHome value) home,
     required TResult Function(MainNavigationSearch value) search,
-    required TResult Function(MainNavigationPlaylists value) playlists,
+    required TResult Function(MainNavigationLibrary value) library,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MainNavigationHome value)? home,
     TResult Function(MainNavigationSearch value)? search,
-    TResult Function(MainNavigationPlaylists value)? playlists,
+    TResult Function(MainNavigationLibrary value)? library,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -125,7 +125,7 @@ class _$MainNavigationHome implements MainNavigationHome {
   TResult when<TResult extends Object?>({
     required TResult Function() home,
     required TResult Function() search,
-    required TResult Function() playlists,
+    required TResult Function() library,
   }) {
     return home();
   }
@@ -135,7 +135,7 @@ class _$MainNavigationHome implements MainNavigationHome {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? home,
     TResult Function()? search,
-    TResult Function()? playlists,
+    TResult Function()? library,
     required TResult orElse(),
   }) {
     if (home != null) {
@@ -149,7 +149,7 @@ class _$MainNavigationHome implements MainNavigationHome {
   TResult map<TResult extends Object?>({
     required TResult Function(MainNavigationHome value) home,
     required TResult Function(MainNavigationSearch value) search,
-    required TResult Function(MainNavigationPlaylists value) playlists,
+    required TResult Function(MainNavigationLibrary value) library,
   }) {
     return home(this);
   }
@@ -159,7 +159,7 @@ class _$MainNavigationHome implements MainNavigationHome {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MainNavigationHome value)? home,
     TResult Function(MainNavigationSearch value)? search,
-    TResult Function(MainNavigationPlaylists value)? playlists,
+    TResult Function(MainNavigationLibrary value)? library,
     required TResult orElse(),
   }) {
     if (home != null) {
@@ -215,7 +215,7 @@ class _$MainNavigationSearch implements MainNavigationSearch {
   TResult when<TResult extends Object?>({
     required TResult Function() home,
     required TResult Function() search,
-    required TResult Function() playlists,
+    required TResult Function() library,
   }) {
     return search();
   }
@@ -225,7 +225,7 @@ class _$MainNavigationSearch implements MainNavigationSearch {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? home,
     TResult Function()? search,
-    TResult Function()? playlists,
+    TResult Function()? library,
     required TResult orElse(),
   }) {
     if (search != null) {
@@ -239,7 +239,7 @@ class _$MainNavigationSearch implements MainNavigationSearch {
   TResult map<TResult extends Object?>({
     required TResult Function(MainNavigationHome value) home,
     required TResult Function(MainNavigationSearch value) search,
-    required TResult Function(MainNavigationPlaylists value) playlists,
+    required TResult Function(MainNavigationLibrary value) library,
   }) {
     return search(this);
   }
@@ -249,7 +249,7 @@ class _$MainNavigationSearch implements MainNavigationSearch {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MainNavigationHome value)? home,
     TResult Function(MainNavigationSearch value)? search,
-    TResult Function(MainNavigationPlaylists value)? playlists,
+    TResult Function(MainNavigationLibrary value)? library,
     required TResult orElse(),
   }) {
     if (search != null) {
@@ -264,37 +264,37 @@ abstract class MainNavigationSearch implements MainNavigationState {
 }
 
 /// @nodoc
-abstract class $MainNavigationPlaylistsCopyWith<$Res> {
-  factory $MainNavigationPlaylistsCopyWith(MainNavigationPlaylists value,
-          $Res Function(MainNavigationPlaylists) then) =
-      _$MainNavigationPlaylistsCopyWithImpl<$Res>;
+abstract class $MainNavigationLibraryCopyWith<$Res> {
+  factory $MainNavigationLibraryCopyWith(MainNavigationLibrary value,
+          $Res Function(MainNavigationLibrary) then) =
+      _$MainNavigationLibraryCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$MainNavigationPlaylistsCopyWithImpl<$Res>
+class _$MainNavigationLibraryCopyWithImpl<$Res>
     extends _$MainNavigationStateCopyWithImpl<$Res>
-    implements $MainNavigationPlaylistsCopyWith<$Res> {
-  _$MainNavigationPlaylistsCopyWithImpl(MainNavigationPlaylists _value,
-      $Res Function(MainNavigationPlaylists) _then)
-      : super(_value, (v) => _then(v as MainNavigationPlaylists));
+    implements $MainNavigationLibraryCopyWith<$Res> {
+  _$MainNavigationLibraryCopyWithImpl(
+      MainNavigationLibrary _value, $Res Function(MainNavigationLibrary) _then)
+      : super(_value, (v) => _then(v as MainNavigationLibrary));
 
   @override
-  MainNavigationPlaylists get _value => super._value as MainNavigationPlaylists;
+  MainNavigationLibrary get _value => super._value as MainNavigationLibrary;
 }
 
 /// @nodoc
 
-class _$MainNavigationPlaylists implements MainNavigationPlaylists {
-  _$MainNavigationPlaylists();
+class _$MainNavigationLibrary implements MainNavigationLibrary {
+  _$MainNavigationLibrary();
 
   @override
   String toString() {
-    return 'MainNavigationState.playlists()';
+    return 'MainNavigationState.library()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is MainNavigationPlaylists);
+    return identical(this, other) || (other is MainNavigationLibrary);
   }
 
   @override
@@ -305,9 +305,9 @@ class _$MainNavigationPlaylists implements MainNavigationPlaylists {
   TResult when<TResult extends Object?>({
     required TResult Function() home,
     required TResult Function() search,
-    required TResult Function() playlists,
+    required TResult Function() library,
   }) {
-    return playlists();
+    return library();
   }
 
   @override
@@ -315,11 +315,11 @@ class _$MainNavigationPlaylists implements MainNavigationPlaylists {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? home,
     TResult Function()? search,
-    TResult Function()? playlists,
+    TResult Function()? library,
     required TResult orElse(),
   }) {
-    if (playlists != null) {
-      return playlists();
+    if (library != null) {
+      return library();
     }
     return orElse();
   }
@@ -329,9 +329,9 @@ class _$MainNavigationPlaylists implements MainNavigationPlaylists {
   TResult map<TResult extends Object?>({
     required TResult Function(MainNavigationHome value) home,
     required TResult Function(MainNavigationSearch value) search,
-    required TResult Function(MainNavigationPlaylists value) playlists,
+    required TResult Function(MainNavigationLibrary value) library,
   }) {
-    return playlists(this);
+    return library(this);
   }
 
   @override
@@ -339,16 +339,16 @@ class _$MainNavigationPlaylists implements MainNavigationPlaylists {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MainNavigationHome value)? home,
     TResult Function(MainNavigationSearch value)? search,
-    TResult Function(MainNavigationPlaylists value)? playlists,
+    TResult Function(MainNavigationLibrary value)? library,
     required TResult orElse(),
   }) {
-    if (playlists != null) {
-      return playlists(this);
+    if (library != null) {
+      return library(this);
     }
     return orElse();
   }
 }
 
-abstract class MainNavigationPlaylists implements MainNavigationState {
-  factory MainNavigationPlaylists() = _$MainNavigationPlaylists;
+abstract class MainNavigationLibrary implements MainNavigationState {
+  factory MainNavigationLibrary() = _$MainNavigationLibrary;
 }
