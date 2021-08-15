@@ -1,5 +1,5 @@
 import {
-  Component, EventEmitter, Input, OnInit, Output
+  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild
 } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { AlbumEdit } from 'src/app/models/album/album-edit';
@@ -8,6 +8,11 @@ import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { Group } from 'src/app/models/group/group';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GroupService } from 'src/app/services/group.service';
+
+interface Author {
+  name: string,
+  value: number
+}
 
 @Component({
   selector: 'app-edit-album-modal',
@@ -30,11 +35,16 @@ export class EditAlbumModalComponent implements OnInit {
   userId: number;
   userName: string;
   tempIconURL: string;
+  authors = [] as Author[];
+  isAuthorHidden: boolean = true;
+  selectedIndex: number;
 
   @Input() editedAlbum: AlbumEdit = { } as AlbumEdit;
 
   @Output() isClosed = new EventEmitter<void>();
   @Output() editAlbum = new EventEmitter<AlbumEdit>();
+
+  @ViewChild('author') selectElement: ElementRef<HTMLSelectElement>;
 
   constructor(
     private _groupService: GroupService,
@@ -58,8 +68,24 @@ export class EditAlbumModalComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.groups = data;
+
+          if (this.groups?.length) {
+            this.fillAuthors(this.groups);
+          }
         }
       });
+  };
+
+  fillAuthors = (groups: Group[]) => {
+    this.authors.push({ name: this.userName, value: 0 });
+
+    groups.forEach((group) => {
+      this.authors.push({ name: group?.name, value: group.id });
+    });
+
+    this.selectedIndex = this.editedAlbum.groupId ?? 0;
+
+    this.isAuthorHidden = false;
   };
 
   public onSubmit() {
@@ -67,6 +93,10 @@ export class EditAlbumModalComponent implements OnInit {
 
     if (this.editedAlbum.authorType === AuthorType.artist) {
       this.editedAlbum.authorId = this.userId;
+      this.editedAlbum.groupId = undefined;
+    }
+    else {
+      this.editedAlbum.authorId = undefined;
     }
 
     this.editAlbum.emit(this.editedAlbum);
@@ -96,13 +126,23 @@ export class EditAlbumModalComponent implements OnInit {
   }
 
   authorTypeChange = () => {
-    if (this.editedAlbum.authorType === AuthorType.group) {
-      this.editedAlbum.groupId = this.groups[0].id;
-      this.editedAlbum.authorId = undefined;
+    const index = +this.selectElement.nativeElement.value;
+
+    if (index === 0) {
+      this.editedAlbum = {
+        ...this.editedAlbum,
+        authorType: AuthorType.artist,
+        authorId: this.userId,
+        groupId: undefined
+      };
     }
     else {
-      this.editedAlbum.authorId = this.userId;
-      this.editedAlbum.groupId = undefined;
+      this.editedAlbum = {
+        ...this.editedAlbum,
+        authorType: AuthorType.group,
+        groupId: index,
+        authorId: undefined
+      };
     }
   };
 }
