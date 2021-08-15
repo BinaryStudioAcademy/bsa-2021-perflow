@@ -17,6 +17,9 @@ export class UserProfileComponent implements OnInit {
   public isProfileMenuShown: boolean = false;
 
   private readonly _scrollingSize: number = 270;
+  private readonly _topAmount = 20;
+  private readonly _decimalRadix = 10;
+  private readonly _gridScrollMultiplier = 3;
 
   user: User = {} as User;
   topArtists: ArtistReadDTO[] = [];
@@ -31,8 +34,8 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser();
-    this.getTop20Artists();
-    this.getTop20Songs();
+    this.getTopArtists();
+    this.getTopSongs();
   }
 
   getUser() {
@@ -46,10 +49,18 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  getTop20Artists() {
-    this._artistService.getTopArtistsByLikes(20).subscribe(
+  getTopArtists() {
+    this._artistService.getTopArtistsByLikes(this._topAmount).subscribe(
       (result) => {
         this.topArtists = result;
+      }
+    );
+  }
+
+  getTopSongs() {
+    this._songService.getTopSongsByLikes(this._topAmount).subscribe(
+      (songs) => {
+        this.topSongs = songs;
       }
     );
   }
@@ -90,8 +101,8 @@ export class UserProfileComponent implements OnInit {
   getGridScrollWidth = (selector: string) => {
     const element = document.querySelector(selector);
     const style = getComputedStyle(element!);
-    const gapWidth = parseInt(style.gridGap.split(' ')[0], 10);
-    const elementWidth = parseInt(style.gridTemplateColumns.split(' ')[0], 10);
+    const gapWidth = parseInt(style.gridGap.split(' ')[0], this._decimalRadix);
+    const elementWidth = parseInt(style.gridTemplateColumns.split(' ')[0], this._decimalRadix);
 
     return gapWidth + elementWidth;
   };
@@ -99,20 +110,12 @@ export class UserProfileComponent implements OnInit {
   scrollGridRight = (id: string, selector: string) => {
     const grid = document.getElementById(id);
 
-    grid?.scrollBy({ left: this.getGridScrollWidth(selector) * 3, behavior: 'smooth' });
+    grid?.scrollBy({ left: this.getGridScrollWidth(selector) * this._gridScrollMultiplier, behavior: 'smooth' });
   };
 
   scrollGridLeft = (id: string, selector: string) => {
     const grid = document.getElementById(id);
 
-    grid?.scrollBy({ left: -(this.getGridScrollWidth(selector) * 3), behavior: 'smooth' });
+    grid?.scrollBy({ left: -(this.getGridScrollWidth(selector) * this._gridScrollMultiplier), behavior: 'smooth' });
   };
-
-  getTop20Songs() {
-    this._songService.getTopSongsByLikes(20).subscribe(
-      (songs) => {
-        this.topSongs = songs;
-      }
-    );
-  }
 }
