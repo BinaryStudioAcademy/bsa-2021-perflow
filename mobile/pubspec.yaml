@@ -12,10 +12,19 @@ dependencies:
   flutter:
     sdk: flutter
 
+  rxdart: ^0.27.1
+
   shared_preferences: ^2.0.6
+
+  audio_service: ^0.17.1
+  just_audio: ^0.9.5
 
   logger: ^1.0.0
   http: ^0.13.3
+  chopper: ^4.0.1
+  firebase_core: ^1.4.0
+  firebase_auth: ^3.0.1
+  google_sign_in: ^5.0.7
 
   provider: ^5.0.0
   flutter_bloc: ^7.1.0
@@ -28,6 +37,7 @@ dependencies:
 
   google_fonts: ^2.1.0
   cupertino_icons: ^1.0.3
+  animations: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +49,7 @@ dev_dependencies:
   json_serializable: any
   freezed: ^0.14.2
   injectable_generator: ^1.4.1
+  chopper_generator: ^4.0.1
 
 flutter:
   uses-material-design: true

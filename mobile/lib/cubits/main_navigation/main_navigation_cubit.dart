@@ -23,8 +23,8 @@ class MainNavigationCubit extends Cubit<MainNavigationState> {
     emit(MainNavigationState.search());
   }
 
-  void goToPlaylists() {
-    _router.to(Routes.playlists);
-    emit(MainNavigationState.playlists());
+  void goToLibrary() {
+    _router.to(Routes.library);
+    emit(MainNavigationState.library());
   }
 }

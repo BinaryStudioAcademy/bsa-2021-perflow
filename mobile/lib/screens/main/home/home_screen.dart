@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:perflow/helpers/get_service.dart';
-import 'package:perflow/services/playback_service.dart';
+import 'package:perflow/services/auth/auth_api.dart';
+import 'package:perflow/services/playback/playback_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:perflow/widgets/perflow_elevated_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,8 +29,8 @@ class HomeScreen extends StatelessWidget {
                     style: theme.textTheme.headline6,
                   ),
                   IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.settings)
+                    onPressed: () => context.read<AuthCubit>().signOut(),
+                    icon: const Icon(Icons.logout)
                   )
                 ],
               ),
@@ -46,11 +50,12 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ElevatedButton(
+                        PerflowElevatedButton(
                           onPressed: getService<PlaybackService>().play,
                           child: const Text('Play')
                         ),
-                        ElevatedButton(
+                        const SizedBox(height: 8),
+                        PerflowElevatedButton(
                             onPressed: getService<PlaybackService>().pause,
                             child: const Text('Stop')
                         ),
