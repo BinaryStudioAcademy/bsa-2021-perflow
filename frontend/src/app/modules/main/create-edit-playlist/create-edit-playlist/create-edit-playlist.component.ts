@@ -96,6 +96,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       ...this.playlist,
       id: 0,
       name: 'Playlist title',
+      iconURL: '../../../../assets/images/playlist_default.jpg',
       accessType: AccessType.default,
       author: { id: this.userId } as User
     };
