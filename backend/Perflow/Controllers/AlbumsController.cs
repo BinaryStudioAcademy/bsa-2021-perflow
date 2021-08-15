@@ -62,5 +62,11 @@ namespace Perflow.Controllers
         {
             return Ok(await _albumsService.DeleteEntityAsync(id));
         }
+
+        [HttpPut("publicStatus")]
+        public async Task<ActionResult<AlbumPublicStatusDTO>> SetPublicStatusAsync(AlbumPublicStatusDTO status)
+        {
+            return Ok(await _albumsService.SetPublicStatusAsync(status));
+        }
     }
 }
