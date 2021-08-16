@@ -43,48 +43,10 @@ namespace Shared.AzureBlobStorage.Services
 
         public async Task<Uri> UploadFileBlobAsync(string blobContainerName, BlobDto file)
         {
-            Console.WriteLine("-------------------UploadFileBlobAsync started-------------------");
-            string connString = _configuration["ConnectionStrings:BlobStorage"];
-
-            Console.WriteLine("-------------------GetSection\"ConnectionStrings: BlobStorage\"-------------------");
-            Console.WriteLine($"-------------------connString: {connString}-------------------");
-
-            //Possibly can become useful in future
-
-            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connString);
-            //var client = storageAccount.CreateCloudBlobClient();
-            //CloudBlobContainer container = client.GetContainerReference("songs");
-            //CloudBlockBlob blockBlob = container.GetBlockBlobReference(file.Guid);
-            //using (var fileStream = file.Content)
-            //{
-            //    _ = blockBlob.UploadFromStreamAsync(fileStream);
-            //}
-
-
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connString);
-
-            Console.WriteLine($"-------------------Get BlobServiceClient-------------------");
-            Console.WriteLine($"-------------------BlobServiceClient-AccountName: {blobServiceClient.AccountName}-------------------");
-            Console.WriteLine($"-------------------BlobServiceClient-Uri: {blobServiceClient.Uri}-------------------");
-
             var containerClient = GetContainerClient(blobContainerName);
-
-            Console.WriteLine($"-------------------GetContainerClient-------------------");
-            Console.WriteLine($"-------------------ContainerClient-Name: {containerClient.Name}-------------------");
-            Console.WriteLine($"-------------------ContainerClient-AccountName: {containerClient.AccountName}-------------------");
-            Console.WriteLine($"-------------------ContainerClient-Uri: {containerClient.Uri}-------------------");
-
             var blobClient = containerClient.GetBlobClient(file.Guid);
 
-            Console.WriteLine($"-------------------GetBlobClient-------------------");
-            Console.WriteLine($"-------------------BlobClient-Name: {blobClient.Name}-------------------");
-            Console.WriteLine($"-------------------BlobClient-AccountName: {containerClient.AccountName}-------------------");
-            Console.WriteLine($"-------------------BlobClient-Uri: {containerClient.Uri}-------------------");
-
-            await blobClient.UploadAsync(file.Content, true);
-
-            Console.WriteLine($"-------------------File Uploaded-------------------");
-            Console.WriteLine($"-------------------BlobClient-Uri: {containerClient.Uri}-------------------");
+            await blobClient.UploadAsync(file.Content, new BlobHttpHeaders { ContentType = file.ContentType });
 
             return blobClient.Uri;
         }
