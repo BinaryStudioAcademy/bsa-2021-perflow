@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 import { Song } from 'src/app/models/song/song';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
 import { HttpInternalService } from '../http-internal.service';
-import { SongRow } from 'src/app/models/song/song-row';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class SongsService {
   ) { }
 
   public getLikedSongs() {
-    return this._httpService.getRequest<SongRow[]>('/api/songs/liked');
+    return this._httpService.getRequest<Song[]>('/api/songs/liked');
   }
 
   public getLikedSongsCount() {
