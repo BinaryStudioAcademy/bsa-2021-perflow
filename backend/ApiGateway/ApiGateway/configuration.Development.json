@@ -12,7 +12,6 @@
       ],
       "UpstreamPathTemplate": "/api/Playlists",
       "UpstreamHttpMethod": [
-        "GET",
         "POST",
         "PUT"
       ]
