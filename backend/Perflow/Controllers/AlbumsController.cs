@@ -66,6 +66,10 @@ namespace Perflow.Controllers
         [HttpPut("publicStatus")]
         public async Task<ActionResult<AlbumPublicStatusDTO>> SetPublicStatusAsync(AlbumPublicStatusDTO status)
         {
+            if(status.UserId != User.GetId())
+            {
+                return Forbid();
+            }
             return Ok(await _albumsService.SetPublicStatusAsync(status));
         }
     }
