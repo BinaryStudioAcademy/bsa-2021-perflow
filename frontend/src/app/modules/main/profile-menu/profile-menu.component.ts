@@ -38,10 +38,10 @@ export class ProfileMenuComponent {
   }
 
   getUserIconURL() {
-    this._userService.getUser(this._userId)
+    this._userService.getUserImage(this._userId)
       .subscribe({
-        next: (user) => {
-          this.userIconURL = user.iconURL;
+        next: (response) => {
+          this.userIconURL = response.imageUrl;
         }
       });
 
