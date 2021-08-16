@@ -1,0 +1,41 @@
+<div class="bg-modal-fader" (click)="cancelModal()">
+  <div class="ui modal modal-upload" (click)="clickOnModal($event)">
+    <div class="ui icon header">
+      Crop Image
+    </div>
+    <div class="content">
+      <form #formEdit="ngForm" (ngSubmit)="onSubmit()" class="ui form error">
+        <div class="cross-validation" [class.cross-validation-error]="formEdit.errors?.identityRevealed && (formEdit.touched || formEdit.dirty)">
+          <div class="ui two column divided equal height grid"> 
+            <!-- Inputs Row -->
+            <div class="row">
+              <!-- Image Column -->
+              <div class="column">
+                <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [imageURL]="imageURL"
+                [imageFile]="imageFile"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="4 / 3"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                ></image-cropper>
+              </div>
+              <div class="column">
+                  <img id="image" [src]="croppedImage" /> 
+                <!-- Buttons Row -->
+                <div class="row buttons-row">
+                  <div class="form-group">
+                    <button type="submit" class="ui btn-full submit button"  [disabled]="formEdit.form.invalid">Save</button>
+                    <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
+                  </div>
+                </div>
+            </div>
+            </div>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

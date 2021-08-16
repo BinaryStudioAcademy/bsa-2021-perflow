@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
+import { CroppedImageData } from 'src/app/models/shared/cropped.model';
 
 @Component({
   selector: 'app-edit-playlist-modal',
@@ -10,7 +11,10 @@ import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
   styleUrls: ['./edit-playlist-modal.component.sass']
 })
 export class EditPlaylistModalComponent implements OnInit {
+  isCropperModalShown = false;
+
   readonly pattern = '.*(.jpg$|.png$|.jpeg$)';
+
   file: File;
   public selectControlValues: AccessType[] = [AccessType.secret, AccessType.collaborative, AccessType.default];
   public tempIconURL: string;
@@ -18,7 +22,6 @@ export class EditPlaylistModalComponent implements OnInit {
   @Input() editedPlaylist: EditedPlaylist;
 
   @Output() isClosed = new EventEmitter<void>();
-
   @Output() editPlaylist = new EventEmitter<EditedPlaylist>();
 
   ngOnInit() {
@@ -28,6 +31,10 @@ export class EditPlaylistModalComponent implements OnInit {
   public onSubmit() {
     this.editedPlaylist.iconURL = this.tempIconURL;
     this.editPlaylist.emit(this.editedPlaylist);
+  }
+
+  switchModal() {
+    this.isCropperModalShown = !this.isCropperModalShown;
   }
 
   cancelModal() {
@@ -46,10 +53,18 @@ export class EditPlaylistModalComponent implements OnInit {
       };
 
       reader.readAsDataURL(this.file);
+
+      this.isCropperModalShown = !this.isCropperModalShown;
     }
   };
 
   clickOnModal = (event: Event) => {
     event.stopPropagation();
+  };
+
+  onSubmitModal = (croppedFile: CroppedImageData) => {
+    this.isCropperModalShown = !this.isCropperModalShown;
+    this.file = croppedFile.croppedFile;
+    this.tempIconURL = croppedFile.croppedImage;
   };
 }
