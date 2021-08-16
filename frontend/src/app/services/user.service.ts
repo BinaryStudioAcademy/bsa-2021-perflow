@@ -20,6 +20,10 @@ export class UserService {
     return this._httpService.getRequest<User>(`${this.routePrefix}/${id}`);
   }
 
+  getUserImage(id: number) {
+    return this._httpService.getRequest<{imageUrl: string}>(`${this.routePrefix}/${id}/image`);
+  }
+
   updateUserPassword(userChangePassword: UserChangePassword) {
     const route = `${this.routePrefix}/changePassword`;
     return this._httpService.putFullRequest<UserChangePassword>(route, userChangePassword);
