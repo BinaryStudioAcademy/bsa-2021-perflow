@@ -14,22 +14,21 @@ namespace Perflow.Services.Implementations
 {
     public class PlaylistReactionService : BaseService
     {
-        public PlaylistReactionService(PerflowContext context, IMapper mapper) : base(context, mapper) {}
+        public PlaylistReactionService(PerflowContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<IEnumerable<PlaylistDTO>> GetLikedPlaylistsByTheUser(int userId)
+        public async Task<IEnumerable<PlaylistViewDTO>> GetLikedPlaylistsByTheUser(int userId)
         {
-            var likedPlaylists = await context.Playlists
-                                        .Include(playlist => playlist.Reactions
-                                                                     .Where(r => r.UserId == userId))
-                                        .Where(playlist => playlist.Reactions.Any())
-                                        .ToListAsync();
+            var likedPlaylists = await context.PlaylistReactions
+                .Where(playlist => playlist.UserId == userId)
+                .Select(p => p.Playlist)
+                .ToListAsync();
 
-            return mapper.Map<IEnumerable<PlaylistDTO>>(likedPlaylists.ToList());
+            return mapper.Map<IEnumerable<PlaylistViewDTO>>(likedPlaylists);
         }
 
         public async Task AddPlaylistReactionAsync(NewPlaylistReactionDTO reaction)
         {
-            if(reaction == null)
+            if (reaction == null)
             {
                 throw new ArgumentNullException(nameof(reaction), "Argument cannot be null");
             }

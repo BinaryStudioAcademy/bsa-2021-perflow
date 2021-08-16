@@ -12,12 +12,10 @@ namespace Shared.AzureBlobStorage.Services
     public class BlobService : IBlobService
     {
         private readonly BlobServiceClient _blobServiceClient;
-        private readonly IConfiguration _configuration;
 
-        public BlobService(BlobServiceClient blobServiceClient, IConfiguration configuration)
+        public BlobService(BlobServiceClient blobServiceClient)
         {
             _blobServiceClient = blobServiceClient;
-            _configuration = configuration;
         }
 
         public async Task<bool> DeleteFileBlobAsync(string blobContainerName, string blobId)
@@ -43,29 +41,10 @@ namespace Shared.AzureBlobStorage.Services
 
         public async Task<Uri> UploadFileBlobAsync(string blobContainerName, BlobDto file)
         {
-
-            string connString = _configuration.GetSection("ConnectionStrings:BlobStorage").Value;
-
-
-            //Possibly can become useful in future
-
-            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connString);
-            //var client = storageAccount.CreateCloudBlobClient();
-            //CloudBlobContainer container = client.GetContainerReference("songs");
-            //CloudBlockBlob blockBlob = container.GetBlockBlobReference(file.Guid);
-            //using (var fileStream = file.Content)
-            //{
-            //    _ = blockBlob.UploadFromStreamAsync(fileStream);
-            //}
-
-
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connString);
-
             var containerClient = GetContainerClient(blobContainerName);
-
             var blobClient = containerClient.GetBlobClient(file.Guid);
 
-            await blobClient.UploadAsync(file.Content, true);
+            await blobClient.UploadAsync(file.Content, new BlobHttpHeaders { ContentType = file.ContentType });
 
             return blobClient.Uri;
         }
