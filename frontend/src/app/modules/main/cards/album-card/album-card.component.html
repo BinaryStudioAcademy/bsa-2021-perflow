@@ -1,12 +1,10 @@
-<div class="card" [routerLink]="['/albums', album.id]">
+<div class="card" routerLink="/albums/{{album.id}}">
   <div class="image-block">
     <div class="image">
       <img [attr.src]="album.iconURL" alt="Album" />
     </div>
-    <div class="edit-icon" *ngIf="isForEdit">
-      <a routerLink="/albums/edit/{{album.id}}" routerLinkActive="active-link">
+    <div class="edit" routerLink="/albums/edit/{{album.id}}" appClickStopPropagation *ngIf="isForEdit">
         <i class="pencil icon ui"></i>
-      </a>
     </div>
     <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit">
       <i class="like icon ui"></i>
