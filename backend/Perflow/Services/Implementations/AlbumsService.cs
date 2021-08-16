@@ -185,5 +185,20 @@ namespace Perflow.Services.Implementations
 
             return entityId;
         }
+        
+        public async Task SetPublicStatusAsync(AlbumPublicStatusDTO status)
+        {
+            if (status == null)
+                throw new ArgumentNullException("Argument cannot be null");
+
+            var album = await context.Albums
+                .FirstOrDefaultAsync(album => album.Id == status.Id);
+            
+            album.IsPublished = status.IsPublished;
+
+            context.Entry(album).State = EntityState.Modified;
+
+            await context.SaveChangesAsync();
+        }
     }
 }
