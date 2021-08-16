@@ -13,7 +13,7 @@ namespace Perflow.Common.DTO.Playlists
 
         public string IconURL { get; set; }
 
-        public UserReadDTO Author { get; set; }
+        public UserForPlaylistDTO Author { get; set; }
 
         public AccessTypeDTO AccessType { get; set; }
 
