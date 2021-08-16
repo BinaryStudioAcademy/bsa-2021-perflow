@@ -6,7 +6,7 @@ import { AlbumRegion } from 'src/app/models/album/album-region';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { AlbumService } from 'src/app/services/album.service';
 import { Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AudioFileDuration } from 'src/app/helpers/AudioFileDuration';
 import { SongsService } from 'src/app/services/songs/songs.service';
@@ -28,7 +28,6 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   isSongUploadShown = false;
   publishButtonTitle: string = 'Publish';
 
-  private _userId: number;
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
   private _isEditMode: boolean = false;
@@ -39,13 +38,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _songsService: SongsService,
     private _authService: AuthService
-  ) {
-    this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
-      .subscribe((authState) => {
-        this._userId = authState!.id;
-      });
-  }
+  ) { }
 
   ngOnInit() {
     this.album = this.getBasicAlbumFull();
@@ -243,14 +236,12 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     if (this.album.isPublished) {
       albumPublicStatus = {
         ...this.album,
-        userId: this._userId,
         isPublished: false
       };
     }
     else {
       albumPublicStatus = {
         ...this.album,
-        userId: this._userId,
         isPublished: true
       };
     }
