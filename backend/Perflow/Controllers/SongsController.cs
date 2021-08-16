@@ -81,8 +81,6 @@ namespace Perflow.Controllers
         {
             var result = await _songsService.CheckIsLiked(id, User.GetId());
 
-            Console.WriteLine(result);
-
             return Ok(new{isLiked = result});
         }
 
