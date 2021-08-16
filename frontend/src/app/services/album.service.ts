@@ -5,6 +5,7 @@ import { AlbumEdit } from '../models/album/album-edit';
 import { AlbumFull } from '../models/album/album-full';
 import { AlbumView } from '../models/album/album-view';
 import { HttpInternalService } from './http-internal.service';
+import { AlbumPublicStatus } from '../models/album/аlbum-public-status';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,9 @@ export class AlbumService {
 
   public removeAlbum(id: number): Observable<number> {
     return this._httpService.deleteRequest<number>(`${this.routePrefix}/${id}`);
+  }
+
+  public changeAlbumPublicStatus(albumPublicStatus: AlbumPublicStatus): Observable<AlbumPublicStatus> {
+    return this._httpService.putRequest<AlbumPublicStatus>(`${this.routePrefix}/publicStatus`, albumPublicStatus);
   }
 }
