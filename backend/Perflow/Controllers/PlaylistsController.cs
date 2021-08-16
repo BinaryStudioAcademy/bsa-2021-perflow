@@ -26,12 +26,6 @@ namespace Perflow.Controllers
             _playlistService = playlistService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<ICollection<PlaylistDTO>>> Get()
-        {
-            return Ok(await _playlistService.GetEntitiesAsync());
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<PlaylistDTO>> Get(int id)
         {
