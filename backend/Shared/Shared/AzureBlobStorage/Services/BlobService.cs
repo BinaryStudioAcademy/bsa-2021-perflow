@@ -12,12 +12,10 @@ namespace Shared.AzureBlobStorage.Services
     public class BlobService : IBlobService
     {
         private readonly BlobServiceClient _blobServiceClient;
-        private readonly IConfiguration _configuration;
 
-        public BlobService(BlobServiceClient blobServiceClient, IConfiguration configuration)
+        public BlobService(BlobServiceClient blobServiceClient)
         {
             _blobServiceClient = blobServiceClient;
-            _configuration = configuration;
         }
 
         public async Task<bool> DeleteFileBlobAsync(string blobContainerName, string blobId)
