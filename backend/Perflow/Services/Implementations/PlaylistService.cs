@@ -41,11 +41,11 @@ namespace Perflow.Services.Implementations
 
         public async Task<ICollection<PlaylistNameDTO>> GetCreatedPlaylistsAsync(int userId)
         {
-            var entities = mapper.Map<ICollection<PlaylistNameDTO>>(await context.Playlists
+            var entities = await context.Playlists
                                             .Include((pl) => pl.Author)
                                             .AsNoTracking()
                                             .Where(pl => pl.Author.Id == userId)
-                                            .ToListAsync());
+                                            .ToListAsync();
 
             return mapper.Map<ICollection<PlaylistNameDTO>>(entities);
         }
