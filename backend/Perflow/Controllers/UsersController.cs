@@ -34,6 +34,14 @@ namespace Perflow.Controllers
             return Ok(_mapper.Map<UserReadDTO>(user));
         }
 
+        [HttpGet("{id}/image")]
+        public async Task<ActionResult<object>> GetImage(int id)
+        {
+            var imageUrl = await _usersService.GetUserImage(id);
+
+            return Ok(new { imageUrl });
+        }
+
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UserReadDTO user)
         {
