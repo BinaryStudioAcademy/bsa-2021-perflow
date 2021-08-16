@@ -49,17 +49,8 @@ namespace Perflow.Controllers
         [HttpGet("created")]
         public async Task<ActionResult<ICollection<PlaylistDTO>>> GetCreated()
         {
-            var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
-            var playlists = await _playlistService.GetEntitiesAsync();
-            var sortedPlaylist = new List<PlaylistDTO>();
-            foreach(var pl in playlists)
-            {
-                if(pl.Author.Email == email)
-                {
-                    sortedPlaylist.Add(pl);
-                }
-            }
-            return Ok(sortedPlaylist);
+            var playlists = await _playlistService.GetCreatedPlaylistsAsync(User.GetId());
+            return Ok(playlists);
         }
 
         [HttpPost]
