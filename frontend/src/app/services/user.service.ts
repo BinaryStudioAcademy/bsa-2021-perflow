@@ -21,7 +21,7 @@ export class UserService {
   }
 
   getUserImage(id: number) {
-    return this._httpService.getRequest<{imageUrl: string}>(`${this.routePrefix}/${id}/image`);
+    return this._httpService.getRequest<{ imageUrl: string }>(`${this.routePrefix}/${id}/image`);
   }
 
   updateUserPassword(userChangePassword: UserChangePassword) {
