@@ -1,6 +1,7 @@
 @import "src/styles.sass"
 
 .card
+    position: relative
     padding: 16px
     border-radius: 4px
     background: transparent
@@ -8,6 +9,7 @@
     box-shadow: none
     width: 100%
     height: 100%
+    
     .image
         width: 100%
         padding-bottom: 100%
@@ -15,18 +17,22 @@
         position: relative
         border-radius: 50%
         overflow: hidden
+        .play-icon
+            position: absolute
+            top: 50%
+            right: 50%
+            transform: translate(50%, -50%)
+        &:hover
+            .play-icon
+                opacity: 1
         img
             position: absolute
             height: 100%
             width: 100%
             object-fit: cover
-        .play-icon
-            top: 50%
-            right: 50%
-            transform: translate(50%, -50%)
-    &:hover
-        .play-icon
-                opacity: 1
+            &:hover
+            cursor: pointer
+    
     .content
         min-height: 64px
         .card-name, .card-desc

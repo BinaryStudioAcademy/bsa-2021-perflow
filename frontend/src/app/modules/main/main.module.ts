@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { ClipboardModule } from 'ngx-clipboard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
@@ -32,6 +33,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
+import { CropImageComponent } from '../shared/crop-image/crop-image.component';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 import { NewReleaseCardComponent } from './cards/new-release-card/new-release-card/new-release-card.component';
 
@@ -59,6 +61,7 @@ import { NewReleaseCardComponent } from './cards/new-release-card/new-release-ca
     EditPlaylistModalComponent,
     SettingsComponent,
     AlbumListComponent,
+    CropImageComponent,
     ViewPlaylistComponent,
     NewReleaseCardComponent
   ],
@@ -70,7 +73,8 @@ import { NewReleaseCardComponent } from './cards/new-release-card/new-release-ca
     UserModule,
     SharedModule,
     ReactiveFormsModule,
-    ClipboardModule
+    ClipboardModule,
+    ImageCropperModule
   ],
   exports: [
     ClickOutsideModule,

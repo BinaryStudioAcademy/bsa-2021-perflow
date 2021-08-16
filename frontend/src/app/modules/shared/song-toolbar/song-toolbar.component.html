@@ -2,7 +2,7 @@
     <source [attr.src]="songForPlay.songURL">
 </audio>
 
-<div class="toolbar" appShowHide [show]="show">
+<div class="toolbar">
     <input type="range" id="seek-slider" class="seekrange" max="100" value="0" (change)="getSeekSliderValue($event)"
         (mousedown)="setTimeChanging(true)" (mouseup)="setTimeChanging(false)">
     <div class="infocontrol">
@@ -13,9 +13,9 @@
                     <i class="itunes note icon"></i>
                 </div>
             </div>
-            <h6 class="songname">{{songForPlay.name}}</h6>
-            <span class="artistname body-light">{{songForPlay.artistName}}</span>
-            <div class="likebutton">
+            <h6 class="songname" *ngIf="show">{{songForPlay.name}}</h6>
+            <span class="artistname body-light" *ngIf="show">{{songForPlay.artistName}}</span>
+            <div class="likebutton" *ngIf="show">
                 <i class="heart outline icon"></i>
             </div>
         </div>

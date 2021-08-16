@@ -75,6 +75,10 @@
           </div>
         </div>
       </form>
+      <!-- Modal cropper window -->
+      <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchModal()"></app-crop-image>
     </div>
   </div>
+
+
 </div>
