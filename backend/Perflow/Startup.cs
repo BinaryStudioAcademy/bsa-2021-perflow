@@ -41,7 +41,7 @@ namespace Perflow
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Perflow", Version = "v1" });
             });
 
-            services.AddBlobStorage(Configuration.GetConnectionString("BlobStorage"));
+            services.AddBlobStorage(Configuration["ConnectionStrings:BlobStorage"]);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
