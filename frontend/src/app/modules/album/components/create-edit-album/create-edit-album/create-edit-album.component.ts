@@ -231,30 +231,16 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   };
 
   setPublicStatus() {
-    let albumPublicStatus: AlbumPublicStatus;
-
-    if (this.album.isPublished) {
-      albumPublicStatus = {
-        ...this.album,
-        isPublished: false
-      };
-    }
-    else {
-      albumPublicStatus = {
-        ...this.album,
-        isPublished: true
-      };
-    }
+    const albumPublicStatus: AlbumPublicStatus = {
+      ...this.album,
+      isPublished: !this.album.isPublished
+    };
 
     this._albumService.changeAlbumPublicStatus(albumPublicStatus)
       .subscribe({
         next: (data) => {
-          this.album = {
-            ...this.album,
-            isPublished: data.isPublished
-          };
-
-          this.publishButtonTitle = data.isPublished ? 'Unpublish' : 'Publish';
+          this.album.isPublished = !this.album.isPublished;
+          this.publishButtonTitle = this.album.isPublished ? 'Unpublish' : 'Publish';
         }
       });
   }

@@ -186,7 +186,7 @@ namespace Perflow.Services.Implementations
             return entityId;
         }
         
-        public async Task<AlbumPublicStatusDTO> SetPublicStatusAsync(AlbumPublicStatusDTO status)
+        public async Task SetPublicStatusAsync(AlbumPublicStatusDTO status)
         {
             if (status == null)
                 throw new ArgumentNullException("Argument cannot be null");
@@ -199,8 +199,6 @@ namespace Perflow.Services.Implementations
             context.Entry(album).State = EntityState.Modified;
 
             await context.SaveChangesAsync();
-
-            return status;
         }
     }
 }

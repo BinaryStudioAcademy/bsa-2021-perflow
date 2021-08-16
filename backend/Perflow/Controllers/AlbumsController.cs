@@ -64,9 +64,11 @@ namespace Perflow.Controllers
         }
 
         [HttpPut("publicStatus")]
-        public async Task<ActionResult<AlbumPublicStatusDTO>> SetPublicStatusAsync(AlbumPublicStatusDTO status)
+        public async Task<ActionResult> SetPublicStatusAsync(AlbumPublicStatusDTO status)
         {
-            return Ok(await _albumsService.SetPublicStatusAsync(status));
+            await _albumsService.SetPublicStatusAsync(status);
+
+            return Ok();
         }
     }
 }
