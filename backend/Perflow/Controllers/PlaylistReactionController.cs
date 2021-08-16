@@ -23,7 +23,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("liked/{userId}")]
-        public async Task<ActionResult<ICollection<PlaylistDTO>>> GetLikedPlaylistsByTheUser(int userId)
+        public async Task<ActionResult<ICollection<PlaylistViewDTO>>> GetLikedPlaylistsByTheUser(int userId)
         {
             if (userId <= 0)
                 throw new ArgumentException("User ID cannot be less than or equal to zero");

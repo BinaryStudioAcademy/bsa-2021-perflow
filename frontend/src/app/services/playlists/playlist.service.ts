@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
+import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { PlaylistSongDTO } from 'src/app/models/playlist/playlistSongDTO';
 import { Song } from 'src/app/models/song/song';
@@ -18,7 +19,7 @@ export class PlaylistsService {
   }
 
   getUserCreatedPlaylists() {
-    return this._httpService.getFullRequest<Playlist[]>(`${this._endpoint}/created`);
+    return this._httpService.getFullRequest<PlaylistName[]>(`${this._endpoint}/created`);
   }
 
   getPlaylist(id: number): Observable<Playlist> {

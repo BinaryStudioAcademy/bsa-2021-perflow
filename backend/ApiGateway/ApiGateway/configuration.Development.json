@@ -193,6 +193,20 @@
       ]
     },
     {
+      "DownstreamPathTemplate": "/api/Albums/publicStatus",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Albums/publicStatus",
+      "UpstreamHttpMethod": [
+        "PUT"
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Groups/artist/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [

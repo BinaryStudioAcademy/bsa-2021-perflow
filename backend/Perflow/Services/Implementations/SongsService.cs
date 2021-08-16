@@ -79,7 +79,6 @@ namespace Perflow.Services.Implementations
 
         public async Task<string> UploadSongAsync(IFormFile song)
         {
-            Console.WriteLine("----------------------------Upload song async started.");
             var guid = Guid.NewGuid().ToString();
 
             if (song == null)

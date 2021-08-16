@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AudioFileDuration } from 'src/app/helpers/AudioFileDuration';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
+import { AlbumPublicStatus } from 'src/app/models/album/аlbum-public-status';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-create-edit-album',
@@ -24,6 +26,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   albumSongs: Array<Song> = new Array<Song>();
   isModalShown = false;
   isSongUploadShown = false;
+  publishButtonTitle: string = 'Publish';
 
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
@@ -33,7 +36,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _albumService: AlbumService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    private _songsService: SongsService
+    private _songsService: SongsService,
+    private _authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -67,6 +71,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.album = data;
+
+          this.publishButtonTitle = this.album.isPublished ? 'Unpublish' : 'Publish';
         },
         error: (err) => {
           this._router.navigateByUrl('/albums');
@@ -223,4 +229,19 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
         });
     }
   };
+
+  setPublicStatus() {
+    const albumPublicStatus: AlbumPublicStatus = {
+      ...this.album,
+      isPublished: !this.album.isPublished
+    };
+
+    this._albumService.changeAlbumPublicStatus(albumPublicStatus)
+      .subscribe({
+        next: (data) => {
+          this.album.isPublished = !this.album.isPublished;
+          this.publishButtonTitle = this.album.isPublished ? 'Unpublish' : 'Publish';
+        }
+      });
+  }
 }

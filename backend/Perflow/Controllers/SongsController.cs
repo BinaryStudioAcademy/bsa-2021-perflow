@@ -63,7 +63,6 @@ namespace Perflow.Controllers
         [HttpPost("file/upload")]
         public async Task<ActionResult<object>> AddSongFile()
         {
-            Console.WriteLine("----------------------------Add song file method started.");
             var files = Request.Form.Files;
             var result = await _songsService.UploadSongAsync(files.First());   
             return Ok(new { blobId = result });

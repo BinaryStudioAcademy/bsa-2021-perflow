@@ -1,9 +1,30 @@
 @import ../playlist-card-styles
-    
+
 .card
     .remove
         right: 25px
         bottom: 25px
+    .edit-icon
+        visibility: hidden
+    .image-block:hover
+        cursor: pointer
+        .edit-icon
+            visibility: visible
+            position: absolute
+            width: 44px
+            height: 44px
+            right: 25px
+            bottom: 130px
+            border-radius: 50%
+            background: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
+            a
+                i
+                    position: absolute
+                    left: 50%
+                    top: 50%
+                    transform: translate(-50%, -50%)
+                    color: rgba(0, 0, 0, 0.7)
+                    font-size: 20px
     .info-block
         .album-author
             font-weight: $light-weight
