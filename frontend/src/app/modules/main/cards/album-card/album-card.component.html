@@ -3,12 +3,12 @@
     <div class="image">
       <img [attr.src]="album.iconURL" alt="Album" />
     </div>
-    <div class="edit-icon" >
+    <div class="edit-icon" *ngIf="isForEdit">
       <a routerLink="/albums/edit/{{album.id}}" routerLinkActive="active-link">
         <i class="pencil icon ui"></i>
       </a>
     </div>
-    <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation>
+    <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit">
       <i class="like icon ui"></i>
     </div>
   </div>
