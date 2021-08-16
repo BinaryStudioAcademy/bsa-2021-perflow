@@ -47,7 +47,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("created")]
-        public async Task<ActionResult<ICollection<PlaylistDTO>>> GetCreated()
+        public async Task<ActionResult<ICollection<PlaylistNameDTO>>> GetCreated()
         {
             var playlists = await _playlistService.GetCreatedPlaylistsAsync(User.GetId());
             return Ok(playlists);
