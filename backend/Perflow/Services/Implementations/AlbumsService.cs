@@ -90,10 +90,10 @@ namespace Perflow.Services.Implementations
             return mapper.Map<ICollection<AlbumReadDTO>>(albums);
         }
 
-        public async Task<ICollection<AlbumViewDTO>> GetNewReleases()
+        public async Task<IEnumerable<AlbumViewDTO>> GetNewReleases()
         {
             var firstDay = DateTime.Today.AddDays(-30);
-            var entities = await context.Albums
+            IEnumerable<AlbumViewDTO> entities = await context.Albums
                 .Include(a => a.Songs).ThenInclude(s => s.Artist)
                 .Include(a => a.Songs).ThenInclude(s => s.Group)
                 .AsNoTracking()
@@ -103,16 +103,13 @@ namespace Perflow.Services.Implementations
                 {
                     Id = a.Id,
                     Name = a.Name,
-                    Description = a.Description,
                     IconURL = a.IconURL,
-                    IsSingle = a.IsSingle,
-                    Reactions = a.Reactions.Count,
-                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false)).ToList()
+                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false)).Take(7).ToList()
                 })
                 .ToListAsync();
             foreach (var entity in entities)
             {
-                entity.Authors = entity.Authors.Distinct();
+                entity.Authors = entity.Authors.Distinct().Take(20);
             }
             return entities;
         }

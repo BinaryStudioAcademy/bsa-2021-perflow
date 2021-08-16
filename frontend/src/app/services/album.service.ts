@@ -6,6 +6,7 @@ import { AlbumFull } from '../models/album/album-full';
 import { AlbumView } from '../models/album/album-view';
 import { HttpInternalService } from './http-internal.service';
 import { AlbumPublicStatus } from '../models/album/аlbum-public-status';
+import { NewReleaseView } from '../models/album/new-release-view';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AlbumService {
   }
 
   public getNewReleases() {
-    return this._httpService.getFullRequest<AlbumView[]>(`${this.routePrefix}/new-releases`);
+    return this._httpService.getFullRequest<NewReleaseView[]>(`${this.routePrefix}/new-releases`);
   }
 
   public getAlbum(id: number) {
