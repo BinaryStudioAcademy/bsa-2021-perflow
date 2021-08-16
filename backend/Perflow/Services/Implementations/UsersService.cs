@@ -27,7 +27,7 @@ namespace Perflow.Services.Implementations
 
         public async Task<string> GetUserImage(int id)
         {
-            return _context.Users.Find(id).IconURL;
+            return (await _context.Users.FindAsync(id)).IconURL;
         }
 
         public async Task UpdateUserAsync(User user)
