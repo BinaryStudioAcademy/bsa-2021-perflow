@@ -15,8 +15,9 @@
             </div>
             <h6 class="songname" *ngIf="show">{{songForPlay.name}}</h6>
             <span class="artistname body-light" *ngIf="show">{{songForPlay.artistName}}</span>
-            <div class="likebutton" *ngIf="show">
-                <i class="heart outline icon"></i>
+            <div class="likebutton" *ngIf="show" (click)="toggleLike()">
+                <i class="heart outline icon" *ngIf="!isLiked"></i>
+                <i class="heart icon orange" *ngIf="isLiked"></i>
             </div>
         </div>
         <div class="midpart">
