@@ -44,6 +44,14 @@ namespace Perflow.Services.Implementations
             return songs;
         }
 
+        public async Task<int> GetLikedSongsCountAsync(int userId)
+        {
+            var songs = await context.SongReactions
+                .Where(songReaction => songReaction.UserId == userId)
+                .CountAsync();
+            return songs;
+        }
+
         public async Task<IEnumerable<SongReadDTO>> FindSongsByNameAsync(string searchTerm)
         {
             var songs = await context.Songs

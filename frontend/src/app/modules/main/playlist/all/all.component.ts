@@ -31,9 +31,9 @@ export class AllComponent {
       .subscribe((authState) => {
         this.userId = authState!.id;
       });
-    this._songsService.getLikedSongs().subscribe(
-      (songs) => {
-        this.likedSongs = songs.length;
+    this._songsService.getLikedSongsCount().subscribe(
+      (count) => {
+        this.likedSongs = count;
       }
     );
     this.loadPlaylist();
