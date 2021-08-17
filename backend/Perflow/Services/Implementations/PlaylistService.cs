@@ -12,6 +12,8 @@ using Perflow.Services.Abstract;
 using Perflow.Common.Helpers;
 using Shared.ExceptionsHandler.Exceptions;
 using Perflow.Common.DTO.Users;
+using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Groups;
 
 namespace Perflow.Services.Implementations
 {
@@ -150,7 +152,7 @@ namespace Perflow.Services.Implementations
             return playlistSongDTO;
         }
 
-        public async Task<ICollection<SongReadDTO>> GetSongsAsync(int id, int userId)
+        public async Task<ICollection<SongForPlaylistDTO>> GetSongsAsync(int id, int userId)
         {
             var songs = await context.PlaylistSong
                 .Where(ps => ps.PlaylistId == id)
@@ -160,13 +162,23 @@ namespace Perflow.Services.Implementations
                     .ThenInclude(s => s.Artist)
                 .Include(ps => ps.Song)
                     .ThenInclude(s => s.Group)
+                .Include(ps => ps.Song)
+                    .ThenInclude(s => s.Reactions)
                 .AsNoTracking()
-                .Select(ps =>
-                    mapper.Map<LikedSong, SongReadDTO>(new LikedSong(ps.Song, ps.Song.Reactions.Any(r=> r.UserId == userId)))
-                )
+                .Select(ps => new SongForPlaylistDTO
+                {
+                    Id = ps.Song.Id,
+                    Album = mapper.Map<AlbumForPlaylistDTO>(ps.Song.Album),
+                    Group = mapper.Map<GroupForPlaylistDTO>(ps.Song.Group),
+                    Artist = mapper.Map<UserForPlaylistDTO>(ps.Song.Artist),
+                    Duration = ps.Song.Duration,
+                    HasCensorship = ps.Song.HasCensorship,
+                    Name = ps.Song.Name,
+                    IsLiked = ps.Song.Reactions.Any(r => r.UserId == userId)
+                })
                 .ToListAsync();
 
-            return mapper.Map<ICollection<SongReadDTO>>(songs);
+            return songs;
         }
 
         public async Task<IEnumerable<PlaylistViewDTO>> GetPlaylistsByAuthorIdAsync(int authorId)
