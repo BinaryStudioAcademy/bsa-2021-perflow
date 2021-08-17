@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Perflow.Common.DTO.Users
+﻿namespace Perflow.Common.DTO.Users
 {
     public class UserForPlaylistDTO
     {
         public int Id { get; set; }
         public string UserName { get; set; }
     }
-
 }
