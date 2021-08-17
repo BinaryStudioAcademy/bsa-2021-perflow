@@ -2,47 +2,45 @@
   <div class="accordion">
     <!-- Accordion Information -->
     <div class="accordion-information">
-        <img class="user-avatar" alt="Avatar" [src]="user.iconURL" *ngIf="user.iconURL">
-        <div class="icon-background" *ngIf="!user.iconURL">
-          <i class="user icon"></i>
-        </div>
+      <img class="user-avatar" alt="Avatar" [src]="user.iconURL" *ngIf="user.iconURL">
+      <div class="icon-background" *ngIf="!user.iconURL">
+        <i class="user icon"></i>
+      </div>
         
-        <div class="user-info">
-          <div class="user-profile">Profile</div>
-          <div class="ui dropdown" (click)="showProfileMenu()" (clickOutside)="onClickOutsideProfileMenu($event)">
-            <i class="ellipsis vertical icon"></i>
-            <div class="right menu dropdown-content" *ngIf="isProfileMenuShown">
-              <a routerLink="/profile/edit" class="item"><i class="edit icon"></i> Edit Profile</a>
-              <a routerLink="/" class="item"><i class="share alternate icon"></i> Share Profile</a>
-            </div>
+      <div class="user-info">
+        <div class="user-profile">Profile</div>
+        <div class="ui dropdown" (click)="showProfileMenu()" (clickOutside)="onClickOutsideProfileMenu($event)">
+          <i class="ellipsis vertical icon"></i>
+          <div class="right menu dropdown-content" *ngIf="isProfileMenuShown">
+            <a routerLink="/profile/edit" class="item"><i class="edit icon"></i> Edit Profile</a>
+            <a routerLink="/" class="item"><i class="share alternate icon"></i> Share Profile</a>
           </div>
-          <p class="user-name">{{user.userName}}</p>
+        </div>
+        <p class="user-name">{{user.userName}}</p>
       </div>
     </div>
   </div>
 
-    <div class="ui grid">
-      <!-- Top artists -->
-      <div class="sixteen column row top-artists">
-        <div class="header">Top artists this month</div>
-        <div id="topArtists" class="top-artists-cont">
-          <!-- Demonstration cards (delete them) -->
-          <app-top-artists-card></app-top-artists-card>
-          <app-top-artists-card></app-top-artists-card>
-          <app-top-artists-card></app-top-artists-card>
-          <!-- Work component -->
-          <app-top-artists-card *ngFor="let card of topArtists"></app-top-artists-card>
+  <div class="main-content-container">
+    <div class="items-scroll-box top-artists">
+      <h4 class="header">Top artists this month</h4>
+      <div class="list-of-items">
+        <div class="ui icon button scroll-button" (click)="scrollGridLeft('artists', '.items')"> 
+          <i class="large inverted angle left icon"></i>
         </div>
-        <div class="scroll-box">
-          <button class="scroll-button" (click)="scroll('topArtists')">
-            <i class="chevron right icon"></i>
-          </button>
+        <div id="artists" class="items">
+            <app-artist-card *ngFor="let artist of topArtists" [artist]="artist">
+            </app-artist-card>
         </div>
-      </div>
-
-      <div class="sixteen column row top-songs">
-        <div class="header">Top songs this month</div>
-        <app-songs-list [songs]="topSongs"></app-songs-list>
+        <div class="ui icon button scroll-button" (click)="scrollGridRight('artists', '.items')">
+          <i class="large inverted angle right icon"></i>
+        </div>
       </div>
     </div>
+  
+    <div class="top-songs">
+      <h4 class="header">Top songs this month</h4>
+      <app-songs-list [songs]="topSongs"></app-songs-list>
+    </div>
+  </div>
 </main>

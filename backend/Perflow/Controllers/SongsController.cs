@@ -92,5 +92,11 @@ namespace Perflow.Controllers
             return Ok(songs);
         }
 
+        [HttpGet("top/{amount}")]
+        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByLikes(int amount)
+        {
+            return Ok(await _songsService.GetTopSongsByLikes(amount));
+        }
+
     }
 }
