@@ -16,6 +16,8 @@ namespace Perflow.Services.Interfaces
         public Task<SongReadDTO> AddSongInfoAsync(SongWriteDTO songInfo, int artistId);
         public Task<string> UploadSongAsync(IFormFile song);
         public Task RemoveSongAsync(int id);
+        public Task<IEnumerable<SongReadDTO>> GetTopSongsByLikes(int amount);
         public Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count, int userId);
+        public Task<bool> CheckIsLiked(int songId, int userId);
     }
 }
