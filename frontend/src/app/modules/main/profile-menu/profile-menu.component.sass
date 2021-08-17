@@ -20,7 +20,7 @@
     border: 1px solid darken($gray, 15%)
     &:hover
         cursor: pointer
-    .text
+    .user-name
         display: flex
         flex-direction: row
         justify-content: space-between
@@ -32,24 +32,30 @@
         width: 40px
         height: 40px
         border-radius: 50%
-    #profile-menu
-        &.active
-            visibility: visible
-        visibility: hidden
-        position: absolute
-        right: 0
-        top: 60px
-        width: 200px
-        background: $drk-gray
-        border: 1px solid #373C43
+
+.ui.floating.dropdown
+    .menu
+        background: $light-gray
+        border: 0.5px solid #373C43 !important
         border-radius: 4px
-        >.item
-            padding: 12px
-            > span
-                font-weight: $thin-weight
-                font-size: 15px
+        box-shadow: none !important
+        .item
+            background-color: $light-gray
+            color: $text !important
+            font-family: Montserrat !important
+            font-weight: $normal-weight !important
             &:hover
-                background-color: $light-gray
-                cursor: pointer
-                > span
-                    color: $light-orange
+                background-color: $drk-gray !important
+            &:active
+                background-color: $light-gray !important
+                font-weight: $normal-weight !important
+        .item.first
+            padding-top: 18px !important
+        .item.last
+            padding-bottom: 18px !important
+
+.item.active.selected
+    background-color: $light-gray !important
+    font-weight: $normal-weight !important
+    &:hover
+        background-color: $drk-gray !important
