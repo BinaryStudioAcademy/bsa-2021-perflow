@@ -119,7 +119,7 @@ namespace Perflow.Services.Implementations
             return entityId;
         }
 
-        public async Task<PlaylistSongDTO> AddSongAsync(PlaylistSongDTO playlistSongDTO)
+        public async Task AddSongAsync(PlaylistSongDTO playlistSongDTO)
         {
             var playlist = await context.Playlists
                 .FirstOrDefaultAsync(playlist => playlist.Id == playlistSongDTO.PlaylistId);
@@ -136,8 +136,6 @@ namespace Perflow.Services.Implementations
             await context.PlaylistSong.AddAsync(playlistSong);
 
             await context.SaveChangesAsync();
-
-            return playlistSongDTO;
         }
 
         public async Task<PlaylistSongDTO> DeleteSongAsync(PlaylistSongDTO playlistSongDTO)
