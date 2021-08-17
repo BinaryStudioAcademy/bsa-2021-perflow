@@ -10,7 +10,7 @@ namespace Perflow.Services.Interfaces
     {
         public Task<IEnumerable<SongReadDTO>> GetLikedSongsAsync(int userId);
         public Task<int> GetLikedSongsCountAsync(int userId);
-        public Task<IEnumerable<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm);
+        Task<IEnumerable<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm, int userId);
         public Task<SongReadDTO> FindSongsByIdAsync(int id);
         public Task<FileContentResult> GetSongFileAsync(string blobId);
         public Task<SongReadDTO> AddSongInfoAsync(SongWriteDTO songInfo, int artistId);
