@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
 import 'package:perflow/theme.dart';
+import 'package:perflow/widgets/player/player.dart';
 
 class MainScreen extends StatelessWidget {
   final Widget child;
@@ -15,35 +17,36 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: child,
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15.0),
-          topRight: Radius.circular(15.0),
-        ),
-        child: BlocBuilder<MainNavigationCubit, MainNavigationState>(
-          builder: (context, state) {
-            return BottomNavigationBar(
-              backgroundColor: Perflow.surfaceColor,
-              selectedItemColor: Perflow.primaryLightColor,
-              currentIndex: _getCurrentIndex(state),
-              onTap: (index) => _handleNav(index, context.read<MainNavigationCubit>()),
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.local_fire_department),
-                  label: 'Home'
-                ),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.search),
-                    label: 'Search'
-                ),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.music_note),
-                    label: 'Library'
-                ),
-              ],
-            );
-          }
-        ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        verticalDirection: VerticalDirection.up,
+        children: [
+          BlocBuilder<MainNavigationCubit, MainNavigationState>(
+            builder: (context, state) {
+              return BottomNavigationBar(
+                backgroundColor: Perflow.surfaceColor,
+                selectedItemColor: Perflow.primaryLightColor,
+                currentIndex: _getCurrentIndex(state),
+                onTap: (index) => _handleNav(index, context.read<MainNavigationCubit>()),
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.local_fire_department),
+                    label: 'Home'
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.search),
+                      label: 'Search'
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.music_note),
+                      label: 'Library'
+                  ),
+                ],
+              );
+            }
+          ),
+          const Player(),
+        ],
       ),
     );
   }

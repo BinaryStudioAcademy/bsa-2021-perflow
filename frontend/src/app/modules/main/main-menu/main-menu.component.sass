@@ -1,9 +1,10 @@
 @import "../../../../styles"
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap')
 
+$left-padding: 30px
+
 .ui.visible.sidebar.vertical.menu
     width: 247px
-    padding-left: 40px
     padding-bottom: calc(100px + 40px)
     background: $drk-gray
     border-right: 1.5px solid #373C43
@@ -18,9 +19,9 @@
     width: auto
     background: $drk-gray
 
-.logo
+.ui.logo
     margin-top: 25px
-    padding: 0
+    padding-left: $left-padding + 5px
     &>a
         font-size: 20px
 
@@ -29,22 +30,39 @@
     color: $text
 
 .routers
-    margin-top: 50px
-    width: max-content
-    border-bottom: 1.5px solid #373C43
+    position: relative
+    width: 100%
+    margin-top: 40px
+    padding-bottom: 30px
+    &::after
+        content: ""
+        background: #373C43
+        position: absolute
+        bottom: 0
+        left: $left-padding
+        height: 1px
+        width: 180px
 
 .routers > div
-    margin-bottom: 40px
+    box-sizing: border-box
+    height: 60px
+    padding: 13px 0 0 $left-padding
+    &:hover
+        background: $light-gray
 
 .playlists-menu
-    width: max-content
     margin-top: 40px
     color: $text
+    span > h6
+        margin-left: $left-padding
+    ul
+        margin-top: 10px
 
 li
     display: flex
     align-items: center
-    margin-top: 20px    
+    padding: 10px 0
+    padding-left: $left-padding
     a
         font-weight: $light-weight
         color: $text
@@ -52,7 +70,8 @@ li
         content: "•"
         color: #FD5D34
         font-size: 35px
-        margin-right: 15px 
+    &:hover
+        background: $light-gray
 i
     color: $text
 
@@ -61,6 +80,9 @@ a
     text-align: center
     flex-direction: row
     align-items: center
+    padding: 3px
+    transition: all 0.4s linear
+    text-decoration: none
 
 .playlist
     font-weight: $light-weight
@@ -71,7 +93,6 @@ a
     border-radius: 100%
     position: relative
     transition: .3s
-    background: $drk-gray
     i
         position: absolute
         left: 50%
@@ -80,11 +101,16 @@ a
         font-size: 16px
         transition: .3s
 
-.active-link > .circle-fire
-    background: $fire-orange
-
-.active-link > .name-route
-    color: $medium-orange
+.active-link
+    border: none
+    .circle-fire
+        background: $fire-orange
+    .name-route
+        color: $medium-orange
 
 .create-playlist
-    margin-top: 25px
+    margin: 15px 40px
+
+.clickable
+    &:hover
+        cursor: pointer
