@@ -76,6 +76,14 @@ namespace Perflow.Controllers
             return Ok(await _songsService.FindSongsByIdAsync(id));
         }
 
+        [HttpGet("{id}/isLiked")]
+        public async Task<ActionResult<object>> CheckReaction(int id)
+        {
+            var result = await _songsService.CheckIsLiked(id, User.GetId());
+
+            return Ok(new{isLiked = result});
+        }
+
         [HttpGet("topSongs/{authorId}")]
         public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByAuthorIdAsync(int authorId, [FromQuery] int count)
         {
