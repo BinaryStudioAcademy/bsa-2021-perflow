@@ -10,4 +10,6 @@ export class CircleInfoCardComponent {
   @Input() name: string;
   @Input() description: string;
   @Input() iconUrl: string;
+
+  playAlbum = (id: number) => {};
 }

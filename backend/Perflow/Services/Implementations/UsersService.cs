@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
@@ -23,6 +25,11 @@ namespace Perflow.Services.Implementations
         public ValueTask<User> GetUserAsync(int id)
         {
             return _context.Users.FindAsync(id);
+        }
+
+        public async Task<string> GetUserImage(int id)
+        {
+            return (await _context.Users.FindAsync(id)).IconURL;
         }
 
         public async Task UpdateUserAsync(User user)

@@ -90,10 +90,12 @@ namespace Perflow.Services.Implementations
             return mapper.Map<ICollection<AlbumReadDTO>>(albums);
         }
 
-        public async Task<ICollection<AlbumViewDTO>> GetNewReleases()
+        public async Task<IEnumerable<AlbumViewDTO>> GetNewReleases()
         {
             var firstDay = DateTime.Today.AddDays(-30);
-            var entities = await context.Albums
+            var authorsToTake = 7;
+            var newReleasesToTake = 20;
+            IEnumerable<AlbumViewDTO> entities = await context.Albums
                 .Include(a => a.Songs).ThenInclude(s => s.Artist)
                 .Include(a => a.Songs).ThenInclude(s => s.Group)
                 .AsNoTracking()
@@ -103,16 +105,19 @@ namespace Perflow.Services.Implementations
                 {
                     Id = a.Id,
                     Name = a.Name,
-                    Description = a.Description,
                     IconURL = a.IconURL,
-                    IsSingle = a.IsSingle,
-                    Reactions = a.Reactions.Count,
-                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false)).ToList()
+                    Authors = a.Songs
+                                 .Select(
+                                    (s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? 
+                                                new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : 
+                                                new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false))
+                                 .Take(authorsToTake)
+                                 .ToList()
                 })
                 .ToListAsync();
             foreach (var entity in entities)
             {
-                entity.Authors = entity.Authors.Distinct();
+                entity.Authors = entity.Authors.Distinct().Take(newReleasesToTake);
             }
             return entities;
         }
@@ -184,6 +189,21 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
 
             return entityId;
+        }
+        
+        public async Task SetPublicStatusAsync(AlbumPublicStatusDTO status)
+        {
+            if (status == null)
+                throw new ArgumentNullException("Argument cannot be null");
+
+            var album = await context.Albums
+                .FirstOrDefaultAsync(album => album.Id == status.Id);
+            
+            album.IsPublished = status.IsPublished;
+
+            context.Entry(album).State = EntityState.Modified;
+
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -31,13 +31,4 @@ export class AlbumsPageComponent implements OnInit {
       }
     );
   }
-
-  deleteAlbum(album: AlbumForReadDTO) {
-    this._reactionService.removeAlbumReaction(album.id, this.userId).subscribe(
-      () => {
-        const index = this.albums.indexOf(album);
-        this.albums.splice(index, 1);
-      }
-    );
-  }
 }

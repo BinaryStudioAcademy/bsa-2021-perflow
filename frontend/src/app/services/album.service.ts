@@ -5,6 +5,9 @@ import { AlbumEdit } from '../models/album/album-edit';
 import { AlbumFull } from '../models/album/album-full';
 import { AlbumView } from '../models/album/album-view';
 import { HttpInternalService } from './http-internal.service';
+import { AlbumPublicStatus } from '../models/album/аlbum-public-status';
+import { NewReleaseView } from '../models/album/new-release-view';
+import { AlbumForReadDTO } from '../models/album/albumForReadDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,7 @@ export class AlbumService {
   }
 
   public getNewReleases() {
-    return this._httpService.getFullRequest<AlbumView[]>(`${this.routePrefix}/new-releases`);
+    return this._httpService.getFullRequest<NewReleaseView[]>(`${this.routePrefix}/new-releases`);
   }
 
   public getAlbum(id: number) {
@@ -28,6 +31,10 @@ export class AlbumService {
 
   public getAlbumsByArtist(artistId: number) {
     return this._httpService.getRequest<Album[]>(`${this.routePrefix}/byArtist/${artistId}`);
+  }
+
+  public getAlbumViewsByArtist(artistId: number) {
+    return this._httpService.getRequest<AlbumForReadDTO[]>(`${this.routePrefix}/ViewsbyArtist/${artistId}`);
   }
 
   public createAlbum(album: AlbumEdit): Observable<AlbumEdit> {
@@ -44,5 +51,9 @@ export class AlbumService {
 
   public removeAlbum(id: number): Observable<number> {
     return this._httpService.deleteRequest<number>(`${this.routePrefix}/${id}`);
+  }
+
+  public changeAlbumPublicStatus(albumPublicStatus: AlbumPublicStatus): Observable<AlbumPublicStatus> {
+    return this._httpService.putRequest<AlbumPublicStatus>(`${this.routePrefix}/publicStatus`, albumPublicStatus);
   }
 }

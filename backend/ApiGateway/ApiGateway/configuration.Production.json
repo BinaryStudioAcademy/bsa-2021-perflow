@@ -12,7 +12,6 @@
       ],
       "UpstreamPathTemplate": "/api/Playlists",
       "UpstreamHttpMethod": [
-        "GET",
         "POST",
         "PUT"
       ]
@@ -141,6 +140,19 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownstreamPathTemplate": "/api/Songs/top/{amount}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Songs/top/{amount}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Albums/new-releases",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
@@ -190,6 +202,32 @@
       "UpstreamPathTemplate": "/api/Albums/byArtist/{artistId}",
       "UpstreamHttpMethod": [
         "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Artists/top/{amount}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Artists/top/{amount}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Albums/publicStatus",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Albums/publicStatus",
+      "UpstreamHttpMethod": [
+        "PUT"
       ]
     },
     {

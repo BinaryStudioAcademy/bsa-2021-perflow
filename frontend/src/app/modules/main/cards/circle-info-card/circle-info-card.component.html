@@ -1,7 +1,7 @@
 <div class="card">
-    <div class="image" [routerLink]="['/albums', id]">
-        <img [src]="iconUrl">  
-        <button class="play-icon">
+    <div class="image">
+        <img [src]="iconUrl" [routerLink]="['/albums', id]">  
+        <button class="play-icon" (click)="playAlbum(id)">
             <i class="play icon"></i>
         </button>  
     </div>
