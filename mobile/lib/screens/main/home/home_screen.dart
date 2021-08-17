@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:perflow/cubits/auth/auth_cubit.dart';
-import 'package:perflow/helpers/get_service.dart';
-import 'package:perflow/services/auth/auth_api.dart';
-import 'package:perflow/services/playback/playback_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:perflow/widgets/perflow_elevated_button.dart';
+import 'package:perflow/cubits/playback/playback_cubit.dart';
+import 'package:perflow/widgets/perflow_outlined_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,55 +12,55 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Good morning!',
+                        style: theme.textTheme.headline6,
+                      ),
+                      IconButton(
+                        onPressed: () => context.read<AuthCubit>().signOut(),
+                        icon: const Icon(Icons.logout)
+                      )
+                    ],
+                  ),
+                ),
+                _buildPlayCard(context),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlayCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+        child: SizedBox(
+          width: double.infinity,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Good morning!',
-                    style: theme.textTheme.headline6,
-                  ),
-                  IconButton(
-                    onPressed: () => context.read<AuthCubit>().signOut(),
-                    icon: const Icon(Icons.logout)
-                  )
-                ],
+              PerflowOutlinedButton(
+                onPressed: () => context.read<PlaybackCubit>().setById(32),
+                child: const Text('Play - A Promise From Distant Days')
               ),
-              const Expanded(
-                flex: 1,
-                child: Card(
-                  child: Center(child: Text('Playlists')),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Card(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        PerflowElevatedButton(
-                          onPressed: getService<PlaybackService>().play,
-                          child: const Text('Play')
-                        ),
-                        const SizedBox(height: 8),
-                        PerflowElevatedButton(
-                            onPressed: getService<PlaybackService>().pause,
-                            child: const Text('Stop')
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              const SizedBox(height: 6),
+              PerflowOutlinedButton(
+                onPressed: () => context.read<PlaybackCubit>().setById(33),
+                child: const Text('Play - Stayin alive')
               ),
             ],
           ),
