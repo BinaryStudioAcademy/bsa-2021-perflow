@@ -44,6 +44,13 @@ namespace Perflow.Services.Implementations
             return songs;
         }
 
+        public async Task<int> GetLikedSongsCountAsync(int userId)
+        {
+            var songs = await context.SongReactions
+                .CountAsync(songReaction => songReaction.UserId == userId);
+            return songs;
+        }
+
         public async Task<IEnumerable<SongReadDTO>> FindSongsByNameAsync(string searchTerm)
         {
             var songs = await context.Songs
@@ -153,6 +160,35 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             return songs;
+        }
+
+        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByLikes(int amount)
+        {
+            var songs = await context.SongReactions
+                                    .GroupBy(
+                                        r => r.SongId,
+                                        (key, group) => new { SongId = key, Count = group.Count() }
+                                    )
+                                    .OrderByDescending(group => group.Count)
+                                    .Take(amount)
+                                    .Join(
+                                        context.Songs,
+                                        group => group.SongId,
+                                        song => song.Id,
+                                        (group, song) => song
+                                     )
+                                    .Include(song => song.Album)
+                                    .Include(song => song.Artist)
+                                    .Include(song => song.Group)
+                                    .AsNoTracking()
+                                    .ToListAsync();
+
+            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+        }
+        
+        public async Task<bool> CheckIsLiked(int songId, int userId)
+        {
+            return await context.SongReactions.AnyAsync(sr => sr.SongId == songId && sr.UserId == userId);
         }
     }
 }
