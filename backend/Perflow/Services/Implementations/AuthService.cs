@@ -83,6 +83,19 @@ namespace Perflow.Services.Implementations
                 user = await _usersService.CreateUserAsync(userData);
             }
 
+            var updateResult = await _firebase.AuthApp.TryUpdateUserAsync(new UserRecordArgs
+            {
+                DisplayName = user.UserName
+            });
+
+            if (updateResult.IsT1)
+            {
+                return new AuthServiceError
+                {
+                    FirebaseException = updateResult.AsT1
+                };
+            }
+
             return await UpdateUserClaimsAsync(user);
         }
 
