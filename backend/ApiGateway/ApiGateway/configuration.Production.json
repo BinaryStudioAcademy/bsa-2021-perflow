@@ -142,7 +142,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/Songs/top/{amount}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
@@ -207,7 +207,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/Artists/top/{amount}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
