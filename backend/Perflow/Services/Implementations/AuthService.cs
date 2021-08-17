@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FirebaseAdmin.Auth;
 using OneOf;
@@ -69,7 +70,7 @@ namespace Perflow.Services.Implementations
             FirebaseToken token = verificationResult.AsT0;
 
             User user = token.ContainsId() ? await _usersService.GetUserAsync(token.GetId()) : null;
-
+            
             if (user == null)
             {
                 var userData = new UserWriteDTO
@@ -81,6 +82,13 @@ namespace Perflow.Services.Implementations
                 };
 
                 user = await _usersService.CreateUserAsync(userData);
+            }
+
+            if(user.IconURL == null)
+            {
+                var iconURL = (await _firebase.AuthApp.GetUserAsync(token.Uid)).PhotoUrl;
+                if(iconURL != null)
+                    await _usersService.UpdateUserIconAsync(new UserChangeIconDTO { Id = user.Id, IconURL = iconURL });
             }
 
             return await UpdateUserClaimsAsync(user);
