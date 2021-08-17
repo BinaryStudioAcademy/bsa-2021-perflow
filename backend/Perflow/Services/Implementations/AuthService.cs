@@ -86,7 +86,8 @@ namespace Perflow.Services.Implementations
 
             var updateResult = await _firebase.AuthApp.TryUpdateUserAsync(new UserRecordArgs
             {
-                DisplayName = user.UserName
+                DisplayName = user.UserName,
+                Uid = token.Uid
             });
 
             if (updateResult.IsT1)
