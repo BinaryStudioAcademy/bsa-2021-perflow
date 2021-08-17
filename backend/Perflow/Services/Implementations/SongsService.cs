@@ -44,7 +44,7 @@ namespace Perflow.Services.Implementations
             return songs;
         }
 
-        public async Task<IEnumerable<SongReadDTO>> FindSongsByNameAsync(string searchTerm)
+        public async Task<IEnumerable<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm)
         {
             var songs = await context.Songs
                 .Where(song => song.Name.Contains(searchTerm.Trim()))
@@ -54,7 +54,7 @@ namespace Perflow.Services.Implementations
                 .AsNoTracking()
                 .ToListAsync();
 
-            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+            return mapper.Map<IEnumerable<SongForPlaylistSongSearchDTO>>(songs);
         }
 
         public async Task<SongReadDTO> FindSongsByIdAsync(int id)

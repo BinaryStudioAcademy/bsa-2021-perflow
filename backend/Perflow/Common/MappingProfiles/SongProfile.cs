@@ -35,6 +35,8 @@ namespace Perflow.Common.MappingProfiles
 
             CreateMap<SongWriteDTO, Song>();
             CreateMap<Song, SongWriteDTO>();
+
+            CreateMap<Song, SongForPlaylistSongSearchDTO>();
         }
     }
 }
