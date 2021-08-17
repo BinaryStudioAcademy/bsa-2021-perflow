@@ -213,12 +213,24 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Artists/top/{amount}",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    // Auth
+    {
+      "DownstreamPathTemplate": "/api/Albums/publicStatus",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Albums/publicStatus",
+      "UpstreamHttpMethod": [
+        "PUT"
+      ]
+    },
     {
       "DownstreamPathTemplate": "/api/Groups/artist/{id}",
       "DownstreamScheme": "http",

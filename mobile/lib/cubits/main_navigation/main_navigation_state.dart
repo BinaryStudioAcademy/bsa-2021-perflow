@@ -4,5 +4,5 @@ part of 'main_navigation_cubit.dart';
 class MainNavigationState with _$MainNavigationState {
   factory MainNavigationState.home() = MainNavigationHome;
   factory MainNavigationState.search() = MainNavigationSearch;
-  factory MainNavigationState.playlists() = MainNavigationPlaylists;
+  factory MainNavigationState.library() = MainNavigationLibrary;
 }

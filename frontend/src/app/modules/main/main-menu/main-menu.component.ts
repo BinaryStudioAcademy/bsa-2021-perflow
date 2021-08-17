@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Playlist } from 'src/app/models/playlist/playlist';
+import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 
@@ -12,7 +12,7 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
   styleUrls: ['./main-menu.component.sass']
 })
 export class MainMenuComponent implements OnDestroy, OnInit {
-  playlists: Playlist[] = [];
+  playlists: PlaylistName[] = [];
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -36,7 +36,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       .getUserCreatedPlaylists()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
-        (resp: HttpResponse<Playlist[]>) => {
+        (resp: HttpResponse<PlaylistName[]>) => {
           this.playlists = resp.body!;
         }
       );
