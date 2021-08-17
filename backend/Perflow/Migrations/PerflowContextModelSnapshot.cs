@@ -381,35 +381,23 @@ namespace Perflow.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("Autoplay")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                    b.Property<bool>("Autoplay")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Language")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("English");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quality")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(2);
+                        .HasColumnType("int");
 
-                    b.Property<bool?>("ShowExplicitContent")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                    b.Property<bool>("ShowExplicitContent")
+                        .HasColumnType("bit");
 
-                    b.Property<bool?>("ShowFriendsPlaying")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                    b.Property<bool>("ShowFriendsPlaying")
+                        .HasColumnType("bit");
 
-                    b.Property<bool?>("ShowNewReleases")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                    b.Property<bool>("ShowNewReleases")
+                        .HasColumnType("bit");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
