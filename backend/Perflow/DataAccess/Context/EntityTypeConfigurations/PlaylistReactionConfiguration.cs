@@ -11,7 +11,7 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
             builder
                 .HasOne(pl => pl.Playlist)
                 .WithMany(pl => pl.Reactions)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(pl => pl.User)
