@@ -56,7 +56,7 @@ namespace Perflow.Services.Implementations
                     AccessType = (AccessTypeDTO)p.AccessType,
                     CreatedAt = p.CreatedAt,
                     Description = p.Description,
-                    Author = mapper.Map<User, UserReadDTO>(p.Author),
+                    Author = mapper.Map<UserForPlaylistDTO>(p.Author),
                     IsLiked = p.Reactions.Any(r => r.UserId == userId)
                 })
                 .FirstOrDefaultAsync(p => p.Id == id);
