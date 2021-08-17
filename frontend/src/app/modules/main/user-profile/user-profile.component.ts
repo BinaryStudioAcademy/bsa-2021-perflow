@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { filter, switchMap } from 'rxjs/operators';
-import { Artist } from 'src/app/models/shared/artist.model';
 import { Song } from 'src/app/models/song/song';
+import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { User } from 'src/app/models/user/user';
 import { ArtistsService } from 'src/app/services/artists/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -17,9 +17,12 @@ export class UserProfileComponent implements OnInit {
   public isProfileMenuShown: boolean = false;
 
   private readonly _scrollingSize: number = 270;
+  private readonly _topAmount = 20;
+  private readonly _decimalRadix = 10;
+  private readonly _gridScrollMultiplier = 3;
 
   user: User = {} as User;
-  topArtists: Artist[] = [];
+  topArtists: ArtistReadDTO[] = [];
   topSongs: Song[] = [];
 
   constructor(
@@ -32,7 +35,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.getTopArtists();
-    this.loadTopSongs();
+    this.getTopSongs();
   }
 
   getUser() {
@@ -46,7 +49,21 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  getTopArtists = (): Array<object> => new Array<object>();
+  getTopArtists() {
+    this._artistService.getTopArtistsByLikes(this._topAmount).subscribe(
+      (result) => {
+        this.topArtists = result;
+      }
+    );
+  }
+
+  getTopSongs() {
+    this._songService.getTopSongsByLikes(this._topAmount).subscribe(
+      (songs) => {
+        this.topSongs = songs;
+      }
+    );
+  }
 
   onClickOutsideProfileMenu = (event: Event) => {
     this.isProfileMenuShown = false;
@@ -81,19 +98,24 @@ export class UserProfileComponent implements OnInit {
     element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
   };
 
-  loadTopSongs() {
-    this._songService.getTopSongs().subscribe(
-      (songs) => {
-        this.topSongs = songs;
-      }
-    );
-  }
+  getGridScrollWidth = (selector: string) => {
+    const element = document.querySelector(selector);
+    const style = getComputedStyle(element!);
+    const gapWidth = parseInt(style.gridGap.split(' ')[0], this._decimalRadix);
+    const elementWidth = parseInt(style.gridTemplateColumns.split(' ')[0], this._decimalRadix);
 
-  loadTopArtists() {
-    this._artistService.getTopArtists().subscribe(
-      (artists) => {
-        this.topArtists = artists;
-      }
-    );
-  }
+    return gapWidth + elementWidth;
+  };
+
+  scrollGridRight = (id: string, selector: string) => {
+    const grid = document.getElementById(id);
+
+    grid?.scrollBy({ left: this.getGridScrollWidth(selector) * this._gridScrollMultiplier, behavior: 'smooth' });
+  };
+
+  scrollGridLeft = (id: string, selector: string) => {
+    const grid = document.getElementById(id);
+
+    grid?.scrollBy({ left: -(this.getGridScrollWidth(selector) * this._gridScrollMultiplier), behavior: 'smooth' });
+  };
 }

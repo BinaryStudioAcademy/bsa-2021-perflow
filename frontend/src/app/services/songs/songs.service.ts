@@ -62,4 +62,11 @@ export class SongsService {
     const httpParams = { count };
     return this._httpService.getRequest<Song[]>(`/api/songs/topSongs/${id}`, httpParams);
   }
+
+  getTopSongsByLikes(amount: number) {
+    return this._httpService.getRequest<Song[]>(`/api/songs/top/${amount}`);
+  }
+  checkIfSongLiked(id: number) {
+    return this._httpService.getRequest<{ isLiked: boolean }>(`/api/songs/${id}/isLiked`);
+  }
 }
