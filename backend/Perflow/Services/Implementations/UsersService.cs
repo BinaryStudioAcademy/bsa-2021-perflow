@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
@@ -11,12 +10,14 @@ namespace Perflow.Services.Implementations
     public class UsersService : IUsersService
     {
         private readonly PerflowContext _context;
+        private IImageService _imageService;
         private readonly IMapper _mapper;
 
-        public UsersService(PerflowContext context, IMapper mapper)
+        public UsersService(PerflowContext context, IMapper mapper, IImageService imageService)
         {
             _context = context;
             _mapper = mapper;
+            _imageService = imageService;
         }
 
         public ValueTask<User> GetUserAsync(int id)
@@ -46,14 +47,19 @@ namespace Perflow.Services.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserIconAsync(UserChangeIconDTO userChangeIconDTO)
+        public async Task<string> UpdateUserIconAsync(UserChangeIconDTO userChangeIconDTO)
         {
-            var updatedUser = await _context.Users.FirstOrDefaultAsync(user => user.Id == userChangeIconDTO.Id);
-            updatedUser.IconURL = userChangeIconDTO.IconURL;
+            var updatedUser = await GetUserAsync(userChangeIconDTO.Id);
 
-            _context.Entry(updatedUser).State = EntityState.Modified;
+            var oldImageId = updatedUser.IconURL;
 
-            await _context.SaveChangesAsync();
+            updatedUser.IconURL = await _imageService.UploadImageAsync(userChangeIconDTO.Icon);
+
+            _imageService.DeleteImageAsync(oldImageId);
+
+            await UpdateUserAsync(updatedUser);
+
+            return _imageService.GetImageUrl(updatedUser.IconURL);
         }
     }
 }

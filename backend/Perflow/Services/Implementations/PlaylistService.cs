@@ -12,14 +12,16 @@ using Perflow.Services.Abstract;
 using Perflow.Common.Helpers;
 using Shared.ExceptionsHandler.Exceptions;
 using Perflow.Common.DTO.Users;
+using Perflow.Services.Interfaces;
 
 namespace Perflow.Services.Implementations
 {
     public class PlaylistService : BaseService
     {
-
-        public PlaylistService(PerflowContext context, IMapper mapper) : base(context, mapper)
+        private IImageService _imageService;
+        public PlaylistService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
         {
+            _imageService = imageService;
         }
 
         public async Task<ICollection<PlaylistDTO>> GetEntitiesAsync()
@@ -97,18 +99,27 @@ namespace Perflow.Services.Implementations
             return mapper.Map<PlaylistDTO>(createdPlaylist);
         }
 
-        public async Task<PlaylistDTO> UpdateEntityAsync(PlaylistDTO playlistDTO)
+        public async Task<PlaylistDTO> UpdateEntityAsync(PlaylistWriteDTO playlistDTO)
         {
             if (playlistDTO == null)
                 throw new ArgumentNullException(nameof(playlistDTO), "Argument cannot be null");
 
-            var playlist = mapper.Map<Playlist>(playlistDTO);
+            var playlist = await context.Playlists.FindAsync(playlistDTO.Id);
 
-            context.Entry(playlist).State = EntityState.Modified;
+            if (playlistDTO.Icon != null)
+            {
+                var oldImageId = playlist.IconURL;
+
+                playlist.IconURL = await _imageService.UploadImageAsync(playlistDTO.Icon);
+
+                _imageService.DeleteImageAsync(oldImageId);
+            }
+
+            var updatedPlaylist = mapper.Map(playlistDTO, playlist);
+
+            context.Playlists.Update(updatedPlaylist);
 
             await context.SaveChangesAsync();
-
-            var updatedPlaylist = await GetEntityAsync(playlist.Id);
 
             return mapper.Map<PlaylistDTO>(updatedPlaylist);
         }
