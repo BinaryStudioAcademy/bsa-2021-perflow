@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
+import 'package:perflow/cubits/playback/playback_cubit.dart';
 import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/screens/main/home/home_screen.dart';
@@ -65,6 +66,9 @@ class MainRoutes extends VRouteElementBuilder {
         providers: [
           BlocProvider<MainNavigationCubit>(
             create: (_) => MainNavigationCubit(context.vRouter),
+          ),
+          BlocProvider<PlaybackCubit>(
+            create: (_) => PlaybackCubit()
           )
         ],
         child: MainScreen(

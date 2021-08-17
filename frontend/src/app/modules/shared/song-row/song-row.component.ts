@@ -76,6 +76,7 @@ export class SongRowComponent implements OnInit {
 
     this._songService.getSongById(id).subscribe((song) => {
       const testSong = new SongInfo(
+        id,
         song.name,
         (song?.artist?.userName ?? song?.group?.name)!,
         this._httpService.buildUrl(`/api/Songs/file?blobId=${song.blobId}`),

@@ -12,6 +12,8 @@ using Perflow.Services.Abstract;
 using Perflow.Common.Helpers;
 using Shared.ExceptionsHandler.Exceptions;
 using Perflow.Common.DTO.Users;
+using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Groups;
 
 namespace Perflow.Services.Implementations
 {
@@ -20,13 +22,6 @@ namespace Perflow.Services.Implementations
 
         public PlaylistService(PerflowContext context, IMapper mapper) : base(context, mapper)
         {
-        }
-
-        public async Task<ICollection<PlaylistDTO>> GetEntitiesAsync()
-        {
-            var entities = await context.Playlists.Include((pl) => pl.Author).AsNoTracking().ToListAsync();
-
-            return mapper.Map<ICollection<PlaylistDTO>>(entities);
         }
 
         public async Task<PlaylistDTO> GetEntityAsync(int id)
@@ -63,7 +58,7 @@ namespace Perflow.Services.Implementations
                     AccessType = (AccessTypeDTO)p.AccessType,
                     CreatedAt = p.CreatedAt,
                     Description = p.Description,
-                    Author = mapper.Map<User, UserReadDTO>(p.Author),
+                    Author = mapper.Map<UserForPlaylistDTO>(p.Author),
                     IsLiked = p.Reactions.Any(r => r.UserId == userId)
                 })
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -126,7 +121,7 @@ namespace Perflow.Services.Implementations
             return entityId;
         }
 
-        public async Task<PlaylistSongDTO> AddSongAsync(PlaylistSongDTO playlistSongDTO)
+        public async Task AddSongAsync(PlaylistSongDTO playlistSongDTO)
         {
             var playlist = await context.Playlists
                 .FirstOrDefaultAsync(playlist => playlist.Id == playlistSongDTO.PlaylistId);
@@ -143,8 +138,6 @@ namespace Perflow.Services.Implementations
             await context.PlaylistSong.AddAsync(playlistSong);
 
             await context.SaveChangesAsync();
-
-            return playlistSongDTO;
         }
 
         public async Task<PlaylistSongDTO> DeleteSongAsync(PlaylistSongDTO playlistSongDTO)
@@ -159,7 +152,7 @@ namespace Perflow.Services.Implementations
             return playlistSongDTO;
         }
 
-        public async Task<ICollection<SongReadDTO>> GetSongsAsync(int id, int userId)
+        public async Task<ICollection<SongForPlaylistDTO>> GetSongsAsync(int id, int userId)
         {
             var songs = await context.PlaylistSong
                 .Where(ps => ps.PlaylistId == id)
@@ -169,13 +162,23 @@ namespace Perflow.Services.Implementations
                     .ThenInclude(s => s.Artist)
                 .Include(ps => ps.Song)
                     .ThenInclude(s => s.Group)
+                .Include(ps => ps.Song)
+                    .ThenInclude(s => s.Reactions)
                 .AsNoTracking()
-                .Select(ps =>
-                    mapper.Map<LikedSong, SongReadDTO>(new LikedSong(ps.Song, ps.Song.Reactions.Any(r=> r.UserId == userId)))
-                )
+                .Select(ps => new SongForPlaylistDTO
+                {
+                    Id = ps.Song.Id,
+                    Album = mapper.Map<AlbumForPlaylistDTO>(ps.Song.Album),
+                    Group = mapper.Map<GroupForPlaylistDTO>(ps.Song.Group),
+                    Artist = mapper.Map<UserForPlaylistDTO>(ps.Song.Artist),
+                    Duration = ps.Song.Duration,
+                    HasCensorship = ps.Song.HasCensorship,
+                    Name = ps.Song.Name,
+                    IsLiked = ps.Song.Reactions.Any(r => r.UserId == userId)
+                })
                 .ToListAsync();
 
-            return mapper.Map<ICollection<SongReadDTO>>(songs);
+            return songs;
         }
 
         public async Task<IEnumerable<PlaylistViewDTO>> GetPlaylistsByAuthorIdAsync(int authorId)

@@ -25,7 +25,17 @@ namespace Perflow.Services.Implementations
                 .Include(ar => ar.Album)
                 .ThenInclude(al => al.Author)
                 .Where(r => r.UserId == userId)
-                .Select(albumReaction => albumReaction.Album)
+                .Select(albumReaction => new AlbumForListDTO
+                {
+                    Id = albumReaction.Album.Id,
+                    Name = albumReaction.Album.Name,
+                    Author = new AlbumViewAuthorsDTO(
+                                    (int)albumReaction.Album.AuthorId, 
+                                    albumReaction.Album.Author.UserName,
+                                    albumReaction.Album.Author.GroupId.HasValue ? false : true),
+                    IconURL = albumReaction.Album.IconURL,
+                    ReleaseYear = albumReaction.Album.ReleaseYear
+                })
                 .ToListAsync();
 
             return mapper.Map<ICollection<AlbumForListDTO>>(albums);

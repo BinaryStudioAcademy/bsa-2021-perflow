@@ -11,8 +11,6 @@ import { UserRoles } from '../../../models/enums/user-roles.enum';
   styleUrls: ['./profile-menu.component.sass']
 })
 export class ProfileMenuComponent {
-  isProfileMenuShown: boolean = false;
-
   userName: string = 'user';
   userIconURL: string = '';
   isRightRole: boolean = false;
@@ -56,12 +54,4 @@ export class ProfileMenuComponent {
   logout() {
     this._authService.signOut();
   }
-
-  onClickOutsideProfileMenu = (event: Event) => {
-    this.isProfileMenuShown = false;
-  };
-
-  showProfileMenu = () => {
-    this.isProfileMenuShown = !this.isProfileMenuShown;
-  };
 }

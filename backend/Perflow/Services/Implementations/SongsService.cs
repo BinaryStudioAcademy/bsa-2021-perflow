@@ -15,6 +15,9 @@ using Shared.AzureBlobStorage.Interfaces;
 using Shared.AzureBlobStorage.Models;
 using Shared.AzureBlobStorage.Helpers;
 using Perflow.Common.Helpers;
+using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Users;
+using Perflow.Common.DTO.Groups;
 
 namespace Perflow.Services.Implementations
 {
@@ -44,17 +47,36 @@ namespace Perflow.Services.Implementations
             return songs;
         }
 
-        public async Task<IEnumerable<SongReadDTO>> FindSongsByNameAsync(string searchTerm)
+        public async Task<int> GetLikedSongsCountAsync(int userId)
+        {
+            var songs = await context.SongReactions
+                .CountAsync(songReaction => songReaction.UserId == userId);
+            return songs;
+        }
+
+        public async Task<IEnumerable<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm, int userId)
         {
             var songs = await context.Songs
                 .Where(song => song.Name.Contains(searchTerm.Trim()))
                 .Include(song => song.Artist)
                 .Include(song => song.Group)
                 .Include(song => song.Album)
+                .Include(song => song.Reactions)
                 .AsNoTracking()
+                .Select(song => new SongForPlaylistSongSearchDTO
+                {
+                    Id = song.Id,
+                    Album = mapper.Map<AlbumForPlaylistSongSearchDTO>(song.Album),
+                    Artist = mapper.Map<UserForPlaylistDTO>(song.Artist),
+                    Group = mapper.Map<GroupForPlaylistDTO>(song.Group),
+                    Duration = song.Duration,
+                    HasCensorship = song.HasCensorship,
+                    Name = song.Name,
+                    IsLiked = song.Reactions.Any(r => r.UserId == userId)
+                })
                 .ToListAsync();
 
-            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+            return mapper.Map<IEnumerable<SongForPlaylistSongSearchDTO>>(songs);
         }
 
         public async Task<SongReadDTO> FindSongsByIdAsync(int id)
@@ -153,6 +175,35 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             return songs;
+        }
+
+        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByLikes(int amount)
+        {
+            var songs = await context.SongReactions
+                                    .GroupBy(
+                                        r => r.SongId,
+                                        (key, group) => new { SongId = key, Count = group.Count() }
+                                    )
+                                    .OrderByDescending(group => group.Count)
+                                    .Take(amount)
+                                    .Join(
+                                        context.Songs,
+                                        group => group.SongId,
+                                        song => song.Id,
+                                        (group, song) => song
+                                     )
+                                    .Include(song => song.Album)
+                                    .Include(song => song.Artist)
+                                    .Include(song => song.Group)
+                                    .AsNoTracking()
+                                    .ToListAsync();
+
+            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+        }
+        
+        public async Task<bool> CheckIsLiked(int songId, int userId)
+        {
+            return await context.SongReactions.AnyAsync(sr => sr.SongId == songId && sr.UserId == userId);
         }
     }
 }
