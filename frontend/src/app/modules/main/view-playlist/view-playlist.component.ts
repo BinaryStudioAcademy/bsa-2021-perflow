@@ -6,6 +6,7 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-view-playlist',
@@ -28,7 +29,8 @@ export class ViewPlaylistComponent implements OnInit {
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _reactionService: ReactionService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _createdPlaylistService: CreatePlaylistService
   ) { }
 
   ngOnInit() {
@@ -102,8 +104,8 @@ export class ViewPlaylistComponent implements OnInit {
     this._playlistsService.deletePlaylist(this.playlist.id)
       .subscribe({
         next: (data) => {
+          this._createdPlaylistService.deletePlaylist(data);
           this._router.navigateByUrl('/playlists/all');
-          this._router.dispose();
         }
       });
   }

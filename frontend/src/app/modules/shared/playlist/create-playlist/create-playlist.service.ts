@@ -13,11 +13,22 @@ export class CreatePlaylistService {
     description: '',
     iconURL: ''
   };
+
+  private _lastDeletedPlaylistId: number = 0;
+
   private _playlistSubject$ = new BehaviorSubject<Playlist | null>(this.lastPlaylist);
   playlistChanged$ = this._playlistSubject$.asObservable();
+
+  private _deletedPlaylistSubject$ = new BehaviorSubject<number>(this._lastDeletedPlaylistId);
+  playlistDeleted$ = this._deletedPlaylistSubject$.asObservable();
 
   addPlaylist(playlist: Playlist) {
     this.lastPlaylist = playlist;
     this._playlistSubject$.next(playlist);
+  }
+
+  deletePlaylist(id: number) {
+    this._lastDeletedPlaylistId = id;
+    this._deletedPlaylistSubject$.next(id);
   }
 }
