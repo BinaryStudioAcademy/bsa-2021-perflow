@@ -7,6 +7,7 @@ import { AlbumView } from '../models/album/album-view';
 import { HttpInternalService } from './http-internal.service';
 import { AlbumPublicStatus } from '../models/album/аlbum-public-status';
 import { NewReleaseView } from '../models/album/new-release-view';
+import { AlbumForReadDTO } from '../models/album/albumForReadDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class AlbumService {
 
   public getAlbumsByArtist(artistId: number) {
     return this._httpService.getRequest<Album[]>(`${this.routePrefix}/byArtist/${artistId}`);
+  }
+
+  public getAlbumViewsByArtist(artistId: number) {
+    return this._httpService.getRequest<AlbumForReadDTO[]>(`${this.routePrefix}/ViewsbyArtist/${artistId}`);
   }
 
   public createAlbum(album: AlbumEdit): Observable<AlbumEdit> {
