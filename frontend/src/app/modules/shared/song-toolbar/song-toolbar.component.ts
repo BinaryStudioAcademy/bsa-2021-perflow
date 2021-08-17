@@ -1,9 +1,13 @@
 import {
   Component, ElementRef, Input, OnInit, ViewChild
 } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
 import { SongInfo } from 'src/app/models/song/song-info';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { ReactionService } from 'src/app/services/reaction.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
+import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
   selector: 'app-song-toolbar',
@@ -13,7 +17,8 @@ import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 export class SongToolbarComponent implements OnInit {
   @ViewChild('audio') audioRef! : ElementRef<HTMLAudioElement>;
 
-  songForPlay: SongInfo = new SongInfo('NONAME', 'NOARTIST', '', '');
+  songForPlay: SongInfo = new SongInfo(0, 'NONAME', 'NOARTIST', '', '');
+  userId: number;
 
   @Input()
   savedVolume: number = 100;
@@ -36,12 +41,23 @@ export class SongToolbarComponent implements OnInit {
   volumeSlider! : HTMLInputElement | null;
   audio! : HTMLAudioElement | null;
 
-  constructor(toolbarService: SongToolbarService) {
+  constructor(
+    authService: AuthService,
+    toolbarService: SongToolbarService,
+    private _songsService: SongsService,
+    private _reactionService: ReactionService
+  ) {
     toolbarService.songUpdated$.subscribe(
       (song) => {
         this.updateSong(song);
       }
     );
+
+    authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe((authState) => {
+        this.userId = authState!.id;
+      });
   }
 
   ngOnInit(): void {
@@ -59,6 +75,7 @@ export class SongToolbarComponent implements OnInit {
     this.audio?.load();
     this.show = true;
     this.audio!.loop = this.isRepeating;
+    this.setLike();
   };
 
   setTimeChanging = (value: boolean) => {
@@ -149,5 +166,25 @@ export class SongToolbarComponent implements OnInit {
   toggleRepeat = () => {
     this.isRepeating = !this.isRepeating;
     this.audio!.loop = this.isRepeating;
+  };
+
+  toggleLike = () => {
+    if (this.isLiked) {
+      this._reactionService.removeLike(this.songForPlay.id, this.userId).subscribe(() => {
+        this.isLiked = false;
+      });
+      return;
+    }
+
+    this._reactionService.likeSong(this.songForPlay.id, this.userId).subscribe(() => {
+      this.isLiked = true;
+    });
+  };
+
+  setLike = () => {
+    const subscription = this._songsService.checkIfSongLiked(this.songForPlay.id).subscribe((response) => {
+      this.isLiked = response.isLiked;
+      subscription.unsubscribe();
+    });
   };
 }

@@ -1,9 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Playlist } from 'src/app/models/playlist';
-import { HttpInternalService } from 'src/app/services/http-internal.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { SongImageComponent } from '../../shared/upload/song-image/song-image.component';
@@ -16,25 +13,11 @@ import { SongImageComponent } from '../../shared/upload/song-image/song-image.co
   styleUrls: ['./playlist.component.sass']
 })
 export class PlaylistComponent {
-  playlists: Playlist[] = [];
-
   toolbarService: SongToolbarService;
   songsService: SongsService;
 
   @ViewChild(SongImageComponent)
   upload: SongImageComponent;
-
-  constructor(private _httpService: HttpInternalService) {
-    this.loadPlaylist();
-  }
-
-  loadPlaylist() {
-    this._httpService.getRequest<Playlist[]>('/api/playlists')
-      .pipe(catchError(this._handleError))
-      .subscribe((ps) => {
-        this.playlists = ps;
-      });
-  }
 
   private _handleError = (error: HttpErrorResponse) => {
     if (error.status === 0) console.error('An error occurred:', error.error);
