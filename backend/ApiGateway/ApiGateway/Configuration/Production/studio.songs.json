@@ -5,7 +5,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
-          "Host": "perflow",
+          "Host": "perflow-studio",
           "Port": "4203"
         }
       ],
@@ -20,7 +20,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
-          "Host": "perflow",
+          "Host": "perflow-studio",
           "Port": "4203"
         }
       ],
