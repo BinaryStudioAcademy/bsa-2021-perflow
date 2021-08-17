@@ -10,6 +10,8 @@ import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 })
 export class AlbumCardComponent {
   @Input()
+  isForEdit = false;
+  @Input()
   album: AlbumForReadDTO;
   @Output()
   delete = new EventEmitter<AlbumForReadDTO>();
