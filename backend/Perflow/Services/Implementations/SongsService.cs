@@ -47,8 +47,7 @@ namespace Perflow.Services.Implementations
         public async Task<int> GetLikedSongsCountAsync(int userId)
         {
             var songs = await context.SongReactions
-                .Where(songReaction => songReaction.UserId == userId)
-                .CountAsync();
+                .CountAsync(songReaction => songReaction.UserId == userId);
             return songs;
         }
 

@@ -93,6 +93,8 @@ namespace Perflow.Services.Implementations
         public async Task<IEnumerable<AlbumViewDTO>> GetNewReleases()
         {
             var firstDay = DateTime.Today.AddDays(-30);
+            var authorsToTake = 7;
+            var newReleasesToTake = 20;
             IEnumerable<AlbumViewDTO> entities = await context.Albums
                 .Include(a => a.Songs).ThenInclude(s => s.Artist)
                 .Include(a => a.Songs).ThenInclude(s => s.Group)
@@ -104,12 +106,18 @@ namespace Perflow.Services.Implementations
                     Id = a.Id,
                     Name = a.Name,
                     IconURL = a.IconURL,
-                    Authors = a.Songs.Select((s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false)).Take(7).ToList()
+                    Authors = a.Songs
+                                 .Select(
+                                    (s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? 
+                                                new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : 
+                                                new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false))
+                                 .Take(authorsToTake)
+                                 .ToList()
                 })
                 .ToListAsync();
             foreach (var entity in entities)
             {
-                entity.Authors = entity.Authors.Distinct().Take(20);
+                entity.Authors = entity.Authors.Distinct().Take(newReleasesToTake);
             }
             return entities;
         }
