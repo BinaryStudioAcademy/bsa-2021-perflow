@@ -15,7 +15,7 @@ class Perflow {
   static const backgroundColor = Color(0xFF21292D);
 
   static const textColor = Color(0xFFFAFBFF);
-  static const textGrayColor = Color(0xFFA3A6B1);
+  static const textGrayColor = Color(0xFF9597A1);
   static const textDarkColor = Color(0xFF717477);
   static const textAccentColor = Color(0xFFFF792A);
 
@@ -63,7 +63,7 @@ class Perflow {
   static final ThemeData theme = ThemeData(
     textTheme: textTheme.apply(
       bodyColor: textColor,
-      displayColor: textColor,
+      displayColor: textGrayColor,
       decorationColor: textGrayColor
     ),
 
@@ -84,65 +84,54 @@ class Perflow {
       fontSize: 98,
       fontWeight: FontWeight.w800,
       letterSpacing: -1.5,
-      color: textColor
     ),
     headline2: GoogleFonts.rubik(
       fontSize: 61,
       fontWeight: FontWeight.w800,
       letterSpacing: -0.5,
-      color: textColor
     ),
     headline3: GoogleFonts.rubik(
       fontSize: 49,
       fontWeight: FontWeight.w700,
-      color: textColor
     ),
     headline4: GoogleFonts.rubik(
       fontSize: 35,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.25,
-      color: textColor
     ),
     headline5: GoogleFonts.rubik(
       fontSize: 24,
       fontWeight: FontWeight.w500,
-      color: textColor
     ),
     headline6: GoogleFonts.rubik(
       fontSize: 20,
       fontWeight: FontWeight.w500,
       letterSpacing: 0.15,
-      color: textColor
     ),
     subtitle1: GoogleFonts.rubik(
       fontSize: 16,
-      fontWeight: FontWeight.w300,
+      fontWeight: FontWeight.w400,
       letterSpacing: 0.15,
-      color: textColor
     ),
     subtitle2: GoogleFonts.rubik(
       fontSize: 14,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.1,
-      color: textColor
     ),
     bodyText1: GoogleFonts.rubik(
       fontSize: 16,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w300,
       letterSpacing: 0.5,
-      color: textColor
     ),
     bodyText2: GoogleFonts.rubik(
       fontSize: 14,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w300,
       letterSpacing: 0.25,
-      color: textColor
     ),
     button: GoogleFonts.rubik(
       fontSize: 16,
       fontWeight: FontWeight.w500,
       letterSpacing: 1.25,
-      color: textColor,
     ),
     caption: GoogleFonts.rubik(
       fontSize: 12,
@@ -153,7 +142,6 @@ class Perflow {
       fontSize: 10,
       fontWeight: FontWeight.w400,
       letterSpacing: 1.5,
-      color: textColor
     ),
   );
 }

@@ -39,7 +39,7 @@ class AuthService {
 
   AuthUser? get currentAuthState => _currentAuthState;
 
-  Stream<AuthUser?> getAuthStateStream() {
+  Stream<AuthUser?> get authStateChanges {
     return _authStateSubject.stream;
   }
 
