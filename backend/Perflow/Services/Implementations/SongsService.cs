@@ -178,5 +178,10 @@ namespace Perflow.Services.Implementations
 
             return mapper.Map<IEnumerable<SongReadDTO>>(songs);
         }
+        
+        public async Task<bool> CheckIsLiked(int songId, int userId)
+        {
+            return await context.SongReactions.AnyAsync(sr => sr.SongId == songId && sr.UserId == userId);
+        }
     }
 }

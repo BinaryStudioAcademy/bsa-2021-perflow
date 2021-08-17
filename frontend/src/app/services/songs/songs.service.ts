@@ -66,4 +66,7 @@ export class SongsService {
   getTopSongsByLikes(amount: number) {
     return this._httpService.getRequest<Song[]>(`/api/songs/top/${amount}`);
   }
+  checkIfSongLiked(id: number) {
+    return this._httpService.getRequest<{ isLiked: boolean }>(`/api/songs/${id}/isLiked`);
+  }
 }

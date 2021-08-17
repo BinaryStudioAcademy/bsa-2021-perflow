@@ -21,6 +21,10 @@ namespace Perflow.Common.MappingProfiles
                                                                        .Map<ICollection<Album>, ICollection<AlbumForArtistDTO>>(src.Albums));
 
             CreateMap<UserWriteDTO, User>();
+
+            CreateMap<User, UserForPlaylistDTO>();
+
+            CreateMap<UserForPlaylistDTO, User>();
         }
     }
 }
