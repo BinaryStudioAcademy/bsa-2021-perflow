@@ -84,11 +84,11 @@ namespace Perflow.Services.Implementations
                 user = await _usersService.CreateUserAsync(userData);
             }
 
-            if(user.IconURL == null)
+            if (user.IconURL == null)
             {
                 var iconURL = (await _firebase.AuthApp.GetUserAsync(token.Uid)).PhotoUrl;
 
-                if(iconURL != null)
+                if (iconURL != null)
                     await _usersService.UpdateUserIconAsync(new UserChangeIconDTO { Id = user.Id, IconURL = iconURL });
             }
 
