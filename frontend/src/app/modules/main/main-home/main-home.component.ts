@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist';
 import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
-import { AlbumView } from 'src/app/models/album/album-view';
 import { AlbumService } from 'src/app/services/album.service';
 import { Subject } from 'rxjs';
+import { NewReleaseView } from 'src/app/models/album/new-release-view';
 
 @Component({
   selector: 'app-main-home',
@@ -21,7 +21,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   public currentNewestAlbum = this._newestAlbums[0];
   public recentlyPlayed = new Array<object>(); // Only 8 items
-  public newReleases: AlbumView[] = [];
+  public newReleases: NewReleaseView[] = [];
   public calmRhythms = new Array<Playlist>();
   public yourMix = new Array<object>();
   public top100Songs = new Array<Playlist>();
@@ -65,7 +65,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       .getNewReleases()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
-        (resp: HttpResponse<AlbumView[]>) => {
+        (resp: HttpResponse<NewReleaseView[]>) => {
           this.newReleases = resp.body!;
         }
       );
