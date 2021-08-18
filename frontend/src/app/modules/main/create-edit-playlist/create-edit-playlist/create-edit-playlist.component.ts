@@ -15,6 +15,8 @@ import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 import { User } from 'src/app/models/user/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CreatePlaylistService } from 'src/app/modules/shared/playlist/create-playlist/create-playlist.service';
+import { ClipboardService } from 'ngx-clipboard';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -41,7 +43,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _authService: AuthService,
-    private _createdPlaylistService: CreatePlaylistService
+    private _createdPlaylistService: CreatePlaylistService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -244,5 +248,11 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.searchValue = '';
       this.foundSongs = new Array<Song>();
     }
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(
+      `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
+    );
   }
 }

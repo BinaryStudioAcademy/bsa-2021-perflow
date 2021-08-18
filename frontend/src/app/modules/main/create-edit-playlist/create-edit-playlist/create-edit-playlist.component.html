@@ -27,8 +27,13 @@
                   <div class="item first" (click)="deletePlaylist()">
                       <i class="trash icon"></i>Remove playlist
                   </div>
-                  <div class="item last">
-                      <i class="share alternate icon"></i>Share
+                  <div class="item last share">
+                      <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
+                      <div class="right menu">
+                        <div class="item first last" (click)="copyLink()">
+                            Copy link
+                        </div>
+                      </div>
                   </div>
               </div>
             </div>
