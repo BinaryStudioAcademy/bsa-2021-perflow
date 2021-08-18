@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Users;
+using Perflow.Common.Helpers;
 using Perflow.Domain;
 using System.Collections.Generic;
 
@@ -12,16 +13,16 @@ namespace Perflow.Common.MappingProfiles
         {
             CreateMap<User, UserReadDTO>();
 
-            CreateMap<(User, string), UserReadDTO>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Item1.Id))
-                .ForMember(d => d.Gender, opt => opt.MapFrom(s => s.Item1.Gender))
-                .ForMember(d => d.Email, opt => opt.MapFrom(s => s.Item1.Email))
-                .ForMember(d => d.Birthday, opt => opt.MapFrom(s => s.Item1.Birthday))
-                .ForMember(d => d.Country, opt => opt.MapFrom(s => s.Item1.Country))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Item1.Description))
-                .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.Item1.UserName))
-                .ForMember(d => d.Subscriptions, opt => opt.MapFrom(s => s.Item1.Subscriptions))
-                .ForMember(d => d.IconURL, opt => opt.MapFrom(s => s.Item2));
+            CreateMap<UserWithIcon, UserReadDTO>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.User.Id))
+                .ForMember(d => d.Gender, opt => opt.MapFrom(s => s.User.Gender))
+                .ForMember(d => d.Email, opt => opt.MapFrom(s => s.User.Email))
+                .ForMember(d => d.Birthday, opt => opt.MapFrom(s => s.User.Birthday))
+                .ForMember(d => d.Country, opt => opt.MapFrom(s => s.User.Country))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.User.Description))
+                .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.User.UserName))
+                .ForMember(d => d.Subscriptions, opt => opt.MapFrom(s => s.User.Subscriptions))
+                .ForMember(d => d.IconURL, opt => opt.MapFrom(s => s.IconURL));
 
             CreateMap<User, ArtistReadDTO>();
             CreateMap<User, ArtistForAlbumDTO>();

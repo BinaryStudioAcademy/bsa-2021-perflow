@@ -10,6 +10,7 @@ using FirebaseAdmin.Auth;
 using System;
 using Perflow.Services.Implementations;
 using Perflow.Domain;
+using Perflow.Common.Helpers;
 
 namespace Perflow.Controllers
 {
@@ -36,7 +37,7 @@ namespace Perflow.Controllers
         {
             var user = await _usersService.GetUserAsync(id);
 
-            var userDto = _mapper.Map<(User, string), UserReadDTO>((user, _imageService.GetImageUrl(user.IconURL)));
+            var userDto = _mapper.Map<UserReadDTO>(new UserWithIcon(user, _imageService.GetImageUrl(user.IconURL)));
 
             return Ok(userDto);
         }
