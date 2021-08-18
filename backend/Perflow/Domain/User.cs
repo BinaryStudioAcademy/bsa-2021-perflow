@@ -37,5 +37,7 @@ namespace Perflow.Domain
 
         public ICollection<SongReaction> Reactions { get; set; }
 
+        public ICollection<ArtistReaction> ArtistReactions { get; set; }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
@@ -59,6 +60,33 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             return mapper.Map<ICollection<ArtistForAlbumDTO>>(artists);
+        }
+
+        public async Task<ArtistFullDTO> GetArtistFullAsync(int id, int userId)
+        {
+            var artist = await context.Users
+                                        .Include(a => a.Albums)
+                                        .Include(a => a.Reactions)
+                                        .Where(a => a.Id == id)
+                                        .AsNoTracking()
+                                        .Select(a => new ArtistFullDTO
+                                        {
+                                            Id = a.Id,
+                                            UserName = a.UserName,
+                                            IconURL = a.IconURL,
+                                            Description = a.Description,
+                                            Country = a.Country,
+                                            Albums = mapper.Map<IEnumerable<AlbumReadDTO>>(a.Albums),
+                                            IsLiked = a.ArtistReactions.Any(r => r.UserId == userId),
+                                        })
+                                        .FirstAsync();
+
+            if (artist == null)
+            {
+                throw new NotFoundExcepion($"{nameof(User)} not found");
+            }
+
+            return artist;
         }
     }
 }
