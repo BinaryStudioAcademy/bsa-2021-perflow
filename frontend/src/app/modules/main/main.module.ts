@@ -36,6 +36,18 @@ import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-ca
 import { CropImageComponent } from '../shared/crop-image/crop-image.component';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 import { NewReleaseCardComponent } from './cards/new-release-card/new-release-card/new-release-card.component';
+import {
+  SearchAlbumsResultComponent
+} from './search/components/search-albums-result/search-albums-result.component';
+import {
+  SearchArtistsResultComponent
+} from './search/components/search-artists-result/search-artists-result.component';
+import {
+  SearchPlaylistsResultComponent
+} from './search/components/search-playlists-result/search-playlists-result.component';
+import {
+  SearchSongsResultComponent
+} from './search/components/search-songs-result/search-songs-result.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +75,11 @@ import { NewReleaseCardComponent } from './cards/new-release-card/new-release-ca
     AlbumListComponent,
     CropImageComponent,
     ViewPlaylistComponent,
-    NewReleaseCardComponent
+    NewReleaseCardComponent,
+    SearchAlbumsResultComponent,
+    SearchArtistsResultComponent,
+    SearchPlaylistsResultComponent,
+    SearchSongsResultComponent
   ],
   imports: [
     CommonModule,

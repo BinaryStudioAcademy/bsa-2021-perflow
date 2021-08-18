@@ -1,3 +1,16 @@
-<div class="ui segment search">
-  <p>search work!</p>
+<div class="search-container">
+  <div class="ui search">
+    <div class="ui icon input">
+      <input class="prompt input-dark" type="text" name="search" placeholder="Artists, songs, albums or playlists..."
+        (input)="findSongsByName()" [(ngModel)]="searchValue" autocomplete="sss" aria-autocomplete="none"
+        (keyup)="clearSearch($event)">
+      <i class="search icon"></i>
+    </div>
+  </div>
+
+
+  <div class="search-result">
+    <app-search-songs-result [foundSongs]="foundSongs" *ngIf="foundSongs.length"></app-search-songs-result>
+
+  </div>
 </div>
