@@ -5,6 +5,7 @@ import { PlaylistView } from '../models/playlist/playlist-view';
 import { ArtistReadDTO } from '../models/user/ArtistReadDTO';
 import { HttpInternalService } from './http-internal.service';
 import { SearchParam } from '../models/search/search-param';
+import { Song } from '../models/song/song';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,11 @@ import { SearchParam } from '../models/search/search-param';
 export class SearchService {
   constructor(private _httpService: HttpInternalService) {
   }
+
+  getSongsByName = (data: SearchParam): Observable<Song[]> => {
+    const httpParams = { searchTerm: `${data.searchTerm}`, amount: `${data.amount}` };
+    return this._httpService.getRequest<Song[]>('/api/Search/songs', httpParams);
+  };
 
   getArtistByName = (data: SearchParam): Observable<ArtistReadDTO[]> => {
     const httpParams = { searchTerm: `${data.searchTerm}`, amount: `${data.amount}` };

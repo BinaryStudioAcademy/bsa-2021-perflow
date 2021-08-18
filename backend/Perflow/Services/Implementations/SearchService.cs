@@ -9,6 +9,8 @@ using Shared.Auth;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Perflow.Common.DTO.Songs;
+using Perflow.Common.DTO.Groups;
 
 namespace Perflow.Services.Implementations
 {
@@ -16,6 +18,32 @@ namespace Perflow.Services.Implementations
     {
         public SearchService(PerflowContext context, IMapper mapper) : base(context, mapper)
         { }
+
+        public async Task<ICollection<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm, int amount, int userId)
+        {
+            var songs = await context.Songs
+                .Where(song => song.Name.Contains(searchTerm.Trim()))
+                .Include(song => song.Artist)
+                .Include(song => song.Group)
+                .Include(song => song.Album)
+                .Include(song => song.Reactions)
+                .Take(amount)
+                .AsNoTracking()
+                .Select(song => new SongForPlaylistSongSearchDTO
+                {
+                    Id = song.Id,
+                    Album = mapper.Map<AlbumForPlaylistSongSearchDTO>(song.Album),
+                    Artist = mapper.Map<UserForPlaylistDTO>(song.Artist),
+                    Group = mapper.Map<GroupForPlaylistDTO>(song.Group),
+                    Duration = song.Duration,
+                    HasCensorship = song.HasCensorship,
+                    Name = song.Name,
+                    IsLiked = song.Reactions.Any(r => r.UserId == userId)
+                })
+                .ToListAsync();
+
+            return songs;
+        }
 
         public async Task<ICollection<ArtistReadDTO>> FindArtistsByNameAsync(string searchTerm, int amount)
         {

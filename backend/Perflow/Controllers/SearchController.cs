@@ -5,8 +5,10 @@ using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.Users;
 using Perflow.Services.Implementations;
 using Shared.Auth.Constants;
+using Shared.Auth.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Perflow.Common.DTO.Songs;
 
 namespace Perflow.Controllers
 {
@@ -21,6 +23,12 @@ namespace Perflow.Controllers
             _searchService = searchService;
         }
 
+        [HttpGet("songs")]
+        public async Task<ActionResult<ICollection<SongForPlaylistSongSearchDTO>>> FindSongsByNameAsync([FromQuery] string searchTerm, int amount)
+        {
+            return Ok(await _searchService.FindSongsByNameAsync(searchTerm, amount, User.GetId()));
+        }
+    
         [HttpGet("artists")]
         public async Task<ActionResult<ICollection<ArtistReadDTO>>> FindArtistsByNameAsync([FromQuery] string searchTerm, int amount)
         {

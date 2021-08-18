@@ -17,6 +17,8 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
   readonly amountOfFoundItems: number = 8;
+  readonly amountOfFoundSongs: number = 4;
+  readonly debounceTime: number = 750;
 
   songs: Array<Song> = new Array<Song>();
   albums: Array<AlbumForReadDTO> = new Array<AlbumForReadDTO>();
@@ -48,12 +50,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   setSongsSearch() {
     this._searchTerms$.pipe(
       takeUntil(this._unsubscribe$),
-      debounceTime(500),
+      debounceTime(this.debounceTime),
       distinctUntilChanged(),
-      switchMap((term: string) => this._songService.getSongsByName(term))
+      switchMap((term: string) => this._searchService.getSongsByName(
+        { searchTerm: term, amount: this.amountOfFoundSongs }
+      ))
     ).subscribe({
       next: (data) => {
-        this.songs = data.filter((u, i) => i < 4);
+        this.songs = data;
       }
     });
   }
@@ -61,7 +65,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   setArtistsSearch() {
     this._searchTerms$.pipe(
       takeUntil(this._unsubscribe$),
-      debounceTime(500),
+      debounceTime(this.debounceTime),
       distinctUntilChanged(),
       switchMap((term: string) => this._searchService.getArtistByName(
         { searchTerm: term, amount: this.amountOfFoundItems }
@@ -76,7 +80,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   setAlbumsSearch() {
     this._searchTerms$.pipe(
       takeUntil(this._unsubscribe$),
-      debounceTime(500),
+      debounceTime(this.debounceTime),
       distinctUntilChanged(),
       switchMap((term: string) => this._searchService.getAlbumsByName(
         { searchTerm: term, amount: this.amountOfFoundItems }
@@ -91,7 +95,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   setPlaylistsSearch() {
     this._searchTerms$.pipe(
       takeUntil(this._unsubscribe$),
-      debounceTime(500),
+      debounceTime(this.debounceTime),
       distinctUntilChanged(),
       switchMap((term: string) => this._searchService.getPlaylistsByName(
         { searchTerm: term, amount: this.amountOfFoundItems }
@@ -116,6 +120,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     if (event.key === 'Escape') {
       this.searchValue = '';
       this.songs = new Array<Song>();
+      this.albums = new Array<AlbumForReadDTO>();
+      this.artists = new Array<ArtistReadDTO>();
+      this.playlists = new Array<PlaylistView>();
     }
   }
 }
