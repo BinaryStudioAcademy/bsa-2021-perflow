@@ -32,8 +32,13 @@
                         <div class="ui floating dropdown icon" appSmDropdown>
                             <i class="ellipsis vertical icon icons"></i>
                             <div class="right menu">
-                                <div class="item first last" (click)="copyLink()">
-                                    <i class="share alternate icon"></i>Share
+                                <div class="item first last share">
+                                    <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
+                                        <div class="right menu">
+                                            <div class="item first last" (click)="copyLink()">
+                                                Copy link
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
