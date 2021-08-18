@@ -509,7 +509,7 @@ namespace Perflow.Migrations
                     b.HasOne("Perflow.Domain.Playlist", "Playlist")
                         .WithMany("Reactions")
                         .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Perflow.Domain.User", "User")

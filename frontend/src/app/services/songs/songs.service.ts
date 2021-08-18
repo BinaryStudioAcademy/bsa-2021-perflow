@@ -21,6 +21,10 @@ export class SongsService {
     return this._httpService.getRequest<Song[]>('/api/songs/liked');
   }
 
+  public getLikedSongsCount() {
+    return this._httpService.getRequest<number>('/api/songs/likedCount');
+  }
+
   public getTopSongs(): Observable<Song[]> {
     return of(this.topSongs);
   }
@@ -63,6 +67,9 @@ export class SongsService {
     return this._httpService.getRequest<Song[]>(`/api/songs/topSongs/${id}`, httpParams);
   }
 
+  getTopSongsByLikes(amount: number) {
+    return this._httpService.getRequest<Song[]>(`/api/songs/top/${amount}`);
+  }
   checkIfSongLiked(id: number) {
     return this._httpService.getRequest<{ isLiked: boolean }>(`/api/songs/${id}/isLiked`);
   }

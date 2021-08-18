@@ -72,7 +72,9 @@ namespace Perflow.Controllers
             if (!ModelState.IsValid)
                 throw new ArgumentException("Model is not valid.");
 
-            return Ok(await _playlistService.AddSongAsync(playlistSongDTO));
+            await _playlistService.AddSongAsync(playlistSongDTO);
+
+            return Ok();
         }
 
         [HttpDelete("songs")]

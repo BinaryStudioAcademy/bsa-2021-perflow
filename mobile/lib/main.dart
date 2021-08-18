@@ -8,7 +8,8 @@ import 'package:perflow/perflow_app.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if(kDebugMode || kProfileMode) {
+  // TODO Reconfigure for https
+  if(kDebugMode || kProfileMode || kReleaseMode) {
     HttpOverrides.global = DevHttpOverrides();
   }
 

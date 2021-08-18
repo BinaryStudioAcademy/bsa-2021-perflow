@@ -30,11 +30,18 @@ namespace Perflow.Controllers
 
             return Ok(songs);
         }
-        
-        [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetSongsByNameAsync([FromQuery] string searchTerm)
+
+        [HttpGet("likedCount")]
+        public async Task<ActionResult<int>> GetLikedSongsCount()
         {
-            var songs = await _songsService.FindSongsByNameAsync(searchTerm);
+            var songsCount = await _songsService.GetLikedSongsCountAsync(User.GetId());
+            return Ok(songsCount);
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<SongForPlaylistSongSearchDTO>>> GetSongsByNameAsync([FromQuery] string searchTerm)
+        {
+            var songs = await _songsService.FindSongsByNameAsync(searchTerm, User.GetId());
 
             return Ok(songs);
         }
@@ -90,6 +97,12 @@ namespace Perflow.Controllers
             var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count, User.GetId());
 
             return Ok(songs);
+        }
+
+        [HttpGet("top/{amount}")]
+        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByLikes(int amount)
+        {
+            return Ok(await _songsService.GetTopSongsByLikes(amount));
         }
 
     }

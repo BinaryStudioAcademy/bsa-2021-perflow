@@ -34,7 +34,7 @@
             <i class="heart outline icon" (click)="likePlaylist(playlist.id)" *ngIf="!playlist.isLiked"></i>
             <i class="heart icon" (click)="dislikePlaylist(playlist.id)" *ngIf="playlist.isLiked"></i>
             <span class="menu">
-              <div class="ui simple dropdown item ellipsis-button">
+              <div class="ui floating dropdown ellipsis-button" appSmDropdown>
                 <i class="ellipsis vertical icon"></i>
                 <div class="menu">
                   <div class="item first" routerLink="../../edit/{{playlist.id}}">
@@ -61,10 +61,16 @@
                       Share
                     </span>
                   </div>
-                  <div class="item" routerLink="/">
+                  <div class="item last" routerLink="/">
                     <span>
                       <i class="hand peace outline icon"></i>
                       About recommendations
+                    </span>
+                  </div>
+                  <div class="item last" (click)="deletePlaylist()">
+                    <span>
+                      <i class="trash alternate outline icon"></i>
+                      Delete playlist
                     </span>
                   </div>
                 </div>

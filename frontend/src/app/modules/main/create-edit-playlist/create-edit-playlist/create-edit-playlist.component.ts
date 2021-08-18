@@ -14,6 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 import { User } from 'src/app/models/user/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CreatePlaylistService } from 'src/app/modules/shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -39,7 +40,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _songService: SongsService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _createdPlaylistService: CreatePlaylistService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -106,6 +108,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this._router.navigateByUrl(`/playlists/edit/${data.id}`);
+          this._createdPlaylistService.addPlaylist(data);
         }
       });
   }
@@ -142,6 +145,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.playlist = data;
+          this._createdPlaylistService.addPlaylist(data);
         }
       });
   };
@@ -150,8 +154,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     this._playlistService.deletePlaylist(this.playlist.id)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
-        next: (data) => {
-          this._router.navigateByUrl('/playlists');
+        next: (id) => {
+          this._createdPlaylistService.deletePlaylist(id);
+          this._router.navigateByUrl('/playlists/all');
         }
       });
   }

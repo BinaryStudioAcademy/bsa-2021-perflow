@@ -30,6 +30,10 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<Album, AlbumEditDTO>()
                 .ForMember(p => p.AuthorId, opt => opt.MapFrom(c => c.AuthorId))
                 .ForMember(p => p.GroupId, opt => opt.MapFrom(c => c.GroupId));
+
+            CreateMap<Album, AlbumForPlaylistDTO>();
+
+            CreateMap<Album, AlbumForPlaylistSongSearchDTO>();
         }
     }
 }

@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -18,12 +19,28 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   constructor(
     private _playlistsService: PlaylistsService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _createdPlaylistService: CreatePlaylistService
   ) {
   }
 
   public ngOnInit() {
     this.getUserCreatedPlaylists();
+
+    this._createdPlaylistService.playlistChanged$.subscribe((playlist) => {
+      const playlistIndex = this.playlists.findIndex((pl) => pl.id === playlist?.id);
+      if (playlistIndex === -1) {
+        this.playlists.push(playlist!);
+      }
+      else {
+        this.playlists[playlistIndex] = playlist!;
+      }
+    });
+
+    this._createdPlaylistService.playlistDeleted$
+      .subscribe((id) => {
+        this.playlists = this.playlists.filter((pl) => pl.id !== id);
+      });
   }
 
   public ngOnDestroy() {
