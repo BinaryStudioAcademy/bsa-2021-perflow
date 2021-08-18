@@ -13,6 +13,8 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
 import { AlbumPublicStatus } from 'src/app/models/album/аlbum-public-status';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ClipboardService } from 'ngx-clipboard';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-create-edit-album',
@@ -37,7 +39,9 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _songsService: SongsService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) { }
 
   ngOnInit() {
@@ -243,5 +247,9 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
           this.publishButtonTitle = this.album.isPublished ? 'Unpublish' : 'Publish';
         }
       });
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(`${this._location.hostname}:${this._location.port}/albums/${this.album.id}`);
   }
 }
