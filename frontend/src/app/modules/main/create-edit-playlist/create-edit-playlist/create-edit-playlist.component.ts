@@ -154,8 +154,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     this._playlistService.deletePlaylist(this.playlist.id)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
-        next: (data) => {
-          this._router.navigateByUrl('/playlists');
+        next: (id) => {
+          this._createdPlaylistService.deletePlaylist(id);
+          this._router.navigateByUrl('/playlists/all');
         }
       });
   }
