@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
+import { AlbumService } from 'src/app/services/album.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { ReactionService } from 'src/app/services/reaction.service';
 
 @Component({
   selector: 'app-albums-page',
@@ -14,7 +14,7 @@ export class AlbumsPageComponent implements OnInit {
   albums!: AlbumForReadDTO[];
 
   constructor(
-    private _reactionService: ReactionService,
+    private _albumService: AlbumService,
     private _authService: AuthService
   ) {
     this._authService.getAuthStateObservable().subscribe(
@@ -25,7 +25,7 @@ export class AlbumsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._reactionService.getAlbumsByUserId(this.userId).subscribe(
+    this._albumService.getAlbumViewsByArtist(this.userId).subscribe(
       (response) => {
         this.albums = response;
       }

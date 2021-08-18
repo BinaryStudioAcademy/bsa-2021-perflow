@@ -29,10 +29,7 @@ namespace Perflow.Services.Implementations
                 {
                     Id = albumReaction.Album.Id,
                     Name = albumReaction.Album.Name,
-                    Author = new AlbumViewAuthorsDTO(
-                                    (int)albumReaction.Album.AuthorId, 
-                                    albumReaction.Album.Author.UserName,
-                                    albumReaction.Album.Author.GroupId.HasValue ? false : true),
+                    AuthorName = albumReaction.Album.Author.UserName,
                     IconURL = albumReaction.Album.IconURL,
                     ReleaseYear = albumReaction.Album.ReleaseYear
                 })

@@ -90,6 +90,19 @@ namespace Perflow.Services.Implementations
             return mapper.Map<ICollection<AlbumReadDTO>>(albums);
         }
 
+        public async Task<ICollection<AlbumForListDTO>> GetAlbumShortInfosByArtist(int artistId)
+        {
+            var albums = await context.Albums
+                                        .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
+                                        .Include(a => a.Author)
+                                        .Include(a => a.Group)
+                                        .AsNoTracking()
+                                        .ToListAsync();
+
+            return mapper.Map<ICollection<AlbumForListDTO>>(albums);
+        }
+
+
         public async Task<IEnumerable<AlbumViewDTO>> GetNewReleases()
         {
             var firstDay = DateTime.Today.AddDays(-30);

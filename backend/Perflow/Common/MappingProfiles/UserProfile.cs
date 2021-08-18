@@ -25,6 +25,9 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<User, UserForPlaylistDTO>();
 
             CreateMap<UserForPlaylistDTO, User>();
+
+            CreateMap<AlbumViewAuthorsDTO, User>();
+            CreateMap<User, AlbumViewAuthorsDTO>();
         }
     }
 }
