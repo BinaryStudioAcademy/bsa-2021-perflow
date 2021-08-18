@@ -12,7 +12,6 @@
     width: calc(100% - 247px)
     display: grid
     grid-template-columns: 100%
-    z-index: 1
     .ui.icon.input
       grid-column: 1
       align-self: center
@@ -34,9 +33,10 @@
   .search-result
     position: relative
     top: 92px
-    height: 100%
+    height: calc(100vh - 190px)
     width: 100%
-    padding: 5px 10px
+    padding: 5px 15px
+    overflow-y: auto
     display: grid
     grid-template-columns: 100%
-    grid-template-rows: repeat(4, 200px)
+    grid-template-rows: repeat(4, max-content)

@@ -1,8 +1,11 @@
 <div class="result-container">
   <div class="result-header">
-
+    <h1 class="field-name">Songs</h1>
+    <a class="see-all">SEE ALL</a>
   </div>
   <div class="result-body">
-    
+    <div class="search-result" *ngIf="foundSongs.length" >
+      <app-search-song-row *ngFor="let song of foundSongs" [song]="song"></app-search-song-row>
+    </div>
   </div>
 </div>

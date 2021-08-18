@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { SongsResultComponent } from './components/songs-result/songs-result.component';
@@ -19,7 +20,8 @@ import { SearchRoutingModule } from './search-routing.module';
   imports: [
     CommonModule,
     SharedModule,
-    SearchRoutingModule
+    SearchRoutingModule,
+    FormsModule
   ]
 })
 export class SearchModule { }
