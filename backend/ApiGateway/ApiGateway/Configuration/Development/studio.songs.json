@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/songs",
+      "DownstreamPathTemplate": "/api/studio/songs",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
@@ -9,14 +9,14 @@
           "Port": "44355"
         }
       ],
-      "UpstreamPathTemplate": "/api/songs",
+      "UpstreamPathTemplate": "/api/studio/songs",
       "UpstreamHttpMethod": [
         "GET",
         "POST"
       ]
     },
     {
-      "DownstreamPathTemplate": "/api/songs/{id}",
+      "DownstreamPathTemplate": "/api/studio/songs/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
@@ -24,7 +24,7 @@
           "Port": "44355"
         }
       ],
-      "UpstreamPathTemplate": "/api/songs/{id}",
+      "UpstreamPathTemplate": "/api/studio/songs/{id}",
       "UpstreamHttpMethod": [
         "GET",
         "PUT",
