@@ -7,12 +7,12 @@
                 <div class="name">Select language</div>
                 <div class="value">
                     <div class="ui floating fluid selection dropdown my-dropdown" appSmDropdown>
-                        <div class="text">English</div>
+                        <div class="text">{{ userSettings?.language }}</div>
                         <i class="chevron down icon"></i>
                         <div class="menu">
-                            <div class="item">English</div>
-                            <div class="item">Russian</div>
-                            <div class="item">Ukranian</div>
+                            <div class="item" (click)="changeLanguage('English')">English</div>
+                            <div class="item" (click)="changeLanguage('Russian')">Russian</div>
+                            <div class="item" (click)="changeLanguage('Ukranian')">Ukranian</div>
                         </div>
                     </div>
                 </div>
@@ -23,8 +23,9 @@
             <div class="item">
                 <div class="name">Show songs without censorship</div>
                 <div class="value">
-                    <div class="ui toggle checkbox my-checkbox">
-                        <input type="checkbox" name="public">
+                    <div class="ui toggle checkbox my-checkbox" (click)="changeShowExplicitContent()">
+                        <input *ngIf="userSettings?.showExplicitContent" type="checkbox" name="public" checked>
+                        <input *ngIf="!userSettings?.showExplicitContent" type="checkbox" name="public">
                         <label></label>
                     </div>
                 </div>
@@ -35,8 +36,9 @@
             <div class="item">
                 <div class="name">Play recommended songs after the queue reach the end</div>
                 <div class="value">
-                    <div class="ui toggle checkbox my-checkbox">
-                        <input type="checkbox" name="public">
+                    <div class="ui toggle checkbox my-checkbox" (click)="changeAutoplay()">
+                        <input *ngIf="userSettings?.autoplay" type="checkbox" name="public" checked>
+                        <input *ngIf="!userSettings?.autoplay" type="checkbox" name="public">
                         <label></label>
                     </div>
                 </div>
@@ -48,13 +50,13 @@
                 <div class="name">Streaming quality</div>
                 <div class="value">
                     <div class="ui floating fluid dropdown my-dropdown" appSmDropdown>
-                        <div class="text">High</div>
+                        <div class="text">{{ qualityString }}</div>
                         <i class="chevron down icon"></i>
                         <div class="menu">
-                            <div class="item">Low</div>
-                            <div class="item">Medium</div>
-                            <div class="item">High</div>
-                            <div class="item">Very high</div>
+                            <div class="item" (click)="changeQuality(0)">Low</div>
+                            <div class="item" (click)="changeQuality(1)">Medium</div>
+                            <div class="item" (click)="changeQuality(2)">High</div>
+                            <div class="item" (click)="changeQuality(3)">Very high</div>
                         </div>
                     </div>
                 </div>
@@ -65,8 +67,9 @@
             <div class="item">
                 <div class="name">Show announcements about new releases</div>
                 <div class="value">
-                    <div class="ui toggle checkbox my-checkbox">
-                        <input type="checkbox" name="public">
+                    <div class="ui toggle checkbox my-checkbox" (click)="changeShowNewReleases()">
+                        <input *ngIf="userSettings?.showNewReleases" type="checkbox" name="public" checked>
+                        <input *ngIf="!userSettings?.showNewReleases" type="checkbox" name="public">
                         <label></label>
                     </div>
                 </div>
@@ -74,8 +77,9 @@
             <div class="item">
                 <div class="name">Show what friends are playing</div>
                 <div class="value">
-                    <div class="ui toggle checkbox my-checkbox">
-                        <input type="checkbox" name="public">
+                    <div class="ui toggle checkbox my-checkbox" (click)="changeShowFriendsPlaying()">
+                        <input *ngIf="userSettings?.showFriendsPlaying" type="checkbox" name="public" checked>
+                        <input *ngIf="!userSettings?.showFriendsPlaying" type="checkbox" name="public">
                         <label></label>
                     </div>
                 </div>

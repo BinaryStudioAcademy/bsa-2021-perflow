@@ -122,7 +122,9 @@ namespace Perflow.Services.Implementations
 
         public async Task<int> DeleteEntityAsync(int entityId)
         {
-            var deletedPlaylist = await context.Playlists.FirstOrDefaultAsync(p => p.Id == entityId);
+            var deletedPlaylist = await context.Playlists
+                .Include(p => p.Reactions)
+                .FirstOrDefaultAsync(p => p.Id == entityId);
 
             context.Playlists.Remove(deletedPlaylist);
 

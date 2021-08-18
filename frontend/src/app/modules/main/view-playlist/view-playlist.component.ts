@@ -1,11 +1,12 @@
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-view-playlist',
@@ -25,8 +26,11 @@ export class ViewPlaylistComponent implements OnInit {
   constructor(
     private _activateRoute: ActivatedRoute,
     private _playlistsService: PlaylistsService,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute,
     private _reactionService: ReactionService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _createdPlaylistService: CreatePlaylistService
   ) { }
 
   ngOnInit() {
@@ -94,5 +98,15 @@ export class ViewPlaylistComponent implements OnInit {
           this.playlist.isLiked = true;
         }
       );
+  }
+
+  deletePlaylist() {
+    this._playlistsService.deletePlaylist(this.playlist.id)
+      .subscribe({
+        next: (data) => {
+          this._createdPlaylistService.deletePlaylist(data);
+          this._router.navigateByUrl('/playlists/all');
+        }
+      });
   }
 }

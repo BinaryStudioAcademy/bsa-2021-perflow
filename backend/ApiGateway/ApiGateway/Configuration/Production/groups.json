@@ -1,0 +1,16 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Groups/artist/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Groups/artist/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+  ]
+}

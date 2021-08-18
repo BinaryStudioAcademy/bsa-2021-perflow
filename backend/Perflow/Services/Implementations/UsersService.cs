@@ -41,11 +41,28 @@ namespace Perflow.Services.Implementations
         public async Task<User> CreateUserAsync(UserWriteDTO userDto)
         {
             var user = _mapper.Map<User>(userDto);
-
+            using var transaction = _context.Database.BeginTransaction();
             var userEntity = await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-
+            _context.UserSettings.Add(new Domain.UserSettings() { UserId = userEntity.Entity.Id });
+            await _context.SaveChangesAsync();
+            transaction.Commit();
             return userEntity.Entity;
+        }
+
+        public async Task<UserSettings> GetUserSettingsAsync(int userId)
+        {
+            return await _context.UserSettings.FirstAsync(us => us.UserId == userId);
+        }
+
+        public async Task UpdateUserSettingsAsync(UserChangeSettingsDTO userSettings)
+        {
+            var updatedSettings = await _context.UserSettings
+                                                    .AsNoTracking()
+                                                    .FirstOrDefaultAsync(us => us.Id == userSettings.Id);
+            updatedSettings = _mapper.Map<UserSettings>(userSettings);
+            _context.UserSettings.Update(updatedSettings);
+            await _context.SaveChangesAsync();  
         }
 
         public async Task DeleteUserAsync(User user)

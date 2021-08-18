@@ -1,0 +1,40 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/PlaylistReaction/liked/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/PlaylistReaction/liked/{userId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/PlaylistReaction/like",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/PlaylistReaction/like",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/PlaylistReaction/removeLike",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/PlaylistReaction/removeLike",
+      "UpstreamHttpMethod": [ "POST" ]
+    }
+  ]
+}

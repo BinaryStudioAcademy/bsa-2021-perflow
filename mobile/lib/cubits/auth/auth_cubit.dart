@@ -19,7 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> _initialize() async {
-    _authSubscription = _authService.getAuthStateStream().listen(
+    _authSubscription = _authService.authStateChanges.listen(
       _handleAuthStateChange,
       onError: _handleAuthStateError
     );

@@ -49,6 +49,14 @@ namespace Perflow.Controllers
             return Ok(new { imageUrl });
         }
 
+        [HttpGet("settings")]
+        public async Task<ActionResult<UserSettings>> GetSettings()
+        {
+            var userSettings = await _usersService.GetUserSettingsAsync(User.GetId());
+
+            return Ok(userSettings);
+        }
+
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UserReadDTO user)
         {
@@ -68,6 +76,16 @@ namespace Perflow.Controllers
                 success => NoContent(),
                 error => BadRequest()
             );
+        }
+
+        [HttpPut("changeSettings")]
+        public async Task<ActionResult> ChangeSettings([FromBody] UserChangeSettingsDTO userSettings)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+            userSettings.UserId = User.GetId();
+            await _usersService.UpdateUserSettingsAsync(userSettings);
+            return Ok();
         }
 
         [HttpPut("changePassword")]

@@ -1,38 +1,53 @@
-import 'dart:io';
+import 'dart:async';
+import 'package:audio_service/audio_service.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:perflow/api_urls.dart';
+import 'package:perflow/models/auth/auth_user.dart';
+import 'package:perflow/models/songs/song.dart';
 import 'package:perflow/services/auth/auth_service.dart';
+import 'package:perflow/services/playback/playback_handler.dart';
 
-@Singleton()
+@Singleton(signalsReady: true)
 class PlaybackService {
   final AuthService _authService;
+  late final StreamSubscription<AuthUser?> _authSubscription;
 
-  final _player = AudioPlayer();
+  final player = AudioPlayer();
+  late final PlaybackHandler _audioHandler;
 
-  PlaybackService(this._authService);
-
-  Future<void> play() async {
-    await setUrl('/api/songs/file?blobId=d3097e44-92b4-4d4f-b3ec-493b8dd416f5');
-    _player.play();
+  PlaybackService(this._authService) {
+    _authSubscription = _authService.authStateChanges.listen(_handleAuthChange);
+    _initialize();
   }
 
-  Future<void> pause() async {
-    _player.pause();
-  }
-
-  Future<void> setUrl(String url) async {
-    if(!url.startsWith('http')) {
-      url = url.startsWith('/')
-        ? ApiUrls.base + url
-        : ApiUrls.base + '/' + url;
-    }
-
-    final token = await _authService.getToken();
-
-    await _player.setUrl(
-      url,
-      headers: token != null ? { HttpHeaders.authorizationHeader: 'Bearer ' + token } : null
+  Future<void> _initialize() async {
+    _audioHandler = await AudioService.init(
+      builder: () => PlaybackHandler(player),
+      config: const AudioServiceConfig(
+        androidNotificationChannelId: 'com.bsa.perflow.channel.audio',
+        androidNotificationChannelName: 'Perflow playback',
+        artDownscaleWidth: 384,
+        artDownscaleHeight: 384
+      ),
     );
+
+    GetIt.instance.signalReady(this);
+  }
+
+  Future<void> playSong(Song song) async {
+    return _audioHandler.playSong(song);
+  }
+
+  void _handleAuthChange(AuthUser? authUser) {
+    if(authUser == null) {
+      player.stop();
+    }
+  }
+
+  @disposeMethod
+  void dispose() {
+    _authSubscription.cancel();
+    player.dispose();
   }
 }
