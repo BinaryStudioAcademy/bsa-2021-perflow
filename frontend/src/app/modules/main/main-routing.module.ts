@@ -16,6 +16,8 @@ import { AuthGuard } from '../../guards/auth.guard';
 import { SettingsComponent } from './settings/settings.component';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 import { UserProfileEditComponent } from '../user/user-profile-edit/user-profile-edit.component';
+import { AlbumDetailsComponent } from './album-details/album-details.component';
+import { ArtistDetailsComponent } from './artist-details/artist-details.component';
 
 const routes: Routes = [{
   path: '',
@@ -53,14 +55,8 @@ const routes: Routes = [{
     },
     { path: 'songs', component: SongsComponent },
     { path: 'settings', component: SettingsComponent },
-    {
-      path: 'albums',
-      loadChildren: () => import('../album/album.module').then((m) => m.AlbumModule)
-    },
-    {
-      path: 'artists',
-      loadChildren: () => import('../artist/artist.module').then((m) => m.ArtistModule)
-    }
+    { path: 'albums/:id', component: AlbumDetailsComponent },
+    { path: 'artists/:id', component: ArtistDetailsComponent }
   ]
 }];
 

@@ -2,9 +2,11 @@ import {
   Component, ElementRef, OnInit, ViewChild
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { Artist } from 'src/app/models/user/artist';
+import { AlbumService } from 'src/app/services/album.service';
 import { ArtistService } from 'src/app/services/artist.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
@@ -23,12 +25,14 @@ export class ArtistDetailsComponent implements OnInit {
   artist: Artist = {} as Artist;
   topSongs: Song[] = [];
   artistPlaylists: PlaylistView[] = [];
+  artistAlbums: AlbumForReadDTO[] = [];
 
   constructor(
     private _route: ActivatedRoute,
     private _artistService: ArtistService,
     private _songService: SongsService,
-    private _playlistsService: PlaylistsService
+    private _playlistsService: PlaylistsService,
+    private _albumsService: AlbumService
   ) { }
 
   ngOnInit() {
@@ -44,6 +48,7 @@ export class ArtistDetailsComponent implements OnInit {
           this.artist = result;
           this.loadTopSongs();
           this.loadPlaylists();
+          this.loadAlbums();
         }
       );
   }
@@ -62,6 +67,15 @@ export class ArtistDetailsComponent implements OnInit {
       .subscribe(
         (result) => {
           this.artistPlaylists = result;
+        }
+      );
+  }
+
+  loadAlbums() {
+    this._albumsService.getAlbumsByArtist(this.artist.id)
+      .subscribe(
+        (result) => {
+          this.artistAlbums = result;
         }
       );
   }

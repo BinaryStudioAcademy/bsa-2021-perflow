@@ -5,6 +5,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
 import { ClipboardModule } from 'ngx-clipboard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { RouterModule } from '@angular/router';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
@@ -36,6 +37,9 @@ import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-ca
 import { CropImageComponent } from '../shared/crop-image/crop-image.component';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 import { NewReleaseCardComponent } from './cards/new-release-card/new-release-card/new-release-card.component';
+import { AlbumDetailsComponent } from './album-details/album-details.component';
+import { ArtistDetailsComponent } from './artist-details/artist-details.component';
+import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +55,7 @@ import { NewReleaseCardComponent } from './cards/new-release-card/new-release-ca
     TopArtistsCardComponent,
     SquareInfoCardComponent,
     CircleInfoCardComponent,
+    PlaylistCardComponent,
     ArtistListComponent,
     ArtistCardComponent,
     MainMenuProfileComponent,
@@ -63,7 +68,9 @@ import { NewReleaseCardComponent } from './cards/new-release-card/new-release-ca
     AlbumListComponent,
     CropImageComponent,
     ViewPlaylistComponent,
-    NewReleaseCardComponent
+    NewReleaseCardComponent,
+    AlbumDetailsComponent,
+    ArtistDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +81,8 @@ import { NewReleaseCardComponent } from './cards/new-release-card/new-release-ca
     SharedModule,
     ReactiveFormsModule,
     ClipboardModule,
-    ImageCropperModule
+    ImageCropperModule,
+    RouterModule
   ],
   exports: [
     ClickOutsideModule,
