@@ -1,28 +1,3 @@
 @import "src/styles.sass"
+@import "../search-result-styles"
 
-.result-container
-  width: 100%
-  height: 100%
-  display: grid
-  grid-template-columns: 100%
-  grid-template-rows: max-content 1fr
-  gap: 5px 0px
-  .result-header
-    grid-row: 1
-    display: grid
-    grid-template-columns: 50% 50%
-    align-items: end
-    .field-name
-      grid-column: 1
-      color: $text
-    .see-all
-      grid-column: 2
-      justify-self: end
-      color: $text-color-gray
-      font-weight: $bold-weight
-      &:hover
-        cursor: pointer
-        text-decoration: underline
-  .result-body
-    grid-row: 2
-    overflow: auto

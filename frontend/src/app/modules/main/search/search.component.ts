@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
       switchMap((term: string) => this._songService.getSongsByName(term))
     ).subscribe({
       next: (data) => {
-        this.foundSongs = data;
+        this.foundSongs = data.filter((u, i) => i < 4);
       }
     });
   }
