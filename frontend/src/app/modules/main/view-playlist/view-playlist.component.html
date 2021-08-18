@@ -38,40 +38,32 @@
                 <i class="ellipsis vertical icon"></i>
                 <div class="menu">
                   <div class="item first" routerLink="../../edit/{{playlist.id}}">
-                    <span>
                       <i class="edit outline icon"></i>
                       Edit playlist
-                    </span>
                   </div>
                   <div class="item" routerLink="/">
-                    <span>
                       <i class="outdent icon"></i>
                       Add to queue
-                    </span>
                   </div>
                   <div class="item" routerLink="/">
-                    <span>
                       <i class="podcast icon"></i>
                       Start playlist radio
-                    </span>
                   </div>
-                  <div class="item" routerLink="/">
-                    <span>
-                      <i class="share alternate icon"></i>
-                      Share
-                    </span>
+                  <div class="item share">
+                      <i class="share alternate icon"></i> Share<i class="dropdown icon"></i>
+                      <div class="right menu">
+                        <div class="item first last" (click)="copyLink()">
+                            Copy link
+                        </div>
+                      </div>
                   </div>
                   <div class="item last" routerLink="/">
-                    <span>
                       <i class="hand peace outline icon"></i>
                       About recommendations
-                    </span>
                   </div>
                   <div class="item last" (click)="deletePlaylist()">
-                    <span>
                       <i class="trash alternate outline icon"></i>
                       Delete playlist
-                    </span>
                   </div>
                 </div>
               </div>
