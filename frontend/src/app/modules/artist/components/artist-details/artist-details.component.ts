@@ -1,7 +1,9 @@
+import { PlatformLocation } from '@angular/common';
 import {
   Component, ElementRef, OnInit, ViewChild
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ClipboardService } from 'ngx-clipboard';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { Artist } from 'src/app/models/user/artist';
@@ -28,7 +30,9 @@ export class ArtistDetailsComponent implements OnInit {
     private _route: ActivatedRoute,
     private _artistService: ArtistService,
     private _songService: SongsService,
-    private _playlistsService: PlaylistsService
+    private _playlistsService: PlaylistsService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) { }
 
   ngOnInit() {
@@ -77,5 +81,9 @@ export class ArtistDetailsComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(this._location.href);
   }
 }
