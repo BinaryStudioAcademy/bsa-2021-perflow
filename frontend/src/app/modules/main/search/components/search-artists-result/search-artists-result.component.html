@@ -4,13 +4,6 @@
     <a class="see-all">SEE ALL</a>
   </div>
   <div class="result-body">
-    <app-artist-card [artist]="artist"></app-artist-card>
-    <app-artist-card [artist]="artist"></app-artist-card>
-    <app-artist-card [artist]="artist"></app-artist-card>
-    <app-artist-card [artist]="artist"></app-artist-card>
-    <app-artist-card [artist]="artist"></app-artist-card>
-    <app-artist-card [artist]="artist"></app-artist-card>
-    <app-artist-card [artist]="artist"></app-artist-card>
-    <app-artist-card [artist]="artist"></app-artist-card>
+    <app-artist-card *ngFor="let artist of artists" [artist]="artist"></app-artist-card>
   </div>
 </div>

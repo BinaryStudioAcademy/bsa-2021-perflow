@@ -7,5 +7,5 @@ import { Song } from 'src/app/models/song/song';
   styleUrls: ['./search-songs-result.component.sass']
 })
 export class SearchSongsResultComponent {
-  @Input() foundSongs: Array<Song> = new Array<Song>();
+  @Input() songs: Array<Song> = new Array<Song>();
 }

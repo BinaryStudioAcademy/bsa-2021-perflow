@@ -4,13 +4,6 @@
     <a class="see-all">SEE ALL</a>
   </div>
   <div class="result-body">
-    <app-playlist-card [playlist]="playlist"></app-playlist-card>
-    <app-playlist-card [playlist]="playlist"></app-playlist-card>
-    <app-playlist-card [playlist]="playlist"></app-playlist-card>
-    <app-playlist-card [playlist]="playlist"></app-playlist-card>
-    <app-playlist-card [playlist]="playlist"></app-playlist-card>
-    <app-playlist-card [playlist]="playlist"></app-playlist-card>
-    <app-playlist-card [playlist]="playlist"></app-playlist-card>
-    <app-playlist-card [playlist]="playlist"></app-playlist-card>
+    <app-playlist-card *ngFor="let playlist of playlists" [playlist]="playlist"></app-playlist-card>
   </div>
 </div>

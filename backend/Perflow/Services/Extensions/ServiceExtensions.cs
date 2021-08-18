@@ -42,6 +42,7 @@ namespace Perflow.Services.Extensions
             services.AddScoped<ArtistReactionService>();
             services.AddScoped<AlbumReactionService>();
             services.AddScoped<PlaylistReactionService>();
+            services.AddScoped<SearchService>();
 
             services.AddScoped<ISongsService, SongsService>();
 

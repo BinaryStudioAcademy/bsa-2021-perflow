@@ -4,8 +4,8 @@
     <a class="see-all">SEE ALL</a>
   </div>
   <div class="song-result-body">
-    <div class="search-result" *ngIf="foundSongs.length" >
-      <app-song-row *ngFor="let song of foundSongs" [song]="song"></app-song-row>
+    <div class="search-result" *ngIf="songs.length" >
+      <app-song-row *ngFor="let song of songs" [song]="song"></app-song-row>
     </div>
   </div>
 </div>
