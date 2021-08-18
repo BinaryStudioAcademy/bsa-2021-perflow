@@ -5,7 +5,7 @@
   </div>
   <div class="song-result-body">
     <div class="search-result" *ngIf="foundSongs.length" >
-      <app-search-song-row *ngFor="let song of foundSongs" [song]="song"></app-search-song-row>
+      <app-song-row *ngFor="let song of foundSongs" [song]="song"></app-song-row>
     </div>
   </div>
 </div>

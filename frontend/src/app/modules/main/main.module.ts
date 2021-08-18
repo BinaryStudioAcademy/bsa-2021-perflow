@@ -48,6 +48,7 @@ import {
 import {
   SearchSongsResultComponent
 } from './search/components/search-songs-result/search-songs-result.component';
+import { PlaylistCardComponent } from './search/components/cards/playlist-card/playlist-card.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {
     SearchAlbumsResultComponent,
     SearchArtistsResultComponent,
     SearchPlaylistsResultComponent,
-    SearchSongsResultComponent
+    SearchSongsResultComponent,
+    PlaylistCardComponent
   ],
   imports: [
     CommonModule,

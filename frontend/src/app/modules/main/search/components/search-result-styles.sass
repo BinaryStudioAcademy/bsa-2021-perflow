@@ -16,7 +16,6 @@
     .see-all
       grid-column: 2
       justify-self: end
-      margin-right: 20px
       color: $text-color-gray
       font-weight: $bold-weight
       &:hover
@@ -24,10 +23,11 @@
         text-decoration: underline
   .result-body
     grid-row: 2
-    height: 282px
+    height: 280px
     display: grid
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
-    gap: 20px 10px
-    // justify-items: center
+    grid-template-columns: repeat(auto-fit, 200px)
+    gap: 0px 15px
+    justify-content: space-between
+    justify-items: stretch
     align-items: center
     overflow: hidden
