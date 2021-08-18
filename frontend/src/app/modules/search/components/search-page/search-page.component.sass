@@ -1,0 +1,42 @@
+@import "src/styles.sass"
+
+.search-container
+  position: relative
+  height: 100%
+  width: 100%
+  // Fixed
+  .ui.search
+    position: fixed
+    height: 90px
+    background: $drk-gray
+    width: calc(100% - 247px)
+    display: grid
+    grid-template-columns: 100%
+    z-index: 1
+    .ui.icon.input
+      grid-column: 1
+      align-self: center
+      justify-self: start
+      margin-left: 5% 
+      width: 50%
+      i
+        color: $text
+      .prompt.input-dark
+        background: $drk-rain
+        border: 1px solid $text
+        color: $text
+        &:focus
+          background: $drk-rain
+        &:active
+          background: $drk-rain
+
+  
+  .search-result
+    position: relative
+    top: 92px
+    height: 100%
+    width: 100%
+    padding: 5px 10px
+    display: grid
+    grid-template-columns: 100%
+    grid-template-rows: repeat(4, 200px)

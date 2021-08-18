@@ -6,7 +6,7 @@ import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { AllComponent } from './playlist/all/all.component';
 import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
 import { PlaylistComponent } from './playlist/playlist.component';
-import { SearchComponent } from './search/search.component';
+// import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import {
@@ -25,7 +25,11 @@ const routes: Routes = [{
   children: [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: MainHomeComponent },
-    { path: 'search', component: SearchComponent },
+    // { path: 'search', component: SearchComponent },
+    {
+      path: 'search',
+      loadChildren: () => import('../search/search.module').then((m) => m.SearchModule)
+    },
     {
       path: 'profile',
       children: [
