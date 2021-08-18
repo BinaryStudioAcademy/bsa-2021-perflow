@@ -7,6 +7,8 @@ namespace Perflow.Services.Interfaces
     {
         Task<string> UploadImageAsync(IFormFile file);
 
+        Task<string> UploadImageAsync(string url);
+
         Task<bool> DeleteImageAsync(string imageId);
 
         string GetImageUrl(string imageId);

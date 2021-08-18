@@ -9,18 +9,19 @@ using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
-using Perflow.Common.Helpers;
 using Shared.ExceptionsHandler.Exceptions;
 using Perflow.Common.DTO.Users;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Groups;
 using Perflow.Services.Interfaces;
+using Perflow.Common.Helpers;
 
 namespace Perflow.Services.Implementations
 {
     public class PlaylistService : BaseService
     {
-        private IImageService _imageService;
+        private readonly IImageService _imageService;
+
         public PlaylistService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
         {
             _imageService = imageService;
@@ -56,7 +57,7 @@ namespace Perflow.Services.Implementations
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    IconURL = p.IconURL,
+                    IconURL = _imageService.GetImageUrl(p.IconURL),
                     AccessType = (AccessTypeDTO)p.AccessType,
                     CreatedAt = p.CreatedAt,
                     Description = p.Description,
@@ -183,6 +184,7 @@ namespace Perflow.Services.Implementations
                     Duration = ps.Song.Duration,
                     HasCensorship = ps.Song.HasCensorship,
                     Name = ps.Song.Name,
+                    CreatedAt = ps.Song.CreatedAt,
                     IsLiked = ps.Song.Reactions.Any(r => r.UserId == userId)
                 })
                 .ToListAsync();
@@ -194,10 +196,12 @@ namespace Perflow.Services.Implementations
         {
             var playlists = await context.Playlists
                 .Where(p => p.AuthorId == authorId)
-                .AsNoTracking()
+                .Select(
+                    p => mapper.Map<PlaylistViewDTO>(new PlaylistWithIcon(p, _imageService.GetImageUrl(p.IconURL)))
+                 )
                 .ToListAsync();
 
-            return mapper.Map<IEnumerable<PlaylistViewDTO>>(playlists);
+            return playlists;
         }
     }
 }

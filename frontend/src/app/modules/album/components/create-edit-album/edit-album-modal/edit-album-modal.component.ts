@@ -90,6 +90,7 @@ export class EditAlbumModalComponent implements OnInit {
 
   public onSubmit() {
     this.editedAlbum.iconURL = this.tempIconURL;
+    this.editedAlbum.icon = this.file;
 
     if (this.editedAlbum.authorType === AuthorType.artist) {
       this.editedAlbum.authorId = this.userId;

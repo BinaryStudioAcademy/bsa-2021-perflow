@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
@@ -12,7 +10,7 @@ namespace Perflow.Services.Implementations
     public class UsersService : IUsersService
     {
         private readonly PerflowContext _context;
-        private IImageService _imageService;
+        private readonly IImageService _imageService;
         private readonly IMapper _mapper;
 
         public UsersService(PerflowContext context, IMapper mapper, IImageService imageService)
@@ -29,7 +27,9 @@ namespace Perflow.Services.Implementations
 
         public async Task<string> GetUserImage(int id)
         {
-            return (await _context.Users.FindAsync(id)).IconURL;
+            var userImage = (await GetUserAsync(id)).IconURL;
+
+            return _imageService.GetImageUrl(userImage);
         }
 
         public async Task UpdateUserAsync(User user)

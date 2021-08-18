@@ -8,6 +8,7 @@ using Perflow.Common.Helpers;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
+using Perflow.Services.Interfaces;
 using Shared.ExceptionsHandler.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,12 @@ namespace Perflow.Services.Implementations
 {
     public class AlbumsService : BaseService
     {
-        public AlbumsService(PerflowContext context, IMapper mapper) : base(context, mapper)
-        { }
+        private readonly IImageService _imageService;
+
+        public AlbumsService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        {
+            _imageService = imageService;
+        }
 
         public async Task<ICollection<AlbumViewDTO>> GetAllAlbums()
         {
@@ -54,10 +59,10 @@ namespace Perflow.Services.Implementations
                                                 Id = a.Id,
                                                 Name = a.Name,
                                                 ReleaseYear = a.ReleaseYear,
-                                                IconURL = a.IconURL,
+                                                IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs
                                                 .Select(s =>
-                                                    mapper.Map<LikedSong, SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
+                                                    mapper.Map<SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
                                                 ),
                                                 Artist = mapper.Map<User, ArtistForAlbumDTO>(a.Author),
                                                 Group = mapper.Map<Group, GroupForAlbumDTO>(a.Group),
@@ -78,13 +83,16 @@ namespace Perflow.Services.Implementations
             return album;
         }
 
-        public async Task<ICollection<AlbumReadDTO>> GetAlbumsByArtist(int artistId)
+        public async Task<IEnumerable<AlbumReadDTO>> GetAlbumsByArtist(int artistId)
         {
             var albums = await context.Albums
                                         .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
                                         .AsNoTracking()
+                                        .Select(a =>
+                                            mapper.Map<AlbumReadDTO>(new AlbumWithIcon(a, _imageService.GetImageUrl(a.IconURL)))
+                                         )
                                         .ToListAsync();
 
             return mapper.Map<ICollection<AlbumReadDTO>>(albums);
@@ -105,11 +113,11 @@ namespace Perflow.Services.Implementations
                 {
                     Id = a.Id,
                     Name = a.Name,
-                    IconURL = a.IconURL,
+                    IconURL = _imageService.GetImageUrl(a.IconURL),
                     Authors = a.Songs
                                  .Select(
-                                    (s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? 
-                                                new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : 
+                                    (s) => s.AuthorType == Domain.Enums.AuthorType.Artist ?
+                                                new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) :
                                                 new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false))
                                  .Take(authorsToTake)
                                  .ToList()
@@ -122,7 +130,7 @@ namespace Perflow.Services.Implementations
             return entities;
         }
 
-        public async Task<AlbumEditDTO> AddEntityAsync(AlbumEditDTO albumDTO)
+        public async Task<AlbumEditDTO> AddEntityAsync(AlbumWriteDTO albumDTO)
         {
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
@@ -140,6 +148,11 @@ namespace Perflow.Services.Implementations
                 album.Group = await context.Groups.FirstOrDefaultAsync(group => group.Id == albumDTO.GroupId);
             }
 
+            if (albumDTO.Icon != null)
+            {
+                album.IconURL = await _imageService.UploadImageAsync(albumDTO.Icon);
+            }
+
             await context.Albums.AddAsync(album);
 
             await context.SaveChangesAsync();
@@ -150,15 +163,17 @@ namespace Perflow.Services.Implementations
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == album.Id);
 
-            return mapper.Map<AlbumEditDTO>(createdAlbum);
+            return mapper.Map<AlbumEditDTO>(new AlbumWithIcon(createdAlbum, _imageService.GetImageUrl(createdAlbum.IconURL)));
         }
 
-        public async Task<AlbumEditDTO> UpdateEntityAsync(AlbumEditDTO albumDTO)
+        public async Task<AlbumEditDTO> UpdateEntityAsync(AlbumWriteDTO albumDTO)
         {
             if (albumDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
-            var album = mapper.Map<Album>(albumDTO);
+            var updatedAlbum = await GetEntityAsync(albumDTO.Id);
+
+            var album = mapper.Map(albumDTO, updatedAlbum);
 
             if (albumDTO.GroupId == null && albumDTO.AuthorId != null)
             {
@@ -169,13 +184,20 @@ namespace Perflow.Services.Implementations
                 album.Group = await context.Groups.FirstOrDefaultAsync(g => g.Id == albumDTO.GroupId);
             }
 
+            if (albumDTO.Icon != null)
+            {
+                var oldImageId = album.IconURL;
+
+                album.IconURL = await _imageService.UploadImageAsync(albumDTO.Icon);
+
+                _imageService.DeleteImageAsync(oldImageId);
+            }
+
             context.Entry(album).State = EntityState.Modified;
 
             await context.SaveChangesAsync();
 
-            var updatedAlbum = await GetEntityAsync(album.Id);
-
-            return mapper.Map<AlbumEditDTO>(updatedAlbum);
+            return mapper.Map<AlbumEditDTO>(new AlbumWithIcon(updatedAlbum, _imageService.GetImageUrl(updatedAlbum.IconURL)));
         }
 
         public async Task<int> DeleteEntityAsync(int entityId)
@@ -190,7 +212,7 @@ namespace Perflow.Services.Implementations
 
             return entityId;
         }
-        
+
         public async Task SetPublicStatusAsync(AlbumPublicStatusDTO status)
         {
             if (status == null)
@@ -198,7 +220,7 @@ namespace Perflow.Services.Implementations
 
             var album = await context.Albums
                 .FirstOrDefaultAsync(album => album.Id == status.Id);
-            
+
             album.IsPublished = status.IsPublished;
 
             context.Entry(album).State = EntityState.Modified;
