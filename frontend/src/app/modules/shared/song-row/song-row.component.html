@@ -52,8 +52,13 @@
                     <div class="item" (click)="clickItem('Remove from playlist')">
                         <i class="list icon"></i>Remove from playlist
                     </div>
-                    <div class="item last" (click)="clickItem('Share')">
+                    <div class="item last share">
                         <i class="share alternate icon"></i>Share
+                        <div class="left menu">
+                          <div class="item first last" (click)="copyLink()">
+                              Copy link
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>

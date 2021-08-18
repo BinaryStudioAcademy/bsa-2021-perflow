@@ -1,6 +1,8 @@
+import { PlatformLocation } from '@angular/common';
 import {
   Component, Input, Output, EventEmitter, OnInit
 } from '@angular/core';
+import { ClipboardService } from 'ngx-clipboard';
 import { filter } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { SongInfo } from 'src/app/models/song/song-info';
@@ -30,7 +32,9 @@ export class SongRowComponent implements OnInit {
     private _toolbarService: SongToolbarService,
     private _httpService: HttpInternalService,
     private _reactionService: ReactionService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +53,10 @@ export class SongRowComponent implements OnInit {
 
   clickItem(menu: string) {
     this.clickMenuItem.emit({ menuItem: menu, song: this.song });
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(this._location.href);
   }
 
   dislikeSong(songId: number) {
