@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserRoles } from '../../../models/enums/user-roles.enum';
 
@@ -14,13 +15,15 @@ export class ProfileMenuComponent {
   userName: string = 'user';
   userIconURL: string = '';
   isRightRole: boolean = false;
+  currentRoute: string;
 
   private _userId: number;
 
   constructor(
     private _authService: AuthService,
     private _userService: UserService,
-    private _profileService: ProfileService
+    private _profileService: ProfileService,
+    private _router: Router
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => state !== null))
@@ -32,6 +35,13 @@ export class ProfileMenuComponent {
 
         const { role } = authState!;
         this.isRightRole = role === UserRoles.artist || role === UserRoles.moderator;
+        this._router.events.pipe(
+          filter((event) => event instanceof NavigationEnd)
+        )
+          .subscribe((event) => {
+            const route = event as NavigationEnd;
+            this.currentRoute = route.url;
+          });
       });
   }
 
