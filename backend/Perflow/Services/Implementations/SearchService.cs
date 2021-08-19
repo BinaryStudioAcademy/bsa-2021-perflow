@@ -20,15 +20,20 @@ namespace Perflow.Services.Implementations
         public SearchService(PerflowContext context, IMapper mapper) : base(context, mapper)
         { }
 
-        public async Task<ICollection<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm, int amount, int userId)
+        public async Task<ICollection<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync
+            (string searchTerm, int page, int perPage, int userId)
         {
+            int skip = (page - 1) * perPage;
+
             var songs = await context.Songs
                 .Where(song => song.Name.Contains(searchTerm.Trim()))
                 .Include(song => song.Artist)
                 .Include(song => song.Group)
                 .Include(song => song.Album)
                 .Include(song => song.Reactions)
-                .Take(amount)
+                .OrderByDescending(song => song.Reactions.GroupBy(r => r.UserId).Count())
+                .Skip(skip)
+                .Take(perPage)
                 .AsNoTracking()
                 .Select(song => new SongForPlaylistSongSearchDTO
                 {
@@ -98,7 +103,7 @@ namespace Perflow.Services.Implementations
 
             var result = new SearchResultDTO
             {
-                Songs = await FindSongsByNameAsync(searchTerm, maxSongAmount, userId),
+                Songs = await FindSongsByNameAsync(searchTerm, 1, maxSongAmount, userId),
                 Albums = await FindAlbumsByNameAsync(searchTerm, maxEntitiesAmount),
                 Artists = await FindArtistsByNameAsync(searchTerm, maxEntitiesAmount),
                 Playlists = await FindPlaylistsByNameAsync(searchTerm, maxEntitiesAmount)

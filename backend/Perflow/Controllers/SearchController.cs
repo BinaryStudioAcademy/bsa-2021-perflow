@@ -25,9 +25,10 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("songs")]
-        public async Task<ActionResult<ICollection<SongForPlaylistSongSearchDTO>>> FindSongsByNameAsync([FromQuery] string searchTerm, int amount)
+        public async Task<ActionResult<ICollection<SongForPlaylistSongSearchDTO>>> FindSongsByNameAsync(
+            [FromQuery] string searchTerm, [FromQuery] int page, [FromQuery] int itemsOnPage)
         {
-            return Ok(await _searchService.FindSongsByNameAsync(searchTerm, amount, User.GetId()));
+            return Ok(await _searchService.FindSongsByNameAsync(searchTerm, page, itemsOnPage, User.GetId()));
         }
     
         [HttpGet("artists")]

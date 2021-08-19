@@ -18,6 +18,7 @@ import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 import { UserProfileEditComponent } from '../user/user-profile-edit/user-profile-edit.component';
 import { AlbumDetailsComponent } from './album-details/album-details.component';
 import { ArtistDetailsComponent } from './artist-details/artist-details.component';
+import { AllSongsComponent } from './search/components/all-songs/all-songs.component';
 
 const routes: Routes = [{
   path: '',
@@ -28,6 +29,7 @@ const routes: Routes = [{
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
+    { path: 'search/:term/songs', component: AllSongsComponent },
     { path: 'search/:term', component: SearchComponent },
     {
       path: 'profile',

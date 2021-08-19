@@ -9,7 +9,7 @@
   </div>
 
   <div class="search-result">
-    <app-search-songs-result [songs]="foundData.songs" *ngIf="foundData.songs?.length"></app-search-songs-result>
+    <app-search-songs-result [term]="searchValue" [songs]="foundData.songs" *ngIf="foundData.songs?.length"></app-search-songs-result>
     <app-search-artists-result [artists]="foundData.artists" *ngIf="foundData.artists?.length"></app-search-artists-result>
     <app-search-albums-result [albums]="foundData.albums" *ngIf="foundData.albums?.length"></app-search-albums-result>
     <app-search-playlists-result [playlists]="foundData.playlists" *ngIf="foundData.playlists?.length"></app-search-playlists-result>
