@@ -3,13 +3,10 @@ import { Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, takeUntil
 } from 'rxjs/operators';
-import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
-import { PlaylistView } from 'src/app/models/playlist/playlist-view';
-import { Song } from 'src/app/models/song/song';
-import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { SearchService } from 'src/app/services/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { FoundData } from 'src/app/models/search/found-data';
 
 @Component({
   selector: 'app-search',
@@ -21,10 +18,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   readonly amountOfFoundSongs: number = 4;
   readonly debounceTime: number = 750;
 
-  songs: Array<Song> = new Array<Song>();
-  albums: Array<AlbumForReadDTO> = new Array<AlbumForReadDTO>();
-  artists: Array<ArtistReadDTO> = new Array<ArtistReadDTO>();
-  playlists: Array<PlaylistView> = new Array<PlaylistView>();
+  foundData = {} as FoundData;
 
   searchValue: string;
 
@@ -63,10 +57,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       switchMap((term: string) => this._searchService.getFoundData(term))
     ).subscribe({
       next: (data) => {
-        this.songs = data.songs;
-        this.albums = data.albums;
-        this.artists = data.artists;
-        this.playlists = data.playlists;
+        this.foundData = data;
       }
     });
   }
@@ -76,19 +67,12 @@ export class SearchComponent implements OnInit, OnDestroy {
       this._searchTerms$.next(this.searchValue);
       this._location.replaceState(this._router.url.replace(this._regex, `search/${this.searchValue}`));
     }
-    else {
-      this.songs = [];
-    }
   }
 
   clearSearch(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       this.searchValue = '';
-      this.songs = new Array<Song>();
-      this.albums = new Array<AlbumForReadDTO>();
-      this.artists = new Array<ArtistReadDTO>();
-      this.playlists = new Array<PlaylistView>();
-
+      this.foundData = {} as FoundData;
       this._location.replaceState(this._router.url.replace(this._regex, 'search'));
     }
   }
