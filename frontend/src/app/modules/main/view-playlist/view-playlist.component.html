@@ -76,7 +76,7 @@
   <div>
     <app-songs-list [songs]="songs"></app-songs-list>
   </div>
-  <div [ngClass]="['ui', 'success', 'message']" *ngIf="isSuccess">
+  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
     <div class="header">
       Link copied to clipboard!
     </div>

@@ -62,7 +62,7 @@
 
     <!-- Modal window -->
     <app-edit-playlist-modal [editedPlaylist]="previousPlaylistData" *ngIf="isModalShown" (editPlaylist)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-playlist-modal>
-    <div [ngClass]="['ui', 'success', 'message']" *ngIf="isSuccess">
+    <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
       <div class="header">
         Link copied to clipboard!
       </div>

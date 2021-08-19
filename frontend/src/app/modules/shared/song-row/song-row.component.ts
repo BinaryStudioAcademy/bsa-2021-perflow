@@ -59,7 +59,7 @@ export class SongRowComponent implements OnInit {
   copyLink() {
     this._clipboardApi.copyFromContent(
       `${this._location.hostname}:${this._location.port}/albums/${this.song.album.id}`
-      );
+    );
     this.isSuccess = true;
 
     setTimeout(() => {
