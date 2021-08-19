@@ -7,6 +7,7 @@ import { Song } from 'src/app/models/song/song';
 import { Artist } from 'src/app/models/user/artist';
 import { ArtistService } from 'src/app/services/artist.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { QueueService } from 'src/app/services/queue.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -28,7 +29,8 @@ export class ArtistDetailsComponent implements OnInit {
     private _route: ActivatedRoute,
     private _artistService: ArtistService,
     private _songService: SongsService,
-    private _playlistsService: PlaylistsService
+    private _playlistsService: PlaylistsService,
+    private _queueService: QueueService
   ) { }
 
   ngOnInit() {
@@ -78,4 +80,19 @@ export class ArtistDetailsComponent implements OnInit {
         break;
     }
   }
+
+  playArtist = () => {
+    if (this.topSongs.length === 0) return;
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.topSongs);
+
+    this._queueService.initSong(this.topSongs[0], true);
+  };
+
+  addToQueue = () => {
+    if (this.topSongs.length === 0) return;
+
+    if (!QueueService.isInitialized) this._queueService.initSong(this.topSongs[0]);
+  };
 }

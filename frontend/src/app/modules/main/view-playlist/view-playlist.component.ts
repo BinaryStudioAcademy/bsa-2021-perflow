@@ -6,6 +6,7 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-view-playlist',
@@ -26,7 +27,8 @@ export class ViewPlaylistComponent implements OnInit {
     private _activateRoute: ActivatedRoute,
     private _playlistsService: PlaylistsService,
     private _reactionService: ReactionService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _queueService: QueueService
   ) { }
 
   ngOnInit() {
@@ -42,7 +44,14 @@ export class ViewPlaylistComponent implements OnInit {
 
   previousSlide = () => { };
 
-  play = () => { };
+  play = () => {
+    if (this.songs.length === 0) return;
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.songs);
+
+    this._queueService.initSong(this.songs[0], true);
+  };
 
   getUserId() {
     this._authService.getAuthStateObservable()
@@ -95,4 +104,12 @@ export class ViewPlaylistComponent implements OnInit {
         }
       );
   }
+
+  addToQueue = () => {
+    if (this.songs.length === 0) return;
+
+    this._queueService.addSongsToQueue(this.songs);
+
+    if (!QueueService.isInitialized) this._queueService.initSong(this.songs[0]);
+  };
 }

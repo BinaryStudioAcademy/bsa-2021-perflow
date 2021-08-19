@@ -1,4 +1,5 @@
-<app-main-menu></app-main-menu>
+<app-main-menu [isContainerHidden]="isContainerHidden"></app-main-menu>
 <app-profile-menu></app-profile-menu>
 
-<app-song-toolbar></app-song-toolbar>
+<app-queue (opened)="hideContainer()" (closed)="showContainer()"></app-queue>
+<app-song-toolbar (queueClicked)="toggleQueue()"></app-song-toolbar>

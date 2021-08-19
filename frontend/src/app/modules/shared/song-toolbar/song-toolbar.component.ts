@@ -1,10 +1,11 @@
 import {
-  Component, ElementRef, Input, OnInit, ViewChild
+  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild
 } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
@@ -33,6 +34,9 @@ export class SongToolbarComponent implements OnInit {
   isTimeChanging = false;
   isPlaying = false;
   isMuted = false;
+  isQueueOpened = false;
+
+  @Output() queueClicked = new EventEmitter<void>();
 
   playPauseButton! : HTMLButtonElement | null;
   currentTimeContainer! : HTMLElement | null;
@@ -45,11 +49,18 @@ export class SongToolbarComponent implements OnInit {
     authService: AuthService,
     toolbarService: SongToolbarService,
     private _songsService: SongsService,
-    private _reactionService: ReactionService
+    private _reactionService: ReactionService,
+    private _queueService: QueueService
   ) {
     toolbarService.songUpdated$.subscribe(
       (song) => {
         this.updateSong(song);
+      }
+    );
+
+    toolbarService.playToggled$.subscribe(
+      () => {
+        this.playPause();
       }
     );
 
@@ -85,6 +96,14 @@ export class SongToolbarComponent implements OnInit {
   resetPlaying = () => {
     this.isPlaying = false;
     this.playPauseButton?.lastElementChild?.classList.replace('pause', 'play');
+
+    this._queueService.setPlaying(this.isPlaying);
+  };
+
+  songEnded = () => {
+    this.resetPlaying();
+
+    this.nextSongPlay();
   };
 
   updateTime() {
@@ -96,7 +115,6 @@ export class SongToolbarComponent implements OnInit {
     this.displayDuration();
     this.setSeekSliderMax();
     this.setInitialVolume();
-    this.playPause();
   };
 
   setVisibility(show: boolean) {
@@ -144,6 +162,8 @@ export class SongToolbarComponent implements OnInit {
       this.isPlaying = true;
       this.playPauseButton?.lastElementChild?.classList.replace('play', 'pause');
     }
+
+    this._queueService.setPlaying(this.isPlaying);
   };
 
   muteUnmute = () => {
@@ -186,5 +206,18 @@ export class SongToolbarComponent implements OnInit {
       this.isLiked = response.isLiked;
       subscription.unsubscribe();
     });
+  };
+
+  toggleQueue = () => {
+    this.queueClicked.emit();
+    this.isQueueOpened = !this.isQueueOpened;
+  };
+
+  nextSongPlay = () => {
+    this._queueService.nextSong();
+  };
+
+  previousSongPlay = () => {
+    this._queueService.previousSong();
   };
 }

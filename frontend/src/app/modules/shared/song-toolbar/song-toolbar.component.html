@@ -1,4 +1,4 @@
-<audio controls id="audio" (loadedmetadata)="initSong()" (ended)="resetPlaying()" (timeupdate)="updateTime()">
+<audio controls id="audio" (loadedmetadata)="initSong()" (ended)="songEnded()" (timeupdate)="updateTime()">
     <source [attr.src]="songForPlay.songURL">
 </audio>
 
@@ -25,13 +25,13 @@
                 [ngClass]="isShuffling ? 'active' : ''">
                 <i class="random icon"></i>
             </div>
-            <div class="backwardbutton">
+            <div class="backwardbutton" (click)="previousSongPlay()">
                 <i class="step backward icon"></i>
             </div>
             <div class="playbutton" (click)="playPause()" id="playbutton">
                 <i class="play icon"></i>
             </div>
-            <div class="forwardbutton">
+            <div class="forwardbutton" (click)="nextSongPlay()">
                 <i class="step forward icon"></i>
             </div>
             <div class="repeatbutton" id="repeatbutton" (click)="toggleRepeat()"
@@ -45,7 +45,8 @@
                 /
                 <span id="duration" class="time">0:00</span>
             </div>
-            <div class="queuebutton">
+            <div *ngIf="!show"></div>
+            <div class="queuebutton" (click)="toggleQueue()" *ngIf="show" [ngClass]="isQueueOpened ? 'active' : ''">
                 <i class="outdent icon"></i>
             </div>
             <div class="mutebutton" (click)="muteUnmute()">

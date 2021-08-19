@@ -11,6 +11,7 @@ import { SongSortType } from '../../../models/song/song-sort-type';
 })
 export class SongsListComponent {
   @Input() songs: Song[];
+  @Input() highlightId: number;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();

@@ -23,7 +23,7 @@
                     </span>
                 </div>
                 <div class="buttons">
-                    <button class="btn-full button-play">Play</button>
+                    <button class="btn-full button-play" (click)="playAlbum()">Play</button>
                     <div class="action-icon">
                         <i class="heart outline icon icons" (click)="likeAlbum()" *ngIf="!album.isLiked"></i>
                         <i class="heart icon icons" (click)="dislikeAlbum()" *ngIf="album.isLiked"></i>
@@ -32,8 +32,11 @@
                         <div class="ui floating dropdown icon" appSmDropdown>
                             <i class="ellipsis vertical icon icons"></i>
                             <div class="right menu">
-                                <div class="item first last" (click)="copyLink()">
+                                <div class="item first" (click)="copyLink()">
                                     <i class="share alternate icon"></i>Share
+                                </div>
+                                <div class="item last" (click)="addToQueue()">
+                                    <i class="outdent alternate icon"></i>Add to queue
                                 </div>
                             </div>
                         </div>

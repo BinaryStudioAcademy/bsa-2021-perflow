@@ -1,8 +1,8 @@
-<div class="ui padded grid song">
+<div class="ui padded grid song" [ngClass]="highlightId === song.id ? 'playing' : ''">
     <div class="sm-row">
         <div class="column song-number">
             <span class="number">{{number}}</span>
-            <i class="play icon" (click)="playSong(song.id)"></i>
+            <i class="play icon" (click)="playSong()"></i>
         </div>
         <div class="column like">
             <i class="heart outline icon" (click)="likeSong(song.id)" *ngIf="!song.isLiked"></i>

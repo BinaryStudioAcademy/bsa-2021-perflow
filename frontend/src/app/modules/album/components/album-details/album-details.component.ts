@@ -10,6 +10,7 @@ import { ClipboardService } from 'ngx-clipboard';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-album-details',
@@ -31,7 +32,8 @@ export class AlbumDetailsComponent implements OnInit {
     private _reactionService: ReactionService,
     private _router: Router,
     private _location: PlatformLocation,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _queueService: QueueService
   ) {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -100,4 +102,21 @@ export class AlbumDetailsComponent implements OnInit {
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
   }
+
+  playAlbum = () => {
+    if (this.album.songs.length === 0) return;
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.album.songs);
+
+    this._queueService.initSong(this.album.songs[0], true);
+  };
+
+  addToQueue = () => {
+    if (this.album.songs.length === 0) return;
+
+    this._queueService.addSongsToQueue(this.album.songs);
+
+    if (!QueueService.isInitialized) this._queueService.initSong(this.album.songs[0]);
+  };
 }

@@ -172,7 +172,8 @@ namespace Perflow.Services.Implementations
                     Duration = ps.Song.Duration,
                     HasCensorship = ps.Song.HasCensorship,
                     Name = ps.Song.Name,
-                    IsLiked = ps.Song.Reactions.Any(r => r.UserId == userId)
+                    IsLiked = ps.Song.Reactions.Any(r => r.UserId == userId),
+                    CreatedAt = ps.Song.CreatedAt                    
                 })
                 .ToListAsync();
 

@@ -12,7 +12,7 @@
                     {{artist.description}}
                 </div>
                 <div class="buttons">
-                    <button class="btn-full button-play">Play</button>
+                    <button class="btn-full button-play" (click)="playArtist()">Play</button>
                     <div class="action-icon">
                         <i class="heart outline icon icons"></i>
                     </div>
@@ -23,8 +23,11 @@
                                 <div class="item first">
                                     <i class="bell icon"></i>Subscribe
                                 </div>
-                                <div class="item last">
+                                <div class="item">
                                     <i class="share alternate icon"></i>Share
+                                </div>
+                                <div class="item last" (click)="addToQueue()">
+                                    <i class="outdent alternate icon"></i>Add to queue
                                 </div>
                             </div>
                         </div>
