@@ -137,6 +137,8 @@ export class ArtistDetailsComponent implements OnInit {
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
     this.isSuccess = true;
-    timer(3000).subscribe((val) => { this.isSuccess = Boolean(val) });
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 }

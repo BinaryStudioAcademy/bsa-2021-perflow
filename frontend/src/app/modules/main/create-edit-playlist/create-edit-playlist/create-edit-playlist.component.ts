@@ -256,6 +256,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
     );
     this.isSuccess = true;
-    timer(3000).subscribe((val) => { this.isSuccess = Boolean(val) });
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 }
