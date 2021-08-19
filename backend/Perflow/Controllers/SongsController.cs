@@ -68,6 +68,13 @@ namespace Perflow.Controllers
             return Ok(new { blobId = result });
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] SongWriteDTO songInfo)
+        {
+            await _songsService.Update(songInfo);
+            return Ok();
+        }
+
         [AllowAnonymous]
         [HttpGet("file")]
         public async Task<FileResult> GetSongFile([FromQuery] string blobId)

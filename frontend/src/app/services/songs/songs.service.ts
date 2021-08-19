@@ -73,4 +73,13 @@ export class SongsService {
   checkIfSongLiked(id: number) {
     return this._httpService.getRequest<{ isLiked: boolean }>(`/api/songs/${id}/isLiked`);
   }
+
+  updateSongInfo(song: Song) {
+    const songForWrite = new SongWriteDTO();
+    songForWrite.id = song.id;
+    songForWrite.name = song.name;
+    songForWrite.hasCensorship = song.hasCensorship;
+
+    return this._httpService.putFullRequest<SongWriteDTO>('/api/songs', songForWrite);
+  }
 }

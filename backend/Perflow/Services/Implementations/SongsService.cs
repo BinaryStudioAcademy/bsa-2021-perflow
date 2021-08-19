@@ -205,5 +205,10 @@ namespace Perflow.Services.Implementations
         {
             return await context.SongReactions.AnyAsync(sr => sr.SongId == songId && sr.UserId == userId);
         }
+
+        public async Task Update(SongWriteDTO song)
+        {
+            await Task.Run(() => context.Songs.Update(mapper.Map<Song>(song)));
+        }
     }
 }

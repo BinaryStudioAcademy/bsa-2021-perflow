@@ -18,9 +18,11 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 
 export class SongRowComponent implements OnInit {
   private _userId: number;
+  isEditing = false;
 
   @Input() song: Song;
   @Input() number: number;
+  @Input() isEditable = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
@@ -83,6 +85,22 @@ export class SongRowComponent implements OnInit {
         song.album.iconURL
       );
       this._toolbarService.updateSong(testSong);
+    });
+  };
+
+  editName = () => {
+    this.isEditing = true;
+  };
+
+  saveName = () => {
+    this._songService.updateSongInfo(this.song).subscribe(() => {
+      this.isEditing = false;
+    });
+  };
+
+  changeCensorship = () => {
+    this._songService.updateSongInfo(this.song).subscribe(() => {
+      this.song.hasCensorship = !this.song.hasCensorship;
     });
   };
 }
