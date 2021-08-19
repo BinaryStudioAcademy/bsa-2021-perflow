@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
+import { timer } from 'rxjs';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -118,9 +119,6 @@ export class ViewPlaylistComponent implements OnInit {
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
     this.isSuccess = true;
-
-    setTimeout(() => {
-      this.isSuccess = false;
-    }, 3000);
+    timer(3000).subscribe((val) => { this.isSuccess = Boolean(val) });
   }
 }

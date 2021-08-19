@@ -1,7 +1,7 @@
 import {
   Component, OnInit, OnDestroy
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
 } from 'rxjs/operators';
@@ -256,9 +256,6 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
     );
     this.isSuccess = true;
-
-    setTimeout(() => {
-      this.isSuccess = false;
-    }, 3000);
+    timer(3000).subscribe((val) => { this.isSuccess = Boolean(val) });
   }
 }

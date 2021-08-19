@@ -3,6 +3,7 @@ import {
   Component, Input, Output, EventEmitter, OnInit
 } from '@angular/core';
 import { ClipboardService } from 'ngx-clipboard';
+import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { SongInfo } from 'src/app/models/song/song-info';
@@ -61,10 +62,7 @@ export class SongRowComponent implements OnInit {
       `${this._location.hostname}:${this._location.port}/albums/${this.song.album.id}`
     );
     this.isSuccess = true;
-
-    setTimeout(() => {
-      this.isSuccess = false;
-    }, 3000);
+    timer(3000).subscribe((val) => { this.isSuccess = Boolean(val) });
   }
 
   dislikeSong(songId: number) {
