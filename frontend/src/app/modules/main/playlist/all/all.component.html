@@ -15,12 +15,19 @@
         </app-circle-info-card>
     </div>
     <div class="liked-playlists">
-        <app-square-info-card *ngFor="let playlist of playlists"
-        [id]="playlist.id"
-        [name]="playlist.name"
-        [description]="playlist.description"
-        [iconUrl]="playlist.iconURL"
-        >
-        </app-square-info-card>
+        <div *ngIf="playlists.length > 0">
+            <app-square-info-card *ngFor="let playlist of playlists"
+            [id]="playlist.id"
+            [name]="playlist.name"
+            [description]="playlist.description"
+            [iconUrl]="playlist.iconURL"
+            >
+            </app-square-info-card>
+        </div>
+        <div *ngIf="!playlists.length">
+            <div class="playlistslabel">
+                <h5>There are no available playlists now</h5>
+            </div>    
+        </div>
     </div>
 </div>

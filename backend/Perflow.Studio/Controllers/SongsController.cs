@@ -10,7 +10,7 @@ using Perflow.Studio.Business.Songs.Queries;
 namespace Perflow.Studio.Controllers
 {
     [ApiController]
-    [Route("api/songs")]
+    [Route("api/studio/songs")]
     public class SongsController : ControllerBase
     {
         private readonly IMediator _mediator;

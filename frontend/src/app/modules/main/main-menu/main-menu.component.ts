@@ -30,6 +30,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   public ngOnInit() {
     this.isContainerHidden = false;
     this.getUserCreatedPlaylists();
+
     this._createdPlaylistService.playlistChanged$.subscribe((playlist) => {
       const playlistIndex = this.playlists.findIndex((pl) => pl.id === playlist?.id);
       if (playlistIndex === -1) {
@@ -39,6 +40,11 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         this.playlists[playlistIndex] = playlist!;
       }
     });
+
+    this._createdPlaylistService.playlistDeleted$
+      .subscribe((id) => {
+        this.playlists = this.playlists.filter((pl) => pl.id !== id);
+      });
   }
 
   public ngOnDestroy() {

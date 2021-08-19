@@ -19,7 +19,8 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
 
             builder
                 .HasOne(s => s.Album)
-                .WithMany(a => a.Songs);
+                .WithMany(a => a.Songs)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

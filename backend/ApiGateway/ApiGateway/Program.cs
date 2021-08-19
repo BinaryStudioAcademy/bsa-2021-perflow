@@ -1,3 +1,4 @@
+using ApiGateway.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -17,11 +18,9 @@ namespace ApiGateway
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-            .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config
-                .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                .AddJsonFile($"configuration.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: false, reloadOnChange: true);
-            });
+                .ConfigureAppConfiguration((hostingContext, config) => config
+                    .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+                    .AddOcelotConfiguration($"Configuration/{hostingContext.HostingEnvironment.EnvironmentName}")
+                );
     }
 }
