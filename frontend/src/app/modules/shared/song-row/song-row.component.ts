@@ -20,6 +20,7 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 
 export class SongRowComponent implements OnInit {
   private _userId: number;
+  isSuccess: boolean = false;
 
   @Input() song: Song;
   @Input() number: number;
@@ -56,7 +57,14 @@ export class SongRowComponent implements OnInit {
   }
 
   copyLink() {
-    this._clipboardApi.copyFromContent(this._location.href);
+    this._clipboardApi.copyFromContent(
+      `${this._location.hostname}:${this._location.port}/albums/${this.song.album.id}`
+      );
+    this.isSuccess = true;
+
+    setTimeout(() => {
+      this.isSuccess = false;
+    }, 3000);
   }
 
   dislikeSong(songId: number) {

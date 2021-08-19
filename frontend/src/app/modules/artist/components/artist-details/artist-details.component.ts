@@ -25,6 +25,7 @@ export class ArtistDetailsComponent implements OnInit {
   artist: Artist = {} as Artist;
   topSongs: Song[] = [];
   artistPlaylists: PlaylistView[] = [];
+  isSuccess: boolean = false;
 
   constructor(
     private _route: ActivatedRoute,
@@ -85,5 +86,10 @@ export class ArtistDetailsComponent implements OnInit {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+
+    setTimeout(() => {
+      this.isSuccess = false;
+    }, 3000);
   }
 }

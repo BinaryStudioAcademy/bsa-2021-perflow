@@ -23,6 +23,7 @@ export class AlbumDetailsComponent implements OnInit {
   @ViewChild('albums') albumsElement: ElementRef;
   album: AlbumFull = {} as AlbumFull;
   anotherAlbums: Album[] = [];
+  isSuccess: boolean = false;
 
   constructor(
     private _clipboardApi: ClipboardService,
@@ -99,5 +100,10 @@ export class AlbumDetailsComponent implements OnInit {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+
+    setTimeout(() => {
+      this.isSuccess = false;
+    }, 3000);
   }
 }

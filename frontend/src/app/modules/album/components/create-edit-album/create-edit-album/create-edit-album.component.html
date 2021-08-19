@@ -63,5 +63,9 @@
   <app-songs-list *ngIf="album.songs.length" [songs]="album.songs" (clickMenuItem)="clickMenuHandler($event)"></app-songs-list>
 
   <app-edit-album-modal [editedAlbum]="editedAlbum" *ngIf="isModalShown" (editAlbum)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-album-modal>
-
+  <div [ngClass]="['ui', 'success', 'message']" *ngIf="isSuccess">
+    <div class="header">
+      Link copied to clipboard!
+    </div>
+  </div>
 </main>

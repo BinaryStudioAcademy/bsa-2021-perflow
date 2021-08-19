@@ -31,6 +31,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   playlist = {} as Playlist;
   searchValue: string;
   userId: number;
+  isSuccess: boolean = false;
 
   private _id: number | undefined;
 
@@ -254,5 +255,10 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     this._clipboardApi.copyFromContent(
       `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
     );
+    this.isSuccess = true;
+
+    setTimeout(() => {
+      this.isSuccess = false;
+    }, 3000);
   }
 }

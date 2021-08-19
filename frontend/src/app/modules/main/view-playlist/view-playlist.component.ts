@@ -24,6 +24,7 @@ export class ViewPlaylistComponent implements OnInit {
   public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
+  public isSuccess: boolean = false;
 
   constructor(
     private _activateRoute: ActivatedRoute,
@@ -116,5 +117,10 @@ export class ViewPlaylistComponent implements OnInit {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+
+    setTimeout(() => {
+      this.isSuccess = false;
+    }, 3000);
   }
 }

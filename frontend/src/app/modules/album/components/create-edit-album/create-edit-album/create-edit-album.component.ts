@@ -29,6 +29,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   isModalShown = false;
   isSongUploadShown = false;
   publishButtonTitle: string = 'Publish';
+  isSuccess: boolean = false;
 
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
@@ -251,5 +252,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
 
   copyLink() {
     this._clipboardApi.copyFromContent(`${this._location.hostname}:${this._location.port}/albums/${this.album.id}`);
+    this.isSuccess = true;
+
+    setTimeout(() => {
+      this.isSuccess = false;
+    }, 3000);
   }
 }

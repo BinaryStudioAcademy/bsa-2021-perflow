@@ -72,4 +72,9 @@
             </div>
         </div>
     </div>
+    <div [ngClass]="['ui', 'success', 'message']" *ngIf="isSuccess">
+        <div class="header">
+          Link copied to clipboard!
+        </div>
+    </div>
 </main>
