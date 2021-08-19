@@ -93,14 +93,16 @@ export class SongRowComponent implements OnInit {
   };
 
   saveName = () => {
-    this._songService.updateSongInfo(this.song).subscribe(() => {
+    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
       this.isEditing = false;
+      subscription.unsubscribe();
     });
   };
 
   changeCensorship = () => {
-    this._songService.updateSongInfo(this.song).subscribe(() => {
+    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
       this.song.hasCensorship = !this.song.hasCensorship;
+      subscription.unsubscribe();
     });
   };
 }
