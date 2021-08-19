@@ -9,6 +9,7 @@ using Shared.Auth.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Songs;
+using Perflow.Common.DTO.Search;
 
 namespace Perflow.Controllers
 {
@@ -45,6 +46,12 @@ namespace Perflow.Controllers
         public async Task<ActionResult<ICollection<PlaylistViewDTO>>> FindPlaylistsByNameAsync([FromQuery] string searchTerm, int amount)
         {
             return Ok(await _searchService.FindPlaylistsByNameAsync(searchTerm, amount));
+        }
+
+        [HttpGet("{searchTerm}")]
+        public async Task<ActionResult<SearchResultDTO>> FindAllByNameAsync([FromRoute] string searchTerm)
+        {
+            return Ok(await _searchService.FindAllByNameAsync(searchTerm, User.GetId()));
         }
     }
 }

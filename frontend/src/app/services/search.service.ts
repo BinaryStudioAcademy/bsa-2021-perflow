@@ -6,6 +6,7 @@ import { ArtistReadDTO } from '../models/user/ArtistReadDTO';
 import { HttpInternalService } from './http-internal.service';
 import { SearchParam } from '../models/search/search-param';
 import { Song } from '../models/song/song';
+import { FoundData } from '../models/search/found-data';
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +34,8 @@ export class SearchService {
     const httpParams = { searchTerm: `${data.searchTerm}`, amount: `${data.amount}` };
     return this._httpService.getRequest<PlaylistView[]>('/api/Search/playlists', httpParams);
   };
+
+  getFoundData(searchTerm: string): Observable<FoundData> {
+    return this._httpService.getRequest<FoundData>(`/api/Search/${searchTerm}`);
+  }
 }

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Songs;
 using Perflow.Common.DTO.Groups;
+using Perflow.Common.DTO.Search;
 
 namespace Perflow.Services.Implementations
 {
@@ -88,6 +89,22 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             return mapper.Map<ICollection<PlaylistViewDTO>>(playlists);
+        }
+
+        public async Task<SearchResultDTO> FindAllByNameAsync(string searchTerm, int userId)
+        {
+            int maxSongAmount = 4;
+            int maxEntitiesAmount = 8;
+
+            var result = new SearchResultDTO
+            {
+                Songs = await FindSongsByNameAsync(searchTerm, maxSongAmount, userId),
+                Albums = await FindAlbumsByNameAsync(searchTerm, maxEntitiesAmount),
+                Artists = await FindArtistsByNameAsync(searchTerm, maxEntitiesAmount),
+                Playlists = await FindPlaylistsByNameAsync(searchTerm, maxEntitiesAmount)
+            };
+
+            return result;
         }
     }
 }
