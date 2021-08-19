@@ -12,6 +12,8 @@ export class AlbumCardComponent {
   @Input()
   isForEdit = false;
   @Input()
+  isLiked = true;
+  @Input()
   album: AlbumForReadDTO;
   @Output()
   delete = new EventEmitter<AlbumForReadDTO>();
