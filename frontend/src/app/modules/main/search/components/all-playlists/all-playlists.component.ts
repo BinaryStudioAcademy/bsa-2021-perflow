@@ -2,17 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { SearchParam } from 'src/app/models/search/search-param';
-import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
-  selector: 'app-all-artists',
-  templateUrl: './all-artists.component.html',
-  styleUrls: ['./all-artists.component.sass']
+  selector: 'app-all-playlists',
+  templateUrl: './all-playlists.component.html',
+  styleUrls: ['./all-playlists.component.sass']
 })
-export class AllArtistsComponent implements OnInit, OnDestroy {
-  artists: Array<ArtistReadDTO> = Array<ArtistReadDTO>();
+export class AllPlaylistsComponent implements OnInit, OnDestroy {
+  playlists: Array<PlaylistView> = new Array<PlaylistView>();
   searchTerm: string = '';
 
   private _unsubscribe$ = new Subject<void>();
@@ -46,7 +46,7 @@ export class AllArtistsComponent implements OnInit, OnDestroy {
       this.searchTerm = data;
     });
 
-    this.getArtistByName(this._query);
+    this.getPlaylistsByName(this._query);
   }
 
   ngOnDestroy() {
@@ -60,15 +60,15 @@ export class AllArtistsComponent implements OnInit, OnDestroy {
       page: this._query.page += 1
     };
 
-    this.getArtistByName(this._query);
+    this.getPlaylistsByName(this._query);
   }
 
-  getArtistByName(query: SearchParam) {
-    this._searchService.getArtistByName(query)
+  getPlaylistsByName(query: SearchParam) {
+    this._searchService.getPlaylistsByName(query)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (result) => {
-          this.artists = [...this.artists, ...result];
+          this.playlists = [...this.playlists, ...result];
         }
       });
   }

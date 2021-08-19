@@ -1,7 +1,7 @@
 <div class="container">
-  <h2>All artists for <i>"{{searchTerm}}"</i></h2>
+  <h2>All playlists for <i>"{{searchTerm}}"</i></h2>
   <div class="search-result" infinite-scroll [infiniteScrollDistance]="distance" [infiniteScrollThrottle]="throttle"
     (scrolled)="onScroll()">
-    <app-artist-card *ngFor="let artist of artists" [artist]="artist"></app-artist-card>
+    <app-playlist-card *ngFor="let playlist of playlists" [playlist]="playlist"></app-playlist-card>
   </div>
 </div>
