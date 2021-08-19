@@ -1,8 +1,12 @@
-<div class="cr-card">
-  <div class="fader">
-    <button class="play-icon"><i class="caret right icon"></i></button>
-    <img src="{{ image }}" alt="Icon" />
+<div class="card" routerLink='/playlists/view-playlist/{{playlist.id}}'>
+  <div class="image">
+      <img [src]="playlist.iconURL">  
+      <button class="play-icon" appClickStopPropagation>
+          <i class="play icon"></i>
+      </button>  
   </div>
-  <div class="card-name">{{ name }}</div>
-  <div class="card-desc">{{ songs.join(", ") }}</div>
+  <div class="content">
+      <div class="card-name"> {{playlist.name}} </div>
+      <div class="card-desc"> {{playlist.description}} </div>
+  </div>
 </div>

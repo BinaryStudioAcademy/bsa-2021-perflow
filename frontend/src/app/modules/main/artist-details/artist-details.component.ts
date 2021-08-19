@@ -3,9 +3,11 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { ArtistFull } from 'src/app/models/user/artist-full';
+import { AlbumService } from 'src/app/services/album.service';
 import { ArtistService } from 'src/app/services/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
@@ -27,6 +29,7 @@ export class ArtistDetailsComponent implements OnInit {
   artist: ArtistFull = {} as ArtistFull;
   topSongs: Song[] = [];
   artistPlaylists: PlaylistView[] = [];
+  artistAlbums: AlbumForReadDTO[] = [];
 
   constructor(
     private _route: ActivatedRoute,
@@ -34,7 +37,8 @@ export class ArtistDetailsComponent implements OnInit {
     private _songService: SongsService,
     private _playlistsService: PlaylistsService,
     private _reactionService: ReactionService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _albumsService: AlbumService
   ) { }
 
   ngOnInit() {
@@ -61,6 +65,7 @@ export class ArtistDetailsComponent implements OnInit {
           this.artist = result;
           this.loadTopSongs();
           this.loadPlaylists();
+          this.loadAlbums();
         }
       );
   }
@@ -97,6 +102,15 @@ export class ArtistDetailsComponent implements OnInit {
       .subscribe(
         () => {
           this.artist.isLiked = false;
+        }
+      );
+  }
+
+  loadAlbums() {
+    this._albumsService.getAlbumsByArtist(this.artist.id)
+      .subscribe(
+        (result) => {
+          this.artistAlbums = result;
         }
       );
   }
