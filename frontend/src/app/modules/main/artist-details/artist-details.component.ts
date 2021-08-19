@@ -7,7 +7,6 @@ import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { ArtistFull } from 'src/app/models/user/artist-full';
-import { Artist } from 'src/app/models/user/artist';
 import { AlbumService } from 'src/app/services/album.service';
 import { ArtistService } from 'src/app/services/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
