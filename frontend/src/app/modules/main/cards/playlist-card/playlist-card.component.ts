@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 
 @Component({
   selector: 'app-playlist-card',
@@ -6,7 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./playlist-card.component.sass']
 })
 export class PlaylistCardComponent {
-  @Input() image! : string;
-  @Input() name! : string;
-  @Input() songs! : string[];
+  @Input()
+  playlist: PlaylistView = {} as PlaylistView;
 }
