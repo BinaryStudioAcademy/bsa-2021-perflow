@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AlbumAuthor } from 'src/app/models/user/album-author';
 
 @Component({
@@ -6,9 +6,13 @@ import { AlbumAuthor } from 'src/app/models/user/album-author';
   templateUrl: './new-release-card.component.html',
   styleUrls: ['./new-release-card.component.sass']
 })
-export class NewReleaseCardComponent {
+export class NewReleaseCardComponent implements OnInit {
   @Input() id: number;
   @Input() name: string;
   @Input() authors: Array<AlbumAuthor>;
   @Input() iconUrl: string;
+
+  public ngOnInit(){
+    this.authors = this.authors.filter((author, i, arr) => arr.findIndex(t => t.id === author.id) === i);
+  }
 }
