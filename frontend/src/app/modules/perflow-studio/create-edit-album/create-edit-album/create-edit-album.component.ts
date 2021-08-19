@@ -115,7 +115,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
-          this._router.navigateByUrl(`/albums/edit/${data.id}`);
+          this._router.navigateByUrl(`/perflowstudio/albums/edit/${data.id}`);
         }
       });
   }

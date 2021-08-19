@@ -3,13 +3,13 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
-import { Album } from 'src/app/models/album/album';
 import { AlbumFull } from 'src/app/models/album/album-full';
 import { AlbumService } from 'src/app/services/album.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 
 @Component({
   selector: 'app-album-details',
@@ -22,8 +22,8 @@ export class AlbumDetailsComponent implements OnInit {
 
   @ViewChild('albums') albumsElement: ElementRef;
   album: AlbumFull = {} as AlbumFull;
-  anotherAlbums: Album[] = [];
   isSuccess: boolean = false;
+  anotherAlbums: AlbumForReadDTO[] = [];
 
   constructor(
     private _clipboardApi: ClipboardService,

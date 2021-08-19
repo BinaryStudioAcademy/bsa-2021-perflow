@@ -56,7 +56,7 @@
         </div>
         <div class="albums">
             <div #albums name="albums" class="albums-cards">
-                <app-album-card class="card" *ngFor="let album of anotherAlbums" [album]="album"></app-album-card>
+                <app-album-card class="card" *ngFor="let album of anotherAlbums" [album]="album" [isLiked]=false></app-album-card>
             </div>
             <div class="scroll-box">
                 <button class="scroll-button" (click)="scroll()">
