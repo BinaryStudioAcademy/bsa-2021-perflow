@@ -15,7 +15,7 @@
         </app-circle-info-card>
     </div>
     <div class="liked-playlists">
-        <div *ngIf="playlists.length>0">
+        <div *ngIf="playlists.length > 0">
             <app-square-info-card *ngFor="let playlist of playlists"
             [id]="playlist.id"
             [name]="playlist.name"
@@ -24,7 +24,7 @@
             >
             </app-square-info-card>
         </div>
-        <div *ngIf="playlists.length===0">
+        <div *ngIf="!playlists.length">
             <div class="playlistslabel">
                 <h5>There are no available playlists now</h5>
             </div>    
