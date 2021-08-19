@@ -1,20 +1,17 @@
 <div class="infolist">
     <div class="albumlist">
-        <button class="ui btn-full button albums-create" routerLink="/albums/create">
-            Create Playlist
-          </button>
         <div class="albumslabel">
             <h4>Albums</h4>
         </div>
         <div *ngIf="albums.length > 0">
             <div *ngFor="let album of albums" class="album-card">
                 <app-album-card [album]="album" (delete)="deleteAlbum($event)"></app-album-card>
-            </div>    
+            </div>
         </div>
         <div *ngIf="!albums.length">
             <div class="albumslabel">
                 <h5>There are no available albums now</h5>
-            </div>    
+            </div>
         </div>
-    </div>    
+    </div>
 </div>
