@@ -5,6 +5,7 @@ using Perflow.Services.Interfaces;
 using System.Collections.Generic;
 using Shared.Auth.Constants;
 using System.Threading.Tasks;
+using Shared.Auth.Extensions;
 
 namespace Perflow.Controllers
 {
@@ -21,9 +22,9 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ArtistDTO>> GetById(int id)
+        public async Task<ActionResult<ArtistFullDTO>> GetById(int id)
         {
-            return Ok(await _artistService.GetArtistAsync(id));
+            return Ok(await _artistService.GetArtistFullAsync(id, User.GetId()));
         }
 
         [HttpGet("top/{amount}")]

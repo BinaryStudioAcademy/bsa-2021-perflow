@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user/user';
 import { UserChangeIcon } from '../models/user/user-change-icon';
 import { UserChangePassword } from '../models/user/user-change-password';
+import { UserChangeSettings } from '../models/user/user-change-settings';
+import { UserSettings } from '../models/user/user-settings';
 import { HttpInternalService } from './http-internal.service';
 
 @Injectable({
@@ -22,6 +24,15 @@ export class UserService {
 
   getUserImage(id: number) {
     return this._httpService.getRequest<{ imageUrl: string }>(`${this.routePrefix}/${id}/image`);
+  }
+
+  getUserSettings() {
+    return this._httpService.getFullRequest<UserSettings>(`${this.routePrefix}/settings`);
+  }
+
+  updateUserSettings(userSettings: UserChangeSettings) {
+    const route = `${this.routePrefix}/changeSettings`;
+    return this._httpService.putFullRequest<UserChangeSettings>(route, userSettings);
   }
 
   updateUserPassword(userChangePassword: UserChangePassword) {
