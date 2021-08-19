@@ -12,7 +12,7 @@ export class NewReleaseCardComponent implements OnInit {
   @Input() authors: Array<AlbumAuthor>;
   @Input() iconUrl: string;
 
-  public ngOnInit(){
-    this.authors = this.authors.filter((author, i, arr) => arr.findIndex(t => t.id === author.id) === i);
+  public ngOnInit() {
+    this.authors = this.authors.filter((author, i, arr) => arr.findIndex((t) => t.id === author.id) === i);
   }
 }
