@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +21,15 @@ namespace Perflow.Services.Implementations
             _mapper = mapper;
         }
 
-        public ValueTask<User> GetUserAsync(int id)
+        public async ValueTask<User> GetUserAsync(int id)
         {
-            return _context.Users.FindAsync(id);
+            var userEntity = await _context.Users.FindAsync(id);
+            if(await CheckUserSettingsAsync(id) == false)
+            {
+                _context.UserSettings.Add(new Domain.UserSettings() { UserId = id });
+                await _context.SaveChangesAsync();
+            }
+            return userEntity;
         }
 
         public async Task<string> GetUserImage(int id)
@@ -51,6 +58,11 @@ namespace Perflow.Services.Implementations
         public async Task<UserSettings> GetUserSettingsAsync(int userId)
         {
             return await _context.UserSettings.FirstAsync(us => us.UserId == userId);
+        }
+
+        public async Task<bool> CheckUserSettingsAsync(int userId)
+        {
+            return await _context.UserSettings.AnyAsync(us => us.UserId == userId);
         }
 
         public async Task UpdateUserSettingsAsync(UserChangeSettingsDTO userSettings)
