@@ -25,28 +25,31 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("songs")]
-        public async Task<ActionResult<ICollection<SongForPlaylistSongSearchDTO>>> FindSongsByNameAsync(
-            [FromQuery] string searchTerm, [FromQuery] int page, [FromQuery] int itemsOnPage)
+        public async Task<ActionResult<ICollection<SongForPlaylistSongSearchDTO>>> FindSongsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
         {
             return Ok(await _searchService.FindSongsByNameAsync(searchTerm, page, itemsOnPage, User.GetId()));
         }
     
         [HttpGet("artists")]
-        public async Task<ActionResult<ICollection<ArtistReadDTO>>> FindArtistsByNameAsync([FromQuery] string searchTerm, int amount)
+        public async Task<ActionResult<ICollection<ArtistReadDTO>>> FindArtistsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
         {
-            return Ok(await _searchService.FindArtistsByNameAsync(searchTerm, amount));
+            return Ok(await _searchService.FindArtistsByNameAsync(searchTerm, page, itemsOnPage));
         }
 
         [HttpGet("albums")]
-        public async Task<ActionResult<ICollection<AlbumForListDTO>>> FindAlbumsByNameAsync([FromQuery] string searchTerm, int amount)
+        public async Task<ActionResult<ICollection<AlbumForListDTO>>> FindAlbumsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
         {
-            return Ok(await _searchService.FindAlbumsByNameAsync(searchTerm, amount));
+            return Ok(await _searchService.FindAlbumsByNameAsync(searchTerm, page, itemsOnPage));
         }
 
         [HttpGet("playlists")]
-        public async Task<ActionResult<ICollection<PlaylistViewDTO>>> FindPlaylistsByNameAsync([FromQuery] string searchTerm, int amount)
+        public async Task<ActionResult<ICollection<PlaylistViewDTO>>> FindPlaylistsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
         {
-            return Ok(await _searchService.FindPlaylistsByNameAsync(searchTerm, amount));
+            return Ok(await _searchService.FindPlaylistsByNameAsync(searchTerm, page, itemsOnPage));
         }
 
         [HttpGet("{searchTerm}")]

@@ -54,6 +54,7 @@ import {
   SearchSongsResultComponent
 } from './search/components/search-songs-result/search-songs-result.component';
 import { AllSongsComponent } from './search/components/all-songs/all-songs.component';
+import { AllArtistsComponent } from './search/components/all-artists/all-artists.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { AllSongsComponent } from './search/components/all-songs/all-songs.compo
     SearchArtistsResultComponent,
     SearchPlaylistsResultComponent,
     SearchSongsResultComponent,
-    AllSongsComponent
+    AllSongsComponent,
+    AllArtistsComponent
   ],
   imports: [
     CommonModule,

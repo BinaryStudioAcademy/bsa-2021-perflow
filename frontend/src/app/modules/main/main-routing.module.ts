@@ -19,6 +19,7 @@ import { UserProfileEditComponent } from '../user/user-profile-edit/user-profile
 import { AlbumDetailsComponent } from './album-details/album-details.component';
 import { ArtistDetailsComponent } from './artist-details/artist-details.component';
 import { AllSongsComponent } from './search/components/all-songs/all-songs.component';
+import { AllArtistsComponent } from './search/components/all-artists/all-artists.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,6 +31,9 @@ const routes: Routes = [{
     { path: 'home', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
     { path: 'search/:term/songs', component: AllSongsComponent },
+    { path: 'search/:term/artists', component: AllArtistsComponent },
+    { path: 'search/:term/albums', component: AllSongsComponent },
+    { path: 'search/:term/playlist', component: AllSongsComponent },
     { path: 'search/:term', component: SearchComponent },
     {
       path: 'profile',
