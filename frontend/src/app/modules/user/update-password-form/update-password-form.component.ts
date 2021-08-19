@@ -2,7 +2,6 @@ import {
   Component, EventEmitter, OnInit, Output, Input
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
 
@@ -21,14 +20,8 @@ export class UpdatePasswordFormComponent implements OnInit {
   @Output()
   updatedUserPassword = new EventEmitter<UserChangePassword>();
 
-  constructor(private _router: Router) { }
-
   ngOnInit() {
     this.userChangePassword = { currentPassword: '', newPassword: '', id: this.user.id };
-  }
-
-  redirect(route: string) {
-    this._router.navigate([route]);
   }
 
   onSubmit(form: NgForm) {
