@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { QueueComponent } from '../../shared/queue/queue/queue.component';
 import { SongToolbarComponent } from '../../shared/song-toolbar/song-toolbar.component';
@@ -16,6 +17,14 @@ export class MainMenuProfileComponent implements OnInit {
   private _queue: QueueComponent;
 
   isContainerHidden: boolean;
+
+  constructor(private _router: Router) {
+    _router.events.forEach((event) => {
+      if(event instanceof NavigationStart) {
+        this._queue.closeView();
+      }
+    });
+  }
 
   ngOnInit() {
     this.isContainerHidden = false;

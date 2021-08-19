@@ -29,12 +29,13 @@ export class SongToolbarComponent implements OnInit {
   isRepeating: boolean = false;
   @Input()
   isLiked: boolean = false;
+  @Input() 
+  isQueueOpened = false;
 
   show: boolean = false;
   isTimeChanging = false;
   isPlaying = false;
   isMuted = false;
-  isQueueOpened = false;
 
   @Output() queueClicked = new EventEmitter<void>();
 

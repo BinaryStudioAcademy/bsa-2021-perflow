@@ -19,8 +19,4 @@ export class SongToolbarService {
   togglePlay = () => {
     this._playToggledSource.next();
   };
-
-  isInitialized = () => {
-
-  };
 }
