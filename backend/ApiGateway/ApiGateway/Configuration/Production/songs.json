@@ -1,19 +1,6 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/Songs/search?searchTerm={searchTerm}",
-      "DownstreamScheme": "http",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "perflow",
-          "Port": "4202"
-        }
-
-      ],
-      "UpstreamPathTemplate": "/api/Songs/search?searchTerm={searchTerm}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
       "DownstreamPathTemplate": "/api/Songs/liked",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [

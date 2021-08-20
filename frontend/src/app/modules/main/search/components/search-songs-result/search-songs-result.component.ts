@@ -8,4 +8,5 @@ import { Song } from 'src/app/models/song/song';
 })
 export class SearchSongsResultComponent {
   @Input() songs: Array<Song> = new Array<Song>();
+  @Input() term: string;
 }

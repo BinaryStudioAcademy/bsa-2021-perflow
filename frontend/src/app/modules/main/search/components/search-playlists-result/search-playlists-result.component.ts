@@ -8,4 +8,5 @@ import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 })
 export class SearchPlaylistsResultComponent {
   @Input() playlists: Array<PlaylistView> = new Array<PlaylistView>();
+  @Input() term: string;
 }

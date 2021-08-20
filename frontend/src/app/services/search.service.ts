@@ -16,22 +16,22 @@ export class SearchService {
   }
 
   getSongsByName = (data: SearchParam): Observable<Song[]> => {
-    const httpParams = { searchTerm: `${data.searchTerm}`, amount: `${data.amount}` };
+    const httpParams = { ...data };
     return this._httpService.getRequest<Song[]>('/api/Search/songs', httpParams);
   };
 
   getArtistByName = (data: SearchParam): Observable<ArtistReadDTO[]> => {
-    const httpParams = { searchTerm: `${data.searchTerm}`, amount: `${data.amount}` };
+    const httpParams = { ...data };
     return this._httpService.getRequest<ArtistReadDTO[]>('/api/Search/artists', httpParams);
   };
 
   getAlbumsByName = (data: SearchParam): Observable<AlbumForReadDTO[]> => {
-    const httpParams = { searchTerm: `${data.searchTerm}`, amount: `${data.amount}` };
+    const httpParams = { ...data };
     return this._httpService.getRequest<AlbumForReadDTO[]>('/api/Search/albums', httpParams);
   };
 
   getPlaylistsByName = (data: SearchParam): Observable<PlaylistView[]> => {
-    const httpParams = { searchTerm: `${data.searchTerm}`, amount: `${data.amount}` };
+    const httpParams = { ...data };
     return this._httpService.getRequest<PlaylistView[]>('/api/Search/playlists', httpParams);
   };
 

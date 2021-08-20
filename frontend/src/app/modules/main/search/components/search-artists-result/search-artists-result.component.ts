@@ -8,4 +8,5 @@ import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 })
 export class SearchArtistsResultComponent {
   @Input() artists: Array<ArtistReadDTO> = new Array<ArtistReadDTO>();
+  @Input() term: string;
 }

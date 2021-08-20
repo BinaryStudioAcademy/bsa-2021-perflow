@@ -20,15 +20,20 @@ namespace Perflow.Services.Implementations
         public SearchService(PerflowContext context, IMapper mapper) : base(context, mapper)
         { }
 
-        public async Task<ICollection<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm, int amount, int userId)
+        public async Task<ICollection<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync
+            (string searchTerm, int page, int itemsOnPage, int userId)
         {
+            int skip = (page - 1) * itemsOnPage;
+
             var songs = await context.Songs
                 .Where(song => song.Name.Contains(searchTerm.Trim()))
                 .Include(song => song.Artist)
                 .Include(song => song.Group)
                 .Include(song => song.Album)
                 .Include(song => song.Reactions)
-                .Take(amount)
+                .OrderByDescending(song => song.Reactions.GroupBy(r => r.UserId).Count())
+                .Skip(skip)
+                .Take(itemsOnPage)
                 .AsNoTracking()
                 .Select(song => new SongForPlaylistSongSearchDTO
                 {
@@ -46,23 +51,35 @@ namespace Perflow.Services.Implementations
             return songs;
         }
 
-        public async Task<ICollection<ArtistReadDTO>> FindArtistsByNameAsync(string searchTerm, int amount)
+        public async Task<ICollection<ArtistReadDTO>> FindArtistsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
         {
+            int skip = (page - 1) * itemsOnPage;
+
             var artists = await context.Users
                 .Where(user => user.Role == UserRole.Artist && user.UserName.Contains(searchTerm.Trim()))
-                .Take(amount)
+                .Include(user => user.Reactions)
+                .OrderByDescending(user => user.Reactions.GroupBy(r => r.UserId).Count())
+                .Skip(skip)
+                .Take(itemsOnPage)
                 .AsNoTracking()
                 .ToListAsync();
 
             return mapper.Map<ICollection<ArtistReadDTO>>(artists);
         }
 
-        public async Task<ICollection<AlbumForListDTO>> FindAlbumsByNameAsync(string searchTerm, int amount)
+        public async Task<ICollection<AlbumForListDTO>> FindAlbumsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
         {
+            int skip = (page - 1) * itemsOnPage;
+
             var albums = await context.Albums
-                .Include(album => album.Author)
                 .Where(album => album.Name.Contains(searchTerm.Trim()))
-                .Take(amount)
+                .Include(album => album.Author)
+                .Include(album => album.Reactions)
+                .OrderByDescending(album => album.Reactions.GroupBy(r => r.UserId).Count())
+                .Skip(skip)
+                .Take(itemsOnPage)
                 .AsNoTracking()
                 .Select(album => new AlbumForListDTO
                 {
@@ -77,14 +94,20 @@ namespace Perflow.Services.Implementations
                 })
                 .ToListAsync();
 
-            return mapper.Map<ICollection<AlbumForListDTO>>(albums);
+            return albums;
         }
 
-        public async Task<ICollection<PlaylistViewDTO>> FindPlaylistsByNameAsync(string searchTerm, int amount)
+        public async Task<ICollection<PlaylistViewDTO>> FindPlaylistsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
         {
+            int skip = (page - 1) * itemsOnPage;
+
             var playlists = await context.Playlists
                 .Where(playlist => playlist.Name.Contains(searchTerm.Trim()))
-                .Take(amount)
+                .Include(playlist => playlist.Reactions)
+                .OrderByDescending(playlist => playlist.Reactions.GroupBy(r => r.UserId).Count())
+                .Skip(skip)
+                .Take(itemsOnPage)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -95,13 +118,14 @@ namespace Perflow.Services.Implementations
         {
             int maxSongAmount = 4;
             int maxEntitiesAmount = 8;
+            const int page = 1; // don't change
 
             var result = new SearchResultDTO
             {
-                Songs = await FindSongsByNameAsync(searchTerm, maxSongAmount, userId),
-                Albums = await FindAlbumsByNameAsync(searchTerm, maxEntitiesAmount),
-                Artists = await FindArtistsByNameAsync(searchTerm, maxEntitiesAmount),
-                Playlists = await FindPlaylistsByNameAsync(searchTerm, maxEntitiesAmount)
+                Songs = await FindSongsByNameAsync(searchTerm, page, maxSongAmount, userId),
+                Albums = await FindAlbumsByNameAsync(searchTerm, page, maxEntitiesAmount),
+                Artists = await FindArtistsByNameAsync(searchTerm, page, maxEntitiesAmount),
+                Playlists = await FindPlaylistsByNameAsync(searchTerm, page, maxEntitiesAmount)
             };
 
             return result;
