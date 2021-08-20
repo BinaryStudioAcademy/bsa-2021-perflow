@@ -9,7 +9,9 @@ import { ClipboardService } from 'ngx-clipboard';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { QueueService } from 'src/app/services/queue.service';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-album-details',
@@ -22,6 +24,7 @@ export class AlbumDetailsComponent implements OnInit {
 
   @ViewChild('albums') albumsElement: ElementRef;
   album: AlbumFull = {} as AlbumFull;
+  isSuccess: boolean = false;
   anotherAlbums: AlbumForReadDTO[] = [];
   isAuthor: boolean;
 
@@ -32,7 +35,8 @@ export class AlbumDetailsComponent implements OnInit {
     private _reactionService: ReactionService,
     private _router: Router,
     private _location: PlatformLocation,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _queueService: QueueService
   ) {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
 
@@ -97,5 +101,35 @@ export class AlbumDetailsComponent implements OnInit {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
+
+  playAlbum = () => {
+    if (!this.album.songs.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.album.songs);
+
+    const [first] = this.album.songs;
+
+    this._queueService.initSong(first, true);
+  };
+
+  addToQueue = () => {
+    if (!this.album.songs.length) {
+      return;
+    }
+
+    this._queueService.addSongsToQueue(this.album.songs);
+
+    if (!QueueService.isInitialized) {
+      const [first] = this.album.songs;
+      this._queueService.initSong(first);
+    }
+  };
 }

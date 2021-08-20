@@ -25,27 +25,11 @@ main
     border-radius: 0
     background: linear-gradient(90deg, rgba(134, 64, 153, 0.9) 0%, rgba(70, 65, 146, 0.855) 100%)
     filter: alpha(Opacity=70)
-    .arrows
-        display: flex
-        padding: 28px
-        .arrow
-            display: flex
-            margin: 10px
-            background: #A859C0
-            border-radius: 2px
-            width: 28px
-            height: 28px
-            border: 0px solid
-            align-items: center
-            justify-content: center
-            &:hover
-                background: #A859C0aa
-            &:active
-                border: 2px solid #A859C0
     .content-view-playlist
         margin-left: 20%
-        height: 240px
+        height: 100%
         display: flex
+        align-items: center
         .image
             height: 240px
             width: 240px
@@ -106,8 +90,20 @@ main
                             span
                                 font-family: Montserrat
                                 line-height: 135%
+                            >i.dropdown.icon 
+                                margin-left: 3rem !important
+                                margin-right: 0em !important
                         .item:hover
                             background: $drk-gray
+                        .item.share
+                            >.menu
+                                font-family: 'Montserrat' !important
+                                box-shadow: none !important
+                                margin-left: 0px !important
+                                >.item.first.last
+                                    padding: 18px !important
+                                    padding-top: 14px !important
+                                    padding-bottom: 14px !important
             .view-playlist-toolbar
                 display: flex
                 flex-direction: column

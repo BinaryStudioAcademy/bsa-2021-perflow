@@ -30,6 +30,7 @@ export class EditPlaylistModalComponent implements OnInit {
 
   public onSubmit() {
     this.editedPlaylist.iconURL = this.tempIconURL;
+    this.editedPlaylist.icon = this.file;
     this.editPlaylist.emit(this.editedPlaylist);
   }
 

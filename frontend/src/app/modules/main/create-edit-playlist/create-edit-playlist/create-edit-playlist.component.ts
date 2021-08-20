@@ -1,20 +1,23 @@
 import {
   Component, OnInit, OnDestroy
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
 } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { Playlist } from 'src/app/models/playlist/playlist';
-import { SongsService } from 'src/app/services/songs/songs.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 import { User } from 'src/app/models/user/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CreatePlaylistService } from 'src/app/modules/shared/playlist/create-playlist/create-playlist.service';
+import { ClipboardService } from 'ngx-clipboard';
+import { PlatformLocation } from '@angular/common';
+import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -29,6 +32,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   playlist = {} as Playlist;
   searchValue: string;
   userId: number;
+  isSuccess: boolean = false;
 
   private _id: number | undefined;
 
@@ -37,11 +41,14 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
 
   constructor(
     private _playlistService: PlaylistsService,
-    private _songService: SongsService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _authService: AuthService,
-    private _createdPlaylistService: CreatePlaylistService
+    private _createdPlaylistService: CreatePlaylistService,
+    private _searchService: SearchService,
+
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -118,7 +125,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe$),
       debounceTime(500),
       distinctUntilChanged(),
-      switchMap((term: string) => this._songService.getSongsByName(term))
+      switchMap((term: string) => this._searchService.getSongsByName({
+        searchTerm: term, page: 1, itemsOnPage: 30
+      }))
     ).subscribe({
       next: (data) => {
         this.foundSongs = data;
@@ -140,7 +149,12 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       songs: {} as Song[]
     };
 
-    this._playlistService.editPlaylist(this.playlist)
+    const pl: PlaylistForSave = {
+      ...editedPlaylist,
+      id: this.playlist.id
+    };
+
+    this._playlistService.editPlaylist(pl)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
@@ -244,5 +258,15 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.searchValue = '';
       this.foundSongs = new Array<Song>();
     }
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(
+      `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
+    );
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 }

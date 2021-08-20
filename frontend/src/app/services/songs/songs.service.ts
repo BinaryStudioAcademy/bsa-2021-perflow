@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Song } from 'src/app/models/song/song';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
+import { SongOrder } from 'src/app/models/song/song-order';
 import { HttpInternalService } from '../http-internal.service';
 
 @Injectable({
@@ -28,10 +29,6 @@ export class SongsService {
   public getTopSongs(): Observable<Song[]> {
     return of(this.topSongs);
   }
-  getSongsByName = (searchTerm: string): Observable<Song[]> => {
-    const httpParams = { searchTerm: `${searchTerm}` };
-    return this._httpService.getRequest<Song[]>('/api/songs/search', httpParams);
-  };
 
   getSongById = (id: number) => this._httpService.getRequest<Song>(`/api/songs/${id}`);
 
@@ -72,5 +69,18 @@ export class SongsService {
   }
   checkIfSongLiked(id: number) {
     return this._httpService.getRequest<{ isLiked: boolean }>(`/api/songs/${id}/isLiked`);
+  }
+
+  updateSongInfo(song: Song) {
+    const songForWrite = new SongWriteDTO();
+    songForWrite.id = song.id;
+    songForWrite.name = song.name;
+    songForWrite.hasCensorship = song.hasCensorship;
+
+    return this._httpService.putRequest<SongWriteDTO>('/api/songs', songForWrite);
+  }
+
+  updateOrders(songOrders: SongOrder[]) {
+    return this._httpService.putRequest<SongWriteDTO>('/api/songs/orders', songOrders);
   }
 }

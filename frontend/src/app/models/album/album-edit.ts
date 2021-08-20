@@ -13,5 +13,6 @@ export interface AlbumEdit {
   authorType: AuthorType,
   authorId: number | undefined,
   groupId: number | undefined,
-  isSingle: boolean
+  isSingle: boolean,
+  icon?: File
 }

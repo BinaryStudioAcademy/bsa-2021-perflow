@@ -1,0 +1,61 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Playlists;
+using Perflow.Common.DTO.Users;
+using Perflow.Services.Implementations;
+using Shared.Auth.Constants;
+using Shared.Auth.Extensions;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Perflow.Common.DTO.Songs;
+using Perflow.Common.DTO.Search;
+
+namespace Perflow.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize(Policy = Policies.IsUser)]
+    public class SearchController : ControllerBase
+    {
+        private readonly SearchService _searchService;
+        public SearchController(SearchService searchService)
+        {
+            _searchService = searchService;
+        }
+
+        [HttpGet("songs")]
+        public async Task<ActionResult<ICollection<SongForPlaylistSongSearchDTO>>> FindSongsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
+        {
+            return Ok(await _searchService.FindSongsByNameAsync(searchTerm, page, itemsOnPage, User.GetId()));
+        }
+    
+        [HttpGet("artists")]
+        public async Task<ActionResult<ICollection<ArtistReadDTO>>> FindArtistsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
+        {
+            return Ok(await _searchService.FindArtistsByNameAsync(searchTerm, page, itemsOnPage));
+        }
+
+        [HttpGet("albums")]
+        public async Task<ActionResult<ICollection<AlbumForListDTO>>> FindAlbumsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
+        {
+            return Ok(await _searchService.FindAlbumsByNameAsync(searchTerm, page, itemsOnPage));
+        }
+
+        [HttpGet("playlists")]
+        public async Task<ActionResult<ICollection<PlaylistViewDTO>>> FindPlaylistsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
+        {
+            return Ok(await _searchService.FindPlaylistsByNameAsync(searchTerm, page, itemsOnPage));
+        }
+
+        [HttpGet("{searchTerm}")]
+        public async Task<ActionResult<SearchResultDTO>> FindAllByNameAsync([FromRoute] string searchTerm)
+        {
+            return Ok(await _searchService.FindAllByNameAsync(searchTerm, User.GetId()));
+        }
+    }
+}

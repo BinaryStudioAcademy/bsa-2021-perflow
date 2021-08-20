@@ -26,6 +26,14 @@ namespace Shared.AzureBlobStorage.Services
             return await blobClient.DeleteIfExistsAsync();
         }
 
+        public Uri GetFileUrl(string blobContainerName, string blobId)
+        {
+            var containerClient = GetContainerClient(blobContainerName);
+            var blobClient = containerClient.GetBlobClient(blobId);
+
+            return blobClient.Uri;
+        }
+
         public async Task<BlobDto> DownloadFileBlobAsync(string blobContainerName, string blobId)
         {
             var containerClient = GetContainerClient(blobContainerName);

@@ -2,7 +2,10 @@
     <div class="album">
         <div class="album-details">
             <div class="album-image">
-                <img class="image" alt="Album" [src]="album.iconURL">
+                <img class="image" alt="Album" [src]="album.iconURL" *ngIf="album.iconURL">
+                <div class="icon-background" *ngIf="!album.iconURL">
+                    <i class="itunes note icon"></i>
+                  </div>
             </div>
             <div class="album-info">
                 <p class="type">Album</p>
@@ -23,7 +26,7 @@
                     </span>
                 </div>
                 <div class="buttons">
-                    <button class="btn-full button-play">Play</button>
+                    <button class="btn-full button-play" (click)="playAlbum()">Play</button>
                     <div class="action-icon" *ngIf="!isAuthor">
                         <i class="heart outline icon icons" (click)="likeAlbum()" *ngIf="!album.isLiked"></i>
                         <i class="heart icon icons" (click)="dislikeAlbum()" *ngIf="album.isLiked"></i>
@@ -32,8 +35,16 @@
                         <div class="ui floating dropdown icon" appSmDropdown>
                             <i class="ellipsis vertical icon icons"></i>
                             <div class="right menu">
-                                <div class="item first last" (click)="copyLink()">
-                                    <i class="share alternate icon"></i>Share
+                                <div class="item first share">
+                                    <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
+                                        <div class="right menu">
+                                            <div class="item first last" (click)="copyLink()">
+                                                Copy link
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="item last" (click)="addToQueue()">
+                                    <i class="outdent alternate icon"></i>Add to queue
                                 </div>
                             </div>
                         </div>
@@ -58,6 +69,11 @@
                     <i class="chevron right icon"></i>
                 </button>
             </div>
+        </div>
+    </div>
+    <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
+        <div class="header">
+          Link copied to clipboard!
         </div>
     </div>
 </main>

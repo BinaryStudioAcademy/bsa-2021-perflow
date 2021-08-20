@@ -10,6 +10,7 @@ $xbold-weight:    800
 $black-weight:    900
 
 $menu-z-index: 102
+$left-menu-width: 247px
 
 $bg-gradient: linear-gradient(180deg, #FD8427 0%, #FD6831 100%)
 $drk-gray: #21292D
@@ -40,7 +41,7 @@ $fire-orange: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
   font-family: 'Rubik','sans-serif'
 
   &::-webkit-scrollbar
-    width: 5px !important
+    width: 5px
     height: 5px !important
     opacity: 0.7 !important
 
@@ -50,7 +51,6 @@ $fire-orange: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
   &::-webkit-scrollbar-thumb
     background-color: #FD6333 !important
     border-radius: 4px !important
-
 
 body
   font-size: 14px
@@ -156,3 +156,18 @@ card
     i.icon
         color: $login-text-color
         font-size: 16px !important
+
+
+.ui.success.message.copied
+    position: fixed
+    bottom: 110px
+    left: 42% !important
+    right: 42% !important
+    background-color: grey
+    text-align: center
+    box-shadow: none !important
+    border-radius: 50px
+    opacity: 75%
+    z-index: 10
+    .header
+        color: white !important

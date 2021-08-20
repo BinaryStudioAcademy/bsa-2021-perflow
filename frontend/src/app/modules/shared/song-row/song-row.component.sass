@@ -10,6 +10,7 @@
     cursor: pointer
 
 .song
+    box-sizing: content-box
     background-color: $drk-gray
     color: $text
     padding-left: 0.5rem
@@ -21,9 +22,12 @@
         display: inline-block
     .play
         display: none
+    &.playing
+        border: 1px solid $medium-orange
     &:hover
         background-color: $light-gray
-        .like
+        .like,
+        .foredit
             visibility: visible
             &:hover
                 @extend %clickable
@@ -59,6 +63,29 @@
     display: flex
     text-align: center
     align-items: center
+    &:hover
+        .nameedit,
+        .namesave
+            visibility: visible
+    .ui.input
+        height: 20px
+        width: 70%
+        input
+            background: $drk-gray
+            color: $text
+            &:focus
+                outline: none !important
+
+.nameedit,
+.namesave
+    margin-left: 5px
+    visibility: hidden
+    &:hover
+        cursor: pointer  
+
+.namesave
+    font-size: 18px
+    padding-top: 2px
 
 
 .artist-name
@@ -105,6 +132,16 @@
     >i, >.img-wrapper
         margin-right: 1rem !important
 
+.item.last.share
+    >.menu
+        font-family: 'Montserrat' !important
+        box-shadow: none !important
+        margin-right: 0px !important
+        >.item.first.last
+          padding: 18px !important
+          padding-top: 14px !important
+          padding-bottom: 14px !important
+
 .item.active.selected
     background-color: $light-gray !important
     font-weight: $normal-weight !important
@@ -122,6 +159,21 @@
     align-items: center
     display: inline-flex
     padding: 2px 4px
+    &.foredit
+        visibility: hidden
+        font-size: 11px
+        height: 19px
+        width: 19px
+        padding-left: 5px
+        margin: 0 15px
+        background-color: transparent
+        color: $gray
+        border-color: $gray
+        &.active
+            color: $light-orange
+            border-color: $light-orange
+        &:hover
+            cursor: pointer
 
 .ellipsis.vertical
     display: inline

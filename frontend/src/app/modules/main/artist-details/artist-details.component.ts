@@ -1,7 +1,10 @@
+import { PlatformLocation } from '@angular/common';
 import {
   Component, ElementRef, OnInit, ViewChild
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ClipboardService } from 'ngx-clipboard';
+import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
@@ -11,6 +14,7 @@ import { AlbumService } from 'src/app/services/album.service';
 import { ArtistService } from 'src/app/services/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
@@ -29,6 +33,7 @@ export class ArtistDetailsComponent implements OnInit {
   artist: ArtistFull = {} as ArtistFull;
   topSongs: Song[] = [];
   artistPlaylists: PlaylistView[] = [];
+  isSuccess: boolean = false;
   artistAlbums: AlbumForReadDTO[] = [];
 
   constructor(
@@ -36,6 +41,9 @@ export class ArtistDetailsComponent implements OnInit {
     private _artistService: ArtistService,
     private _songService: SongsService,
     private _playlistsService: PlaylistsService,
+    private _queueService: QueueService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation,
     private _reactionService: ReactionService,
     private _authService: AuthService,
     private _albumsService: AlbumService
@@ -126,5 +134,36 @@ export class ArtistDetailsComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  playArtist = () => {
+    if (!this.topSongs.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.topSongs);
+
+    const [first] = this.topSongs;
+
+    this._queueService.initSong(first, true);
+  };
+
+  addToQueue = () => {
+    if (!this.topSongs.length) {
+      return;
+    }
+
+    if (!QueueService.isInitialized) {
+      const [first] = this.topSongs;
+      this._queueService.initSong(first);
+    }
+  };
+  copyLink() {
+    this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 }

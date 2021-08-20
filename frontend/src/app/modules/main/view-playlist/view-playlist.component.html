@@ -1,14 +1,6 @@
 <main>
   <div class="fon-view-playlist">
     <div class="hat-view-playlist">
-      <div class="arrows">
-        <button class="ui icon button arrow" (click)="nextSlide()">
-          <i class="chevron inverted left icon"></i>
-        </button>
-        <button class="ui icon button arrow" (click)="previousSlide()">
-          <i class="chevron inverted right icon"></i>
-        </button>
-      </div>
       <div class="content-view-playlist">
         <div class="image">
           <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" />
@@ -37,40 +29,32 @@
                 <i class="ellipsis vertical icon"></i>
                 <div class="menu">
                   <div class="item first" routerLink="../../edit/{{playlist.id}}">
-                    <span>
                       <i class="edit outline icon"></i>
                       Edit playlist
-                    </span>
                   </div>
-                  <div class="item" routerLink="/">
-                    <span>
+                  <div class="item" (click)="addToQueue()">
                       <i class="outdent icon"></i>
                       Add to queue
-                    </span>
                   </div>
                   <div class="item" routerLink="/">
-                    <span>
                       <i class="podcast icon"></i>
                       Start playlist radio
-                    </span>
                   </div>
-                  <div class="item" routerLink="/">
-                    <span>
-                      <i class="share alternate icon"></i>
-                      Share
-                    </span>
+                  <div class="item share">
+                      <i class="share alternate icon"></i> Share<i class="dropdown icon"></i>
+                      <div class="right menu">
+                        <div class="item first last" (click)="copyLink()">
+                            Copy link
+                        </div>
+                      </div>
                   </div>
                   <div class="item last" routerLink="/">
-                    <span>
                       <i class="hand peace outline icon"></i>
                       About recommendations
-                    </span>
                   </div>
-                  <div class="item last" (click)="deletePlaylist()">
-                    <span>
+                  <div *ngIf="playlist.author?.id === userId" class="item last" (click)="deletePlaylist()">
                       <i class="trash alternate outline icon"></i>
                       Delete playlist
-                    </span>
                   </div>
                 </div>
               </div>
@@ -82,5 +66,10 @@
   </div>
   <div>
     <app-songs-list [songs]="songs"></app-songs-list>
+  </div>
+  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
+    <div class="header">
+      Link copied to clipboard!
+    </div>
   </div>
 </main>

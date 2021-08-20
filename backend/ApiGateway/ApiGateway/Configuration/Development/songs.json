@@ -1,19 +1,6 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/Songs/search?searchTerm={searchTerm}",
-      "DownstreamScheme": "https",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "localhost",
-          "Port": "5001"
-        }
-
-      ],
-      "UpstreamPathTemplate": "/api/Songs/search?searchTerm={searchTerm}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
       "DownstreamPathTemplate": "/api/Songs/liked",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
@@ -50,7 +37,20 @@
 
       ],
       "UpstreamPathTemplate": "/api/Songs",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Songs/orders",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Songs/orders",
+      "UpstreamHttpMethod": [ "PUT" ]
     },
     {
       "DownstreamPathTemplate": "/api/Songs/{id}",

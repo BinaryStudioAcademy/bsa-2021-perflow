@@ -26,6 +26,7 @@ export class ProfileEditFormComponent implements OnInit {
   userForm!: FormGroup;
   genders: Gender[] = genders;
   countries: Country[] = countries;
+  validImageTypes: string[] = ['image/png', 'image/jpg', 'image/jpeg'];
   standartIcon: string = '../../../../assets/images/standartIcon.png';
 
   @Input()
@@ -53,14 +54,8 @@ export class ProfileEditFormComponent implements OnInit {
   handleFileInput(event: Event) {
     const file: File = (<HTMLInputElement>event.target).files![0];
 
-    if (['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)) {
-      const reader: FileReader = new FileReader();
-      reader.onload = () => {
-        this.user.iconURL = reader.result!.toString();
-
-        this.updateUserIcon();
-      };
-      reader.readAsDataURL(file);
+    if (this.validImageTypes.includes(file.type)) {
+      this.updateUserIcon(file);
     }
     else {
       $('.ui.modal').modal('show');
@@ -71,10 +66,11 @@ export class ProfileEditFormComponent implements OnInit {
     this.updatedUser.emit(this.user);
   }
 
-  updateUserIcon() {
-    this._userService.updateUserIcon({ id: this.user.id, iconURL: this.user.iconURL })
+  updateUserIcon(file: File) {
+    this._userService.updateUserIcon({ id: this.user.id, icon: file })
       .subscribe({
-        next: () => {
+        next: (result) => {
+          this.user.iconURL = result.uri;
           this._profileService.updateProfileIcon(this.user.iconURL);
         }
       });

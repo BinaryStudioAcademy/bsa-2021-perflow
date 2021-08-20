@@ -10,13 +10,18 @@ using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
+using Shared.Auth;
+using Perflow.Services.Interfaces;
 
 namespace Perflow.Services.Implementations
 {
     public class AlbumReactionService : BaseService
     {
-        public AlbumReactionService(PerflowContext context, IMapper mapper) : base(context, mapper)
+        private readonly IImageService _imageService;
+
+        public AlbumReactionService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
         {
+            _imageService = imageService;
         }
 
         public async Task<ICollection<AlbumForListDTO>> GetAlbumsByUserId(int userId)
@@ -30,10 +35,10 @@ namespace Perflow.Services.Implementations
                     Id = albumReaction.Album.Id,
                     Name = albumReaction.Album.Name,
                     Author = new AlbumViewAuthorsDTO(
-                                    (int)albumReaction.Album.AuthorId, 
-                                    albumReaction.Album.Author.UserName,
-                                    albumReaction.Album.Author.GroupId.HasValue ? false : true),
-                    IconURL = albumReaction.Album.IconURL,
+                        albumReaction.Album.Author.Id,
+                        albumReaction.Album.Author.UserName,
+                        albumReaction.Album.Author.GroupId.HasValue ? false : true),
+                    IconURL = _imageService.GetImageUrl(albumReaction.Album.IconURL),
                     ReleaseYear = albumReaction.Album.ReleaseYear
                 })
                 .ToListAsync();
@@ -52,7 +57,7 @@ namespace Perflow.Services.Implementations
                     Id = a.Id,
                     Name = a.Name,
                     Description = a.Description,
-                    IconURL = a.IconURL,
+                    IconURL = _imageService.GetImageUrl(a.IconURL),
                     IsSingle = a.IsSingle,
                     Reactions = a.Reactions.Count,
                     Songs = mapper.Map<ICollection<SongViewDTO>>(a.Songs)

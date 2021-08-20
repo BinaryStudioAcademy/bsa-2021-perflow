@@ -6,6 +6,10 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { QueueService } from 'src/app/services/queue.service';
+import { ClipboardService } from 'ngx-clipboard';
+import { PlatformLocation } from '@angular/common';
+import { timer } from 'rxjs';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -22,6 +26,7 @@ export class ViewPlaylistComponent implements OnInit {
   public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
+  public isSuccess: boolean = false;
   isAuthor: boolean;
 
   constructor(
@@ -30,15 +35,18 @@ export class ViewPlaylistComponent implements OnInit {
     private _router: Router,
     private _reactionService: ReactionService,
     private _authService: AuthService,
-    private _createdPlaylistService: CreatePlaylistService
+    private _queueService: QueueService,
+    private _createdPlaylistService: CreatePlaylistService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) {
-    this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
-      .subscribe(
-        (state) => {
-          this.userId = state!.id;
-        }
-      );
+      this._authService.getAuthStateObservable()
+          .pipe(filter((state) => !!state))
+          .subscribe(
+              (state) => {
+                  this.userId = state!.id;
+              }
+          );
   }
 
   ngOnInit() {
@@ -53,7 +61,14 @@ export class ViewPlaylistComponent implements OnInit {
 
   previousSlide = () => { };
 
-  play = () => { };
+  play = () => {
+    if (this.songs.length === 0) return;
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.songs);
+
+    this._queueService.initSong(this.songs[0], true);
+  };
 
   loadPlaylistSongs() {
     this._playlistsService
@@ -98,6 +113,18 @@ export class ViewPlaylistComponent implements OnInit {
       );
   }
 
+  addToQueue = () => {
+    if (!this.songs.length) {
+      return;
+    }
+
+    this._queueService.addSongsToQueue(this.songs);
+
+    if (!QueueService.isInitialized) {
+      const [first] = this.songs;
+      this._queueService.initSong(first);
+    }
+  };
   deletePlaylist() {
     this._playlistsService.deletePlaylist(this.playlist.id)
       .subscribe({
@@ -106,5 +133,13 @@ export class ViewPlaylistComponent implements OnInit {
           this._router.navigateByUrl('/playlists/all');
         }
       });
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 }

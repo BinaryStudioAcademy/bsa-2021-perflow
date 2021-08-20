@@ -10,6 +10,8 @@ import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 })
 export class ArtistCardComponent {
   @Input()
+  isLiked: boolean = false;
+  @Input()
   artist: ArtistReadDTO;
   @Output()
   delete = new EventEmitter<ArtistReadDTO>();

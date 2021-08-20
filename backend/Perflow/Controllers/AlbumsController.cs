@@ -45,14 +45,20 @@ namespace Perflow.Controllers
             return Ok(await _albumsService.GetAlbumsByArtist(artistId));
         }
 
+        [HttpGet("viewsByArtist/{artistId}")]
+        public async Task<ActionResult<ICollection<AlbumViewDTO>>> GetAlbumsShortInfoByArtistId(int artistId)
+        {
+            return Ok(await _albumsService.GetAlbumShortInfosByArtist(artistId));
+        }
+
         [HttpPost]
-        public async Task<ActionResult<AlbumEditDTO>> AddAlbumAsync(AlbumEditDTO albumEditDTO)
+        public async Task<ActionResult<AlbumEditDTO>> AddAlbumAsync([FromForm] AlbumWriteDTO albumEditDTO)
         {
             return Ok(await _albumsService.AddEntityAsync(albumEditDTO));
         }
 
         [HttpPut]
-        public async Task<ActionResult<AlbumEditDTO>> UpdateAlbumAsync(AlbumEditDTO albumEditDTO)
+        public async Task<ActionResult<AlbumEditDTO>> UpdateAlbumAsync([FromForm] AlbumWriteDTO albumEditDTO)
         {
             return Ok(await _albumsService.UpdateEntityAsync(albumEditDTO));
         }

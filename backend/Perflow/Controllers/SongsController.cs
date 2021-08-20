@@ -38,14 +38,6 @@ namespace Perflow.Controllers
             return Ok(songsCount);
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<SongForPlaylistSongSearchDTO>>> GetSongsByNameAsync([FromQuery] string searchTerm)
-        {
-            var songs = await _songsService.FindSongsByNameAsync(searchTerm, User.GetId());
-
-            return Ok(songs);
-        }
-
         [HttpPost("upload")]
         public async Task<ActionResult<SongReadDTO>> AddSongInfo(SongWriteDTO songInfo)
         {
@@ -66,6 +58,20 @@ namespace Perflow.Controllers
             var files = Request.Form.Files;
             var result = await _songsService.UploadSongAsync(files.First());   
             return Ok(new { blobId = result });
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateNameCensorship([FromBody] SongWriteDTO songInfo)
+        {
+            await _songsService.Update(songInfo);
+            return Ok();
+        }
+
+        [HttpPut("orders")]
+        public async Task<ActionResult> UpdateOrders([FromBody] SongOrderDTO[] songOrders)
+        {
+            await _songsService.UpdateOrders(songOrders);
+            return Ok();
         }
 
         [AllowAnonymous]

@@ -65,6 +65,20 @@
       "UpstreamHttpMethod": [
         "PUT"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Albums/viewsByArtist/{artistId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Albums/viewsByArtist/{artistId}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
     }
   ]
 }

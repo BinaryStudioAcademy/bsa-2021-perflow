@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { ClipboardModule } from 'ngx-clipboard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RouterModule } from '@angular/router';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
@@ -40,6 +41,22 @@ import { NewReleaseCardComponent } from './cards/new-release-card/new-release-ca
 import { AlbumDetailsComponent } from './album-details/album-details.component';
 import { ArtistDetailsComponent } from './artist-details/artist-details.component';
 import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.component';
+import {
+  SearchAlbumsResultComponent
+} from './search/components/search-albums-result/search-albums-result.component';
+import {
+  SearchArtistsResultComponent
+} from './search/components/search-artists-result/search-artists-result.component';
+import {
+  SearchPlaylistsResultComponent
+} from './search/components/search-playlists-result/search-playlists-result.component';
+import {
+  SearchSongsResultComponent
+} from './search/components/search-songs-result/search-songs-result.component';
+import { AllSongsComponent } from './search/components/all-songs/all-songs.component';
+import { AllArtistsComponent } from './search/components/all-artists/all-artists.component';
+import { AllAlbumsComponent } from './search/components/all-albums/all-albums.component';
+import { AllPlaylistsComponent } from './search/components/all-playlists/all-playlists.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +87,16 @@ import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.compo
     ViewPlaylistComponent,
     NewReleaseCardComponent,
     AlbumDetailsComponent,
-    ArtistDetailsComponent
+    ArtistDetailsComponent,
+    NewReleaseCardComponent,
+    SearchAlbumsResultComponent,
+    SearchArtistsResultComponent,
+    SearchPlaylistsResultComponent,
+    SearchSongsResultComponent,
+    AllSongsComponent,
+    AllArtistsComponent,
+    AllAlbumsComponent,
+    AllPlaylistsComponent
   ],
   imports: [
     CommonModule,
@@ -82,7 +108,8 @@ import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.compo
     ReactiveFormsModule,
     ClipboardModule,
     ImageCropperModule,
-    RouterModule
+    RouterModule,
+    InfiniteScrollModule
   ],
   exports: [
     ClickOutsideModule,
