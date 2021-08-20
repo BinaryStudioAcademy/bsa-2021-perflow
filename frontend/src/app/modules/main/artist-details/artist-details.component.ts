@@ -47,10 +47,10 @@ export class ArtistDetailsComponent implements OnInit {
     private _reactionService: ReactionService,
     private _authService: AuthService,
     private _albumsService: AlbumService
-  ) { 
-    _route.params.subscribe(routeParams => {
+  ) {
+    _route.params.subscribe((routeParams) => {
       this.loadData();
-  });
+    });
   }
 
   ngOnInit() {
