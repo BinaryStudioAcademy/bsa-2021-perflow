@@ -60,6 +60,20 @@ namespace Perflow.Controllers
             return Ok(new { blobId = result });
         }
 
+        [HttpPut]
+        public async Task<ActionResult> UpdateNameCensorship([FromBody] SongWriteDTO songInfo)
+        {
+            await _songsService.Update(songInfo);
+            return Ok();
+        }
+
+        [HttpPut("orders")]
+        public async Task<ActionResult> UpdateOrders([FromBody] SongOrderDTO[] songOrders)
+        {
+            await _songsService.UpdateOrders(songOrders);
+            return Ok();
+        }
+
         [AllowAnonymous]
         [HttpGet("file")]
         public async Task<FileResult> GetSongFile([FromQuery] string blobId)

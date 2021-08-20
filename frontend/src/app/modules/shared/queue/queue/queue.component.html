@@ -1,0 +1,19 @@
+<div class="queue-container" [ngClass]="isOpened ? 'show' : ''">
+    <div class="song-info">
+        <div class="playing-label"><h4>Now playing</h4></div>
+        <div class="container" *ngIf="!!getCurrentSong()">
+            <div class="playinganimation">
+                <app-playing [isPaused]="!isPlaying"></app-playing>
+            </div>
+            <div class="songicon">
+                <img [attr.src]="getCurrentSong().album.iconURL">
+            </div>
+            <h5 class="songname">{{getCurrentSong().name}}</h5>
+            <h6 [routerLink]="['/artists', getCurrentSong().artist?.id]" class="songauthor">
+                {{getCurrentSong().artist?.userName}}
+            </h6>
+        </div>
+        <div class="queue-label"><h4>Queue</h4></div>
+    </div>
+    <app-songs-list [songs]="songs" (clickMenuItem)="clickMenuHandler($event)" [highlightId]="currentSongId"></app-songs-list>
+</div>

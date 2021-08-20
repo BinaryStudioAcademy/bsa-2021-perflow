@@ -18,5 +18,6 @@ namespace Perflow.Common.DTO.Songs
         public bool HasCensorship { get; set; }
         public string BlobId { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
+        public int Order { get; set; }
     }
 }

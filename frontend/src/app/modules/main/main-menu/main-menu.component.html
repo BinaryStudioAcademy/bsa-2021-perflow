@@ -48,6 +48,6 @@
   </div>  
 </div>
 
-<div class="container">
+<div class="container" [ngClass]="isContainerHidden ? 'hide' : ''">
   <router-outlet></router-outlet>
 </div>

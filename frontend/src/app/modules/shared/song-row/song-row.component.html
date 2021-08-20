@@ -1,8 +1,8 @@
-<div class="ui padded grid song">
+<div class="ui padded grid song" [ngClass]="highlightId === song.id ? 'playing' : ''">
     <div class="sm-row">
         <div class="column song-number">
             <span class="number">{{number}}</span>
-            <i class="play icon" (click)="playSong(song.id)"></i>
+            <i class="play icon" (click)="playSong()"></i>
         </div>
         <div class="column like">
             <i class="heart outline icon" (click)="likeSong(song.id)" *ngIf="!song.isLiked"></i>
@@ -10,7 +10,21 @@
         </div>
         <div class="column song-name text">
             <span class="e" *ngIf="song.hasCensorship">E</span>
-            {{song.name}}
+            <span *ngIf="!isEditing">{{song.name}}</span>
+        
+            <div class="ui input" *ngIf="isEditing">
+                <input type="text" maxlength="50" placeholder="Song's name" [(ngModel)]="song.name" 
+                required>
+            </div>
+
+            <span class="nameedit" *ngIf="isEditable && !isEditing" (click)="editName()">
+                <i class="ui pencil alternate icon"></i>
+            </span>
+            <span class="namesave" *ngIf="isEditable && isEditing" (click)="saveName()">
+                <i class="ui save icon"></i>
+            </span>
+
+            <span class="e foredit" *ngIf="isEditable" [ngClass]="song.hasCensorship ? 'active' : ''" (click)="changeCensorship()">E</span>
         </div>
         <div class="column artist-name text">
             <a class="link" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">

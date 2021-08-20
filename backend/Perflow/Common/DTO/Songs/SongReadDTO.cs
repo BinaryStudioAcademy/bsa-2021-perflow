@@ -21,5 +21,6 @@ namespace Perflow.Common.DTO.Songs
         public string BlobId { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public bool IsLiked { get; set; }
+        public int Order { get; set; }
     }
 }

@@ -1,0 +1,57 @@
+@import '../../../../styles'
+	
+.playing 
+	width: auto 
+.now 
+	&.playing 
+		.bar 
+			display: inline-block 
+			width: 15px 
+			height: 5px
+			background: linear-gradient(to bottom, #9292920a, #ececec1f)
+			animation-name: pulse 
+			animation-timing-function: ease out
+			animation-duration: 1.5s 
+			animation-iteration-count: infinite 
+			&.last
+				border-bottom-right-radius: 5px
+.paused 
+	&.playing 
+		.bar 
+			animation-iteration-count: 1 
+.n1 
+	animation-delay: 0.5s 
+.n2 
+	animation-delay: 0.2s 
+.n3 
+	animation-delay: 1.2s 
+.n4 
+	animation-delay: 0.9s 
+.n5 
+	animation-delay: 2.3s 
+.n6 
+	animation-delay: 1.3s 
+.n7 
+	animation-delay: 3.1s 
+.n8 
+	animation-delay: 1.9s 
+
+@keyframes pulse 
+	0%
+		height: 1px 
+		margin-top: 0 
+	10% 
+		height: 40px 
+		margin-top: -40px 
+	50% 
+		height: 20px 
+		margin-top: -20px 
+	60% 
+		height: 30px 
+		margin-top: -30px 
+	80% 
+		height: 60px 
+		margin-top: -60px 
+	100% 
+		height: 1px 
+		margin-top: 0 

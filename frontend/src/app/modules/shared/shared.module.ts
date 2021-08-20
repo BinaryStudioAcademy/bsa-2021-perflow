@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
+import { ClickOutsideModule } from 'ng-click-outside';
 import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdown.directive';
 import { SemanticCalendarDirective } from './directives/calendar/semantic-calendar.directive';
 import { SemanticMessageDirective } from './directives/message/semantic-message.directive';
@@ -22,6 +25,8 @@ import { SearchSongRowComponent } from './playlist/search-song-row/search-song-r
 import { AlbumRegionTypePipe } from './pipes/album-region-type.pipe';
 import { AuthorTypePipe } from './pipes/album-author-type.pipe';
 import { ClickStopPropagationDirective } from './directives/stopPropagation/click-stop-propagation.directive';
+import { QueueComponent } from './queue/queue/queue.component';
+import { PlayingComponent } from './playing/playing.component';
 
 @NgModule({
   declarations: [
@@ -45,12 +50,17 @@ import { ClickStopPropagationDirective } from './directives/stopPropagation/clic
     SearchSongRowComponent,
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
-    AuthorTypePipe
+    AuthorTypePipe,
+    QueueComponent,
+    PlayingComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    ImageCropperModule
+    ImageCropperModule,
+    DragDropModule,
+    FormsModule,
+    ClickOutsideModule
   ],
   exports: [
     SemanticDropdownDirective,
@@ -73,7 +83,8 @@ import { ClickStopPropagationDirective } from './directives/stopPropagation/clic
     SearchSongRowComponent,
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
-    AuthorTypePipe
+    AuthorTypePipe,
+    QueueComponent
   ]
 })
 
