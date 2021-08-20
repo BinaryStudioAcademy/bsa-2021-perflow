@@ -97,17 +97,17 @@ export class SongRowComponent implements OnInit {
       this._queueService.addSongToQueue(this.song);
     }
 
-    if(this.highlightId !== this.song.id) {
+    if (this.highlightId !== this.song.id) {
       this._queueService.initSong(this.song, true);
     }
-    else{
+    else {
       this.togglePlayEvent.emit();
     }
   };
 
   pauseSong = () => {
     this.togglePlayEvent.emit();
-  }
+  };
 
   editName = () => {
     this.isEditing = true;

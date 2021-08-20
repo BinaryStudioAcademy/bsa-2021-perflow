@@ -50,5 +50,5 @@ export class SongsListComponent {
 
   togglePlay = () => {
     this.togglePlayEvent.emit();
-  }
+  };
 }

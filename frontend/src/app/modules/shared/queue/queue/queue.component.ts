@@ -73,7 +73,7 @@ export class QueueComponent {
 
   togglePlay = () => {
     this.togglePlayEvent.emit();
-  }
+  };
 
   getNextSong = () => {
     const index = this.getCurrentSongIndex();
