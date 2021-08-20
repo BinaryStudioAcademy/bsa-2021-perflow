@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FirebaseAdmin.Auth;
 using OneOf;
@@ -18,11 +17,13 @@ namespace Perflow.Services.Implementations
     {
         private readonly IFirebaseService _firebase;
         private readonly IUsersService _usersService;
+        private readonly IImageService _imageService;
 
-        public AuthService(IFirebaseService firebase, IUsersService usersService)
+        public AuthService(IFirebaseService firebase, IUsersService usersService, IImageService imageService)
         {
             _firebase = firebase;
             _usersService = usersService;
+            _imageService = imageService;
         }
 
         public async Task<OneOf<FirebaseToken, AuthServiceError>> VerifyTokenAsync(string token)
@@ -70,7 +71,7 @@ namespace Perflow.Services.Implementations
             FirebaseToken token = verificationResult.AsT0;
 
             User user = token.ContainsId() ? await _usersService.GetUserAsync(token.GetId()) : null;
-            
+
             if (user == null)
             {
                 var userData = new UserWriteDTO
@@ -103,7 +104,10 @@ namespace Perflow.Services.Implementations
                 var iconURL = (await _firebase.AuthApp.GetUserAsync(token.Uid)).PhotoUrl;
 
                 if (iconURL != null)
-                    await _usersService.UpdateUserIconAsync(new UserChangeIconDTO { Id = user.Id, IconURL = iconURL });
+                {
+                    user.IconURL = await _imageService.UploadImageAsync(iconURL);
+                    await _usersService.UpdateUserAsync(user);
+                }
             }
 
             return await UpdateUserClaimsAsync(user);

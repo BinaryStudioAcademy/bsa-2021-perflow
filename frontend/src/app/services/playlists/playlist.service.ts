@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { objectToFormData } from 'src/app/helpers/object-to-formData-converter';
 import { Playlist } from 'src/app/models/playlist/playlist';
+import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { PlaylistSongDTO } from 'src/app/models/playlist/playlistSongDTO';
@@ -34,8 +36,9 @@ export class PlaylistsService {
     return this._httpService.postRequest<Playlist>(this._endpoint, playlist);
   }
 
-  editPlaylist(playlist: Playlist): Observable<Playlist> {
-    return this._httpService.putRequest<Playlist>(this._endpoint, playlist);
+  editPlaylist(playlist: PlaylistForSave): Observable<Playlist> {
+    const formData = objectToFormData(playlist);
+    return this._httpService.putRequest<Playlist>(this._endpoint, formData);
   }
 
   addSongToPlaylist(playlistSongDTO: PlaylistSongDTO): Observable<PlaylistSongDTO> {

@@ -51,9 +51,9 @@ IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Albu
     SET IDENTITY_INSERT [Songs] ON;
 INSERT INTO [Songs] ([Id], [AlbumId], [ArtistId], [AuthorType], [CreatedAt], [Duration], [GroupId], [HasCensorship], [Name])
 VALUES (1, 1, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'That Would Be Something'),
-(2, 2, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(1 AS bit), N'Mind Games'),
-(3, 2, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Imagine'),
-(4, 3, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Only People'),
+(2, 1, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(1 AS bit), N'Mind Games'),
+(3, 1, 2, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Imagine'),
+(4, 1, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 3, NULL, CAST(0 AS bit), N'Only People'),
 (5, 4, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Shape Of You'),
 (6, 5, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 4, NULL, CAST(1 AS bit), N'Perfect'),
 (7, 6, 1, 0, '2020-09-09T00:00:00.0000000+03:00', 2, NULL, CAST(0 AS bit), N'Thinking Out Loud'),
