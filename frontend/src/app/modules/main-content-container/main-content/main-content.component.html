@@ -2,3 +2,5 @@
     <router-outlet></router-outlet>
 </div>
 <app-profile-menu></app-profile-menu>
+<app-queue (opened)="hideContainer()" (closed)="showContainer()"></app-queue>
+<app-song-toolbar (queueClicked)="toggleQueue()" [isQueueOpened]="isContainerHidden"></app-song-toolbar>

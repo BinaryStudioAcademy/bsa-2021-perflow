@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import {
-  Component, Input, OnDestroy, OnInit
+  Component, OnDestroy, OnInit
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -16,9 +16,6 @@ import { CreatePlaylistService } from '../../shared/playlist/create-playlist/cre
 export class MainMenuComponent implements OnDestroy, OnInit {
   playlists: PlaylistName[] = [];
 
-  @Input()
-  isContainerHidden: boolean;
-
   private _unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -28,7 +25,6 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   }
 
   public ngOnInit() {
-    this.isContainerHidden = false;
     this.getUserCreatedPlaylists();
 
     this._createdPlaylistService.playlistChanged$.subscribe((playlist) => {
