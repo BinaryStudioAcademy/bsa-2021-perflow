@@ -26,7 +26,7 @@ export class RecentlyPlayedService {
   }
 
   addSongViaId(songId: number, userId: number, playlistId?: number) {
-    const songInfo: RPViaSongIdInfo = {userId, playlistId};
+    const songInfo: RPViaSongIdInfo = { userId, playlistId };
     return this._httpService.postRequest<RecentlyPlayed>(`${this.routePrefix}/add/${songId}`, songInfo);
   }
 }

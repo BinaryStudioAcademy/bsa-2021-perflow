@@ -1,4 +1,4 @@
 export interface RPViaSongIdInfo {
-    userId: number,
-    playlistId?: number
+  userId: number,
+  playlistId?: number
 }
