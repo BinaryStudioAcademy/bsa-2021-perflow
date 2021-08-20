@@ -3,6 +3,6 @@
     <a class="field-name" routerLink="/search/{{term}}/artists">Artists</a>
   </div>
   <div class="result-body">
-    <app-artist-card *ngFor="let artist of artists" [artist]="artist"></app-artist-card>
+    <app-artist-card [isPlayShown]="true" *ngFor="let artist of artists" [artist]="artist"></app-artist-card>
   </div>
 </div>

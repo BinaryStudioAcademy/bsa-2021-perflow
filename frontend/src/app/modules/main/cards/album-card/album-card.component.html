@@ -9,6 +9,9 @@
     <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked">
       <i class="like icon ui"></i>
     </div>
+    <div class="remove btn-play" *ngIf="!isForEdit && !isLiked" appClickStopPropagation>
+      <i class="play icon ui"></i>
+    </div>
   </div>
   <div class="info-block">
     <div class="album-name tub">

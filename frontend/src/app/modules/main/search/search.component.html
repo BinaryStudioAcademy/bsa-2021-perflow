@@ -7,7 +7,7 @@
       <i class="search icon"></i>
     </div>
   </div>
-
+  
   <div class="search-result">
     <app-search-songs-result [term]="searchValue" [songs]="foundData.songs" *ngIf="foundData.songs?.length"></app-search-songs-result>
     <app-search-artists-result [term]="searchValue" [artists]="foundData.artists" *ngIf="foundData.artists?.length"></app-search-artists-result>

@@ -19,7 +19,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   readonly debounceTime: number = 750;
 
   foundData = {} as FoundData;
-
   searchValue: string;
 
   private readonly _regex = new RegExp('search.*');
