@@ -32,6 +32,8 @@ namespace Perflow
 
             services.RegisterCustomServices();
 
+            services.AddHttpClient();
+
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
             services.AddAuth(Configuration["GOOGLE_CREDENTIALS:project_id"]);

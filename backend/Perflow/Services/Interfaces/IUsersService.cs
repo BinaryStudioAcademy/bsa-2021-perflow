@@ -12,7 +12,7 @@ namespace Perflow.Services.Interfaces
         public Task<UserSettings> GetUserSettingsAsync(int userId);
         public Task DeleteUserAsync(User user);
         public Task UpdateUserSettingsAsync(UserChangeSettingsDTO userSettings);
-        public Task UpdateUserIconAsync(UserChangeIconDTO userChangeIconDTO);
         public Task<string> GetUserImage(int id);
+        public Task<string> UpdateUserIconAsync(UserChangeIconDTO userChangeIconDTO);
     }
 }

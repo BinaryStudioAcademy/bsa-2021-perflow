@@ -10,6 +10,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-album-details',
@@ -22,6 +23,7 @@ export class AlbumDetailsComponent implements OnInit {
 
   @ViewChild('albums') albumsElement: ElementRef;
   album: AlbumFull = {} as AlbumFull;
+  isSuccess: boolean = false;
   anotherAlbums: AlbumForReadDTO[] = [];
 
   constructor(
@@ -98,5 +100,9 @@ export class AlbumDetailsComponent implements OnInit {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 }

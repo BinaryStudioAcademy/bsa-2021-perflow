@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.Reactions;
+using Perflow.Common.Helpers;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
+using Perflow.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +16,20 @@ namespace Perflow.Services.Implementations
 {
     public class PlaylistReactionService : BaseService
     {
-        public PlaylistReactionService(PerflowContext context, IMapper mapper) : base(context, mapper) { }
+        private readonly IImageService _imageService;
+
+        public PlaylistReactionService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        {
+            _imageService = imageService;
+        }
 
         public async Task<IEnumerable<PlaylistViewDTO>> GetLikedPlaylistsByTheUser(int userId)
         {
             var likedPlaylists = await context.PlaylistReactions
-                .Where(playlist => playlist.UserId == userId)
-                .Select(p => p.Playlist)
+                .Where(pr => pr.UserId == userId)
+                .Select(pr =>
+                    mapper.Map<PlaylistViewDTO>(new PlaylistWithIcon(pr.Playlist, _imageService.GetImageUrl(pr.Playlist.IconURL)))
+                )
                 .ToListAsync();
 
             return mapper.Map<IEnumerable<PlaylistViewDTO>>(likedPlaylists);

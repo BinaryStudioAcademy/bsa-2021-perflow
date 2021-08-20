@@ -6,25 +6,33 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Reactions;
 using Perflow.Common.DTO.Users;
+using Perflow.Common.Helpers;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
+using Perflow.Services.Interfaces;
 
 namespace Perflow.Services.Implementations
 {
     public class ArtistReactionService : BaseService
     {
-        public ArtistReactionService(PerflowContext context, IMapper mapper) : base(context, mapper)
+        private readonly IImageService _imageService;
+
+        public ArtistReactionService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
         {
+            _imageService = imageService;
         }
 
         public async Task<ICollection<ArtistReadDTO>> GetArtistsByUserId(int userId)
         {
             var artists = await context.ArtistReactions
                 .Where(r => r.UserId == userId)
-                .Select(userReaction => userReaction.Artist)
+                .Select(r =>
+                    mapper.Map<UserWithIcon, ArtistReadDTO>(new UserWithIcon(r.Artist, _imageService.GetImageUrl(r.Artist.IconURL)))
+                )
                 .ToListAsync();
-            return mapper.Map<ICollection<ArtistReadDTO>>(artists);
+
+            return artists;
         }
 
         public async Task AddArtistReaction(NewArtistReactionDTO reaction)
