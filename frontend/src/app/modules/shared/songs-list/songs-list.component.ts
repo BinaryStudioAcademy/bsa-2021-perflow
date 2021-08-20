@@ -2,9 +2,9 @@ import {
   Component, Input, Output, EventEmitter
 } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { SongsService } from 'src/app/services/songs/songs.service';
 import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type';
-import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
   selector: 'app-songs-list',
@@ -21,14 +21,14 @@ export class SongsListComponent {
 
   sortType: SongSortType | null = null;
 
-  constructor(private _songService: SongsService){ }
+  constructor(private _songService: SongsService) { }
 
   drop(event: CdkDragDrop<Song[]>) {
     moveItemInArray(this.songs, event.previousIndex, event.currentIndex);
 
-    const orders = this.songs.map((s, index) => ({id: s.id, order: index}));
+    const orders = this.songs.map((s, index) => ({ id: s.id, order: index }));
 
-    const subscription = this._songService.updateOrders(orders).subscribe(()=>{
+    const subscription = this._songService.updateOrders(orders).subscribe(() => {
       subscription.unsubscribe();
     });
   }

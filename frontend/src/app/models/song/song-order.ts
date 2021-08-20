@@ -1,4 +1,4 @@
-export class SongOrder{
-    id: number;
-    order: number;
+export class SongOrder {
+  id: number;
+  order: number;
 }
