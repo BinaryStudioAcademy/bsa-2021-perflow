@@ -27,16 +27,16 @@ namespace Perflow.Services.Implementations
                                               rp.SongId == rpInfo.SongId)
                                  .FirstOrDefault();
 
-            if(rpUpdate == null)
+            if (rpList.Count() > maxNumberOfStoredSongsPerUser)
             {
-                if (rpList.Count() >= maxNumberOfStoredSongsPerUser)
-                {
-                    var rpRemove = rpList
-                                    .OrderByDescending(rp => rp.LastTimeListened)
-                                    .Last();
-                    context.RecentlyPlayed.Remove(rpRemove);
-                }
+                var rpRemove = rpList
+                                .OrderByDescending(rp => rp.LastTimeListened)
+                                .Last();
+                context.RecentlyPlayed.Remove(rpRemove);
+            }
 
+            if (rpUpdate == null)
+            {
                 var newRp = mapper.Map<RecentlyPlayed>(rpInfo);
                 await context.RecentlyPlayed.AddAsync(newRp);
             }
