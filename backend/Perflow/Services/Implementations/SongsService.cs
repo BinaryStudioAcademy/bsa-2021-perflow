@@ -54,31 +54,6 @@ namespace Perflow.Services.Implementations
             return songs;
         }
 
-        public async Task<IEnumerable<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm, int userId)
-        {
-            var songs = await context.Songs
-                .Where(song => song.Name.Contains(searchTerm.Trim()))
-                .Include(song => song.Artist)
-                .Include(song => song.Group)
-                .Include(song => song.Album)
-                .Include(song => song.Reactions)
-                .AsNoTracking()
-                .Select(song => new SongForPlaylistSongSearchDTO
-                {
-                    Id = song.Id,
-                    Album = mapper.Map<AlbumForPlaylistSongSearchDTO>(song.Album),
-                    Artist = mapper.Map<UserForPlaylistDTO>(song.Artist),
-                    Group = mapper.Map<GroupForPlaylistDTO>(song.Group),
-                    Duration = song.Duration,
-                    HasCensorship = song.HasCensorship,
-                    Name = song.Name,
-                    IsLiked = song.Reactions.Any(r => r.UserId == userId)
-                })
-                .ToListAsync();
-
-            return mapper.Map<IEnumerable<SongForPlaylistSongSearchDTO>>(songs);
-        }
-
         public async Task<SongReadDTO> FindSongsByIdAsync(int id)
         {
             var songs = await context.Songs
