@@ -159,6 +159,10 @@ namespace Perflow.Services.Implementations
 
             await _blobService.DeleteFileBlobAsync("songs", song.BlobId);
 
+            var recentlyPlayed = context.RecentlyPlayed.Where(rp => rp.SongId == id);
+
+            context.RecentlyPlayed.RemoveRange(recentlyPlayed);
+
             context.Songs.Remove(song);
 
             await context.SaveChangesAsync();

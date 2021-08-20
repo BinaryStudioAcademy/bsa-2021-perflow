@@ -232,6 +232,10 @@ namespace Perflow.Services.Implementations
                 .Include(album => album.Songs)
                 .FirstOrDefaultAsync(album => album.Id == entityId);
 
+            var recentlyPlayed = context.RecentlyPlayed.Where(rp => rp.AlbumId == entityId);
+
+            context.RecentlyPlayed.RemoveRange(recentlyPlayed);
+
             context.Albums.Remove(deletedAlbum);
 
             await context.SaveChangesAsync();
