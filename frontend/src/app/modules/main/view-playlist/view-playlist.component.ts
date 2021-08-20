@@ -6,6 +6,9 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { ClipboardService } from 'ngx-clipboard';
+import { PlatformLocation } from '@angular/common';
+import { timer } from 'rxjs';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -22,6 +25,7 @@ export class ViewPlaylistComponent implements OnInit {
   public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
+  public isSuccess: boolean = false;
 
   constructor(
     private _activateRoute: ActivatedRoute,
@@ -30,7 +34,9 @@ export class ViewPlaylistComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     private _reactionService: ReactionService,
     private _authService: AuthService,
-    private _createdPlaylistService: CreatePlaylistService
+    private _createdPlaylistService: CreatePlaylistService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) { }
 
   ngOnInit() {
@@ -108,5 +114,13 @@ export class ViewPlaylistComponent implements OnInit {
           this._router.navigateByUrl('/playlists/all');
         }
       });
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 }

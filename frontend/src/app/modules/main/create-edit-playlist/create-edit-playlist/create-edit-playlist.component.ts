@@ -1,7 +1,7 @@
 import {
   Component, OnInit, OnDestroy
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
 } from 'rxjs/operators';
@@ -15,6 +15,8 @@ import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 import { User } from 'src/app/models/user/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CreatePlaylistService } from 'src/app/modules/shared/playlist/create-playlist/create-playlist.service';
+import { ClipboardService } from 'ngx-clipboard';
+import { PlatformLocation } from '@angular/common';
 import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
 
 @Component({
@@ -30,6 +32,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   playlist = {} as Playlist;
   searchValue: string;
   userId: number;
+  isSuccess: boolean = false;
 
   private _id: number | undefined;
 
@@ -42,7 +45,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _authService: AuthService,
-    private _createdPlaylistService: CreatePlaylistService
+    private _createdPlaylistService: CreatePlaylistService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -250,5 +255,15 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.searchValue = '';
       this.foundSongs = new Array<Song>();
     }
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(
+      `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
+    );
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 }

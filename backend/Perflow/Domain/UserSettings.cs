@@ -17,10 +17,10 @@ namespace Perflow.Domain
         public int UserId { get; set; }
         public User User { get; set; }
         public string Language { get; set; }
-        public bool ShowExplicitContent { get; set; }
-        public bool Autoplay { get; set; }
+        public bool? ShowExplicitContent { get; set; }
+        public bool? Autoplay { get; set; }
         public AudioQuality Quality { get; set; }
-        public bool ShowNewReleases { get; set; }
-        public bool ShowFriendsPlaying { get; set; }
+        public bool? ShowNewReleases { get; set; }
+        public bool? ShowFriendsPlaying { get; set; }
     }
 }
