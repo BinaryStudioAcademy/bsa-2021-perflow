@@ -3,16 +3,18 @@
   
   <ng-container *ngIf="isDraggable">
     <div *ngFor="let song of songs | sortSongs:sortType; let i = index" cdkDrag class="song-row">
-      <app-song-row [number]="i+1" [song]="song" [isEditable]="isEditable" [highlightId]="highlightId"
+      <app-song-row [number]="i+1" [song]="song" [isEditable]="isEditable" [highlightId]="highlightId" [isPlaying]="isPlaying"
       (clickMenuItem)="rowMenuClick($event)" 
-      (clickDislike)="clickDislikeIcon($event)"></app-song-row>
+      (clickDislike)="clickDislikeIcon($event)"
+      (togglePlay)="togglePlay()"></app-song-row>
     </div>
   </ng-container>
 
   <ng-container *ngIf="!isDraggable">
     <app-song-row *ngFor="let song of songs | sortSongs:sortType; let i = index"
-    [number]="i+1" [song]="song" [isEditable]="isEditable" [highlightId]="highlightId"
+    [number]="i+1" [song]="song" [isEditable]="isEditable" [highlightId]="highlightId" [isPlaying]="isPlaying"
     (clickMenuItem)="rowMenuClick($event)" 
-    (clickDislike)="clickDislikeIcon($event)"></app-song-row>
+    (clickDislike)="clickDislikeIcon($event)"
+    (togglePlayEvent)="togglePlay()"></app-song-row>
   </ng-container>
 </div>

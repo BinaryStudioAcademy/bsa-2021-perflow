@@ -20,7 +20,8 @@
         visibility: hidden
     .number
         display: inline-block
-    .play
+    .play,
+    .pause
         display: none
     &.playing
         border: 1px solid $medium-orange
@@ -35,7 +36,8 @@
                 @extend %clickable
         .number
             display: none
-        .play
+        .play,
+        .pause
             display: inline-block
             &:hover
                 @extend %clickable
