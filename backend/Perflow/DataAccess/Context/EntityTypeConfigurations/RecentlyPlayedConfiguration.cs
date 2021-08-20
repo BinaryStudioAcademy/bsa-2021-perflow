@@ -14,23 +14,28 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
         {
             builder
                 .HasOne(rp => rp.User)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(rp => rp.Album)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(rp => rp.Playlist)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(rp => rp.Artist)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(rp => rp.Song)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .Property(rp => rp.Frequency)
