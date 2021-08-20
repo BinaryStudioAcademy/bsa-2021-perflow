@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { RecentlyPlayedSong } from '../models/recently-played/recent-song';
 import { RecentlyPlayed } from '../models/recently-played/recently-played';
 import { RPViaSongIdInfo } from '../models/recently-played/rp-via-song-id-info';
 import { HttpInternalService } from './http-internal.service';
@@ -28,5 +30,12 @@ export class RecentlyPlayedService {
   addSongViaId(songId: number, userId: number, playlistId?: number) {
     const info: RPViaSongIdInfo = { userId, playlistId };
     return this._httpService.postRequest<RPViaSongIdInfo>(`${this.routePrefix}/add/${songId}`, info);
+  }
+
+  getRecentSongs(userId: number, amount: number): Observable<RecentlyPlayedSong[]> {
+    const httpParams = { userId };
+    return this._httpService.getRequest<RecentlyPlayedSong[]>(
+      `${this.routePrefix}/get/recent/songs/${amount}`, httpParams
+    );
   }
 }
