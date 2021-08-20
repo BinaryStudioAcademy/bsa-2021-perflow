@@ -1,7 +1,10 @@
+import { PlatformLocation } from '@angular/common';
 import {
   Component, ElementRef, OnInit, ViewChild
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ClipboardService } from 'ngx-clipboard';
+import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
@@ -30,6 +33,7 @@ export class ArtistDetailsComponent implements OnInit {
   artist: ArtistFull = {} as ArtistFull;
   topSongs: Song[] = [];
   artistPlaylists: PlaylistView[] = [];
+  isSuccess: boolean = false;
   artistAlbums: AlbumForReadDTO[] = [];
 
   constructor(
@@ -38,6 +42,8 @@ export class ArtistDetailsComponent implements OnInit {
     private _songService: SongsService,
     private _playlistsService: PlaylistsService,
     private _queueService: QueueService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation,
     private _reactionService: ReactionService,
     private _authService: AuthService,
     private _albumsService: AlbumService
@@ -153,4 +159,11 @@ export class ArtistDetailsComponent implements OnInit {
       this._queueService.initSong(first);
     }
   };
+  copyLink() {
+    this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
+  }
 }

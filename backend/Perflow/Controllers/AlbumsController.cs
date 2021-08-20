@@ -52,13 +52,13 @@ namespace Perflow.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AlbumEditDTO>> AddAlbumAsync(AlbumEditDTO albumEditDTO)
+        public async Task<ActionResult<AlbumEditDTO>> AddAlbumAsync([FromForm] AlbumWriteDTO albumEditDTO)
         {
             return Ok(await _albumsService.AddEntityAsync(albumEditDTO));
         }
 
         [HttpPut]
-        public async Task<ActionResult<AlbumEditDTO>> UpdateAlbumAsync(AlbumEditDTO albumEditDTO)
+        public async Task<ActionResult<AlbumEditDTO>> UpdateAlbumAsync([FromForm] AlbumWriteDTO albumEditDTO)
         {
             return Ok(await _albumsService.UpdateEntityAsync(albumEditDTO));
         }

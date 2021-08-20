@@ -24,8 +24,13 @@
                                 <div class="item first">
                                     <i class="bell icon"></i>Subscribe
                                 </div>
-                                <div class="item">
-                                    <i class="share alternate icon"></i>Share
+                                <div class="item last share">
+                                    <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
+                                    <div class="right menu">
+                                        <div class="item first last" (click)="copyLink()">
+                                            Copy link
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="item last" (click)="addToQueue()">
                                     <i class="outdent alternate icon"></i>Add to queue
@@ -69,6 +74,11 @@
                     <i class="chevron right icon"></i>
                 </button>
             </div>
+        </div>
+    </div>
+    <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
+        <div class="header">
+          Link copied to clipboard!
         </div>
     </div>
 </main>

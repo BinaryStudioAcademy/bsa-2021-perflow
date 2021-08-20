@@ -1,6 +1,9 @@
+import { PlatformLocation } from '@angular/common';
 import {
   Component, Input, Output, EventEmitter, OnInit
 } from '@angular/core';
+import { ClipboardService } from 'ngx-clipboard';
+import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -15,6 +18,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
 
 export class SongRowComponent implements OnInit {
   private _userId: number;
+  isSuccess: boolean = false;
 
   @Input() song: Song;
   @Input() number: number;
@@ -27,9 +31,10 @@ export class SongRowComponent implements OnInit {
   constructor(
     private _reactionService: ReactionService,
     private _authService: AuthService,
-    private _queueService: QueueService
-  ) {
-  }
+    private _queueService: QueueService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
+  ) { }
 
   ngOnInit(): void {
     this.getUserId();
@@ -49,6 +54,16 @@ export class SongRowComponent implements OnInit {
     this.clickMenuItem.emit({ menuItem: menu, song: this.song });
 
     if (menu === 'Add to queue') this._queueService.addSongToQueue(this.song);
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(
+      `${this._location.hostname}:${this._location.port}/albums/${this.song.album.id}`
+    );
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
   }
 
   dislikeSong(songId: number) {

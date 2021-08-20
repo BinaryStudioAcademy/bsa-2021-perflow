@@ -1,9 +1,9 @@
 import { AccessType } from './accessType';
 
-export interface EditedPlaylist {
+export interface PlaylistForSave {
+  id: number;
   name: string;
   description: string;
-  accessType: AccessType;
-  iconURL: string;
   icon?: File;
+  accessType: AccessType;
 }

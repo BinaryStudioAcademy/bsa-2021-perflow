@@ -10,6 +10,6 @@ namespace Perflow.Common.DTO.Users
         public string IconURL { get; set; }
         public string Country { get; set; }
         public string Description { get; set; }
-        public ICollection<AlbumForArtistDTO> Albums { get; set; }
+        public IEnumerable<AlbumForArtistDTO> Albums { get; set; }
     }
 }

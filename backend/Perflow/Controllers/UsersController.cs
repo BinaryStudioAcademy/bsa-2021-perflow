@@ -7,8 +7,10 @@ using Perflow.Services.Interfaces;
 using AutoMapper;
 using Shared.Auth.Extensions;
 using FirebaseAdmin.Auth;
-using Perflow.Domain;
 using System;
+using Perflow.Services.Implementations;
+using Perflow.Domain;
+using Perflow.Common.Helpers;
 
 namespace Perflow.Controllers
 {
@@ -19,13 +21,15 @@ namespace Perflow.Controllers
     {
         private readonly IUsersService _usersService;
         private readonly IAuthService _authService;
+        private readonly IImageService _imageService;
         private readonly IMapper _mapper;
 
-        public UsersController(IUsersService usersService, IAuthService authService, IMapper mapper)
+        public UsersController(IUsersService usersService, IAuthService authService, IMapper mapper, IImageService imageService)
         {
             _usersService = usersService;
             _authService = authService;
             _mapper = mapper;
+            _imageService = imageService;
         }
 
         [HttpGet("{id}")]
@@ -33,7 +37,9 @@ namespace Perflow.Controllers
         {
             var user = await _usersService.GetUserAsync(id);
 
-            return Ok(_mapper.Map<UserReadDTO>(user));
+            var userDto = _mapper.Map<UserReadDTO>(new UserWithIcon(user, _imageService.GetImageUrl(user.IconURL)));
+
+            return Ok(userDto);
         }
 
         [HttpGet("{id}/image")]
@@ -100,12 +106,11 @@ namespace Perflow.Controllers
         }
 
         [HttpPut("changeIcon")]
-        public async Task<ActionResult> Put([FromBody] UserChangeIconDTO userChangeIconDTO)
+        public async Task<ActionResult<string>> Put([FromForm] UserChangeIconDTO userChangeIconDTO)
         {
+            var uri = await _usersService.UpdateUserIconAsync(userChangeIconDTO);
 
-            await _usersService.UpdateUserIconAsync(userChangeIconDTO);
-
-            return Ok();
+            return Ok(new { uri });
         }
     }
 }

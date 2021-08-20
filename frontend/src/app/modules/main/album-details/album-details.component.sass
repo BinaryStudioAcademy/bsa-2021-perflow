@@ -2,6 +2,16 @@
 
 $image-size: 245px
 
+%avatar
+    width: $image-size
+    height: $image-size
+    border-radius: 50%
+
+=flex-container($align-items, $justify-content)
+    display: flex
+    align-items: $align-items
+    justify-content: $justify-content
+
 main
     background: $drk-gray
     width: 100%
@@ -27,18 +37,24 @@ main
             text-align: center
             padding-top: 104px
             .image
-                width: $image-size
-                height: $image-size
-                border-radius: 50%
+                @extend %avatar
                 box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
                 object-fit: cover
+            .icon-background
+                @extend %avatar
+                +flex-container(center, center)
+                background: $light-orange
+                box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
+                i
+                    font-size: 64px
+                    margin-top: 3rem
+                    color: $text
+                    margin-right: 0 !important         
         .album-info 
             grid-area: album-info
             padding-top: 104px
-            display: flex
             flex-direction: column
-            justify-content: left
-            align-items: left
+            +flex-container(left, left)
             margin-left: 35px
             color: $text
             .type
