@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
@@ -28,7 +29,8 @@ export class LandingPageComponent {
   });
 
   constructor(
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _snackbarService: SnackbarService
   ) {
     this.loginForm.valueChanges.subscribe((changes) => {
       this.isLogInClicked = false;
@@ -52,8 +54,8 @@ export class LandingPageComponent {
     })
       .catch((e) => {
         this.isLogInClicked = false;
-        this.failure = true;
-        this.failMessage = e;
+
+        this._snackbarService.show({ message: e, header: 'Login Failed!', type: 'error' });
       });
   }
 

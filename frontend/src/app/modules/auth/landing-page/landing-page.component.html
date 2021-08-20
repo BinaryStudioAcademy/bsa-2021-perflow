@@ -56,12 +56,13 @@
                 </p>
                 <div class="checkbox-container">
                   <div class="ui checkbox remember-me">
-                    <input type="checkbox" id="remember" name="remember" [checked]="rememberMe" (change)="rememberMe = !rememberMe">
+                    <input type="checkbox" id="remember" name="remember" [checked]="rememberMe"
+                      (change)="rememberMe = !rememberMe">
                     <label for="remember">Remember me</label>
                   </div>
                   <button id="log-in-btn" 
                           class="ui btn-full button" 
-                          (click)="logInWithEmail()"
+                          (click)="logInWithEmail()" 
                           [ngClass]="{
                             'loading': isLogInClicked
                           }">
@@ -94,12 +95,7 @@
         <div class="fake"></div>
       </div>
     </div>
-  <div *ngIf="failure" class="ui negative message">
-    <i class="close icon" (click)="failure = false"></i>
-    <div class="header">
-      Login Failed!
-    </div>
-    <p>{{ failMessage }}</p>
-  </div>
   </div>
 </div>
+
+<app-snackbar></app-snackbar>

@@ -22,33 +22,16 @@ export class ViewPlaylistComponent implements OnInit {
   public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
+  isAuthor: boolean;
 
   constructor(
     private _activateRoute: ActivatedRoute,
     private _playlistsService: PlaylistsService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute,
     private _reactionService: ReactionService,
     private _authService: AuthService,
     private _createdPlaylistService: CreatePlaylistService
-  ) { }
-
-  ngOnInit() {
-    this._activateRoute.params.subscribe((params: Params) => {
-      this._playlistId = params.id;
-      this.loadPlaylist();
-      this.loadPlaylistSongs();
-    });
-    this.getUserId();
-  }
-
-  nextSlide = () => { };
-
-  previousSlide = () => { };
-
-  play = () => { };
-
-  getUserId() {
+  ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
       .subscribe(
@@ -57,6 +40,20 @@ export class ViewPlaylistComponent implements OnInit {
         }
       );
   }
+
+  ngOnInit() {
+    this._activateRoute.params.subscribe((params: Params) => {
+      this._playlistId = params.id;
+      this.loadPlaylist();
+      this.loadPlaylistSongs();
+    });
+  }
+
+  nextSlide = () => { };
+
+  previousSlide = () => { };
+
+  play = () => { };
 
   loadPlaylistSongs() {
     this._playlistsService
@@ -79,6 +76,7 @@ export class ViewPlaylistComponent implements OnInit {
       .getPlaylist(this._playlistId)
       .subscribe((playlist) => {
         this.playlist = playlist;
+        this.isAuthor = this.userId === this.playlist.author.id;
       });
   }
 

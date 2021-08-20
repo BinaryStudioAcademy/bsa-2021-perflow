@@ -52,7 +52,7 @@ export class AlbumDetailsComponent implements OnInit {
       .subscribe(
         (result) => {
           this.album = result;
-          this.isAuthor = this._userId === this.album?.artist?.id;
+          this.isAuthor = this._userId === (this.album?.artist?.id ?? this.album?.group?.id);
 
           this.loadAnotherAlbums();
         }
