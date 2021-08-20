@@ -50,6 +50,24 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
+        public async Task AddSongViaId(int songId, RPViaSongIdInfoDTO info)
+        {
+            var song = await context.Songs.SingleAsync(s => s.Id == songId);
+            if(song == null)
+                throw new ArgumentNullException(nameof(song), "Song was not found");
+
+            var rpInfo = new RecentlyPlayedDTO
+            {
+                UserId = info.UserId,
+                AlbumId = song.AlbumId,
+                ArtistId = song.ArtistId,
+                PlaylistId = info.PlaylistId,
+                SongId = songId
+            };
+
+            await AddSong(rpInfo);
+        }
+
         public async Task<IEnumerable<RecentlyPlayedDTO>> GetAll(int userId)
         {
             var rpList = await context.RecentlyPlayed

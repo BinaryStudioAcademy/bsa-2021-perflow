@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { RecentlyPlayed } from '../models/recently-played';
+import { RecentlyPlayed } from '../models/recently-played/recently-played';
+import { RPViaSongIdInfo } from '../models/recently-played/rp-via-song-id-info';
 import { HttpInternalService } from './http-internal.service';
 
 @Injectable({
@@ -22,5 +23,10 @@ export class RecentlyPlayedService {
 
   addSong(rpInfo: RecentlyPlayed) {
     return this._httpService.postRequest<RecentlyPlayed>(`${this.routePrefix}/add`, rpInfo);
+  }
+
+  addSongViaId(songId: number, userId: number, playlistId?: number) {
+    const songInfo: RPViaSongIdInfo = {userId, playlistId};
+    return this._httpService.postRequest<RecentlyPlayed>(`${this.routePrefix}/add/${songId}`, songInfo);
   }
 }

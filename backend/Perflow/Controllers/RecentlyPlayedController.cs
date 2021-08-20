@@ -27,6 +27,14 @@ namespace Perflow.Controllers
             return Ok();
         }
 
+        [HttpPost("add/{songId}")]
+        public async Task<ActionResult> AddSongViaId(int songId, [FromBody] RPViaSongIdInfoDTO info)
+        {
+            await _service.AddSongViaId(songId, info);
+
+            return Ok();
+        }
+
         [HttpGet("get/all")]
         public async Task<ActionResult<IEnumerable<RecentlyPlayedDTO>>> GetAll([FromQuery] int userId)
         {
