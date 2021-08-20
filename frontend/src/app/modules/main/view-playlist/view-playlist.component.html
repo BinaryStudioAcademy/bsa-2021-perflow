@@ -1,14 +1,6 @@
 <main>
   <div class="fon-view-playlist">
     <div class="hat-view-playlist">
-      <div class="arrows">
-        <button class="ui icon button arrow" (click)="nextSlide()">
-          <i class="chevron inverted left icon"></i>
-        </button>
-        <button class="ui icon button arrow" (click)="previousSlide()">
-          <i class="chevron inverted right icon"></i>
-        </button>
-      </div>
       <div class="content-view-playlist">
         <div class="image">
           <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" />
@@ -61,7 +53,7 @@
                       <i class="hand peace outline icon"></i>
                       About recommendations
                   </div>
-                  <div class="item last" (click)="deletePlaylist()">
+                  <div *ngIf="playlist.author?.id === userId" class="item last" (click)="deletePlaylist()">
                       <i class="trash alternate outline icon"></i>
                       Delete playlist
                   </div>

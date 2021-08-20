@@ -125,10 +125,6 @@ namespace Perflow.Services.Implementations
                                  .ToList()
                 })
                 .ToListAsync();
-            foreach (var entity in entities)
-            {
-                entity.Authors = entity.Authors.Distinct().Take(newReleasesToTake);
-            }
             return entities;
         }
 
