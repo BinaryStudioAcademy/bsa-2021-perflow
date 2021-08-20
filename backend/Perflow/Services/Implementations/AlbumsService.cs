@@ -106,10 +106,20 @@ namespace Perflow.Services.Implementations
                                         .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
-                                        .AsNoTracking()
+                                        .Select(a => new AlbumForListDTO 
+                                        {
+                                            Id = a.Id,
+                                            Name = a.Name,
+                                            IconURL = a.IconURL,
+                                            Author = new AlbumViewAuthorsDTO(
+                                            a.Author.Id,
+                                            a.Author.UserName,
+                                            !a.Author.GroupId.HasValue),
+
+                                        })
                                         .ToListAsync();
 
-            return mapper.Map<ICollection<AlbumForListDTO>>(albums);
+            return albums;
         }
 
 
