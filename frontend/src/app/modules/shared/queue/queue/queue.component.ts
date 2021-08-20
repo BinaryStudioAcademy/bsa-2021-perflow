@@ -22,7 +22,9 @@ export class QueueComponent {
 
   constructor(private _queueService: QueueService) {
     _queueService.songAdded$.subscribe((song) => {
-      if (this.songs.length === 0) this.currentSongId = song.id;
+      if (!this.songs.length) {
+        this.currentSongId = song.id;
+      }
 
       if (!this.songs.find((s) => s.id === song.id)) this.songs.push(song);
     });
@@ -61,7 +63,7 @@ export class QueueComponent {
   clickMenuHandler(data: { menuItem: string, song: Song }) {
     switch (data.menuItem) {
       case 'Add to queue':
-        this.songs.push(data.song);
+        this.songs = [...this.songs, data.song];
         break;
       default:
         break;
@@ -71,7 +73,7 @@ export class QueueComponent {
   getNextSong = () => {
     const index = this.getCurrentSongIndex();
 
-    if (this.songs.length === 0 || index + 1 >= this.songs.length) return null;
+    if (!this.songs.length || index + 1 >= this.songs.length) return null;
 
     this.currentSongId = this.songs[index + 1].id;
 
@@ -81,7 +83,7 @@ export class QueueComponent {
   getPreviousSong = () => {
     const index = this.getCurrentSongIndex();
 
-    if (this.songs.length === 0 || index - 1 < 0) return null;
+    if (!this.songs.length || index - 1 < 0) return null;
 
     this.currentSongId = this.songs[index - 1].id;
 

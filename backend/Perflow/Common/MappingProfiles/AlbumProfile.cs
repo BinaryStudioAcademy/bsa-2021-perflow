@@ -14,8 +14,7 @@ namespace Perflow.Common.MappingProfiles
         {
             CreateMap<Album, AlbumViewDTO>();
             CreateMap<Album, AlbumReadDTO>();
-            CreateMap<Album, AlbumForListDTO>()
-                .ForMember(dest => dest.AuthorName, opt => opt.MapFrom(src => src.Author.UserName));
+            CreateMap<Album, AlbumForListDTO>();
             CreateMap<AlbumForListDTO, Album>();
 
             CreateMap<Album, AlbumFullDTO>()

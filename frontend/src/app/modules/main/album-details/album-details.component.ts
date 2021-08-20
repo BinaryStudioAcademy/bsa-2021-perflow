@@ -103,19 +103,28 @@ export class AlbumDetailsComponent implements OnInit {
   }
 
   playAlbum = () => {
-    if (this.album.songs.length === 0) return;
+    if (!this.album.songs.length) {
+      return;
+    }
 
     this._queueService.clearQueue();
     this._queueService.addSongsToQueue(this.album.songs);
 
-    this._queueService.initSong(this.album.songs[0], true);
+    const [first] = this.album.songs;
+
+    this._queueService.initSong(first, true);
   };
 
   addToQueue = () => {
-    if (this.album.songs.length === 0) return;
+    if (!this.album.songs.length) {
+      return;
+    }
 
     this._queueService.addSongsToQueue(this.album.songs);
 
-    if (!QueueService.isInitialized) this._queueService.initSong(this.album.songs[0]);
+    if (!QueueService.isInitialized) {
+      const [first] = this.album.songs;
+      this._queueService.initSong(first);
+    }
   };
 }

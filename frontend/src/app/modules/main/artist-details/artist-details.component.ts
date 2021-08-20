@@ -131,17 +131,26 @@ export class ArtistDetailsComponent implements OnInit {
   }
 
   playArtist = () => {
-    if (this.topSongs.length === 0) return;
+    if (!this.topSongs.length) {
+      return;
+    }
 
     this._queueService.clearQueue();
     this._queueService.addSongsToQueue(this.topSongs);
 
-    this._queueService.initSong(this.topSongs[0], true);
+    const [first] = this.topSongs;
+
+    this._queueService.initSong(first, true);
   };
 
   addToQueue = () => {
-    if (this.topSongs.length === 0) return;
+    if (!this.topSongs.length) {
+      return;
+    }
 
-    if (!QueueService.isInitialized) this._queueService.initSong(this.topSongs[0]);
+    if (!QueueService.isInitialized) {
+      const [first] = this.topSongs;
+      this._queueService.initSong(first);
+    }
   };
 }

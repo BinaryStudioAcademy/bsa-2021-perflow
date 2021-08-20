@@ -110,11 +110,16 @@ export class ViewPlaylistComponent implements OnInit {
   }
 
   addToQueue = () => {
-    if (this.songs.length === 0) return;
+    if (!this.songs.length) {
+      return;
+    }
 
     this._queueService.addSongsToQueue(this.songs);
 
-    if (!QueueService.isInitialized) this._queueService.initSong(this.songs[0]);
+    if (!QueueService.isInitialized) {
+      const [first] = this.songs;
+      this._queueService.initSong(first);
+    }
   };
   deletePlaylist() {
     this._playlistsService.deletePlaylist(this.playlist.id)

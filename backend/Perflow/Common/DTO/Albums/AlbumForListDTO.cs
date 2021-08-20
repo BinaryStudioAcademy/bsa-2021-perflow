@@ -8,6 +8,6 @@ namespace Perflow.Common.DTO.Albums
         public string Name { get; set; }
         public int? ReleaseYear { get; set; }
         public string IconURL { get; set; }
-        public string AuthorName { get; set; }
+        public AlbumViewAuthorsDTO Author { get; set; }
     }
 }
