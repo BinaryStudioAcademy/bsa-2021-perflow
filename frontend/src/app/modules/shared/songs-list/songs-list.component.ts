@@ -26,7 +26,7 @@ export class SongsListComponent {
   drop(event: CdkDragDrop<Song[]>) {
     moveItemInArray(this.songs, event.previousIndex, event.currentIndex);
 
-    const orders = this.songs.map((s, index) => { return {id: s.id, order: index}});
+    const orders = this.songs.map((s, index) => ({id: s.id, order: index}));
 
     const subscription = this._songService.updateOrders(orders).subscribe(()=>{
       subscription.unsubscribe();
