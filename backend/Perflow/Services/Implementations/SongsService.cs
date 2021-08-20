@@ -208,7 +208,26 @@ namespace Perflow.Services.Implementations
 
         public async Task Update(SongWriteDTO song)
         {
-            await Task.Run(() => context.Songs.Update(mapper.Map<Song>(song)));
+            var songForChange = (await context.Songs.FindAsync(song.Id));
+
+            songForChange.Name = song.Name;
+            songForChange.HasCensorship = song.HasCensorship;
+
+            await Task.Run(() => context.Songs.Update(mapper.Map<Song>(songForChange)));
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateOrders(SongOrderDTO[] songOrders)
+        {
+            foreach(var order in songOrders)
+            {
+                var song = await context.Songs.FindAsync(order.Id);
+                song.Order = order.Order;
+                context.Songs.Update(song);
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

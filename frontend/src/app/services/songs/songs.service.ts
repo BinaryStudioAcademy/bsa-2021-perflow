@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Song } from 'src/app/models/song/song';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
 import { HttpInternalService } from '../http-internal.service';
+import { SongOrder } from 'src/app/models/song/song-order';
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +81,10 @@ export class SongsService {
     songForWrite.name = song.name;
     songForWrite.hasCensorship = song.hasCensorship;
 
-    return this._httpService.putFullRequest<SongWriteDTO>('/api/songs', songForWrite);
+    return this._httpService.putRequest<SongWriteDTO>('/api/songs', songForWrite);
+  }
+
+  updateOrders(songOrders: SongOrder[]){
+    return this._httpService.putRequest<SongWriteDTO>('/api/songs/orders', songOrders);
   }
 }

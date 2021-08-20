@@ -20,5 +20,6 @@ namespace Perflow.Services.Interfaces
         public Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count, int userId);
         public Task<bool> CheckIsLiked(int songId, int userId);
         public Task Update(SongWriteDTO song);
+        public Task UpdateOrders(SongOrderDTO[] songOrders);
     }
 }

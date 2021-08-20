@@ -69,9 +69,16 @@ namespace Perflow.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update([FromBody] SongWriteDTO songInfo)
+        public async Task<ActionResult> UpdateNameCensorship([FromBody] SongWriteDTO songInfo)
         {
             await _songsService.Update(songInfo);
+            return Ok();
+        }
+
+        [HttpPut("orders")]
+        public async Task<ActionResult> UpdateOrders([FromBody] SongOrderDTO[] songOrders)
+        {
+            await _songsService.UpdateOrders(songOrders);
             return Ok();
         }
 

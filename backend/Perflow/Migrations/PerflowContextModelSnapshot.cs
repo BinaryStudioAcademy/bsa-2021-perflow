@@ -294,6 +294,9 @@ namespace Perflow.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AlbumId");
@@ -466,7 +469,7 @@ namespace Perflow.Migrations
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>
                 {
                     b.HasOne("Perflow.Domain.User", "Artist")
-                        .WithMany()
+                        .WithMany("ArtistReactions")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -632,6 +635,8 @@ namespace Perflow.Migrations
             modelBuilder.Entity("Perflow.Domain.User", b =>
                 {
                     b.Navigation("Albums");
+
+                    b.Navigation("ArtistReactions");
 
                     b.Navigation("Followers");
 

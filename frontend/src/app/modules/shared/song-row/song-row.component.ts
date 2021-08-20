@@ -100,8 +100,8 @@ export class SongRowComponent implements OnInit {
   };
 
   changeCensorship = () => {
+    this.song.hasCensorship = !this.song.hasCensorship;
     const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
-      this.song.hasCensorship = !this.song.hasCensorship;
       subscription.unsubscribe();
     });
   };

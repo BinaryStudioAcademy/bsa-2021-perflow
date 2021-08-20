@@ -55,7 +55,7 @@ namespace Perflow.Services.Implementations
                                                 Name = a.Name,
                                                 ReleaseYear = a.ReleaseYear,
                                                 IconURL = a.IconURL,
-                                                Songs = a.Songs
+                                                Songs = a.Songs.OrderBy(s => s.Order)
                                                 .Select(s =>
                                                     mapper.Map<LikedSong, SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
                                                 ),
