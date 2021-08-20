@@ -21,11 +21,10 @@ namespace Perflow.Services.Implementations
         {
             var rpList = context.RecentlyPlayed.Where(rp => rp.UserId == rpInfo.UserId);
 
-            var rpUpdate = rpList.Where(rp => rp.ArtistId == rpInfo.ArtistId &&
-                                              rp.AlbumId == rpInfo.AlbumId &&
-                                              rp.PlaylistId == rpInfo.PlaylistId &&
-                                              rp.SongId == rpInfo.SongId)
-                                 .FirstOrDefault();
+            var rpUpdate = rpList.FirstOrDefault(rp => rp.ArtistId == rpInfo.ArtistId &&
+                                                       rp.AlbumId == rpInfo.AlbumId &&
+                                                       rp.PlaylistId == rpInfo.PlaylistId &&
+                                                       rp.SongId == rpInfo.SongId);
 
             if (rpList.Count() > maxNumberOfStoredSongsPerUser)
             {
