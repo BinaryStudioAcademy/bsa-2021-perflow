@@ -59,7 +59,7 @@ namespace Perflow.Services.Implementations
                                                 Id = a.Id,
                                                 Name = a.Name,
                                                 ReleaseYear = a.ReleaseYear,
-                                                IconURL = a.IconURL,
+                                                IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs.OrderBy(s => s.Order)
                                                 .Select(s =>
                                                     mapper.Map<SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
@@ -97,7 +97,7 @@ namespace Perflow.Services.Implementations
                                             a.Author.Id,
                                             a.Author.UserName,
                                             !a.Author.GroupId.HasValue),
-                                            IconURL = a.IconURL,
+                                            IconURL = _imageService.GetImageUrl(a.IconURL),
                                             ReleaseYear = a.ReleaseYear
                                         })
                                         .ToListAsync();
@@ -115,7 +115,7 @@ namespace Perflow.Services.Implementations
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
-                                            IconURL = a.IconURL,
+                                            IconURL = _imageService.GetImageUrl(a.IconURL),
                                             Author = new AlbumViewAuthorsDTO(
                                             a.Author.Id,
                                             a.Author.UserName,

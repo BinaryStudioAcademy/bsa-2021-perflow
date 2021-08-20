@@ -8,7 +8,6 @@ import {
 import { Song } from 'src/app/models/song/song';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { Playlist } from 'src/app/models/playlist/playlist';
-import { SongsService } from 'src/app/services/songs/songs.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
@@ -18,6 +17,7 @@ import { CreatePlaylistService } from 'src/app/modules/shared/playlist/create-pl
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
 import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -41,11 +41,12 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
 
   constructor(
     private _playlistService: PlaylistsService,
-    private _songService: SongsService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _authService: AuthService,
     private _createdPlaylistService: CreatePlaylistService,
+    private _searchService: SearchService,
+
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation
   ) {
@@ -124,7 +125,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe$),
       debounceTime(500),
       distinctUntilChanged(),
-      switchMap((term: string) => this._songService.getSongsByName(term))
+      switchMap((term: string) => this._searchService.getSongsByName({
+        searchTerm: term, page: 1, itemsOnPage: 30
+      }))
     ).subscribe({
       next: (data) => {
         this.foundSongs = data;

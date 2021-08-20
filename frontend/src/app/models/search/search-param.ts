@@ -1,4 +1,5 @@
 export interface SearchParam {
   searchTerm: string,
-  amount: number
+  page: number,
+  itemsOnPage: number
 }

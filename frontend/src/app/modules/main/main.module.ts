@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { ClipboardModule } from 'ngx-clipboard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RouterModule } from '@angular/router';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
@@ -51,6 +52,10 @@ import {
 import {
   SearchSongsResultComponent
 } from './search/components/search-songs-result/search-songs-result.component';
+import { AllSongsComponent } from './search/components/all-songs/all-songs.component';
+import { AllArtistsComponent } from './search/components/all-artists/all-artists.component';
+import { AllAlbumsComponent } from './search/components/all-albums/all-albums.component';
+import { AllPlaylistsComponent } from './search/components/all-playlists/all-playlists.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +90,11 @@ import {
     SearchAlbumsResultComponent,
     SearchArtistsResultComponent,
     SearchPlaylistsResultComponent,
-    SearchSongsResultComponent
+    SearchSongsResultComponent,
+    AllSongsComponent,
+    AllArtistsComponent,
+    AllAlbumsComponent,
+    AllPlaylistsComponent
   ],
   imports: [
     CommonModule,
@@ -97,7 +106,8 @@ import {
     ReactiveFormsModule,
     ClipboardModule,
     ImageCropperModule,
-    RouterModule
+    RouterModule,
+    InfiniteScrollModule
   ],
   exports: [
     ClickOutsideModule,

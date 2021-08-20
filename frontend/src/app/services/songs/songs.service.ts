@@ -30,11 +30,6 @@ export class SongsService {
     return of(this.topSongs);
   }
 
-  getSongsByName = (searchTerm: string): Observable<Song[]> => {
-    const httpParams = { searchTerm: `${searchTerm}` };
-    return this._httpService.getRequest<Song[]>('/api/songs/search', httpParams);
-  };
-
   getSongById = (id: number) => this._httpService.getRequest<Song>(`/api/songs/${id}`);
 
   uploadSong = (songForWrite: SongWriteDTO, song: File) => this._uploadSongFile(song).pipe(
