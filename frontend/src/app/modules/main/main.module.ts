@@ -6,7 +6,6 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RouterModule } from '@angular/router';
-import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -60,7 +59,6 @@ import {
     PlaylistComponent,
     SearchComponent,
     SongsComponent,
-    ProfileMenuComponent,
     RecentlyPlayedCardComponent,
     YourMixCardComponent,
     UserProfileComponent,
@@ -103,7 +101,6 @@ import {
   ],
   exports: [
     ClickOutsideModule,
-    ProfileMenuComponent,
     AlbumCardComponent
   ]
 })
