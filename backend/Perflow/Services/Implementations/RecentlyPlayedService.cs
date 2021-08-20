@@ -50,13 +50,24 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
-        public async Task GetAll(int userId)
+        public async Task<IEnumerable<RecentlyPlayedDTO>> GetAll(int userId)
         {
             var rpList = await context.RecentlyPlayed
                                 .Where(rp => rp.UserId == userId)
                                 .ToListAsync();
 
-            return;
+            return mapper.Map<IEnumerable<RecentlyPlayedDTO>>(rpList);
+        }
+
+        public async Task<IEnumerable<RecentlyPlayedDTO>> GetRecent(int userId, int amount)
+        {
+            var rpList = await context.RecentlyPlayed
+                                .Where(rp => rp.UserId == userId)
+                                .OrderByDescending(rp => rp.LastTimeListened)
+                                .Take(amount)
+                                .ToListAsync();
+
+            return mapper.Map<IEnumerable<RecentlyPlayedDTO>>(rpList);
         }
     }
 }

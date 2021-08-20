@@ -26,5 +26,17 @@ namespace Perflow.Controllers
 
             return Ok();
         }
+
+        [HttpGet("get/all")]
+        public async Task<ActionResult<IEnumerable<RecentlyPlayedDTO>>> GetAll([FromQuery] int userId)
+        {
+            return Ok(await _service.GetAll(userId));
+        }
+
+        [HttpGet("get/recent/{amount}")]
+        public async Task<ActionResult<IEnumerable<RecentlyPlayedDTO>>> GetRecent([FromQuery] int userId, int amount)
+        {
+            return Ok(await _service.GetRecent(userId, amount));
+        }
     }
 }
