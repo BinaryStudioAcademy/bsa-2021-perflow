@@ -16,9 +16,11 @@ export class SongsListComponent {
   @Input() highlightId: number;
   @Input() isDraggable = false;
   @Input() isEditable = false;
+  @Input() isPlaying = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
+  @Output() togglePlayEvent = new EventEmitter<void>();
 
   sortType: SongSortType | null = null;
 
@@ -45,4 +47,8 @@ export class SongsListComponent {
   clickDislikeIcon(songId: number) {
     this.clickDislike.emit(songId);
   }
+
+  togglePlay = () => {
+    this.togglePlayEvent.emit();
+  };
 }

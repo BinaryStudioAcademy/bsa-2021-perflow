@@ -2,7 +2,8 @@
     <div class="sm-row">
         <div class="column song-number">
             <span class="number">{{number}}</span>
-            <i class="play icon" (click)="playSong()"></i>
+            <i class="pause icon" (click)="pauseSong()" *ngIf="isPlaying && highlightId === song.id"></i>
+            <i class="play icon" (click)="playSong()" *ngIf="highlightId !== song.id || !isPlaying"></i>
         </div>
         <div class="column like">
             <i class="heart outline icon" (click)="likeSong(song.id)" *ngIf="!song.isLiked"></i>
