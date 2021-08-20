@@ -3,12 +3,12 @@
         <div class="image">
             <img [attr.src]="artist.iconURL" alt="Artist">    
         </div>
-        <div class="remove" *ngIf="!isPlayShown" (click)="onDeleteClick(artist)" appClickStopPropagation>
+        <div class="remove" *ngIf="isLiked" (click)="onDeleteClick(artist)" appClickStopPropagation>
             <i class="like icon ui"></i>
         </div>
-        <div class="remove btn-play" *ngIf="isPlayShown" appClickStopPropagation>
-          <i class="play icon ui"></i>
-        </div>
+        <button class="play-icon" appClickStopPropagation>
+          <i class="play icon"></i>
+        </button> 
     </div>
     <div class="info-block">
         <div class="artist-name tub">

@@ -2,6 +2,6 @@
   <h2>All artists for <i>"{{searchTerm}}"</i></h2>
   <div class="search-result" infinite-scroll [infiniteScrollDistance]="distance" [infiniteScrollThrottle]="throttle"
     (scrolled)="onScroll()">
-    <app-artist-card [isPlayShown]="true" *ngFor="let artist of artists" [artist]="artist"></app-artist-card>
+    <app-artist-card *ngFor="let artist of artists" [artist]="artist"></app-artist-card>
   </div>
 </div>

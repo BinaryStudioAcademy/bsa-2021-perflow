@@ -10,7 +10,7 @@ import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 })
 export class ArtistCardComponent {
   @Input()
-  isPlayShown: boolean = false;
+  isLiked: boolean = false;
   @Input()
   artist: ArtistReadDTO;
   @Output()
