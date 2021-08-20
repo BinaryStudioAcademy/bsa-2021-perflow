@@ -12,7 +12,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     SharedModule
   ]
 })

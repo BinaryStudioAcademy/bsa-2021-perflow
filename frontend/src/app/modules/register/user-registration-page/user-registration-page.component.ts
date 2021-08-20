@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { RegisterData } from '../../../models/auth/register-data';
-import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-user-registration-page',
@@ -9,7 +9,6 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./user-registration-page.component.sass']
 })
 export class UserRegistrationPageComponent {
-
   @Input()
   isRequiredError: boolean = false;
 
@@ -21,8 +20,8 @@ export class UserRegistrationPageComponent {
   async onSubmit(newUser: RegisterData) {
     await this._authService.registerWithEmail({ registerData: newUser, redirect: '/' });
 
-    this._snackbarService.show({ 
-      message: 'You may now log-in with your email and password.', 
+    this._snackbarService.show({
+      message: 'You may now log-in with your email and password.',
       header: 'Registration successful!'
     });
   }
