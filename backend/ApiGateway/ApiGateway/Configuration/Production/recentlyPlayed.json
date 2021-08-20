@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/RecentlyPlayed/add",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
@@ -16,7 +16,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/RecentlyPlayed/add/{songId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
@@ -30,7 +30,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/RecentlyPlayed/get/all",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
@@ -44,7 +44,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/RecentlyPlayed/recent/{amount}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
