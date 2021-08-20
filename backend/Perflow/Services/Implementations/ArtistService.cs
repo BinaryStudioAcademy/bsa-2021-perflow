@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Users;
+using Perflow.Common.Helpers;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
@@ -16,18 +17,25 @@ namespace Perflow.Services.Implementations
 {
     public class ArtistService : BaseService, IArtistService
     {
-        public ArtistService(PerflowContext context, IMapper mapper) : base(context, mapper) { }
+        private readonly IImageService _imageService;
+
+        public ArtistService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        {
+            _imageService = imageService;
+        }
 
         public async Task<ArtistDTO> GetArtistAsync(int id)
         {
-            var user = await context.Users.Include(u => u.Albums)
-                                          .AsNoTracking()
-                                          .FirstOrDefaultAsync(u => u.Id == id);
+            var user = await context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
             {
                 throw new NotFoundExcepion($"{nameof(User)} not found");
             }
+
+            user.IconURL = _imageService.GetImageUrl(user.IconURL);
 
             return mapper.Map<ArtistDTO>(user);
         }
@@ -47,19 +55,25 @@ namespace Perflow.Services.Implementations
                                         artist => artist.Id,
                                         (group, artist) => artist
                                      )
+                                    .Select(
+                                        a => mapper.Map<UserWithIcon, ArtistReadDTO>(new UserWithIcon(a, _imageService.GetImageUrl(a.IconURL)))
+                                    )
                                     .ToListAsync();
 
-            return mapper.Map<IEnumerable<ArtistReadDTO>>(artists);
+            return artists;
         }
-            
-        public async Task<ICollection<ArtistForAlbumDTO>> GetAllArtistsAsync()
+
+        public async Task<IEnumerable<ArtistReadDTO>> GetAllArtistsAsync()
         {
             var artists = await context.Users
                 .AsNoTracking()
                 .Where(user => user.Role == UserRole.Artist)
+                .Select(
+                    a => mapper.Map<UserWithIcon, ArtistReadDTO>(new UserWithIcon(a, _imageService.GetImageUrl(a.IconURL)))
+                )
                 .ToListAsync();
 
-            return mapper.Map<ICollection<ArtistForAlbumDTO>>(artists);
+            return artists;
         }
 
         public async Task<ArtistFullDTO> GetArtistFullAsync(int id, int userId)

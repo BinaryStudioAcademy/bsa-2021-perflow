@@ -40,6 +40,18 @@ import { NewReleaseCardComponent } from './cards/new-release-card/new-release-ca
 import { AlbumDetailsComponent } from './album-details/album-details.component';
 import { ArtistDetailsComponent } from './artist-details/artist-details.component';
 import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.component';
+import {
+  SearchAlbumsResultComponent
+} from './search/components/search-albums-result/search-albums-result.component';
+import {
+  SearchArtistsResultComponent
+} from './search/components/search-artists-result/search-artists-result.component';
+import {
+  SearchPlaylistsResultComponent
+} from './search/components/search-playlists-result/search-playlists-result.component';
+import {
+  SearchSongsResultComponent
+} from './search/components/search-songs-result/search-songs-result.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +82,12 @@ import { PlaylistCardComponent } from './cards/playlist-card/playlist-card.compo
     ViewPlaylistComponent,
     NewReleaseCardComponent,
     AlbumDetailsComponent,
-    ArtistDetailsComponent
+    ArtistDetailsComponent,
+    NewReleaseCardComponent,
+    SearchAlbumsResultComponent,
+    SearchArtistsResultComponent,
+    SearchPlaylistsResultComponent,
+    SearchSongsResultComponent
   ],
   imports: [
     CommonModule,

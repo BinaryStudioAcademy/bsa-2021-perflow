@@ -5,4 +5,5 @@ export interface EditedPlaylist {
   description: string;
   accessType: AccessType;
   iconURL: string;
+  icon?: File;
 }

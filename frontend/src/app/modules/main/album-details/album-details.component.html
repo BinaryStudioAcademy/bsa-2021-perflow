@@ -2,7 +2,10 @@
     <div class="album">
         <div class="album-details">
             <div class="album-image">
-                <img class="image" alt="Album" [src]="album.iconURL">
+                <img class="image" alt="Album" [src]="album.iconURL" *ngIf="album.iconURL">
+                <div class="icon-background" *ngIf="!album.iconURL">
+                    <i class="itunes note icon"></i>
+                  </div>
             </div>
             <div class="album-info">
                 <p class="type">Album</p>

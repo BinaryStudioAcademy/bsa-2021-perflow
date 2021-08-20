@@ -1,9 +1,10 @@
 ﻿namespace Perflow.Common.DTO.Playlists
 {
-    public record PlaylistViewDTO(
-        int Id,
-        string Name,
-        string Description,
-        string IconURL
-    );
+    public class PlaylistViewDTO
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string IconURL { get; set; }
+    }
 }
