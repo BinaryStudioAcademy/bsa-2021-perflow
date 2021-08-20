@@ -1,4 +1,6 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:perflow/root_media_query.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/routes/auth_routes.dart';
 import 'package:perflow/routes/main_routes.dart';
@@ -17,16 +19,29 @@ class PerflowApp extends StatelessWidget {
       theme: Perflow.theme,
       title: Perflow.title,
       initialUrl: Routes.auth,
+      onPop: _handlePop,
+      onSystemPop: _handlePop,
       routes: [
         RootRoutes([
           AuthRoutes(),
-          MainRoutes(),
-          VRouteRedirector(
-            path: ':_(.+)',
-            redirectTo: Routes.home
-          )
+          MainRoutes()
         ]),
       ],
+      builder: (context, child) {
+        RootMediaQuery.value = MediaQuery.of(context);
+        return child;
+      },
+      buildTransition: (animation, secondaryAnimation, child) => FadeThroughTransition(
+        animation: animation,
+        secondaryAnimation: secondaryAnimation,
+        child: child
+      ),
     );
+  }
+
+  Future<void> _handlePop(VRedirector redirector) async {
+    if(redirector.historyCanBack()) {
+      redirector.historyBack();
+    }
   }
 }

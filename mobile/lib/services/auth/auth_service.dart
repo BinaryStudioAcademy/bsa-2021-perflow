@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 import 'package:perflow/models/auth/auth_user.dart';
 import 'package:perflow/models/auth/login_data.dart';
 import 'package:perflow/models/auth/register_data.dart';
-import 'package:perflow/models/enums/user_role.dart';
+import 'package:perflow/models/auth/user_role.dart';
 import 'package:perflow/services/auth/auth_api.dart';
 import 'package:rxdart/rxdart.dart';
 

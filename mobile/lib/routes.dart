@@ -6,4 +6,7 @@ class Routes {
   static const String home = '/home';
   static const String search = '/search';
   static const String library = '/library';
+
+  static const String playlistTemplate = '/playlist/:id';
+  static String playlist(int playlistId) => '/playlist/$playlistId';
 }
