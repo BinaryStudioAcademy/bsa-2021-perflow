@@ -3,7 +3,7 @@
         <div class="artistslabel">
             <h4>Artists</h4>
         </div>
-        <ng-container *ngIf="artists.length > 0">
+        <ng-container *ngIf="artists.length">
             <div *ngFor="let artist of artists" class="artist-card">
                 <app-artist-card [artist]="artist" (delete)="deleteArtist($event)"></app-artist-card>
             </div>    

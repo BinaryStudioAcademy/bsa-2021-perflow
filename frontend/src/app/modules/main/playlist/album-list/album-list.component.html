@@ -3,7 +3,7 @@
         <div class="albumslabel">
             <h4>Albums</h4>
         </div>
-        <ng-container *ngIf="albums.length > 0">
+        <ng-container *ngIf="albums.length">
             <div *ngFor="let album of albums" class="album-card">
                 <app-album-card [album]="album" (delete)="deleteAlbum($event)"></app-album-card>
             </div>
