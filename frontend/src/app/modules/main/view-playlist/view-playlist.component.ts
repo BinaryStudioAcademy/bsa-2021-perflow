@@ -40,13 +40,13 @@ export class ViewPlaylistComponent implements OnInit {
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation
   ) {
-      this._authService.getAuthStateObservable()
-          .pipe(filter((state) => !!state))
-          .subscribe(
-              (state) => {
-                  this.userId = state!.id;
-              }
-          );
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe(
+        (state) => {
+          this.userId = state!.id;
+        }
+      );
   }
 
   ngOnInit() {
