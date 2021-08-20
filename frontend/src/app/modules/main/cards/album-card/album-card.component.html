@@ -6,7 +6,7 @@
     <div class="edit" routerLink="/albums/edit/{{album.id}}" appClickStopPropagation *ngIf="isForEdit">
         <i class="pencil icon ui"></i>
     </div>
-    <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit">
+    <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked">
       <i class="like icon ui"></i>
     </div>
   </div>

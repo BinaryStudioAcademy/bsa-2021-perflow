@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Album } from '../models/album/album';
 import { AlbumEdit } from '../models/album/album-edit';
 import { AlbumFull } from '../models/album/album-full';
 import { AlbumView } from '../models/album/album-view';
@@ -30,7 +29,7 @@ export class AlbumService {
   }
 
   public getAlbumsByArtist(artistId: number) {
-    return this._httpService.getRequest<Album[]>(`${this.routePrefix}/byArtist/${artistId}`);
+    return this._httpService.getRequest<AlbumForReadDTO[]>(`${this.routePrefix}/byArtist/${artistId}`);
   }
 
   public getAlbumViewsByArtist(artistId: number) {

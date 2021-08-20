@@ -1,0 +1,63 @@
+<main>
+    <div class="album">
+        <div class="album-details">
+            <div class="album-image">
+                <img class="image" alt="Album" [src]="album.iconURL">
+            </div>
+            <div class="album-info">
+                <p class="type">Album</p>
+                <p class="album-title">
+                    {{album.name}}
+                </p>
+                <div class="album-description">
+                    <span *ngIf="album?.artist || album?.group">{{album?.artist?.userName ?? album?.group?.name
+                        }}</span>
+                    <span class="info" *ngIf="album.songs">
+                        <span class="divider">|</span> {{album.songs.length}} songs
+                    </span>
+                    <span class="info">
+                        <span class="divider">|</span> {{album.releaseYear}}
+                    </span>
+                    <span class="info" *ngIf="album.songs">
+                        <span class="divider">|</span> {{ album.songs | itemsSum:'duration' | albumDuration }}
+                    </span>
+                </div>
+                <div class="buttons">
+                    <button class="btn-full button-play">Play</button>
+                    <div class="action-icon">
+                        <i class="heart outline icon icons" (click)="likeAlbum()" *ngIf="!album.isLiked"></i>
+                        <i class="heart icon icons" (click)="dislikeAlbum()" *ngIf="album.isLiked"></i>
+                    </div>
+                    <div class="action-icon">
+                        <div class="ui floating dropdown icon" appSmDropdown>
+                            <i class="ellipsis vertical icon icons"></i>
+                            <div class="right menu">
+                                <div class="item first last" (click)="copyLink()">
+                                    <i class="share alternate icon"></i>Share
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-songs-list [songs]="album.songs"></app-songs-list>
+
+    <div class="anotherAlbums" *ngIf="anotherAlbums.length > 0">
+        <div class="header">
+            Another albums
+        </div>
+        <div class="albums">
+            <div #albums name="albums" class="albums-cards">
+                <app-album-card class="card" *ngFor="let album of anotherAlbums" [album]="album" [isLiked]=false></app-album-card>
+            </div>
+            <div class="scroll-box">
+                <button class="scroll-button" (click)="scroll()">
+                    <i class="chevron right icon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>

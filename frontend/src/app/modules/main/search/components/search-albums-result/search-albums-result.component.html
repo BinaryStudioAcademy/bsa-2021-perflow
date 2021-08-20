@@ -1,0 +1,8 @@
+<div class="result-container">
+  <div class="result-header">
+    <a class="field-name">Albums</a>
+  </div>
+  <div class="result-body">
+    <app-album-card *ngFor="let album of albums" [album]="album"></app-album-card>
+  </div>
+</div>
