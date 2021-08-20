@@ -14,8 +14,8 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./modules/main-content-container/main-content-container.module')
-                        .then((m) => m.MainContentContainerModule),
-    canLoad: [AuthGuard]
+      .then((m) => m.MainContentContainerModule),
+    canActivate: [AuthGuard]
   }
 ];
 
