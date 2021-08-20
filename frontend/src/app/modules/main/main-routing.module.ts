@@ -28,6 +28,7 @@ const routes: Routes = [{
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: MainHomeComponent },
     { path: 'search', component: SearchComponent },
+    { path: 'search/:term', component: SearchComponent },
     {
       path: 'profile',
       children: [

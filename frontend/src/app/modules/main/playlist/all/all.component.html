@@ -14,8 +14,8 @@
         >
         </app-circle-info-card>
     </div>
-    <div class="liked-playlists">
-        <div *ngIf="playlists.length > 0">
+    <div class="liked-playlists-container">
+        <div class="liked-playlists">
             <app-square-info-card *ngFor="let playlist of playlists"
             [id]="playlist.id"
             [name]="playlist.name"
