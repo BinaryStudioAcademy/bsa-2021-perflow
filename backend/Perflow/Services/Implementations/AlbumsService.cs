@@ -83,19 +83,26 @@ namespace Perflow.Services.Implementations
             return album;
         }
 
-        public async Task<IEnumerable<AlbumReadDTO>> GetAlbumsByArtist(int artistId)
+        public async Task<IEnumerable<AlbumForListDTO>> GetAlbumsByArtist(int artistId)
         {
             var albums = await context.Albums
                                         .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
-                                        .AsNoTracking()
-                                        .Select(a =>
-                                            mapper.Map<AlbumReadDTO>(new AlbumWithIcon(a, _imageService.GetImageUrl(a.IconURL)))
-                                         )
+                                        .Select(a => new AlbumForListDTO
+                                        {
+                                            Id = a.Id,
+                                            Name = a.Name,
+                                            Author = new AlbumViewAuthorsDTO(
+                                            a.Author.Id,
+                                            a.Author.UserName,
+                                            !a.Author.GroupId.HasValue),
+                                            IconURL = a.IconURL,
+                                            ReleaseYear = a.ReleaseYear
+                                        })
                                         .ToListAsync();
 
-            return mapper.Map<ICollection<AlbumReadDTO>>(albums);
+            return albums;
         }
 
         public async Task<IEnumerable<AlbumViewDTO>> GetNewReleases()
@@ -123,10 +130,6 @@ namespace Perflow.Services.Implementations
                                  .ToList()
                 })
                 .ToListAsync();
-            foreach (var entity in entities)
-            {
-                entity.Authors = entity.Authors.Distinct().Take(newReleasesToTake);
-            }
             return entities;
         }
 

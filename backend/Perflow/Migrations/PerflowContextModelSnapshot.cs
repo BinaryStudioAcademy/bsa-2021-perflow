@@ -546,7 +546,8 @@ namespace Perflow.Migrations
                 {
                     b.HasOne("Perflow.Domain.Album", "Album")
                         .WithMany("Songs")
-                        .HasForeignKey("AlbumId");
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Perflow.Domain.User", "Artist")
                         .WithMany()
@@ -568,7 +569,7 @@ namespace Perflow.Migrations
                     b.HasOne("Perflow.Domain.Song", "Song")
                         .WithMany("Reactions")
                         .HasForeignKey("SongId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Perflow.Domain.User", "User")

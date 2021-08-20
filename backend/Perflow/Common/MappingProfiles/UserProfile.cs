@@ -36,8 +36,10 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<UserWriteDTO, User>();
 
             CreateMap<User, UserForPlaylistDTO>();
-
             CreateMap<UserForPlaylistDTO, User>();
+
+            CreateMap<User, ArtistFullDTO>()
+                .AfterMap((src, dest, context) => dest.Albums = context.Mapper.Map<ICollection<Album>, ICollection<AlbumReadDTO>>(src.Albums));
         }
     }
 }
