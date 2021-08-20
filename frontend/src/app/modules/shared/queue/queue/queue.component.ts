@@ -12,6 +12,7 @@ import { QueueService } from 'src/app/services/queue.service';
 export class QueueComponent {
   @Output() opened = new EventEmitter<void>();
   @Output() closed = new EventEmitter<void>();
+  @Output() togglePlayEvent = new EventEmitter<void>();
 
   isOpened = false;
   isPlaying = false;
@@ -68,6 +69,10 @@ export class QueueComponent {
       default:
         break;
     }
+  }
+
+  togglePlay = () => {
+    this.togglePlayEvent.emit();
   }
 
   getNextSong = () => {

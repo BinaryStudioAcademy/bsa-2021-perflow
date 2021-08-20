@@ -27,9 +27,11 @@ export class SongRowComponent implements OnInit {
   @Input() highlightId: number;
   @Input() isInQueue = false;
   @Input() isEditable = false;
+  @Input() isPlaying = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
+  @Output() togglePlayEvent = new EventEmitter<void>();
 
   constructor(
     private _reactionService: ReactionService,
@@ -95,8 +97,17 @@ export class SongRowComponent implements OnInit {
       this._queueService.addSongToQueue(this.song);
     }
 
-    this._queueService.initSong(this.song, true);
+    if(this.highlightId !== this.song.id) {
+      this._queueService.initSong(this.song, true);
+    }
+    else{
+      this.togglePlayEvent.emit();
+    }
   };
+
+  pauseSong = () => {
+    this.togglePlayEvent.emit();
+  }
 
   editName = () => {
     this.isEditing = true;

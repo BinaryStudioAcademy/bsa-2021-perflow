@@ -34,6 +34,10 @@ export class MainMenuProfileComponent implements OnInit {
     this._songToolbar.updateSong(song);
   };
 
+  togglePlay = () => {
+    this._songToolbar.playPause();
+  }
+
   hideContainer = () => {
     this.isContainerHidden = true;
   };
