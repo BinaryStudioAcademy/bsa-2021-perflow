@@ -25,6 +25,7 @@ namespace Perflow.DataAccess.Context
             modelBuilder.ApplyConfiguration(new UserSettingsConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             modelBuilder.ApplyConfiguration(new ArtistFollowerConfiguration());
+            modelBuilder.ApplyConfiguration(new RecentlyPlayedConfiguration());
         }
 
         public static void Seed(this ModelBuilder modelBuilder)
