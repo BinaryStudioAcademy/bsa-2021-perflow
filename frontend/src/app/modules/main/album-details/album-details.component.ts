@@ -9,6 +9,7 @@ import { ClipboardService } from 'ngx-clipboard';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { QueueService } from 'src/app/services/queue.service';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { timer } from 'rxjs';
 
@@ -33,7 +34,8 @@ export class AlbumDetailsComponent implements OnInit {
     private _reactionService: ReactionService,
     private _router: Router,
     private _location: PlatformLocation,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _queueService: QueueService
   ) {
   }
 
@@ -105,4 +107,30 @@ export class AlbumDetailsComponent implements OnInit {
       this.isSuccess = Boolean(val);
     });
   }
+
+  playAlbum = () => {
+    if (!this.album.songs.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.album.songs);
+
+    const [first] = this.album.songs;
+
+    this._queueService.initSong(first, true);
+  };
+
+  addToQueue = () => {
+    if (!this.album.songs.length) {
+      return;
+    }
+
+    this._queueService.addSongsToQueue(this.album.songs);
+
+    if (!QueueService.isInitialized) {
+      const [first] = this.album.songs;
+      this._queueService.initSong(first);
+    }
+  };
 }

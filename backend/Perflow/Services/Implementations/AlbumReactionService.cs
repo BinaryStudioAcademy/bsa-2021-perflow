@@ -10,6 +10,7 @@ using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
+using Shared.Auth;
 using Perflow.Services.Interfaces;
 
 namespace Perflow.Services.Implementations
@@ -34,9 +35,9 @@ namespace Perflow.Services.Implementations
                     Id = albumReaction.Album.Id,
                     Name = albumReaction.Album.Name,
                     Author = new AlbumViewAuthorsDTO(
-                                    (int)albumReaction.Album.AuthorId,
-                                    albumReaction.Album.Author.UserName,
-                                    albumReaction.Album.Author.GroupId.HasValue ? false : true),
+                        albumReaction.Album.Author.Id,
+                        albumReaction.Album.Author.UserName,
+                        albumReaction.Album.Author.GroupId.HasValue ? false : true),
                     IconURL = _imageService.GetImageUrl(albumReaction.Album.IconURL),
                     ReleaseYear = albumReaction.Album.ReleaseYear
                 })

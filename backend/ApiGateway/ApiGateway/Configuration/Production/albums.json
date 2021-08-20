@@ -65,6 +65,20 @@
       "UpstreamHttpMethod": [
         "PUT"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Albums/viewsByArtist/{artistId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Albums/viewsByArtist/{artistId}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
     }
   ]
 }

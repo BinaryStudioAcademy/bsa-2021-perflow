@@ -6,11 +6,9 @@ import { ClipboardService } from 'ngx-clipboard';
 import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
-import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { HttpInternalService } from 'src/app/services/http-internal.service';
+import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
-import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -26,19 +24,20 @@ export class SongRowComponent implements OnInit {
 
   @Input() song: Song;
   @Input() number: number;
+  @Input() highlightId: number;
+  @Input() isInQueue = false;
   @Input() isEditable = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
 
   constructor(
-    private _songService: SongsService,
-    private _toolbarService: SongToolbarService,
-    private _httpService: HttpInternalService,
     private _reactionService: ReactionService,
     private _authService: AuthService,
+    private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _songService: SongsService
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +56,8 @@ export class SongRowComponent implements OnInit {
 
   clickItem(menu: string) {
     this.clickMenuItem.emit({ menuItem: menu, song: this.song });
+
+    if (menu === 'Add to queue') this._queueService.addSongToQueue(this.song);
   }
 
   copyLink() {
@@ -89,19 +90,12 @@ export class SongRowComponent implements OnInit {
       );
   }
 
-  playSong = (id: number) => {
-    // This code works, it is commented temporary
+  playSong = () => {
+    if (!this.highlightId) {
+      this._queueService.addSongToQueue(this.song);
+    }
 
-    this._songService.getSongById(id).subscribe((song) => {
-      const testSong = new SongInfo(
-        id,
-        song.name,
-        (song?.artist?.userName ?? song?.group?.name)!,
-        this._httpService.buildUrl(`/api/Songs/file?blobId=${song.blobId}`),
-        song.album.iconURL
-      );
-      this._toolbarService.updateSong(testSong);
-    });
+    this._queueService.initSong(this.song, true);
   };
 
   editName = () => {

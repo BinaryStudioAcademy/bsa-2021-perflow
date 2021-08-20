@@ -14,6 +14,7 @@ import { AlbumService } from 'src/app/services/album.service';
 import { ArtistService } from 'src/app/services/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
@@ -40,6 +41,7 @@ export class ArtistDetailsComponent implements OnInit {
     private _artistService: ArtistService,
     private _songService: SongsService,
     private _playlistsService: PlaylistsService,
+    private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
     private _reactionService: ReactionService,
@@ -134,6 +136,29 @@ export class ArtistDetailsComponent implements OnInit {
     }
   }
 
+  playArtist = () => {
+    if (!this.topSongs.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.topSongs);
+
+    const [first] = this.topSongs;
+
+    this._queueService.initSong(first, true);
+  };
+
+  addToQueue = () => {
+    if (!this.topSongs.length) {
+      return;
+    }
+
+    if (!QueueService.isInitialized) {
+      const [first] = this.topSongs;
+      this._queueService.initSong(first);
+    }
+  };
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
     this.isSuccess = true;

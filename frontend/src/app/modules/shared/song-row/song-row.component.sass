@@ -10,6 +10,7 @@
     cursor: pointer
 
 .song
+    box-sizing: content-box
     background-color: $drk-gray
     color: $text
     padding-left: 0.5rem
@@ -21,6 +22,8 @@
         display: inline-block
     .play
         display: none
+    &.playing
+        border: 1px solid $medium-orange
     &:hover
         background-color: $light-gray
         .like,

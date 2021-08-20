@@ -13,6 +13,7 @@ import { SongSortType } from '../../../models/song/song-sort-type';
 })
 export class SongsListComponent {
   @Input() songs: Song[];
+  @Input() highlightId: number;
   @Input() isDraggable = false;
   @Input() isEditable = false;
 
