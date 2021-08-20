@@ -9,6 +9,7 @@ import { Song } from 'src/app/models/song/song';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
   selector: 'app-song-row',
@@ -18,12 +19,14 @@ import { ReactionService } from 'src/app/services/reaction.service';
 
 export class SongRowComponent implements OnInit {
   private _userId: number;
+  isEditing = false;
   isSuccess: boolean = false;
 
   @Input() song: Song;
   @Input() number: number;
   @Input() highlightId: number;
   @Input() isInQueue = false;
+  @Input() isEditable = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
@@ -33,7 +36,8 @@ export class SongRowComponent implements OnInit {
     private _authService: AuthService,
     private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _songService: SongsService
   ) { }
 
   ngOnInit(): void {
@@ -92,5 +96,23 @@ export class SongRowComponent implements OnInit {
     }
 
     this._queueService.initSong(this.song, true);
+  };
+
+  editName = () => {
+    this.isEditing = true;
+  };
+
+  saveName = () => {
+    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
+      this.isEditing = false;
+      subscription.unsubscribe();
+    });
+  };
+
+  changeCensorship = () => {
+    this.song.hasCensorship = !this.song.hasCensorship;
+    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
+      subscription.unsubscribe();
+    });
   };
 }

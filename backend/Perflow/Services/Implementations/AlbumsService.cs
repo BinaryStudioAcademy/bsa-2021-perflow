@@ -59,8 +59,8 @@ namespace Perflow.Services.Implementations
                                                 Id = a.Id,
                                                 Name = a.Name,
                                                 ReleaseYear = a.ReleaseYear,
-                                                IconURL = _imageService.GetImageUrl(a.IconURL),
-                                                Songs = a.Songs
+                                                IconURL = a.IconURL,
+                                                Songs = a.Songs.OrderBy(s => s.Order)
                                                 .Select(s =>
                                                     mapper.Map<SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
                                                 ),

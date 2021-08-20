@@ -60,7 +60,7 @@
 
   <app-songs-upload-modal *ngIf="isSongUploadShown" (isClosed)="closeUpload()" (isFilesSaved)="uploadSongs($event)"></app-songs-upload-modal>
 
-  <app-songs-list *ngIf="album.songs.length" [songs]="album.songs" (clickMenuItem)="clickMenuHandler($event)"></app-songs-list>
+  <app-songs-list *ngIf="album.songs.length" [songs]="album.songs" [isDraggable]="true" [isEditable]="true" (clickMenuItem)="clickMenuHandler($event)"></app-songs-list>
 
   <app-edit-album-modal [editedAlbum]="editedAlbum" *ngIf="isModalShown" (editAlbum)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-album-modal>
   <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
