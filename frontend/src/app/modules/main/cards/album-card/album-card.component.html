@@ -3,7 +3,7 @@
     <div class="image">
       <img [attr.src]="album.iconURL" alt="Album" />
     </div>
-    <div class="edit" routerLink="/albums/edit/{{album.id}}" appClickStopPropagation *ngIf="isForEdit">
+    <div class="edit" routerLink="/perflowstudio/albums/edit/{{album.id}}" appClickStopPropagation *ngIf="isForEdit">
         <i class="pencil icon ui"></i>
     </div>
     <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked">

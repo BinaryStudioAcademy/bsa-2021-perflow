@@ -87,7 +87,7 @@ namespace Perflow.Services.Implementations
                                         {
                                             Id = a.Id,
                                             UserName = a.UserName,
-                                            IconURL = a.IconURL,
+                                            IconURL = _imageService.GetImageUrl(a.IconURL),
                                             Description = a.Description,
                                             Country = a.Country,
                                             Albums = mapper.Map<IEnumerable<AlbumReadDTO>>(a.Albums),
