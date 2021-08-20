@@ -33,7 +33,6 @@ export class AlbumDetailsComponent implements OnInit {
     private _location: PlatformLocation,
     private _authService: AuthService
   ) {
-    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit() {
