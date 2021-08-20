@@ -3,15 +3,15 @@
         <div class="albumslabel">
             <h4>Albums</h4>
         </div>
-        <div *ngIf="albums.length > 0">
+        <ng-container *ngIf="albums.length">
             <div *ngFor="let album of albums" class="album-card">
                 <app-album-card [album]="album" (delete)="deleteAlbum($event)"></app-album-card>
             </div>
-        </div>
-        <div *ngIf="!albums.length">
+        </ng-container>
+        <ng-container *ngIf="!albums.length">
             <div class="albumslabel">
                 <h5>There are no available albums now</h5>
             </div>
-        </div>
+        </ng-container>
     </div>
 </div>
