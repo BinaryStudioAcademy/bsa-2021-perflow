@@ -20,7 +20,7 @@ export class MainMenuProfileComponent implements OnInit {
 
   constructor(private _router: Router) {
     _router.events.forEach((event) => {
-      if(event instanceof NavigationStart) {
+      if (event instanceof NavigationStart) {
         this._queue.closeView();
       }
     });

@@ -30,7 +30,7 @@ export class SongToolbarComponent implements OnInit {
   isRepeating: boolean = false;
   @Input()
   isLiked: boolean = false;
-  @Input() 
+  @Input()
   isQueueOpened = false;
 
   show: boolean = false;
