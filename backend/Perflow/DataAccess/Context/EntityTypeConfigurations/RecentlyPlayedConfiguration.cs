@@ -20,22 +20,22 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
             builder
                 .HasOne(rp => rp.Album)
                 .WithMany()
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(rp => rp.Playlist)
                 .WithMany()
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(rp => rp.Artist)
                 .WithMany()
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(rp => rp.Song)
                 .WithMany()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Property(rp => rp.Frequency)

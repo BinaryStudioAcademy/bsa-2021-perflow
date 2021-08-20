@@ -10,7 +10,7 @@ using Perflow.DataAccess.Context;
 namespace Perflow.Migrations
 {
     [DbContext(typeof(PerflowContext))]
-    [Migration("20210820022957_RecentlyPlayed")]
+    [Migration("20210820024853_RecentlyPlayed")]
     partial class RecentlyPlayed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -596,22 +596,22 @@ namespace Perflow.Migrations
                     b.HasOne("Perflow.Domain.Album", "Album")
                         .WithMany()
                         .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Perflow.Domain.User", "Artist")
                         .WithMany()
                         .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Perflow.Domain.Playlist", "Playlist")
                         .WithMany()
                         .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Perflow.Domain.Song", "Song")
                         .WithMany()
                         .HasForeignKey("SongId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Perflow.Domain.User", "User")
