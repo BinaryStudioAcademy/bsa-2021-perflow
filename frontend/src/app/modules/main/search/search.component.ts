@@ -62,7 +62,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   findSongsByName() {
-    if (this.searchValue.trim() !== '') {
+    if (this.searchValue.trim()) {
       this._searchTerms$.next(this.searchValue);
       this._location.replaceState(this._router.url.replace(this._regex, `search/${this.searchValue}`));
     }
