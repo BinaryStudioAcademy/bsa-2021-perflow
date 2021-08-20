@@ -7,6 +7,7 @@ import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
@@ -51,11 +52,13 @@ export class SongToolbarComponent implements OnInit {
     toolbarService: SongToolbarService,
     private _songsService: SongsService,
     private _reactionService: ReactionService,
-    private _queueService: QueueService
+    private _queueService: QueueService,
+    private _rpService: RecentlyPlayedService
   ) {
     toolbarService.songUpdated$.subscribe(
       (song) => {
         this.updateSong(song);
+        this._rpService.addSongViaId(song.id, this.userId, undefined).subscribe();
       }
     );
 

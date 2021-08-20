@@ -1,0 +1,10 @@
+<div class="result-container">
+  <div class="result-header">
+    <a class="field-name">Songs</a>
+  </div>
+  <div class="song-result-body">
+    <div class="search-result" *ngIf="songs.length" >
+      <app-song-row *ngFor="let song of songs" [song]="song"></app-song-row>
+    </div>
+  </div>
+</div>

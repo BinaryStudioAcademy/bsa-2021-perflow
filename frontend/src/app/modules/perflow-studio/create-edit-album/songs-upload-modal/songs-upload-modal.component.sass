@@ -1,0 +1,43 @@
+@import "../../../../../styles"
+    
+.upload-songs-outside
+    position: fixed
+    top: 0
+    left: 0
+    height: 100vh
+    width: 100%
+    background: #00000060
+    z-index: 1
+    .upload-songs-inside
+        border-radius: 5px
+        position: relative
+        box-shadow: 0px 2px 12px 2px #00000050
+        z-index: 2
+        display: block
+        width: 650px
+        height: 550px
+        position: relative
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        background: $drk-gray !important
+        .header
+            height: 50px
+            text-align: center
+            padding-top: 15px
+            color: $login-text-color    
+            font-size: 18px
+            font-weight: $medium-weight
+        .upload-block
+            padding: 5px 15px
+            height: calc( 100% - 50px - 60px)
+        .save-block
+            height: 60px
+            display: flex
+            flex-direction: row
+            justify-content: flex-end
+            padding: 5px 10px
+            button
+                height: 45px
+            .btn-cancel
+                border-radius: 25px

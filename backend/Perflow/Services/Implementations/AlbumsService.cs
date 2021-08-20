@@ -78,16 +78,26 @@ namespace Perflow.Services.Implementations
             return album;
         }
 
-        public async Task<ICollection<AlbumReadDTO>> GetAlbumsByArtist(int artistId)
+        public async Task<IEnumerable<AlbumForListDTO>> GetAlbumsByArtist(int artistId)
         {
             var albums = await context.Albums
                                         .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
-                                        .AsNoTracking()
+                                        .Select(a => new AlbumForListDTO
+                                        {
+                                            Id = a.Id,
+                                            Name = a.Name,
+                                            Author = new AlbumViewAuthorsDTO(
+                                            a.Author.Id,
+                                            a.Author.UserName,
+                                            !a.Author.GroupId.HasValue),
+                                            IconURL = a.IconURL,
+                                            ReleaseYear = a.ReleaseYear
+                                        })
                                         .ToListAsync();
 
-            return mapper.Map<ICollection<AlbumReadDTO>>(albums);
+            return albums;
         }
 
         public async Task<ICollection<AlbumForListDTO>> GetAlbumShortInfosByArtist(int artistId)
@@ -121,17 +131,13 @@ namespace Perflow.Services.Implementations
                     IconURL = a.IconURL,
                     Authors = a.Songs
                                  .Select(
-                                    (s) => s.AuthorType == Domain.Enums.AuthorType.Artist ? 
-                                                new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) : 
+                                    (s) => s.AuthorType == Domain.Enums.AuthorType.Artist ?
+                                                new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) :
                                                 new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false))
                                  .Take(authorsToTake)
                                  .ToList()
                 })
                 .ToListAsync();
-            foreach (var entity in entities)
-            {
-                entity.Authors = entity.Authors.Distinct().Take(newReleasesToTake);
-            }
             return entities;
         }
 
@@ -203,7 +209,7 @@ namespace Perflow.Services.Implementations
 
             return entityId;
         }
-        
+
         public async Task SetPublicStatusAsync(AlbumPublicStatusDTO status)
         {
             if (status == null)
@@ -211,7 +217,7 @@ namespace Perflow.Services.Implementations
 
             var album = await context.Albums
                 .FirstOrDefaultAsync(album => album.Id == status.Id);
-            
+
             album.IsPublished = status.IsPublished;
 
             context.Entry(album).State = EntityState.Modified;
