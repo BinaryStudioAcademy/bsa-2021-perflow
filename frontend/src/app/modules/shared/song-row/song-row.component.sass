@@ -23,7 +23,8 @@
         display: none
     &:hover
         background-color: $light-gray
-        .like
+        .like,
+        .foredit
             visibility: visible
             &:hover
                 @extend %clickable
@@ -59,6 +60,29 @@
     display: flex
     text-align: center
     align-items: center
+    &:hover
+        .nameedit,
+        .namesave
+            visibility: visible
+    .ui.input
+        height: 20px
+        width: 70%
+        input
+            background: $drk-gray
+            color: $text
+            &:focus
+                outline: none !important
+
+.nameedit,
+.namesave
+    margin-left: 5px
+    visibility: hidden
+    &:hover
+        cursor: pointer  
+
+.namesave
+    font-size: 18px
+    padding-top: 2px
 
 
 .artist-name
@@ -132,6 +156,21 @@
     align-items: center
     display: inline-flex
     padding: 2px 4px
+    &.foredit
+        visibility: hidden
+        font-size: 11px
+        height: 19px
+        width: 19px
+        padding-left: 5px
+        margin: 0 15px
+        background-color: transparent
+        color: $gray
+        border-color: $gray
+        &.active
+            color: $light-orange
+            border-color: $light-orange
+        &:hover
+            cursor: pointer
 
 .ellipsis.vertical
     display: inline

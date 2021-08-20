@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
+import { ClickOutsideModule } from 'ng-click-outside';
 import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdown.directive';
 import { SemanticCalendarDirective } from './directives/calendar/semantic-calendar.directive';
 import { SemanticMessageDirective } from './directives/message/semantic-message.directive';
@@ -50,7 +53,10 @@ import { ClickStopPropagationDirective } from './directives/stopPropagation/clic
   imports: [
     CommonModule,
     RouterModule,
-    ImageCropperModule
+    ImageCropperModule,
+    DragDropModule,
+    FormsModule,
+    ClickOutsideModule
   ],
   exports: [
     SemanticDropdownDirective,

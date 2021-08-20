@@ -23,6 +23,8 @@ namespace Perflow.Domain
         public bool HasCensorship { get; set; }
         public string BlobId { get; set; }
 
+        public int Order { get; set; }
+
         public ICollection<PlaylistSong> Playlists { get; set; }
 
         public ICollection<SongReaction> Reactions { get; set; }

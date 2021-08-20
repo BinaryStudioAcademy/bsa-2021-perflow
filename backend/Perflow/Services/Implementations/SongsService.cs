@@ -210,5 +210,29 @@ namespace Perflow.Services.Implementations
         {
             return await context.SongReactions.AnyAsync(sr => sr.SongId == songId && sr.UserId == userId);
         }
+
+        public async Task Update(SongWriteDTO song)
+        {
+            var songForChange = (await context.Songs.FindAsync(song.Id));
+
+            songForChange.Name = song.Name;
+            songForChange.HasCensorship = song.HasCensorship;
+
+            await Task.Run(() => context.Songs.Update(mapper.Map<Song>(songForChange)));
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateOrders(SongOrderDTO[] songOrders)
+        {
+            foreach(var order in songOrders)
+            {
+                var song = await context.Songs.FindAsync(order.Id);
+                song.Order = order.Order;
+                context.Songs.Update(song);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

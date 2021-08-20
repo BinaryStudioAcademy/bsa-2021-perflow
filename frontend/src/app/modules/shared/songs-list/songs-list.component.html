@@ -1,6 +1,18 @@
-<div class="song-list">
-  <app-songs-list-header (sortTypeChanged)="setSortType($event)"></app-songs-list-header>
-  <app-song-row *ngFor="let song of songs | sortSongs:sortType; let i = index" [number]="i+1" [song]="song"
+<div class="song-list drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
+  <app-songs-list-header (sortTypeChanged)="setSortType($event)" ></app-songs-list-header>
+  
+  <ng-container *ngIf="isDraggable">
+    <div *ngFor="let song of songs | sortSongs:sortType; let i = index" cdkDrag class="song-row">
+      <app-song-row [number]="i+1" [song]="song" [isEditable]="isEditable"
+      (clickMenuItem)="rowMenuClick($event)" 
+      (clickDislike)="clickDislikeIcon($event)"></app-song-row>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isDraggable">
+    <app-song-row *ngFor="let song of songs | sortSongs:sortType; let i = index"
+    [number]="i+1" [song]="song" [isEditable]="isEditable"
     (clickMenuItem)="rowMenuClick($event)" 
     (clickDislike)="clickDislikeIcon($event)"></app-song-row>
+  </ng-container>
 </div>
