@@ -117,7 +117,7 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
 
-            return mapper.Map<PlaylistDTO>(updatedPlaylist);
+            return mapper.Map<PlaylistDTO>(new PlaylistWithIcon(updatedPlaylist, _imageService.GetImageUrl(updatedPlaylist.IconURL)));
         }
 
         public async Task<int> DeleteEntityAsync(int entityId)

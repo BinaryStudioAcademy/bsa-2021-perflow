@@ -12,13 +12,19 @@ using System.Threading.Tasks;
 using Perflow.Common.DTO.Songs;
 using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Search;
+using Perflow.Services.Interfaces;
+using Perflow.Common.Helpers;
 
 namespace Perflow.Services.Implementations
 {
     public class SearchService : BaseService
     {
-        public SearchService(PerflowContext context, IMapper mapper) : base(context, mapper)
-        { }
+        private readonly IImageService _imageService;
+
+        public SearchService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        {
+            _imageService = imageService;
+        }
 
         public async Task<ICollection<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync(string searchTerm, int amount, int userId)
         {
@@ -52,9 +58,12 @@ namespace Perflow.Services.Implementations
                 .Where(user => user.Role == UserRole.Artist && user.UserName.Contains(searchTerm.Trim()))
                 .Take(amount)
                 .AsNoTracking()
+                .Select(
+                    u => mapper.Map<ArtistReadDTO>(new UserWithIcon(u, _imageService.GetImageUrl(u.IconURL)))
+                 )
                 .ToListAsync();
 
-            return mapper.Map<ICollection<ArtistReadDTO>>(artists);
+            return artists;
         }
 
         public async Task<ICollection<AlbumForListDTO>> FindAlbumsByNameAsync(string searchTerm, int amount)
@@ -69,7 +78,7 @@ namespace Perflow.Services.Implementations
                     Id = album.Id,
                     Name = album.Name,
                     ReleaseYear = album.ReleaseYear,
-                    IconURL = album.IconURL,
+                    IconURL = _imageService.GetImageUrl(album.IconURL),
                     Author = new AlbumViewAuthorsDTO (
                         album.Author.Id,
                         album.Author.UserName,
@@ -86,9 +95,12 @@ namespace Perflow.Services.Implementations
                 .Where(playlist => playlist.Name.Contains(searchTerm.Trim()))
                 .Take(amount)
                 .AsNoTracking()
+                .Select(
+                    p => mapper.Map<PlaylistViewDTO>(new PlaylistWithIcon(p, _imageService.GetImageUrl(p.IconURL)))
+                 )
                 .ToListAsync();
 
-            return mapper.Map<ICollection<PlaylistViewDTO>>(playlists);
+            return playlists;
         }
 
         public async Task<SearchResultDTO> FindAllByNameAsync(string searchTerm, int userId)
