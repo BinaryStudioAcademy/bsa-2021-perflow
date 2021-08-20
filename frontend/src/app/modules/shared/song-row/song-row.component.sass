@@ -27,7 +27,9 @@
     &:hover
         background-color: $light-gray
         .like,
-        .foredit
+        .foredit,
+        .nameedit,
+        .namesave
             visibility: visible
             &:hover
                 @extend %clickable
@@ -63,10 +65,6 @@
     display: flex
     text-align: center
     align-items: center
-    &:hover
-        .nameedit,
-        .namesave
-            visibility: visible
     .ui.input
         height: 20px
         width: 70%
@@ -78,7 +76,7 @@
 
 .nameedit,
 .namesave
-    margin-left: 5px
+    margin-left: 10px
     visibility: hidden
     &:hover
         cursor: pointer  
@@ -158,13 +156,12 @@
     margin-right: 4px
     align-items: center
     display: inline-flex
-    padding: 2px 4px
+    padding: 2px 7px
     &.foredit
         visibility: hidden
         font-size: 11px
         height: 19px
-        width: 19px
-        padding-left: 5px
+        padding: 2px 8.5px
         margin: 0 15px
         background-color: transparent
         color: $gray
