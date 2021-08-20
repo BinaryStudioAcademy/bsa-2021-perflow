@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { objectToFormData } from '../helpers/object-to-formData-converter';
 import { User } from '../models/user/user';
 import { UserChangeIcon } from '../models/user/user-change-icon';
 import { UserChangePassword } from '../models/user/user-change-password';
@@ -41,6 +42,8 @@ export class UserService {
   }
 
   updateUserIcon(user: UserChangeIcon) {
-    return this._httpService.putRequest<UserChangeIcon>(`${this.routePrefix}/changeIcon`, user);
+    const formData = objectToFormData(user);
+
+    return this._httpService.putRequest<{ uri: string }>(`${this.routePrefix}/changeIcon`, formData);
   }
 }

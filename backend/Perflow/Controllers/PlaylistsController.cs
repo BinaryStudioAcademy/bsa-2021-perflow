@@ -11,6 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using Shared.Auth.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Perflow.Common.DTO.Users;
 
 namespace Perflow.Controllers
 {
@@ -87,7 +88,7 @@ namespace Perflow.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] PlaylistDTO playlistDTO)
+        public async Task<ActionResult> Put([FromForm] PlaylistWriteDTO playlistDTO)
         {
             if (!ModelState.IsValid)
                 throw new ArgumentException("Model is not valid.");

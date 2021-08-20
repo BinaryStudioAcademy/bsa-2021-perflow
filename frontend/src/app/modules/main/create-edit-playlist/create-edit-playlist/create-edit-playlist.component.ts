@@ -15,6 +15,7 @@ import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 import { User } from 'src/app/models/user/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CreatePlaylistService } from 'src/app/modules/shared/playlist/create-playlist/create-playlist.service';
+import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -140,7 +141,12 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       songs: {} as Song[]
     };
 
-    this._playlistService.editPlaylist(this.playlist)
+    const pl: PlaylistForSave = {
+      ...editedPlaylist,
+      id: this.playlist.id
+    };
+
+    this._playlistService.editPlaylist(pl)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
