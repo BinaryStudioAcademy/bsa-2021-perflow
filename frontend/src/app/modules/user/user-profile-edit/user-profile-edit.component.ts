@@ -3,6 +3,7 @@ import { filter, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -14,10 +15,12 @@ export class UserProfileEditComponent implements OnInit {
   user: User;
   updatedUser: User;
   updatedUserPassword: UserChangePassword;
-  isSuccess: boolean = false;
-  isError: boolean = false;
 
-  constructor(private _userService: UserService, private _authService: AuthService) { }
+  constructor(
+    private _userService: UserService,
+    private _authService: AuthService,
+    private _snackbarService: SnackbarService
+  ) { }
 
   ngOnInit() {
     this.getUser();
@@ -39,10 +42,10 @@ export class UserProfileEditComponent implements OnInit {
 
     this._userService.updateUser(updatedUser)
       .subscribe(() => {
-        this.isSuccess = true;
+        this._snackbarService.show({ message: 'Changed successfully!' });
       },
-      () => {
-        this.isError = true;
+      (e) => {
+        this._snackbarService.show({ message: e.statusText, header: 'Error', type: 'error' });
       });
   }
 
@@ -51,10 +54,10 @@ export class UserProfileEditComponent implements OnInit {
 
     this._userService.updateUserPassword(updatedUserPassword)
       .subscribe(() => {
-        this.isSuccess = true;
+        this._snackbarService.show({ message: 'Changed successfully!' });
       },
-      () => {
-        this.isError = true;
+      (e) => {
+        this._snackbarService.show({ message: e.statusText, header: 'Error', type: 'error' });
       });
   }
 }

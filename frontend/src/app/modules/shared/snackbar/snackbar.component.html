@@ -1,0 +1,8 @@
+<div *ngIf="show" @state [ngClass]="['snackbar-wrap', info.type ?? 'success']">
+    <div class="snackbar-header" *ngIf="info.header">
+        {{info.header}}
+    </div>
+    <p class="snackbar-message">
+        {{info.message}}
+    </p>
+</div>
