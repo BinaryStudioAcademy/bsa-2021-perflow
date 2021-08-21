@@ -9,6 +9,7 @@ import { RecentlyPlayedService } from 'src/app/services/recently-played.service'
 import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { NewestFiveAlbum } from 'src/app/models/album/newest-five';
 
 @Component({
   selector: 'app-main-home',
@@ -17,14 +18,14 @@ import { filter } from 'rxjs/operators';
 })
 export class MainHomeComponent implements OnInit, OnDestroy {
   private readonly _rpSongAmount: number = 8;
-  private _newestCounter: number = 1;
-  private _newestAlbums = new Array<object>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
+  private _newestCounter: number = 0;
+  private _newestAlbums = new Array<NewestFiveAlbum>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
 
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
   private readonly _scrollingSize: number = 1530;
 
-  public currentNewestAlbum = this._newestAlbums[0];
+  public currentNewestAlbum = {} as NewestFiveAlbum;
   public recentlyPlayed = new Array<RecentlyPlayedSong>();
   public newReleases: NewReleaseView[] = [];
   public calmRhythms = new Array<Playlist>();
@@ -47,7 +48,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this._newestAlbums = this.getNewestFiveAlbums();
+    this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
     this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
@@ -68,8 +69,18 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     // Ability to save album - album is saved in the user playlist
   };
 
-  // User should be able to reach Top 5 of the newest albums
-  getNewestFiveAlbums = (): Array<object> => new Array<object>();
+  getNewestFiveAlbums() {
+    this._albumService.getFiveNewestAlbums()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this._newestAlbums = data;
+          this.currentNewestAlbum = {
+            ...this._newestAlbums[0]
+          };
+        }
+      });
+  }
 
   getRecentlyPlayed() {
     this._recentlyPlayedService.getRecentSongs(this._userId, this._rpSongAmount)
@@ -122,20 +133,21 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   nextSlide = () => {
     this.accordionAnimation();
-    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
     this._newestCounter += 1;
     if (this._newestCounter > this._newestAlbumsMax - 1) {
       this._newestCounter = 0;
     }
+    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
+    this.accordionAnimation();
   };
 
   previousSlide = () => {
     this.accordionAnimation();
-    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
     this._newestCounter -= 1;
     if (this._newestCounter < 0) {
       this._newestCounter = this._newestAlbumsMax - 1;
     }
+    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
     this.accordionAnimation();
   };
 

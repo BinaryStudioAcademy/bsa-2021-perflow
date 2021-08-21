@@ -76,5 +76,11 @@ namespace Perflow.Controllers
 
             return Ok();
         }
+
+        [HttpGet("newestFive")]
+        public async Task<ActionResult<IEnumerable<AlbumForNewestFiveDTO>>> GetFiveNewestAlbumsAsync()
+        {
+            return Ok(await _albumsService.GetFiveNewestAlbumsAsync());
+        }
     }
 }
