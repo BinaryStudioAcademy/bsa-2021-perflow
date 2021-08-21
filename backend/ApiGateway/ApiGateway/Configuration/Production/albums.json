@@ -79,6 +79,20 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Albums/newestFive",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Albums/newestFive",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
     }
   ]
 }
