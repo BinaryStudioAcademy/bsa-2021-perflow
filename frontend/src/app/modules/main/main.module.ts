@@ -21,7 +21,6 @@ import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { SquareInfoCardComponent } from './cards/square-info-card/square-info-card.component';
 import { CircleInfoCardComponent } from './cards/circle-info-card/circle-info-card.component';
-import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
 import { UserModule } from '../user/user.module';
 import { AllComponent } from './playlist/all/all.component';
 import {
@@ -74,7 +73,6 @@ import { SongCardComponent } from './cards/song-card/song-card.component';
     PlaylistCardComponent,
     ArtistListComponent,
     ArtistCardComponent,
-    MainMenuProfileComponent,
     YourMixCardComponent,
     AlbumCardComponent,
     AllComponent,
