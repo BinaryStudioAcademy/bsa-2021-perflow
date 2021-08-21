@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { SongInfo } from 'src/app/models/song/song-info';
-import { QueueComponent } from '../queue/queue.component';
-import { SongToolbarComponent } from '../song-toolbar/song-toolbar.component';
+import { QueueComponent } from '../music-components/queue/queue.component';
+import { SongToolbarComponent } from '../music-components/song-toolbar/song-toolbar.component';
 
 @Component({
   selector: 'app-main-content',
