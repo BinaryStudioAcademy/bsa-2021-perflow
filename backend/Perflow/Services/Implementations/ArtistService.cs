@@ -90,7 +90,6 @@ namespace Perflow.Services.Implementations
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
                                             Description = a.Description,
                                             Country = a.Country,
-                                            Albums = mapper.Map<IEnumerable<AlbumReadDTO>>(a.Albums),
                                             IsLiked = a.ArtistReactions.Any(r => r.UserId == userId),
                                         })
                                         .FirstAsync();

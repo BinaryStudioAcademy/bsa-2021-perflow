@@ -59,8 +59,8 @@ export class SongsService {
     `/api/Songs/delete/${id}`
   );
 
-  getTopSongsByAuthorId(id: number, count: number) {
-    const httpParams = { count };
+  getTopSongsByAuthorId(id: number, count: number, isArtist: boolean) {
+    const httpParams = { count, isArtist };
     return this._httpService.getRequest<Song[]>(`/api/songs/topSongs/${id}`, httpParams);
   }
 

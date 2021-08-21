@@ -1,0 +1,175 @@
+@import '../../../../styles'
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400")
+
+$image-size: 245px
+
+=max-lines($lines, $line-height)
+    overflow: hidden
+    text-overflow: ellipsis
+    display: -webkit-box
+    -webkit-box-orient: vertical
+    -webkit-line-clamp: $lines
+    line-height: $line-height
+    max-height: $line-height * $lines
+
+main
+    background: $drk-gray
+    width: 100%
+    height: 100%
+
+.artist
+    width: 100%
+    height: 401px
+    border-radius: 5px
+    display: grid
+    grid-template-areas: "left-col artist-details right-col"
+    grid-template-columns: 1fr 6fr 1fr
+    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+    margin-bottom: 1rem
+    .artist-details
+        grid-area: artist-details
+        width: 100%
+        display: grid
+        grid-template-areas: "artist-image artist-info"
+        grid-template-columns: $image-size 1fr
+        .artist-image
+            grid-area: artist-image
+            text-align: center
+            padding-top: 104px
+            .image
+                width: $image-size
+                height: $image-size
+                border-radius: 50%
+                box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
+                object-fit: cover
+        .artist-info
+            grid-area: artist-info
+            padding-top: 104px
+            display: flex
+            flex-direction: column
+            justify-content: left
+            align-items: left
+            margin-left: 35px
+            color: $text
+            .artist-title
+                margin-top: 2rem
+                font-weight: $bold-weight
+                font-size: 40px
+                line-height: 47px
+            .artist-description
+                margin-top: 1rem
+                padding-bottom: 1rem
+                font-weight: $light-weight
+                font-size: 16px
+                +max-lines(3, 21px)
+            .buttons
+                margin-top: 20px
+                .button-play
+                    padding: 12px 22px
+                    font-weight: $bold-weight
+                    border: none
+                    margin-right: 10px
+                    &:hover
+                        cursor: pointer
+                        color: black
+                .action-icon
+                    display: inline-block
+                    margin-left: 10px
+                    margin-right: 10px
+                    .icons
+                        font-size: 18px
+                        &:hover
+                            cursor: pointer
+
+.menu
+    border: 0.5px solid #373C43 !important
+    border-radius: 2px
+
+.ui.dropdown
+    background-color: transparent !important
+
+.ui.floating.dropdown
+    >.menu
+        box-shadow: none !important
+        >.item.first
+            padding-top: 18px !important
+        >.item.last
+            padding-bottom: 18px !important
+
+.item
+    background-color: $light-gray
+    color: $text !important
+    font-family: 'Montserrat' !important
+    font-style: normal !important
+    &:hover
+        background-color: $drk-gray !important
+        cursor: pointer
+    &:active
+        background-color: $drk-gray !important
+        font-weight: $medium-weight !important
+    >i, >.img-wrapper
+        margin-right: 1rem !important
+    >i.dropdown.icon 
+        margin-left: 3rem !important
+        margin-right: 0em !important
+
+.item.last.share
+    >.menu
+        font-family: 'Montserrat' !important
+        box-shadow: none !important
+        margin-left: 0px !important
+        >.item.first.last
+          padding: 18px !important
+          padding-top: 14px !important
+          padding-bottom: 14px !important
+
+.item.active.selected
+    background-color: $light-gray !important
+    font-weight: $normal-weight !important
+    &:hover
+        background-color: $drk-gray !important
+
+.artistAlbums, .artistPlaylists
+    margin-top: 2rem
+    margin-bottom: 2rem
+    .header
+        padding-left: 1rem
+        font-weight: $medium-weight
+        font-size: 26px
+        line-height: 32px
+        color: $text
+    .items
+        position: relative
+        margin: 1rem
+        overflow: hidden
+        .cards
+            position: relative
+            display: flex
+            width: 100%
+            height: 280px
+            overflow-y: scroll
+            &::-webkit-scrollbar 
+                display: none  
+            .card
+                margin-right: 42px       
+    .scroll-box
+        width: 40px
+        position: absolute
+        right: 0px
+        top: 0px
+        bottom: 0px
+        display: flex
+        align-items: center
+        justify-content: center
+        background: $drk-gray
+        .scroll-button
+            width: 30px
+            height: 30px
+            font-size: 1.2rem
+            color: $text
+            border: none
+            border-radius: 3px
+            background: $light-gray
+            cursor: pointer
+            &:hover
+                background: #373C43

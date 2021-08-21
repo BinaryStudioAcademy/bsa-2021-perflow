@@ -98,9 +98,9 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("topSongs/{authorId}")]
-        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByAuthorIdAsync(int authorId, [FromQuery] int count)
+        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByAuthorIdAsync(int authorId, [FromQuery] int count, [FromQuery] bool isArtist)
         {
-            var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count, User.GetId());
+            var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count, isArtist, User.GetId());
 
             return Ok(songs);
         }

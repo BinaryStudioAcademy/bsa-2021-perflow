@@ -1,5 +1,3 @@
-import { Album } from '../album/album';
-
 export interface ArtistFull {
   id: number;
   userName: string;
@@ -7,5 +5,4 @@ export interface ArtistFull {
   description: string;
   country: string;
   isLiked: boolean;
-  albums: Album[];
 }

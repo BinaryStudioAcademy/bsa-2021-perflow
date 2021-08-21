@@ -143,10 +143,10 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count, int userId)
+        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count, bool isArtist, int userId)
         {
             var songs = await context.Songs
-                .Where(song => song.ArtistId == id || song.GroupId == id)
+                .Where(song => isArtist ? song.ArtistId == id : song.GroupId == id)
                 .OrderByDescending(song => song.Reactions.Count)
                 .Take(count)
                 .Include(song => song.Artist)
