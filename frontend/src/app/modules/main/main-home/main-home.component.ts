@@ -5,6 +5,10 @@ import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumService } from 'src/app/services/album.service';
 import { Subject } from 'rxjs';
 import { NewReleaseView } from 'src/app/models/album/new-release-view';
+import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
+import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-home',
@@ -12,6 +16,7 @@ import { NewReleaseView } from 'src/app/models/album/new-release-view';
   styleUrls: ['./main-home.component.sass']
 })
 export class MainHomeComponent implements OnInit, OnDestroy {
+  private readonly _rpSongAmount: number = 8;
   private _newestCounter: number = 1;
   private _newestAlbums = new Array<object>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
 
@@ -20,20 +25,30 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   private readonly _scrollingSize: number = 1530;
 
   public currentNewestAlbum = this._newestAlbums[0];
-  public recentlyPlayed = new Array<object>(); // Only 8 items
+  public recentlyPlayed = new Array<RecentlyPlayedSong>();
   public newReleases: NewReleaseView[] = [];
   public calmRhythms = new Array<Playlist>();
   public yourMix = new Array<object>();
   public top100Songs = new Array<Playlist>();
 
   private _unsubscribe$ = new Subject<void>();
+  private _userId: number;
 
-  constructor(private _albumService: AlbumService) {
+  constructor(
+    private _albumService: AlbumService,
+    private _recentlyPlayedService: RecentlyPlayedService,
+    private _authService: AuthService
+  ) {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe((authState) => {
+        this._userId = authState!.id;
+      });
   }
 
   async ngOnInit() {
     this._newestAlbums = this.getNewestFiveAlbums();
-    this.recentlyPlayed = this.getRecentlyPlayed();
+    this.getRecentlyPlayed();
     this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
@@ -56,8 +71,15 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   // User should be able to reach Top 5 of the newest albums
   getNewestFiveAlbums = (): Array<object> => new Array<object>();
 
-  // User should be able to play Recently played - 8 songs/albums/playlists which was played recently
-  getRecentlyPlayed = (): Array<object> => new Array<object>();
+  getRecentlyPlayed() {
+    this._recentlyPlayedService.getRecentSongs(this._userId, this._rpSongAmount)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.recentlyPlayed = data;
+        }
+      });
+  }
 
   // User should be able to play New Releases - songs/albums which was added to system during last month
   public getNewReleases() {
