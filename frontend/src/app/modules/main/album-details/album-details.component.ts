@@ -12,6 +12,7 @@ import { filter } from 'rxjs/operators';
 import { QueueService } from 'src/app/services/queue.service';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { timer } from 'rxjs';
+import { AuthorType } from 'src/app/models/enums/author-type.enum';
 
 @Component({
   selector: 'app-album-details',
@@ -67,7 +68,7 @@ export class AlbumDetailsComponent implements OnInit {
   loadAnotherAlbums() {
     const artistId = this.album?.artist?.id ?? this.album?.group?.id;
 
-    this._service.getAlbumsByArtist(artistId as number)
+    this._service.getAlbumsByArtist(artistId as number, this.album.authorType)
       .subscribe(
         (result) => {
           this.anotherAlbums = result;

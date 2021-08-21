@@ -7,11 +7,11 @@ import { ClipboardService } from 'ngx-clipboard';
 import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
+import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { GroupFull } from 'src/app/models/group/groupFull';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { AlbumService } from 'src/app/services/album.service';
-import { ArtistService } from 'src/app/services/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GroupService } from 'src/app/services/group.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
@@ -39,7 +39,6 @@ export class GroupViewComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
-    private _artistService: ArtistService,
     private _groupService: GroupService,
     private _songService: SongsService,
     private _playlistsService: PlaylistsService,
@@ -82,7 +81,7 @@ export class GroupViewComponent implements OnInit {
   }
 
   loadTopSongs() {
-    this._songService.getTopSongsByAuthorId(this.group.id, 10, false)
+    this._songService.getTopSongsByAuthorId(this.group.id, 10, AuthorType.group)
       .subscribe(
         (result) => {
           this.topSongs = result;
@@ -91,7 +90,7 @@ export class GroupViewComponent implements OnInit {
   }
 
   loadPlaylists() {
-    this._playlistsService.getPlaylistsByAuthorId(this.group.id)
+    this._playlistsService.getPlaylistsByGroupId(this.group.id)
       .subscribe(
         (result) => {
           this.groupPlaylists = result;
@@ -100,7 +99,7 @@ export class GroupViewComponent implements OnInit {
   }
 
   loadAlbums() {
-    this._albumsService.getAlbumsByArtist(this.group.id)
+    this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
       .subscribe(
         (result) => {
           this.groupAlbums = result;
@@ -108,23 +107,23 @@ export class GroupViewComponent implements OnInit {
       );
   }
 
-  // likeArtist() {
-  //   this._reactionService.addArtistReaction(this.artist.id, this._userId)
-  //     .subscribe(
-  //       () => {
-  //         this.artist.isLiked = true;
-  //       }
-  //     );
-  // }
+  likeGroup() {
+    this._reactionService.addGroupReaction(this.group.id, this._userId)
+      .subscribe(
+        () => {
+          this.group.isLiked = true;
+        }
+      );
+  }
 
-  // dislikeArtist() {
-  //   this._reactionService.removeArtistReaction(this.artist.id, this._userId)
-  //     .subscribe(
-  //       () => {
-  //         this.artist.isLiked = false;
-  //       }
-  //     );
-  // }
+  dislikeGroup() {
+    this._reactionService.removeGroupReaction(this.group.id, this._userId)
+      .subscribe(
+        () => {
+          this.group.isLiked = false;
+        }
+      );
+  }
 
   scroll(id: string, scrollingSize: number = this._scrollingSize) {
     switch (id) {

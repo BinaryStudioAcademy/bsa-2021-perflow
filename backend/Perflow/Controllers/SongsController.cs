@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
+using Perflow.Domain.Enums;
 using Perflow.Services.Interfaces;
 using Shared.Auth.Constants;
 using Shared.Auth.Extensions;
@@ -98,9 +99,9 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("topSongs/{authorId}")]
-        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByAuthorIdAsync(int authorId, [FromQuery] int count, [FromQuery] bool isArtist)
+        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByAuthorIdAsync(int authorId, AuthorType authorType, int count)
         {
-            var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count, isArtist, User.GetId());
+            var songs = await _songsService.GetTopSongsByAuthorIdAsync(authorId, count, authorType, User.GetId());
 
             return Ok(songs);
         }

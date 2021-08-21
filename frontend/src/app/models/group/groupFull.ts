@@ -3,4 +3,5 @@ export interface GroupFull {
   name: string;
   iconURL: string;
   description: string;
+  isLiked: boolean;
 }

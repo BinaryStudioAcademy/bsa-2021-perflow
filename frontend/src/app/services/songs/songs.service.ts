@@ -7,6 +7,7 @@ import { Song } from 'src/app/models/song/song';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
 import { SongOrder } from 'src/app/models/song/song-order';
 import { HttpInternalService } from '../http-internal.service';
+import { AuthorType } from 'src/app/models/enums/author-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -59,8 +60,9 @@ export class SongsService {
     `/api/Songs/delete/${id}`
   );
 
-  getTopSongsByAuthorId(id: number, count: number, isArtist: boolean) {
-    const httpParams = { count, isArtist };
+  getTopSongsByAuthorId(id: number, count: number, authorType: AuthorType) {
+    const httpParams = { count, authorType };
+
     return this._httpService.getRequest<Song[]>(`/api/songs/topSongs/${id}`, httpParams);
   }
 

@@ -7,6 +7,7 @@ import { ClipboardService } from 'ngx-clipboard';
 import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
+import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { ArtistFull } from 'src/app/models/user/artist-full';
@@ -79,7 +80,7 @@ export class ArtistDetailsComponent implements OnInit {
   }
 
   loadTopSongs() {
-    this._songService.getTopSongsByAuthorId(this.artist.id, 10, true)
+    this._songService.getTopSongsByAuthorId(this.artist.id, 10, AuthorType.artist)
       .subscribe(
         (result) => {
           this.topSongs = result;
@@ -115,7 +116,7 @@ export class ArtistDetailsComponent implements OnInit {
   }
 
   loadAlbums() {
-    this._albumsService.getAlbumsByArtist(this.artist.id)
+    this._albumsService.getAlbumsByArtist(this.artist.id, AuthorType.artist)
       .subscribe(
         (result) => {
           this.artistAlbums = result;

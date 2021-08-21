@@ -8,6 +8,7 @@ import { AlbumPublicStatus } from '../models/album/аlbum-public-status';
 import { NewReleaseView } from '../models/album/new-release-view';
 import { AlbumForReadDTO } from '../models/album/albumForReadDTO';
 import { albumToFormData } from '../helpers/object-to-formData-converter';
+import { AuthorType } from '../models/enums/author-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,10 @@ export class AlbumService {
     return this._httpService.getRequest<AlbumFull>(`${this.routePrefix}/${id}`);
   }
 
-  public getAlbumsByArtist(artistId: number) {
-    return this._httpService.getRequest<AlbumForReadDTO[]>(`${this.routePrefix}/byArtist/${artistId}`);
+  public getAlbumsByArtist(artistId: number, authorType:AuthorType) {
+    const httpParams = { authorType };
+
+    return this._httpService.getRequest<AlbumForReadDTO[]>(`${this.routePrefix}/byArtist/${artistId}`, httpParams);
   }
 
   public getAlbumViewsByArtist(artistId: number) {

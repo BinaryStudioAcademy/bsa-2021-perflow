@@ -15,9 +15,7 @@ using Shared.AzureBlobStorage.Interfaces;
 using Shared.AzureBlobStorage.Models;
 using Shared.AzureBlobStorage.Helpers;
 using Perflow.Common.Helpers;
-using Perflow.Common.DTO.Albums;
-using Perflow.Common.DTO.Users;
-using Perflow.Common.DTO.Groups;
+using Perflow.Domain.Enums;
 
 namespace Perflow.Services.Implementations
 {
@@ -143,10 +141,10 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count, bool isArtist, int userId)
+        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count, AuthorType type, int userId)
         {
             var songs = await context.Songs
-                .Where(song => isArtist ? song.ArtistId == id : song.GroupId == id)
+                .Where(song => type == AuthorType.Artist ? song.ArtistId == id : song.GroupId == id)
                 .OrderByDescending(song => song.Reactions.Count)
                 .Take(count)
                 .Include(song => song.Artist)

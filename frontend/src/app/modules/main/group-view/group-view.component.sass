@@ -17,23 +17,23 @@ main
     width: 100%
     height: 100%
 
-.artist
+.group
     width: 100%
     height: 401px
     border-radius: 5px
     display: grid
-    grid-template-areas: "left-col artist-details right-col"
+    grid-template-areas: "left-col group-details right-col"
     grid-template-columns: 1fr 6fr 1fr
     background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
     margin-bottom: 1rem
-    .artist-details
-        grid-area: artist-details
+    .group-details
+        grid-area: group-details
         width: 100%
         display: grid
-        grid-template-areas: "artist-image artist-info"
+        grid-template-areas: "group-image group-info"
         grid-template-columns: $image-size 1fr
-        .artist-image
-            grid-area: artist-image
+        .group-image
+            grid-area: group-image
             text-align: center
             padding-top: 104px
             .image
@@ -42,8 +42,8 @@ main
                 border-radius: 50%
                 box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
                 object-fit: cover
-        .artist-info
-            grid-area: artist-info
+        .group-info
+            grid-area: group-info
             padding-top: 104px
             display: flex
             flex-direction: column
@@ -51,12 +51,12 @@ main
             align-items: left
             margin-left: 35px
             color: $text
-            .artist-title
+            .group-title
                 margin-top: 2rem
                 font-weight: $bold-weight
                 font-size: 40px
                 line-height: 47px
-            .artist-description
+            .group-description
                 margin-top: 1rem
                 padding-bottom: 1rem
                 font-weight: $light-weight
@@ -129,7 +129,7 @@ main
     &:hover
         background-color: $drk-gray !important
 
-.artistAlbums, .artistPlaylists
+.groupAlbums, .groupPlaylists
     margin-top: 2rem
     margin-bottom: 2rem
     .header

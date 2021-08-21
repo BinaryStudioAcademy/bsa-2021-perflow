@@ -38,10 +38,17 @@ namespace Perflow.Services.Implementations
             return mapper.Map<ICollection<GroupForAlbumDTO>>(groups);
         }
 
-        public async Task<GroupLikedDTO> GetGroupAsync(int id)
+        public async Task<GroupLikedDTO> GetGroupAsync(int id, int userId)
         {
             var group = await context.Groups
-                .AsNoTracking()
+                .Select(g => new GroupLikedDTO
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    Description = g.Description,
+                    IconURL = _imageService.GetImageUrl(g.IconURL),
+                    IsLiked = g.Reactions.Any(r => r.UserId == userId)
+                })
                 .FirstOrDefaultAsync(g => g.Id == id);
 
             if (group == null)
@@ -49,9 +56,7 @@ namespace Perflow.Services.Implementations
                 throw new NotFoundExcepion($"{nameof(Group)} not found");
             }
 
-            group.IconURL = _imageService.GetImageUrl(group.IconURL);
-
-            return mapper.Map<GroupLikedDTO>(group);
+            return group;
         }
     }
 }
