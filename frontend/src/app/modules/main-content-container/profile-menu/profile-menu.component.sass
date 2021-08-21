@@ -1,4 +1,4 @@
-@import "../../../../styles.sass"
+@import "src/styles.sass"
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400")
 
 // Profile icon in top right corner
@@ -19,6 +19,7 @@
     font-size: 18px
     background-color: $light-gray
     border: 1px solid darken($gray, 15%)
+    z-index: $mini-profile-z-index
     &:hover
         cursor: pointer
     .user-name
