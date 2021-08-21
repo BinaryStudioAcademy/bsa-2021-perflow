@@ -1,4 +1,5 @@
 @import ../playlist-card-styles
+@import ../../../../../styles
 
 .card
     .remove
@@ -6,7 +7,11 @@
         bottom: 25px
     .edit
         right: 25px
-        top: 25px
+        bottom: 25px
+        i
+            color: $text
+            &:hover
+                color: black
     .info-block
         .album-author
             font-weight: $light-weight

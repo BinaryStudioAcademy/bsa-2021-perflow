@@ -1,9 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Groups;
+using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.RecentlyPlayed;
+using Perflow.Common.DTO.Songs;
+using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
+using Perflow.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +19,13 @@ namespace Perflow.Services.Implementations
 {
     public class RecentlyPlayedService : BaseService
     {
+        private readonly IImageService _imageService;
         private const int maxNumberOfStoredSongsPerUser = 100;
-        public RecentlyPlayedService(PerflowContext context, IMapper mapper) : base(context, mapper)
-        { }
+
+        public RecentlyPlayedService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        {
+            _imageService = imageService;
+        }
 
         public async Task AddSong(RecentlyPlayedDTO rpInfo)
         {
@@ -85,6 +95,35 @@ namespace Perflow.Services.Implementations
                                 .ToListAsync();
 
             return mapper.Map<IEnumerable<RecentlyPlayedDTO>>(rpList);
+        }
+
+        public async Task<IEnumerable<RecentlyPlayedSongDTO>> GetRecentSongsAsync(int userId, int amount)
+        {
+            var songs = await context.RecentlyPlayed
+                                .Where(rp => rp.UserId == userId)
+                                .Include(rp => rp.Playlist)
+                                .Include(rp => rp.Album)
+                                .Include(rp => rp.Artist)
+                                .Include(rp => rp.Song)
+                                    .ThenInclude(s => s.Group)
+                                .OrderByDescending(rp => rp.LastTimeListened)
+                                .Take(amount)
+                                .Select(rp =>  new RecentlyPlayedSongDTO
+                                {
+                                    Id = rp.Song.Id,
+                                    Name = rp.Song.Name,
+                                    Album = new AlbumForPlaylistDTO
+                                    { 
+                                        Id = rp.Album.Id,
+                                        Name = rp.Album.Name,
+                                        IconURL = _imageService.GetImageUrl(rp.Album.IconURL)
+                                    },
+                                    Group = mapper.Map<GroupForPlaylistDTO>(rp.Song.Group),
+                                    Artist = mapper.Map<UserForPlaylistDTO>(rp.Artist),
+                                    Playlist = mapper.Map<PlaylistNameDTO>(rp.Playlist)
+                                })
+                                .ToListAsync();
+            return songs; 
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Perflow.Services.Implementations
                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs.OrderBy(s => s.Order)
                                                 .Select(s =>
-                                                    mapper.Map<SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
+                                                    mapper.Map<SongForAlbumDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
                                                 ),
                                                 Artist = mapper.Map<User, ArtistForAlbumDTO>(a.Author),
                                                 Group = mapper.Map<Group, GroupForAlbumDTO>(a.Group),
@@ -256,6 +256,27 @@ namespace Perflow.Services.Implementations
             context.Entry(album).State = EntityState.Modified;
 
             await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<AlbumForNewestFiveDTO>> GetFiveNewestAlbumsAsync()
+        {
+            var newAlbumsToTake = 5;
+
+            IEnumerable<AlbumForNewestFiveDTO> entities = await context.Albums
+                .Where(album => album.IsPublished)
+                .OrderByDescending(a => a.CreatedAt)
+                .Take(newAlbumsToTake)
+                .AsNoTracking()
+                .Select(album => new AlbumForNewestFiveDTO
+                {
+                    Id = album.Id,
+                    Name = album.Name,
+                    Description = album.Description,
+                    IconURL = _imageService.GetImageUrl(album.IconURL)
+                })
+                .ToListAsync();
+
+            return entities;
         }
     }
 }

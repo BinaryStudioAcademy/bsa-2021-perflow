@@ -27,6 +27,7 @@ import { AuthorTypePipe } from './pipes/album-author-type.pipe';
 import { ClickStopPropagationDirective } from './directives/stopPropagation/click-stop-propagation.directive';
 import { QueueComponent } from './queue/queue/queue.component';
 import { PlayingComponent } from './playing/playing.component';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { PlayingComponent } from './playing/playing.component';
     AlbumRegionTypePipe,
     AuthorTypePipe,
     QueueComponent,
-    PlayingComponent
+    PlayingComponent,
+    SnackbarComponent
   ],
   imports: [
     CommonModule,
@@ -84,7 +86,8 @@ import { PlayingComponent } from './playing/playing.component';
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
     AuthorTypePipe,
-    QueueComponent
+    QueueComponent,
+    SnackbarComponent
   ]
 })
 

@@ -65,7 +65,13 @@
                         <i class="list icon"></i>Add to playlist
                     </div>
                     <div class="item" (click)="clickItem('Remove from playlist')">
-                        <i class="list icon"></i>Remove from playlist
+                        <i class="trash icon"></i>Remove from playlist
+                    </div>
+                    <div class="item" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">
+                        <i class="user icon"></i>Go to artist
+                    </div>
+                    <div class="item" *ngIf="song.album" [routerLink]="['/albums', song.album.id]" >
+                        <i class="gem outline icon"></i>Go to album
                     </div>
                     <div class="item last share">
                         <i class="share alternate icon"></i>Share

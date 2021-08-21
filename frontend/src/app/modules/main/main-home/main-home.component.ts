@@ -5,6 +5,11 @@ import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumService } from 'src/app/services/album.service';
 import { Subject } from 'rxjs';
 import { NewReleaseView } from 'src/app/models/album/new-release-view';
+import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
+import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { filter } from 'rxjs/operators';
+import { NewestFiveAlbum } from 'src/app/models/album/newest-five';
 
 @Component({
   selector: 'app-main-home',
@@ -12,28 +17,39 @@ import { NewReleaseView } from 'src/app/models/album/new-release-view';
   styleUrls: ['./main-home.component.sass']
 })
 export class MainHomeComponent implements OnInit, OnDestroy {
-  private _newestCounter: number = 1;
-  private _newestAlbums = new Array<object>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
+  private readonly _rpSongAmount: number = 8;
+  private _newestCounter: number = 0;
+  private _newestAlbums = new Array<NewestFiveAlbum>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
 
   private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
   private readonly _scrollingSize: number = 1530;
 
-  public currentNewestAlbum = this._newestAlbums[0];
-  public recentlyPlayed = new Array<object>(); // Only 8 items
+  public currentNewestAlbum = {} as NewestFiveAlbum;
+  public recentlyPlayed = new Array<RecentlyPlayedSong>();
   public newReleases: NewReleaseView[] = [];
   public calmRhythms = new Array<Playlist>();
   public yourMix = new Array<object>();
   public top100Songs = new Array<Playlist>();
 
   private _unsubscribe$ = new Subject<void>();
+  private _userId: number;
 
-  constructor(private _albumService: AlbumService) {
+  constructor(
+    private _albumService: AlbumService,
+    private _recentlyPlayedService: RecentlyPlayedService,
+    private _authService: AuthService
+  ) {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe((authState) => {
+        this._userId = authState!.id;
+      });
   }
 
   async ngOnInit() {
-    this._newestAlbums = this.getNewestFiveAlbums();
-    this.recentlyPlayed = this.getRecentlyPlayed();
+    this.getNewestFiveAlbums();
+    this.getRecentlyPlayed();
     this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
@@ -53,11 +69,28 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     // Ability to save album - album is saved in the user playlist
   };
 
-  // User should be able to reach Top 5 of the newest albums
-  getNewestFiveAlbums = (): Array<object> => new Array<object>();
+  getNewestFiveAlbums() {
+    this._albumService.getFiveNewestAlbums()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this._newestAlbums = data;
+          this.currentNewestAlbum = {
+            ...this._newestAlbums[0]
+          };
+        }
+      });
+  }
 
-  // User should be able to play Recently played - 8 songs/albums/playlists which was played recently
-  getRecentlyPlayed = (): Array<object> => new Array<object>();
+  getRecentlyPlayed() {
+    this._recentlyPlayedService.getRecentSongs(this._userId, this._rpSongAmount)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.recentlyPlayed = data;
+        }
+      });
+  }
 
   // User should be able to play New Releases - songs/albums which was added to system during last month
   public getNewReleases() {
@@ -100,20 +133,21 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   nextSlide = () => {
     this.accordionAnimation();
-    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
     this._newestCounter += 1;
     if (this._newestCounter > this._newestAlbumsMax - 1) {
       this._newestCounter = 0;
     }
+    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
+    this.accordionAnimation();
   };
 
   previousSlide = () => {
     this.accordionAnimation();
-    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
     this._newestCounter -= 1;
     if (this._newestCounter < 0) {
       this._newestCounter = this._newestAlbumsMax - 1;
     }
+    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
     this.accordionAnimation();
   };
 

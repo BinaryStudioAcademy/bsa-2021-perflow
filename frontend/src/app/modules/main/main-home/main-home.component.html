@@ -15,16 +15,13 @@
       <img
         class="album-icon"
         alt="Album"
-        src="../../../../assets/images/Sunset.jpg"
+        src="{{currentNewestAlbum.iconURL}}"
       />
       <div class="album-info">
         <p class="type">Album</p>
-        <p class="album-title">Perfect Morning</p>
+        <p class="album-title">{{currentNewestAlbum.name}}</p>
         <p class="album-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-          facilis deleniti quidem atque obcaecati eaque quod tenetur odit
-          laborum ex explicabo iste placeat, repellendus aliquid alias
-          voluptatibus, quos incidunt? Quos.
+          {{currentNewestAlbum.description}}
         </p>
 
         <div class="buttons">
@@ -39,22 +36,11 @@
 
   <div class="main-content">
     <!-- Recently played -->
-    <div class="recently-played">
+    <div class="recently-played" *ngIf="recentlyPlayed?.length">
       <div class="header">Recently played</div>
       <div class="ui grid recently-played-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <!-- Work component -->
-        <app-recently-played-card
-          *ngFor="let card of recentlyPlayed"
-        ></app-recently-played-card>
+        <app-song-card *ngFor="let card of recentlyPlayed" [name]="card.name" [iconURL]="card.album.iconURL"
+          [artist]="card.group?.name ?? card.artist.userName" [podcast]="card.playlist?.name ?? card.album.name"></app-song-card>
       </div>
     </div>
 

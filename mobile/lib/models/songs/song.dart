@@ -11,7 +11,7 @@ class Song {
   final ArtistSimplified artist;
   final AlbumSimplified album;
   final int duration;
-  final String blobId;
+  final String? blobId;
   final bool isLiked;
 
   const Song({
