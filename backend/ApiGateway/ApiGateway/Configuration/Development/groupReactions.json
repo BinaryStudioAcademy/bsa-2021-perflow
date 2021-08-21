@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/Groups/artist/{id}",
+      "DownstreamPathTemplate": "/api/GroupReactions/like",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
@@ -9,11 +9,13 @@
           "Port": "5001"
         }
       ],
-      "UpstreamPathTemplate": "/api/Groups/artist/{id}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamPathTemplate": "/api/GroupReactions/like",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
     },
     {
-      "DownstreamPathTemplate": "/api/Groups/{id}",
+      "DownstreamPathTemplate": "/api/GroupReactions/removeLike",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
@@ -21,8 +23,10 @@
           "Port": "5001"
         }
       ],
-      "UpstreamPathTemplate": "/api/Groups/{id}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamPathTemplate": "/api/GroupReactions/removeLike",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
     }
   ]
 }

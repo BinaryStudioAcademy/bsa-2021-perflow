@@ -68,6 +68,19 @@
       ],
       "UpstreamPathTemplate": "/api/Playlists/byAuthor/{authorId}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Playlists/byGroup/{groupId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Playlists/byGroup/{groupId}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ]
 }
