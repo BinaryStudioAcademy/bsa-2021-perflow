@@ -2,12 +2,21 @@ import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:perflow/api_urls.dart';
 import 'package:perflow/models/songs/song.dart';
+import 'package:perflow/services/auth/auth_service.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final AudioPlayer _player;
+  final AuthService _authService;
 
-  PlaybackHandler(this._player) {
-    _player.playbackEventStream.map(_transformPlaybackEvent).pipe(playbackState);
+  PlaybackHandler(
+    this._player,
+    this._authService
+  ) {
+    _player.playbackEventStream
+      .withLatestFrom(_authService.authStateChanges, (playbackEvent, authState) => playbackEvent)
+      .map(_transformPlaybackEvent)
+      .pipe(playbackState);
   }
 
   Future<void> prepareSong(Song song, [Map<String, dynamic>? extras]) {
@@ -114,7 +123,7 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         ProcessingState.ready: AudioProcessingState.ready,
         ProcessingState.completed: AudioProcessingState.completed,
       }[_player.processingState]!,
-      playing: true,
+      playing: _authService.isAuthenticated,
       updatePosition: _player.position,
       bufferedPosition: _player.bufferedPosition,
       speed: _player.speed,

@@ -1,30 +1,44 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:perflow/models/albums/album_simplified.dart';
 import 'package:perflow/models/artists/artist_simplified.dart';
+import 'package:perflow/models/songs/song.dart';
 
-part 'song.g.dart';
+part 'playlist_song.g.dart';
 
 @JsonSerializable()
-class Song {
+class PlaylistSong implements Song {
+  @override
   final int id;
+
+  @override
   final String name;
+
+  @override
   final ArtistSimplified artist;
+
+  @override
   final AlbumSimplified album;
+
+  @override
   final int duration;
-  final String? blobId;
+
+  @override
   final bool isLiked;
 
-  const Song({
+  @override
+  String? get blobId => null;
+
+  const PlaylistSong({
     required this.id,
     required this.name,
     required this.artist,
     required this.album,
     required this.duration,
-    required this.blobId,
     required this.isLiked,
   });
 
-  factory Song.fromJson(Map<String, dynamic> json) => _$SongFromJson(json);
+  factory PlaylistSong.fromJson(Map<String, dynamic> json) => _$PlaylistSongFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SongToJson(this);
+  @override
+  Map<String, dynamic> toJson() => _$PlaylistSongToJson(this);
 }

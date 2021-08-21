@@ -3,8 +3,8 @@ import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:perflow/helpers/validators/auth_validators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/theme.dart';
-import 'package:perflow/widgets/perflow_elevated_button.dart';
-import 'package:perflow/widgets/perflow_outlined_button.dart';
+import 'package:perflow/widgets/buttons/perflow_elevated_button.dart';
+import 'package:perflow/widgets/buttons/perflow_outlined_button.dart';
 
 class LoginForm extends StatefulWidget {
   final void Function()? onRegister;

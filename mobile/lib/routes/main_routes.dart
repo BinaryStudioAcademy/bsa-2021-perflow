@@ -5,6 +5,8 @@ import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
 import 'package:perflow/cubits/playback/playback_cubit.dart';
 import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/routes.dart';
+import 'package:perflow/routes/content_routes.dart';
+import 'package:perflow/screens/empty_screen.dart';
 import 'package:perflow/screens/main/home/home_screen.dart';
 import 'package:perflow/screens/main/library/library_screen.dart';
 import 'package:perflow/screens/main/main_screen.dart';
@@ -35,26 +37,24 @@ class MainRoutes extends VRouteElementBuilder {
           VWidget(
             path: Routes.home,
             widget: const HomeScreen(),
-            buildTransition: (_, __, child) => child,
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero
           ),
           VWidget(
             path: Routes.search,
             widget: const SearchScreen(),
-            buildTransition: (_, __, child) => child,
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero
           ),
           VWidget(
             path: Routes.library,
             widget: const LibraryScreen(),
-            buildTransition: (_, __, child) => child,
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero
+          ),
+          VWidget(
+            path: null,
+            widget: const EmptyScreen(),
+            stackedRoutes: [
+              ContentRoutes()
+            ]
           ),
         ]
-      ),
+      )
     ];
   }
 
