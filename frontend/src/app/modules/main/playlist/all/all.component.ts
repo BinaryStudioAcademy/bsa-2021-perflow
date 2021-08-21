@@ -56,10 +56,10 @@ export class AllComponent {
       });
   }
 
-  deletePlaylist(id: number){
+  deletePlaylist(id: number) {
     this._reactionService.removePlaylistReaction(id, this.userId).subscribe(
       () => {
-        const index = this.playlists.findIndex(p=> p.id === id);
+        const index = this.playlists.findIndex((p) => p.id === id);
         this.playlists.splice(index, 1);
       }
     );
