@@ -26,6 +26,7 @@ export class AlbumDetailsComponent implements OnInit {
   album: AlbumFull = {} as AlbumFull;
   isSuccess: boolean = false;
   anotherAlbums: AlbumForReadDTO[] = [];
+  isAuthor: boolean;
 
   constructor(
     private _clipboardApi: ClipboardService,
@@ -37,11 +38,17 @@ export class AlbumDetailsComponent implements OnInit {
     private _authService: AuthService,
     private _queueService: QueueService
   ) {
+    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
+
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe((authState) => {
+        this._userId = authState!.id;
+      });
   }
 
   ngOnInit() {
     this.loadData();
-    this.getUserId();
   }
 
   loadData() {
@@ -49,17 +56,9 @@ export class AlbumDetailsComponent implements OnInit {
       .subscribe(
         (result) => {
           this.album = result;
-          this.loadAnotherAlbums();
-        }
-      );
-  }
+          this.isAuthor = this._userId === (this.album?.artist?.id ?? this.album?.group?.id);
 
-  getUserId() {
-    this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
-      .subscribe(
-        (state) => {
-          this._userId = state!.id;
+          this.loadAnotherAlbums();
         }
       );
   }

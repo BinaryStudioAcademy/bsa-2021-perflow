@@ -2,7 +2,6 @@ import {
   Component, EventEmitter, OnInit, Output, Input
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from '../../../models/user/user';
@@ -37,7 +36,6 @@ export class ProfileEditFormComponent implements OnInit {
   updatedUser = new EventEmitter<User>();
 
   constructor(
-    private _router: Router,
     private _profileService: ProfileService,
     private _userService: UserService
   ) { }
@@ -62,10 +60,6 @@ export class ProfileEditFormComponent implements OnInit {
     else {
       $('.ui.modal').modal('show');
     }
-  }
-
-  redirect(route: string) {
-    this._router.navigate([route]);
   }
 
   onSubmit() {

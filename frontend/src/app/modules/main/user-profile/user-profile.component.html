@@ -9,11 +9,21 @@
         
       <div class="user-info">
         <div class="user-profile">Profile</div>
-        <div class="ui dropdown" (click)="showProfileMenu()" (clickOutside)="onClickOutsideProfileMenu($event)">
+        <div class="ui floating dropdown" appSmDropdown>
           <i class="ellipsis vertical icon"></i>
-          <div class="right menu dropdown-content" *ngIf="isProfileMenuShown">
-            <a routerLink="/profile/edit" class="item"><i class="edit icon"></i> Edit Profile</a>
-            <a routerLink="/" class="item"><i class="share alternate icon"></i> Share Profile</a>
+          <div class="menu right">
+            <div class="item first" routerLink="/profile/edit">
+              <span>
+                <i class="edit icon"></i>
+                Edit Profile
+              </span>
+            </div>
+            <div class="item last" routerLink="/">
+              <span>
+                <i class="share alternate icon"></i>
+                Share Profile
+              </span>
+            </div>
           </div>
         </div>
         <p class="user-name">{{user.userName}}</p>

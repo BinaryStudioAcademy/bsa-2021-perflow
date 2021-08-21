@@ -57,6 +57,7 @@ import { AllSongsComponent } from './search/components/all-songs/all-songs.compo
 import { AllArtistsComponent } from './search/components/all-artists/all-artists.component';
 import { AllAlbumsComponent } from './search/components/all-albums/all-albums.component';
 import { AllPlaylistsComponent } from './search/components/all-playlists/all-playlists.component';
+import { SongCardComponent } from './cards/song-card/song-card.component';
 import { GroupViewComponent } from './group-view/group-view.component';
 
 @NgModule({
@@ -98,6 +99,7 @@ import { GroupViewComponent } from './group-view/group-view.component';
     AllArtistsComponent,
     AllAlbumsComponent,
     AllPlaylistsComponent,
+    SongCardComponent,
     GroupViewComponent
   ],
   imports: [

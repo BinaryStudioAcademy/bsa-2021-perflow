@@ -1,4 +1,5 @@
 @import "../../../../styles.sass"
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400")
 
 $image-size: 245px
 
@@ -11,17 +12,12 @@ $image-size: 245px
     padding: 0
     margin: 0
     text-decoration: none
+
 main
     background: $drk-gray
     width: 100%
     height: 100%
 
-.profile-menu
-    grid-column: 1
-    grid-row: 1
-    position: absolute
-    right: 42px
-    top: 45px
 
 .show
     display: block !important
@@ -119,29 +115,7 @@ main
             font-size: 64px
             margin-top: 3rem
             margin-right: 0 !important
-    .dropdown-content
-        display: block
-        top: -70px
-        left: 20px
-        position: absolute
-        background: $light-gray
-        border: 0.5px solid #373C43
-        border-radius: 2px
-        transition: all 1s ease-out
-        z-index: 99
-        .item
-            font-family: Rubik
-            font-style: normal
-            font-weight: 300
-            font-size: 14px !important
-            line-height: 135%
-            color: $text
-            padding: 9px 19px
-            &:hover
-                background: #373C43
-                color: $light-orange !important
-            &:last-child
-                color: $light-orange
+
 
 .main-content-container
     padding: 50px 25px 50px 40px
@@ -188,3 +162,36 @@ main
     margin-top: 50px
     .header
         margin-bottom: 30px
+
+
+.ui.floating.dropdown
+    .menu
+        background: $light-gray
+        border: 0.5px solid #373C43 !important
+        border-radius: 4px
+        box-shadow: none !important
+        .item
+          i
+            margin-right: 10px
+            padding: 0
+            font-size: 14px
+          span
+            color: $text !important
+            font-family: Montserrat !important
+            font-weight: $normal-weight !important
+            line-height: 135%
+          &:hover
+              background-color: $drk-gray !important
+          &:active
+              background-color: $light-gray !important
+              font-weight: $normal-weight !important
+        .item.first
+            padding-top: 18px !important
+        .item.last
+            padding-bottom: 18px !important
+
+.item.active.selected
+    background-color: $light-gray !important
+    font-weight: $normal-weight !important
+    &:hover
+        background-color: $drk-gray !important

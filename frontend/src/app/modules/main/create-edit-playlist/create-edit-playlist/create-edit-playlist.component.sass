@@ -201,6 +201,8 @@ img[src='']
             margin-left:  20px
             color: $text
             cursor: pointer
+          .ellipsis.vertical.icon
+              font-size: 18px
 
 
 // Playlist's songs' container
@@ -248,33 +250,44 @@ img[src='']
     color: $text
     margin-left: 13px 
   .menu
-    display: none !important
-    box-shadow: none !important
-    .item.first
-      padding-top: 18px !important
-    .item.last
-      padding-bottom: 18px !important
+      display: none !important
+      border: 0.5px solid #373C43 !important
+      border-radius: 2px
+      .item.first
+          padding-top: 18px !important
+      .item.last
+          padding-bottom: 18px !important
+      .item
+          font-family: Montserrat
+          line-height: 135%
+          .trash.icon
+              margin: 0px 10px 0px 0px
+              padding: 0
+              font-size: 14px
+              
+              
+          >i.dropdown.icon 
+              margin-left: 3rem !important
+              margin-right: 0em !important
+      .item:hover
+          background: $drk-gray
+      .item.share
+          font-family: 'Montserrat' !important
+          line-height: 135%
+          .share.alternate.icon
+              margin: 0px 15px 0px 0px
+              padding: 0
+              font-size: 14px
+          >.menu
+              font-family: 'Montserrat' !important
+              box-shadow: none !important
+              margin-left: 0px !important
+              >.item.first.last
+                  padding: 18px !important
+                  padding-top: 14px !important
+                  padding-bottom: 14px !important
 
-.item.last.share
-    >.menu
-        font-family: 'Montserrat' !important
-        box-shadow: none !important
-        margin-left: 0px !important
-        >.item.first.last
-          padding: 18px !important
-          padding-top: 14px !important
-          padding-bottom: 14px !important
 
-.item
-  background-color: $light-gray !important
-  font-weight: $normal-weight !important
-  color: $text !important
-  font-family: 'Rubik' !important
-  &:hover
-    background-color: $drk-gray !important
-  &:active
-    color: #aaaaaa !important
-  >i.dropdown.icon 
-    margin-left: 3rem !important
-    margin-right: 0em !important
+
+
  

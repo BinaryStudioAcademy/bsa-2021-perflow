@@ -23,7 +23,10 @@ class PlaybackService {
 
   Future<void> _initialize() async {
     _audioHandler = await AudioService.init(
-      builder: () => PlaybackHandler(player),
+      builder: () => PlaybackHandler(
+        player,
+        _authService
+      ),
       config: const AudioServiceConfig(
         androidNotificationChannelId: 'com.bsa.perflow.channel.audio',
         androidNotificationChannelName: 'Perflow playback',

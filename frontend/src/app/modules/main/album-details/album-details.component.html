@@ -27,7 +27,7 @@
                 </div>
                 <div class="buttons">
                     <button class="btn-full button-play" (click)="playAlbum()">Play</button>
-                    <div class="action-icon">
+                    <div class="action-icon" *ngIf="!isAuthor">
                         <i class="heart outline icon icons" (click)="likeAlbum()" *ngIf="!album.isLiked"></i>
                         <i class="heart icon icons" (click)="dislikeAlbum()" *ngIf="album.isLiked"></i>
                     </div>

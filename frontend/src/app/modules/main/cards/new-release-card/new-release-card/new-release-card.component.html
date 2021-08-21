@@ -6,7 +6,7 @@
       </button>  
   </div>
   <div class="content">
-      <div class="card-name"> {{name}} </div>
+      <div class="card-name" [routerLink]="['/albums', id]"> {{name}} </div>
       <div class="card-desc">
         <span *ngFor="let author of authors; let last = last" appClickStopPropagation>
           <span *ngIf="author.isArtist"><i routerLink="../artists/{{ author.id }}">{{author.name}}</i><span class="separator" [ngClass]="{'last-child': last}">, </span></span>
