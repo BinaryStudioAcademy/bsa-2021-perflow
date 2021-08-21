@@ -13,7 +13,7 @@ Song _$SongFromJson(Map<String, dynamic> json) {
     artist: ArtistSimplified.fromJson(json['artist'] as Map<String, dynamic>),
     album: AlbumSimplified.fromJson(json['album'] as Map<String, dynamic>),
     duration: json['duration'] as int,
-    blobId: json['blobId'] as String,
+    blobId: json['blobId'] as String?,
     isLiked: json['isLiked'] as bool,
   );
 }

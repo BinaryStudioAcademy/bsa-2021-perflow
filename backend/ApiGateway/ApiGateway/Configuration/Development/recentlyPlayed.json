@@ -55,6 +55,20 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/RecentlyPlayed/get/recent/songs/{amount}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/RecentlyPlayed/get/recent/songs/{amount}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
     }
   ]
 }

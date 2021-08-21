@@ -168,6 +168,8 @@ export class SongToolbarComponent implements OnInit {
     }
 
     this._queueService.setPlaying(this.isPlaying);
+
+    return this.isPlaying;
   };
 
   muteUnmute = () => {

@@ -24,6 +24,7 @@ import { SearchSongRowComponent } from './playlist/search-song-row/search-song-r
 import { AlbumRegionTypePipe } from './pipes/album-region-type.pipe';
 import { AuthorTypePipe } from './pipes/album-author-type.pipe';
 import { ClickStopPropagationDirective } from './directives/stopPropagation/click-stop-propagation.directive';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ClickStopPropagationDirective } from './directives/stopPropagation/clic
     SearchSongRowComponent,
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
-    AuthorTypePipe
+    AuthorTypePipe,
+    SnackbarComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +78,8 @@ import { ClickStopPropagationDirective } from './directives/stopPropagation/clic
     SearchSongRowComponent,
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
-    AuthorTypePipe
+    AuthorTypePipe,
+    SnackbarComponent
   ]
 })
 

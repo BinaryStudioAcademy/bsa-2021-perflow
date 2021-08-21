@@ -27,6 +27,17 @@ namespace Perflow.Common.MappingProfiles
                 .AfterMap((src, dest, context) => dest.Artist = context.Mapper.Map<User, ArtistReadDTO>(src.Song.Artist))
                 .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupReadDTO>(src.Song.Group));
 
+            CreateMap<LikedSong, SongForAlbumDTO>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Song.Id))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Song.Name))
+                .ForMember(d => d.Duration, opt => opt.MapFrom(s => s.Song.Duration))
+                .ForMember(d => d.HasCensorship, opt => opt.MapFrom(s => s.Song.HasCensorship))
+                .ForMember(d => d.CreatedAt, opt => opt.MapFrom(s => s.Song.CreatedAt))
+                .ForMember(d => d.IsLiked, opt => opt.MapFrom(s => s.IsLiked))
+                .AfterMap((src, dest, context) => dest.Album = context.Mapper.Map<Album, AlbumForPlaylistDTO>(src.Song.Album))
+                .AfterMap((src, dest, context) => dest.Artist = context.Mapper.Map<User, ArtistForAlbumDTO>(src.Song.Artist))
+                .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupForAlbumDTO>(src.Song.Group));
+
             CreateMap<Song, SongViewDTO>()
                 .ForMember("Artist", opt => opt.MapFrom(c => c.Artist.UserName))
                 .ForMember("Group", opt => opt.MapFrom(c => c.Group.Name));

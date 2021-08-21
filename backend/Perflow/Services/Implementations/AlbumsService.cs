@@ -62,7 +62,7 @@ namespace Perflow.Services.Implementations
                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs.OrderBy(s => s.Order)
                                                 .Select(s =>
-                                                    mapper.Map<SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
+                                                    mapper.Map<SongForAlbumDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
                                                 ),
                                                 Artist = mapper.Map<User, ArtistForAlbumDTO>(a.Author),
                                                 Group = mapper.Map<Group, GroupForAlbumDTO>(a.Group),
@@ -231,6 +231,10 @@ namespace Perflow.Services.Implementations
             var deletedAlbum = await context.Albums
                 .Include(album => album.Songs)
                 .FirstOrDefaultAsync(album => album.Id == entityId);
+
+            var recentlyPlayed = context.RecentlyPlayed.Where(rp => rp.AlbumId == entityId);
+
+            context.RecentlyPlayed.RemoveRange(recentlyPlayed);
 
             context.Albums.Remove(deletedAlbum);
 
