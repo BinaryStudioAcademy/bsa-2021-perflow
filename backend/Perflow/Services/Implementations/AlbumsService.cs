@@ -272,7 +272,7 @@ namespace Perflow.Services.Implementations
                     Id = album.Id,
                     Name = album.Name,
                     Description = album.Description,
-                    IconURL = _imageService.GetImageUrl(a.IconURL)
+                    IconURL = _imageService.GetImageUrl(album.IconURL)
                 })
                 .ToListAsync();
 
