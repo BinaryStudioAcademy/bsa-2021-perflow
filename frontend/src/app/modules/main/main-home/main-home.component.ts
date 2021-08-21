@@ -47,7 +47,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this._newestAlbums = this.getNewestFiveAlbums();
+    this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
     this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
@@ -68,8 +68,15 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     // Ability to save album - album is saved in the user playlist
   };
 
-  // User should be able to reach Top 5 of the newest albums
-  getNewestFiveAlbums = (): Array<object> => new Array<object>();
+  getNewestFiveAlbums() {
+    this._albumService.getFiveNewestAlbums()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this._newestAlbums = data;
+        }
+      });
+  }
 
   getRecentlyPlayed() {
     this._recentlyPlayedService.getRecentSongs(this._userId, this._rpSongAmount)

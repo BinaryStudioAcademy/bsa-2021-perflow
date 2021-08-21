@@ -257,5 +257,26 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<AlbumForNewestFiveDTO>> GetFiveNewestAlbumsAsync()
+        {
+            var newAlbumsToTake = 5;
+
+            IEnumerable<AlbumForNewestFiveDTO> entities = await context.Albums
+                .Where(album => album.IsPublished)
+                .OrderByDescending(a => a.CreatedAt)
+                .Take(newAlbumsToTake)
+                .AsNoTracking()
+                .Select(album => new AlbumForNewestFiveDTO
+                {
+                    Id = album.Id,
+                    Name = album.Name,
+                    Description = album.Description,
+                    IconURL = _imageService.GetImageUrl(a.IconURL)
+                })
+                .ToListAsync();
+
+            return entities;
+        }
     }
 }
