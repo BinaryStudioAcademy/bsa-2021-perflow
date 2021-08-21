@@ -9,10 +9,6 @@
       </div>
     </div>
   </div>
-  <div [ngClass]="['ui', 'success', 'message']" *ngIf="isSuccess">
-    <div class="header">
-      Registration successful!
-    </div>
-    <p>You may now log-in with your email and password.</p>
-  </div>
 </div>
+
+<app-snackbar></app-snackbar>

@@ -12,19 +12,18 @@
             <span class="total-all"> {{ playlist?.author?.userName }} </span>
             <span class="menu-view-playlist-description">
               |
-              <span class="total-count-songs"
-                >{{ totalCountSongs }} songs
+              <span class="total-count-songs">{{ totalCountSongs }} songs
               </span>
               |
-              <span class="total-time-songs"
-                >{{ hours }} h {{ minutes }} min</span
-              >
+              <span class="total-time-songs">{{ hours }} h {{ minutes }} min</span>
             </span>
           </div>
           <div class="view-button-toolbar">
             <button class="ui btn-full button" (click)="play()">Play</button>
-            <i class="heart outline icon" (click)="likePlaylist(playlist.id)" *ngIf="!playlist.isLiked"></i>
-            <i class="heart icon" (click)="dislikePlaylist(playlist.id)" *ngIf="playlist.isLiked"></i>
+            <div class="like" *ngIf="!isAuthor">
+              <i class="heart outline icon" (click)="likePlaylist(playlist.id)" *ngIf="!playlist.isLiked"></i>
+              <i class="heart icon" (click)="dislikePlaylist(playlist.id)" *ngIf="playlist.isLiked"></i>
+            </div>
             <span class="menu">
               <div class="ui floating dropdown ellipsis-button" appSmDropdown>
                 <i class="ellipsis vertical icon"></i>
