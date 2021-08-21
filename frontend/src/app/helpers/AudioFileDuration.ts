@@ -3,13 +3,12 @@
 import { Subject } from 'rxjs';
 
 export class AudioFileDuration {
-
   static getDuration(song: File) {
     const readerLoaded = new Subject<number>();
     const getDuration$ = readerLoaded.asObservable();
 
     const audio = document.createElement('audio');
-    const reader = new FileReader();  
+    const reader = new FileReader();
 
     reader.onload = function emitDuration(e) {
       audio.src = e.target?.result as string;

@@ -8,9 +8,9 @@ describe('GroupViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GroupViewComponent ]
+      declarations: [GroupViewComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

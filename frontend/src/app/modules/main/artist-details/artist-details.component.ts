@@ -159,7 +159,7 @@ export class ArtistDetailsComponent implements OnInit {
       this._queueService.initSong(first);
     }
   };
-  
+
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
     this.isSuccess = true;
