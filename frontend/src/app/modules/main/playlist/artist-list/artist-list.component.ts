@@ -15,8 +15,10 @@ export class ArtistListComponent implements OnInit {
   artists!: ArtistReadDTO[];
 
   constructor(private _reactionService: ReactionService, private _authService: AuthService) {
-    this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
+    this._authService.getAuthStateObservableFirst()
+      .pipe(
+        filter((state) => !!state)
+      )
       .subscribe((authState) => {
         this.userId = authState!.id;
       });

@@ -68,7 +68,7 @@ export class SongToolbarComponent implements OnInit {
       }
     );
 
-    authService.getAuthStateObservable()
+    authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { filter, first } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { NavigationEnd, Router } from '@angular/router';
@@ -25,9 +25,8 @@ export class ProfileMenuComponent {
     private _profileService: ProfileService,
     private _router: Router
   ) {
-    this._authService.getAuthStateObservable()
+    this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => state !== null))
-      .pipe(first())
       .subscribe((authState) => {
         this.userName = authState!.userName;
         this._userId = authState!.id;

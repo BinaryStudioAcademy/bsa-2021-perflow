@@ -26,7 +26,7 @@ export class AllComponent {
     private _authService: AuthService,
     private _songsService: SongsService
   ) {
-    this._authService.getAuthStateObservable()
+    this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;
