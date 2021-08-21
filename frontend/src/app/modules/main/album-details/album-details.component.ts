@@ -38,8 +38,6 @@ export class AlbumDetailsComponent implements OnInit {
     private _authService: AuthService,
     private _queueService: QueueService
   ) {
-    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
-
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
