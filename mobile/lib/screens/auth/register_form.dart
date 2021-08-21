@@ -4,8 +4,8 @@ import 'package:perflow/helpers/validators/auth_validators.dart';
 import 'package:perflow/models/auth/register_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/theme.dart';
-import 'package:perflow/widgets/perflow_elevated_button.dart';
-import 'package:perflow/widgets/perflow_outlined_button.dart';
+import 'package:perflow/widgets/buttons/perflow_elevated_button.dart';
+import 'package:perflow/widgets/buttons/perflow_outlined_button.dart';
 
 class RegisterForm extends StatefulWidget {
   final void Function()? onLogin;

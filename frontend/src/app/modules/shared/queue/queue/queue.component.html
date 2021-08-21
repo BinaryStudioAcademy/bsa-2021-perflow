@@ -9,9 +9,11 @@
                 <img [attr.src]="getCurrentSong().album.iconURL">
             </div>
             <h5 class="songname">{{getCurrentSong().name}}</h5>
-            <h6 [routerLink]="['/artists', getCurrentSong().artist?.id]" class="songauthor">
-                {{getCurrentSong().artist?.userName}}
-            </h6>
+            <div class="songauthor">
+                <h6 [routerLink]="['/artists', getCurrentSong().artist?.id]" (click)="closeView()">
+                    {{getCurrentSong().artist?.userName}}
+                </h6>
+            </div>
         </div>
         <div class="queue-label"><h4>Queue</h4></div>
     </div>
