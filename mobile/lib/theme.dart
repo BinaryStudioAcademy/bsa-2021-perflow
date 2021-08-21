@@ -25,6 +25,12 @@ class Perflow {
     colors: [ primaryLightColor, primaryColor ]
   );
 
+  static const secondaryGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [ Color(0xFF864099), Color(0xFF464192) ]
+  );
+
   static final inputDecoration = InputDecoration(
     contentPadding: const EdgeInsets.symmetric(
       horizontal: 26,
@@ -69,6 +75,7 @@ class Perflow {
 
     brightness: Brightness.dark,
     primaryColor: primaryColor,
+    accentColor: primaryLightColor,
     errorColor: errorColor,
 
     backgroundColor: backgroundColor,

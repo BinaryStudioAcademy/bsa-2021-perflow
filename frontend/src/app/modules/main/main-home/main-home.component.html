@@ -39,22 +39,11 @@
 
   <div class="main-content">
     <!-- Recently played -->
-    <div class="recently-played">
+    <div class="recently-played" *ngIf="recentlyPlayed?.length">
       <div class="header">Recently played</div>
       <div class="ui grid recently-played-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <app-recently-played-card></app-recently-played-card>
-        <!-- Work component -->
-        <app-recently-played-card
-          *ngFor="let card of recentlyPlayed"
-        ></app-recently-played-card>
+        <app-song-card *ngFor="let card of recentlyPlayed" [name]="card.name" [iconURL]="card.album.iconURL"
+          [artist]="card.group?.name ?? card.artist.userName" [podcast]="card.playlist?.name ?? card.album.name"></app-song-card>
       </div>
     </div>
 

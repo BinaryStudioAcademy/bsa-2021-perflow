@@ -1,4 +1,4 @@
-import 'package:perflow/models/enums/user_role.dart';
+import 'package:perflow/models/auth/user_role.dart';
 
 class AuthUser {
   final int id;
