@@ -47,7 +47,12 @@ export class QueueService {
   }
 
   addSongToQueue = (song: Song) => {
-    this._songAdd.next(song);
+    const subscription = this._songService.getSongById(song.id).subscribe(
+      fullSong => {
+      this._songAdd.next(fullSong);
+      subscription.unsubscribe();
+      }
+    );
   };
 
   addSongsToQueue = (songs: Song[]) => {
