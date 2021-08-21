@@ -12,7 +12,6 @@ import { filter } from 'rxjs/operators';
 import { QueueService } from 'src/app/services/queue.service';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { timer } from 'rxjs';
-import { AuthorType } from 'src/app/models/enums/author-type.enum';
 
 @Component({
   selector: 'app-album-details',

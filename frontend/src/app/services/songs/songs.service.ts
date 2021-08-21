@@ -6,8 +6,8 @@ import { Observable, of } from 'rxjs';
 import { Song } from 'src/app/models/song/song';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
 import { SongOrder } from 'src/app/models/song/song-order';
-import { HttpInternalService } from '../http-internal.service';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
+import { HttpInternalService } from '../http-internal.service';
 
 @Injectable({
   providedIn: 'root'
