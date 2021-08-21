@@ -48,9 +48,9 @@ export class QueueService {
 
   addSongToQueue = (song: Song) => {
     const subscription = this._songService.getSongById(song.id).subscribe(
-      fullSong => {
-      this._songAdd.next(fullSong);
-      subscription.unsubscribe();
+      (fullSong) => {
+        this._songAdd.next(fullSong);
+        subscription.unsubscribe();
       }
     );
   };
