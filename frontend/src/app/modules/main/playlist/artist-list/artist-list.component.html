@@ -5,7 +5,7 @@
         </div>
         <ng-container *ngIf="artists.length">
             <div *ngFor="let artist of artists" class="artist-card">
-                <app-artist-card [artist]="artist" (delete)="deleteArtist($event)"></app-artist-card>
+                <app-artist-card [artist]="artist" (delete)="deleteArtist($event)" [isLiked]=true></app-artist-card>
             </div>    
         </ng-container>
         <ng-container *ngIf="!artists.length">
