@@ -1,43 +1,53 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:perflow/api_urls.dart';
-import 'package:perflow/models/songs/song.dart';
-import 'package:perflow/services/auth/auth_service.dart';
+import 'package:perflow/models/playback/playback_event_data.dart';
+import 'package:perflow/services/playback/playback_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final AudioPlayer _player;
-  final AuthService _authService;
+  final PlaybackService _playbackService;
 
   PlaybackHandler(
     this._player,
-    this._authService
+    this._playbackService
   ) {
-    _player.playbackEventStream
-      .withLatestFrom(_authService.authStateChanges, (playbackEvent, authState) => playbackEvent)
-      .map(_transformPlaybackEvent)
+    CombineLatestStream<dynamic, PlaybackEventData>(
+      [
+        _playbackService.playbackChanges,
+        _player.playbackEventStream
+      ],
+      (values) => PlaybackEventData(
+        data: values[0],
+        event: values[1]
+      ))
+      .doOnData(prepareSong)
+      .map(_transformPlaybackDataEvent)
       .pipe(playbackState);
   }
 
-  Future<void> prepareSong(Song song, [Map<String, dynamic>? extras]) {
-    var uri = Uri.parse('${ApiUrls.base}/api/songs/file?blobId=${song.blobId}');
+  void prepareSong(PlaybackEventData eventData) async {
+    if (eventData.data == null) {
+      return;
+    }
 
-    return _prepareMediaItem(
-      uri: uri,
-      item: MediaItem(
-        id: uri.toString(),
+    final song = eventData.data!.song;
+    if(mediaItem.value?.id != song.id.toString()) {
+      final item = MediaItem(
+        id: song.id.toString(),
         title: song.name,
-        album: song.album.name,
         artist: song.artist.userName,
+        album: song.album.name,
         artUri: song.album.iconURL != null ? Uri.parse(song.album.iconURL!) : null
-      ),
-      extras: extras
-    );
-  }
+      );
 
-  Future<void> playSong(Song song) async {
-    await prepareSong(song);
-    await _player.play();
+      mediaItem.add(item);
+    }
+
+    final duration = eventData.data!.duration?.max;
+    if(mediaItem.value?.duration != duration) {
+      mediaItem.add(mediaItem.value?.copyWith(duration: duration));
+    }
   }
 
   @override
@@ -51,11 +61,6 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   @override
-  Future<void> stop() async {
-    await _player.stop();
-  }
-
-  @override
   Future<void> seek(Duration position) async {
     await _player.seek(position);
   }
@@ -65,38 +70,7 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await _player.setSpeed(speed);
   }
 
-  Future<void> _prepareMediaItem({
-    required Uri uri,
-    required MediaItem item,
-    Map<String, dynamic>? extras
-  }) async {
-    if (_isPlaying(uri)) {
-      return;
-    }
-
-    item = item.copyWith(extras: extras);
-
-    mediaItem.add(item);
-
-    final duration = await _player.setAudioSource(
-      AudioSource.uri(uri),
-      initialPosition: Duration.zero,
-    );
-
-    if (duration != null && duration != item.duration) {
-      mediaItem.add(item.copyWith(duration: duration));
-    }
-  }
-
-  bool _isPlaying(Uri uri) {
-    if (mediaItem.valueOrNull?.id == null) {
-      return false;
-    }
-
-    return mediaItem.valueOrNull?.id == uri.toString();
-  }
-
-  PlaybackState _transformPlaybackEvent(PlaybackEvent event) {
+  PlaybackState _transformPlaybackDataEvent(PlaybackEventData eventData) {
     return PlaybackState(
       controls: [
         const MediaControl(
@@ -105,7 +79,7 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
           action: MediaAction.setRating
         ),
         MediaControl.skipToPrevious,
-        _player.playing
+        eventData.data?.actions.playing == true
           ? MediaControl.pause
           : MediaControl.play,
         MediaControl.skipToNext,
@@ -123,11 +97,11 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         ProcessingState.ready: AudioProcessingState.ready,
         ProcessingState.completed: AudioProcessingState.completed,
       }[_player.processingState]!,
-      playing: _authService.isAuthenticated,
-      updatePosition: _player.position,
+      playing: eventData.data?.actions.playing ?? false,
+      updatePosition: eventData.data?.duration?.timeChanges.valueOrNull ?? Duration.zero,
       bufferedPosition: _player.bufferedPosition,
       speed: _player.speed,
-      queueIndex: event.currentIndex,
+      queueIndex: eventData.event.currentIndex,
       errorMessage: "Couldn't load music"
     );
   }

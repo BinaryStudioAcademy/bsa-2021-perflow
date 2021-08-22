@@ -20,11 +20,9 @@ class _$PlaybackStateTearOff {
     return PlaybackStateNone();
   }
 
-  PlaybackStatePlaying playing(
-      {required Song song, required Stream<PlaybackTime> playbackTimeChanges}) {
+  PlaybackStatePlaying playing(PlaybackData data) {
     return PlaybackStatePlaying(
-      song: song,
-      playbackTimeChanges: playbackTimeChanges,
+      data,
     );
   }
 }
@@ -37,16 +35,13 @@ mixin _$PlaybackState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() none,
-    required TResult Function(
-            Song song, Stream<PlaybackTime> playbackTimeChanges)
-        playing,
+    required TResult Function(PlaybackData data) playing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
-    TResult Function(Song song, Stream<PlaybackTime> playbackTimeChanges)?
-        playing,
+    TResult Function(PlaybackData data)? playing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -123,9 +118,7 @@ class _$PlaybackStateNone implements PlaybackStateNone {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() none,
-    required TResult Function(
-            Song song, Stream<PlaybackTime> playbackTimeChanges)
-        playing,
+    required TResult Function(PlaybackData data) playing,
   }) {
     return none();
   }
@@ -134,8 +127,7 @@ class _$PlaybackStateNone implements PlaybackStateNone {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
-    TResult Function(Song song, Stream<PlaybackTime> playbackTimeChanges)?
-        playing,
+    TResult Function(PlaybackData data)? playing,
     required TResult orElse(),
   }) {
     if (none != null) {
@@ -176,7 +168,9 @@ abstract class $PlaybackStatePlayingCopyWith<$Res> {
   factory $PlaybackStatePlayingCopyWith(PlaybackStatePlaying value,
           $Res Function(PlaybackStatePlaying) then) =
       _$PlaybackStatePlayingCopyWithImpl<$Res>;
-  $Res call({Song song, Stream<PlaybackTime> playbackTimeChanges});
+  $Res call({PlaybackData data});
+
+  $PlaybackDataCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -192,54 +186,48 @@ class _$PlaybackStatePlayingCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? song = freezed,
-    Object? playbackTimeChanges = freezed,
+    Object? data = freezed,
   }) {
     return _then(PlaybackStatePlaying(
-      song: song == freezed
-          ? _value.song
-          : song // ignore: cast_nullable_to_non_nullable
-              as Song,
-      playbackTimeChanges: playbackTimeChanges == freezed
-          ? _value.playbackTimeChanges
-          : playbackTimeChanges // ignore: cast_nullable_to_non_nullable
-              as Stream<PlaybackTime>,
+      data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as PlaybackData,
     ));
+  }
+
+  @override
+  $PlaybackDataCopyWith<$Res> get data {
+    return $PlaybackDataCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$PlaybackStatePlaying implements PlaybackStatePlaying {
-  _$PlaybackStatePlaying(
-      {required this.song, required this.playbackTimeChanges});
+  _$PlaybackStatePlaying(this.data);
 
   @override
-  final Song song;
-  @override
-  final Stream<PlaybackTime> playbackTimeChanges;
+  final PlaybackData data;
 
   @override
   String toString() {
-    return 'PlaybackState.playing(song: $song, playbackTimeChanges: $playbackTimeChanges)';
+    return 'PlaybackState.playing(data: $data)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PlaybackStatePlaying &&
-            (identical(other.song, song) ||
-                const DeepCollectionEquality().equals(other.song, song)) &&
-            (identical(other.playbackTimeChanges, playbackTimeChanges) ||
-                const DeepCollectionEquality()
-                    .equals(other.playbackTimeChanges, playbackTimeChanges)));
+            (identical(other.data, data) ||
+                const DeepCollectionEquality().equals(other.data, data)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(song) ^
-      const DeepCollectionEquality().hash(playbackTimeChanges);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
 
   @JsonKey(ignore: true)
   @override
@@ -251,23 +239,20 @@ class _$PlaybackStatePlaying implements PlaybackStatePlaying {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() none,
-    required TResult Function(
-            Song song, Stream<PlaybackTime> playbackTimeChanges)
-        playing,
+    required TResult Function(PlaybackData data) playing,
   }) {
-    return playing(song, playbackTimeChanges);
+    return playing(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
-    TResult Function(Song song, Stream<PlaybackTime> playbackTimeChanges)?
-        playing,
+    TResult Function(PlaybackData data)? playing,
     required TResult orElse(),
   }) {
     if (playing != null) {
-      return playing(song, playbackTimeChanges);
+      return playing(data);
     }
     return orElse();
   }
@@ -296,14 +281,9 @@ class _$PlaybackStatePlaying implements PlaybackStatePlaying {
 }
 
 abstract class PlaybackStatePlaying implements PlaybackState {
-  factory PlaybackStatePlaying(
-          {required Song song,
-          required Stream<PlaybackTime> playbackTimeChanges}) =
-      _$PlaybackStatePlaying;
+  factory PlaybackStatePlaying(PlaybackData data) = _$PlaybackStatePlaying;
 
-  Song get song => throw _privateConstructorUsedError;
-  Stream<PlaybackTime> get playbackTimeChanges =>
-      throw _privateConstructorUsedError;
+  PlaybackData get data => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PlaybackStatePlayingCopyWith<PlaybackStatePlaying> get copyWith =>
       throw _privateConstructorUsedError;

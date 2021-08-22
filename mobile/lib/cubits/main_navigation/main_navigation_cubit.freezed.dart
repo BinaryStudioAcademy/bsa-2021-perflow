@@ -27,6 +27,14 @@ class _$MainNavigationStateTearOff {
   MainNavigationLibrary library() {
     return MainNavigationLibrary();
   }
+
+  MainNavigationPlayer player() {
+    return MainNavigationPlayer();
+  }
+
+  MainNavigationOther other() {
+    return MainNavigationOther();
+  }
 }
 
 /// @nodoc
@@ -39,6 +47,8 @@ mixin _$MainNavigationState {
     required TResult Function() home,
     required TResult Function() search,
     required TResult Function() library,
+    required TResult Function() player,
+    required TResult Function() other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -46,6 +56,8 @@ mixin _$MainNavigationState {
     TResult Function()? home,
     TResult Function()? search,
     TResult Function()? library,
+    TResult Function()? player,
+    TResult Function()? other,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +66,8 @@ mixin _$MainNavigationState {
     required TResult Function(MainNavigationHome value) home,
     required TResult Function(MainNavigationSearch value) search,
     required TResult Function(MainNavigationLibrary value) library,
+    required TResult Function(MainNavigationPlayer value) player,
+    required TResult Function(MainNavigationOther value) other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,6 +75,8 @@ mixin _$MainNavigationState {
     TResult Function(MainNavigationHome value)? home,
     TResult Function(MainNavigationSearch value)? search,
     TResult Function(MainNavigationLibrary value)? library,
+    TResult Function(MainNavigationPlayer value)? player,
+    TResult Function(MainNavigationOther value)? other,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -126,6 +142,8 @@ class _$MainNavigationHome implements MainNavigationHome {
     required TResult Function() home,
     required TResult Function() search,
     required TResult Function() library,
+    required TResult Function() player,
+    required TResult Function() other,
   }) {
     return home();
   }
@@ -136,6 +154,8 @@ class _$MainNavigationHome implements MainNavigationHome {
     TResult Function()? home,
     TResult Function()? search,
     TResult Function()? library,
+    TResult Function()? player,
+    TResult Function()? other,
     required TResult orElse(),
   }) {
     if (home != null) {
@@ -150,6 +170,8 @@ class _$MainNavigationHome implements MainNavigationHome {
     required TResult Function(MainNavigationHome value) home,
     required TResult Function(MainNavigationSearch value) search,
     required TResult Function(MainNavigationLibrary value) library,
+    required TResult Function(MainNavigationPlayer value) player,
+    required TResult Function(MainNavigationOther value) other,
   }) {
     return home(this);
   }
@@ -160,6 +182,8 @@ class _$MainNavigationHome implements MainNavigationHome {
     TResult Function(MainNavigationHome value)? home,
     TResult Function(MainNavigationSearch value)? search,
     TResult Function(MainNavigationLibrary value)? library,
+    TResult Function(MainNavigationPlayer value)? player,
+    TResult Function(MainNavigationOther value)? other,
     required TResult orElse(),
   }) {
     if (home != null) {
@@ -216,6 +240,8 @@ class _$MainNavigationSearch implements MainNavigationSearch {
     required TResult Function() home,
     required TResult Function() search,
     required TResult Function() library,
+    required TResult Function() player,
+    required TResult Function() other,
   }) {
     return search();
   }
@@ -226,6 +252,8 @@ class _$MainNavigationSearch implements MainNavigationSearch {
     TResult Function()? home,
     TResult Function()? search,
     TResult Function()? library,
+    TResult Function()? player,
+    TResult Function()? other,
     required TResult orElse(),
   }) {
     if (search != null) {
@@ -240,6 +268,8 @@ class _$MainNavigationSearch implements MainNavigationSearch {
     required TResult Function(MainNavigationHome value) home,
     required TResult Function(MainNavigationSearch value) search,
     required TResult Function(MainNavigationLibrary value) library,
+    required TResult Function(MainNavigationPlayer value) player,
+    required TResult Function(MainNavigationOther value) other,
   }) {
     return search(this);
   }
@@ -250,6 +280,8 @@ class _$MainNavigationSearch implements MainNavigationSearch {
     TResult Function(MainNavigationHome value)? home,
     TResult Function(MainNavigationSearch value)? search,
     TResult Function(MainNavigationLibrary value)? library,
+    TResult Function(MainNavigationPlayer value)? player,
+    TResult Function(MainNavigationOther value)? other,
     required TResult orElse(),
   }) {
     if (search != null) {
@@ -306,6 +338,8 @@ class _$MainNavigationLibrary implements MainNavigationLibrary {
     required TResult Function() home,
     required TResult Function() search,
     required TResult Function() library,
+    required TResult Function() player,
+    required TResult Function() other,
   }) {
     return library();
   }
@@ -316,6 +350,8 @@ class _$MainNavigationLibrary implements MainNavigationLibrary {
     TResult Function()? home,
     TResult Function()? search,
     TResult Function()? library,
+    TResult Function()? player,
+    TResult Function()? other,
     required TResult orElse(),
   }) {
     if (library != null) {
@@ -330,6 +366,8 @@ class _$MainNavigationLibrary implements MainNavigationLibrary {
     required TResult Function(MainNavigationHome value) home,
     required TResult Function(MainNavigationSearch value) search,
     required TResult Function(MainNavigationLibrary value) library,
+    required TResult Function(MainNavigationPlayer value) player,
+    required TResult Function(MainNavigationOther value) other,
   }) {
     return library(this);
   }
@@ -340,6 +378,8 @@ class _$MainNavigationLibrary implements MainNavigationLibrary {
     TResult Function(MainNavigationHome value)? home,
     TResult Function(MainNavigationSearch value)? search,
     TResult Function(MainNavigationLibrary value)? library,
+    TResult Function(MainNavigationPlayer value)? player,
+    TResult Function(MainNavigationOther value)? other,
     required TResult orElse(),
   }) {
     if (library != null) {
@@ -351,4 +391,200 @@ class _$MainNavigationLibrary implements MainNavigationLibrary {
 
 abstract class MainNavigationLibrary implements MainNavigationState {
   factory MainNavigationLibrary() = _$MainNavigationLibrary;
+}
+
+/// @nodoc
+abstract class $MainNavigationPlayerCopyWith<$Res> {
+  factory $MainNavigationPlayerCopyWith(MainNavigationPlayer value,
+          $Res Function(MainNavigationPlayer) then) =
+      _$MainNavigationPlayerCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$MainNavigationPlayerCopyWithImpl<$Res>
+    extends _$MainNavigationStateCopyWithImpl<$Res>
+    implements $MainNavigationPlayerCopyWith<$Res> {
+  _$MainNavigationPlayerCopyWithImpl(
+      MainNavigationPlayer _value, $Res Function(MainNavigationPlayer) _then)
+      : super(_value, (v) => _then(v as MainNavigationPlayer));
+
+  @override
+  MainNavigationPlayer get _value => super._value as MainNavigationPlayer;
+}
+
+/// @nodoc
+
+class _$MainNavigationPlayer implements MainNavigationPlayer {
+  _$MainNavigationPlayer();
+
+  @override
+  String toString() {
+    return 'MainNavigationState.player()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is MainNavigationPlayer);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() home,
+    required TResult Function() search,
+    required TResult Function() library,
+    required TResult Function() player,
+    required TResult Function() other,
+  }) {
+    return player();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? home,
+    TResult Function()? search,
+    TResult Function()? library,
+    TResult Function()? player,
+    TResult Function()? other,
+    required TResult orElse(),
+  }) {
+    if (player != null) {
+      return player();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(MainNavigationHome value) home,
+    required TResult Function(MainNavigationSearch value) search,
+    required TResult Function(MainNavigationLibrary value) library,
+    required TResult Function(MainNavigationPlayer value) player,
+    required TResult Function(MainNavigationOther value) other,
+  }) {
+    return player(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(MainNavigationHome value)? home,
+    TResult Function(MainNavigationSearch value)? search,
+    TResult Function(MainNavigationLibrary value)? library,
+    TResult Function(MainNavigationPlayer value)? player,
+    TResult Function(MainNavigationOther value)? other,
+    required TResult orElse(),
+  }) {
+    if (player != null) {
+      return player(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class MainNavigationPlayer implements MainNavigationState {
+  factory MainNavigationPlayer() = _$MainNavigationPlayer;
+}
+
+/// @nodoc
+abstract class $MainNavigationOtherCopyWith<$Res> {
+  factory $MainNavigationOtherCopyWith(
+          MainNavigationOther value, $Res Function(MainNavigationOther) then) =
+      _$MainNavigationOtherCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$MainNavigationOtherCopyWithImpl<$Res>
+    extends _$MainNavigationStateCopyWithImpl<$Res>
+    implements $MainNavigationOtherCopyWith<$Res> {
+  _$MainNavigationOtherCopyWithImpl(
+      MainNavigationOther _value, $Res Function(MainNavigationOther) _then)
+      : super(_value, (v) => _then(v as MainNavigationOther));
+
+  @override
+  MainNavigationOther get _value => super._value as MainNavigationOther;
+}
+
+/// @nodoc
+
+class _$MainNavigationOther implements MainNavigationOther {
+  _$MainNavigationOther();
+
+  @override
+  String toString() {
+    return 'MainNavigationState.other()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is MainNavigationOther);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() home,
+    required TResult Function() search,
+    required TResult Function() library,
+    required TResult Function() player,
+    required TResult Function() other,
+  }) {
+    return other();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? home,
+    TResult Function()? search,
+    TResult Function()? library,
+    TResult Function()? player,
+    TResult Function()? other,
+    required TResult orElse(),
+  }) {
+    if (other != null) {
+      return other();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(MainNavigationHome value) home,
+    required TResult Function(MainNavigationSearch value) search,
+    required TResult Function(MainNavigationLibrary value) library,
+    required TResult Function(MainNavigationPlayer value) player,
+    required TResult Function(MainNavigationOther value) other,
+  }) {
+    return other(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(MainNavigationHome value)? home,
+    TResult Function(MainNavigationSearch value)? search,
+    TResult Function(MainNavigationLibrary value)? library,
+    TResult Function(MainNavigationPlayer value)? player,
+    TResult Function(MainNavigationOther value)? other,
+    required TResult orElse(),
+  }) {
+    if (other != null) {
+      return other(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class MainNavigationOther implements MainNavigationState {
+  factory MainNavigationOther() = _$MainNavigationOther;
 }

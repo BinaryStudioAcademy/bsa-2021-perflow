@@ -59,7 +59,7 @@ class PlaylistHeaderInfo extends StatelessWidget {
           Row(
             children: [
               GestureDetector(
-                onTap: () => print('author tap'),
+                onTap: () {},
                 child: Center(
                   child: Text(
                     info.author.userName,
