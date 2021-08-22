@@ -117,5 +117,11 @@ namespace Perflow.Controllers
         {
             return Ok(await _playlistService.GetPlaylistsByAuthorIdAsync(authorId));
         }
+
+        [HttpGet("byGroup/{groupId}")]
+        public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetPlaylistsByGroupIdAsync(int groupId)
+        {
+            return Ok(await _playlistService.GetPlaylistsByGroupIdAsync(groupId));
+        }
     }
 }

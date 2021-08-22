@@ -22,6 +22,7 @@ import { AllArtistsComponent } from './search/components/all-artists/all-artists
 import { AllAlbumsComponent } from './search/components/all-albums/all-albums.component';
 import { AllPlaylistsComponent } from './search/components/all-playlists/all-playlists.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
+import { GroupViewComponent } from './group-view/group-view.component';
 
 const routes: Routes = [{
   path: '',
@@ -65,6 +66,7 @@ const routes: Routes = [{
     { path: 'songs', component: SongsComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'albums/:id', component: AlbumDetailsComponent },
+    { path: 'groups/:id', component: GroupViewComponent },
     { path: 'artists/:id', component: ArtistDetailsComponent }
   ]
 }];

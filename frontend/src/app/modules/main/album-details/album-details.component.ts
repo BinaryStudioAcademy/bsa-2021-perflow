@@ -31,26 +31,37 @@ export class AlbumDetailsComponent implements OnInit {
   constructor(
     private _clipboardApi: ClipboardService,
     private _route: ActivatedRoute,
+    private _router: Router,
     private _service: AlbumService,
     private _reactionService: ReactionService,
-    private _router: Router,
     private _location: PlatformLocation,
     private _authService: AuthService,
     private _queueService: QueueService
   ) {
-    this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
-      .subscribe((authState) => {
-        this._userId = authState!.id;
-      });
+    this.getUserId();
   }
 
   ngOnInit() {
-    this.loadData();
+    this._route.params.subscribe(() => {
+      this.loadData();
+      window.scroll(0, 0);
+    });
+  }
+
+  getUserId() {
+    this._authService.getAuthStateObservableFirst()
+      .pipe(filter((state) => !!state))
+      .subscribe(
+        (state) => {
+          this._userId = state!.id;
+        }
+      );
   }
 
   loadData() {
-    this._service.getAlbum(this._route.snapshot.params.id)
+    const albumId = this._route.snapshot.params.id;
+
+    this._service.getAlbum(albumId)
       .subscribe(
         (result) => {
           this.album = result;
@@ -64,7 +75,7 @@ export class AlbumDetailsComponent implements OnInit {
   loadAnotherAlbums() {
     const artistId = this.album?.artist?.id ?? this.album?.group?.id;
 
-    this._service.getAlbumsByArtist(artistId as number)
+    this._service.getAlbumsByArtist(artistId as number, this.album.authorType)
       .subscribe(
         (result) => {
           this.anotherAlbums = result;
@@ -89,6 +100,15 @@ export class AlbumDetailsComponent implements OnInit {
       .subscribe(
         () => {
           this.album.isLiked = false;
+        }
+      );
+  }
+
+  removeAlbum() {
+    this._service.removeAlbum(this.album.id)
+      .subscribe(
+        () => {
+          this._router.navigateByUrl('/playlists/albums');
         }
       );
   }

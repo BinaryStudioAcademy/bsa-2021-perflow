@@ -21,6 +21,8 @@
             [name]="playlist.name"
             [description]="playlist.description"
             [iconUrl]="playlist.iconURL"
+            [isLiked]=true
+            (clickDislike)="deletePlaylist($event)"
             >
             </app-square-info-card>
         </div>

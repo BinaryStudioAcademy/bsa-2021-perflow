@@ -7,6 +7,7 @@ using Perflow.Common.DTO.Users;
 using Perflow.Common.Helpers;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
+using Perflow.Domain.Enums;
 using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
 using Shared.ExceptionsHandler.Exceptions;
@@ -83,20 +84,17 @@ namespace Perflow.Services.Implementations
             return album;
         }
 
-        public async Task<IEnumerable<AlbumForListDTO>> GetAlbumsByArtist(int artistId)
+        public async Task<IEnumerable<AlbumShortDTO>> GetAlbumsByArtist(int artistId, AuthorType type)
         {
             var albums = await context.Albums
-                                        .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
+                                        .Where(a => type == AuthorType.Artist ? a.AuthorId == artistId : a.GroupId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
-                                        .Select(a => new AlbumForListDTO
+                                        .Select(a => new AlbumShortDTO
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
-                                            Author = new AlbumViewAuthorsDTO(
-                                            a.Author.Id,
-                                            a.Author.UserName,
-                                            !a.Author.GroupId.HasValue),
+                                            AuthorName = type == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
                                             ReleaseYear = a.ReleaseYear
                                         })

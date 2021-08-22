@@ -46,4 +46,8 @@ export class MainContentComponent implements OnInit {
     if (!this._queue.isOpened) this._queue.openView();
     else this._queue.closeView();
   };
+
+  resetToolbar = () => {
+    this._songToolbar.resetToolbar();
+  };
 }

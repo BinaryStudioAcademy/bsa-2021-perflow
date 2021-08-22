@@ -126,7 +126,12 @@ export class SongToolbarComponent implements OnInit {
   }
 
   displayDuration = () => {
-    this.durationContainer!.textContent = TimeConverter.secondsToMMSS(this.audio!.duration);
+    let duration = 0;
+    if (this.audio!.duration) {
+      duration = this.audio!.duration;
+    }
+
+    this.durationContainer!.textContent = TimeConverter.secondsToMMSS(duration);
   };
 
   displayCurrentTime = () => {
@@ -156,6 +161,10 @@ export class SongToolbarComponent implements OnInit {
   };
 
   playPause = () => {
+    if (!this.show) {
+      return false;
+    }
+
     if (this.isPlaying) {
       this.audio?.pause();
       this.isPlaying = false;
@@ -225,5 +234,13 @@ export class SongToolbarComponent implements OnInit {
 
   previousSongPlay = () => {
     this._queueService.previousSong();
+  };
+
+  resetToolbar = () => {
+    this.resetPlaying();
+    this.show = false;
+    this.songForPlay = new SongInfo(0, 'NONAME', 'NOARTIST', '', '');
+    this.audio!.src = this.songForPlay.songURL;
+    this.displayDuration();
   };
 }
