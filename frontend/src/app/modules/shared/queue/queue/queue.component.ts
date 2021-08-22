@@ -13,6 +13,7 @@ export class QueueComponent {
   @Output() opened = new EventEmitter<void>();
   @Output() closed = new EventEmitter<void>();
   @Output() togglePlayEvent = new EventEmitter<void>();
+  @Output() reseted = new EventEmitter<void>();
 
   isOpened = false;
   isPlaying = false;
@@ -27,7 +28,9 @@ export class QueueComponent {
         this.currentSongId = song.id;
       }
 
-      if (!this.songs.find((s) => s.id === song.id)) this.songs.push(song);
+      if (!this.songs.find((s) => s.id === song.id)) {
+        this.songs.push(song);
+      }
     });
 
     _queueService.nextSong$.subscribe(() => {
@@ -63,13 +66,48 @@ export class QueueComponent {
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
     switch (data.menuItem) {
-      case 'Add to queue':
-        this.songs = [...this.songs, data.song];
+      case 'Add to queue': {
+        if (!this.songs.find((s) => s.id === data.song.id)) {
+          this.songs = [...this.songs, data.song];
+        }
         break;
+      }
+      case 'Remove from queue': {
+        const removingSong = this.songs.find((s) => s.id === data.song.id);
+
+        if (!removingSong) {
+          break;
+        }
+
+        if (this.songs.length === 1) {
+          this.resetQueue();
+        }
+
+        if (this.currentSongId === removingSong.id) {
+          this.switchToNearestAccessible();
+        }
+
+        this.removeSong(removingSong);
+        break;
+      }
       default:
         break;
     }
   }
+
+  switchToNearestAccessible = () => {
+    if (this.getCurrentSongIndex() + 1 === this.songs.length) {
+      this._queueService.previousSong();
+    }
+    else {
+      this._queueService.nextSong();
+    }
+  };
+
+  removeSong = (song: Song) => {
+    const indexForDelete = this.songs.indexOf(song);
+    this.songs.splice(indexForDelete, 1);
+  };
 
   togglePlay = () => {
     this.togglePlayEvent.emit();
@@ -102,4 +140,11 @@ export class QueueComponent {
   getCurrentSong() {
     return this.songs[this.getCurrentSongIndex()];
   }
+
+  resetQueue = () => {
+    this.closeView();
+    this.isPlaying = false;
+    this.songs = [];
+    this.reseted.emit();
+  };
 }
