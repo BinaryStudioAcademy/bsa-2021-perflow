@@ -1,6 +1,9 @@
 <h4 class="ui header profile">
   <div id="profile" class="ui floating dropdown" appSmDropdown>
-      <img src="{{userIconURL}}" />
+      <img src="{{userIconURL}}" *ngIf="userIconURL" />
+      <div class="icon-background" *ngIf="!userIconURL">
+        <i class="user icon"></i>
+      </div>
       <div class="user-name" id="profile-user-name">
         <span>{{ userName }}</span>
         <i class="caret down icon"></i>

@@ -1,6 +1,18 @@
 @import "../../../../styles.sass"
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400")
 
+$image-size: 40px
+
+=flex-container($align-items, $justify-content)
+    display: flex
+    align-items: $align-items
+    justify-content: $justify-content
+
+%avatar
+    width: $image-size
+    height: $image-size
+    border-radius: 50%
+
 // Profile icon in top right corner
 #profile
     position: fixed
@@ -30,9 +42,14 @@
             margin: 0 10px
     img
         object-fit: cover
-        width: 40px
-        height: 40px
-        border-radius: 50%
+        @extend %avatar
+    .icon-background
+        @extend %avatar
+        +flex-container(center, center)
+        background: darken($gray, 15%)
+        i
+            font-size: 18px
+            margin-right: 0
 
 .ui.floating.dropdown
     .menu
@@ -43,10 +60,10 @@
         .item
             background-color: $light-gray
             span
-              color: $text !important
-              font-family: Montserrat !important
-              font-weight: $normal-weight !important
-              line-height: 135%
+                color: $text !important
+                font-family: Montserrat !important
+                font-weight: $normal-weight !important
+                line-height: 135%
             &:hover
                 background-color: $drk-gray !important
             &:active
