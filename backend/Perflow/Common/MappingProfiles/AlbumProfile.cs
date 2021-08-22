@@ -64,6 +64,8 @@ namespace Perflow.Common.MappingProfiles
 
             CreateMap<Album, AlbumForPlaylistDTO>();
 
+            CreateMap<Album, AlbumShortDTO>();
+
             CreateMap<Album, AlbumForPlaylistSongSearchDTO>();
 
             CreateMap<AlbumWithIcon, AlbumForPlaylistSongSearchDTO>()

@@ -1,8 +1,7 @@
-export interface ArtistFull {
+export interface GroupFull {
   id: number;
-  userName: string;
+  name: string;
   iconURL: string;
   description: string;
-  country: string;
   isLiked: boolean;
 }

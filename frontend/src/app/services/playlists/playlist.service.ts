@@ -56,4 +56,8 @@ export class PlaylistsService {
   getPlaylistsByAuthorId(authorId: number) {
     return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/byAuthor/${authorId}`);
   }
+
+  getPlaylistsByGroupId(groupId: number) {
+    return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/byGroup/${groupId}`);
+  }
 }

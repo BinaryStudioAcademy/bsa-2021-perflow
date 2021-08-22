@@ -11,6 +11,18 @@
       ],
       "UpstreamPathTemplate": "/api/Groups/artist/{id}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Groups/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Groups/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ]
 }

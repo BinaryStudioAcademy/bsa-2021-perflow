@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Albums;
+using Perflow.Domain.Enums;
 using Perflow.Services.Implementations;
 using Shared.Auth.Constants;
 using Shared.Auth.Extensions;
@@ -40,9 +41,9 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("byArtist/{artistId}")]
-        public async Task<ActionResult<ICollection<AlbumForListDTO>>> GetByArtistId(int artistId)
+        public async Task<ActionResult<ICollection<AlbumForListDTO>>> GetByArtistId(int artistId, AuthorType authorType)
         {
-            return Ok(await _albumsService.GetAlbumsByArtist(artistId));
+            return Ok(await _albumsService.GetAlbumsByArtist(artistId, authorType));
         }
 
         [HttpGet("viewsByArtist/{artistId}")]

@@ -13,6 +13,8 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<Group, GroupForAlbumDTO>();
             
             CreateMap<Group, GroupForPlaylistDTO>();
+
+            CreateMap<Group, GroupLikedDTO>();
         }
     }
 }

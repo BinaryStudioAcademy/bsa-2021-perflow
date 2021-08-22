@@ -75,7 +75,7 @@ export class AlbumDetailsComponent implements OnInit {
   loadAnotherAlbums() {
     const artistId = this.album?.artist?.id ?? this.album?.group?.id;
 
-    this._service.getAlbumsByArtist(artistId as number)
+    this._service.getAlbumsByArtist(artistId as number, this.album.authorType)
       .subscribe(
         (result) => {
           this.anotherAlbums = result;

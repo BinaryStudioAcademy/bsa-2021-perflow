@@ -8,38 +8,38 @@ import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
+import { GroupFull } from 'src/app/models/group/groupFull';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
-import { ArtistFull } from 'src/app/models/user/artist-full';
 import { AlbumService } from 'src/app/services/album.service';
-import { ArtistService } from 'src/app/services/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { GroupService } from 'src/app/services/group.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
-  selector: 'app-artist-details',
-  templateUrl: './artist-details.component.html',
-  styleUrls: ['./artist-details.component.sass']
+  selector: 'app-group-view',
+  templateUrl: './group-view.component.html',
+  styleUrls: ['./group-view.component.sass']
 })
-export class ArtistDetailsComponent implements OnInit {
+export class GroupViewComponent implements OnInit {
   private readonly _scrollingSize: number = 240;
   private _userId: number;
 
   @ViewChild('albums') albumsElement: ElementRef;
   @ViewChild('playlists') playlistsElement: ElementRef;
 
-  artist: ArtistFull = {} as ArtistFull;
+  group: GroupFull = {} as GroupFull;
   topSongs: Song[] = [];
-  artistPlaylists: PlaylistView[] = [];
+  groupPlaylists: PlaylistView[] = [];
   isSuccess: boolean = false;
-  artistAlbums: AlbumForReadDTO[] = [];
+  groupAlbums: AlbumForReadDTO[] = [];
 
   constructor(
     private _route: ActivatedRoute,
-    private _artistService: ArtistService,
+    private _groupService: GroupService,
     private _songService: SongsService,
     private _playlistsService: PlaylistsService,
     private _queueService: QueueService,
@@ -49,14 +49,11 @@ export class ArtistDetailsComponent implements OnInit {
     private _authService: AuthService,
     private _albumsService: AlbumService
   ) {
-    _route.params.subscribe((routeParams) => {
-      this.loadData();
-    });
+    this.getUserId();
   }
 
   ngOnInit() {
     this.loadData();
-    this.getUserId();
   }
 
   getUserId() {
@@ -70,12 +67,12 @@ export class ArtistDetailsComponent implements OnInit {
   }
 
   loadData() {
-    const artistId = this._route.snapshot.params.id;
+    const groupId = this._route.snapshot.params.id;
 
-    this._artistService.getArtist(artistId)
+    this._groupService.getGroup(groupId)
       .subscribe(
         (result) => {
-          this.artist = result;
+          this.group = result;
           this.loadTopSongs();
           this.loadPlaylists();
           this.loadAlbums();
@@ -84,7 +81,7 @@ export class ArtistDetailsComponent implements OnInit {
   }
 
   loadTopSongs() {
-    this._songService.getTopSongsByAuthorId(this.artist.id, 10, AuthorType.artist)
+    this._songService.getTopSongsByAuthorId(this.group.id, 10, AuthorType.group)
       .subscribe(
         (result) => {
           this.topSongs = result;
@@ -93,37 +90,37 @@ export class ArtistDetailsComponent implements OnInit {
   }
 
   loadPlaylists() {
-    this._playlistsService.getPlaylistsByAuthorId(this.artist.id)
+    this._playlistsService.getPlaylistsByGroupId(this.group.id)
       .subscribe(
         (result) => {
-          this.artistPlaylists = result;
-        }
-      );
-  }
-
-  likeArtist() {
-    this._reactionService.addArtistReaction(this.artist.id, this._userId)
-      .subscribe(
-        () => {
-          this.artist.isLiked = true;
-        }
-      );
-  }
-
-  dislikeArtist() {
-    this._reactionService.removeArtistReaction(this.artist.id, this._userId)
-      .subscribe(
-        () => {
-          this.artist.isLiked = false;
+          this.groupPlaylists = result;
         }
       );
   }
 
   loadAlbums() {
-    this._albumsService.getAlbumsByArtist(this.artist.id, AuthorType.artist)
+    this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
       .subscribe(
         (result) => {
-          this.artistAlbums = result;
+          this.groupAlbums = result;
+        }
+      );
+  }
+
+  likeGroup() {
+    this._reactionService.addGroupReaction(this.group.id, this._userId)
+      .subscribe(
+        () => {
+          this.group.isLiked = true;
+        }
+      );
+  }
+
+  dislikeGroup() {
+    this._reactionService.removeGroupReaction(this.group.id, this._userId)
+      .subscribe(
+        () => {
+          this.group.isLiked = false;
         }
       );
   }

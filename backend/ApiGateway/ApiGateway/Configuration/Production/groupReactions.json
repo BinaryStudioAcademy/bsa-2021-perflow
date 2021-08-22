@@ -1,0 +1,32 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/GroupReactions/like",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/GroupReactions/like",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/GroupReactions/removeLike",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/GroupReactions/removeLike",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    }
+  ]
+}

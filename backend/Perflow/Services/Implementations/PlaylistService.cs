@@ -205,5 +205,23 @@ namespace Perflow.Services.Implementations
 
             return playlists;
         }
+
+        public async Task<IEnumerable<PlaylistViewDTO>> GetPlaylistsByGroupIdAsync(int groupId)
+        {
+            var groupUsers = await context.Groups
+                .Where(g => g.Id == groupId)
+                .SelectMany(g => g.Users)
+                .Select(u => u.Id)
+                .ToListAsync();
+
+            var playlists = await context.Playlists
+                .Where(p => groupUsers.Contains(p.AuthorId))
+                .Select(
+                    p => mapper.Map<PlaylistViewDTO>(new PlaylistWithIcon(p, _imageService.GetImageUrl(p.IconURL)))
+                 )
+                .ToListAsync();
+
+            return playlists;
+        }
     }
 }

@@ -47,6 +47,20 @@ export class ReactionService {
     );
   }
 
+  addGroupReaction(groupId: number, userId: number) {
+    return this.httpService.postClearRequest(
+      '/api/GroupReactions/like',
+      { groupId, userId }
+    );
+  }
+
+  removeGroupReaction(groupId: number, userId: number) {
+    return this.httpService.postClearRequest(
+      '/api/GroupReactions/removeLike',
+      { groupId, userId }
+    );
+  }
+
   getAlbumsByUserId(userId: number) {
     return this.httpService.getRequest<AlbumForReadDTO[]>(`/api/AlbumReaction/${userId}`);
   }
