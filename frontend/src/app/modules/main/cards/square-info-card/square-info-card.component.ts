@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
 
 @Component({
   selector: 'app-square-info-card',
@@ -6,8 +8,18 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./square-info-card.component.sass']
 })
 export class SquareInfoCardComponent {
-  @Input() id:number;
+  @Input() id: number;
   @Input() name: string;
   @Input() description: string;
   @Input() iconUrl: string;
+
+  @Input()
+  isLiked = false;
+
+  @Output()
+  clickDislike = new EventEmitter<number>();
+
+  dislike(id: number) {
+    this.clickDislike.emit(id);
+  }
 }

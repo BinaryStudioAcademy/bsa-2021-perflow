@@ -56,6 +56,15 @@ export class AllComponent {
       });
   }
 
+  deletePlaylist(id: number) {
+    this._reactionService.removePlaylistReaction(id, this.userId).subscribe(
+      () => {
+        const index = this.playlists.findIndex((p) => p.id === id);
+        this.playlists.splice(index, 1);
+      }
+    );
+  }
+
   private _handleError = (error: HttpErrorResponse) => {
     if (error.status === 0) console.error('An error occurred:', error.error);
     else {
