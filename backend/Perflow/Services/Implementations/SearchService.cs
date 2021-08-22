@@ -44,7 +44,7 @@ namespace Perflow.Services.Implementations
                 .Select(song => new SongForPlaylistSongSearchDTO
                 {
                     Id = song.Id,
-                    Album = mapper.Map<AlbumForPlaylistSongSearchDTO>(song.Album),
+                    Album = mapper.Map<AlbumForPlaylistSongSearchDTO>(new AlbumWithIcon(song.Album, _imageService.GetImageUrl(song.Album.IconURL))),
                     Artist = mapper.Map<UserForPlaylistDTO>(song.Artist),
                     Group = mapper.Map<GroupForPlaylistDTO>(song.Group),
                     Duration = song.Duration,
