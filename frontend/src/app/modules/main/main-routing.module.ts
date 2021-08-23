@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainHomeComponent } from './main-home/main-home.component';
-import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { AllComponent } from './playlist/all/all.component';
 import { ArtistListComponent } from './playlist/artist-list/artist-list.component';
@@ -22,11 +21,12 @@ import { AllSongsComponent } from './search/components/all-songs/all-songs.compo
 import { AllArtistsComponent } from './search/components/all-artists/all-artists.component';
 import { AllAlbumsComponent } from './search/components/all-albums/all-albums.component';
 import { AllPlaylistsComponent } from './search/components/all-playlists/all-playlists.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
 import { GroupViewComponent } from './group-view/group-view.component';
 
 const routes: Routes = [{
   path: '',
-  component: MainMenuProfileComponent,
+  component: MainMenuComponent,
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard],
   children: [

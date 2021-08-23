@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RouterModule } from '@angular/router';
-import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -22,7 +21,6 @@ import { AlbumCardComponent } from './cards/album-card/album-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { SquareInfoCardComponent } from './cards/square-info-card/square-info-card.component';
 import { CircleInfoCardComponent } from './cards/circle-info-card/circle-info-card.component';
-import { MainMenuProfileComponent } from './main-menu-profile/main-menu-profile.component';
 import { UserModule } from '../user/user.module';
 import { AllComponent } from './playlist/all/all.component';
 import {
@@ -67,7 +65,6 @@ import { GroupViewComponent } from './group-view/group-view.component';
     PlaylistComponent,
     SearchComponent,
     SongsComponent,
-    ProfileMenuComponent,
     RecentlyPlayedCardComponent,
     YourMixCardComponent,
     UserProfileComponent,
@@ -77,7 +74,6 @@ import { GroupViewComponent } from './group-view/group-view.component';
     PlaylistCardComponent,
     ArtistListComponent,
     ArtistCardComponent,
-    MainMenuProfileComponent,
     YourMixCardComponent,
     AlbumCardComponent,
     AllComponent,
@@ -117,7 +113,6 @@ import { GroupViewComponent } from './group-view/group-view.component';
   ],
   exports: [
     ClickOutsideModule,
-    ProfileMenuComponent,
     AlbumCardComponent
   ]
 })

@@ -1,4 +1,6 @@
-<app-main-menu [isContainerHidden]="isContainerHidden"></app-main-menu>
+<div class="router-container">
+    <router-outlet></router-outlet>
+</div>
 <app-profile-menu></app-profile-menu>
 
 <app-queue 
@@ -8,5 +10,4 @@
     (reseted)="resetToolbar()">
 </app-queue>
 <app-song-toolbar (queueClicked)="toggleQueue()" [isQueueOpened]="isContainerHidden"></app-song-toolbar>
-
 <app-snackbar></app-snackbar>

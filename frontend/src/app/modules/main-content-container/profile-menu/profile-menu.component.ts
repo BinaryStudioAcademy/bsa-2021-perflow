@@ -25,12 +25,11 @@ export class ProfileMenuComponent {
     private _profileService: ProfileService,
     private _router: Router
   ) {
-    this._authService.getAuthStateObservable()
+    this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => state !== null))
       .subscribe((authState) => {
         this.userName = authState!.userName;
         this._userId = authState!.id;
-
         this.getUserIconURL();
 
         const { role } = authState!;

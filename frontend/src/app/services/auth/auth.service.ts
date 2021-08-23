@@ -3,7 +3,7 @@ import { ReplaySubject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
-import { skip, take } from 'rxjs/operators';
+import { first, skip, take } from 'rxjs/operators';
 import { AuthUser } from '../../models/auth/auth-user';
 import { LoginData } from '../../models/auth/login-data';
 import { HttpInternalService } from '../http-internal.service';
@@ -51,6 +51,10 @@ export class AuthService {
 
   getAuthStateObservable() {
     return this._authStateSubject.asObservable();
+  }
+
+  getAuthStateObservableFirst() {
+    return this._authStateSubject.asObservable().pipe(first());
   }
 
   getCurrentTokenObservable() {

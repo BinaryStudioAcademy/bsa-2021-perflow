@@ -18,7 +18,7 @@ export class AlbumListComponent implements OnInit {
     private _reactionService: ReactionService,
     private _authService: AuthService
   ) {
-    this._authService.getAuthStateObservable()
+    this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;

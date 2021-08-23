@@ -9,7 +9,6 @@ import { SemanticDropdownDirective } from './directives/dropdown/semantic-dropdo
 import { SemanticCalendarDirective } from './directives/calendar/semantic-calendar.directive';
 import { SemanticMessageDirective } from './directives/message/semantic-message.directive';
 import { SongImageComponent } from './upload/song-image/song-image.component';
-import { SongToolbarComponent } from './song-toolbar/song-toolbar.component';
 import { SongRowComponent } from './song-row/song-row.component';
 import { DragDropDirective } from './directives/upload/song-image/drag-drop.directive';
 import { ShowHideDirective } from './directives/show/show-hide.directive';
@@ -25,8 +24,6 @@ import { SearchSongRowComponent } from './playlist/search-song-row/search-song-r
 import { AlbumRegionTypePipe } from './pipes/album-region-type.pipe';
 import { AuthorTypePipe } from './pipes/album-author-type.pipe';
 import { ClickStopPropagationDirective } from './directives/stopPropagation/click-stop-propagation.directive';
-import { QueueComponent } from './queue/queue/queue.component';
-import { PlayingComponent } from './playing/playing.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 
 @NgModule({
@@ -35,7 +32,6 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     SemanticCalendarDirective,
     SemanticMessageDirective,
     SongRowComponent,
-    SongToolbarComponent,
     SongImageComponent,
     DragDropDirective,
     ShowHideDirective,
@@ -52,8 +48,6 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
     AuthorTypePipe,
-    QueueComponent,
-    PlayingComponent,
     SnackbarComponent
   ],
   imports: [
@@ -69,7 +63,6 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     SemanticCalendarDirective,
     SemanticMessageDirective,
     SongRowComponent,
-    SongToolbarComponent,
     SongImageComponent,
     DragDropDirective,
     ShowHideDirective,
@@ -86,7 +79,6 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
     AuthorTypePipe,
-    QueueComponent,
     SnackbarComponent
   ]
 })

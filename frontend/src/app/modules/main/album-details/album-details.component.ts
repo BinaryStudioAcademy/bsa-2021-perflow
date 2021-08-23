@@ -49,7 +49,7 @@ export class AlbumDetailsComponent implements OnInit {
   }
 
   getUserId() {
-    this._authService.getAuthStateObservable()
+    this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
       .subscribe(
         (state) => {

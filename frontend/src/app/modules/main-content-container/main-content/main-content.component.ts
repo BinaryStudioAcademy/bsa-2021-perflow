@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { SongInfo } from 'src/app/models/song/song-info';
-import { QueueComponent } from '../../shared/queue/queue/queue.component';
-import { SongToolbarComponent } from '../../shared/song-toolbar/song-toolbar.component';
+import { QueueComponent } from '../music-components/queue/queue.component';
+import { SongToolbarComponent } from '../music-components/song-toolbar/song-toolbar.component';
 
 @Component({
-  selector: 'app-main-menu-profile',
-  templateUrl: './main-menu-profile.component.html',
-  styleUrls: ['./main-menu-profile.component.sass']
+  selector: 'app-main-content',
+  templateUrl: './main-content.component.html',
+  styleUrls: ['./main-content.component.sass']
 })
-export class MainMenuProfileComponent implements OnInit {
+export class MainContentComponent implements OnInit {
   @ViewChild(SongToolbarComponent)
   private _songToolbar: SongToolbarComponent;
 
