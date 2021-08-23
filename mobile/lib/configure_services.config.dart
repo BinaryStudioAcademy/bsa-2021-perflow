@@ -25,7 +25,9 @@ _i1.GetIt $configureServices(_i1.GetIt get,
   gh.singleton<_i6.AuthApi>(_i6.AuthApi.create(get<_i3.Chopper>()));
   gh.singleton<_i7.AuthService>(_i7.AuthService(get<_i6.AuthApi>()),
       signalsReady: true);
-  gh.singleton<_i8.PlaybackService>(_i8.PlaybackService(get<_i7.AuthService>()),
-      signalsReady: true, dispose: (i) => i.dispose());
+  gh.singleton<_i8.PlaybackService>(
+      _i8.PlaybackService(get<_i7.AuthService>(), get<_i5.SongsApi>()),
+      signalsReady: true,
+      dispose: (i) => i.dispose());
   return get;
 }

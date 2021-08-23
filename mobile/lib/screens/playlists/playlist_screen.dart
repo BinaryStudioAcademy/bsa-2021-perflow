@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
+import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
 import 'package:perflow/cubits/playlists/playlist_info_cubit.dart';
 import 'package:perflow/cubits/playlists/playlist_songs_cubit.dart';
 import 'package:perflow/models/playlists/playlist_info.dart';
@@ -12,6 +13,7 @@ import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_back_button.dart';
 
 import 'package:perflow/widgets/songs/song_row.dart';
+import 'package:vrouter/vrouter.dart';
 
 class PlaylistScreen extends StatelessWidget {
   final int playlistId;
@@ -25,46 +27,49 @@ class PlaylistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final headerExpandedHeight = MediaQuery.of(context).size.height * 0.6;
 
-    return Scaffold(
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider<PlaylistSongsCubit>(
-            create: (context) => PlaylistSongsCubit(playlistId),
-          ),
-          BlocProvider<PlaylistInfoCubit>(
-            create: (context) => PlaylistInfoCubit(playlistId),
-          ),
-        ],
-        child: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(),
-            BlocBuilder<PlaylistInfoCubit, ApiCallState<PlaylistInfo>>(
-              builder: (context, state) => state.map(
-                loading: (_) => _buildDefaultSliverAppbar(
-                  context: context,
-                  title: const CircularProgressIndicator(),
-                  expandedHeight: headerExpandedHeight
-                ),
-                error: (error) => _buildDefaultSliverAppbar(
-                  context: context,
-                  title: Text(error.message),
-                  expandedHeight: headerExpandedHeight
-                ),
-                data: (value) => SliverPersistentHeader(
-                  pinned: true,
-                  delegate: PlaylistHeaderDelegate(
-                    expandedHeight: headerExpandedHeight,
-                    info: value.data
-                  )
-                ),
-              ),
+    return VWidgetGuard(
+      afterEnter: (context, from, to) => context.read<MainNavigationCubit>().setOther(),
+      child: Scaffold(
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider<PlaylistSongsCubit>(
+              create: (context) => PlaylistSongsCubit(playlistId),
             ),
-            BlocBuilder<PlaylistSongsCubit, ApiCallState<List<PlaylistSong>>>(
-              builder: _buildSongsList
+            BlocProvider<PlaylistInfoCubit>(
+              create: (context) => PlaylistInfoCubit(playlistId),
             ),
           ],
-        ),
-      )
+          child: CustomScrollView(
+            slivers: [
+              const SliverToBoxAdapter(),
+              BlocBuilder<PlaylistInfoCubit, ApiCallState<PlaylistInfo>>(
+                builder: (context, state) => state.map(
+                  loading: (_) => _buildDefaultSliverAppbar(
+                    context: context,
+                    title: const CircularProgressIndicator(),
+                    expandedHeight: headerExpandedHeight
+                  ),
+                  error: (error) => _buildDefaultSliverAppbar(
+                    context: context,
+                    title: Text(error.message),
+                    expandedHeight: headerExpandedHeight
+                  ),
+                  data: (value) => SliverPersistentHeader(
+                    pinned: true,
+                    delegate: PlaylistHeaderDelegate(
+                      expandedHeight: headerExpandedHeight,
+                      info: value.data
+                    )
+                  ),
+                ),
+              ),
+              BlocBuilder<PlaylistSongsCubit, ApiCallState<List<PlaylistSong>>>(
+                builder: _buildSongsList
+              ),
+            ],
+          ),
+        )
+      ),
     );
   }
 

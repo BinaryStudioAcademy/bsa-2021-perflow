@@ -5,4 +5,6 @@ class MainNavigationState with _$MainNavigationState {
   factory MainNavigationState.home() = MainNavigationHome;
   factory MainNavigationState.search() = MainNavigationSearch;
   factory MainNavigationState.library() = MainNavigationLibrary;
+  factory MainNavigationState.player() = MainNavigationPlayer;
+  factory MainNavigationState.other() = MainNavigationOther;
 }

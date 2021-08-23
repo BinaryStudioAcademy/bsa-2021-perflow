@@ -39,8 +39,8 @@
     <div class="recently-played" *ngIf="recentlyPlayed?.length">
       <div class="header">Recently played</div>
       <div class="ui grid recently-played-cont">
-        <app-song-card *ngFor="let card of recentlyPlayed" [name]="card.name" [iconURL]="card.album.iconURL"
-          [artist]="card.group?.name ?? card.artist.userName" [podcast]="card.playlist?.name ?? card.album.name"></app-song-card>
+        <app-song-card routerLink="/albums/{{song.album.id}}" *ngFor="let song of recentlyPlayed" 
+          [song]="song"></app-song-card>
       </div>
     </div>
 

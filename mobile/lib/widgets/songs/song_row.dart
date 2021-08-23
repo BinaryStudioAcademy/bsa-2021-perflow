@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:perflow/cubits/playback/playback_cubit.dart';
+import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/models/songs/song.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:perflow/services/playback/playback_service.dart';
 import 'package:perflow/theme.dart';
 
 class SongRow extends StatelessWidget {
@@ -18,37 +18,30 @@ class SongRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    final image = song.album.iconURL != null
-      ? Image.network(
-        song.album.iconURL!,
-        fit: BoxFit.cover,
-        width: height,
-        height: height,
-      )
-      : const SizedBox(
-        height: height,
-        width: height,
-        child: Icon(Icons.all_inclusive),
-      );
-
     return InkWell(
-      onTap: () => context.read<PlaybackCubit>().setById(song.id),
+      onTap: () => getService<PlaybackService>().setSongById(song.id),
       child: SizedBox(
         height: height,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 4
+            if(song.album.iconURL != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 4
+                ),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.network(
+                    song.album.iconURL!,
+                    fit: BoxFit.cover,
+                    width: height,
+                    height: height,
+                  )
+                ),
               ),
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: image
-              ),
-            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 2),

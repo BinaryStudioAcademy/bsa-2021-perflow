@@ -11,7 +11,7 @@ class ContentRoutes extends VRouteElementBuilder {
         builder: (context, state) => PlaylistScreen(
           playlistId: int.parse(state.pathParameters['id']!)
         ),
-      )
+      ),
     ];
   }
 }

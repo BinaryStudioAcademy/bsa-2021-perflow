@@ -14,6 +14,9 @@
     display: flex
     background: $drk-gray
     cursor: pointer
+    border-radius: 2px
+    &:hover
+      background: $drk-rain
     .fader
         height: 65px
         position: relative
@@ -44,10 +47,17 @@
       text-overflow: ellipsis
       overflow: hidden
       max-height: 19px
+      a
+        text-decoration: none
+        color: $text-color-gray
+        &:hover
+          text-decoration: underline
+          color: $text
 .card-name
     font-size: 14px
     font-weight: $normal-weight
     color: $text
+    max-width: 250px
     text-overflow: ellipsis
     overflow: hidden
     max-height: 36px
