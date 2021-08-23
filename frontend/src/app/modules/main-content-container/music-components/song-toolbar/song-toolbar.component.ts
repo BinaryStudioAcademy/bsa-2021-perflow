@@ -153,10 +153,19 @@ export class SongToolbarComponent implements OnInit {
   getVolumeSliderValue = (event: Event) => {
     const volume = Number.parseInt((<HTMLInputElement>event.target).value, 10);
     this.savedVolume = volume;
+    localStorage.setItem('savedVolume', this.savedVolume.toString());
     this.audio!.volume = volume / 100;
   };
 
   setInitialVolume = () => {
+    let savedVolume = Number.parseInt(localStorage.getItem('savedVolume')!, 10);
+
+    if (!savedVolume) {
+      savedVolume = 40;
+      localStorage.setItem('savedVolume', savedVolume.toString());
+    }
+
+    this.volumeSlider!.value = savedVolume.toString();
     this.audio!.volume = Number.parseInt(this.volumeSlider!.value, 10) / 100;
   };
 
