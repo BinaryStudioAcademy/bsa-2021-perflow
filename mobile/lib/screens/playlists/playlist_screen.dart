@@ -11,7 +11,6 @@ import 'package:perflow/root_media_query.dart';
 import 'package:perflow/screens/playlists/playlist_header.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_back_button.dart';
-
 import 'package:perflow/widgets/songs/song_row.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -66,6 +65,7 @@ class PlaylistScreen extends StatelessWidget {
               BlocBuilder<PlaylistSongsCubit, ApiCallState<List<PlaylistSong>>>(
                 builder: _buildSongsList
               ),
+              const SliverFillRemaining()
             ],
           ),
         )
@@ -113,10 +113,10 @@ class PlaylistScreen extends StatelessWidget {
       data: (songs) => SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            final song = songs.data[index % songs.data.length];
+            final song = songs.data[index];
             return SongRow(song: song);
           },
-          childCount: songs.data.length * 3
+          childCount: songs.data.length
         )
       )
     );

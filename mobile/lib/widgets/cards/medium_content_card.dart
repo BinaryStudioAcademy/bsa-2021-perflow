@@ -49,9 +49,9 @@ class MediumContentCard extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.only(
-            left: 8,
-            top: 8,
-            right: 8
+            left: 6,
+            top: 6,
+            right: 6
           ),
           child: Column(
             children: [

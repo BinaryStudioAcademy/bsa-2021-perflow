@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:perflow/cubits/home/home_playlists_cubit.dart';
+import 'package:perflow/models/playlists/playlist_info.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/cards/content_row.dart';
 import 'package:perflow/widgets/cards/medium_content_card.dart';
 import 'package:perflow/widgets/cards/small_content_card.dart';
+import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:vrouter/vrouter.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -27,9 +30,9 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   _buildHeader(context),
                   _buildSmallCards(context),
-                  _buildSectionHeader(context, 'New songs added'),
+                  const _HomeSectionHeader(title: 'New songs added', showMoreLabel: true),
                   _buildContentRow(),
-                  _buildSectionHeader(context, 'Recently played'),
+                  const _HomeSectionHeader(title: 'Recently played'),
                   _buildMediumCards(),
                 ],
               ),
@@ -73,15 +76,15 @@ class HomeScreen extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: const [
             SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997212238495754/f6060f0bc76d055681c44063d8f94824.png',
-              title: "Cool playlist",
-              onTap: () => context.vRouter.to(Routes.playlist(167)),
+              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877998049207660614/unknown.png',
+              title: "Indie",
+              onTap: f,
             ),
-            const SmallContentCard(
+            SmallContentCard(
               imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997420305350707/unknown.png',
-              title: 'Rock mix',
+              title: 'Rock',
               onTap: f,
             ),
           ],
@@ -129,26 +132,49 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildMediumCards() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
-        MediumContentCard(
-          imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877998016341082132/unknown.png',
-          title: 'Daily mix 1',
-          subtitle: 'Nothing But Thieves, The Neighbourhood, Black Pistol Fire',
-          onTap: f,
+    return BlocProvider<HomePlaylistsCubit>(
+      create: (context) => HomePlaylistsCubit([
+        190,
+        167,
+        187,
+      ]),
+      child: BlocBuilder<HomePlaylistsCubit, ApiCallState<List<PlaylistInfo>>>(
+        builder: (context, state) => state.map(
+          loading: (_) => const SizedBox(),
+          error: (_) => const SizedBox(),
+          data: (state) => SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: state.data.map((playlist) =>
+                MediumContentCard(
+                  cardSize: 142,
+                  imageUrl: playlist.iconURL,
+                  title: playlist.name,
+                  subtitle: playlist.author.userName,
+                  onTap: () => context.vRouter.to(Routes.playlist(playlist.id)),
+                )
+              ).toList(),
+            ),
+          )
         ),
-        MediumContentCard(
-          imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877998049207660614/unknown.png',
-          title: 'Daily mix 2',
-          subtitle: 'Royal Blood, Bring Me The Horizon, Black Pistol Fire',
-          onTap: f,
-        ),
-      ],
+      ),
     );
   }
+}
 
-  Widget _buildSectionHeader(BuildContext context, String title) {
+class _HomeSectionHeader extends StatelessWidget {
+  final String title;
+  final bool showMoreLabel;
+
+  const _HomeSectionHeader({
+    required this.title,
+    this.showMoreLabel = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
@@ -160,14 +186,16 @@ class HomeScreen extends StatelessWidget {
             title,
             style: textTheme.subtitle1,
           ),
-          Text(
-            'See more',
-            style: textTheme.subtitle2!.copyWith(
-              color: Perflow.primaryLightColor
-            ),
-          )
+          if(showMoreLabel)
+            Text(
+              'See more',
+              style: textTheme.subtitle2!.copyWith(
+                color: Perflow.primaryLightColor
+              ),
+            )
         ],
       ),
     );
   }
 }
+
