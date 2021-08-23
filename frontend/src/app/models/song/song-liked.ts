@@ -1,5 +1,5 @@
-import { AlbumName } from "../album/album-name";
-import { AlbumAuthor } from "../user/album-author";
+import { AlbumName } from '../album/album-name';
+import { AlbumAuthor } from '../user/album-author';
 
 export interface SongLiked {
   id: number;
