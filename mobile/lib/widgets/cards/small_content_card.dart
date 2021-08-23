@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SmallContentCard extends StatelessWidget {
-  final double width;
+  final double? width;
   final double height;
   final String title;
   final String? imageUrl;
@@ -9,7 +9,7 @@ class SmallContentCard extends StatelessWidget {
 
   const SmallContentCard({
     required this.title,
-    this.width = 168,
+    this.width,
     this.height = 56,
     this.imageUrl,
     this.onTap,
@@ -33,28 +33,33 @@ class SmallContentCard extends StatelessWidget {
         child: const Icon(Icons.all_inclusive),
       );
 
-    return SizedBox(
-      width: width,
-      height: height + 8,
-      child: Card(
-        child: InkWell(
-          onTap: onTap,
-          child: Row(
-            children: [
-              image,
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  title,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.subtitle2,
-                ),
-              )
-            ],
-          ),
+    final card = Card(
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
+          children: [
+            image,
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                title,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: textTheme.subtitle2,
+              ),
+            )
+          ],
         ),
       ),
     );
+
+    return width == null
+      ? Expanded(
+        child: card
+      )
+      : SizedBox(
+        width: width,
+        child: card
+      );
   }
 }
