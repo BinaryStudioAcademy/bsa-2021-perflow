@@ -3,10 +3,14 @@
       <button class="play-icon" appClickStopPropagation>
           <i class="play icon"></i>
       </button>  
-    <img src="{{ iconURL }}" alt="Artist Avatar" />
+    <img src="{{ song.album?.iconURL }}" alt="Artist Avatar" />
   </div>
   <div class="card-description">
-    <h5 class="card-name">{{ name }}</h5>
-    <span >{{ artist }} | {{ podcast }}</span>
+    <h5 class="card-name">{{ song.name }}</h5>
+    <span>
+      <a routerLink="{{artistRoute}}" appClickStopPropagation>{{ artist }}</a> 
+      | 
+      <a routerLink="{{podcastRoute}}" appClickStopPropagation>{{ podcast }}</a>
+    </span>
   </div>
 </div>

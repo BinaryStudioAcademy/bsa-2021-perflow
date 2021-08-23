@@ -102,10 +102,11 @@ namespace Perflow.Services.Implementations
             var songs = await context.RecentlyPlayed
                                 .Where(rp => rp.UserId == userId)
                                 .Include(rp => rp.Playlist)
-                                .Include(rp => rp.Album)
                                 .Include(rp => rp.Artist)
                                 .Include(rp => rp.Song)
                                     .ThenInclude(s => s.Group)
+                                .Include(rp => rp.Song)
+                                    .ThenInclude(s => s.Album)
                                 .OrderByDescending(rp => rp.LastTimeListened)
                                 .Take(amount)
                                 .Select(rp =>  new RecentlyPlayedSongDTO
@@ -114,9 +115,9 @@ namespace Perflow.Services.Implementations
                                     Name = rp.Song.Name,
                                     Album = new AlbumForPlaylistDTO
                                     { 
-                                        Id = rp.Album.Id,
-                                        Name = rp.Album.Name,
-                                        IconURL = _imageService.GetImageUrl(rp.Album.IconURL)
+                                        Id = rp.Song.Album.Id,
+                                        Name = rp.Song.Album.Name,
+                                        IconURL = _imageService.GetImageUrl(rp.Song.Album.IconURL)
                                     },
                                     Group = mapper.Map<GroupForPlaylistDTO>(rp.Song.Group),
                                     Artist = mapper.Map<UserForPlaylistDTO>(rp.Artist),
