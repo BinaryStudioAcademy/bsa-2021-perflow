@@ -6,10 +6,10 @@ import 'package:perflow/cubits/playback/playback_cubit.dart';
 import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/routes/content_routes.dart';
-import 'package:perflow/screens/empty_screen.dart';
 import 'package:perflow/screens/main/home/home_screen.dart';
 import 'package:perflow/screens/main/library/library_screen.dart';
 import 'package:perflow/screens/main/main_screen.dart';
+import 'package:perflow/screens/main/player/player_screen.dart';
 import 'package:perflow/screens/main/search/search_screen.dart';
 import 'package:perflow/services/auth/auth_service.dart';
 import 'package:vrouter/vrouter.dart';
@@ -27,7 +27,7 @@ class MainRoutes extends VRouteElementBuilder {
   @override
   List<VRouteElement> buildRoutes() {
     return [
-      VNester.builder(
+      VNester(
         path: null,
         widgetBuilder: _buildMainRoot,
         transitionDuration: Duration.zero,
@@ -47,34 +47,56 @@ class MainRoutes extends VRouteElementBuilder {
             widget: const LibraryScreen(),
           ),
           VWidget(
-            path: null,
-            widget: const EmptyScreen(),
-            stackedRoutes: [
-              ContentRoutes()
-            ]
+            path: Routes.player,
+            widget: const PlayerScreen()
           ),
+          ContentRoutes()
         ]
       )
     ];
   }
 
-  Widget _buildMainRoot(BuildContext context, VRouterData data, Widget child) {
+  Widget _buildMainRoot(Widget child) {
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (previous, current) => current is AuthStateSignedOut,
       listener: (context, state) => context.vRouter.to(Routes.auth, isReplacement: true),
       child: MultiBlocProvider(
         providers: [
           BlocProvider<MainNavigationCubit>(
-            create: (_) => MainNavigationCubit(context.vRouter),
+            create: (_) => MainNavigationCubit(),
           ),
           BlocProvider<PlaybackCubit>(
             create: (_) => PlaybackCubit()
           )
         ],
-        child: MainScreen(
-          child: child,
+        child: VWidgetGuard(
+          afterUpdate: _matchRoute,
+          child: MainScreen(
+            child: child,
+          ),
         )
       )
     );
+  }
+
+  void _matchRoute(BuildContext context, String? from, String to) {
+    final navCubit = context.read<MainNavigationCubit>();
+    switch(to) {
+      case Routes.home:
+        navCubit.setHome();
+        break;
+      case Routes.search:
+        navCubit.setSearch();
+        break;
+      case Routes.library:
+        navCubit.setLibrary();
+        break;
+      case Routes.player:
+        navCubit.setPlayer();
+        break;
+      default:
+        navCubit.setOther();
+        break;
+    }
   }
 }

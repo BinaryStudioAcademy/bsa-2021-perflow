@@ -2,29 +2,20 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
-import 'package:perflow/routes.dart';
-import 'package:vrouter/vrouter.dart';
 
 part 'main_navigation_state.dart';
 part 'main_navigation_cubit.freezed.dart';
 
 class MainNavigationCubit extends Cubit<MainNavigationState> {
-  final InitializedVRouterSailor _router;
+  MainNavigationCubit() : super(MainNavigationState.home());
 
-  MainNavigationCubit(this._router) : super(MainNavigationState.home());
+  void setHome() => emit(MainNavigationState.home());
 
-  void goToHome() {
-    _router.to(Routes.home);
-    emit(MainNavigationState.home());
-  }
+  void setSearch() => emit(MainNavigationState.search());
 
-  void goToSearch() {
-    _router.to(Routes.search);
-    emit(MainNavigationState.search());
-  }
+  void setLibrary() => emit(MainNavigationState.library());
 
-  void goToLibrary() {
-    _router.to(Routes.library);
-    emit(MainNavigationState.library());
-  }
+  void setPlayer() => emit(MainNavigationState.player());
+
+  void setOther() => emit(MainNavigationState.other());
 }
