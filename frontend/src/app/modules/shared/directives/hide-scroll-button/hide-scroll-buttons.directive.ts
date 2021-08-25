@@ -1,4 +1,6 @@
-import { AfterViewInit, Directive, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit, Directive, ElementRef, OnDestroy, OnInit
+} from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 
 @Directive({
@@ -11,7 +13,7 @@ export class HideScrollButtonsDirective implements OnInit, OnDestroy, AfterViewI
 
   constructor(private _elRef: ElementRef) {
     this._el = <HTMLElement>_elRef.nativeElement;
-   }
+  }
 
   ngOnInit() {
     this._resizeObservable$ = fromEvent(window, 'resize');
@@ -41,5 +43,5 @@ export class HideScrollButtonsDirective implements OnInit, OnDestroy, AfterViewI
       arrowLeft?.classList.add('hidden');
       arrowRight?.classList.add('hidden');
     }
-  };
+  }
 }
