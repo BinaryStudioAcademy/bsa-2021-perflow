@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Playlist } from 'src/app/models/playlist';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
@@ -26,8 +27,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   constructor(
     private _playlistsService: PlaylistsService,
     private _createdPlaylistService: CreatePlaylistService
-  ) {
-  }
+  ) { }
 
   public ngOnInit() {
     this.getUserCreatedPlaylists();
@@ -89,17 +89,29 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   clickOnMenuItem(item: string) {
     (this.menu.nativeElement as HTMLDivElement).classList.toggle('show');
-    this.editedPlaylist = this._tempPlaylist;
 
     switch (item) {
       case 'Rename':
         this.renamePlaylist();
+        this.editedPlaylist = this._tempPlaylist;
         break;
       case 'Create similar playlist':
+        this.createSimilarPlaylist();
         break;
       default:
         break;
     }
+  }
+
+  createSimilarPlaylist() {
+    this._playlistsService.copyPlaylist(this._tempPlaylist)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          const temp = { ...data } as Playlist;
+          this._createdPlaylistService.addPlaylist(temp);
+        }
+      });
   }
 
   renamePlaylist() {

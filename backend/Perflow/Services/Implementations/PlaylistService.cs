@@ -236,5 +236,36 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
         }
+        
+        public async Task<PlaylistNameDTO> CopyPlaylistAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (playlistNameDTO == null)
+                throw new ArgumentNullException(nameof(playlistNameDTO), "Argument cannot be null");
+
+            var playlist = await context.Playlists
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == playlistNameDTO.Id);
+
+            playlist.Id = 0;
+            playlist.Name = $"copy-{playlist.Name}";
+
+            await context.Playlists.AddAsync(playlist);
+            await context.SaveChangesAsync();
+
+            var songs = await context.PlaylistSong
+                .Where(ps => ps.PlaylistId == playlistNameDTO.Id)
+                .AsNoTracking()
+                .ToListAsync();
+
+            songs.ForEach(p => {
+                p.PlaylistId = playlist.Id;
+                p.Id = 0;
+            });
+
+            await context.PlaylistSong.AddRangeAsync(songs);
+            await context.SaveChangesAsync();
+
+            return new PlaylistNameDTO { Id = playlist.Id, Name = playlist.Name };
+        }
     }
 }

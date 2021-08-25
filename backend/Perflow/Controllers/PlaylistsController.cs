@@ -134,5 +134,16 @@ namespace Perflow.Controllers
 
             return Ok();
         }
+
+        [HttpPost("copy")]
+        public async Task<ActionResult<PlaylistNameDTO>> CopyPlaylistAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            var copyedPlaylist = await _playlistService.CopyPlaylistAsync(playlistNameDTO);
+
+            return Ok(copyedPlaylist);
+        }
     }
 }
