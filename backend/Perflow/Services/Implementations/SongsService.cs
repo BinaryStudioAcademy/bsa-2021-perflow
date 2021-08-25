@@ -30,7 +30,7 @@ namespace Perflow.Services.Implementations
             _imageService = imageService;
         }
 
-        public async Task<IEnumerable<SongReadDTO>> GetLikedSongsAsync(int userId)
+        public async Task<IEnumerable<SongLikedDTO>> GetLikedSongsAsync(int userId)
         {
             var songs = await context.SongReactions
                 .Where(songReaction => songReaction.UserId == userId)
@@ -41,7 +41,7 @@ namespace Perflow.Services.Implementations
                 .Include(songReaction => songReaction.Song)
                     .ThenInclude(song => song.Album)
                 .Select(songReaction =>
-                    mapper.Map<LikedSong, SongReadDTO>(new LikedSong(songReaction.Song, true))
+                    mapper.Map<LikedSong, SongLikedDTO>(new LikedSong(songReaction.Song, true))
                  )
                 .ToListAsync();
 
