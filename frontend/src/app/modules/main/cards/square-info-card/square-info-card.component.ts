@@ -25,15 +25,15 @@ export class SquareInfoCardComponent {
 
   constructor(
     private _router: Router,
-    private _activatedRoute: ActivatedRoute,)
-    { }
+    private _activatedRoute: ActivatedRoute
+  ) { }
 
   dislike(id: number) {
     this.clickDislike.emit(id);
   }
 
   edit() {
-    if(this.editRouterLink) {
+    if (this.editRouterLink) {
       console.log(this._activatedRoute.toString());
       this._router.navigate([`${this.editRouterLink}/${this.id}`], { relativeTo: this._activatedRoute });
     }
