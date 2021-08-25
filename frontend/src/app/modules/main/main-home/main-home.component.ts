@@ -1,9 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component, OnDestroy, OnInit
+} from '@angular/core';
 import { Playlist } from 'src/app/models/playlist';
 import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumService } from 'src/app/services/album.service';
-import { Subject } from 'rxjs';
+import {
+  fromEvent, Observable, Subject, Subscription
+} from 'rxjs';
 import { NewReleaseView } from 'src/app/models/album/new-release-view';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
 import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
@@ -35,6 +39,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
   private _userId: number;
 
+  private _resizeObservable$: Observable<Event>;
+  private _resizeSubscription$: Subscription;
+
   constructor(
     private _albumService: AlbumService,
     private _recentlyPlayedService: RecentlyPlayedService,
@@ -54,11 +61,17 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
+
+    this._resizeObservable$ = fromEvent(window, 'resize');
+    this._resizeSubscription$ = this._resizeObservable$.subscribe((evt) => {
+      console.log('event: ', evt);
+    });
   }
 
   public ngOnDestroy() {
     this._unsubscribe$.next();
     this._unsubscribe$.complete();
+    this._resizeSubscription$.unsubscribe();
   }
 
   playAlbum = () => {
@@ -168,5 +181,12 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   scrollLeft = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
+  };
+
+  displayHideArrowButton = (id: string, arrowBtn: HTMLDivElement) => {
+    let arrowBtnLoc = arrowBtn
+    const el = document.getElementById(id);
+    if (el?.scrollWidth! / el?.clientWidth! > 1) arrowBtnLoc.style.display = 'block';
+    else arrowBtnLoc.style.display = 'none';
   };
 }

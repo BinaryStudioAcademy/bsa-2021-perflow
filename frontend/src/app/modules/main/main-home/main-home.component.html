@@ -48,7 +48,7 @@
     <div class="items-scroll-box calmRhythms">
       <div class="header">New releases</div>
       <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollLeft('album')">
+        <div #newReleasesArrowButtonLeft class="ui icon button scroll-button" (click)="scrollLeft('album')" (window:resize)="displayHideArrowButton('album', newReleasesArrowButtonLeft)">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="album" class="items">
@@ -61,7 +61,7 @@
           >
           </app-new-release-card>
         </div>
-        <div class="ui icon button scroll-button" (click)="scrollRight('album')">
+        <div #newReleasesArrowButtonRight class="ui icon button scroll-button" (click)="scrollRight('album')" (window:resize)="displayHideArrowButton('album', newReleasesArrowButtonRight)">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
@@ -71,19 +71,26 @@
     <div class="items-scroll-box calmRhythms">
       <div class="header">Calm rhythms</div>
       <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollLeft('playlist')">
+        <div #calmRhytmsArrowButtonLeft class="ui icon button scroll-button" (click)="scrollLeft('playlist')" (window:resize)="displayHideArrowButton('playlist', calmRhytmsArrowButtonLeft)">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="playlist" class="items">
-          <app-square-info-card
+          <!-- <app-square-info-card
             *ngFor="let playlist of calmRhythms"
             [name]="playlist.name"
             [description]="playlist.description"
             [iconUrl]="playlist.iconURL"
           >
+          </app-square-info-card> -->
+          <app-square-info-card
+            *ngFor="let k of [].constructor(5); let i = index"
+            [name]="calmRhythms[i%3].name"
+            [description]="calmRhythms[i%3].description"
+            [iconUrl]="calmRhythms[i%3].iconURL"
+          >
           </app-square-info-card>
         </div>
-        <div class="ui icon button scroll-button" (click)="scrollRight('playlist')">
+        <div #calmRhytmsArrowButtonRight class="ui icon button scroll-button" (click)="scrollRight('playlist')" (window:resize)="displayHideArrowButton('playlist', calmRhytmsArrowButtonRight)">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
@@ -109,9 +116,9 @@
 
     <!-- Top 100 songs -->
     <div class="items-scroll-box calmRhythms">
-      <div class="header">Calm rhythms</div>
+      <div class="header">Top 100 songs</div>
       <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollLeft('repeat')">
+        <div #topSongsArrowButtonLeft class="ui icon button scroll-button" (click)="scrollLeft('repeat')" (window:resize)="displayHideArrowButton('repeat', topSongsArrowButtonLeft)">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="repeat" class="items" >
@@ -123,7 +130,7 @@
           >
           </app-square-info-card>
         </div>
-        <div class="ui icon button scroll-button" (click)="scrollRight('repeat')">
+        <div #topSongsArrowButtonRight class="ui icon button scroll-button" (click)="scrollRight('repeat')" (window:resize)="displayHideArrowButton('repeat', topSongsArrowButtonRight)">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
