@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PerflowStudioGuard } from 'src/app/guards/perflow-studio.guard';
-import { 
-  CreateEditPlaylistComponent 
+import {
+  CreateEditPlaylistComponent
 } from '../shared/create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 import { AlbumsPageComponent } from './albums-page/albums-page.component';
 import { CreateEditAlbumComponent } from './create-edit-album/create-edit-album/create-edit-album.component';
