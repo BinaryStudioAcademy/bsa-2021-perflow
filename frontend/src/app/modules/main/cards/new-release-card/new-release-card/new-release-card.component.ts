@@ -30,7 +30,7 @@ export class NewReleaseCardComponent implements OnInit {
         const songs = result;
 
         this.updateQueue(songs);
-      })
+      });
   };
 
   updateQueue(songs: Song[]) {

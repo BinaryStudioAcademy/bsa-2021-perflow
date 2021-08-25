@@ -25,7 +25,7 @@ export class CircleInfoCardComponent {
         const songs = result;
 
         this.updateQueue(songs);
-      })
+      });
   };
 
   updateQueue(songs: Song[]) {

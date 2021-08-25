@@ -24,7 +24,7 @@ export class PlaylistCardComponent {
         const songs = result;
 
         this.updateQueue(songs);
-      })
+      });
   };
 
   updateQueue(songs: Song[]) {

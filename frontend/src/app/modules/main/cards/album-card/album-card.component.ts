@@ -36,7 +36,7 @@ export class AlbumCardComponent {
         const songs = result;
 
         this.updateQueue(songs);
-      })
+      });
   };
 
   updateQueue(songs: Song[]) {

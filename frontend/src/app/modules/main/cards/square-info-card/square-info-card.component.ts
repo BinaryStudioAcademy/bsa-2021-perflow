@@ -37,7 +37,7 @@ export class SquareInfoCardComponent {
         const songs = result;
 
         this.updateQueue(songs);
-      })
+      });
   };
 
   updateQueue(songs: Song[]) {
