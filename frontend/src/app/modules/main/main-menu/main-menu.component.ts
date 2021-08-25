@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import {
-  Component, OnDestroy, OnInit
+  Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -60,4 +60,55 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   }
 
   public createPlaylist = () => { };
+
+  @ViewChild('ddmenu') menu: ElementRef;
+  editedPlaylist = {} as PlaylistName;
+  isEditPlaylistMode: boolean = false;
+  tempPlaylist = {} as PlaylistName;
+
+  plSettingsClick = (pl: PlaylistName, e: MouseEvent) => {
+    const menu = (this.menu.nativeElement as HTMLDivElement);
+    const height = window.innerHeight - e.y;
+    this.tempPlaylist = pl;
+
+    if (height > 500) {
+      menu.style.top = `${e.y + 10}px`;
+      menu.style.left = `${e.x + 5}px`;
+    }
+    if (height < 500) {
+      menu.style.bottom = `${height}px`;
+      menu.style.left = `${e.x + 5}px`;
+    }
+    menu.classList.toggle('show');
+  };
+
+  clickOnMenuItem(item: string) {
+    (this.menu.nativeElement as HTMLDivElement).classList.toggle('show');
+    this.editedPlaylist = this.tempPlaylist;
+
+    switch (item) {
+      case 'Rename':
+        this.renamePlaylist();
+        break;
+      case 'Create similar playlist':
+        break;
+      default:
+        break;
+    }
+  }
+
+  renamePlaylist() {
+    this.isEditPlaylistMode = true;
+  }
+
+  clickOutside() {
+    (this.menu.nativeElement as HTMLDivElement).classList.remove('show');
+    const temp = this.playlists.find((p) => p.id === this.editedPlaylist.id);
+    temp!.name = this.editedPlaylist.name;
+  }
+
+  clickOutsidePlaylistName() {
+    this.isEditPlaylistMode = !this.isEditPlaylistMode;
+    this.editedPlaylist = {} as PlaylistName;
+  }
 }

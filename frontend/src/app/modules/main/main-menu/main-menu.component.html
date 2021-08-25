@@ -35,11 +35,15 @@
       <h6>Created playlists</h6>
     </span>
     <ul>
-      <li *ngFor="let playlist of playlists" 
-        [routerLink]="['/playlists/view-playlist', playlist.id]" 
-        routerLinkActive="active-link"
-        class="clickable">
-        <a>{{ playlist.name }} </a>
+      <li *ngFor="let playlist of playlists" [routerLink]="['/playlists/view-playlist', playlist.id]" 
+        routerLinkActive="active-link"  class="clickable">
+          <span class="show-name" *ngIf="playlist.id !== editedPlaylist.id">
+            <span>{{ playlist.name }}</span>
+            <i class="ellipsis vertical icon pl-settings" (click)="plSettingsClick(playlist, $event)" appClickStopPropagation></i>
+          </span>
+          <span class="edit-name" *ngIf="isEditPlaylistMode && playlist.id === editedPlaylist.id">
+            <input type="text" [(ngModel)]="editedPlaylist.name" (clickOutside)="clickOutsidePlaylistName()" appClickStopPropagation>
+          </span>
       </li>
     </ul>
     <button class="ui btn-full button create-playlist" routerLink="/playlists/create" (click)="createPlaylist()">
@@ -47,6 +51,71 @@
     </button>
   </div>  
 </div>
+
+
+<div class="pl-menu" #ddmenu (clickOutside)="clickOutside()" appClickStopPropagation>
+  <div class="item first" (click)="clickOnMenuItem('')">
+    <span>
+      <i class="outdent icon"></i>
+      Add to queue
+    </span>
+  </div>
+  <div class="item" (click)="clickOnMenuItem('')">
+    <span>
+      <i class="podcast icon"></i>
+      Start playlist radio
+    </span>
+  </div>
+  <div class="item" (click)="clickOnMenuItem('')">
+    <span>
+      <i class="users icon"></i>
+      Collaborative playlist
+    </span>
+  </div>
+  <div class="item" (click)="clickOnMenuItem('')">
+    <span>
+      <i class="user secret icon"></i>
+      Make secret
+    </span>
+  </div>
+  <div class="item" (click)="clickOnMenuItem('')">
+    <span>
+      <i class="edit outline icon"></i>
+      Edit details
+    </span>
+  </div>
+  <div class="item" (click)="clickOnMenuItem('Create similar playlist')">
+    <span>
+      <i class="clone icon"></i>
+      Create similar playlist
+    </span>
+  </div>
+  <div class="item" (click)="clickOnMenuItem('')">
+    <span>
+      <i class="trash alternate outline icon"></i>
+      Delete
+    </span>
+  </div>
+  <div class="item" (click)="clickOnMenuItem('Rename')">
+    <span>
+      <i class="i cursor icon"></i>
+      Rename
+    </span>
+  </div>
+  <div class="item" (click)="clickOnMenuItem('')">
+    <span>
+      <i class="file icon"></i>
+      Create playlist
+    </span>
+  </div>
+  <div class="item last" (click)="clickOnMenuItem('')">
+    <span>
+      <i class="share alternate icon"></i>
+      Share
+    </span>
+  </div>
+</div>
+
 
 <div class="container">
   <router-outlet></router-outlet>
