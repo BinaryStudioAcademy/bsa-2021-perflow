@@ -1,7 +1,17 @@
 <div class="info-list">
-  <div class="playlists-list">
-      <div class="playlists-label">
-          <h1>Coming soon</h1>
-      </div>  
+  <div class="albums-list">
+      <button class="ui btn-full button create-playlist-btn" routerLink="../albums/create">
+          Create playlist
+      </button>
+      <div class="albums-label">
+          <h4>Playlists</h4>
+      </div>
+      <app-square-info-card *ngFor="let playlist of playlists"
+      [id]="playlist.id"
+      [name]="playlist.name"
+      [description]="playlist.description"
+      [iconUrl]="playlist.iconURL"
+      >
+      </app-square-info-card>
   </div>    
 </div>
