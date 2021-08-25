@@ -33,14 +33,7 @@ export class QueueComponent {
       if (!this.songs.find((s) => s.id === song.id)) {
         this.songs.push(song);
         this.unshuffledSongs.push(song);
-        let currentIndex = this.songs.length; let
-          randomIndex;
-        while (currentIndex !== 0) {
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-          [this.songs[currentIndex], this.songs[randomIndex]] = [
-            this.songs[randomIndex], this.songs[currentIndex]];
-        }
+        this.shuffleSongs();
       }
     });
 
@@ -170,6 +163,17 @@ export class QueueComponent {
 
   getCurrentSong() {
     return this.isShuffling ? this.songs[this.getCurrentSongIndex()] : this.unshuffledSongs[this.getCurrentSongIndex()];
+  }
+
+  shuffleSongs(){
+    let currentIndex = this.songs.length; 
+    let randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      [this.songs[currentIndex], this.songs[randomIndex]] = [
+        this.songs[randomIndex], this.songs[currentIndex]];
+    }
   }
 
   resetQueue = () => {
