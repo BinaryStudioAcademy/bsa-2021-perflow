@@ -128,6 +128,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         next: () => {
           const playlistIndex = this.playlists.findIndex((pl) => pl.id === this.editedPlaylist?.id);
           this.playlists[playlistIndex] = this.editedPlaylist!;
+          this._createdPlaylistService.editPlaylistName(this.editedPlaylist);
           this.editedPlaylist = {} as PlaylistName;
           this._tempPlaylist = {} as PlaylistName;
         }
