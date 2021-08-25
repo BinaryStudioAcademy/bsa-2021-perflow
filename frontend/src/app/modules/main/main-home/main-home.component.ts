@@ -184,7 +184,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   };
 
   displayHideArrowButton = (id: string, arrowBtn: HTMLDivElement) => {
-    let arrowBtnLoc = arrowBtn
+    const arrowBtnLoc = arrowBtn;
     const el = document.getElementById(id);
     if (el?.scrollWidth! / el?.clientWidth! > 1) arrowBtnLoc.style.display = 'block';
     else arrowBtnLoc.style.display = 'none';
