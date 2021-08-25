@@ -1,0 +1,26 @@
+<div class="ui visible menu">
+  <div class="logo">
+    <a class="ui logo icon image" routerLink="/home">
+      <img src="../../../../assets/Logo.png"/>
+    </a>
+  </div>
+</div>
+
+<main class="main-content">
+  <h1>Get access to Perflow for Artists</h1>
+  <h5>First, tell us who you are.</h5>
+  <div class="cards">
+    <div class="option-card" routerLink="../register" routerLinkActive="active-link" [state]="{ type: 'artist'}">
+      <img src="../../../../../assets/images/artist.jpg"/>
+      <span>Artist</span>
+    </div>
+    <div class="option-card" routerLink="../register" routerLinkActive="active-link" [state]="{ type: 'moderator'}">
+      <img src="../../../../../assets/images/Moderator.jpg"/>
+      <span>Moderator</span>
+    </div>
+    <div class="option-card" routerLink="../register" routerLinkActive="active-link" [state]="{ type: 'teamMember'}">
+      <img src="../../../../../assets/images/vinyl.jpg"/>
+      <span>Team member</span>
+    </div>
+  </div>
+</main>
