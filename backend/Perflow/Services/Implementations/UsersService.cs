@@ -7,6 +7,7 @@ using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Interfaces;
+using Shared.Auth;
 
 namespace Perflow.Services.Implementations
 {
@@ -50,13 +51,23 @@ namespace Perflow.Services.Implementations
         public async Task<User> CreateUserAsync(UserWriteDTO userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            using var transaction = _context.Database.BeginTransaction();
             var userEntity = await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             _context.UserSettings.Add(new Domain.UserSettings() { UserId = userEntity.Entity.Id });
             await _context.SaveChangesAsync();
-            transaction.Commit();
             return userEntity.Entity;
+        }
+
+        public async Task<ArtistApplicant> CreateArtistApplicantAsync(string email, int userRole)
+        {
+            while(!await _context.Users.AnyAsync(u => u.Email == email))
+            {
+                await Task.Delay(25);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var result = await _context.ArtistApplicants.AddAsync(new ArtistApplicant(user.Id, (UserRole)userRole));
+            await _context.SaveChangesAsync();
+            return result.Entity;
         }
 
         public async Task<UserSettings> GetUserSettingsAsync(int userId)
