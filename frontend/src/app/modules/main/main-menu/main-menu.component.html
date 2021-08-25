@@ -39,7 +39,7 @@
         routerLinkActive="active-link"  class="clickable">
           <span class="show-name" *ngIf="playlist.id !== editedPlaylist.id">
             <span>{{ playlist.name }}</span>
-            <i class="ellipsis vertical icon pl-settings" (click)="plSettingsClick(playlist, $event)" appClickStopPropagation></i>
+            <i class="ellipsis vertical icon pl-settings" (click)="playlistSettingsClick(playlist, $event)" appClickStopPropagation></i>
           </span>
           <span class="edit-name" *ngIf="isEditPlaylistMode && playlist.id === editedPlaylist.id">
             <input type="text" [(ngModel)]="editedPlaylist.name" (clickOutside)="clickOutsidePlaylistName()" 
@@ -109,11 +109,17 @@
       Create playlist
     </span>
   </div>
-  <div class="item last" (click)="clickOnMenuItem('')">
+  <div class="item last share-menu" (click)="clickOnMenuItem('')">
     <span>
-      <i class="share alternate icon"></i>
-      Share
+      <i class="share alternate icon"></i>Share<i class="caret right icon"></i>
     </span>
+    <div class="submenu">
+      <div class="item">
+        <span>
+          Copy link
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 

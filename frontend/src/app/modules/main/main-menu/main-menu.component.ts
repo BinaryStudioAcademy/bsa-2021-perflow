@@ -64,27 +64,28 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       );
   }
 
-  plSettingsClick = (pl: PlaylistName, e: MouseEvent) => {
+  playlistSettingsClick = (playist: PlaylistName, e: MouseEvent) => {
     const menu = (this.menu.nativeElement as HTMLDivElement);
-    const height = window.innerHeight - e.y;
+    const height = window.innerHeight - e.clientY;
+    const menuHeight: number = 500;
 
-    if (height > 500) {
-      menu.style.top = `${e.y + 10}px`;
-      menu.style.left = `${e.x + 5}px`;
+    if (height > menuHeight) {
+      menu.style.top = `${e.clientY + 10}px`!;
+      menu.style.left = `${e.clientX! + 5}px`!;
     }
     else {
-      menu.style.bottom = `${height}px`;
-      menu.style.left = `${e.x + 5}px`;
+      menu.style.bottom = `${height!}px`!;
+      menu.style.left = `${e.clientX! + 5}px`!;
     }
 
-    if (pl.id === this._tempPlaylist.id) {
+    if (playist.id === this._tempPlaylist.id) {
       menu.classList.toggle('show');
     }
     else {
       menu.classList.add('show');
     }
 
-    this._tempPlaylist = pl;
+    this._tempPlaylist = playist;
   };
 
   clickOnMenuItem(item: string) {
