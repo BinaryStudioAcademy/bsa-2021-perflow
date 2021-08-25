@@ -11,6 +11,6 @@ export class SearchHistoryService {
   constructor(private _httpService: HttpInternalService) {}
 
   addSearchHistory(history: WriteSearchHistory) {
-    return this._httpService.postRequest<WriteSearchHistory>(this._routePrefix, history);
+    return this._httpService.postRequest('/api/SearchHistory', history);
   }
 }

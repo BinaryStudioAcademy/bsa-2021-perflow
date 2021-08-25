@@ -1,6 +1,6 @@
 export interface WriteSearchHistory {
   userId: number,
-  albumId: number,
-  artistId: number,
-  playlistId: number
+  albumId: number | null,
+  artistId: number | null,
+  playlistId: number | null
 }

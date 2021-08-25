@@ -33,7 +33,20 @@ namespace Perflow.Services.Implementations
                 .Where(hl => hl.UserId == historyDTO.UserId)
                 .ToListAsync();
 
-            if(shList.Count >= maxNumberOfNotesPerUser)
+            var shUpdate = shList.FirstOrDefault(
+                rp => rp.ArtistId == historyDTO.ArtistId &&
+                rp.AlbumId == historyDTO.AlbumId &&
+                rp.PlaylistId == historyDTO.PlaylistId);
+
+            if (shUpdate != null)
+            {
+                shUpdate.CreatedAt = DateTimeOffset.Now;
+                context.Entry(shUpdate).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+                return;
+            }
+
+            if (shList.Count >= maxNumberOfNotesPerUser)
             {
                 var shRemove = shList
                     .OrderByDescending(sh => sh.CreatedAt)
@@ -61,7 +74,6 @@ namespace Perflow.Services.Implementations
             }
 
             await context.SearchHistory.AddAsync(history);
-
             await context.SaveChangesAsync();
         }
     }
