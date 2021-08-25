@@ -28,13 +28,13 @@
               <div class="ui floating dropdown ellipsis-button" appSmDropdown>
                 <i class="ellipsis vertical icon"></i>
                 <div class="menu">
-                  <div class="item first" routerLink="../../edit/{{playlist.id}}">
+                  <div *ngIf="isAuthor" class="item first" routerLink="../../edit/{{playlist.id}}">
                     <span>
                       <i class="edit outline icon"></i>
                       Edit playlist
                     </span>
                   </div>
-                  <div class="item" (click)="addToQueue()">
+                  <div class="item" (click)="addToQueue()" [ngClass]="{'first':!isAuthor}">
                     <span>
                       <i class="outdent icon"></i>
                       Add to queue
@@ -54,13 +54,13 @@
                         </div>
                       </div>
                   </div>
-                  <div class="item" routerLink="/">
+                  <div class="item" routerLink="/" [ngClass]="{'last':!isAuthor}">
                     <span>
                       <i class="hand peace outline icon"></i>
                       About recommendations
                     </span>
                   </div>
-                  <div *ngIf="playlist.author?.id === userId" class="item last" (click)="deletePlaylist()">
+                  <div *ngIf="isAuthor" class="item last" (click)="deletePlaylist()">
                     <span>
                       <i class="trash alternate outline icon"></i>
                       Delete playlist

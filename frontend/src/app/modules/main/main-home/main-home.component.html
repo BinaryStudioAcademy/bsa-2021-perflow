@@ -51,7 +51,7 @@
         <div class="ui icon button scroll-button" (click)="scrollLeft('album')">
           <i class="large inverted angle left icon"></i>
         </div>
-        <div id="album" class="items">
+        <div id="album" class="items" appHideScrollButtons>
           <app-new-release-card
             *ngFor="let album of newReleases"
             [id]="album.id"
@@ -74,7 +74,7 @@
         <div class="ui icon button scroll-button" (click)="scrollLeft('playlist')">
           <i class="large inverted angle left icon"></i>
         </div>
-        <div id="playlist" class="items">
+        <div id="playlist" class="items" appHideScrollButtons>
           <app-square-info-card
             *ngFor="let playlist of calmRhythms"
             [name]="playlist.name"
@@ -109,12 +109,12 @@
 
     <!-- Top 100 songs -->
     <div class="items-scroll-box calmRhythms">
-      <div class="header">Calm rhythms</div>
+      <div class="header">Top 100 songs</div>
       <div class="list-of-items">
         <div class="ui icon button scroll-button" (click)="scrollLeft('repeat')">
           <i class="large inverted angle left icon"></i>
         </div>
-        <div id="repeat" class="items" >
+        <div id="repeat" class="items" appHideScrollButtons>
           <app-square-info-card
             *ngFor="let song of top100Songs"
             [name]="song.name"
