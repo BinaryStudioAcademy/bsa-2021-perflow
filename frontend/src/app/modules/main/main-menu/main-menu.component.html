@@ -42,11 +42,12 @@
             <i class="ellipsis vertical icon pl-settings" (click)="plSettingsClick(playlist, $event)" appClickStopPropagation></i>
           </span>
           <span class="edit-name" *ngIf="isEditPlaylistMode && playlist.id === editedPlaylist.id">
-            <input type="text" [(ngModel)]="editedPlaylist.name" (clickOutside)="clickOutsidePlaylistName()" appClickStopPropagation>
+            <input type="text" [(ngModel)]="editedPlaylist.name" (clickOutside)="clickOutsidePlaylistName()" 
+              appClickStopPropagation (keyup)="inputKeyup($event)">
           </span>
       </li>
     </ul>
-    <button class="ui btn-full button create-playlist" routerLink="/playlists/create" (click)="createPlaylist()">
+    <button class="ui btn-full button create-playlist" routerLink="/playlists/create">
       Create Playlist
     </button>
   </div>  

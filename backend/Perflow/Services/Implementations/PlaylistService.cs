@@ -223,5 +223,18 @@ namespace Perflow.Services.Implementations
 
             return playlists;
         }
+
+        public async Task EditPlaylistNameAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (playlistNameDTO == null)
+                throw new ArgumentNullException(nameof(playlistNameDTO), "Argument cannot be null");
+
+            var playlist = await context.Playlists.FindAsync(playlistNameDTO.Id);
+            playlist.Name = playlistNameDTO.Name;
+
+            context.Playlists.Update(playlist);
+
+            await context.SaveChangesAsync();
+        }
     }
 }

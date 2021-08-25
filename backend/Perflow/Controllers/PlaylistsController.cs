@@ -123,5 +123,16 @@ namespace Perflow.Controllers
         {
             return Ok(await _playlistService.GetPlaylistsByGroupIdAsync(groupId));
         }
+        
+        [HttpPut("editName")]
+        public async Task<ActionResult> EditPlaylistNameAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            await _playlistService.EditPlaylistNameAsync(playlistNameDTO);
+
+            return Ok();
+        }
     }
 }

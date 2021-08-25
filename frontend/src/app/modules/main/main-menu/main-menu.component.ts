@@ -14,7 +14,12 @@ import { CreatePlaylistService } from '../../shared/playlist/create-playlist/cre
   styleUrls: ['./main-menu.component.sass']
 })
 export class MainMenuComponent implements OnDestroy, OnInit {
+  @ViewChild('ddmenu') menu: ElementRef;
+
   playlists: PlaylistName[] = [];
+  editedPlaylist = {} as PlaylistName;
+  isEditPlaylistMode: boolean = false;
+  private _tempPlaylist = {} as PlaylistName;
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -59,32 +64,32 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       );
   }
 
-  public createPlaylist = () => { };
-
-  @ViewChild('ddmenu') menu: ElementRef;
-  editedPlaylist = {} as PlaylistName;
-  isEditPlaylistMode: boolean = false;
-  tempPlaylist = {} as PlaylistName;
-
   plSettingsClick = (pl: PlaylistName, e: MouseEvent) => {
     const menu = (this.menu.nativeElement as HTMLDivElement);
     const height = window.innerHeight - e.y;
-    this.tempPlaylist = pl;
 
     if (height > 500) {
       menu.style.top = `${e.y + 10}px`;
       menu.style.left = `${e.x + 5}px`;
     }
-    if (height < 500) {
+    else {
       menu.style.bottom = `${height}px`;
       menu.style.left = `${e.x + 5}px`;
     }
-    menu.classList.toggle('show');
+
+    if (pl.id === this._tempPlaylist.id) {
+      menu.classList.toggle('show');
+    }
+    else {
+      menu.classList.add('show');
+    }
+
+    this._tempPlaylist = pl;
   };
 
   clickOnMenuItem(item: string) {
     (this.menu.nativeElement as HTMLDivElement).classList.toggle('show');
-    this.editedPlaylist = this.tempPlaylist;
+    this.editedPlaylist = this._tempPlaylist;
 
     switch (item) {
       case 'Rename':
@@ -103,12 +108,29 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   clickOutside() {
     (this.menu.nativeElement as HTMLDivElement).classList.remove('show');
-    const temp = this.playlists.find((p) => p.id === this.editedPlaylist.id);
-    temp!.name = this.editedPlaylist.name;
   }
 
   clickOutsidePlaylistName() {
     this.isEditPlaylistMode = !this.isEditPlaylistMode;
-    this.editedPlaylist = {} as PlaylistName;
+    this.editPlaylistName();
+  }
+
+  inputKeyup(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.editPlaylistName();
+    }
+  }
+
+  editPlaylistName() {
+    this._playlistsService.editPlaylistName(this.editedPlaylist)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: () => {
+          const playlistIndex = this.playlists.findIndex((pl) => pl.id === this.editedPlaylist?.id);
+          this.playlists[playlistIndex] = this.editedPlaylist!;
+          this.editedPlaylist = {} as PlaylistName;
+          this._tempPlaylist = {} as PlaylistName;
+        }
+      });
   }
 }
