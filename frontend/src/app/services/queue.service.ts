@@ -22,7 +22,6 @@ export class QueueService {
   nextSong$ = this._nextSong.asObservable();
   previousSong$ = this._previousSong.asObservable();
   queueCleared$ = this._clearQueue.asObservable();
-  
 
   nextSongGot = new EventEmitter<Song | null>();
   previousSongGot = new EventEmitter<Song | null>();
