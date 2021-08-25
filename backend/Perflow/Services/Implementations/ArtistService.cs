@@ -43,6 +43,8 @@ namespace Perflow.Services.Implementations
         public async Task<IEnumerable<ArtistReadDTO>> GetTopArtistsByLikes(int amount)
         {
             var artists = await context.ArtistReactions
+                                    .Include(ar => ar.Artist)
+                                    .Where(ar => ar.Artist.Role == UserRole.Artist)
                                     .GroupBy(
                                         r => r.ArtistId,
                                         (key, group) => new { ArtistId = key, Count = group.Count() }

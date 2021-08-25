@@ -6,9 +6,14 @@ services:
     image: krasnovnikita/bsa2021-perflow-frontend
     ports:
       - '80:80'
-      # - '443:443'
+      - '443:443'
     env_file:
-     - ./env/frontend.env
+      - ./env/frontend.env
+    volumes:
+      - /etc/letsencrypt/live/perflow.westeurope.cloudapp.azure.com/cert.pem:/etc/letsencrypt/live/perflow.westeurope.cloudapp.azure.com/cert.pem
+      - /etc/letsencrypt/live/perflow.westeurope.cloudapp.azure.com/chain.pem:/etc/letsencrypt/live/perflow.westeurope.cloudapp.azure.com/chain.pem
+      - /etc/letsencrypt/live/perflow.westeurope.cloudapp.azure.com/fullchain.pem:/etc/letsencrypt/live/perflow.westeurope.cloudapp.azure.com/fullchain.pem
+      - /etc/letsencrypt/live/perflow.westeurope.cloudapp.azure.com/privkey.pem:/etc/letsencrypt/live/perflow.westeurope.cloudapp.azure.com/privkey.pem
 
   gateway:
     image: krasnovnikita/bsa2021-perflow-gateway
