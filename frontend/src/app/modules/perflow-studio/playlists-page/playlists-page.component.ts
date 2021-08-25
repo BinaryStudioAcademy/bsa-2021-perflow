@@ -23,7 +23,7 @@ export class PlaylistsPageComponent implements OnInit {
     this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
-        this.userId = authState!.id
+        this.userId = authState!.id;
       });
 
     this.loadPlaylist();
