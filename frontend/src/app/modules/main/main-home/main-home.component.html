@@ -48,7 +48,7 @@
     <div class="items-scroll-box calmRhythms">
       <div class="header">New releases</div>
       <div class="list-of-items">
-        <div #newReleasesArrowButtonLeft class="ui icon button scroll-button" (click)="scrollLeft('album')" (window:resize)="displayHideArrowButton('album', newReleasesArrowButtonLeft)">
+        <div class="ui icon button scroll-button" (click)="scrollLeft('album')">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="album" class="items">
@@ -61,7 +61,7 @@
           >
           </app-new-release-card>
         </div>
-        <div #newReleasesArrowButtonRight class="ui icon button scroll-button" (click)="scrollRight('album')" (window:resize)="displayHideArrowButton('album', newReleasesArrowButtonRight)">
+        <div class="ui icon button scroll-button" (click)="scrollRight('album')">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
@@ -71,7 +71,7 @@
     <div class="items-scroll-box calmRhythms">
       <div class="header">Calm rhythms</div>
       <div class="list-of-items">
-        <div #calmRhytmsArrowButtonLeft class="ui icon button scroll-button" (click)="scrollLeft('playlist')" (window:resize)="displayHideArrowButton('playlist', calmRhytmsArrowButtonLeft)">
+        <div class="ui icon button scroll-button" (click)="scrollLeft('playlist')">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="playlist" class="items">
@@ -90,7 +90,7 @@
           >
           </app-square-info-card>
         </div>
-        <div #calmRhytmsArrowButtonRight class="ui icon button scroll-button" (click)="scrollRight('playlist')" (window:resize)="displayHideArrowButton('playlist', calmRhytmsArrowButtonRight)">
+        <div class="ui icon button scroll-button" (click)="scrollRight('playlist')">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
@@ -118,7 +118,7 @@
     <div class="items-scroll-box calmRhythms">
       <div class="header">Top 100 songs</div>
       <div class="list-of-items">
-        <div #topSongsArrowButtonLeft class="ui icon button scroll-button" (click)="scrollLeft('repeat')" (window:resize)="displayHideArrowButton('repeat', topSongsArrowButtonLeft)">
+        <div class="ui icon button scroll-button" (click)="scrollLeft('repeat')">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="repeat" class="items" >
@@ -130,7 +130,7 @@
           >
           </app-square-info-card>
         </div>
-        <div #topSongsArrowButtonRight class="ui icon button scroll-button" (click)="scrollRight('repeat')" (window:resize)="displayHideArrowButton('repeat', topSongsArrowButtonRight)">
+        <div class="ui icon button scroll-button" (click)="scrollRight('repeat')">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component, OnDestroy, OnInit
 } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist';
@@ -20,7 +21,7 @@ import { NewestFiveAlbum } from 'src/app/models/album/newest-five';
   templateUrl: './main-home.component.html',
   styleUrls: ['./main-home.component.sass']
 })
-export class MainHomeComponent implements OnInit, OnDestroy {
+export class MainHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly _rpSongAmount: number = 8;
   private _newestCounter: number = 0;
   private _newestAlbums = new Array<NewestFiveAlbum>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
@@ -64,8 +65,12 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
     this._resizeObservable$ = fromEvent(window, 'resize');
     this._resizeSubscription$ = this._resizeObservable$.subscribe((evt) => {
-      console.log('event: ', evt);
+      this.displayHideArrowButtons();
     });
+  }
+
+  ngAfterViewInit() {
+    this.displayHideArrowButtons();
   }
 
   public ngOnDestroy() {
@@ -183,10 +188,24 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     element?.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
   };
 
-  displayHideArrowButton = (id: string, arrowBtn: HTMLDivElement) => {
-    const arrowBtnLoc = arrowBtn;
+  displayHideArrowButtons() {
+    this.displayHideArrowButton('album');
+    this.displayHideArrowButton('playlist');
+    this.displayHideArrowButton('repeat');
+  }
+
+  displayHideArrowButton = (id: string) => {
     const el = document.getElementById(id);
-    if (el?.scrollWidth! / el?.clientWidth! > 1) arrowBtnLoc.style.display = 'block';
-    else arrowBtnLoc.style.display = 'none';
+    const arrowLeft = el!.previousElementSibling;
+    const arrowRight = el!.nextElementSibling;
+    console.log(`${id}: ${el?.scrollWidth! / el?.clientWidth!}`);
+    if (el?.scrollWidth! / el?.clientWidth! > 1) {
+      arrowLeft?.classList.remove('hidden');
+      arrowRight?.classList.remove('hidden');
+    }
+    else {
+      arrowLeft?.classList.add('hidden');
+      arrowRight?.classList.add('hidden');
+    }
   };
 }
