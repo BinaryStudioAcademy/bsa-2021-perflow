@@ -11,6 +11,7 @@ using System;
 using Perflow.Services.Implementations;
 using Perflow.Domain;
 using Perflow.Common.Helpers;
+using Shared.Auth;
 
 namespace Perflow.Controllers
 {
@@ -111,6 +112,14 @@ namespace Perflow.Controllers
             var uri = await _usersService.UpdateUserIconAsync(userChangeIconDTO);
 
             return Ok(new { uri });
+        }
+
+        [HttpPost("createApplicant")]
+        [AllowAnonymous]
+        public async Task<ActionResult> CreateArtistApplicant([FromBody] ArtistApplicantDTO artistApplicant)
+        {
+            await _usersService.CreateArtistApplicantAsync(artistApplicant.Email, artistApplicant.UserRole);
+            return Ok();
         }
     }
 }

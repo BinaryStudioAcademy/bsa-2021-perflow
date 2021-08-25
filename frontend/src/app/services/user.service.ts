@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { objectToFormData } from '../helpers/object-to-formData-converter';
+import { ArtistApplicant } from '../models/user/artist-applicant';
 import { User } from '../models/user/user';
 import { UserChangeIcon } from '../models/user/user-change-icon';
 import { UserChangePassword } from '../models/user/user-change-password';
@@ -45,5 +46,9 @@ export class UserService {
     const formData = objectToFormData(user);
 
     return this._httpService.putRequest<{ uri: string }>(`${this.routePrefix}/changeIcon`, formData);
+  }
+
+  createArtistApplicant(artistApplicant: ArtistApplicant) {
+    return this._httpService.postFullRequest(`${this.routePrefix}/createApplicant`, artistApplicant);
   }
 }
