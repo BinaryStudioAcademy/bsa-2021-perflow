@@ -196,6 +196,8 @@ export class SongToolbarComponent implements OnInit {
 
   toggleShuffle = () => {
     this.isShuffling = !this.isShuffling;
+    this._queueService.setShuffle(this.isShuffling);
+    return this.isShuffling;
   };
 
   toggleRepeat = () => {
