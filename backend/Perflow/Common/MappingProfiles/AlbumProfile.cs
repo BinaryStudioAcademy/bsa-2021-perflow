@@ -18,6 +18,9 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<Album, AlbumForListDTO>();
             CreateMap<AlbumForListDTO, Album>();
 
+            CreateMap<Album, AlbumNameDTO>();
+            CreateMap<AlbumNameDTO, Album>();
+
             CreateMap<AlbumWriteDTO, Album>();
 
             CreateMap<Album, AlbumFullDTO>()
