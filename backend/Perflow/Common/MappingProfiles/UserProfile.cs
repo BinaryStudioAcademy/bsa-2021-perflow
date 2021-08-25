@@ -13,6 +13,9 @@ namespace Perflow.Common.MappingProfiles
         {
             CreateMap<User, UserReadDTO>();
 
+            CreateMap<User, ArtistNameDTO>();
+            CreateMap<ArtistNameDTO, User>();
+
             CreateMap<UserWithIcon, UserReadDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.User.Id))
                 .ForMember(d => d.Gender, opt => opt.MapFrom(s => s.User.Gender))

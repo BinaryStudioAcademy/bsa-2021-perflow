@@ -113,7 +113,8 @@ import { GroupViewComponent } from './group-view/group-view.component';
   ],
   exports: [
     ClickOutsideModule,
-    AlbumCardComponent
+    AlbumCardComponent,
+    SquareInfoCardComponent
   ]
 })
 export class MainModule {
