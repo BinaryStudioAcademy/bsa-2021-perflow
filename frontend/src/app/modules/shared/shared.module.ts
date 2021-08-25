@@ -25,6 +25,7 @@ import { AlbumRegionTypePipe } from './pipes/album-region-type.pipe';
 import { AuthorTypePipe } from './pipes/album-author-type.pipe';
 import { ClickStopPropagationDirective } from './directives/stopPropagation/click-stop-propagation.directive';
 import { SnackbarComponent } from './snackbar/snackbar.component';
+import { HideScrollButtonsDirective } from './directives/hide-scroll-button/hide-scroll-buttons.directive';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
     AuthorTypePipe,
-    SnackbarComponent
+    SnackbarComponent,
+    HideScrollButtonsDirective
   ],
   imports: [
     CommonModule,
@@ -79,7 +81,8 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     ClickStopPropagationDirective,
     AlbumRegionTypePipe,
     AuthorTypePipe,
-    SnackbarComponent
+    SnackbarComponent,
+    HideScrollButtonsDirective
   ]
 })
 

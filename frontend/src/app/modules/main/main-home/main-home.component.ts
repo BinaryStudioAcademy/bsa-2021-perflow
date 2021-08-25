@@ -1,14 +1,11 @@
 import {
-  AfterViewInit,
   Component, OnDestroy, OnInit
 } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist';
 import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumService } from 'src/app/services/album.service';
-import {
-  fromEvent, Observable, Subject, Subscription
-} from 'rxjs';
+import { Subject } from 'rxjs';
 import { NewReleaseView } from 'src/app/models/album/new-release-view';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
 import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
@@ -21,7 +18,7 @@ import { NewestFiveAlbum } from 'src/app/models/album/newest-five';
   templateUrl: './main-home.component.html',
   styleUrls: ['./main-home.component.sass']
 })
-export class MainHomeComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MainHomeComponent implements OnInit, OnDestroy {
   private readonly _rpSongAmount: number = 8;
   private _newestCounter: number = 0;
   private _newestAlbums = new Array<NewestFiveAlbum>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
@@ -39,9 +36,6 @@ export class MainHomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _unsubscribe$ = new Subject<void>();
   private _userId: number;
-
-  private _resizeObservable$: Observable<Event>;
-  private _resizeSubscription$: Subscription;
 
   constructor(
     private _albumService: AlbumService,
@@ -62,21 +56,11 @@ export class MainHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.calmRhythms = this.getCalmRhythms();
     this.yourMix = this.getYourMix();
     this.top100Songs = this.getTop100Songs();
-
-    this._resizeObservable$ = fromEvent(window, 'resize');
-    this._resizeSubscription$ = this._resizeObservable$.subscribe((evt) => {
-      this.displayHideArrowButtons();
-    });
-  }
-
-  ngAfterViewInit() {
-    this.displayHideArrowButtons();
   }
 
   public ngOnDestroy() {
     this._unsubscribe$.next();
     this._unsubscribe$.complete();
-    this._resizeSubscription$.unsubscribe();
   }
 
   playAlbum = () => {
@@ -186,26 +170,5 @@ export class MainHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   scrollLeft = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
-  };
-
-  displayHideArrowButtons() {
-    this.displayHideArrowButton('album');
-    this.displayHideArrowButton('playlist');
-    this.displayHideArrowButton('repeat');
-  }
-
-  displayHideArrowButton = (id: string) => {
-    const el = document.getElementById(id);
-    const arrowLeft = el!.previousElementSibling;
-    const arrowRight = el!.nextElementSibling;
-    console.log(`${id}: ${el?.scrollWidth! / el?.clientWidth!}`);
-    if (el?.scrollWidth! / el?.clientWidth! > 1) {
-      arrowLeft?.classList.remove('hidden');
-      arrowRight?.classList.remove('hidden');
-    }
-    else {
-      arrowLeft?.classList.add('hidden');
-      arrowRight?.classList.add('hidden');
-    }
   };
 }
