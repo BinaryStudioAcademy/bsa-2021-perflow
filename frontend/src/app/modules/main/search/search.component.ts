@@ -1,12 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, switchMap, takeUntil
+  debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
 } from 'rxjs/operators';
 import { SearchService } from 'src/app/services/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FoundData } from 'src/app/models/search/found-data';
+import { SearchHistoryService } from 'src/app/services/search-history.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { ReadSearchHistory } from 'src/app/models/search/read-search-history';
 
 @Component({
   selector: 'app-search',
@@ -20,17 +23,27 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   foundData = {} as FoundData;
   searchValue: string;
+  searchHistory = new Array<ReadSearchHistory>();
 
   private readonly _regex = new RegExp('search.*');
   private _searchTerms$ = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
+  private _userId: number;
 
   constructor(
     private _searchService: SearchService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
-    private _location: Location
-  ) {}
+    private _location: Location,
+    private _searchHistoryService: SearchHistoryService,
+    private _authService: AuthService
+  ) {
+    this._authService.getAuthStateObservable()
+      .pipe(filter((state) => !!state))
+      .subscribe((authState) => {
+        this._userId = authState!.id;
+      });
+  }
 
   ngOnInit() {
     this.setSearch();
@@ -46,6 +59,16 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._unsubscribe$.next();
     this._unsubscribe$.complete();
+  }
+
+  getUserSearchHistory() {
+    this._searchHistoryService.getUserSearchHistory(this._userId)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.searchHistory = data;
+        }
+      });
   }
 
   setSearch() {
@@ -68,6 +91,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       this._searchTerms$.next(this.searchValue);
       return;
     }
+    this.getUserSearchHistory();
     this._searchTerms$.next();
   }
 

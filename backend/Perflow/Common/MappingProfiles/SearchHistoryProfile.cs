@@ -14,6 +14,8 @@ namespace Perflow.Common.MappingProfiles
         {
             CreateMap<SearchHistory, SearchHistoryWriteDTO>();
             CreateMap<SearchHistoryWriteDTO, SearchHistory>();
+
+            CreateMap<SearchHistory, SearchHistoryReadDTO>();
         }
     }
 }

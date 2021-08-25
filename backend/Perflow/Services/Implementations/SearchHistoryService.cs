@@ -23,14 +23,14 @@ namespace Perflow.Services.Implementations
             _imageService = imageService;
         }
 
-        public async Task AddSearchHistory(SearchHistoryWriteDTO historyDTO)
+        public async Task AddSearchHistoryAsync(SearchHistoryWriteDTO historyDTO)
         {
             if (historyDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
 
             var shList = await context.SearchHistory
-                .Where(hl => hl.UserId == historyDTO.UserId)
+                .Where(sh => sh.UserId == historyDTO.UserId)
                 .ToListAsync();
 
             var shUpdate = shList.FirstOrDefault(
@@ -75,6 +75,23 @@ namespace Perflow.Services.Implementations
 
             await context.SearchHistory.AddAsync(history);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<SearchHistoryReadDTO>> GetUserSearchHistory(int userId)
+        {
+            if (userId <= 0)
+                throw new ArgumentNullException("Wrong user ID");
+
+            var list = await context.SearchHistory
+                .Where(sh => sh.UserId == userId)
+                .Include(sh => sh.Album)
+                .Include(sh => sh.Artist)
+                .Include(sh => sh.Playlist)
+                .OrderByDescending(sh => sh.CreatedAt)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<SearchHistoryReadDTO>>(list);
         }
     }
 }

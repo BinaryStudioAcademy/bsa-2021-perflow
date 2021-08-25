@@ -24,9 +24,15 @@ namespace Perflow.Controllers
         [HttpPost]
         public async Task<ActionResult> AddSearchHistoryAsync([FromBody] SearchHistoryWriteDTO historyDTO)
         {
-            await _searchHistoryService.AddSearchHistory(historyDTO);
+            await _searchHistoryService.AddSearchHistoryAsync(historyDTO);
 
             return Ok();
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<SearchHistoryReadDTO>>> GetUserSearchHistory(int userId)
+        {
+            return Ok(await _searchHistoryService.GetUserSearchHistory(userId));
         }
     }
 }
