@@ -1,6 +1,7 @@
 import {
   Component, EventEmitter, Input, Output
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-square-info-card',
@@ -16,10 +17,25 @@ export class SquareInfoCardComponent {
   @Input()
   isLiked = false;
 
+  @Input() isForEdit = false;
+  @Input() editRouterLink: string | undefined = undefined;
+
   @Output()
   clickDislike = new EventEmitter<number>();
 
+  constructor(
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute,)
+    { }
+
   dislike(id: number) {
     this.clickDislike.emit(id);
+  }
+
+  edit() {
+    if(this.editRouterLink) {
+      console.log(this._activatedRoute.toString());
+      this._router.navigate([`${this.editRouterLink}/${this.id}`], { relativeTo: this._activatedRoute });
+    }
   }
 }
