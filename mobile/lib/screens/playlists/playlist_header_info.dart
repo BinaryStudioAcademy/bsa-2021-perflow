@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:perflow/cubits/playlists/playlist_songs_cubit.dart';
 import 'package:perflow/models/playlists/playlist_info.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_elevated_button.dart';
 import 'package:perflow/widgets/buttons/perflow_outlined_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PlaylistHeaderInfo extends StatelessWidget {
   final PlaylistInfo info;
@@ -87,7 +89,7 @@ class PlaylistHeaderInfo extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: PerflowElevatedButton.text(
-                      onPressed: () {},
+                      onPressed: () => context.read<PlaylistSongsCubit>().play(),
                       text: 'Play'
                     ),
                   ),

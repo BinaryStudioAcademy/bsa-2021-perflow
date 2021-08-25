@@ -18,6 +18,12 @@ class SongRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
+    String? iconUrl = song.album.iconURL;
+
+    if(iconUrl != null && !iconUrl.startsWith('http')) {
+      iconUrl = 'http://bsa2021perflow.blob.core.windows.net/images/$iconUrl';
+    }
+
     return InkWell(
       onTap: () => getService<PlaybackService>().setSongById(song.id),
       child: SizedBox(
@@ -26,7 +32,7 @@ class SongRow extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if(song.album.iconURL != null)
+            if(iconUrl != null)
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
@@ -35,7 +41,7 @@ class SongRow extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: Image.network(
-                    song.album.iconURL!,
+                    iconUrl,
                     fit: BoxFit.cover,
                     width: height,
                     height: height,
