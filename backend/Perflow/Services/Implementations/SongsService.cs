@@ -41,7 +41,7 @@ namespace Perflow.Services.Implementations
                 .Include(songReaction => songReaction.Song)
                     .ThenInclude(song => song.Album)
                 .Select(songReaction =>
-                    mapper.Map<LikedSong, SongLikedDTO>(new LikedSong(songReaction.Song, true))
+                    mapper.Map<SongLikedDTO>(new LikedSong(songReaction.Song, _imageService.GetImageUrl(songReaction.Song.Album.IconURL), true))
                  )
                 .ToListAsync();
 
@@ -141,7 +141,7 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByAuthorIdAsync(int id, int count, AuthorType type, int userId)
+        public async Task<IEnumerable<SongForAlbumDTO>> GetTopSongsByAuthorIdAsync(int id, int count, AuthorType type, int userId)
         {
             var songs = await context.Songs
                 .Where(song => type == AuthorType.Artist ? song.ArtistId == id : song.GroupId == id)
@@ -152,11 +152,26 @@ namespace Perflow.Services.Implementations
                 .Include(song => song.Album)
                 .AsNoTracking()
                 .Select(s =>
-                  mapper.Map<LikedSong, SongReadDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
+                    mapper.Map<SongForAlbumDTO>(new LikedSong(s, _imageService.GetImageUrl(s.Album.IconURL), s.Reactions.Any(r => r.UserId == userId)))
                  )
                 .ToListAsync();
 
             return songs;
+        }
+
+        public async Task<IEnumerable<SongForAlbumDTO>> GetSongsByAlbumIdAsync(int id, int userId)
+        {
+            return await context.Songs
+                .Where(s => s.AlbumId == id)
+                .OrderBy(s => s.Order)
+                .Include(s => s.Artist)
+                .Include(s => s.Group)
+                .Include(s => s.Album)
+                .AsNoTracking()
+                .Select(s =>
+                    mapper.Map<SongForAlbumDTO>(new LikedSong(s, _imageService.GetImageUrl(s.Album.IconURL), s.Reactions.Any(r => r.UserId == userId)))
+                 )
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<SongReadDTO>> GetTopSongsByLikes(int amount)
@@ -202,7 +217,7 @@ namespace Perflow.Services.Implementations
 
         public async Task UpdateOrders(SongOrderDTO[] songOrders)
         {
-            foreach(var order in songOrders)
+            foreach (var order in songOrders)
             {
                 var song = await context.Songs.FindAsync(order.Id);
                 song.Order = order.Order;
