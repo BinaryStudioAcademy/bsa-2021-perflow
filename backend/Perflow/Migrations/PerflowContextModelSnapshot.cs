@@ -90,6 +90,29 @@ namespace Perflow.Migrations
                     b.ToTable("AlbumReactions");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.ArtistApplicant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MemberType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ArtistApplicants");
+                });
+
             modelBuilder.Entity("Perflow.Domain.ArtistFollower", b =>
                 {
                     b.Property<int>("Id")
@@ -530,6 +553,17 @@ namespace Perflow.Migrations
                         .IsRequired();
 
                     b.Navigation("Album");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Perflow.Domain.ArtistApplicant", b =>
+                {
+                    b.HasOne("Perflow.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
