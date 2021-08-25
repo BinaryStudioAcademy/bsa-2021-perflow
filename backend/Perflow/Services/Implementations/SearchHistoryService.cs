@@ -15,6 +15,7 @@ namespace Perflow.Services.Implementations
     public class SearchHistoryService : BaseService
     {
         private readonly IImageService _imageService;
+        private const int maxNumberOfNotesPerUser = 8;
 
         public SearchHistoryService(PerflowContext context, IMapper mapper, IImageService imageService) 
             : base(context, mapper)
@@ -27,8 +28,21 @@ namespace Perflow.Services.Implementations
             if (historyDTO == null)
                 throw new ArgumentNullException("Argument cannot be null");
 
-            var history = mapper.Map<SearchHistory>(historyDTO);
 
+            var shList = await context.SearchHistory
+                .Where(hl => hl.UserId == historyDTO.UserId)
+                .ToListAsync();
+
+            if(shList.Count >= maxNumberOfNotesPerUser)
+            {
+                var shRemove = shList
+                    .OrderByDescending(sh => sh.CreatedAt)
+                    .Last();
+
+                context.SearchHistory.Remove(shRemove);
+            }
+
+            var history = mapper.Map<SearchHistory>(historyDTO);
 
             if (historyDTO.AlbumId != null)
             {

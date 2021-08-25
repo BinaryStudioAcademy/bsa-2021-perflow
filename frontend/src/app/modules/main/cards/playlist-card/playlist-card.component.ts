@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 
 @Component({
@@ -9,4 +12,13 @@ import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 export class PlaylistCardComponent {
   @Input()
   playlist: PlaylistView = {} as PlaylistView;
+  @Output()
+  clickEmiter = new EventEmitter<void>();
+
+  constructor(private _router: Router) {}
+
+  redirectTo() {
+    this.clickEmiter.emit();
+    this._router.navigateByUrl(`/playlists/view-playlist/${this.playlist.id}`);
+  }
 }

@@ -9,4 +9,8 @@ import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 export class SearchAlbumsResultComponent {
   @Input() albums: Array<AlbumForReadDTO> = new Array<AlbumForReadDTO>();
   @Input() term: string;
+
+  saveToSearchHistory = (album: AlbumForReadDTO) => {
+
+  };
 }
