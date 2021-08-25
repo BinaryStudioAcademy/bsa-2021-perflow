@@ -158,6 +158,28 @@ namespace Perflow.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.GroupFollower", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FollowerId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("GroupFollowers");
+                });
+
             modelBuilder.Entity("Perflow.Domain.GroupReaction", b =>
                 {
                     b.Property<int>("Id")
@@ -572,6 +594,25 @@ namespace Perflow.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.GroupFollower", b =>
+                {
+                    b.HasOne("Perflow.Domain.User", "Follower")
+                        .WithMany("GroupSubscriptions")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Perflow.Domain.Group", "Group")
+                        .WithMany("Followers")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("Group");
+                });
+
             modelBuilder.Entity("Perflow.Domain.GroupReaction", b =>
                 {
                     b.HasOne("Perflow.Domain.Group", "Group")
@@ -761,6 +802,8 @@ namespace Perflow.Migrations
 
             modelBuilder.Entity("Perflow.Domain.Group", b =>
                 {
+                    b.Navigation("Followers");
+
                     b.Navigation("Reactions");
 
                     b.Navigation("Users");
@@ -789,6 +832,8 @@ namespace Perflow.Migrations
                     b.Navigation("Followers");
 
                     b.Navigation("GroupReactions");
+
+                    b.Navigation("GroupSubscriptions");
 
                     b.Navigation("Reactions");
 

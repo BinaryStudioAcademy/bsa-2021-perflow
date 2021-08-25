@@ -35,6 +35,8 @@ namespace Perflow.Domain
 
         public ICollection<ArtistFollower> Subscriptions { get; set; }
 
+        public ICollection<GroupFollower> GroupSubscriptions { get; set; }
+
         public ICollection<SongReaction> Reactions { get; set; }
 
         public ICollection<ArtistReaction> ArtistReactions { get; set; }

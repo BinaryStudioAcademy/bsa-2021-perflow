@@ -15,5 +15,7 @@ namespace Perflow.Domain
 
         public ICollection<GroupReaction> Reactions { get; set; }
 
+        public ICollection<GroupFollower> Followers { get; set; }
+
     }
 }

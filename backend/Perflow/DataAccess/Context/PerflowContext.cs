@@ -15,6 +15,7 @@ namespace Perflow.DataAccess.Context
         public DbSet<ArtistReaction> ArtistReactions { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupReaction> GroupReactions { get; set; }
+        public DbSet<GroupFollower> GroupFollowers { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<PlaylistSong> PlaylistSong { get; set; }
