@@ -14,6 +14,5 @@ namespace Perflow.Common.DTO.Users
         public string Description { get; set; }
         public DateTimeOffset Birthday { get; set; }
         public bool Gender { get; set; }
-        public ICollection<ArtistFollower> Subscriptions { get; set; }
     }
 }
