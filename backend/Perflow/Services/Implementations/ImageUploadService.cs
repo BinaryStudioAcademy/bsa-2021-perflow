@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using Microsoft.Extensions.Options;
-using Perflow.Common.Options;
 using Perflow.Services.Interfaces;
 using Shared.Processor.Models;
 using Shared.RabbitMQ.Extensions;
@@ -9,11 +8,11 @@ using Shared.RabbitMQ.Interfaces;
 
 namespace Perflow.Services.Implementations
 {
-    public class ImageImageUploadService : IImageUploadService, IDisposable
+    public class ImageUploadService : IImageUploadService, IDisposable
     {
         private readonly IQueue _imageProcessingQueue;
 
-        public ImageImageUploadService(IOptions<ImageProcessingRabbitMQOptions> options, IQueueFactory queueFactory)
+        public ImageUploadService(IOptions<ImageProcessingRabbitMQOptions> options, IQueueFactory queueFactory)
         {
             var rabbitMqOptions = options.Value;
 
@@ -30,7 +29,7 @@ namespace Perflow.Services.Implementations
                 ImageData = imageData
             };
 
-            _imageProcessingQueue.SendImageProcessingRequest(options, imageData);
+            _imageProcessingQueue.SendMessage(options.ToBytes());
         }
 
         public void Dispose()

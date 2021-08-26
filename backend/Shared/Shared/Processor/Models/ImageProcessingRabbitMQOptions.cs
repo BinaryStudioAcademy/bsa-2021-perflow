@@ -1,6 +1,6 @@
 ﻿using Shared.RabbitMQ.Options;
 
-namespace Perflow.Common.Options
+namespace Shared.Processor.Models
 {
     public class ImageProcessingRabbitMQOptions
     {

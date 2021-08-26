@@ -21,8 +21,6 @@ namespace Shared.Processor.Models
 
         public byte[] ToBytes()
         {
-            using Stream s = new MemoryStream();
-
             using var memoryStream = new MemoryStream();
             using var writer = new BinaryWriter(memoryStream);
 

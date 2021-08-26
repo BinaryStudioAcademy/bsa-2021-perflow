@@ -26,12 +26,12 @@
 
   "SongProcessingOptions": {
     "ExchangeOptions": {
-      "Name": "Processor-test-exchange",
+      "Name": "Processor-Songs-Exchange",
       "Type": "direct"
     },
     "QueueOptions": {
-      "Name": "Processor-test-queue",
-      "RoutingKey": "processor-test"
+      "Name": "Processor-Songs-Queue",
+      "RoutingKey": "songs-key"
     }
   }
 }
