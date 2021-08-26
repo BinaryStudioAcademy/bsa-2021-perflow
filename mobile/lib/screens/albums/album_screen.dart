@@ -1,24 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:perflow/cubits/albums/album_info_cubit.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
-import 'package:perflow/cubits/playlists/playlist_info_cubit.dart';
-import 'package:perflow/cubits/playlists/playlist_songs_cubit.dart';
-import 'package:perflow/models/playlists/playlist_info.dart';
-import 'package:perflow/models/songs/playlist_song.dart';
+import 'package:perflow/models/albums/album_info.dart';
 import 'package:perflow/root_media_query.dart';
-import 'package:perflow/screens/playlists/playlist_header.dart';
+import 'package:perflow/screens/albums/album_header.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_back_button.dart';
 import 'package:perflow/widgets/songs/song_row.dart';
 import 'package:vrouter/vrouter.dart';
 
-class PlaylistScreen extends StatelessWidget {
-  final int playlistId;
+class AlbumScreen extends StatelessWidget {
+  final int albumId;
 
-  const PlaylistScreen({
-    required this.playlistId,
+  const AlbumScreen({
+    required this.albumId,
     Key? key
   }) : super(key: key);
 
@@ -31,17 +29,14 @@ class PlaylistScreen extends StatelessWidget {
       child: Scaffold(
         body: MultiBlocProvider(
           providers: [
-            BlocProvider<PlaylistSongsCubit>(
-              create: (context) => PlaylistSongsCubit(playlistId),
-            ),
-            BlocProvider<PlaylistInfoCubit>(
-              create: (context) => PlaylistInfoCubit(playlistId),
+            BlocProvider<AlbumInfoCubit>(
+              create: (context) => AlbumInfoCubit(albumId),
             ),
           ],
           child: CustomScrollView(
             slivers: [
               const SliverToBoxAdapter(),
-              BlocBuilder<PlaylistInfoCubit, ApiCallState<PlaylistInfo>>(
+              BlocBuilder<AlbumInfoCubit, ApiCallState<AlbumInfo>>(
                 builder: (context, state) => state.map(
                   loading: (_) => _buildDefaultSliverAppbar(
                     context: context,
@@ -55,14 +50,14 @@ class PlaylistScreen extends StatelessWidget {
                   ),
                   data: (value) => SliverPersistentHeader(
                     pinned: true,
-                    delegate: PlaylistHeaderDelegate(
+                    delegate: AlbumHeaderDelegate(
                       expandedHeight: headerExpandedHeight,
                       info: value.data
-                    )
+                    ),
                   ),
                 ),
               ),
-              BlocBuilder<PlaylistSongsCubit, ApiCallState<List<PlaylistSong>>>(
+              BlocBuilder<AlbumInfoCubit, ApiCallState<AlbumInfo>>(
                 builder: _buildSongsList
               ),
             ],
@@ -95,7 +90,7 @@ class PlaylistScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSongsList(BuildContext context, ApiCallState<List<PlaylistSong>> state) {
+  Widget _buildSongsList(BuildContext context, ApiCallState<AlbumInfo> state) {
     return state.map(
       loading: (_) => const SliverFillRemaining(
         hasScrollBody: false,
@@ -109,13 +104,13 @@ class PlaylistScreen extends StatelessWidget {
           child: Text(error.message)
         )
       ),
-      data: (songs) => SliverList(
+      data: (value) => SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            final song = songs.data[index];
+            final song = value.data.songs[index];
             return SongRow(song: song);
           },
-          childCount: songs.data.length
+          childCount: value.data.songs.length
         )
       )
     );
