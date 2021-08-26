@@ -77,15 +77,15 @@ export class PlayingComponent implements AfterViewInit {
     }
   }
 
-  appendRect = (svg: d3.Selection<any, any, any, any>, 
-                id: string, 
-                h: number, 
-                w: number, 
-                fillColor: string, 
-                strokeColor: string, 
-                strokeWidth: number, 
-                transX: number, 
-                transY: number) => {
+  appendRect = (svg: d3.Selection<any, any, any, any>,
+    id: string,
+    h: number,
+    w: number,
+    fillColor: string,
+    strokeColor: string,
+    strokeWidth: number,
+    transX: number,
+    transY: number) => {
     svg.append('rect')
       .attr('class', 'reactive-rect')
       .attr('id', id)
@@ -95,7 +95,7 @@ export class PlayingComponent implements AfterViewInit {
       .attr('stroke', strokeColor)
       .attr('stroke-width', `${strokeWidth}px`)
       .attr('transform', `translate(${transX},${transY})`);
-  }
+  };
 
   interruptAnimation() {
     window.cancelAnimationFrame(this._drawVisual);
