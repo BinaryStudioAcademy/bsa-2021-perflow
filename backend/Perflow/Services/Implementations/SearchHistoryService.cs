@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.Search;
+using Perflow.Common.DTO.Users;
+using Perflow.Common.Helpers;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
@@ -85,13 +89,45 @@ namespace Perflow.Services.Implementations
             var list = await context.SearchHistory
                 .Where(sh => sh.UserId == userId)
                 .Include(sh => sh.Album)
+                    .ThenInclude(a => a.Author)
                 .Include(sh => sh.Artist)
                 .Include(sh => sh.Playlist)
                 .OrderByDescending(sh => sh.CreatedAt)
                 .AsNoTracking()
                 .ToListAsync();
 
-            return mapper.Map<IEnumerable<SearchHistoryReadDTO>>(list);
+            var res = list.Select(sh => new SearchHistoryReadDTO
+            {
+                UserId = sh.UserId,
+                Playlist = sh.PlaylistId != null ? new PlaylistViewDTO
+                {
+                    Id = sh.Playlist.Id,
+                    Description = sh.Playlist.Description,
+                    Name = sh.Playlist.Name,
+                    IconURL = _imageService.GetImageUrl(sh.Playlist.IconURL)
+                } : null,
+                Album = sh.AlbumId != null ? new AlbumForListDTO
+                {
+                    Id = sh.Album.Id,
+                    Name = sh.Album.Name,
+                    ReleaseYear = sh.Album.ReleaseYear,
+                    IconURL = _imageService.GetImageUrl(sh.Album.IconURL),
+                    Author = new AlbumViewAuthorsDTO
+                        (
+                            sh.Album.Author.Id,
+                            sh.Album.Author.UserName,
+                            sh.Album.AuthorType == Domain.Enums.AuthorType.Artist
+                        )
+                } : null,
+                Artist = sh.ArtistId != null ? new ArtistReadDTO
+                {
+                    Id = sh.Artist.Id,
+                    UserName = sh.Artist.UserName,
+                    IconURL = _imageService.GetImageUrl(sh.Artist.IconURL)
+                } : null
+            });
+
+            return res;
         }
     }
 }

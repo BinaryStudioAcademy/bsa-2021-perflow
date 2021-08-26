@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
@@ -10,13 +10,17 @@ import { FoundData } from 'src/app/models/search/found-data';
 import { SearchHistoryService } from 'src/app/services/search-history.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReadSearchHistory } from 'src/app/models/search/read-search-history';
+import { WriteSearchHistory } from 'src/app/models/search/write-search-history';
+import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
+import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.sass']
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnInit {
   readonly amountOfFoundItems: number = 8;
   readonly amountOfFoundSongs: number = 4;
   readonly debounceTime: number = 750;
@@ -24,6 +28,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   foundData = {} as FoundData;
   searchValue: string;
   searchHistory = new Array<ReadSearchHistory>();
+  isSearchHistoryShown: boolean = false;
 
   private readonly _regex = new RegExp('search.*');
   private _searchTerms$ = new Subject<string>();
@@ -54,12 +59,16 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.searchValue = data;
       this._searchTerms$.next(data);
     });
+
+    if (!this.searchValue) {
+      this.getUserSearchHistory();
+    }
   }
 
-  ngOnDestroy() {
-    this._unsubscribe$.next();
-    this._unsubscribe$.complete();
-  }
+  // ngOnDestroy() {
+  //   this._unsubscribe$.next();
+  //   this._unsubscribe$.complete();
+  // }
 
   getUserSearchHistory() {
     this._searchHistoryService.getUserSearchHistory(this._userId)
@@ -67,6 +76,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.searchHistory = data;
+          this.isSearchHistoryShown = true;
         }
       });
   }
@@ -76,10 +86,17 @@ export class SearchComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe$),
       debounceTime(this.debounceTime),
       distinctUntilChanged(),
-      switchMap((term: string) => this._searchService.getFoundData(term))
+      switchMap((term: string) => {
+        if (term) {
+          return this._searchService.getFoundData(term);
+        }
+        // this.foundData = {} as FoundData;
+        return new Array<FoundData>();
+      })
     ).subscribe({
       next: (data) => {
         this.foundData = data;
+        this.isSearchHistoryShown = false;
       }
     });
   }
@@ -100,6 +117,45 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.searchValue = '';
       this.foundData = {} as FoundData;
       this._location.replaceState(this._router.url.replace(this._regex, 'search'));
+      this.getUserSearchHistory();
     }
+  }
+
+  saveAlbumToSearchHistory = (album: AlbumForReadDTO | ArtistReadDTO | PlaylistView) => {
+    const history = {
+      userId: this._userId,
+      albumId: album.id
+    } as WriteSearchHistory;
+
+    this.writeSearchHistory(history);
+  };
+
+  saveArtistToSearchHistory = (artist: ArtistReadDTO) => {
+    const history = {
+      userId: this._userId,
+      artistId: artist.id
+    } as WriteSearchHistory;
+
+    this.writeSearchHistory(history);
+  };
+
+  savePlaylistToSearchHistory = (playlist: PlaylistView) => {
+    const history = {
+      userId: this._userId,
+      playlistId: playlist.id
+    } as WriteSearchHistory;
+
+    this.writeSearchHistory(history);
+  };
+
+  writeSearchHistory(history: WriteSearchHistory) {
+    this._searchHistoryService.addSearchHistory(history)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: () => {
+          this._unsubscribe$.next();
+          this._unsubscribe$.complete();
+        }
+      });
   }
 }
