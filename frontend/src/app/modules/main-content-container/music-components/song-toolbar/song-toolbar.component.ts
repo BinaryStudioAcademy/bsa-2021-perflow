@@ -196,6 +196,7 @@ export class SongToolbarComponent implements OnInit {
       this.playPauseButton?.lastElementChild?.classList.replace('pause', 'play');
     }
     else {
+      this._audioContext.resume();
       this.audio?.play();
       this.isPlaying = true;
       this.playPauseButton?.lastElementChild?.classList.replace('play', 'pause');
