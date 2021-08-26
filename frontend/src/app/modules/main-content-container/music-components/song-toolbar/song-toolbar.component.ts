@@ -47,6 +47,10 @@ export class SongToolbarComponent implements OnInit {
   volumeSlider! : HTMLInputElement | null;
   audio! : HTMLAudioElement | null;
 
+  analyser: AnalyserNode;
+  audioContext: AudioContext = new AudioContext();
+  source: MediaElementAudioSourceNode;
+
   constructor(
     authService: AuthService,
     toolbarService: SongToolbarService,
@@ -75,6 +79,14 @@ export class SongToolbarComponent implements OnInit {
       });
   }
 
+  draw = () => {
+    requestAnimationFrame(this.draw);
+    this.analyser.fftSize = 128;
+    const dataArray = new Uint8Array(this.analyser.fftSize);
+    this.analyser.getByteFrequencyData(dataArray);
+    console.log(dataArray[30]);
+  };
+
   ngOnInit(): void {
     this.playPauseButton = <HTMLButtonElement>document.getElementById('playbutton');
     this.seekSlider = <HTMLInputElement>document.getElementById('seek-slider');
@@ -82,6 +94,15 @@ export class SongToolbarComponent implements OnInit {
     this.currentTimeContainer = document.getElementById('current-time');
     this.durationContainer = document.getElementById('duration');
     this.audio = document.querySelector('audio');
+    this.audio!.crossOrigin = 'anonymous';
+    this.initAudioContext();
+  }
+
+  initAudioContext() {
+    this.analyser = this.audioContext.createAnalyser();
+    this.source = this.audioContext.createMediaElementSource(this.audio!);
+    this.source.connect(this.audioContext.destination);
+    this.source.connect(this.analyser);
   }
 
   updateSong = (songInfo: SongInfo) => {
@@ -183,6 +204,7 @@ export class SongToolbarComponent implements OnInit {
       this.audio?.play();
       this.isPlaying = true;
       this.playPauseButton?.lastElementChild?.classList.replace('play', 'pause');
+      this.draw();
     }
 
     this._queueService.setPlaying(this.isPlaying);
