@@ -72,6 +72,18 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     }
 
     this.setSearch();
+
+    this._createdPlaylistService.playlistEditName$
+      .subscribe({
+        next: (data) => {
+          if (this.playlist.id === data.id) {
+            this.playlist = {
+              ...this.playlist,
+              ...data
+            };
+          }
+        }
+      });
   }
 
   public ngOnDestroy() {
