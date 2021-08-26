@@ -11,4 +11,7 @@ class Routes {
 
   static const String playlistTemplate = '/playlist/:id';
   static String playlist(int playlistId) => '/playlist/$playlistId';
+
+  static const String albumTemplate = '/album/:id';
+  static String album(int albumId) => '/album/$albumId';
 }
