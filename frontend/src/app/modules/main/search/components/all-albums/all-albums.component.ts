@@ -92,7 +92,6 @@ export class AllAlbumsComponent implements OnInit, OnDestroy {
     } as WriteSearchHistory;
 
     this._searchHistoryService.addSearchHistory(history)
-      .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: () => {}
       });
