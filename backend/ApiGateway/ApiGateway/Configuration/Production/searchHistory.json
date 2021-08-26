@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/SearchHistory",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
@@ -14,7 +14,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/SearchHistory/{userId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
