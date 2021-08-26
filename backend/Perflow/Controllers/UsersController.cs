@@ -59,6 +59,14 @@ namespace Perflow.Controllers
             return Ok(userSettings);
         }
 
+        [HttpGet("artistApplicant")]
+        public async Task<ActionResult<ArtistApplicant>> GetArtistApplicant()
+        {
+            var userSettings = await _usersService.GetArtistApplicantAsync(User.GetId());
+
+            return Ok(userSettings);
+        }
+
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UserReadDTO user)
         {
@@ -115,10 +123,9 @@ namespace Perflow.Controllers
         }
 
         [HttpPost("createApplicant")]
-        [AllowAnonymous]
         public async Task<ActionResult> CreateArtistApplicant([FromBody] ArtistApplicantDTO artistApplicant)
         {
-            await _usersService.CreateArtistApplicantAsync(artistApplicant.Email, artistApplicant.UserRole);
+            await _usersService.CreateArtistApplicantAsync(User.GetId(), (UserRole)artistApplicant.UserRole);
             return Ok();
         }
     }
