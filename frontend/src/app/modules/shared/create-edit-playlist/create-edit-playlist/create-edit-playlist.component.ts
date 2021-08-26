@@ -50,7 +50,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation
   ) {
-    this._authService.getAuthStateObservable()
+    this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;
@@ -99,7 +99,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
           this.playlist = data;
         },
         error: (err) => {
-          this._router.navigateByUrl('/playlists');
+          this._router.navigate(['../../../playlists'], { relativeTo: this._activatedRoute });
         }
       });
 
@@ -126,7 +126,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
-          this._router.navigateByUrl(`/playlists/edit/${data.id}`);
+          this._router.navigate([`../edit/${data.id}`], { relativeTo: this._activatedRoute });
           this._createdPlaylistService.addPlaylist(data);
         }
       });
@@ -182,7 +182,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (id) => {
           this._createdPlaylistService.deletePlaylist(id);
-          this._router.navigateByUrl('/playlists/all');
+          this._router.navigate(['../../../playlists'], { relativeTo: this._activatedRoute });
         }
       });
   }

@@ -7,6 +7,9 @@
         <div class="remove" *ngIf="isLiked" (click)="dislike(id)" appClickStopPropagation>
             <i class="like icon ui"></i>
         </div>
+        <div class="edit" (click)="edit()" appClickStopPropagation *ngIf="isForEdit">
+            <i class="pencil icon ui"></i>
+        </div>
     </div>
     <div class="content">
         <div class="card-name"> {{name}} </div>

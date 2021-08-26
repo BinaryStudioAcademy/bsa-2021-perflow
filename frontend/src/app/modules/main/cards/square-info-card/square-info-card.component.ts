@@ -1,6 +1,7 @@
 import {
   Component, EventEmitter, Input, Output
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
@@ -19,17 +20,28 @@ export class SquareInfoCardComponent {
   @Input()
   isLiked = false;
 
+  @Input() isForEdit = false;
+  @Input() editRouterLink: string | undefined = undefined;
+
   @Output()
   clickDislike = new EventEmitter<number>();
+
+  constructor(
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute,
+    private _playlistsService: PlaylistsService,
+    private _queueService: QueueService
+  ) { }
 
   dislike(id: number) {
     this.clickDislike.emit(id);
   }
 
-  constructor(
-    private _playlistsService: PlaylistsService,
-    private _queueService: QueueService
-  ) { }
+  edit() {
+    if (this.editRouterLink) {
+      this._router.navigate([`${this.editRouterLink}/${this.id}`], { relativeTo: this._activatedRoute });
+    }
+  }
 
   play = (id: number) => {
     this._playlistsService.getPlaylistSongs(id)

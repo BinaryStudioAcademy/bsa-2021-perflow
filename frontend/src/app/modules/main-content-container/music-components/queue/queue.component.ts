@@ -165,8 +165,8 @@ export class QueueComponent {
     return this.isShuffling ? this.songs[this.getCurrentSongIndex()] : this.unshuffledSongs[this.getCurrentSongIndex()];
   }
 
-  shuffleSongs(){
-    let currentIndex = this.songs.length; 
+  shuffleSongs() {
+    let currentIndex = this.songs.length;
     let randomIndex;
     while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
