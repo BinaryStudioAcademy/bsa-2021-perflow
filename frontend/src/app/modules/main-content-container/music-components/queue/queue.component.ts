@@ -68,6 +68,7 @@ export class QueueComponent {
     this.isOpened = false;
     this.closed.emit();
     this._musicVisualizer.interruptAnimation();
+    console.log(this._musicVisualizer);
   };
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
@@ -154,7 +155,15 @@ export class QueueComponent {
     this.reseted.emit();
   };
 
-  setAnalyser(analyser: AnalyserNode) {
-    this._musicVisualizer.analyser = analyser;
+  get analyser() {
+    return this._musicVisualizer.analyser;
+  }
+
+  set analyser(value: AnalyserNode) {
+    this._musicVisualizer.analyser = value;
+  }
+
+  draw() {
+    this._musicVisualizer.draw();
   }
 }

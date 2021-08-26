@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component, OnInit, ViewChild
+} from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { QueueComponent } from '../music-components/queue/queue.component';
@@ -9,7 +11,7 @@ import { SongToolbarComponent } from '../music-components/song-toolbar/song-tool
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.sass']
 })
-export class MainContentComponent implements OnInit, AfterViewInit {
+export class MainContentComponent implements OnInit {
   @ViewChild(SongToolbarComponent)
   private _songToolbar: SongToolbarComponent;
 
@@ -30,10 +32,6 @@ export class MainContentComponent implements OnInit, AfterViewInit {
     this.isContainerHidden = false;
   }
 
-  ngAfterViewInit() {
-    this._queue.setAnalyser(this._songToolbar.getAnalyser());
-  }
-
   playSong = (song: SongInfo) => {
     this._songToolbar.updateSong(song);
   };
@@ -51,7 +49,11 @@ export class MainContentComponent implements OnInit, AfterViewInit {
   };
 
   toggleQueue = () => {
-    if (!this._queue.isOpened) this._queue.openView();
+    if (!this._queue.isOpened) {
+      if (!this._queue.analyser) this._queue.analyser = this._songToolbar.getAnalyser();
+
+      this._queue.openView();
+    }
     else this._queue.closeView();
   };
 

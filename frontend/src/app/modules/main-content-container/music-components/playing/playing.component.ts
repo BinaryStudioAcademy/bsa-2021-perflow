@@ -1,4 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component, ElementRef, ViewChild
+} from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,21 +9,22 @@ import * as d3 from 'd3';
   templateUrl: './playing.component.html',
   styleUrls: ['./playing.component.sass']
 })
-export class PlayingComponent implements OnInit {
+export class PlayingComponent implements AfterViewInit {
   @ViewChild('ngAnimationContainer') ngAnimationContainer: ElementRef;
 
   private _drawVisual: number;
   private _dataArray: Uint8Array;
   analyser: AnalyserNode;
 
-  private _svg: d3.Selection<any,any,any,any>;
+  private _svg: d3.Selection<any, any, any, any>;
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.prepAnimationCanvas();
   }
 
   prepAnimationCanvas() {
-    let containerStyle = window.getComputedStyle(this.ngAnimationContainer.nativeElement);
+    console.log('Prep');
+    const containerStyle = window.getComputedStyle(this.ngAnimationContainer.nativeElement);
     this._svg = d3.select(this.ngAnimationContainer.nativeElement).append('svg')
       .attr('width', containerStyle.width)
       .attr('height', containerStyle.height)
@@ -29,11 +33,10 @@ export class PlayingComponent implements OnInit {
       .append('g');
   }
 
-  draw() {
+  draw = () => {
     this._drawVisual = requestAnimationFrame(this.draw);
     this._dataArray = new Uint8Array(this.analyser.fftSize);
     this.analyser.getByteFrequencyData(this._dataArray);
-
   };
 
   interruptAnimation() {
