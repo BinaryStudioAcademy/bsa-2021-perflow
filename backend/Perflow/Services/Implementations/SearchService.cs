@@ -44,7 +44,8 @@ namespace Perflow.Services.Implementations
                 .Select(song => new SongForPlaylistSongSearchDTO
                 {
                     Id = song.Id,
-                    Album = mapper.Map<AlbumForPlaylistSongSearchDTO>(new AlbumWithIcon(song.Album, _imageService.GetImageUrl(song.Album.IconURL))),
+                    Album = mapper.Map<AlbumForPlaylistSongSearchDTO>(
+                        new AlbumWithIcon(song.Album, _imageService.GetImageUrl(song.Album.IconURL))),
                     Artist = mapper.Map<UserForPlaylistDTO>(song.Artist),
                     Group = mapper.Map<GroupForPlaylistDTO>(song.Group),
                     Duration = song.Duration,
@@ -85,6 +86,7 @@ namespace Perflow.Services.Implementations
             var albums = await context.Albums
                 .Where(album => album.Name.Contains(searchTerm.Trim()))
                 .Include(album => album.Author)
+                .Include(album => album.Group)
                 .Include(album => album.Reactions)
                 .OrderByDescending(album => album.Reactions.GroupBy(r => r.UserId).Count())
                 .Skip(skip)
@@ -96,10 +98,8 @@ namespace Perflow.Services.Implementations
                     Name = album.Name,
                     ReleaseYear = album.ReleaseYear,
                     IconURL = _imageService.GetImageUrl(album.IconURL),
-                    Author = new AlbumViewAuthorsDTO (
-                        album.Author.Id,
-                        album.Author.UserName,
-                        album.Author.Role == UserRole.Artist)
+                    Author = album.AuthorId != null ? (new AlbumViewAuthorsDTO(album.Author.Id, album.Author.UserName, true)) 
+                        : new AlbumViewAuthorsDTO (album.Group.Id, album.Group.Name, false)
                 })
                 .ToListAsync();
 
