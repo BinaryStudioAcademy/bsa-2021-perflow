@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { objectToFormData } from '../helpers/object-to-formData-converter';
+import { UserRoles } from '../models/enums/user-roles.enum';
 import { ArtistApplicant } from '../models/user/artist-applicant';
 import { User } from '../models/user/user';
 import { UserChangeIcon } from '../models/user/user-change-icon';
@@ -30,6 +31,10 @@ export class UserService {
 
   getUserSettings() {
     return this._httpService.getFullRequest<UserSettings>(`${this.routePrefix}/settings`);
+  }
+
+  getArtistApplicant() {
+    return this._httpService.getFullRequest<ArtistApplicant>(`${this.routePrefix}/artistApplicant`);
   }
 
   updateUserSettings(userSettings: UserChangeSettings) {

@@ -109,7 +109,7 @@
       ],
       "UpstreamPathTemplate": "/api/Users/createApplicant",
       "UpstreamHttpMethod": [
-        "Post"
+        "POST"
       ]
     }
   ]
