@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { SongsService } from 'src/app/services/songs/songs.service';
+import { UserService } from 'src/app/services/user.service';
 import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type';
 
@@ -12,6 +13,8 @@ import { SongSortType } from '../../../models/song/song-sort-type';
   styleUrls: ['./songs-list.component.sass']
 })
 export class SongsListComponent {
+  public filterExplicit: boolean;
+
   @Input() songs: Song[];
   @Input() highlightId: number;
   @Input() isDraggable = false;
@@ -24,7 +27,19 @@ export class SongsListComponent {
 
   sortType: SongSortType | null = null;
 
-  constructor(private _songService: SongsService) { }
+  constructor(
+    private _songService: SongsService,
+    private _userService: UserService
+  ) {
+    this._userService.getUserSettings().subscribe(
+      (resp) => {
+        this.filterExplicit = resp.body?.showExplicitContent!;
+        if (!this.filterExplicit) {
+          this.songs = this.songs?.filter((s) => !s.hasCensorship);
+        }
+      }
+    );
+  }
 
   drop(event: CdkDragDrop<Song[]>) {
     moveItemInArray(this.songs, event.previousIndex, event.currentIndex);

@@ -28,6 +28,7 @@ export class SongRowComponent implements OnInit {
   @Input() isInQueue = false;
   @Input() isEditable = false;
   @Input() isPlaying = false;
+  @Input() filterExplicit = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();

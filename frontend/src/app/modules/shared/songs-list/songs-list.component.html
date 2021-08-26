@@ -12,7 +12,7 @@
 
   <ng-container *ngIf="!isDraggable">
     <app-song-row *ngFor="let song of songs | sortSongs:sortType; let i = index"
-    [number]="i+1" [song]="song" [isEditable]="isEditable" [highlightId]="highlightId" [isPlaying]="isPlaying"
+    [number]="i+1" [song]="song" [isEditable]="isEditable" [highlightId]="highlightId" [isPlaying]="isPlaying" [filterExplicit]="filterExplicit"
     (clickMenuItem)="rowMenuClick($event)" 
     (clickDislike)="clickDislikeIcon($event)"
     (togglePlayEvent)="togglePlay()"></app-song-row>
