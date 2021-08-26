@@ -67,8 +67,7 @@ export class QueueComponent {
   closeView = () => {
     this.isOpened = false;
     this.closed.emit();
-    if(this._musicVisualizer)
-      this._musicVisualizer.interruptAnimation();
+    if (this._musicVisualizer) this._musicVisualizer.interruptAnimation();
   };
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
