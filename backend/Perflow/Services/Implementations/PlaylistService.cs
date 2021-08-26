@@ -108,7 +108,7 @@ namespace Perflow.Services.Implementations
 
                 playlist.IconURL = await _imageService.UploadImageAsync(playlistDTO.Icon);
 
-                _imageService.DeleteImageAsync(oldImageId);
+                _ = _imageService.DeleteImageAsync(oldImageId);
             }
 
             var updatedPlaylist = mapper.Map(playlistDTO, playlist);
