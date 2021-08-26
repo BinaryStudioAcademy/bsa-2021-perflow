@@ -1,7 +1,7 @@
 <div class="card">
   <div class="image" [routerLink]="['/albums', id]">
       <img [src]="iconUrl">  
-      <button class="play-icon" appClickStopPropagation>
+      <button class="play-icon" appClickStopPropagation (click)="playAlbum(id)">
           <i class="play icon"></i>
       </button>  
   </div>

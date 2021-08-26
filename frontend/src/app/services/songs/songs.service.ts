@@ -66,6 +66,10 @@ export class SongsService {
     return this._httpService.getRequest<Song[]>(`/api/songs/topSongs/${id}`, httpParams);
   }
 
+  getSongsByAlbumId(id: number) {
+    return this._httpService.getRequest<Song[]>(`/api/songs/byAlbum/${id}`);
+  }
+
   getTopSongsByLikes(amount: number) {
     return this._httpService.getRequest<Song[]>(`/api/songs/top/${amount}`);
   }

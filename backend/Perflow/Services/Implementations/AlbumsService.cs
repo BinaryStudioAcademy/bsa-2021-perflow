@@ -63,10 +63,13 @@ namespace Perflow.Services.Implementations
                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs.OrderBy(s => s.Order)
                                                 .Select(s =>
-                                                    mapper.Map<SongForAlbumDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
+                                                    mapper.Map<SongForAlbumDTO>(new LikedSong(
+                                                        s,
+                                                        _imageService.GetImageUrl(s.Album.IconURL),
+                                                        s.Reactions.Any(r => r.UserId == userId)))
                                                 ),
-                                                Artist = mapper.Map<User, ArtistForAlbumDTO>(a.Author),
-                                                Group = mapper.Map<Group, GroupForAlbumDTO>(a.Group),
+                                                Artist = mapper.Map<ArtistForAlbumDTO>(a.Author),
+                                                Group = mapper.Map<GroupForAlbumDTO>(a.Group),
                                                 IsLiked = a.Reactions.Any(r => r.UserId == userId),
                                                 IsSingle = a.IsSingle,
                                                 Region = a.Region,
