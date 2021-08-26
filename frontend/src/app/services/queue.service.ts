@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { from, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Song } from '../models/song/song';
 import { SongInfo } from '../models/song/song-info';
 import { HttpInternalService } from './http-internal.service';
@@ -15,6 +16,7 @@ export class QueueService {
   private _nextSong = new Subject<void>();
   private _previousSong = new Subject<void>();
   private _clearQueue = new Subject<void>();
+  private _unsubscribe$ = new Subject<void>();
 
   songAdded$ = this._songAdd.asObservable();
   nextSong$ = this._nextSong.asObservable();
@@ -25,6 +27,7 @@ export class QueueService {
   previousSongGot = new EventEmitter<Song | null>();
   currentSongUpdate = new EventEmitter<Song>();
   playingToggled = new EventEmitter<boolean>();
+  shuffleToggled = new EventEmitter<boolean>();
 
   static isInitialized = false;
 
@@ -56,7 +59,13 @@ export class QueueService {
   };
 
   addSongsToQueue = (songs: Song[]) => {
-    songs.map((song) => this.addSongToQueue(song));
+    from(songs)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (song) => {
+          this._songAdd.next(song);
+        }
+      );
   };
 
   nextSong = () => {
@@ -88,6 +97,10 @@ export class QueueService {
 
   setPlaying = (value: boolean) => {
     this.playingToggled.emit(value);
+  };
+
+  setShuffle = (value: boolean) => {
+    this.shuffleToggled.emit(value);
   };
 
   clearQueue = () => {
