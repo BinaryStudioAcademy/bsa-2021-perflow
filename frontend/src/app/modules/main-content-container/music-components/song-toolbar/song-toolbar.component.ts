@@ -47,9 +47,11 @@ export class SongToolbarComponent implements OnInit {
   volumeSlider! : HTMLInputElement | null;
   audio! : HTMLAudioElement | null;
 
-  analyser: AnalyserNode;
-  audioContext: AudioContext = new AudioContext();
-  source: MediaElementAudioSourceNode;
+  private _analyser: AnalyserNode;
+  private _audioContext: AudioContext = new AudioContext();
+  private _source: MediaElementAudioSourceNode;
+
+  private readonly _fftSize = 2048; //Fast Fourier Transform Size
 
   constructor(
     authService: AuthService,
@@ -79,14 +81,6 @@ export class SongToolbarComponent implements OnInit {
       });
   }
 
-  draw = () => {
-    requestAnimationFrame(this.draw);
-    this.analyser.fftSize = 128;
-    const dataArray = new Uint8Array(this.analyser.fftSize);
-    this.analyser.getByteFrequencyData(dataArray);
-    console.log(dataArray[30]);
-  };
-
   ngOnInit(): void {
     this.playPauseButton = <HTMLButtonElement>document.getElementById('playbutton');
     this.seekSlider = <HTMLInputElement>document.getElementById('seek-slider');
@@ -99,10 +93,11 @@ export class SongToolbarComponent implements OnInit {
   }
 
   initAudioContext() {
-    this.analyser = this.audioContext.createAnalyser();
-    this.source = this.audioContext.createMediaElementSource(this.audio!);
-    this.source.connect(this.audioContext.destination);
-    this.source.connect(this.analyser);
+    this._analyser = this._audioContext.createAnalyser();
+    this._source = this._audioContext.createMediaElementSource(this.audio!);
+    this._source.connect(this._audioContext.destination);
+    this._source.connect(this._analyser);
+    this._analyser.fftSize = this._fftSize;
   }
 
   updateSong = (songInfo: SongInfo) => {
@@ -204,7 +199,6 @@ export class SongToolbarComponent implements OnInit {
       this.audio?.play();
       this.isPlaying = true;
       this.playPauseButton?.lastElementChild?.classList.replace('play', 'pause');
-      this.draw();
     }
 
     this._queueService.setPlaying(this.isPlaying);
@@ -274,4 +268,8 @@ export class SongToolbarComponent implements OnInit {
     this.audio!.src = this.songForPlay.songURL;
     this.displayDuration();
   };
+
+  getAnalyser() {
+    return this._analyser;
+  }
 }

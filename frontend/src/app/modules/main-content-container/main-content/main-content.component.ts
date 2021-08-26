@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { QueueComponent } from '../music-components/queue/queue.component';
@@ -9,7 +9,7 @@ import { SongToolbarComponent } from '../music-components/song-toolbar/song-tool
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.sass']
 })
-export class MainContentComponent implements OnInit {
+export class MainContentComponent implements OnInit, AfterViewInit {
   @ViewChild(SongToolbarComponent)
   private _songToolbar: SongToolbarComponent;
 
@@ -28,6 +28,10 @@ export class MainContentComponent implements OnInit {
 
   ngOnInit() {
     this.isContainerHidden = false;
+  }
+
+  ngAfterViewInit() {
+    this._queue.setAnalyser(this._songToolbar.getAnalyser());
   }
 
   playSong = (song: SongInfo) => {
