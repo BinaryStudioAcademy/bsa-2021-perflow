@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
+  debounceTime, distinctUntilChanged, switchMap, take, takeUntil
 } from 'rxjs/operators';
 import { SearchService } from 'src/app/services/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private _authService: AuthService
   ) {
     this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
+      .pipe(take(1))
       .subscribe((authState) => {
         this._userId = authState!.id;
       });
@@ -55,10 +55,11 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     this._activatedRoute.paramMap.pipe(
       switchMap((params) => params.getAll('term'))
-    ).subscribe((data) => {
-      this.searchValue = data;
-      this._searchTerms$.next(data);
-    });
+    ).pipe(take(1))
+      .subscribe((data) => {
+        this.searchValue = data;
+        this._searchTerms$.next(data);
+      });
 
     if (!this.searchValue) {
       this.getUserSearchHistory();
@@ -76,7 +77,9 @@ export class SearchComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.searchHistory = data;
-          this.isSearchHistoryShown = true;
+          if (data.length) {
+            this.isSearchHistoryShown = true;
+          }
         }
       });
   }
@@ -90,12 +93,17 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (term) {
           return this._searchService.getFoundData(term);
         }
-        return new Array<FoundData>();
+        return of({} as FoundData);
       })
     ).subscribe({
       next: (data) => {
-        this.foundData = data;
-        this.isSearchHistoryShown = false;
+        if (data.albums?.length || data.artists?.length || data.playlists?.length || data.songs?.length) {
+          this.foundData = data;
+          this.isSearchHistoryShown = false;
+        }
+        else {
+          this.foundData = {} as FoundData;
+        }
       }
     });
   }
@@ -120,7 +128,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  saveAlbumToSearchHistory = (album: AlbumForReadDTO | ArtistReadDTO | PlaylistView) => {
+  saveAlbumToSearchHistory = (album: AlbumForReadDTO) => {
     const history = {
       userId: this._userId,
       albumId: album.id
@@ -149,8 +157,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   writeSearchHistory(history: WriteSearchHistory) {
     this._searchHistoryService.addSearchHistory(history)
-      .subscribe({
-        next: () => {}
-      });
+      .pipe(take(1)).subscribe();
   }
 }

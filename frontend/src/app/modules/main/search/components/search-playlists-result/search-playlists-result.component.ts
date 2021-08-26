@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { WriteSearchHistory } from 'src/app/models/search/write-search-history';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -16,14 +15,13 @@ export class SearchPlaylistsResultComponent {
   @Input() term: string;
 
   private _userId: number;
-  private _unsubscribe$ = new Subject<void>();
 
   constructor(
     private _searchHistoryService: SearchHistoryService,
     private _authService: AuthService
   ) {
     this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
+      .pipe(take(1))
       .subscribe((authState) => {
         this._userId = authState!.id;
       });
@@ -36,12 +34,6 @@ export class SearchPlaylistsResultComponent {
     } as WriteSearchHistory;
 
     this._searchHistoryService.addSearchHistory(history)
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: () => {
-          this._unsubscribe$.next();
-          this._unsubscribe$.complete();
-        }
-      });
+      .pipe(take(1)).subscribe();
   };
 }

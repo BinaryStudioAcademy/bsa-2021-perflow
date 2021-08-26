@@ -7,6 +7,6 @@
   </div>
   <div class="content">
       <div class="card-name"> {{playlist.name}} </div>
-      <div class="card-desc"> {{playlist.description === null ? playlist.description : '' }} </div>
+      <div *ngIf="playlist.description!=='null'" class="card-desc"> {{playlist.description}} </div>
   </div>
 </div>

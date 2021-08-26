@@ -90,6 +90,8 @@ namespace Perflow.Services.Implementations
                 .Where(sh => sh.UserId == userId)
                 .Include(sh => sh.Album)
                     .ThenInclude(a => a.Author)
+                .Include(sh => sh.Album)
+                    .ThenInclude(a => a.Group)
                 .Include(sh => sh.Artist)
                 .Include(sh => sh.Playlist)
                 .OrderByDescending(sh => sh.CreatedAt)
@@ -112,12 +114,8 @@ namespace Perflow.Services.Implementations
                     Name = sh.Album.Name,
                     ReleaseYear = sh.Album.ReleaseYear,
                     IconURL = _imageService.GetImageUrl(sh.Album.IconURL),
-                    Author = new AlbumViewAuthorsDTO
-                        (
-                            sh.Album.Author.Id,
-                            sh.Album.Author.UserName,
-                            sh.Album.AuthorType == Domain.Enums.AuthorType.Artist
-                        )
+                    Author = sh.Album.AuthorId != null ? (new AlbumViewAuthorsDTO(sh.Album.Author.Id, sh.Album.Author.UserName, true))
+                        : new AlbumViewAuthorsDTO(sh.Album.Group.Id, sh.Album.Group.Name, false)
                 } : null,
                 Artist = sh.ArtistId != null ? new ArtistReadDTO
                 {

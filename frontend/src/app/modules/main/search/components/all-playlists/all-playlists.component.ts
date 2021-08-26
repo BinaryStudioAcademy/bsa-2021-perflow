@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { SearchParam } from 'src/app/models/search/search-param';
 import { WriteSearchHistory } from 'src/app/models/search/write-search-history';
@@ -40,7 +40,7 @@ export class AllPlaylistsComponent implements OnInit, OnDestroy {
     private _authService: AuthService
   ) {
     this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
+      .pipe(take(1))
       .subscribe((authState) => {
         this._userId = authState!.id;
       });
@@ -49,14 +49,15 @@ export class AllPlaylistsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._activatedRoute.paramMap.pipe(
       switchMap((params) => params.getAll('term'))
-    ).subscribe((data) => {
-      this._query = {
-        ...this._query,
-        searchTerm: data
-      };
+    ).pipe(take(1))
+      .subscribe((data) => {
+        this._query = {
+          ...this._query,
+          searchTerm: data
+        };
 
-      this.searchTerm = data;
-    });
+        this.searchTerm = data;
+      });
 
     this.getPlaylistsByName(this._query);
   }
@@ -92,8 +93,6 @@ export class AllPlaylistsComponent implements OnInit, OnDestroy {
     } as WriteSearchHistory;
 
     this._searchHistoryService.addSearchHistory(history)
-      .subscribe({
-        next: () => {}
-      });
+      .pipe(take(1)).subscribe();
   };
 }
