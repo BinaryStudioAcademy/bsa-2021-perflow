@@ -1,7 +1,7 @@
 <div class="card" routerLink='/playlists/view-playlist/{{id}}'>
     <div class="image">
         <img [src]="iconUrl" loading="lazy" aria-hidden="false">
-        <button class="play-icon" appClickStopPropagation>
+        <button class="play-icon" appClickStopPropagation (click)="play(id)">
             <i class="play icon"></i>
         </button>
         <div class="remove" *ngIf="isLiked" (click)="dislike(id)" appClickStopPropagation>

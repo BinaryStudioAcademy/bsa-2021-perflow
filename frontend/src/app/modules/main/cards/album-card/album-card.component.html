@@ -9,7 +9,7 @@
     <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked">
       <i class="like icon ui"></i>
     </div>
-    <button class="play-icon" appClickStopPropagation>
+    <button class="play-icon" appClickStopPropagation (click)="playAlbum(album.id)">
       <i class="play icon"></i>
     </button> 
   </div>

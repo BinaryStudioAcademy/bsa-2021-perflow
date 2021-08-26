@@ -1,4 +1,4 @@
-@import '../../../../styles'
+@import 'src/styles'
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400")
 
 $image-size: 245px
@@ -130,47 +130,44 @@ main
     &:hover
         background-color: $drk-gray !important
 
-.artistAlbums, .artistPlaylists
-    margin-top: 2rem
-    margin-bottom: 2rem
+
+.main-content-container
+    padding: 10px 25px 50px 40px
+
+.header
+    font-weight: bold
+    color: $text
+
+.items-scroll-box
+    min-width: 100%
+    position: relative
+    margin: 25px 0px
     .header
-        padding-left: 1rem
-        font-weight: $medium-weight
-        font-size: 26px
-        line-height: 32px
-        color: $text
-    .items
-        position: relative
-        margin: 1rem
-        overflow: hidden
-        .cards
-            position: relative
-            display: flex
-            width: 100%
-            height: 280px
-            overflow-y: scroll
-            &::-webkit-scrollbar 
-                display: none  
-            .card
-                margin-right: 42px       
-    .scroll-box
-        width: 40px
-        position: absolute
-        right: 0px
-        top: 0px
-        bottom: 0px
+        margin-bottom: 30px
+    .list-of-items
         display: flex
         align-items: center
-        justify-content: center
-        background: $drk-gray
+        .items
+            display: grid
+            overflow-x: auto
+            grid-gap: 63px
+            grid-auto-flow: column
+            grid-template-columns: repeat(auto-fill, 200px)
+            grid-auto-columns: 200px
+            scrollbar-width: none
+            &::-webkit-scrollbar
+                display: none
         .scroll-button
-            width: 30px
-            height: 30px
+            width: 33px
+            height: 33px
+            background: $drk-rain
+            color: white
+            padding: 5px
+            margin: 6px
+            display: flex
+            align-items: center
+            transition: background 0.4s ease
             font-size: 1.2rem
-            color: $text
-            border: none
-            border-radius: 3px
-            background: $light-gray
-            cursor: pointer
             &:hover
-                background: #373C43
+                cursor: pointer
+                background: lighten($drk-rain, 8%)

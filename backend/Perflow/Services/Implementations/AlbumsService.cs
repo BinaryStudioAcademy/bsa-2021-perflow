@@ -63,10 +63,13 @@ namespace Perflow.Services.Implementations
                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs.OrderBy(s => s.Order)
                                                 .Select(s =>
-                                                    mapper.Map<SongForAlbumDTO>(new LikedSong(s, s.Reactions.Any(r => r.UserId == userId)))
+                                                    mapper.Map<SongForAlbumDTO>(new LikedSong(
+                                                        s,
+                                                        _imageService.GetImageUrl(s.Album.IconURL),
+                                                        s.Reactions.Any(r => r.UserId == userId)))
                                                 ),
-                                                Artist = mapper.Map<User, ArtistForAlbumDTO>(a.Author),
-                                                Group = mapper.Map<Group, GroupForAlbumDTO>(a.Group),
+                                                Artist = mapper.Map<ArtistForAlbumDTO>(a.Author),
+                                                Group = mapper.Map<GroupForAlbumDTO>(a.Group),
                                                 IsLiked = a.Reactions.Any(r => r.UserId == userId),
                                                 IsSingle = a.IsSingle,
                                                 Region = a.Region,
@@ -109,7 +112,7 @@ namespace Perflow.Services.Implementations
                                         .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
-                                        .Select(a => new AlbumForListDTO 
+                                        .Select(a => new AlbumForListDTO
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
@@ -137,6 +140,7 @@ namespace Perflow.Services.Implementations
                 .AsNoTracking()
                 .Where(a => a.CreatedAt >= firstDay && a.IsPublished)
                 .OrderByDescending(a => a.CreatedAt)
+                .Take(newReleasesToTake)
                 .Select(a => new AlbumViewDTO
                 {
                     Id = a.Id,
@@ -214,7 +218,7 @@ namespace Perflow.Services.Implementations
 
                 album.IconURL = await _imageService.UploadImageAsync(albumDTO.Icon);
 
-                _imageService.DeleteImageAsync(oldImageId);
+                _ = _imageService.DeleteImageAsync(oldImageId);
             }
 
             context.Entry(album).State = EntityState.Modified;

@@ -2,6 +2,9 @@ import {
   Component, EventEmitter, Input, Output
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Song } from 'src/app/models/song/song';
+import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-square-info-card',
@@ -25,7 +28,9 @@ export class SquareInfoCardComponent {
 
   constructor(
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _playlistsService: PlaylistsService,
+    private _queueService: QueueService
   ) { }
 
   dislike(id: number) {
@@ -36,5 +41,27 @@ export class SquareInfoCardComponent {
     if (this.editRouterLink) {
       this._router.navigate([`${this.editRouterLink}/${this.id}`], { relativeTo: this._activatedRoute });
     }
+  }
+
+  play = (id: number) => {
+    this._playlistsService.getPlaylistSongs(id)
+      .subscribe((result) => {
+        const songs = result;
+
+        this.updateQueue(songs);
+      });
+  };
+
+  updateQueue(songs: Song[]) {
+    if (!songs.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(songs);
+
+    const [first] = songs;
+
+    this._queueService.initSong(first, true);
   }
 }
