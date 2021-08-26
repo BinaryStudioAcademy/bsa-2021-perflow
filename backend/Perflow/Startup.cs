@@ -9,6 +9,7 @@ using Perflow.Services.Extensions;
 using Perflow.DataAccess.Context;
 using Shared.Auth.Extensions;
 using Shared.ExceptionsHandler.Filters;
+using Perflow.Hubs.Implementations;
 
 namespace Perflow
 {
@@ -33,6 +34,8 @@ namespace Perflow
             services.RegisterCustomServices();
 
             services.AddHttpClient();
+
+            services.AddSignalR();
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
@@ -70,6 +73,7 @@ namespace Perflow
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationsHub>("/notifications");
             });
 
             InitializeDatabase(app);

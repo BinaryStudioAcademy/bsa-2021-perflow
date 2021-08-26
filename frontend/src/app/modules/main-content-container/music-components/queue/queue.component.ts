@@ -18,10 +18,12 @@ export class QueueComponent {
 
   isOpened = false;
   isPlaying = false;
+  isShuffling = false;
 
   @Input() songs: Song[] = [];
 
   currentSongId: number;
+  unshuffledSongs: Song[] = [];
 
   @ViewChild(PlayingComponent)
   private _musicVisualizer: PlayingComponent;
@@ -34,6 +36,8 @@ export class QueueComponent {
 
       if (!this.songs.find((s) => s.id === song.id)) {
         this.songs.push(song);
+        this.unshuffledSongs.push(song);
+        this.shuffleSongs();
       }
     });
 
@@ -51,6 +55,10 @@ export class QueueComponent {
 
     _queueService.playingToggled.subscribe((value) => {
       this.isPlaying = value;
+    });
+
+    _queueService.shuffleToggled.subscribe((value) => {
+      this.isShuffling = value;
     });
 
     _queueService.queueCleared$.subscribe(() => {
@@ -121,36 +129,64 @@ export class QueueComponent {
 
   getNextSong = () => {
     const index = this.getCurrentSongIndex();
+    if (this.isShuffling) {
+      if (!this.songs.length || index + 1 >= this.songs.length) return null;
 
-    if (!this.songs.length || index + 1 >= this.songs.length) return null;
+      this.currentSongId = this.songs[index + 1].id;
 
-    this.currentSongId = this.songs[index + 1].id;
+      return this.songs[index + 1];
+    }
 
-    return this.songs[index + 1];
+    if (!this.unshuffledSongs.length || index + 1 >= this.unshuffledSongs.length) return null;
+
+    this.currentSongId = this.unshuffledSongs[index + 1].id;
+
+    return this.unshuffledSongs[index + 1];
   };
 
   getPreviousSong = () => {
     const index = this.getCurrentSongIndex();
+    if (this.isShuffling) {
+      if (!this.songs.length || index - 1 < 0) return null;
 
-    if (!this.songs.length || index - 1 < 0) return null;
+      this.currentSongId = this.songs[index - 1].id;
 
-    this.currentSongId = this.songs[index - 1].id;
+      return this.songs[index - 1];
+    }
 
-    return this.songs[index - 1];
+    if (!this.unshuffledSongs.length || index - 1 < 0) return null;
+
+    this.currentSongId = this.unshuffledSongs[index - 1].id;
+
+    return this.unshuffledSongs[index - 1];
   };
 
   getCurrentSongIndex() {
-    return this.songs.indexOf(this.songs.find((s) => s.id === this.currentSongId)!);
+    return this.isShuffling
+      ? this.songs.indexOf(this.songs.find((s) => s.id === this.currentSongId)!)
+      : this.unshuffledSongs.indexOf(this.songs.find((s) => s.id === this.currentSongId)!);
   }
 
   getCurrentSong() {
-    return this.songs[this.getCurrentSongIndex()];
+    return this.isShuffling ? this.songs[this.getCurrentSongIndex()] : this.unshuffledSongs[this.getCurrentSongIndex()];
+  }
+
+  shuffleSongs() {
+    let currentIndex = this.songs.length;
+    let randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      [this.songs[currentIndex], this.songs[randomIndex]] = [
+        this.songs[randomIndex], this.songs[currentIndex]];
+    }
   }
 
   resetQueue = () => {
     this.closeView();
     this.isPlaying = false;
     this.songs = [];
+    this.unshuffledSongs = [];
     this.reseted.emit();
   };
 

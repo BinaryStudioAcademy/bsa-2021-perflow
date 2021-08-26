@@ -108,7 +108,7 @@ namespace Perflow.Services.Implementations
 
                 playlist.IconURL = await _imageService.UploadImageAsync(playlistDTO.Icon);
 
-                _imageService.DeleteImageAsync(oldImageId);
+                _ = _imageService.DeleteImageAsync(oldImageId);
             }
 
             var updatedPlaylist = mapper.Map(playlistDTO, playlist);
@@ -180,7 +180,7 @@ namespace Perflow.Services.Implementations
                 .Select(ps => new SongForPlaylistDTO
                 {
                     Id = ps.Song.Id,
-                    Album = mapper.Map<AlbumForPlaylistDTO>(ps.Song.Album),
+                    Album = mapper.Map<AlbumForPlaylistDTO>(new AlbumWithIcon(ps.Song.Album, _imageService.GetImageUrl(ps.Song.Album.IconURL))),
                     Group = mapper.Map<GroupForPlaylistDTO>(ps.Song.Group),
                     Artist = mapper.Map<UserForPlaylistDTO>(ps.Song.Artist),
                     Duration = ps.Song.Duration,
@@ -222,6 +222,50 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             return playlists;
+        }
+
+        public async Task EditPlaylistNameAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (playlistNameDTO == null)
+                throw new ArgumentNullException(nameof(playlistNameDTO), "Argument cannot be null");
+
+            var playlist = await context.Playlists.FindAsync(playlistNameDTO.Id);
+            playlist.Name = playlistNameDTO.Name;
+
+            context.Playlists.Update(playlist);
+
+            await context.SaveChangesAsync();
+        }
+        
+        public async Task<PlaylistNameDTO> CopyPlaylistAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (playlistNameDTO == null)
+                throw new ArgumentNullException(nameof(playlistNameDTO), "Argument cannot be null");
+
+            var playlist = await context.Playlists
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == playlistNameDTO.Id);
+
+            playlist.Id = 0;
+            playlist.Name = $"copy-{playlist.Name}";
+
+            await context.Playlists.AddAsync(playlist);
+            await context.SaveChangesAsync();
+
+            var songs = await context.PlaylistSong
+                .Where(ps => ps.PlaylistId == playlistNameDTO.Id)
+                .AsNoTracking()
+                .ToListAsync();
+
+            songs.ForEach(p => {
+                p.PlaylistId = playlist.Id;
+                p.Id = 0;
+            });
+
+            await context.PlaylistSong.AddRangeAsync(songs);
+            await context.SaveChangesAsync();
+
+            return new PlaylistNameDTO { Id = playlist.Id, Name = playlist.Name };
         }
     }
 }

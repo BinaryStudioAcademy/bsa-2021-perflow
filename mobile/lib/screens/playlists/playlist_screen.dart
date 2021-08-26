@@ -65,7 +65,6 @@ class PlaylistScreen extends StatelessWidget {
               BlocBuilder<PlaylistSongsCubit, ApiCallState<List<PlaylistSong>>>(
                 builder: _buildSongsList
               ),
-              const SliverFillRemaining()
             ],
           ),
         )

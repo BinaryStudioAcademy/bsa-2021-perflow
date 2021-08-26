@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist';
+import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,16 @@ export class CreatePlaylistService {
   private _deletedPlaylistSubject$ = new BehaviorSubject<number>(this._lastDeletedPlaylistId);
   playlistDeleted$ = this._deletedPlaylistSubject$.asObservable();
 
+  private _editedNameSubject$ = new Subject<PlaylistName>();
+  playlistEditName$ = this._editedNameSubject$.asObservable();
+
   addPlaylist(playlist: Playlist) {
     this.lastPlaylist = playlist;
     this._playlistSubject$.next(playlist);
+  }
+
+  editPlaylistName(playlist: PlaylistName) {
+    this._editedNameSubject$.next(playlist);
   }
 
   deletePlaylist(id: number) {

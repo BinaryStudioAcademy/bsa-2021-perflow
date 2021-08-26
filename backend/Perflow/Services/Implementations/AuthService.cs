@@ -70,7 +70,7 @@ namespace Perflow.Services.Implementations
 
             FirebaseToken token = verificationResult.AsT0;
 
-            User user = token.ContainsId() ? await _usersService.GetUserAsync(token.GetId()) : null;
+            var user = await GetUserFromToken(token);
 
             if (user == null)
             {
@@ -84,6 +84,8 @@ namespace Perflow.Services.Implementations
 
                 user = await _usersService.CreateUserAsync(userData);
             }
+
+            await _usersService.EnsureUserSettingsCreated(user.Id);
 
             var updateResult = await _firebase.AuthApp.TryUpdateUserAsync(new UserRecordArgs
             {
@@ -111,6 +113,23 @@ namespace Perflow.Services.Implementations
             }
 
             return await UpdateUserClaimsAsync(user);
+        }
+
+        private async Task<User> GetUserFromToken(FirebaseToken token)
+        {
+            if (!token.ContainsId())
+            {
+                return null;
+            }
+
+            User user = await _usersService.GetUserAsync(token.GetId());
+
+            if (user == null || user.FirebaseId != token.Uid)
+            {
+                user = await _usersService.GetUserByFirebaseIdAsync(token.Uid);
+            }
+
+            return user;
         }
 
         public async Task<OneOf<Success, NotFound, AuthServiceError>> SetRoleAsync(int userId, UserRole role)

@@ -55,6 +55,18 @@ export class ViewPlaylistComponent implements OnInit {
       this.loadPlaylist();
       this.loadPlaylistSongs();
     });
+
+    this._createdPlaylistService.playlistEditName$
+      .subscribe({
+        next: (data) => {
+          if (this.playlist.id === data.id) {
+            this.playlist = {
+              ...this.playlist,
+              ...data
+            };
+          }
+        }
+      });
   }
 
   nextSlide = () => { };
