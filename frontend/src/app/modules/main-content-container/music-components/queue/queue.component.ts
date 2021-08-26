@@ -68,7 +68,6 @@ export class QueueComponent {
     this.isOpened = false;
     this.closed.emit();
     this._musicVisualizer.interruptAnimation();
-    console.log(this._musicVisualizer);
   };
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {

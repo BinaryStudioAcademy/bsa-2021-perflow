@@ -51,7 +51,7 @@ export class SongToolbarComponent implements OnInit {
   private _audioContext: AudioContext = new AudioContext();
   private _source: MediaElementAudioSourceNode;
 
-  private readonly _fftSize = 2048; // Fast Fourier Transform Size
+  private readonly _fftSize = 256; // Fast Fourier Transform Size
 
   constructor(
     authService: AuthService,
