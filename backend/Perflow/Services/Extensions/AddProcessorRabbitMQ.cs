@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Perflow.Common.Options;
+using Shared.Processor.Models;
 using Shared.RabbitMQ.Extensions;
 using Shared.RabbitMQ.Options;
 

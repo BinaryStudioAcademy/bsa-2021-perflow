@@ -7,6 +7,7 @@ using Processor.ConsoleApp.Extensions;
 using Processor.ConsoleApp.Interfaces;
 using Processor.ConsoleApp.Options;
 using Shared.AzureBlobStorage.Extensions;
+using Shared.Processor.Models;
 using Shared.RabbitMQ.Extensions;
 using Shared.RabbitMQ.Options;
 
