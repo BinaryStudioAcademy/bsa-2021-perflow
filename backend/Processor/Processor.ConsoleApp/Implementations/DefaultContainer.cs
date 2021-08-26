@@ -3,7 +3,10 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Processor.ConsoleApp.Extensions;
 using Processor.ConsoleApp.Interfaces;
+using Processor.ConsoleApp.Options;
+using Shared.AzureBlobStorage.Extensions;
 using Shared.RabbitMQ.Extensions;
 using Shared.RabbitMQ.Options;
 
@@ -27,16 +30,20 @@ namespace Processor.ConsoleApp.Implementations
 
             services.AddLogging(builder => builder.AddConsole());
 
-            services.AddOptions<ExchangeOptions>().BindConfiguration("ExchangeOptions");
-            services.AddOptions<QueueOptions>().BindConfiguration("QueueOptions");
+            services.AddOptions<BlobStorageOptions>().BindConfiguration(BlobStorageOptions.Key);
+
+            services.AddOptions<ImageProcessingRabbitMQOptions>().BindConfiguration(ImageProcessingRabbitMQOptions.Key);
 
             RabbitMQOptions rabbitMQOptions = new();
             configuration.Bind("RabbitMQConnection", rabbitMQOptions);
             services.AddRabbitMQ(rabbitMQOptions);
 
+            services.AddBlobStorage(configuration["BlobStorageConnection"]);
+
             services.AddSingleton<IProcessor, Processor>();
 
-            services.AddSingleton<IAsyncMessageHandler, TestMessageHandler>();
+            services.AddMessageHandlerManager(builder => builder
+                .AddHandler<ImageProcessingHandler>());
 
             _provider = services.BuildServiceProvider();
         }

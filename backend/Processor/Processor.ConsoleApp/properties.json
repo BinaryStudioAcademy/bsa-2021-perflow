@@ -1,16 +1,37 @@
 {
+  "BlobStorageConnection": "UseDevelopmentStorage=true",
+
+  "BlobStorageOptions": {
+    "ImagesContainer": "images",
+    "SongsContainer": "songs"
+  },
+
   "RabbitMQConnection": {
     "HostName": "localhost",
     "Port": 5672,
     "Username": "guest",
     "Password": "guest"
   },
-  "ExchangeOptions": {
-    "Name": "Processor-test-exchange",
-    "Type": "direct"
+
+  "ImageProcessingOptions": {
+    "ExchangeOptions": {
+      "Name": "Processor-Images-Exchange",
+      "Type": "direct"
+    },
+    "QueueOptions": {
+      "Name": "Processor-Images-queue",
+      "RoutingKey": "images-key"
+    }
   },
-  "QueueOptions": {
-    "Name": "Processor-test-queue",
-    "RoutingKey": "processor-test"
+
+  "SongProcessingOptions": {
+    "ExchangeOptions": {
+      "Name": "Processor-test-exchange",
+      "Type": "direct"
+    },
+    "QueueOptions": {
+      "Name": "Processor-test-queue",
+      "RoutingKey": "processor-test"
+    }
   }
 }

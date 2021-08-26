@@ -37,6 +37,8 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<IUsersService, UsersService>();
 
+            services.AddSingleton<IImageUploadService, ImageImageUploadService>();
+
             services.AddScoped<PlaylistService>();
             services.AddScoped<GroupService>();
             services.AddScoped<SongReactionService>();
@@ -50,7 +52,7 @@ namespace Perflow.Services.Extensions
             services.AddScoped<ISongsService, SongsService>();
 
             services.AddScoped<AlbumsService>();
-            
+
             services.AddScoped<IArtistService, ArtistService>();
 
             services.AddScoped<IImageService, ImageService>();
