@@ -84,7 +84,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/Playlists/editName",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
@@ -97,7 +97,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/Playlists/copy",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
