@@ -10,15 +10,15 @@
   <h1>Get access to Perflow for Artists</h1>
   <h5>First, tell us who you are.</h5>
   <div class="cards">
-    <div class="option-card" routerLink="../register" routerLinkActive="active-link" [state]="{ type: 'artist'}">
+    <div class="option-card" routerLink="/" (click)="createUserApplicant(1)">
       <img src="../../../../../assets/images/artist.jpg"/>
       <span>Artist</span>
     </div>
-    <div class="option-card" routerLink="../register" routerLinkActive="active-link" [state]="{ type: 'moderator'}">
+    <div class="option-card" routerLink="/" (click)="createUserApplicant(2)">
       <img src="../../../../../assets/images/Moderator.jpg"/>
       <span>Moderator</span>
     </div>
-    <div class="option-card" routerLink="../register" routerLinkActive="active-link" [state]="{ type: 'teamMember'}">
+    <div class="option-card" routerLink="/" (click)="createUserApplicant(3)">
       <img src="../../../../../assets/images/vinyl.jpg"/>
       <span>Team member</span>
     </div>
