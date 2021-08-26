@@ -17,7 +17,7 @@
       grid-column: 1
       align-self: center
       justify-self: start
-      margin-left: 5% 
+      margin-left: 15px 
       width: 50%
       i
         color: $text
@@ -53,21 +53,18 @@
         display: grid
         grid-template-columns: max-content max-content
         align-items: center
-        .field-name
+        .history-title
           grid-column: 1
           color: $text
           font-size: 2rem
           font-weight: $bold-weight
           padding-bottom: 10px
-          &:hover
-            cursor: pointer
-            text-decoration: underline
       .result-body
         grid-row: 2
-        height: 280px
+        height: 290px
         display: grid
         grid-template-columns: repeat(auto-fit, 200px)
-        gap: 0px 15px
+        gap: 15px 15px
         justify-content: stretch
         justify-items: stretch
         align-items: center

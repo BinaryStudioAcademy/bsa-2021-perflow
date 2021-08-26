@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { SearchService } from 'src/app/services/search.service';
   templateUrl: './all-albums.component.html',
   styleUrls: ['./all-albums.component.sass']
 })
-export class AllAlbumsComponent implements OnInit {
+export class AllAlbumsComponent implements OnInit, OnDestroy {
   albums: Array<AlbumForReadDTO> = new Array<AlbumForReadDTO>();
   searchTerm: string = '';
 
@@ -61,10 +61,10 @@ export class AllAlbumsComponent implements OnInit {
     this.getAlbumsByName(this._query);
   }
 
-  // ngOnDestroy() {
-  //   this._unsubscribe$.next();
-  //   this._unsubscribe$.complete();
-  // }
+  ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
+  }
 
   onScroll() {
     this._query = {
@@ -94,10 +94,7 @@ export class AllAlbumsComponent implements OnInit {
     this._searchHistoryService.addSearchHistory(history)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
-        next: () => {
-          this._unsubscribe$.next();
-          this._unsubscribe$.complete();
-        }
+        next: () => {}
       });
   };
 }

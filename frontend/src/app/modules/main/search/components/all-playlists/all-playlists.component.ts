@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { SearchService } from 'src/app/services/search.service';
   templateUrl: './all-playlists.component.html',
   styleUrls: ['./all-playlists.component.sass']
 })
-export class AllPlaylistsComponent implements OnInit {
+export class AllPlaylistsComponent implements OnInit, OnDestroy {
   playlists: Array<PlaylistView> = new Array<PlaylistView>();
   searchTerm: string = '';
 
@@ -61,10 +61,10 @@ export class AllPlaylistsComponent implements OnInit {
     this.getPlaylistsByName(this._query);
   }
 
-  // ngOnDestroy() {
-  //   this._unsubscribe$.next();
-  //   this._unsubscribe$.complete();
-  // }
+  ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
+  }
 
   onScroll() {
     this._query = {
@@ -92,12 +92,8 @@ export class AllPlaylistsComponent implements OnInit {
     } as WriteSearchHistory;
 
     this._searchHistoryService.addSearchHistory(history)
-      .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
-        next: () => {
-          this._unsubscribe$.next();
-          this._unsubscribe$.complete();
-        }
+        next: () => {}
       });
   };
 }
