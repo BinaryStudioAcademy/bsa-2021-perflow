@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 import { Song } from 'src/app/models/song/song';
 import { QueueService } from 'src/app/services/queue.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-queue',
@@ -18,13 +19,17 @@ export class QueueComponent {
   isOpened = false;
   isPlaying = false;
   isShuffling = false;
+  filterExplicit = false;
 
   @Input() songs: Song[] = [];
 
   currentSongId: number;
   unshuffledSongs: Song[] = [];
 
-  constructor(private _queueService: QueueService) {
+  constructor(
+    private _queueService: QueueService,
+    private _userService: UserService
+  ) {
     _queueService.songAdded$.subscribe((song) => {
       if (!this.songs.length) {
         this.currentSongId = song.id;
@@ -54,16 +59,29 @@ export class QueueComponent {
     });
 
     _queueService.shuffleToggled.subscribe((value) => {
+      if (value) {
+        this.shuffleSongs();
+      }
       this.isShuffling = value;
     });
 
     _queueService.queueCleared$.subscribe(() => {
       this.songs = [];
+      this.unshuffledSongs = [];
     });
   }
 
   openView = () => {
     this.isOpened = true;
+    this._userService.getUserSettings().subscribe(
+      (resp) => {
+        this.filterExplicit = resp.body?.showExplicitContent!;
+        if (!this.filterExplicit) {
+          this.songs = this.songs?.filter((s) => !s.hasCensorship);
+          this.unshuffledSongs = this.unshuffledSongs?.filter((s) => !s.hasCensorship);
+        }
+      }
+    );
     this.opened.emit();
   };
 
@@ -82,20 +100,21 @@ export class QueueComponent {
       }
       case 'Remove from queue': {
         const removingSong = this.songs.find((s) => s.id === data.song.id);
+        const removingSong1 = this.unshuffledSongs.find((s) => s.id === data.song.id);
 
-        if (!removingSong) {
+        if (!removingSong || !removingSong1) {
           break;
         }
 
-        if (this.songs.length === 1) {
+        if (this.songs.length === 1 || this.unshuffledSongs.length === 1) {
           this.resetQueue();
         }
 
-        if (this.currentSongId === removingSong.id) {
+        if (this.currentSongId === removingSong.id || this.currentSongId === removingSong1.id) {
           this.switchToNearestAccessible();
         }
 
-        this.removeSong(removingSong);
+        this.removeSong(removingSong, removingSong1);
         break;
       }
       default:
@@ -112,9 +131,11 @@ export class QueueComponent {
     }
   };
 
-  removeSong = (song: Song) => {
+  removeSong = (song: Song, song1: Song) => {
     const indexForDelete = this.songs.indexOf(song);
+    const indexForDelete1 = this.unshuffledSongs.indexOf(song1);
     this.songs.splice(indexForDelete, 1);
+    this.unshuffledSongs.splice(indexForDelete1, 1);
   };
 
   togglePlay = () => {
