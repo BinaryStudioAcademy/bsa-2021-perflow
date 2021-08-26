@@ -820,13 +820,9 @@ namespace Perflow.Migrations
 
                     b.Navigation("ArtistReactions");
 
-                    b.Navigation("Followers");
-
                     b.Navigation("GroupReactions");
 
                     b.Navigation("Reactions");
-
-                    b.Navigation("Subscriptions");
                 });
 #pragma warning restore 612, 618
         }

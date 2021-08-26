@@ -24,7 +24,6 @@ namespace Perflow.Common.MappingProfiles
                 .ForMember(d => d.Country, opt => opt.MapFrom(s => s.User.Country))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.User.Description))
                 .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.User.UserName))
-                .ForMember(d => d.Subscriptions, opt => opt.MapFrom(s => s.User.Subscriptions))
                 .ForMember(d => d.IconURL, opt => opt.MapFrom(s => s.IconURL));
 
             CreateMap<UserWithIcon, ArtistReadDTO>()

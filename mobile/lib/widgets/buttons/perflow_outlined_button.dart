@@ -32,8 +32,8 @@ class PerflowOutlinedButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          primary: Perflow.primaryLightColor,
-          side: const BorderSide(color: Perflow.primaryLightColor),
+          primary: Perflow.textColor,
+          side: const BorderSide(color: Perflow.textColor),
           shape: const StadiumBorder(),
         ),
         child: Center(child: child),

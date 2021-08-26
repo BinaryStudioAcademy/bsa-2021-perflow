@@ -17,7 +17,7 @@
         </div>
         <div class="queue-label"><h4>Queue</h4></div>
     </div>
-    <app-songs-list [songs]="songs" [isPlaying]="isPlaying"
+    <app-songs-list [songs]="isShuffling ? songs : unshuffledSongs" [isPlaying]="isPlaying"
      (clickMenuItem)="clickMenuHandler($event)" 
      [highlightId]="currentSongId" 
      (togglePlayEvent)="togglePlay()">

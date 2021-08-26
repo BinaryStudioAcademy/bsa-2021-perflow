@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
@@ -26,13 +24,12 @@ namespace Perflow.Services.Implementations
 
         public async ValueTask<User> GetUserAsync(int id)
         {
-            var userEntity = await _context.Users.FindAsync(id);
-            if(await CheckUserSettingsAsync(id) == false)
-            {
-                _context.UserSettings.Add(new Domain.UserSettings() { UserId = id });
-                await _context.SaveChangesAsync();
-            }
-            return userEntity;
+            return await _context.Users.FindAsync(id);
+        }
+
+        public async ValueTask<User> GetUserByFirebaseIdAsync(string firebaseId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(user => user.FirebaseId == firebaseId);
         }
 
         public async Task<string> GetUserImage(int id)
@@ -51,9 +48,10 @@ namespace Perflow.Services.Implementations
         public async Task<User> CreateUserAsync(UserWriteDTO userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            var userEntity = await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-            _context.UserSettings.Add(new Domain.UserSettings() { UserId = userEntity.Entity.Id });
+
+            var userEntity = _context.Users.Add(user);
+            _context.UserSettings.Add(new UserSettings { UserId = userEntity.Entity.Id });
+
             await _context.SaveChangesAsync();
             return userEntity.Entity;
         }
@@ -75,9 +73,15 @@ namespace Perflow.Services.Implementations
             return await _context.UserSettings.FirstAsync(us => us.UserId == userId);
         }
 
-        public async Task<bool> CheckUserSettingsAsync(int userId)
+        public async Task EnsureUserSettingsCreated(int userId)
         {
-            return await _context.UserSettings.AnyAsync(us => us.UserId == userId);
+            if (await _context.UserSettings.AnyAsync(us => us.UserId == userId))
+            {
+                return;
+            }
+
+            _context.UserSettings.Add(new UserSettings { UserId = userId });
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateUserSettingsAsync(UserChangeSettingsDTO userSettings)
@@ -87,7 +91,7 @@ namespace Perflow.Services.Implementations
                                                     .FirstOrDefaultAsync(us => us.Id == userSettings.Id);
             updatedSettings = _mapper.Map<UserSettings>(userSettings);
             _context.UserSettings.Update(updatedSettings);
-            await _context.SaveChangesAsync();  
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteUserAsync(User user)
@@ -104,7 +108,7 @@ namespace Perflow.Services.Implementations
 
             updatedUser.IconURL = await _imageService.UploadImageAsync(userChangeIconDTO.Icon);
 
-            _imageService.DeleteImageAsync(oldImageId);
+            _ = _imageService.DeleteImageAsync(oldImageId);
 
             await UpdateUserAsync(updatedUser);
 

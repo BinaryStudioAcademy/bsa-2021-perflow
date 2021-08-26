@@ -94,6 +94,19 @@
       ],
       "UpstreamPathTemplate": "/api/Songs/top/{amount}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Songs/byAlbum/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Songs/byAlbum/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ]
 }

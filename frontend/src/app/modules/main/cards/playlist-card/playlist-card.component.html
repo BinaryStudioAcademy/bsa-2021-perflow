@@ -1,7 +1,7 @@
 <div class="card" routerLink='/playlists/view-playlist/{{playlist.id}}'>
   <div class="image">
       <img [src]="playlist.iconURL">  
-      <button class="play-icon" appClickStopPropagation>
+      <button class="play-icon" appClickStopPropagation (click)="play(playlist.id)">
           <i class="play icon"></i>
       </button>  
   </div>
