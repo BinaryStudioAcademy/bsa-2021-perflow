@@ -1,10 +1,9 @@
 import {
-  Component, EventEmitter, Input, OnInit, Output
+  Component, EventEmitter, OnInit, Output
 } from '@angular/core';
 import {
   AbstractControl, FormControl, FormGroup, ValidatorFn, Validators
 } from '@angular/forms';
-import { UserRoles } from 'src/app/models/enums/user-roles.enum';
 import { RegisterData } from '../../../../models/auth/register-data';
 
 @Component({
@@ -26,11 +25,7 @@ export class UserRegistrationFormComponent implements OnInit {
   @Output()
   newUser = new EventEmitter<RegisterData>();
 
-  @Input()
-  userType: UserRoles | undefined;
-
   ngOnInit() {
-    this.userTypeInt = parseInt(UserRoles[this.userType!], 10);
     this.registrationForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,

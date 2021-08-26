@@ -1,7 +1,4 @@
-<h3 *ngIf="!userTypeInt">Sign up for free to start listening</h3>
-<h3 *ngIf="userTypeInt === 1">Sign up as an artist for free to start listening</h3>
-<h3 *ngIf="userTypeInt === 2">Sign up as a moderator for free to start listening</h3>
-<h3 *ngIf="userTypeInt === 3">Sign up as a team member for free to start listening</h3>
+<h3>Sign up for free to start listening</h3>
 <h5>Already registered? <a class="log-in-link" routerLink="/login">Log In</a></h5>
 <form [formGroup]="registrationForm" #formDir="ngForm" class="ui form error">
 
