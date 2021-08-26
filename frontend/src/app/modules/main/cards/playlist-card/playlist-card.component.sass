@@ -2,14 +2,15 @@
 
 .card
     padding: 16px
-    border-radius: 4px
     background: $light-gray
     color: $text
-    box-shadow: none
     width: 200px
     height: 280px
     position: relative
     cursor: pointer
+    border-radius: 5px
+    box-shadow: 0 0 10px darken($drk-gray, 5%)
+    transition: background-color .2s ease-in-out
     .image
         width: 160px
         height: 160px
@@ -26,6 +27,9 @@
     &:hover
         .play-icon
                 opacity: 1
+        background-color: lighten($drk-rain, 5%)
+        cursor: pointer
+
     .content
         min-height: 64px
         .card-name, .card-desc
