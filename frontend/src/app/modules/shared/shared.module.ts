@@ -26,6 +26,13 @@ import { AuthorTypePipe } from './pipes/album-author-type.pipe';
 import { ClickStopPropagationDirective } from './directives/stopPropagation/click-stop-propagation.directive';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { HideScrollButtonsDirective } from './directives/hide-scroll-button/hide-scroll-buttons.directive';
+import {
+  CreateEditPlaylistComponent
+} from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
+import {
+  EditPlaylistModalComponent
+} from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
+import { CropImageComponent } from './crop-image/crop-image.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +57,10 @@ import { HideScrollButtonsDirective } from './directives/hide-scroll-button/hide
     AlbumRegionTypePipe,
     AuthorTypePipe,
     SnackbarComponent,
-    HideScrollButtonsDirective
+    HideScrollButtonsDirective,
+    CreateEditPlaylistComponent,
+    EditPlaylistModalComponent,
+    CropImageComponent
   ],
   imports: [
     CommonModule,
@@ -82,7 +92,10 @@ import { HideScrollButtonsDirective } from './directives/hide-scroll-button/hide
     AlbumRegionTypePipe,
     AuthorTypePipe,
     SnackbarComponent,
-    HideScrollButtonsDirective
+    HideScrollButtonsDirective,
+    CreateEditPlaylistComponent,
+    EditPlaylistModalComponent,
+    CropImageComponent
   ]
 })
 

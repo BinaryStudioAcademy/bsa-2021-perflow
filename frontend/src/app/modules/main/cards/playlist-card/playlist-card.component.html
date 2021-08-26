@@ -1,7 +1,7 @@
 <div class="card" (click)="redirectTo()">
   <div class="image">
       <img [src]="playlist.iconURL">  
-      <button class="play-icon" appClickStopPropagation>
+      <button class="play-icon" appClickStopPropagation (click)="play(playlist.id)">
           <i class="play icon"></i>
       </button>  
   </div>

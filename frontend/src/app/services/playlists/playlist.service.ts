@@ -60,4 +60,12 @@ export class PlaylistsService {
   getPlaylistsByGroupId(groupId: number) {
     return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/byGroup/${groupId}`);
   }
+
+  editPlaylistName(playlist: PlaylistName): Observable<PlaylistName> {
+    return this._httpService.putRequest<PlaylistName>(`${this._endpoint}/editName`, playlist);
+  }
+
+  copyPlaylist(playlist: PlaylistName): Observable<PlaylistName> {
+    return this._httpService.postRequest<PlaylistName>(`${this._endpoint}/copy`, playlist);
+  }
 }

@@ -25,8 +25,10 @@ import { SongsService } from 'src/app/services/songs/songs.service';
   styleUrls: ['./artist-details.component.sass']
 })
 export class ArtistDetailsComponent implements OnInit {
-  private readonly _scrollingSize: number = 240;
   private _userId: number;
+  private readonly _scrollingSize: number = 270;
+  private readonly _decimalRadix = 10;
+  private readonly _gridScrollMultiplier = 3;
 
   @ViewChild('albums') albumsElement: ElementRef;
   @ViewChild('playlists') playlistsElement: ElementRef;
@@ -172,4 +174,25 @@ export class ArtistDetailsComponent implements OnInit {
       this.isSuccess = Boolean(val);
     });
   }
+
+  getGridScrollWidth = (selector: string) => {
+    const element = document.querySelector(selector);
+    const style = getComputedStyle(element!);
+    const gapWidth = parseInt(style.gridGap.split(' ')[0], this._decimalRadix);
+    const elementWidth = parseInt(style.gridTemplateColumns.split(' ')[0], this._decimalRadix);
+
+    return gapWidth + elementWidth;
+  };
+
+  scrollGridRight = (id: string, selector: string) => {
+    const grid = document.getElementById(id);
+
+    grid?.scrollBy({ left: this.getGridScrollWidth(selector) * this._gridScrollMultiplier, behavior: 'smooth' });
+  };
+
+  scrollGridLeft = (id: string, selector: string) => {
+    const grid = document.getElementById(id);
+
+    grid?.scrollBy({ left: -(this.getGridScrollWidth(selector) * this._gridScrollMultiplier), behavior: 'smooth' });
+  };
 }

@@ -8,9 +8,6 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SongsComponent } from './songs/songs.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import {
-  CreateEditPlaylistComponent
-} from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { SettingsComponent } from './settings/settings.component';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
@@ -23,6 +20,9 @@ import { AllAlbumsComponent } from './search/components/all-albums/all-albums.co
 import { AllPlaylistsComponent } from './search/components/all-playlists/all-playlists.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { GroupViewComponent } from './group-view/group-view.component';
+import {
+  CreateEditPlaylistComponent
+} from '../shared/create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 
 const routes: Routes = [{
   path: '',
