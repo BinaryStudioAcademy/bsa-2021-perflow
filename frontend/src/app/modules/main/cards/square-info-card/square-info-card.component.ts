@@ -34,7 +34,6 @@ export class SquareInfoCardComponent {
 
   edit() {
     if (this.editRouterLink) {
-      console.log(this._activatedRoute.toString());
       this._router.navigate([`${this.editRouterLink}/${this.id}`], { relativeTo: this._activatedRoute });
     }
   }
