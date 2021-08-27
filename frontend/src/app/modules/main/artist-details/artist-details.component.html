@@ -2,7 +2,10 @@
   <div class="artist">
     <div class="artist-details">
       <div class="artist-image">
-        <img class="image" alt="Artist" [src]="artist.iconURL">
+        <img class="image" alt="Artist" [src]="artist.iconURL" *ngIf="artist.iconURL">
+        <div class="icon-background" *ngIf="!artist.iconURL">
+          <i class="user icon"></i>
+        </div>
       </div>
       <div class="artist-info">
         <p class="artist-title">
@@ -45,25 +48,25 @@
 
   <div class="main-content-container">
     <app-songs-list [songs]="topSongs"></app-songs-list>
-    <div class="items-scroll-box top-artists">
+    <div class="items-scroll-box top-artists" *ngIf="artistAlbums.length > 0">
       <h4 class="header">Albums</h4>
       <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollGridLeft('albums', '.items')"> 
+        <div class="ui icon button scroll-button" (click)="scrollGridLeft('albums', '.items')">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="albums" class="items" appHideScrollButtons>
-            <app-album-card class="card" *ngFor="let album of artistAlbums" [album]="album" [isLiked]=false>
-            </app-album-card>
+          <app-album-card class="card" *ngFor="let album of artistAlbums" [album]="album" [isLiked]=false>
+          </app-album-card>
         </div>
         <div class="ui icon button scroll-button" (click)="scrollGridRight('albums', '.items')">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
     </div>
-    <div class="items-scroll-box top-artists">
+    <div class="items-scroll-box top-artists" *ngIf="artistPlaylists.length > 0">
       <h4 class="header">Playlists</h4>
       <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollGridLeft('playlists', '.items')"> 
+        <div class="ui icon button scroll-button" (click)="scrollGridLeft('playlists', '.items')">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="playlists" class="items" appHideScrollButtons>
