@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.AzureBlobStorage.Interfaces;
 using Shared.AzureBlobStorage.Services;
 
-namespace Perflow.Services.Extensions
+namespace Shared.AzureBlobStorage.Extensions
 {
     public static class AddBlobStorageExtension
     {

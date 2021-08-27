@@ -37,6 +37,10 @@ namespace Shared.RabbitMQ.Implementations
             _consumer.Received += ConsumerOnReceived;
         }
 
+        public ExchangeOptions ExchangeOptions => _exchangeOptions;
+
+        public QueueOptions QueueOptions => _queueOptions;
+
         public Task<RabbitMQMessage> ListenAsync(CancellationToken cancellationToken)
         {
             TaskCompletionSource<RabbitMQMessage> tcs = new();

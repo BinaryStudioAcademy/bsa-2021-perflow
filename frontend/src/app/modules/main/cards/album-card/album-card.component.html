@@ -1,4 +1,4 @@
-<div class="card" routerLink="/albums/{{album.id}}">
+<div class="card" (click)="redirectTo()">
   <div class="image-block">
     <div class="image">
       <img [attr.src]="album.iconURL" alt="Album" />

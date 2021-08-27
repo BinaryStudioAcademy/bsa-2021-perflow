@@ -1,24 +1,26 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Perflow.Services.Interfaces;
 using Shared.AzureBlobStorage.Interfaces;
-using Shared.AzureBlobStorage.Models;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Shared.AzureBlobStorage.Extensions;
 
 namespace Perflow.Services.Implementations
 {
     public class ImageService : IImageService
     {
+        private readonly IImageUploadService _imageUploadService;
         private readonly IBlobService _blobService;
         private readonly IHttpClientFactory _httpClientFactory;
 
         private readonly string _containerName = "images";
 
-        public ImageService(IBlobService blobService, IHttpClientFactory httpClientFactory)
+        public ImageService(IBlobService blobService, IHttpClientFactory httpClientFactory, IImageUploadService imageUploadService)
         {
             _blobService = blobService;
             _httpClientFactory = httpClientFactory;
+            _imageUploadService = imageUploadService;
         }
 
         public async Task<string> UploadImageAsync(string url)
@@ -26,38 +28,30 @@ namespace Perflow.Services.Implementations
             var httpClient = _httpClientFactory.CreateClient();
             var response = await httpClient.GetAsync(url);
 
-            var contentType = response.Content.Headers.ContentType.MediaType;
-            var content = await response.Content.ReadAsStreamAsync();
             var guid = Guid.NewGuid().ToString();
 
-            await _blobService.UploadFileBlobAsync(_containerName, new BlobDto
-            {
-                Content = content,
-                ContentType = contentType,
-                Guid = guid
-            });
+            var bytes = await response.Content.ReadAsByteArrayAsync();
+
+            _imageUploadService.UploadImage(guid, BinaryData.FromBytes(bytes));
 
             return guid;
         }
 
-        public async Task<string> UploadImageAsync(IFormFile file)
+        public Task<string> UploadImageAsync(IFormFile file)
         {
             var guid = Guid.NewGuid().ToString();
 
-            await _blobService.UploadFileBlobAsync(_containerName, new BlobDto
-            {
-                Content = file.OpenReadStream(),
-                ContentType = file.ContentType,
-                Guid = guid
-            });
+            _imageUploadService.UploadImage(guid, file.GetBinaryData());
 
-            return guid;
+            return Task.FromResult(guid);
         }
 
         public string GetImageUrl(string imageId)
         {
             if (string.IsNullOrEmpty(imageId) || !Guid.TryParse(imageId, out _))
+            {
                 return imageId;
+            }
 
             var uri = _blobService.GetFileUrl(_containerName, imageId);
 

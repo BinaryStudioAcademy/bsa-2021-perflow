@@ -1,8 +1,9 @@
 import {
-  Component, EventEmitter, Input, Output
+  Component, EventEmitter, Input, Output, ViewChild
 } from '@angular/core';
 import { Song } from 'src/app/models/song/song';
 import { QueueService } from 'src/app/services/queue.service';
+import { PlayingComponent } from '../playing/playing.component';
 
 @Component({
   selector: 'app-queue',
@@ -23,6 +24,9 @@ export class QueueComponent {
 
   currentSongId: number;
   unshuffledSongs: Song[] = [];
+
+  @ViewChild(PlayingComponent)
+  private _musicVisualizer: PlayingComponent;
 
   constructor(private _queueService: QueueService) {
     _queueService.songAdded$.subscribe((song) => {
@@ -65,11 +69,13 @@ export class QueueComponent {
   openView = () => {
     this.isOpened = true;
     this.opened.emit();
+    this._musicVisualizer.draw();
   };
 
   closeView = () => {
     this.isOpened = false;
     this.closed.emit();
+    if (this._musicVisualizer) this._musicVisualizer.interruptAnimation();
   };
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
@@ -183,4 +189,12 @@ export class QueueComponent {
     this.unshuffledSongs = [];
     this.reseted.emit();
   };
+
+  get analyser() {
+    return this._musicVisualizer.analyser;
+  }
+
+  set analyser(value: AnalyserNode) {
+    this._musicVisualizer.analyser = value;
+  }
 }

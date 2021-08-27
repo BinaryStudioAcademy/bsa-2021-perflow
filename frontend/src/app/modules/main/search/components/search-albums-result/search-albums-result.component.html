@@ -3,6 +3,7 @@
     <a class="field-name" routerLink="/search/{{term}}/albums">Albums</a>
   </div>
   <div class="result-body">
-    <app-album-card [isLiked]="false" *ngFor="let album of albums" [album]="album"></app-album-card>
+    <app-album-card (clickEmiter)="saveToSearchHistory(album)" [isLiked]="false" *ngFor="let album of albums" 
+      [album]="album"></app-album-card>
   </div>
 </div>
