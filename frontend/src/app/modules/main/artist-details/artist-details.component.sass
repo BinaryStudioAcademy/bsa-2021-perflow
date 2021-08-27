@@ -3,6 +3,16 @@
 
 $image-size: 245px
 
+%user-avatar
+    width: $image-size
+    height: $image-size
+    border-radius: 50%
+
+=flex-container($align-items, $justify-content)
+    display: flex
+    align-items: $align-items
+    justify-content: $justify-content
+
 =max-lines($lines, $line-height)
     overflow: hidden
     text-overflow: ellipsis
@@ -43,6 +53,16 @@ main
                 border-radius: 50%
                 box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
                 object-fit: cover
+            .icon-background
+                @extend %user-avatar
+                +flex-container(center, center)
+                background: linear-gradient(90deg, rgba(20, 20, 23, 0.45) 0%, #282F37 100%)
+                box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
+                i
+                    color: $text
+                    font-size: 64px
+                    margin-top: 3rem
+                    margin-right: 0 !important
         .artist-info
             grid-area: artist-info
             padding-top: 104px
@@ -110,7 +130,7 @@ main
         font-weight: $medium-weight !important
     >i, >.img-wrapper
         margin-right: 1rem !important
-    >i.dropdown.icon 
+    >i.dropdown.icon
         margin-left: 3rem !important
         margin-right: 0em !important
 
@@ -120,16 +140,15 @@ main
         box-shadow: none !important
         margin-left: 0px !important
         >.item.first.last
-          padding: 18px !important
-          padding-top: 14px !important
-          padding-bottom: 14px !important
+            padding: 18px !important
+            padding-top: 14px !important
+            padding-bottom: 14px !important
 
 .item.active.selected
     background-color: $light-gray !important
     font-weight: $normal-weight !important
     &:hover
         background-color: $drk-gray !important
-
 
 .main-content-container
     padding: 10px 25px 50px 40px

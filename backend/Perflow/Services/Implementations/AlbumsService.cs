@@ -132,11 +132,10 @@ namespace Perflow.Services.Implementations
         public async Task<IEnumerable<AlbumViewDTO>> GetNewReleases()
         {
             var firstDay = DateTime.Today.AddDays(-30);
-            var authorsToTake = 7;
             var newReleasesToTake = 20;
-            IEnumerable<AlbumViewDTO> entities = await context.Albums
-                .Include(a => a.Songs).ThenInclude(s => s.Artist)
-                .Include(a => a.Songs).ThenInclude(s => s.Group)
+            var entities = await context.Albums
+                .Include(a => a.Author)
+                .Include(a => a.Group)
                 .AsNoTracking()
                 .Where(a => a.CreatedAt >= firstDay && a.IsPublished)
                 .OrderByDescending(a => a.CreatedAt)
@@ -146,15 +145,11 @@ namespace Perflow.Services.Implementations
                     Id = a.Id,
                     Name = a.Name,
                     IconURL = _imageService.GetImageUrl(a.IconURL),
-                    Authors = a.Songs
-                                 .Select(
-                                    (s) => s.AuthorType == Domain.Enums.AuthorType.Artist ?
-                                                new AlbumViewAuthorsDTO(s.Artist.Id, s.Artist.UserName, true) :
-                                                new AlbumViewAuthorsDTO(s.Group.Id, s.Group.Name, false))
-                                 .Take(authorsToTake)
-                                 .ToList()
+                    Author = a.AuthorId != null ? (new AlbumViewAuthorsDTO(a.Author.Id, a.Author.UserName, true)) 
+                        : new AlbumViewAuthorsDTO(a.Group.Id, a.Group.Name, false)
                 })
                 .ToListAsync();
+
             return entities;
         }
 

@@ -8,7 +8,22 @@
     </div>
   </div>
   
-  <div class="search-result">
+  <div class="search-result" *ngIf="isSearchHistoryShown">
+    <div class="result-container">
+      <div class="result-header">
+        <span class="history-title">You recently searched for</span>
+      </div>
+      <div class="result-body">
+        <div *ngFor="let item of searchHistory">
+          <app-album-card (clickEmiter)="saveAlbumToSearchHistory(item.album)" [isLiked]="false" *ngIf="item.album?.name" [album]="item.album"></app-album-card>
+          <app-artist-card (clickEmiter)="saveArtistToSearchHistory(item.artist)" *ngIf="item.artist?.userName" [artist]="item.artist"></app-artist-card>
+          <app-playlist-card (clickEmiter)="savePlaylistToSearchHistory(item.playlist)" *ngIf="item.playlist?.name" [playlist]="item.playlist"></app-playlist-card>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div  class="search-result" *ngIf="!isSearchHistoryShown">
     <app-search-songs-result [term]="searchValue" [songs]="foundData.songs" *ngIf="foundData.songs?.length"></app-search-songs-result>
     <app-search-artists-result [term]="searchValue" [artists]="foundData.artists" *ngIf="foundData.artists?.length"></app-search-artists-result>
     <app-search-albums-result [term]="searchValue" [albums]="foundData.albums" *ngIf="foundData.albums?.length"></app-search-albums-result>

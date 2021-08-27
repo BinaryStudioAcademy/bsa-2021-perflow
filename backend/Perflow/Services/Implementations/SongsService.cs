@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,9 +14,9 @@ using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
 using Shared.AzureBlobStorage.Interfaces;
 using Shared.AzureBlobStorage.Models;
-using Shared.AzureBlobStorage.Helpers;
 using Perflow.Common.Helpers;
 using Perflow.Domain.Enums;
+using Shared.AzureBlobStorage.Extensions;
 
 namespace Perflow.Services.Implementations
 {
@@ -81,12 +82,14 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentException("Format of file is incorrect");
             }
 
-            await _blobService.UploadFileBlobAsync("songs", new BlobDto()
+            var blob = new BlobDto
             {
-                Content = song.OpenReadStream(),
+                Guid = guid,
                 ContentType = song.ContentType,
-                Guid = guid
-            });
+                Content = song.GetBinaryData()
+            };
+
+            await _blobService.UploadFileBlobAsync("songs", blob);
 
             return guid;
         }
@@ -116,9 +119,9 @@ namespace Perflow.Services.Implementations
         public async Task<FileContentResult> GetSongFileAsync(string blobId)
         {
             var blob = await _blobService.DownloadFileBlobAsync("songs", blobId);
-            var file = await FileTransformer.BlobToByteArrayAsync(blob);
+            var bytes = blob.Content.ToArray();
 
-            return new FileContentResult(file, blob.ContentType);
+            return new FileContentResult(bytes, blob.ContentType);
         }
 
         public async Task RemoveSongAsync(int id)

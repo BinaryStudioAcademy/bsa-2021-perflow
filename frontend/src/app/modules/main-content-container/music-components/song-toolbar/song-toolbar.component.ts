@@ -50,6 +50,12 @@ export class SongToolbarComponent implements OnInit {
   volumeSlider! : HTMLInputElement | null;
   audio! : HTMLAudioElement | null;
 
+  private _analyser: AnalyserNode;
+  private _audioContext: AudioContext = new AudioContext();
+  private _source: MediaElementAudioSourceNode;
+
+  private readonly _fftSize = 256; // Fast Fourier Transform Size
+
   constructor(
     authService: AuthService,
     toolbarService: SongToolbarService,
@@ -90,6 +96,16 @@ export class SongToolbarComponent implements OnInit {
     this.currentTimeContainer = document.getElementById('current-time');
     this.durationContainer = document.getElementById('duration');
     this.audio = document.querySelector('audio');
+    this.audio!.crossOrigin = 'anonymous';
+    this.initAudioContext();
+  }
+
+  initAudioContext() {
+    this._analyser = this._audioContext.createAnalyser();
+    this._source = this._audioContext.createMediaElementSource(this.audio!);
+    this._source.connect(this._audioContext.destination);
+    this._source.connect(this._analyser);
+    this._analyser.fftSize = this._fftSize;
   }
 
   updateSong = (songInfo: SongInfo) => {
@@ -188,6 +204,7 @@ export class SongToolbarComponent implements OnInit {
       this.playPauseButton?.lastElementChild?.classList.replace('pause', 'play');
     }
     else {
+      this._audioContext.resume();
       this.audio?.play();
       this.isPlaying = true;
       this.playPauseButton?.lastElementChild?.classList.replace('play', 'pause');
@@ -268,4 +285,8 @@ export class SongToolbarComponent implements OnInit {
     this.audio!.src = this.songForPlay.songURL;
     this.displayDuration();
   };
+
+  getAnalyser() {
+    return this._analyser;
+  }
 }

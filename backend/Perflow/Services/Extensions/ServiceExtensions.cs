@@ -28,6 +28,7 @@ namespace Perflow.Services.Extensions
                 cfg.AddProfile<UserSettingsProfile>();
                 cfg.AddProfile<ArtistProfile>();
                 cfg.AddProfile<RecentlyPlayedProfile>();
+                cfg.AddProfile<SearchHistoryProfile>();
             },
             Assembly.GetExecutingAssembly());
         }
@@ -40,6 +41,8 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<IUsersService, UsersService>();
 
+            services.AddSingleton<IImageUploadService, ImageUploadService>();
+
             services.AddScoped<PlaylistService>();
             services.AddScoped<GroupService>();
             services.AddScoped<SongReactionService>();
@@ -49,6 +52,7 @@ namespace Perflow.Services.Extensions
             services.AddScoped<RecentlyPlayedService>();
             services.AddScoped<SearchService>();
             services.AddScoped<GroupReactionService>();
+            services.AddScoped<SearchHistoryService>();
 
             services.AddScoped<ISongsService, SongsService>();
 

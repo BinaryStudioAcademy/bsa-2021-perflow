@@ -1,11 +1,12 @@
 import {
-  Component, EventEmitter, Input, OnDestroy, Output
+  Component, EventEmitter, Input, OnDestroy, Output, ViewChild
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { QueueService } from 'src/app/services/queue.service';
 import { UserService } from 'src/app/services/user.service';
+import { PlayingComponent } from '../playing/playing.component';
 
 @Component({
   selector: 'app-queue',
@@ -29,6 +30,9 @@ export class QueueComponent implements OnDestroy {
 
   currentSongId: number;
   unshuffledSongs: Song[] = [];
+  
+  @ViewChild(PlayingComponent)
+    private _musicVisualizer: PlayingComponent;
 
   constructor(
     private _queueService: QueueService,
@@ -40,7 +44,6 @@ export class QueueComponent implements OnDestroy {
         if (!this.songs.length) {
           this.currentSongId = song.id;
         }
-
         if (!this.songs.find((s) => s.id === song.id)) {
           this.songs.push(song);
           this.unshuffledSongs.push(song);
@@ -104,11 +107,13 @@ export class QueueComponent implements OnDestroy {
         }
       );
     this.opened.emit();
+    this._musicVisualizer.draw();
   };
 
   closeView = () => {
     this.isOpened = false;
     this.closed.emit();
+    if (this._musicVisualizer) this._musicVisualizer.interruptAnimation();
   };
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
@@ -225,4 +230,12 @@ export class QueueComponent implements OnDestroy {
     this.unshuffledSongs = [];
     this.reseted.emit();
   };
+
+  get analyser() {
+    return this._musicVisualizer.analyser;
+  }
+
+  set analyser(value: AnalyserNode) {
+    this._musicVisualizer.analyser = value;
+  }
 }
