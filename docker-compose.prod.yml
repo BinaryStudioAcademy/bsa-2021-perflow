@@ -28,6 +28,8 @@ services:
     image: krasnovnikita/bsa2021-perflow-api
     ports:
       - '4202:4202'
+    depends_on:
+     - "rabbitmq"
     environment: 
       ASPNETCORE_URLS: http://+:4202
     env_file:
@@ -37,6 +39,8 @@ services:
     image: krasnovnikita/bsa2021-perflow-studio-api
     ports:
       - '4203:4203'
+    depends_on:
+     - "rabbitmq"
     environment: 
       ASPNETCORE_URLS: http://+:4203
     env_file:
@@ -46,6 +50,8 @@ services:
     image: krasnovnikita/bsa2021-perflow-processor
     env_file:
      - ./env/processor.env
+    depends_on:
+     - "rabbitmq"
     environment:
       WAIT_HOSTS: rabbitmq:5672
       
