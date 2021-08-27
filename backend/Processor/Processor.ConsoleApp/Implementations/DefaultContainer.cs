@@ -34,6 +34,7 @@ namespace Processor.ConsoleApp.Implementations
             services.AddOptions<BlobStorageOptions>().BindConfiguration(BlobStorageOptions.Key);
 
             services.AddOptions<ImageProcessingRabbitMQOptions>().BindConfiguration(ImageProcessingRabbitMQOptions.Key);
+            services.AddOptions<SongProcessingRabbitMQOptions>().BindConfiguration(SongProcessingRabbitMQOptions.Key);
 
             RabbitMQOptions rabbitMQOptions = new();
             configuration.Bind("RabbitMQConnection", rabbitMQOptions);
@@ -41,10 +42,13 @@ namespace Processor.ConsoleApp.Implementations
 
             services.AddBlobStorage(configuration["BlobStorageConnection"]);
 
+            services.AddSingleton<ISongsProcessingService, SongsProcessingService>();
+
             services.AddSingleton<IProcessor, Processor>();
 
             services.AddMessageHandlerManager(builder => builder
                 .AddHandler<ImageProcessingHandler>());
+                // TODO Add .AddHandler<SongProcessingHandler>());
 
             _provider = services.BuildServiceProvider();
         }

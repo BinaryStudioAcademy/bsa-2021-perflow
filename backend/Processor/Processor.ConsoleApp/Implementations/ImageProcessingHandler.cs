@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Processor.ConsoleApp.Interfaces;
 using Processor.ConsoleApp.Options;
 using Shared.AzureBlobStorage.Interfaces;
 using Shared.AzureBlobStorage.Models;
@@ -15,24 +13,21 @@ using SkiaSharp;
 
 namespace Processor.ConsoleApp.Implementations
 {
-    public class ImageProcessingHandler : IAsyncMessageHandler, IDisposable
+    public class ImageProcessingHandler : MessageHandlerBase
     {
-        private readonly ILogger<ImageProcessingHandler> _logger;
         private readonly IBlobService _blobService;
 
-        private readonly IQueue _queue;
-
         private readonly string _blobContainer;
+
+        protected override IQueue Queue { get; }
 
         public ImageProcessingHandler(
             IOptions<ImageProcessingRabbitMQOptions> rabbitMqOptions,
             IOptions<BlobStorageOptions> blobStorageOptions,
             IQueueFactory queueFactory,
             ILogger<ImageProcessingHandler> logger,
-            IBlobService blobService)
+            IBlobService blobService) : base(logger)
         {
-            _logger = logger;
-
             _blobContainer = blobStorageOptions.Value.ImagesContainer;
             _blobService = blobService;
 
@@ -41,36 +36,51 @@ namespace Processor.ConsoleApp.Implementations
             var exchangeOptions = options.ExchangeOptions;
             var queueOptions = options.QueueOptions;
 
-            _queue = queueFactory.CreateQueue(exchangeOptions, queueOptions);
+            Queue = queueFactory.CreateQueue(exchangeOptions, queueOptions);
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        protected override Task Initialize()
         {
-            _logger.LogInformation("{Data} Started ImageProcessingHandler", DateTime.Now.ToLongTimeString());
+            const string initializationMessage =
+@"
+{Data} Started ImageProcessingHandler
+  Exchange name: {ExchangeName}
+  Exchange type: {ExchangeType}
+  Queue name: {QueueName}
+  Routing key: {RoutingKey}
+";
 
-            do
-            {
-                var message = await _queue.ListenAsync(cancellationToken);
+            Logger.LogInformation(
+                initializationMessage,
+                DateTime.Now.ToLongTimeString(),
+                Queue.ExchangeOptions.Name,
+                Queue.ExchangeOptions.Type,
+                Queue.QueueOptions.Name,
+                Queue.QueueOptions.RoutingKey
+            );
 
-                HandleMessage(message);
-            } while (!cancellationToken.IsCancellationRequested);
+            return Task.CompletedTask;
         }
 
-        private void HandleMessage(RabbitMQMessage message)
+        protected override Task HandleMessage(RabbitMQMessage message)
         {
+            Logger.LogInformation("{Date} Received ImageProcessingRequest", DateTime.Now.ToLongTimeString());
+
             var processingOptions = ImageProcessingOptions.FromBytes(message.Body);
 
             var processedData = ProcessImage(processingOptions);
 
             UploadProcessedImage(processingOptions.BlobId, processedData);
 
-            _logger.LogInformation(
+            Logger.LogInformation(
                 "{Date} Processed image:\n\tBlobId: {Id}\n\tQuality: {Quality},\n\tUrl: {Url}",
                 DateTime.Now.ToLongTimeString(),
                 processingOptions.BlobId,
                 processingOptions.Quality.ToString(),
                 _blobService.GetFileUrl(_blobContainer, processingOptions.BlobId)
             );
+
+            return Task.CompletedTask;
         }
 
         private SKData ProcessImage(ImageProcessingOptions options)
@@ -121,11 +131,6 @@ namespace Processor.ConsoleApp.Implementations
             }
 
             return original;
-        }
-
-        public void Dispose()
-        {
-            _queue.Dispose();
         }
     }
 }
