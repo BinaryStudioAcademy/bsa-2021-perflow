@@ -3,12 +3,12 @@
         <div class="artistslabel">
             <h4>Artists</h4>
         </div>
-        <ng-container *ngIf="artists.length">
+        <ng-container *ngIf="artists?.length">
             <div *ngFor="let artist of artists" class="artist-card">
                 <app-artist-card [artist]="artist" (delete)="deleteArtist($event)" [isLiked]=true></app-artist-card>
             </div>    
         </ng-container>
-        <ng-container *ngIf="!artists.length">
+        <ng-container *ngIf="!artists?.length">
             <div class="artistslabel">
                 <h5>There are no available artists now</h5>
             </div> 

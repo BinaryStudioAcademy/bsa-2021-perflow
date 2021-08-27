@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Song } from 'src/app/models/song/song';
 import { AlbumAuthor } from 'src/app/models/user/album-author';
 import { QueueService } from 'src/app/services/queue.service';
@@ -9,20 +9,16 @@ import { SongsService } from 'src/app/services/songs/songs.service';
   templateUrl: './new-release-card.component.html',
   styleUrls: ['./new-release-card.component.sass']
 })
-export class NewReleaseCardComponent implements OnInit {
+export class NewReleaseCardComponent {
   @Input() id: number;
   @Input() name: string;
-  @Input() authors: Array<AlbumAuthor>;
+  @Input() author: AlbumAuthor;
   @Input() iconUrl: string;
 
   constructor(
     private _songsService: SongsService,
     private _queueService: QueueService
   ) { }
-
-  public ngOnInit() {
-    this.authors = this.authors.filter((author, i, arr) => arr.findIndex((t) => t.id === author.id) === i);
-  }
 
   playAlbum = (id: number) => {
     this._songsService.getSongsByAlbumId(id)
