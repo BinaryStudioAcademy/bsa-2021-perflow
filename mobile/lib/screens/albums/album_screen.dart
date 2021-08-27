@@ -49,7 +49,9 @@ class AlbumScreen extends StatelessWidget {
                   delegate: HeaderDelegate(
                     expandedHeight: headerExpandedHeight,
                     info: ContentInfo(
-                      author: value.data.artist!.userName,
+                      author: value.data.artist != null
+                          ? value.data.artist!.userName
+                          : value.data.group!.name,
                       songsCount: value.data.songs.length,
                       name: value.data.name,
                       iconUrl: IconUrlConvert.getValidUrl(value.data.iconURL),
