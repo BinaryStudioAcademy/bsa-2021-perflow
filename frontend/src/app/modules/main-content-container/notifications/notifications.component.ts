@@ -15,7 +15,7 @@ export class NotificationsComponent {
   notifications: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   constructor(
-    private _authService: AuthService,
+    private _authService: AuthService
   ) {
     this.getUserId();
   }
@@ -24,7 +24,8 @@ export class NotificationsComponent {
     this._authService.getAuthStateObservableFirst()
       .pipe(
         filter((state) => !!state),
-        takeUntil(this._unsubscribe$))
+        takeUntil(this._unsubscribe$)
+      )
       .subscribe(
         (state) => {
           this._userId = state!.id;
