@@ -39,6 +39,8 @@ services:
     image: krasnovnikita/bsa2021-perflow-studio-api
     ports:
       - '4203:4203'
+    depends_on:
+     - "rabbitmq"
     environment: 
       ASPNETCORE_URLS: http://+:4203
     env_file:
