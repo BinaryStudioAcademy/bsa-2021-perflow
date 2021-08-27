@@ -24,6 +24,23 @@ services:
     env_file:
      - ./env/gateway.env
 
+   # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
   perflow:
     image: krasnovnikita/bsa2021-perflow-api
     ports:
@@ -50,19 +67,10 @@ services:
     image: krasnovnikita/bsa2021-perflow-processor
     env_file:
      - ./env/processor.env
+    restart: on-failure
     depends_on:
-     - "rabbitmq"
+      - rabbitmq
+    links: 
+      - rabbitmq
     environment:
       WAIT_HOSTS: rabbitmq:5672
-      
-  # RabbitMQ
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - '15672:15672'
-      - '5672:5672'
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
