@@ -1,43 +1,40 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:perflow/helpers/get_service.dart';
-import 'package:perflow/models/songs/song.dart';
-import 'package:perflow/services/playback/playback_service.dart';
-import 'package:perflow/theme.dart';
+import 'package:perflow/models/albums/album_simplified.dart';
+import 'package:vrouter/vrouter.dart';
 
-class SongRow extends StatelessWidget {
-  static const double height = 64;
+import '../../routes.dart';
+import '../../theme.dart';
 
-  final Song song;
+class AlbumRow extends StatelessWidget {
+  static const double height = 80;
 
-  const SongRow({
-    required this.song,
-    Key? key
-  }) : super(key: key);
+  final AlbumSimplified album;
+
+  const AlbumRow({required this.album, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    String? iconUrl = song.album.iconURL;
+    String? iconUrl = album.iconURL;
 
-    if(iconUrl != null && !iconUrl.startsWith('http')) {
+    if (iconUrl != null && !iconUrl.startsWith('http')) {
       iconUrl = 'http://bsa2021perflow.blob.core.windows.net/images/$iconUrl';
     }
 
     return InkWell(
-      onTap: () => getService<PlaybackService>().setSongById(song.id),
+      onTap: () {
+        context.vRouter.to(Routes.album(album.id));
+      },
       child: SizedBox(
         height: height,
         child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if(iconUrl != null)
+            if (iconUrl != null)
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: Image.network(
@@ -45,7 +42,7 @@ class SongRow extends StatelessWidget {
                     fit: BoxFit.cover,
                     width: height,
                     height: height,
-                  )
+                  ),
                 ),
               ),
             Expanded(
@@ -57,14 +54,14 @@ class SongRow extends StatelessWidget {
                   children: [
                     const Spacer(flex: 2),
                     Text(
-                      song.name,
+                      album.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.subtitle2,
                     ),
                     const Spacer(flex: 1),
                     Text(
-                      (song.artist == null ? song.group!.name : song.artist!.userName),
+                      album.author == null ? 'fff' : album.author!.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.caption,
@@ -72,20 +69,15 @@ class SongRow extends StatelessWidget {
                     const Spacer(flex: 2)
                   ],
                 ),
-              )
+              ),
             ),
-            if(song.isLiked)
-              IconButton(
+            IconButton(
                 onPressed: () {},
                 iconSize: 18,
                 splashRadius: 22,
                 color: Perflow.primaryLightColor,
-                icon: const Icon(Icons.favorite)
-              ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert)
-            )
+                icon: const Icon(Icons.favorite)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
           ],
         ),
       ),

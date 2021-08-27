@@ -1,43 +1,50 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:perflow/helpers/get_service.dart';
-import 'package:perflow/models/songs/song.dart';
-import 'package:perflow/services/playback/playback_service.dart';
-import 'package:perflow/theme.dart';
+import 'package:perflow/models/playlists/playlist_simplified.dart';
+import 'package:vrouter/vrouter.dart';
 
-class SongRow extends StatelessWidget {
-  static const double height = 64;
+import '../../routes.dart';
+import '../../theme.dart';
 
-  final Song song;
+class PlaylistRow extends StatelessWidget {
+  static const double height = 80;
 
-  const SongRow({
-    required this.song,
-    Key? key
-  }) : super(key: key);
+  final PlaylistSimplified playlist;
+  final bool isUsers;
+
+  const PlaylistRow({required this.playlist, required this.isUsers, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    String? iconUrl = song.album.iconURL;
+    String? iconUrl = playlist.iconURL;
 
-    if(iconUrl != null && !iconUrl.startsWith('http')) {
+    if (iconUrl != null &&
+        !iconUrl.startsWith('http') &&
+        !iconUrl.startsWith('.')) {
       iconUrl = 'http://bsa2021perflow.blob.core.windows.net/images/$iconUrl';
     }
 
+    if (iconUrl != null && iconUrl.startsWith('.')) {
+      iconUrl =
+          'https://perflow.westeurope.cloudapp.azure.com/assets/images/playlist_default.jpg';
+    }
+
     return InkWell(
-      onTap: () => getService<PlaybackService>().setSongById(song.id),
+      onTap: () {
+        context.vRouter.to(Routes.playlist(playlist.id));
+      },
       child: SizedBox(
         height: height,
+        width: height,
         child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if(iconUrl != null)
+            if (iconUrl != null)
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: Image.network(
@@ -45,7 +52,7 @@ class SongRow extends StatelessWidget {
                     fit: BoxFit.cover,
                     width: height,
                     height: height,
-                  )
+                  ),
                 ),
               ),
             Expanded(
@@ -57,14 +64,14 @@ class SongRow extends StatelessWidget {
                   children: [
                     const Spacer(flex: 2),
                     Text(
-                      song.name,
+                      playlist.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.subtitle2,
                     ),
                     const Spacer(flex: 1),
                     Text(
-                      (song.artist == null ? song.group!.name : song.artist!.userName),
+                      'Playlist',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.caption,
@@ -72,20 +79,17 @@ class SongRow extends StatelessWidget {
                     const Spacer(flex: 2)
                   ],
                 ),
-              )
+              ),
             ),
-            if(song.isLiked)
+            if (!isUsers)
               IconButton(
                 onPressed: () {},
                 iconSize: 18,
                 splashRadius: 22,
                 color: Perflow.primaryLightColor,
-                icon: const Icon(Icons.favorite)
+                icon: const Icon(Icons.favorite),
               ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert)
-            )
+            IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
           ],
         ),
       ),

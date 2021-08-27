@@ -1,20 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perflow/helpers/math/linear_clamp.dart';
-import 'package:perflow/models/playlists/playlist_info.dart';
+import 'package:perflow/models/common/content_info.dart';
 import 'package:perflow/root_media_query.dart';
-import 'package:perflow/screens/playlists/playlist_header_info.dart';
+import 'package:perflow/screens/details/header_info.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_back_button.dart';
 
-class PlaylistHeaderDelegate extends SliverPersistentHeaderDelegate {
+class HeaderDelegate extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
-  final PlaylistInfo info;
+  final ContentInfo info;
 
-  const PlaylistHeaderDelegate({
-    required this.expandedHeight,
-    required this.info
-  });
+  const HeaderDelegate({required this.expandedHeight, required this.info});
 
   @override
   double get maxExtent => expandedHeight;
@@ -24,15 +21,16 @@ class PlaylistHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-    minExtent != oldDelegate.minExtent || maxExtent != oldDelegate.maxExtent;
+      minExtent != oldDelegate.minExtent || maxExtent != oldDelegate.maxExtent;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     final textTheme = Theme.of(context).textTheme;
 
     final double percent = shrinkOffset / expandedHeight;
 
-    if(percent > 0.85) {
+    if (percent > 0.85) {
       return AppBar(
         centerTitle: true,
         backgroundColor: Perflow.backgroundColor,
@@ -44,31 +42,56 @@ class PlaylistHeaderDelegate extends SliverPersistentHeaderDelegate {
       );
     }
 
-    final double backgroundOpacity = linearClamp(
-      t: percent,
-      upperThreshold: 0.85
-    );
+    final double backgroundOpacity =
+        linearClamp(t: percent, upperThreshold: 0.85);
 
-    final double imageOpacity = 1 - linearClamp(
-      t: percent,
-      lowerThreshold: 0.4,
-      upperThreshold: 0.7
-    );
+    final double imageOpacity =
+        1 - linearClamp(t: percent, lowerThreshold: 0.4, upperThreshold: 0.7);
 
-    final double titleOpacity = linearClamp(
-      t: percent,
-      lowerThreshold: 0.6,
-      upperThreshold: 0.85
-    );
+    final double titleOpacity =
+        linearClamp(t: percent, lowerThreshold: 0.6, upperThreshold: 0.85);
 
-    final double detailsOpacity = 1 - linearClamp(
-      t: percent,
-      lowerThreshold: 0.2,
-      upperThreshold: 0.3
-    );
+    final double detailsOpacity =
+        1 - linearClamp(t: percent, lowerThreshold: 0.2, upperThreshold: 0.3);
 
-    final image = info.iconURL != null ? NetworkImage(info.iconURL!) : null;
+    final image = NetworkImage(info.iconUrl);
 
+    return StackedHeader(
+        backgroundOpacity: backgroundOpacity,
+        image: image,
+        expandedHeight: expandedHeight,
+        imageOpacity: imageOpacity,
+        detailsOpacity: detailsOpacity,
+        info: info,
+        textTheme: textTheme,
+        titleOpacity: titleOpacity);
+  }
+}
+
+class StackedHeader extends StatelessWidget {
+  const StackedHeader({
+    Key? key,
+    required this.backgroundOpacity,
+    required this.image,
+    required this.expandedHeight,
+    required this.imageOpacity,
+    required this.detailsOpacity,
+    required this.info,
+    required this.textTheme,
+    required this.titleOpacity,
+  }) : super(key: key);
+
+  final double backgroundOpacity;
+  final NetworkImage image;
+  final double expandedHeight;
+  final double imageOpacity;
+  final double detailsOpacity;
+  final ContentInfo info;
+  final TextTheme textTheme;
+  final double titleOpacity;
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
       clipBehavior: Clip.none,
@@ -76,17 +99,16 @@ class PlaylistHeaderDelegate extends SliverPersistentHeaderDelegate {
         DecoratedBox(
           decoration: BoxDecoration(
             gradient: Perflow.secondaryGradient.lerpTo(
-              const LinearGradient(colors: [Perflow.backgroundColor, Perflow.backgroundColor]),
-              backgroundOpacity
-            ),
-            image: image != null ? DecorationImage(
+                const LinearGradient(
+                    colors: [Perflow.backgroundColor, Perflow.backgroundColor]),
+                backgroundOpacity),
+            image: DecorationImage(
               image: image,
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity((1 - backgroundOpacity) * 0.3),
-                BlendMode.dstATop
-              )
-            ) : null
+                  Colors.black.withOpacity((1 - backgroundOpacity) * 0.3),
+                  BlendMode.dstATop),
+            ),
           ),
         ),
         SafeArea(
@@ -107,11 +129,10 @@ class PlaylistHeaderDelegate extends SliverPersistentHeaderDelegate {
                     decoration: const BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0x3421292D),
-                          spreadRadius: 4,
-                          blurRadius: 6,
-                          offset: Offset(0, 0)
-                        )
+                            color: Color(0x3421292D),
+                            spreadRadius: 4,
+                            blurRadius: 6,
+                            offset: Offset(0, 0))
                       ],
                     ),
                     child: ClipRRect(
@@ -121,7 +142,7 @@ class PlaylistHeaderDelegate extends SliverPersistentHeaderDelegate {
                         child: Opacity(
                           opacity: imageOpacity,
                           child: Image(
-                            image: image!,
+                            image: image,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -130,27 +151,26 @@ class PlaylistHeaderDelegate extends SliverPersistentHeaderDelegate {
                   ),
                 ),
               ),
-              if(detailsOpacity > 0)
+              if (detailsOpacity > 0)
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Opacity(
                       opacity: detailsOpacity,
-                      child: PlaylistHeaderInfo(info: info)
+                      child: HeaderInfo(
+                        info: info,
+                      ),
                     ),
                   ),
                 ),
               Center(
-                child: Text(
-                  info.name,
-                  style: textTheme.headline6!.copyWith(
-                    color: Perflow.textColor.withOpacity(titleOpacity)
-                  )
-                ),
+                child: Text(info.name,
+                    style: textTheme.headline6!.copyWith(
+                        color: Perflow.textColor.withOpacity(titleOpacity))),
               )
             ],
-          )
+          ),
         ),
       ],
     );

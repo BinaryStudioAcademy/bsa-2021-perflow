@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:perflow/models/albums/album_info.dart';
+import 'package:perflow/models/common/content_info.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_elevated_button.dart';
 import 'package:perflow/widgets/buttons/perflow_outlined_button.dart';
 import 'package:perflow/helpers/time/time_convert.dart';
 
-class AlbumHeaderInfo extends StatelessWidget {
-  final AlbumInfo info;
+class HeaderInfo extends StatelessWidget {
+  final ContentInfo info;
 
-  const AlbumHeaderInfo({required this.info, Key? key}) : super(key: key);
+  const HeaderInfo({required this.info, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +19,32 @@ class AlbumHeaderInfo extends StatelessWidget {
             visualDensity: VisualDensity.compact,
             onPressed: () {},
             color: Perflow.primaryLightColor,
-            icon: const Icon(Icons.favorite))
+            icon: const Icon(Icons.favorite),
+          )
         : IconButton(
             visualDensity: VisualDensity.compact,
             onPressed: () {},
-            icon: const Icon(Icons.favorite_border));
+            icon: const Icon(Icons.favorite_border),
+          );
 
+    return Info(info: info, textTheme: textTheme, likeButton: likeButton);
+  }
+}
+
+class Info extends StatelessWidget {
+  const Info({
+    Key? key,
+    required this.info,
+    required this.textTheme,
+    required this.likeButton,
+  }) : super(key: key);
+
+  final ContentInfo info;
+  final TextTheme textTheme;
+  final IconButton likeButton;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 12),
       child: Column(
@@ -33,9 +53,13 @@ class AlbumHeaderInfo extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                info.name,
-                style: textTheme.headline5,
+              Expanded(
+                child: Text(
+                  info.name,
+                  style: textTheme.headline5,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 4),
@@ -44,7 +68,9 @@ class AlbumHeaderInfo extends StatelessWidget {
                   children: [
                     likeButton,
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.more_vert))
+                      onPressed: () {},
+                      icon: const Icon(Icons.more_vert),
+                    )
                   ],
                 ),
               )
@@ -56,22 +82,23 @@ class AlbumHeaderInfo extends StatelessWidget {
                 onTap: () {},
                 child: Center(
                   child: Text(
-                    info.artist?.userName ?? info.group?.name ?? '---',
+                    info.author,
                     style: textTheme.subtitle1,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
               Text(
-                ' | ' + info.songs.length.toString() + ' songs',
+                ' | ' + info.songsCount.toString() + ' songs',
                 style:
                     textTheme.subtitle1?.copyWith(color: Perflow.textGrayColor),
               ),
               Text(
                 ' | ' +
-                    timeConvert(Duration(
-                        seconds: info.songs
-                            .map((e) => e.duration)
-                            .reduce((value, element) => value + element))),
+                    timeConvert(
+                      info.duration,
+                    ),
                 style:
                     textTheme.subtitle1?.copyWith(color: Perflow.textGrayColor),
               )
@@ -87,16 +114,20 @@ class AlbumHeaderInfo extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: PerflowElevatedButton.text(
-                        // onPressed: () => context.read<PlaylistSongsCubit>().play(),
-                        onPressed: () {},
-                        text: 'Play'),
+                      // onPressed: () => context.read<PlaylistSongsCubit>().play(),
+                      onPressed: () {},
+                      text: 'Play',
+                    ),
                   ),
                   Expanded(
                     flex: 2,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: PerflowOutlinedButton.text(
-                          onPressed: () {}, text: 'Add songs'),
+                        onPressed: () {},
+                        text: 'Add songs',
+                        color: Perflow.textColor,
+                      ),
                     ),
                   ),
                   const Spacer(

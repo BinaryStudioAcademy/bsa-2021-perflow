@@ -5,12 +5,12 @@ import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
 import 'package:perflow/cubits/playlists/playlist_info_cubit.dart';
 import 'package:perflow/cubits/playlists/playlist_songs_cubit.dart';
+import 'package:perflow/helpers/icon_url_convert.dart';
+import 'package:perflow/models/common/content_info.dart';
 import 'package:perflow/models/playlists/playlist_info.dart';
 import 'package:perflow/models/songs/playlist_song.dart';
-import 'package:perflow/root_media_query.dart';
-import 'package:perflow/screens/playlists/playlist_header.dart';
-import 'package:perflow/theme.dart';
-import 'package:perflow/widgets/buttons/perflow_back_button.dart';
+import 'package:perflow/screens/details/default_sliver_bar.dart';
+import 'package:perflow/screens/details/header.dart';
 import 'package:perflow/widgets/songs/song_row.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -43,22 +43,31 @@ class PlaylistScreen extends StatelessWidget {
               const SliverToBoxAdapter(),
               BlocBuilder<PlaylistInfoCubit, ApiCallState<PlaylistInfo>>(
                 builder: (context, state) => state.map(
-                  loading: (_) => _buildDefaultSliverAppbar(
+                  loading: (_) => DefaultSliverBar(
                     context: context,
                     title: const CircularProgressIndicator(),
                     expandedHeight: headerExpandedHeight
                   ),
-                  error: (error) => _buildDefaultSliverAppbar(
+                  error: (error) => DefaultSliverBar(
                     context: context,
                     title: Text(error.message),
                     expandedHeight: headerExpandedHeight
                   ),
                   data: (value) => SliverPersistentHeader(
                     pinned: true,
-                    delegate: PlaylistHeaderDelegate(
-                      expandedHeight: headerExpandedHeight,
-                      info: value.data
-                    )
+                    delegate: HeaderDelegate(
+                    expandedHeight: headerExpandedHeight,
+                    info: ContentInfo(
+                      author: value.data.author.userName,
+                      songsCount: 10,
+                      name: value.data.name,
+                      iconUrl: IconUrlConvert.getValidUrl(value.data.iconURL),
+                      duration: const Duration(
+                        seconds: 100,
+                      ),
+                      isLiked: value.data.isLiked,
+                    ),
+                  ),
                   ),
                 ),
               ),
@@ -68,29 +77,6 @@ class PlaylistScreen extends StatelessWidget {
             ],
           ),
         )
-      ),
-    );
-  }
-
-  Widget _buildDefaultSliverAppbar({
-    required BuildContext context,
-    required Widget title,
-    required double expandedHeight
-  }) {
-    return SliverAppBar(
-      elevation: 2,
-      backgroundColor: Perflow.backgroundColor,
-      expandedHeight: expandedHeight - RootMediaQuery.value.padding.top,
-      pinned: true,
-      leading: const PerflowBackButton(),
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
-        background: const DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: Perflow.secondaryGradient
-          )
-        ),
-        title: title,
       ),
     );
   }
