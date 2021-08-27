@@ -5,6 +5,7 @@ using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Interfaces;
+using Shared.Auth;
 
 namespace Perflow.Services.Implementations
 {
@@ -48,11 +49,23 @@ namespace Perflow.Services.Implementations
         {
             var user = _mapper.Map<User>(userDto);
 
-            var userEntity = _context.Users.Add(user);
-            _context.UserSettings.Add(new UserSettings { UserId = userEntity.Entity.Id });
-
+            var userEntity = await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            _context.UserSettings.Add(new Domain.UserSettings() { UserId = userEntity.Entity.Id });
             await _context.SaveChangesAsync();
             return userEntity.Entity;
+        }
+
+        public async Task<ArtistApplicant> CreateArtistApplicantAsync(int userId, UserRole userRole)
+        {
+            var result = await _context.ArtistApplicants.AddAsync(new ArtistApplicant(userId, userRole));
+            await _context.SaveChangesAsync();
+            return result.Entity;
+        }
+
+        public async Task<ArtistApplicant> GetArtistApplicantAsync(int userId)
+        {
+            return await _context.ArtistApplicants.FirstOrDefaultAsync(us => us.UserId == userId && us.Status != Domain.Enums.ApplicationStatus.Approved);
         }
 
         public async Task<UserSettings> GetUserSettingsAsync(int userId)
