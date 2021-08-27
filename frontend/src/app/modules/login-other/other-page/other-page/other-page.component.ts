@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ArtistApplicant } from 'src/app/models/user/artist-applicant';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
@@ -9,6 +11,9 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./other-page.component.sass']
 })
 export class OtherPageComponent {
+
+  private _unsubscribe$ = new Subject<void>();
+
   constructor(
     private _userService: UserService,
     private _snackbarService: SnackbarService
@@ -19,7 +24,9 @@ export class OtherPageComponent {
   createUserApplicant(userRole: number) {
     const artistApplicant = new ArtistApplicant();
     artistApplicant.userRole = userRole;
-    this._userService.createArtistApplicant(artistApplicant).subscribe();
+    this._userService.createArtistApplicant(artistApplicant)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe();
     this._snackbarService.show({
       message: 'Our moderators will review it soon.',
       header: 'Applicant sended!'
