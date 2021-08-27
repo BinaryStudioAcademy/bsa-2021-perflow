@@ -64,10 +64,9 @@ export class PlayingComponent implements AfterViewInit {
 
   prepVisualization() {
     for (let i = 0; i < this._amountofStrokes; i += 1) {
-      
-      const transX = i % 2 === 0 ? 
-      this._width / 2 + this._barWidth * (i / 2) : 
-      this._width / 2 - this._barWidth * Math.floor(1 + (i / 2));
+      const transX = i % 2 === 0
+        ? this._width / 2 + this._barWidth * (i / 2)
+        : this._width / 2 - this._barWidth * Math.floor(1 + (i / 2));
 
       this.appendRect(this._svg,
         `rect-${i}`,
