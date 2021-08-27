@@ -1,6 +1,6 @@
 import { PlatformLocation } from '@angular/common';
 import {
-  Component, ElementRef, OnInit, ViewChild
+  Component, OnInit
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
@@ -26,12 +26,8 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 })
 export class ArtistDetailsComponent implements OnInit {
   private _userId: number;
-  private readonly _scrollingSize: number = 270;
   private readonly _decimalRadix = 10;
   private readonly _gridScrollMultiplier = 3;
-
-  @ViewChild('albums') albumsElement: ElementRef;
-  @ViewChild('playlists') playlistsElement: ElementRef;
 
   artist: ArtistFull = {} as ArtistFull;
   topSongs: Song[] = [];
@@ -51,7 +47,7 @@ export class ArtistDetailsComponent implements OnInit {
     private _authService: AuthService,
     private _albumsService: AlbumService
   ) {
-    _route.params.subscribe((routeParams) => {
+    _route.params.subscribe(() => {
       this.loadData();
     });
   }
@@ -128,19 +124,6 @@ export class ArtistDetailsComponent implements OnInit {
           this.artistAlbums = result;
         }
       );
-  }
-
-  scroll(id: string, scrollingSize: number = this._scrollingSize) {
-    switch (id) {
-      case 'albums':
-        this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
-        break;
-      case 'playlists':
-        this.playlistsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
-        break;
-      default:
-        break;
-    }
   }
 
   playArtist = () => {

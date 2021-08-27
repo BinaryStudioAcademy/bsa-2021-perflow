@@ -15,7 +15,7 @@
             View account
           </span>
         </div>
-        <div class="item" routerLink="../perflowstudio" *ngIf="isRightRole && !currentRoute.includes('/perflowstudio')">
+        <div class="item" routerLink="../perflowstudio" *ngIf="!currentRoute.includes('/perflowstudio')">
           <span>
             <i class="external alternate icon"></i>
             Perflow Studio

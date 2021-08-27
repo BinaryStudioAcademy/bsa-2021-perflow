@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component, OnInit, ViewChild
+} from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { QueueComponent } from '../music-components/queue/queue.component';
@@ -47,7 +49,11 @@ export class MainContentComponent implements OnInit {
   };
 
   toggleQueue = () => {
-    if (!this._queue.isOpened) this._queue.openView();
+    if (!this._queue.isOpened) {
+      if (!this._queue.analyser) this._queue.analyser = this._songToolbar.getAnalyser();
+
+      this._queue.openView();
+    }
     else this._queue.closeView();
   };
 

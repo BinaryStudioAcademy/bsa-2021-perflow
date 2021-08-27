@@ -1,6 +1,7 @@
 import {
   Component, EventEmitter, Input, Output
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { Song } from 'src/app/models/song/song';
 import { QueueService } from 'src/app/services/queue.service';
@@ -20,10 +21,13 @@ export class AlbumCardComponent {
   album: AlbumForReadDTO;
   @Output()
   delete = new EventEmitter<AlbumForReadDTO>();
+  @Output()
+  clickEmiter = new EventEmitter<void>();
 
   constructor(
     private _songsService: SongsService,
-    private _queueService: QueueService
+    private _queueService: QueueService,
+    private _router: Router
   ) { }
 
   onDeleteClick(album: AlbumForReadDTO) {
@@ -50,5 +54,10 @@ export class AlbumCardComponent {
     const [first] = songs;
 
     this._queueService.initSong(first, true);
+  }
+
+  redirectTo() {
+    this.clickEmiter.emit();
+    this._router.navigateByUrl(`/albums/${this.album.id}`);
   }
 }

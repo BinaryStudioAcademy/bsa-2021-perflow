@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
@@ -13,9 +16,13 @@ export class PlaylistCardComponent {
   @Input()
   playlist: PlaylistView = {} as PlaylistView;
 
+  @Output()
+  clickEmiter = new EventEmitter<void>();
+
   constructor(
     private _playlistsService: PlaylistsService,
-    private _queueService: QueueService
+    private _queueService: QueueService,
+    private _router: Router
   ) { }
 
   play = (id: number) => {
@@ -38,5 +45,10 @@ export class PlaylistCardComponent {
     const [first] = songs;
 
     this._queueService.initSong(first, true);
+  }
+
+  redirectTo() {
+    this.clickEmiter.emit();
+    this._router.navigateByUrl(`/playlists/view-playlist/${this.playlist.id}`);
   }
 }
