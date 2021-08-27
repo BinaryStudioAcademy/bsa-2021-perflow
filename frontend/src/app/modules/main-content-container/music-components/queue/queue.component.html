@@ -3,7 +3,7 @@
         <div class="playing-label"><h4>Now playing</h4></div>
         <div class="container" *ngIf="!!getCurrentSong()">
             <div class="playinganimation">
-                <app-playing [isPaused]="!isPlaying"></app-playing>
+                <app-playing></app-playing>
             </div>
             <div class="songicon">
                 <img [attr.src]="getCurrentSong().album.iconURL">
