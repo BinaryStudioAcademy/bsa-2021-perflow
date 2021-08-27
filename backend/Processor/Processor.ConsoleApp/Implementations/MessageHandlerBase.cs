@@ -33,7 +33,7 @@ namespace Processor.ConsoleApp.Implementations
                 }
                 catch (Exception exception)
                 {
-                    Logger.LogError("{Date} Couldn't process message\n\tError: {Error}", DateTime.Now.ToLongTimeString(), exception.Message);
+                    Logger.LogError("{Date} Couldn't process message\n\tError: {Error}", DateTime.Now.ToLongTimeString(), exception.ToString());
                 }
 
 
