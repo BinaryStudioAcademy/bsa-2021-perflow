@@ -58,13 +58,17 @@ export class PlayingComponent implements AfterViewInit {
       const mod = this._dataArray[i] / 256;
       const newHeight = this._minBarHeight + (this._maxBarHeight * mod);
       d3.select(`#rect-${i}`)
-        .attr('height', newHeight)
-        .attr('transform', `translate(${this._barWidth * i}, 0)`);
+        .attr('height', newHeight);
     }
   };
 
   prepVisualization() {
     for (let i = 0; i < this._amountofStrokes; i += 1) {
+      
+      const transX = i % 2 === 0 ? 
+      this._width / 2 + this._barWidth * (i / 2) : 
+      this._width / 2 - this._barWidth * Math.floor(1 + (i / 2));
+
       this.appendRect(this._svg,
         `rect-${i}`,
         this._minBarHeight,
@@ -72,7 +76,7 @@ export class PlayingComponent implements AfterViewInit {
         '#FD5D34',
         '#FD9122',
         1,
-        this._barWidth * i,
+        transX,
         0);
     }
   }
