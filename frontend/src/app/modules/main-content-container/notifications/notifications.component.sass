@@ -1,0 +1,126 @@
+@import "src/styles.sass"
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400")
+
+$image-size: 40px
+$menu-item-width: 300px
+
+=flex-container($align-items, $justify-content)
+    display: flex
+    align-items: $align-items
+    justify-content: $justify-content
+
+%avatar
+    width: $image-size
+    height: $image-size
+    border-radius: 50%
+
+%break-spaces
+    max-width: 100%
+    white-space: break-spaces
+
+#notifications
+    position: fixed
+    top: 20px
+    right: 230px
+    border-radius: 25px
+    display: grid
+    grid-template-columns: 40px
+    align-items: center
+    color: $text
+    width: fit-content
+    height: 50px
+    padding: 0 5px
+    background-color: $light-gray
+    border: 1px solid darken($gray, 15%)
+    z-index: $mini-profile-z-index
+    &:hover
+        cursor: pointer
+    .icon-background
+        position: relative
+        @extend %avatar
+        +flex-container(center, center)
+        i
+            font-size: 18px
+            margin-right: 0
+    .notifications
+        +flex-container(left, left)
+        .link
+            margin-left: auto
+    .notification
+        display: grid
+        grid-template-areas: 'label text'
+        grid-template-columns: 30px 1fr
+        .label
+            grid-area: label
+            background: #FD8427
+        .text
+            grid-area: text
+            +flex-container(left, left)
+            flex-direction: column
+            .title
+                @extend %break-spaces
+                font-weight: $medium-weight
+            .message
+                @extend %break-spaces
+                padding: 4px 0px
+                line-height: 18px
+                opacity: 0.8
+            .date
+                line-height: 18px
+                opacity: 0.8
+    .new
+        background: $medium-orange
+        border-radius: 50%
+        width: 8px
+        height: 8px
+
+.top-right-corner
+    position: absolute
+    top: 30%
+    right: 30%
+
+.link
+    font-weight: $normal-weight
+    color: $medium-orange
+    &:hover
+        color: darken($medium-orange, 10%)
+        cursor: pointer
+
+.ui.floating.dropdown
+    .menu
+        background: $light-gray
+        border: 0.5px solid #373C43 !important
+        border-radius: 4px
+        box-shadow: none !important
+        width: $menu-item-width !important
+        .scrolling
+            border: none !important
+            border-top: 0.5px solid #373C43 !important
+        .header
+            font-size: 14px !important
+            font-weight: $medium-weight
+            text-transform: none !important
+            width: $menu-item-width !important
+        .item
+            background-color: $light-gray
+            width: $menu-item-width !important
+            span
+                color: $text !important
+                font-family: Montserrat !important
+                font-weight: $normal-weight !important
+                line-height: 135%
+            &:hover
+                background-color: $drk-gray !important
+            &:active
+                background-color: $light-gray !important
+                font-weight: $normal-weight !important
+        .item.first
+            padding-top: 18px !important
+        .item.last
+            padding-bottom: 18px !important
+
+.item.active.selected
+    background-color: $light-gray !important
+    font-weight: $normal-weight !important
+    &:hover
+        background-color: $drk-gray !important

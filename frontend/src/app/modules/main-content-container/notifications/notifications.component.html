@@ -1,0 +1,25 @@
+<h4 class="ui header">
+    <div id="notifications" class="ui floating dropdown" appSmDropdown>
+        <div class="icon-background">
+            <i class="bell icon"></i>
+        </div>
+        <div class="new top-right-corner"></div>
+        <div class="menu left">
+            <div class="header notifications">
+                Notifications
+                <span class="link">Mark all as read</span>
+            </div>
+            <div class="scrolling menu left">
+                <div class="item notification" *ngFor="let n of notifications">
+                    <div class="ui empty circular label"></div>
+                    <div class="text">
+                        <div class="title">Title</div>
+                        <div class="message">The Artist created new bggh fgthb rfr Album <a class="link" href="">Link</a>
+                        </div>
+                        <div class="date">03.03.2021</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</h4>
