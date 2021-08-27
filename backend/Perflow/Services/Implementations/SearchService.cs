@@ -86,8 +86,8 @@ namespace Perflow.Services.Implementations
             var albums = await context.Albums
                 .Where(album => album.Name.Contains(searchTerm.Trim()))
                 .Include(album => album.Author)
-                .Include(album => album.Group)
                 .Include(album => album.Reactions)
+                .Include(album => album.Group)
                 .OrderByDescending(album => album.Reactions.GroupBy(r => r.UserId).Count())
                 .Skip(skip)
                 .Take(itemsOnPage)
@@ -98,8 +98,8 @@ namespace Perflow.Services.Implementations
                     Name = album.Name,
                     ReleaseYear = album.ReleaseYear,
                     IconURL = _imageService.GetImageUrl(album.IconURL),
-                    Author = album.AuthorId != null ? (new AlbumViewAuthorsDTO(album.Author.Id, album.Author.UserName, true)) 
-                        : new AlbumViewAuthorsDTO (album.Group.Id, album.Group.Name, false)
+                    Author = album.AuthorId != null ? (new AlbumViewAuthorsDTO(album.Author.Id, album.Author.UserName, true))
+                        : new AlbumViewAuthorsDTO(album.Group.Id, album.Group.Name, false)
                 })
                 .ToListAsync();
 
