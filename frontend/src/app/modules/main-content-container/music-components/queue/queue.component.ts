@@ -197,8 +197,4 @@ export class QueueComponent {
   set analyser(value: AnalyserNode) {
     this._musicVisualizer.analyser = value;
   }
-
-  draw() {
-    this._musicVisualizer.draw();
-  }
 }
