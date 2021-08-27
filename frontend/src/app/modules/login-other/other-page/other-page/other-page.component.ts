@@ -11,7 +11,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./other-page.component.sass']
 })
 export class OtherPageComponent {
-
   private _unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -25,8 +24,8 @@ export class OtherPageComponent {
     const artistApplicant = new ArtistApplicant();
     artistApplicant.userRole = userRole;
     this._userService.createArtistApplicant(artistApplicant)
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe();
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe();
     this._snackbarService.show({
       message: 'Our moderators will review it soon.',
       header: 'Applicant sended!'
