@@ -77,9 +77,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.searchHistory = data;
-          if (data.length) {
-            this.isSearchHistoryShown = true;
-          }
+          this.isSearchHistoryShown = !!data.length;
         }
       });
   }
