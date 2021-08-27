@@ -1,9 +1,11 @@
 import {
-  Component, Input, Output, EventEmitter
+  Component, Input, Output, EventEmitter, OnInit, OnDestroy
 } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { UserService } from 'src/app/services/user.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type';
 
@@ -12,8 +14,11 @@ import { SongSortType } from '../../../models/song/song-sort-type';
   templateUrl: './songs-list.component.html',
   styleUrls: ['./songs-list.component.sass']
 })
-export class SongsListComponent {
+export class SongsListComponent implements OnInit, OnDestroy {
   public filterExplicit: boolean;
+  public isLoading = false;
+
+  private _unsubscribe$ = new Subject<void>();
 
   @Input() songs: Song[];
   @Input() highlightId: number;
@@ -31,14 +36,22 @@ export class SongsListComponent {
     private _songService: SongsService,
     private _userService: UserService
   ) {
-    this._userService.getUserSettings().subscribe(
-      (resp) => {
-        this.filterExplicit = resp.body?.showExplicitContent!;
-        if (!this.filterExplicit) {
-          this.songs = this.songs?.filter((s) => !s.hasCensorship);
+
+  }
+
+  public ngOnInit() {
+    this._userService.getUserSettings()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp) => {
+          this.filterExplicit = resp.body?.showExplicitContent!;
         }
-      }
-    );
+      );
+  }
+
+  public ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 
   drop(event: CdkDragDrop<Song[]>) {

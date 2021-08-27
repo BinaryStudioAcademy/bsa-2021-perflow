@@ -61,11 +61,11 @@ export class SongToolbarComponent implements OnInit {
     toolbarService.songUpdated$
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
-      (song) => {
-        this.updateSong(song);
-        this._rpService.addSongViaId(song.id, this.userId, undefined).subscribe();
-      }
-    );
+        (song) => {
+          this.updateSong(song);
+          this._rpService.addSongViaId(song.id, this.userId, undefined).subscribe();
+        }
+      );
 
     toolbarService.playToggled$
       .pipe(takeUntil(this._unsubscribe$))

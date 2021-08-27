@@ -13,7 +13,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./queue.component.sass']
 })
 export class QueueComponent implements OnDestroy {
-  private _unsubscribe$ = new Subject<void>(); 
+  private _unsubscribe$ = new Subject<void>();
 
   @Output() opened = new EventEmitter<void>();
   @Output() closed = new EventEmitter<void>();
@@ -35,18 +35,18 @@ export class QueueComponent implements OnDestroy {
     private _userService: UserService
   ) {
     _queueService.songAdded$
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe((song) => {
-          if (!this.songs.length) {
-            this.currentSongId = song.id;
-          }
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((song) => {
+        if (!this.songs.length) {
+          this.currentSongId = song.id;
+        }
 
-          if (!this.songs.find((s) => s.id === song.id)) {
-            this.songs.push(song);
-            this.unshuffledSongs.push(song);
-            this.shuffleSongs();
-          }
-        });
+        if (!this.songs.find((s) => s.id === song.id)) {
+          this.songs.push(song);
+          this.unshuffledSongs.push(song);
+          this.shuffleSongs();
+        }
+      });
 
     _queueService.nextSong$.subscribe(() => {
       _queueService.nextSongGot.emit(this.getNextSong());
@@ -57,33 +57,33 @@ export class QueueComponent implements OnDestroy {
     });
 
     _queueService.currentSongUpdate
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe((song) => {
-          this.currentSongId = song.id;
-        });
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((song) => {
+        this.currentSongId = song.id;
+      });
 
     _queueService.playingToggled
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe((value) => {
-          this.isPlaying = value;
-        });
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((value) => {
+        this.isPlaying = value;
+      });
 
     _queueService.shuffleToggled
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe((value) => {
-          if (value) {
-            this.shuffleSongs();
-          }
-          this.isShuffling = value;
-        });
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((value) => {
+        if (value) {
+          this.shuffleSongs();
+        }
+        this.isShuffling = value;
+      });
 
     _queueService.queueCleared$
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe(() => {
-          this.songs = [];
-          this.unshuffledSongs = [];
-        });
-      }
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        this.songs = [];
+        this.unshuffledSongs = [];
+      });
+  }
 
   public ngOnDestroy() {
     this._unsubscribe$.next();
@@ -93,17 +93,17 @@ export class QueueComponent implements OnDestroy {
   openView = () => {
     this.isOpened = true;
     this._userService.getUserSettings()
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe(
-          (resp) => {
-            this.filterExplicit = resp.body?.showExplicitContent!;
-            if (!this.filterExplicit) {
-              this.songs = this.songs?.filter((s) => !s.hasCensorship);
-              this.unshuffledSongs = this.unshuffledSongs?.filter((s) => !s.hasCensorship);
-            }
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp) => {
+          this.filterExplicit = resp.body?.showExplicitContent!;
+          if (!this.filterExplicit) {
+            this.songs = this.songs?.filter((s) => !s.hasCensorship);
+            this.unshuffledSongs = this.unshuffledSongs?.filter((s) => !s.hasCensorship);
           }
-        );
-        this.opened.emit();
+        }
+      );
+    this.opened.emit();
   };
 
   closeView = () => {
