@@ -1,7 +1,8 @@
 import {
   Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild
 } from '@angular/core';
-import { filter } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -18,6 +19,8 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 })
 export class SongToolbarComponent implements OnInit {
   @ViewChild('audio') audioRef! : ElementRef<HTMLAudioElement>;
+
+  private _unsubscribe$ = new Subject<void>();
 
   songForPlay: SongInfo = new SongInfo(0, 'NONAME', 'NOARTIST', '', '');
   userId: number;
@@ -55,20 +58,25 @@ export class SongToolbarComponent implements OnInit {
     private _queueService: QueueService,
     private _rpService: RecentlyPlayedService
   ) {
-    toolbarService.songUpdated$.subscribe(
+    toolbarService.songUpdated$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
       (song) => {
         this.updateSong(song);
         this._rpService.addSongViaId(song.id, this.userId, undefined).subscribe();
       }
     );
 
-    toolbarService.playToggled$.subscribe(
-      () => {
-        this.playPause();
-      }
-    );
+    toolbarService.playToggled$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        () => {
+          this.playPause();
+        }
+      );
 
     authService.getAuthStateObservableFirst()
+      .pipe(takeUntil(this._unsubscribe$))
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;
@@ -216,22 +224,28 @@ export class SongToolbarComponent implements OnInit {
 
   toggleLike = () => {
     if (this.isLiked) {
-      this._reactionService.removeLike(this.songForPlay.id, this.userId).subscribe(() => {
-        this.isLiked = false;
-      });
+      this._reactionService.removeLike(this.songForPlay.id, this.userId)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe(() => {
+          this.isLiked = false;
+        });
       return;
     }
 
-    this._reactionService.likeSong(this.songForPlay.id, this.userId).subscribe(() => {
-      this.isLiked = true;
-    });
+    this._reactionService.likeSong(this.songForPlay.id, this.userId)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        this.isLiked = true;
+      });
   };
 
   setLike = () => {
-    const subscription = this._songsService.checkIfSongLiked(this.songForPlay.id).subscribe((response) => {
-      this.isLiked = response.isLiked;
-      subscription.unsubscribe();
-    });
+    const subscription = this._songsService.checkIfSongLiked(this.songForPlay.id)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((response) => {
+        this.isLiked = response.isLiked;
+        subscription.unsubscribe();
+      });
   };
 
   toggleQueue = () => {

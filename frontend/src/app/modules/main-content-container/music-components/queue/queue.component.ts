@@ -1,6 +1,8 @@
 import {
-  Component, EventEmitter, Input, Output
+  Component, EventEmitter, Input, OnDestroy, Output
 } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { QueueService } from 'src/app/services/queue.service';
 import { UserService } from 'src/app/services/user.service';
@@ -10,7 +12,9 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.sass']
 })
-export class QueueComponent {
+export class QueueComponent implements OnDestroy {
+  private _unsubscribe$ = new Subject<void>(); 
+
   @Output() opened = new EventEmitter<void>();
   @Output() closed = new EventEmitter<void>();
   @Output() togglePlayEvent = new EventEmitter<void>();
@@ -30,17 +34,19 @@ export class QueueComponent {
     private _queueService: QueueService,
     private _userService: UserService
   ) {
-    _queueService.songAdded$.subscribe((song) => {
-      if (!this.songs.length) {
-        this.currentSongId = song.id;
-      }
+    _queueService.songAdded$
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((song) => {
+          if (!this.songs.length) {
+            this.currentSongId = song.id;
+          }
 
-      if (!this.songs.find((s) => s.id === song.id)) {
-        this.songs.push(song);
-        this.unshuffledSongs.push(song);
-        this.shuffleSongs();
-      }
-    });
+          if (!this.songs.find((s) => s.id === song.id)) {
+            this.songs.push(song);
+            this.unshuffledSongs.push(song);
+            this.shuffleSongs();
+          }
+        });
 
     _queueService.nextSong$.subscribe(() => {
       _queueService.nextSongGot.emit(this.getNextSong());
@@ -50,39 +56,54 @@ export class QueueComponent {
       _queueService.previousSongGot.emit(this.getPreviousSong());
     });
 
-    _queueService.currentSongUpdate.subscribe((song) => {
-      this.currentSongId = song.id;
-    });
+    _queueService.currentSongUpdate
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((song) => {
+          this.currentSongId = song.id;
+        });
 
-    _queueService.playingToggled.subscribe((value) => {
-      this.isPlaying = value;
-    });
+    _queueService.playingToggled
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((value) => {
+          this.isPlaying = value;
+        });
 
-    _queueService.shuffleToggled.subscribe((value) => {
-      if (value) {
-        this.shuffleSongs();
+    _queueService.shuffleToggled
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((value) => {
+          if (value) {
+            this.shuffleSongs();
+          }
+          this.isShuffling = value;
+        });
+
+    _queueService.queueCleared$
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe(() => {
+          this.songs = [];
+          this.unshuffledSongs = [];
+        });
       }
-      this.isShuffling = value;
-    });
 
-    _queueService.queueCleared$.subscribe(() => {
-      this.songs = [];
-      this.unshuffledSongs = [];
-    });
+  public ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 
   openView = () => {
     this.isOpened = true;
-    this._userService.getUserSettings().subscribe(
-      (resp) => {
-        this.filterExplicit = resp.body?.showExplicitContent!;
-        if (!this.filterExplicit) {
-          this.songs = this.songs?.filter((s) => !s.hasCensorship);
-          this.unshuffledSongs = this.unshuffledSongs?.filter((s) => !s.hasCensorship);
-        }
-      }
-    );
-    this.opened.emit();
+    this._userService.getUserSettings()
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe(
+          (resp) => {
+            this.filterExplicit = resp.body?.showExplicitContent!;
+            if (!this.filterExplicit) {
+              this.songs = this.songs?.filter((s) => !s.hasCensorship);
+              this.unshuffledSongs = this.unshuffledSongs?.filter((s) => !s.hasCensorship);
+            }
+          }
+        );
+        this.opened.emit();
   };
 
   closeView = () => {
