@@ -30,9 +30,9 @@ export class QueueComponent implements OnDestroy {
 
   currentSongId: number;
   unshuffledSongs: Song[] = [];
-  
+
   @ViewChild(PlayingComponent)
-    private _musicVisualizer: PlayingComponent;
+  private _musicVisualizer: PlayingComponent;
 
   constructor(
     private _queueService: QueueService,
