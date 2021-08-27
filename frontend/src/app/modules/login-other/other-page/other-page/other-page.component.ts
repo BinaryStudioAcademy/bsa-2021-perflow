@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './other-page.component.html',
   styleUrls: ['./other-page.component.sass']
 })
-export class OtherPageComponent implements OnDestroy{
+export class OtherPageComponent implements OnDestroy {
   private _unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -20,7 +20,7 @@ export class OtherPageComponent implements OnDestroy{
 
   }
 
-  public ngOnDestroy(){
+  public ngOnDestroy() {
     this._unsubscribe$.next();
     this._unsubscribe$.complete();
   }
