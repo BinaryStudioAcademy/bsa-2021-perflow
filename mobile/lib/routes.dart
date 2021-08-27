@@ -5,7 +5,9 @@ class Routes {
 
   static const String home = '/home';
   static const String search = '/search';
-  static const String library = '/library';
+  static const String libraryAll = '/library/all';
+  static const String libraryArtists = '/library/artists';
+  static const String libraryAlbums = '/library/albums';
 
   static const String player = '/player';
 

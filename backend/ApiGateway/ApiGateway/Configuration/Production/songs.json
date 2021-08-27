@@ -97,7 +97,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/Songs/byAlbum/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",

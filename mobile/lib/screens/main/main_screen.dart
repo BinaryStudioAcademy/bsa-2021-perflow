@@ -47,7 +47,7 @@ class MainScreen extends StatelessWidget {
                         selected: state is MainNavigationLibrary,
                         icon: Icons.music_note,
                         title: 'Library',
-                        onTap: () => context.vRouter.to(Routes.library),
+                        onTap: () => context.vRouter.to(Routes.libraryAll),
                       ),
                     ],
                   ),

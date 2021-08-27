@@ -3,6 +3,9 @@ using Perflow.Services.Interfaces;
 using Perflow.Common.MappingProfiles;
 using System.Reflection;
 using Perflow.Services.Implementations;
+using Microsoft.AspNetCore.SignalR;
+using Perflow.Hubs.Implementations;
+using Perflow.Hubs.Interfaces;
 
 namespace Perflow.Services.Extensions
 {
@@ -38,6 +41,8 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<IUsersService, UsersService>();
 
+            services.AddSingleton<IImageUploadService, ImageUploadService>();
+
             services.AddScoped<PlaylistService>();
             services.AddScoped<GroupService>();
             services.AddScoped<SongReactionService>();
@@ -52,10 +57,13 @@ namespace Perflow.Services.Extensions
             services.AddScoped<ISongsService, SongsService>();
 
             services.AddScoped<AlbumsService>();
-            
+
             services.AddScoped<IArtistService, ArtistService>();
 
             services.AddScoped<IImageService, ImageService>();
+
+            services.AddScoped(provider => new NotificationService(
+                provider.GetRequiredService<IHubContext<NotificationsHub, INotificationsHub>>()));
         }
     }
 }

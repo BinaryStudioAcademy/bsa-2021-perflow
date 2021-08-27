@@ -8,7 +8,9 @@ using Microsoft.OpenApi.Models;
 using Perflow.Services.Extensions;
 using Perflow.DataAccess.Context;
 using Shared.Auth.Extensions;
+using Shared.AzureBlobStorage.Extensions;
 using Shared.ExceptionsHandler.Filters;
+using Perflow.Hubs.Implementations;
 
 namespace Perflow
 {
@@ -34,9 +36,13 @@ namespace Perflow
 
             services.AddHttpClient();
 
+            services.AddSignalR();
+
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
             services.AddAuth(Configuration["GOOGLE_CREDENTIALS:project_id"]);
+
+            services.AddProcessorRabbitMQ(Configuration);
 
             services.AddSwaggerGen(c =>
             {
@@ -70,6 +76,7 @@ namespace Perflow
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationsHub>("/notifications");
             });
 
             InitializeDatabase(app);
