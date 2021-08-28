@@ -22,7 +22,6 @@ class AlbumsList extends StatelessWidget {
         ),
         data: (albums) => ListView.builder(
           itemBuilder: (context, index) {
-            //return AlbumRow(album: albums.data[index]);
             return AlbumRow(album: albums.data[index]);
           },
           itemCount: albums.data.length,
