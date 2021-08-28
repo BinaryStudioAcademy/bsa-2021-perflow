@@ -15,6 +15,6 @@ export class NotificationService {
   }
 
   markAllAsRead() {
-    return this._httpService.postRequest(this.routePrefix, {});
+    return this._httpService.postRequest(`${this.routePrefix}/markAllAsRead`, {});
   }
 }

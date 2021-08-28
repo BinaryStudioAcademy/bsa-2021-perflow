@@ -27,7 +27,7 @@ namespace Perflow.Controllers
             return Ok(await _notificationService.GetAll(User.GetId()));
         }
 
-        [HttpPost]
+        [HttpPost("markAllAsRead")]
         public async Task<ActionResult> MarkAllAsRead()
         {
             await _notificationService.MarkAllAsRead(User.GetId());

@@ -1,4 +1,4 @@
-/*eslint no-param-reassign: "error"*/
+/* eslint no-param-reassign: "error" */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map } from 'jquery';
 import { Subject } from 'rxjs';
