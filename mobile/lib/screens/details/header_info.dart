@@ -1,47 +1,85 @@
 import 'package:flutter/material.dart';
-import 'package:perflow/models/common/content_info.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_elevated_button.dart';
 import 'package:perflow/widgets/buttons/perflow_outlined_button.dart';
-import 'package:perflow/helpers/time/time_convert.dart';
 
 class HeaderInfo extends StatelessWidget {
-  final ContentInfo info;
+  final Text primaryText;
+  final Text secondaryTextMain;
+  final Text? secondaryTextOther;
+  final String iconUrl;
+  final bool isLiked;
+  final bool isLikeAvailable;
+  final Function()? onLikePress;
+  final PerflowOutlinedButton? secondaryButton;
 
-  const HeaderInfo({required this.info, Key? key}) : super(key: key);
+  const HeaderInfo(
+      {Key? key,
+      required this.iconUrl,
+      required this.primaryText,
+      required this.secondaryTextMain,
+      this.secondaryTextOther,
+      this.isLiked = false,
+      this.isLikeAvailable = false,
+      this.onLikePress,
+      this.secondaryButton})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    IconButton? likeButton;
 
-    final likeButton = info.isLiked
-        ? IconButton(
-            visualDensity: VisualDensity.compact,
-            onPressed: () {},
-            color: Perflow.primaryLightColor,
-            icon: const Icon(Icons.favorite),
-          )
-        : IconButton(
-            visualDensity: VisualDensity.compact,
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_border),
-          );
+    if (isLikeAvailable) {
+      likeButton = isLiked
+          ? IconButton(
+              visualDensity: VisualDensity.compact,
+              onPressed: () {
+                if (onLikePress != null) {
+                  onLikePress!.call();
+                }
+              },
+              color: Perflow.primaryLightColor,
+              icon: const Icon(Icons.favorite),
+            )
+          : IconButton(
+              visualDensity: VisualDensity.compact,
+              onPressed: () {
+                if (onLikePress != null) {
+                  onLikePress!.call();
+                }
+              },
+              icon: const Icon(Icons.favorite_border),
+            );
+    }
 
-    return Info(info: info, textTheme: textTheme, likeButton: likeButton);
+    return _Info(
+      likeButton: likeButton,
+      iconUrl: iconUrl,
+      primaryText: primaryText,
+      secondaryTextMain: secondaryTextMain,
+      secondaryTextOther: secondaryTextOther,
+    );
   }
 }
 
-class Info extends StatelessWidget {
-  const Info({
-    Key? key,
-    required this.info,
-    required this.textTheme,
-    required this.likeButton,
-  }) : super(key: key);
+class _Info extends StatelessWidget {
+  final Text primaryText;
+  final Text secondaryTextMain;
+  final Text? secondaryTextOther;
+  final String iconUrl;
+  final PerflowOutlinedButton? secondaryButton;
 
-  final ContentInfo info;
-  final TextTheme textTheme;
-  final IconButton likeButton;
+  const _Info(
+      {Key? key,
+      required this.iconUrl,
+      required this.primaryText,
+      required this.secondaryTextMain,
+      this.secondaryTextOther,
+      this.likeButton,
+      this.secondaryButton})
+      : super(key: key);
+
+  final IconButton? likeButton;
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +91,14 @@ class Info extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Text(
-                  info.name,
-                  style: textTheme.headline5,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
+              Expanded(child: primaryText),
               Padding(
                 padding: const EdgeInsets.only(right: 4),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    likeButton,
+                    if(likeButton != null)
+                      likeButton!,
                     IconButton(
                       onPressed: () {},
                       icon: const Icon(Icons.more_vert),
@@ -81,27 +113,10 @@ class Info extends StatelessWidget {
               GestureDetector(
                 onTap: () {},
                 child: Center(
-                  child: Text(
-                    info.author,
-                    style: textTheme.subtitle1,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  child: secondaryTextMain,
                 ),
               ),
-              Text(
-                ' | ' + info.songsCount.toString() + ' songs',
-                style:
-                    textTheme.subtitle1?.copyWith(color: Perflow.textGrayColor),
-              ),
-              Text(
-                ' | ' +
-                    timeConvert(
-                      info.duration,
-                    ),
-                style:
-                    textTheme.subtitle1?.copyWith(color: Perflow.textGrayColor),
-              )
+              if (secondaryTextOther != null) secondaryTextOther!,
             ],
           ),
           Padding(
@@ -114,7 +129,6 @@ class Info extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: PerflowElevatedButton.text(
-                      // onPressed: () => context.read<PlaylistSongsCubit>().play(),
                       onPressed: () {},
                       text: 'Play',
                     ),
@@ -123,11 +137,7 @@ class Info extends StatelessWidget {
                     flex: 2,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: PerflowOutlinedButton.text(
-                        onPressed: () {},
-                        text: 'Add songs',
-                        color: Perflow.textColor,
-                      ),
+                      child: secondaryButton,
                     ),
                   ),
                   const Spacer(

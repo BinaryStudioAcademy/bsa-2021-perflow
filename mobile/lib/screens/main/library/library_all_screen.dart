@@ -1,99 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:perflow/cubits/albums/liked_albums_cubit.dart';
-import 'package:perflow/cubits/artists/liked_artists_cubit.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:perflow/cubits/playlists/liked_playlists_cubit.dart';
 import 'package:perflow/cubits/playlists/users_playlists_cubit.dart';
-import 'package:perflow/models/albums/album_simplified.dart';
-import 'package:perflow/models/artists/artist_simplified.dart';
+import 'package:perflow/helpers/icon_url_convert.dart';
+import 'package:perflow/models/common/content_row_type.dart';
 import 'package:perflow/models/playlists/playlist_simplified.dart';
-import 'package:perflow/screens/main/library/library_albums_screen.dart';
-import 'package:perflow/screens/main/library/library_artists_screen.dart';
-import 'package:perflow/widgets/playlists/playlist_row.dart';
+import 'package:perflow/routes.dart';
+import 'package:perflow/widgets/albums/album_list.dart';
+import 'package:perflow/widgets/artists/artist_list.dart';
+import 'package:perflow/widgets/common/content_row.dart';
+import 'package:vrouter/vrouter.dart';
 
 class LibraryAllScreen extends StatelessWidget {
   const LibraryAllScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<UsersPlaylistsCubit>(
-          create: (context) => UsersPlaylistsCubit(),
+    return ListView(
+      children: [
+        BlocBuilder<UsersPlaylistsCubit,
+            ApiCallState<List<PlaylistSimplified>>>(
+          builder: (builder, state) =>
+              _PlaylistsList(state: state, isUsersPlaylist: true),
         ),
-        BlocProvider<LikedPlaylistsCubit>(
-          create: (context) => LikedPlaylistsCubit(),
+        BlocBuilder<LikedPlaylistsCubit,
+            ApiCallState<List<PlaylistSimplified>>>(
+          builder: (builder, state) =>
+              _PlaylistsList(state: state, isUsersPlaylist: false),
         ),
-        BlocProvider<LikedAlbumsCubit>(
-          create: (context) => LikedAlbumsCubit(),
-        ),
-        BlocProvider<LikedArtistsCubit>(
-          create: (context) => LikedArtistsCubit(),
-        ),
+        const AlbumsList(),
+        const ArtistsList(),
       ],
-      child: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(),
-          BlocBuilder<UsersPlaylistsCubit,
-              ApiCallState<List<PlaylistSimplified>>>(
-            builder: (builder, state) => PlaylistsList(
-                context: context, state: state, isUsersPlaylist: true),
-          ),
-          BlocBuilder<LikedPlaylistsCubit,
-              ApiCallState<List<PlaylistSimplified>>>(
-            builder: (builder, state) => PlaylistsList(
-                context: context, state: state, isUsersPlaylist: false),
-          ),
-          BlocBuilder<LikedAlbumsCubit, ApiCallState<List<AlbumSimplified>>>(
-            builder: (builder, state) =>
-                AlbumsList(context: context, state: state),
-          ),
-          BlocBuilder<LikedArtistsCubit, ApiCallState<List<ArtistSimplified>>>(
-            builder: (builder, state) =>
-                ArtistsList(context: context, state: state),
-          ),
-        ],
-      ),
     );
   }
 }
 
-class PlaylistsList extends StatelessWidget {
-  const PlaylistsList({
+class _PlaylistsList extends StatelessWidget {
+  const _PlaylistsList({
     Key? key,
-    required this.context,
     required this.state,
     required this.isUsersPlaylist,
   }) : super(key: key);
 
-  final BuildContext context;
   final ApiCallState<List<PlaylistSimplified>> state;
   final bool isUsersPlaylist;
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return state.map(
-      loading: (_) => const SliverFillRemaining(
-        hasScrollBody: false,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
+      loading: (_) => const Center(
+        child: CircularProgressIndicator(),
       ),
-      error: (error) => SliverFillRemaining(
-        hasScrollBody: false,
-        child: Center(
-          child: Text(error.message),
-        ),
+      error: (error) => Center(
+        child: Text(error.message),
       ),
-      data: (playlists) => SliverList(
-        delegate: SliverChildBuilderDelegate((context, index) {
-          // return Play(album: albums.data[index]);
-          return PlaylistRow(
-            playlist: playlists.data[index],
-            isUsers: isUsersPlaylist,
+      data: (playlists) => ListView.builder(
+        itemBuilder: (context, index) {
+          return ContentRow(
+            contentType: RowType.playlist,
+            iconUrl: getValidUrl(playlists.data[index].iconURL),
+            primaryText: Text(
+              playlists.data[index].name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: textTheme.subtitle2,
+            ),
+            secondaryText: Text(
+              "Playlist",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: textTheme.caption,
+            ),
+            height: 80,
+            isLikeAvailable: !isUsersPlaylist,
+            onTap: () {
+                context.vRouter.to(
+                  Routes.playlist(playlists.data[index].id),
+                );
+              },
           );
-        }, childCount: playlists.data.length),
+        },
+        itemCount: playlists.data.length,
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
       ),
     );
   }

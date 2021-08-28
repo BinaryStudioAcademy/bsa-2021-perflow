@@ -1,17 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perflow/helpers/math/linear_clamp.dart';
-import 'package:perflow/models/common/content_info.dart';
 import 'package:perflow/root_media_query.dart';
 import 'package:perflow/screens/details/header_info.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_back_button.dart';
+import 'package:perflow/widgets/buttons/perflow_outlined_button.dart';
 
 class HeaderDelegate extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
-  final ContentInfo info;
+  final Text primaryText;
+  final Text secondaryTextMain;
+  final Text? secondaryTextOther;
+  final String iconUrl;
+  final bool isLiked;
+  final bool isLikeAvailable;
+  final Function()? onLikePress;
+  final PerflowOutlinedButton? secondaryButton;
 
-  const HeaderDelegate({required this.expandedHeight, required this.info});
+  const HeaderDelegate(
+      {required this.primaryText,
+      required this.secondaryTextMain,
+      this.secondaryTextOther,
+      required this.iconUrl,
+      this.isLiked = false,
+      this.isLikeAvailable = false,
+      this.onLikePress,
+      this.secondaryButton,
+      required this.expandedHeight});
 
   @override
   double get maxExtent => expandedHeight;
@@ -34,10 +50,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
       return AppBar(
         centerTitle: true,
         backgroundColor: Perflow.backgroundColor,
-        title: Text(
-          info.name,
-          style: textTheme.headline6,
-        ),
+        title: primaryText,
         leading: const PerflowBackButton(),
       );
     }
@@ -54,31 +67,45 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
     final double detailsOpacity =
         1 - linearClamp(t: percent, lowerThreshold: 0.2, upperThreshold: 0.3);
 
-    final image = NetworkImage(info.iconUrl);
+    final image = NetworkImage(iconUrl);
 
-    return StackedHeader(
+    return _StackedHeader(
         backgroundOpacity: backgroundOpacity,
         image: image,
         expandedHeight: expandedHeight,
         imageOpacity: imageOpacity,
         detailsOpacity: detailsOpacity,
-        info: info,
+        iconUrl: iconUrl,
+        primaryText: primaryText,
+        secondaryTextMain: secondaryTextMain,
+        secondaryTextOther: secondaryTextOther,
+        isLikeAvailable: isLikeAvailable,
+        isLiked: isLiked,
+        onLikePress: onLikePress,
         textTheme: textTheme,
+        secondaryButton: secondaryButton,
         titleOpacity: titleOpacity);
   }
 }
 
-class StackedHeader extends StatelessWidget {
-  const StackedHeader({
+class _StackedHeader extends StatelessWidget {
+  const _StackedHeader({
     Key? key,
     required this.backgroundOpacity,
     required this.image,
     required this.expandedHeight,
     required this.imageOpacity,
     required this.detailsOpacity,
-    required this.info,
     required this.textTheme,
     required this.titleOpacity,
+    required this.primaryText,
+    required this.secondaryTextMain,
+    this.secondaryTextOther,
+    required this.iconUrl,
+    this.isLiked = false,
+    this.isLikeAvailable = false,
+    this.onLikePress,
+    this.secondaryButton,
   }) : super(key: key);
 
   final double backgroundOpacity;
@@ -86,9 +113,17 @@ class StackedHeader extends StatelessWidget {
   final double expandedHeight;
   final double imageOpacity;
   final double detailsOpacity;
-  final ContentInfo info;
   final TextTheme textTheme;
   final double titleOpacity;
+
+  final Text primaryText;
+  final Text secondaryTextMain;
+  final Text? secondaryTextOther;
+  final String iconUrl;
+  final bool isLiked;
+  final bool isLikeAvailable;
+  final Function()? onLikePress;
+  final PerflowOutlinedButton? secondaryButton;
 
   @override
   Widget build(BuildContext context) {
@@ -159,13 +194,20 @@ class StackedHeader extends StatelessWidget {
                     child: Opacity(
                       opacity: detailsOpacity,
                       child: HeaderInfo(
-                        info: info,
+                        iconUrl: iconUrl,
+                        primaryText: primaryText,
+                        secondaryTextMain: secondaryTextMain,
+                        secondaryTextOther: secondaryTextOther,
+                        isLikeAvailable: isLikeAvailable,
+                        isLiked: isLiked,
+                        onLikePress: onLikePress,
+                        secondaryButton: secondaryButton,
                       ),
                     ),
                   ),
                 ),
               Center(
-                child: Text(info.name,
+                child: Text(primaryText.data.toString(),
                     style: textTheme.headline6!.copyWith(
                         color: Perflow.textColor.withOpacity(titleOpacity))),
               )
