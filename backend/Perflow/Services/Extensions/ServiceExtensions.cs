@@ -6,6 +6,8 @@ using Perflow.Services.Implementations;
 using Microsoft.AspNetCore.SignalR;
 using Perflow.Hubs.Implementations;
 using Perflow.Hubs.Interfaces;
+using Perflow.DataAccess.Context;
+using AutoMapper;
 
 namespace Perflow.Services.Extensions
 {
@@ -60,8 +62,10 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<IImageService, ImageService>();
 
-            services.AddScoped(provider => new NotificationService(
-                provider.GetRequiredService<IHubContext<NotificationsHub, INotificationsHub>>()));
+            services.AddScoped<INotificationService>(provider => new NotificationService(
+                provider.GetRequiredService<PerflowContext>(),
+                provider.GetRequiredService<IMapper>(),
+                provider.GetRequiredService<IHubContext<NotificationsHub, INotificationsHub>>())); 
         }
     }
 }

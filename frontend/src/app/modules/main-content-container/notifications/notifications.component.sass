@@ -52,7 +52,6 @@ $menu-item-width: 300px
         grid-template-columns: 30px 1fr
         .label
             grid-area: label
-            background: #FD8427
         .text
             grid-area: text
             +flex-container(left, left)
@@ -64,7 +63,6 @@ $menu-item-width: 300px
                 @extend %break-spaces
                 padding: 4px 0px
                 line-height: 18px
-                opacity: 0.8
             .date
                 line-height: 18px
                 opacity: 0.8
@@ -73,6 +71,12 @@ $menu-item-width: 300px
         border-radius: 50%
         width: 8px
         height: 8px
+
+.is-not-read
+    background: #FD8427
+
+.is-read
+    background: darken($gray, 15%)
 
 .top-right-corner
     position: absolute

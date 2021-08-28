@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import {
   HttpTransportType, HubConnection, HubConnectionBuilder, LogLevel
 } from '@microsoft/signalr';
+import { of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +14,28 @@ export class HubFactoryService {
   private _hubs = new Map<string, HubConnection>();
   baseUrl: string = environment.apiUrl;
 
+  constructor(private _authService: AuthService) { }
+
   createHub(hubName: string) {
     if (this._hubs.has(hubName)) {
-      return this._hubs.get(hubName);
+      return of(this._hubs.get(hubName));
     }
 
-    const hub = this._buildHub(hubName);
-    this._hubs.set(hubName, hub);
-
-    return hub;
+    return this._authService.getCurrentTokenObservable()
+      .pipe(filter((token) => !!token),
+        map((token) => {
+          const hub = this._buildHub(hubName, token!);
+          this._hubs.set(hubName, hub);
+          return hub;
+        }));
   }
 
-  private _buildHub(hubUrl: string) {
+  private _buildHub(hubUrl: string, token: string) {
     return new HubConnectionBuilder()
       .withUrl(this._buildUrl(hubUrl), {
         skipNegotiation: true,
-        transport: HttpTransportType.WebSockets
+        transport: HttpTransportType.WebSockets,
+        accessTokenFactory: () => token
       })
       .configureLogging(LogLevel.Information)
       .build();

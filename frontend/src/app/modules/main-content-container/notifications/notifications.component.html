@@ -1,25 +1,29 @@
-<h4 class="ui header">
+<div class="ui header">
     <div id="notifications" class="ui floating dropdown" appSmDropdown>
         <div class="icon-background">
             <i class="bell icon"></i>
         </div>
-        <div class="new top-right-corner"></div>
+        <div class="new top-right-corner" *ngIf="isAnyNewNotification"></div>
         <div class="menu left">
             <div class="header notifications">
                 Notifications
-                <span class="link">Mark all as read</span>
+                <span class="link" (click)="markAllAsRead()">Mark all as read</span>
             </div>
             <div class="scrolling menu left">
                 <div class="item notification" *ngFor="let n of notifications">
-                    <div class="ui empty circular label"></div>
+                    <div class="ui empty circular label" [ngClass]="n.isRead ? 'is-read' : 'is-not-read'"></div>
                     <div class="text">
-                        <div class="title">Title</div>
-                        <div class="message">The Artist created new bggh fgthb rfr Album <a class="link" href="">Link</a>
+                        <div class="title">{{n.title}}</div>
+                        <div class="message">{{n.description}}
+                            <a class="link" routerLink="/albums/{{n.reference}}"
+                                *ngIf="n.type === notificationType.artistSubscribtion || n.type === notificationType.groupSubscribtion">
+                                Link
+                            </a>
                         </div>
-                        <div class="date">03.03.2021</div>
+                        <div class="date">{{n.createdAt | date:'yyyy-MM-dd'}}</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</h4>
+</div>

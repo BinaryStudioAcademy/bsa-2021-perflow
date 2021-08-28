@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Groups;
+using Perflow.Common.DTO.Notifications;
 using Perflow.Common.DTO.Songs;
 using Perflow.Common.DTO.Users;
 using Perflow.Common.Helpers;
@@ -21,10 +22,13 @@ namespace Perflow.Services.Implementations
     public class AlbumsService : BaseService
     {
         private readonly IImageService _imageService;
+        private readonly INotificationService _notificationService;
 
-        public AlbumsService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        public AlbumsService(PerflowContext context, IMapper mapper, IImageService imageService, INotificationService notificationService)
+            : base(context, mapper)
         {
             _imageService = imageService;
+            _notificationService = notificationService;
         }
 
         public async Task<ICollection<AlbumViewDTO>> GetAllAlbums()
@@ -251,6 +255,8 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentNullException("Argument cannot be null");
 
             var album = await context.Albums
+                .Include(a=>a.Author)
+                .Include(a=>a.Group)
                 .FirstOrDefaultAsync(album => album.Id == status.Id);
 
             album.IsPublished = status.IsPublished;
@@ -258,6 +264,11 @@ namespace Perflow.Services.Implementations
             context.Entry(album).State = EntityState.Modified;
 
             await context.SaveChangesAsync();
+
+            if (status.IsPublished)
+            {
+                await SendNotificationAsync(album);
+            }
         }
 
         public async Task<IEnumerable<AlbumForNewestFiveDTO>> GetFiveNewestAlbumsAsync()
@@ -279,6 +290,27 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             return entities;
+        }
+
+        private async Task SendNotificationAsync(Album album)
+        {
+            var isArtist = album.AuthorType == AuthorType.Artist;
+
+            var authorId = isArtist ? album.Author.Id : album.Group.Id;
+            var authorName = isArtist ? album.Author.UserName : album.Group.Name;
+
+            var notification = new NotificationWriteDTO
+            {
+                Title = "New Album",
+                Description = $"{authorName} has released a new album!",
+                Reference = album.Id,
+                Type = isArtist ? NotificationType.ArtistSubscribtion : NotificationType.GroupSubscribtion,
+                IsRead = false,
+                CreatedAt = DateTimeOffset.Now
+            };
+
+            await _notificationService.CreateNotificationAsync(notification, authorId, album.AuthorType);
+            await _notificationService.SendNotificationToGroupAsync(notification, $"{authorId}{authorName}");
         }
     }
 }
