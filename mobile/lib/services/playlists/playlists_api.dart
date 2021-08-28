@@ -13,6 +13,9 @@ abstract class PlaylistsApi extends ChopperService {
   @Get(path: 'songs/{id}')
   Future<Response> getPlaylistSongs(@Path() int id);
 
+  @Get(path: 'byAuthor/{id}')
+  Future<Response> getUsersPlaylists(@Path() int id);
+
   @factoryMethod
   static PlaylistsApi create(Chopper chopper) => _$PlaylistsApi(chopper.client);
 }

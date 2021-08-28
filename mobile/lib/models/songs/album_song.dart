@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:perflow/models/albums/album_simplified.dart';
 import 'package:perflow/models/artists/artist_simplified.dart';
+import 'package:perflow/models/groups/group_simplified.dart';
 import 'package:perflow/models/songs/song.dart';
 
 part 'album_song.g.dart';
@@ -14,7 +15,10 @@ class AlbumSong implements Song{
   final String name;
 
   @override
-  final ArtistSimplified artist;
+  final ArtistSimplified? artist;
+
+  @override
+  final GroupSimplified? group;
 
   @override
   final AlbumSimplified album;
@@ -31,7 +35,8 @@ class AlbumSong implements Song{
   const AlbumSong({
     required this.id,
     required this.name,
-    required this.artist,
+    this.artist,
+    this.group,
     required this.album,
     required this.duration,
     required this.isLiked,
