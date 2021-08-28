@@ -77,7 +77,7 @@ export class QueueService {
         song.id,
         song.name,
         (song?.artist?.userName ?? song?.group?.name)!,
-        this._httpService.buildUrl(`/api/Songs/file?blobId=${song.blobId}`),
+        this._httpService.buildUrl(`/api/Songs/${song.id}/file`),
         song.album.iconURL
       );
       this._toolbarService.updateSong(songForPlay);

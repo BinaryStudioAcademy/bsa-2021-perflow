@@ -51,13 +51,11 @@ namespace Processor.ConsoleApp.Implementations
             await DownloadFFmpegAsync();
 
             const string initializationMessage =
-@"
-{Data} Started SongProcessingHandler
+@"{Data} Started SongProcessingHandler
   Exchange name: {ExchangeName}
   Exchange type: {ExchangeType}
   Queue name: {QueueName}
-  Routing key: {RoutingKey}
-";
+  Routing key: {RoutingKey}";
 
             Logger.LogInformation(
                 initializationMessage,
@@ -102,8 +100,9 @@ namespace Processor.ConsoleApp.Implementations
             await _songsProcessingService.ProcessSongs(processingOptions);
 
             Logger.LogInformation(
-                "{Date} Processed song:\n\tVeryHigh: {Id1}\n\tHigh: {Id2}\n\tMedium: {Id3}\n\tLow: {Id4}",
+                "{Date} Processed song:\n\tSource:{SourceId}\n\tVeryHigh: {Id1}\n\tHigh: {Id2}\n\tMedium: {Id3}\n\tLow: {Id4}",
                 DateTime.Now.ToLongTimeString(),
+                _blobService.GetFileUrl(_containerName, processingOptions.SourceBlobId),
                 _blobService.GetFileUrl(_containerName, processingOptions.QualityLevels.VeryHigh.id),
                 _blobService.GetFileUrl(_containerName, processingOptions.QualityLevels.High.id),
                 _blobService.GetFileUrl(_containerName, processingOptions.QualityLevels.Medium.id),

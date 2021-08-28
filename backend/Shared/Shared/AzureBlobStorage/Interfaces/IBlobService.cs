@@ -12,6 +12,8 @@ namespace Shared.AzureBlobStorage.Interfaces
 
         Task<bool> DeleteFileBlobAsync(string blobContainerName, string blobId);
 
+        Task<bool> FileExistsAsync(string blobContainerName, string blobId);
+
         Uri GetFileUrl(string blobContainerName, string blobId);
     }
 }

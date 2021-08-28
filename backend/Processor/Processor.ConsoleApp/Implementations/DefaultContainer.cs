@@ -47,8 +47,8 @@ namespace Processor.ConsoleApp.Implementations
             services.AddSingleton<IProcessor, Processor>();
 
             services.AddMessageHandlerManager(builder => builder
-                .AddHandler<ImageProcessingHandler>());
-                // TODO Add .AddHandler<SongProcessingHandler>());
+                .AddHandler<ImageProcessingHandler>()
+                .AddHandler<SongProcessingHandler>());
 
             _provider = services.BuildServiceProvider();
         }

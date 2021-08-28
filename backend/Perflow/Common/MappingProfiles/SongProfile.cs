@@ -17,7 +17,6 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<LikedSong, SongReadDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Song.Id))
                 .ForMember(d => d.AuthorType, opt => opt.MapFrom(s => s.Song.AuthorType))
-                .ForMember(d => d.BlobId, opt => opt.MapFrom(s => s.Song.BlobId))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Song.Name))
                 .ForMember(d => d.Duration, opt => opt.MapFrom(s => s.Song.Duration))
                 .ForMember(d => d.HasCensorship, opt => opt.MapFrom(s => s.Song.HasCensorship))
