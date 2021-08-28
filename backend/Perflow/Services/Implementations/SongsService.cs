@@ -1,34 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Songs;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
-using Shared.AzureBlobStorage.Interfaces;
-using Shared.AzureBlobStorage.Models;
 using Perflow.Common.Helpers;
 using Perflow.Domain.Enums;
-using Shared.AzureBlobStorage.Extensions;
 
 namespace Perflow.Services.Implementations
 {
     public class SongsService : BaseService, ISongsService
     {
-        private readonly IBlobService _blobService;
         private readonly IImageService _imageService;
-        public SongsService(PerflowContext context, IMapper mapper, IBlobService blobService, IImageService imageService)
+        private readonly ISongFilesService _songFilesService;
+
+        public SongsService(PerflowContext context, IMapper mapper, IImageService imageService, ISongFilesService songFilesService)
             : base(context, mapper)
         {
-            _blobService = blobService;
             _imageService = imageService;
+            _songFilesService = songFilesService;
         }
 
         public async Task<IEnumerable<SongLikedDTO>> GetLikedSongsAsync(int userId)
@@ -70,30 +65,6 @@ namespace Perflow.Services.Implementations
             return mapper.Map<SongReadDTO>(song);
         }
 
-        public async Task<string> UploadSongAsync(IFormFile song)
-        {
-            var guid = Guid.NewGuid().ToString();
-
-            if (song == null)
-                throw new ArgumentNullException(nameof(song), "Argument cannot be null");
-
-            if (!song.ContentType.StartsWith("audio"))
-            {
-                throw new ArgumentException("Format of file is incorrect");
-            }
-
-            var blob = new BlobDto
-            {
-                Guid = guid,
-                ContentType = song.ContentType,
-                Content = song.GetBinaryData()
-            };
-
-            await _blobService.UploadFileBlobAsync("songs", blob);
-
-            return guid;
-        }
-
         public async Task<SongReadDTO> AddSongInfoAsync(SongWriteDTO songInfo, int artistId)
         {
             if (songInfo == null)
@@ -116,26 +87,20 @@ namespace Perflow.Services.Implementations
             return mapper.Map<SongReadDTO>(result);
         }
 
-        public async Task<FileContentResult> GetSongFileAsync(string blobId)
-        {
-            var blob = await _blobService.DownloadFileBlobAsync("songs", blobId);
-            var bytes = blob.Content.ToArray();
-
-            return new FileContentResult(bytes, blob.ContentType);
-        }
-
         public async Task RemoveSongAsync(int id)
         {
-            var song = context.Songs.First(x => x.Id == id);
+            var song = await context.Songs.FirstOrDefaultAsync(x => x.Id == id);
 
             if (song == null)
             {
                 throw new ArgumentException("Song does not exist");
             }
 
-            await _blobService.DeleteFileBlobAsync("songs", song.BlobId);
+            _ = _songFilesService.DeleteSongFilesAsync(song);
 
-            var recentlyPlayed = context.RecentlyPlayed.Where(rp => rp.SongId == id);
+            var recentlyPlayed = await context.RecentlyPlayed
+                .Where(rp => rp.SongId == id)
+                .ToListAsync();
 
             context.RecentlyPlayed.RemoveRange(recentlyPlayed);
 
@@ -180,23 +145,23 @@ namespace Perflow.Services.Implementations
         public async Task<IEnumerable<SongReadDTO>> GetTopSongsByLikes(int amount)
         {
             var songs = await context.SongReactions
-                                    .GroupBy(
-                                        r => r.SongId,
-                                        (key, group) => new { SongId = key, Count = group.Count() }
-                                    )
-                                    .OrderByDescending(group => group.Count)
-                                    .Take(amount)
-                                    .Join(
-                                        context.Songs,
-                                        group => group.SongId,
-                                        song => song.Id,
-                                        (group, song) => song
-                                     )
-                                    .Include(song => song.Album)
-                                    .Include(song => song.Artist)
-                                    .Include(song => song.Group)
-                                    .AsNoTracking()
-                                    .ToListAsync();
+                .GroupBy(
+                    r => r.SongId,
+                    (key, group) => new { SongId = key, Count = group.Count() }
+                )
+                .OrderByDescending(group => group.Count)
+                .Take(amount)
+                .Join(
+                    context.Songs,
+                    group => group.SongId,
+                    song => song.Id,
+                    (group, song) => song
+                 )
+                .Include(song => song.Album)
+                .Include(song => song.Artist)
+                .Include(song => song.Group)
+                .AsNoTracking()
+                .ToListAsync();
 
             return mapper.Map<IEnumerable<SongReadDTO>>(songs);
         }
@@ -208,12 +173,12 @@ namespace Perflow.Services.Implementations
 
         public async Task Update(SongWriteDTO song)
         {
-            var songForChange = (await context.Songs.FindAsync(song.Id));
+            var songForChange = await context.Songs.FindAsync(song.Id);
 
             songForChange.Name = song.Name;
             songForChange.HasCensorship = song.HasCensorship;
 
-            await Task.Run(() => context.Songs.Update(mapper.Map<Song>(songForChange)));
+            context.Songs.Update(mapper.Map<Song>(songForChange));
 
             await context.SaveChangesAsync();
         }

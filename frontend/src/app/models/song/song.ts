@@ -13,7 +13,6 @@ export interface Song {
   album: Album;
   artist?: User;
   authorType: AuthorType;
-  blobId: string;
   isLiked: boolean;
   group?: Group;
   podcast: string;

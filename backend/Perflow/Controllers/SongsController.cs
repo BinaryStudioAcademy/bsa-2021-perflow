@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
 using Perflow.Domain.Enums;
@@ -18,10 +17,12 @@ namespace Perflow.Controllers
     public class SongsController : ControllerBase
     {
         private readonly ISongsService _songsService;
+        private readonly ISongFilesService _songFilesService;
 
-        public SongsController(ISongsService songsService)
+        public SongsController(ISongsService songsService, ISongFilesService songFilesService)
         {
             _songsService = songsService;
+            _songFilesService = songFilesService;
         }
 
         [HttpGet("liked")]
@@ -39,26 +40,44 @@ namespace Perflow.Controllers
             return Ok(songsCount);
         }
 
-        [HttpPost("upload")]
+        [HttpPost]
         public async Task<ActionResult<SongReadDTO>> AddSongInfo(SongWriteDTO songInfo)
         {
-            var result = await _songsService.AddSongInfoAsync(songInfo, User.GetId());   
+            var result = await _songsService.AddSongInfoAsync(songInfo, User.GetId());
             return Ok(result);
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task<ActionResult<SongWriteDTO>> DeleteSongInfo(int id)
+        public async Task<ActionResult<SongWriteDTO>> DeleteSong(int id)
         {
             await _songsService.RemoveSongAsync(id);
             return Ok();
         }
 
-        [HttpPost("file/upload")]
-        public async Task<ActionResult<object>> AddSongFile()
+        // TODO Prevent artist from uploading files to songs of other artists
+        [HttpPost("{songId:int}/file")]
+        public async Task<ActionResult> AddSongFile([FromRoute] int songId, [FromForm] IFormFile songFile)
         {
-            var files = Request.Form.Files;
-            var result = await _songsService.UploadSongAsync(files.First());   
-            return Ok(new { blobId = result });
+            await _songFilesService.UploadSongFile(songId, songFile);
+
+            return Ok();
+        }
+
+        // TODO Add Auth
+        // TODO Add song loading based on user's quality settings
+        [AllowAnonymous]
+        [HttpGet("{id:int}/file")]
+        public async Task<FileResult> GetSongFile([FromRoute] int id, [FromQuery] SongQualityLevel? quality)
+        {
+            quality ??= SongQualityLevel.Medium;
+
+            var songBlob = await _songFilesService.GetSongFileAsync(id, quality.Value);
+
+            return File(
+                songBlob.Content.ToArray(),
+                songBlob.ContentType,
+                enableRangeProcessing: true
+            );
         }
 
         [HttpPut]
@@ -73,15 +92,6 @@ namespace Perflow.Controllers
         {
             await _songsService.UpdateOrders(songOrders);
             return Ok();
-        }
-
-        [AllowAnonymous]
-        [HttpGet("file")]
-        public async Task<FileResult> GetSongFile([FromQuery] string blobId)
-        {
-            var result = (FileResult) await _songsService.GetSongFileAsync(blobId);
-            result.EnableRangeProcessing = true;
-            return result;
         }
 
         [HttpGet("{id}")]

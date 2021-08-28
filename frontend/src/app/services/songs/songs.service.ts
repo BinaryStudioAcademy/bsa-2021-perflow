@@ -1,7 +1,9 @@
 /* eslint-disable no-param-reassign */
 
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import {
+  filter, map, mergeMap
+} from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Song } from 'src/app/models/song/song';
 import { SongWriteDTO } from 'src/app/models/song/song-write';
@@ -33,26 +35,28 @@ export class SongsService {
 
   getSongById = (id: number) => this._httpService.getRequest<Song>(`/api/songs/${id}`);
 
-  uploadSong = (songForWrite: SongWriteDTO, song: File) => this._uploadSongFile(song).pipe(
-    map((response) => {
-      songForWrite.blobId = response.blobId;
-      return this._uploadSongInfo(songForWrite);
-    })
-  );
+  uploadSong(songInfo: SongWriteDTO, songFile: File) {
+    return this._uploadSongInfo(songInfo).pipe(
+      filter((song) => song !== undefined),
+      mergeMap((song) => this._uploadSongFile(song.id, songFile).pipe(
+        map(((_) => song))
+      ))
+    );
+  }
 
-  private _uploadSongFile = (song: File) => {
+  private _uploadSongFile = (songId: number, songFile: File) => {
     const formData = new FormData();
 
-    formData.append('file', song, song.name);
+    formData.append('songFile', songFile, songFile.name);
 
-    return this._httpService.postRequest<{ blobId: string }>(
-      '/api/Songs/file/upload',
+    return this._httpService.postRequest(
+      `/api/songs/${songId}/file`,
       formData
     );
   };
 
   private _uploadSongInfo = (songInfo: SongWriteDTO) => this._httpService.postRequest<Song>(
-    '/api/Songs/upload',
+    '/api/songs',
     songInfo
   );
 

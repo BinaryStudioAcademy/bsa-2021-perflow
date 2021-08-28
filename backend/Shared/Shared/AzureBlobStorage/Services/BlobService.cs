@@ -18,24 +18,21 @@ namespace Shared.AzureBlobStorage.Services
 
         public async Task<bool> DeleteFileBlobAsync(string blobContainerName, string blobId)
         {
-            var containerClient = GetContainerClient(blobContainerName);
-            var blobClient = containerClient.GetBlobClient(blobId);
+            var blobClient = GetBlobClient(blobContainerName, blobId);
 
             return await blobClient.DeleteIfExistsAsync();
         }
 
         public Uri GetFileUrl(string blobContainerName, string blobId)
         {
-            var containerClient = GetContainerClient(blobContainerName);
-            var blobClient = containerClient.GetBlobClient(blobId);
+            var blobClient = GetBlobClient(blobContainerName, blobId);
 
             return blobClient.Uri;
         }
 
         public async Task<BlobDto> DownloadFileBlobAsync(string blobContainerName, string blobId)
         {
-            var containerClient = GetContainerClient(blobContainerName);
-            var blobClient = containerClient.GetBlobClient(blobId);
+            var blobClient = GetBlobClient(blobContainerName, blobId);
 
             if (!await blobClient.ExistsAsync())
             {
@@ -59,8 +56,7 @@ namespace Shared.AzureBlobStorage.Services
 
         public async Task<Uri> UploadFileBlobAsync(string blobContainerName, BlobDto file)
         {
-            var containerClient = GetContainerClient(blobContainerName);
-            var blobClient = containerClient.GetBlobClient(file.Guid);
+            var blobClient = GetBlobClient(blobContainerName, file.Guid);
 
             var data = new BinaryData(file.Content);
 
@@ -72,12 +68,26 @@ namespace Shared.AzureBlobStorage.Services
             return blobClient.Uri;
         }
 
+        public async Task<bool> FileExistsAsync(string blobContainerName, string blobId)
+        {
+            var blobClient = GetBlobClient(blobContainerName, blobId);
+
+            return await blobClient.ExistsAsync();
+        }
+
         private BlobContainerClient GetContainerClient(string blobContainerName)
         {
             var containerClient = _blobServiceClient.GetBlobContainerClient(blobContainerName);
+            
             containerClient.CreateIfNotExists(PublicAccessType.Blob);
 
             return containerClient;
+        }
+
+        private BlobClient GetBlobClient(string blobContainerName, string blobId)
+        {
+            var containerClient = GetContainerClient(blobContainerName);
+            return containerClient.GetBlobClient(blobId);
         }
     }
 }
