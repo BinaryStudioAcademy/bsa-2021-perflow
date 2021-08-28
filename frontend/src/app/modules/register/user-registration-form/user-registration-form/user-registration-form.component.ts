@@ -14,6 +14,7 @@ import { RegisterData } from '../../../../models/auth/register-data';
 export class UserRegistrationFormComponent implements OnInit {
   public registrationForm!: FormGroup;
   public loading: boolean = false;
+  public userTypeInt: number;
 
   @Output()
   isSuccess = new EventEmitter<boolean>();

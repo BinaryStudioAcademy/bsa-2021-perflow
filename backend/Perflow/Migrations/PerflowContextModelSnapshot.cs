@@ -90,6 +90,51 @@ namespace Perflow.Migrations
                     b.ToTable("AlbumReactions");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.ArtistApplicant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MemberType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ArtistApplicants");
+                });
+
+            modelBuilder.Entity("Perflow.Domain.ArtistFollower", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("FollowerId");
+
+                    b.ToTable("ArtistFollower");
+                });
+
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>
                 {
                     b.Property<int>("Id")
@@ -545,6 +590,36 @@ namespace Perflow.Migrations
                     b.Navigation("Album");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Perflow.Domain.ArtistApplicant", b =>
+                {
+                    b.HasOne("Perflow.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Perflow.Domain.ArtistFollower", b =>
+                {
+                    b.HasOne("Perflow.Domain.User", "Artist")
+                        .WithMany("Followers")
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Perflow.Domain.User", "Follower")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Follower");
                 });
 
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>
