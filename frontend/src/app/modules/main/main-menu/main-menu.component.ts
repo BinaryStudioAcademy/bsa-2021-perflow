@@ -2,6 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import {
   Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Playlist } from 'src/app/models/playlist';
@@ -26,7 +27,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   constructor(
     private _playlistsService: PlaylistsService,
-    private _createdPlaylistService: CreatePlaylistService
+    private _createdPlaylistService: CreatePlaylistService,
+    private _router: Router
   ) { }
 
   public ngOnInit() {
@@ -99,9 +101,33 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       case 'Create similar playlist':
         this.createSimilarPlaylist();
         break;
+      case 'Edit details':
+        this.editPlaylist();
+        break;
+      case 'Delete':
+        this.deletePlaylist();
+        break;
       default:
         break;
     }
+  }
+
+  deletePlaylist() {
+    this._playlistsService.deletePlaylist(this._tempPlaylist.id)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (id) => {
+          this._createdPlaylistService.deletePlaylist(id);
+          if (this._router.url === `/playlists/view-playlist/${id}`
+            || this._router.url === `/playlists/edit/${id}`) {
+            this._router.navigateByUrl('/playlists/all');
+          }
+        }
+      });
+  }
+
+  editPlaylist() {
+    this._router.navigateByUrl(`/playlists/edit/${this._tempPlaylist.id}`);
   }
 
   createSimilarPlaylist() {
