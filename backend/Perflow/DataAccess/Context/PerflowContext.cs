@@ -26,6 +26,9 @@ namespace Perflow.DataAccess.Context
         public DbSet<RecentlyPlayed> RecentlyPlayed { get; set; }
         public DbSet<ArtistApplicant> ArtistApplicants { get; set; }
         public DbSet<SearchHistory> SearchHistory { get; set; }
+        public DbSet<PageContainer> PageContainers { get; set; }
+        public DbSet<PageSection> PageSections { get; set; }
+        public DbSet<PageSectionEntity> PageSectionEntities { get; set; }
 
         public PerflowContext(DbContextOptions<PerflowContext> options): base(options)
         { }
