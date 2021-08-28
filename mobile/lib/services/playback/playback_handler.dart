@@ -36,7 +36,7 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       final item = MediaItem(
         id: song.id.toString(),
         title: song.name,
-        artist: song.artist.userName,
+        artist: (song.artist == null ? song.group!.name : song.artist!.userName),
         album: song.album.name,
         artUri: song.album.iconURL != null ? Uri.parse(song.album.iconURL!) : null
       );

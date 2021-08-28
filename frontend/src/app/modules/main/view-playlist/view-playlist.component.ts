@@ -101,9 +101,14 @@ export class ViewPlaylistComponent implements OnInit {
   loadPlaylist() {
     this._playlistsService
       .getPlaylist(this._playlistId)
-      .subscribe((playlist) => {
-        this.playlist = playlist;
-        this.isAuthor = this.userId === this.playlist.author.id;
+      .subscribe({
+        next: (playlist) => {
+          this.playlist = playlist;
+          this.isAuthor = this.userId === this.playlist.author.id;
+        },
+        error: () => {
+          this._router.navigateByUrl('/playlists/all');
+        }
       });
   }
 

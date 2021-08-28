@@ -6,7 +6,7 @@ import { AlbumRegion } from 'src/app/models/album/album-region';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { AlbumService } from 'src/app/services/album.service';
 import { Subject, timer } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AudioFileDuration } from 'src/app/helpers/AudioFileDuration';
 import { SongsService } from 'src/app/services/songs/songs.service';
@@ -107,10 +107,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.createPlaylist(data);
+    this.createAlbum(data);
   };
 
-  createPlaylist(album: AlbumEdit) {
+  createAlbum(album: AlbumEdit) {
     this._albumService.createAlbum(album)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
@@ -142,22 +142,21 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
 
   uploadSongs = (songs: File[]) => {
     songs.map((s) => {
-      const songForWrite = new SongWriteDTO();
-
       const subscription = AudioFileDuration.getDuration(s)
         .subscribe({
           next: (time: number) => {
+            const songForWrite = new SongWriteDTO();
             songForWrite.albumId = this.album.id;
             songForWrite.authorType = this.album.authorType;
             songForWrite.duration = Math.floor(time);
             songForWrite.hasCensorship = false;
             songForWrite.name = s.name.split('.').slice(0, -1).join('.');
 
-            this._songsService.uploadSong(songForWrite, s).subscribe((uploadInfoObservable) => {
-              uploadInfoObservable.subscribe((addedSong) => {
-                this.album.songs.push(addedSong);
+            this._songsService.uploadSong(songForWrite, s)
+              .pipe(take(1))
+              .subscribe((uploadedSong) => {
+                this.album.songs.push(uploadedSong);
               });
-            });
 
             subscription.unsubscribe();
           }
@@ -176,7 +175,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     this.isModalShown = !this.isModalShown;
 
     if (!this._isEditMode) {
-      this._router.navigateByUrl('albums');
+      this._router.navigateByUrl('/perflowstudio/albums');
     }
 
     this.editedAlbum = {
@@ -191,7 +190,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     this._albumService.removeAlbum(this.album.id)
       .subscribe({
         next: () => {
-          this._router.navigateByUrl('/albums');
+          this._router.navigateByUrl('/perflowstudio/albums');
         }
       });
   }

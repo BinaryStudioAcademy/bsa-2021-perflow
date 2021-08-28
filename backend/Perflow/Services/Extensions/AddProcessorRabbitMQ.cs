@@ -11,6 +11,7 @@ namespace Perflow.Services.Extensions
         public static IServiceCollection AddProcessorRabbitMQ(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions<ImageProcessingRabbitMQOptions>().BindConfiguration(ImageProcessingRabbitMQOptions.Key);
+            services.AddOptions<SongProcessingRabbitMQOptions>().BindConfiguration(SongProcessingRabbitMQOptions.Key);
 
             var rabbitMqOptions = new RabbitMQOptions();
             configuration.Bind("RabbitMQConnection", rabbitMqOptions);

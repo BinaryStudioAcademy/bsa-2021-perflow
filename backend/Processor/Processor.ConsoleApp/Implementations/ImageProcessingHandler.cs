@@ -42,13 +42,11 @@ namespace Processor.ConsoleApp.Implementations
         protected override Task Initialize()
         {
             const string initializationMessage =
-@"
-{Data} Started ImageProcessingHandler
+@"{Data} Started ImageProcessingHandler
   Exchange name: {ExchangeName}
   Exchange type: {ExchangeType}
   Queue name: {QueueName}
-  Routing key: {RoutingKey}
-";
+  Routing key: {RoutingKey}";
 
             Logger.LogInformation(
                 initializationMessage,

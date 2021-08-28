@@ -90,6 +90,29 @@ namespace Perflow.Migrations
                     b.ToTable("AlbumReactions");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.ArtistApplicant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MemberType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ArtistApplicants");
+                });
+
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>
                 {
                     b.Property<int>("Id")
@@ -319,6 +342,41 @@ namespace Perflow.Migrations
                     b.ToTable("RecentlyPlayed");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.SearchHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int?>("PlaylistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlbumId");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("PlaylistId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SearchHistory");
+                });
+
             modelBuilder.Entity("Perflow.Domain.Song", b =>
                 {
                     b.Property<int>("Id")
@@ -335,9 +393,6 @@ namespace Perflow.Migrations
                     b.Property<int>("AuthorType")
                         .HasColumnType("int");
 
-                    b.Property<string>("BlobId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -350,11 +405,26 @@ namespace Perflow.Migrations
                     b.Property<bool>("HasCensorship")
                         .HasColumnType("bit");
 
+                    b.Property<string>("HighBlobId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LowBlobId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MediumBlobId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
+
+                    b.Property<string>("SourceBlobId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VeryHighBlobId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -518,6 +588,17 @@ namespace Perflow.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.ArtistApplicant", b =>
+                {
+                    b.HasOne("Perflow.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>
                 {
                     b.HasOne("Perflow.Domain.User", "Artist")
@@ -652,6 +733,38 @@ namespace Perflow.Migrations
                     b.Navigation("Playlist");
 
                     b.Navigation("Song");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Perflow.Domain.SearchHistory", b =>
+                {
+                    b.HasOne("Perflow.Domain.Album", "Album")
+                        .WithMany()
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Perflow.Domain.User", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Perflow.Domain.Playlist", "Playlist")
+                        .WithMany()
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Perflow.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Playlist");
 
                     b.Navigation("User");
                 });

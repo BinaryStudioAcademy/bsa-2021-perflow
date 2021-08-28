@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Perflow.Common.DTO.Users;
 using Perflow.Domain;
+using Shared.Auth;
 
 namespace Perflow.Services.Interfaces
 {
@@ -18,6 +19,10 @@ namespace Perflow.Services.Interfaces
 
         public Task<UserSettings> GetUserSettingsAsync(int userId);
 
+        public Task<ArtistApplicant> GetArtistApplicantAsync(int userId);
+
+        public Task<ArtistApplicant> CreateArtistApplicantAsync(int userId, UserRole userRole);
+        
         public Task DeleteUserAsync(User user);
 
         public Task UpdateUserSettingsAsync(UserChangeSettingsDTO userSettings);

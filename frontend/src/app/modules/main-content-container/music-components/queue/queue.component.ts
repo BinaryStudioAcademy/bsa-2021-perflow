@@ -1,15 +1,21 @@
 import {
-  Component, EventEmitter, Input, Output
+  Component, EventEmitter, Input, OnDestroy, Output, ViewChild
 } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { QueueService } from 'src/app/services/queue.service';
+import { UserService } from 'src/app/services/user.service';
+import { PlayingComponent } from '../playing/playing.component';
 
 @Component({
   selector: 'app-queue',
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.sass']
 })
-export class QueueComponent {
+export class QueueComponent implements OnDestroy {
+  private _unsubscribe$ = new Subject<void>();
+
   @Output() opened = new EventEmitter<void>();
   @Output() closed = new EventEmitter<void>();
   @Output() togglePlayEvent = new EventEmitter<void>();
@@ -18,24 +24,32 @@ export class QueueComponent {
   isOpened = false;
   isPlaying = false;
   isShuffling = false;
+  filterExplicit = false;
 
   @Input() songs: Song[] = [];
 
   currentSongId: number;
   unshuffledSongs: Song[] = [];
 
-  constructor(private _queueService: QueueService) {
-    _queueService.songAdded$.subscribe((song) => {
-      if (!this.songs.length) {
-        this.currentSongId = song.id;
-      }
+  @ViewChild(PlayingComponent)
+  private _musicVisualizer: PlayingComponent;
 
-      if (!this.songs.find((s) => s.id === song.id)) {
-        this.songs.push(song);
-        this.unshuffledSongs.push(song);
-        this.shuffleSongs();
-      }
-    });
+  constructor(
+    private _queueService: QueueService,
+    private _userService: UserService
+  ) {
+    _queueService.songAdded$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((song) => {
+        if (!this.songs.length) {
+          this.currentSongId = song.id;
+        }
+        if (!this.songs.find((s) => s.id === song.id)) {
+          this.songs.push(song);
+          this.unshuffledSongs.push(song);
+          this.shuffleSongs();
+        }
+      });
 
     _queueService.nextSong$.subscribe(() => {
       _queueService.nextSongGot.emit(this.getNextSong());
@@ -45,31 +59,61 @@ export class QueueComponent {
       _queueService.previousSongGot.emit(this.getPreviousSong());
     });
 
-    _queueService.currentSongUpdate.subscribe((song) => {
-      this.currentSongId = song.id;
-    });
+    _queueService.currentSongUpdate
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((song) => {
+        this.currentSongId = song.id;
+      });
 
-    _queueService.playingToggled.subscribe((value) => {
-      this.isPlaying = value;
-    });
+    _queueService.playingToggled
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((value) => {
+        this.isPlaying = value;
+      });
 
-    _queueService.shuffleToggled.subscribe((value) => {
-      this.isShuffling = value;
-    });
+    _queueService.shuffleToggled
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((value) => {
+        if (value) {
+          this.shuffleSongs();
+        }
+        this.isShuffling = value;
+      });
 
-    _queueService.queueCleared$.subscribe(() => {
-      this.songs = [];
-    });
+    _queueService.queueCleared$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        this.songs = [];
+        this.unshuffledSongs = [];
+      });
+  }
+
+  public ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 
   openView = () => {
     this.isOpened = true;
+    this._userService.getUserSettings()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp) => {
+          this.filterExplicit = resp.body?.showExplicitContent!;
+          if (!this.filterExplicit) {
+            this.songs = this.songs?.filter((s) => !s.hasCensorship);
+            this.unshuffledSongs = this.unshuffledSongs?.filter((s) => !s.hasCensorship);
+          }
+        }
+      );
     this.opened.emit();
+    this._musicVisualizer.draw();
   };
 
   closeView = () => {
     this.isOpened = false;
     this.closed.emit();
+    if (this._musicVisualizer) this._musicVisualizer.interruptAnimation();
   };
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
@@ -82,20 +126,21 @@ export class QueueComponent {
       }
       case 'Remove from queue': {
         const removingSong = this.songs.find((s) => s.id === data.song.id);
+        const removingSong1 = this.unshuffledSongs.find((s) => s.id === data.song.id);
 
-        if (!removingSong) {
+        if (!removingSong || !removingSong1) {
           break;
         }
 
-        if (this.songs.length === 1) {
+        if (this.songs.length === 1 || this.unshuffledSongs.length === 1) {
           this.resetQueue();
         }
 
-        if (this.currentSongId === removingSong.id) {
+        if (this.currentSongId === removingSong.id || this.currentSongId === removingSong1.id) {
           this.switchToNearestAccessible();
         }
 
-        this.removeSong(removingSong);
+        this.removeSong(removingSong, removingSong1);
         break;
       }
       default:
@@ -112,9 +157,11 @@ export class QueueComponent {
     }
   };
 
-  removeSong = (song: Song) => {
+  removeSong = (song: Song, song1: Song) => {
     const indexForDelete = this.songs.indexOf(song);
+    const indexForDelete1 = this.unshuffledSongs.indexOf(song1);
     this.songs.splice(indexForDelete, 1);
+    this.unshuffledSongs.splice(indexForDelete1, 1);
   };
 
   togglePlay = () => {
@@ -183,4 +230,12 @@ export class QueueComponent {
     this.unshuffledSongs = [];
     this.reseted.emit();
   };
+
+  get analyser() {
+    return this._musicVisualizer.analyser;
+  }
+
+  set analyser(value: AnalyserNode) {
+    this._musicVisualizer.analyser = value;
+  }
 }

@@ -1,4 +1,4 @@
-<div class="card" routerLink='/playlists/view-playlist/{{playlist.id}}'>
+<div class="card" (click)="redirectTo()">
   <div class="image">
       <img [src]="playlist.iconURL">  
       <button class="play-icon" appClickStopPropagation (click)="play(playlist.id)">
@@ -7,6 +7,6 @@
   </div>
   <div class="content">
       <div class="card-name"> {{playlist.name}} </div>
-      <div class="card-desc"> {{playlist.description}} </div>
+      <div *ngIf="playlist.description!=='null'" class="card-desc"> {{playlist.description}} </div>
   </div>
 </div>

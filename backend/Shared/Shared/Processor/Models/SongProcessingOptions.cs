@@ -5,6 +5,10 @@ namespace Shared.Processor.Models
 {
     public class SongProcessingOptions
     {
+        public string SourceBlobId { get; init; } = string.Empty;
+
+        public string SourceContentType { get; init; } = string.Empty;
+
         public SongsQualityLevels QualityLevels { get; init; } = default!;
 
         public BinaryData SongData { get; set; } = default!;
@@ -13,6 +17,9 @@ namespace Shared.Processor.Models
         {
             using var memoryStream = new MemoryStream();
             using var writer = new BinaryWriter(memoryStream);
+
+            writer.Write(SourceBlobId);
+            writer.Write(SourceContentType);
 
             WriteQualityLevel(writer, QualityLevels.VeryHigh);
             WriteQualityLevel(writer, QualityLevels.High);
@@ -40,6 +47,8 @@ namespace Shared.Processor.Models
 
             var options = new SongProcessingOptions
             {
+                SourceBlobId = reader.ReadString(),
+                SourceContentType = reader.ReadString(),
                 QualityLevels = new SongsQualityLevels()
                 {
                     VeryHigh = ReadQualityLevel(reader),

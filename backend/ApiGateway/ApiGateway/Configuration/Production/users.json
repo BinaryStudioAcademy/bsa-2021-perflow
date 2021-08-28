@@ -97,6 +97,20 @@
       "UpstreamHttpMethod": [
         "PUT"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Users/createApplicant",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Users/createApplicant",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
     }
   ]
 }

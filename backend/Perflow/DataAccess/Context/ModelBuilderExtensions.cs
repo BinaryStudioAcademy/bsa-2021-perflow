@@ -26,6 +26,7 @@ namespace Perflow.DataAccess.Context
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             modelBuilder.ApplyConfiguration(new RecentlyPlayedConfiguration());
             modelBuilder.ApplyConfiguration(new GroupReactionConfiguration());
+            modelBuilder.ApplyConfiguration(new SearchHistoryConfiguration());
         }
 
         public static void Seed(this ModelBuilder modelBuilder)

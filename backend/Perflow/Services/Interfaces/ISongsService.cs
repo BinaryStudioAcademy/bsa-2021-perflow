@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
 using Perflow.Domain.Enums;
+using Shared.AzureBlobStorage.Models;
 
 namespace Perflow.Services.Interfaces
 {
@@ -12,9 +13,7 @@ namespace Perflow.Services.Interfaces
         public Task<IEnumerable<SongLikedDTO>> GetLikedSongsAsync(int userId);
         public Task<int> GetLikedSongsCountAsync(int userId);
         public Task<SongReadDTO> FindSongsByIdAsync(int id);
-        public Task<FileContentResult> GetSongFileAsync(string blobId);
         public Task<SongReadDTO> AddSongInfoAsync(SongWriteDTO songInfo, int artistId);
-        public Task<string> UploadSongAsync(IFormFile song);
         public Task RemoveSongAsync(int id);
         public Task<IEnumerable<SongReadDTO>> GetTopSongsByLikes(int amount);
         public Task<IEnumerable<SongForAlbumDTO>> GetTopSongsByAuthorIdAsync(int id, int count, AuthorType type, int userId);

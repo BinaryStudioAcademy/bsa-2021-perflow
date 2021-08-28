@@ -21,7 +21,12 @@ namespace Perflow.Domain
         public int Duration { get; set; }
 
         public bool HasCensorship { get; set; }
-        public string BlobId { get; set; }
+
+        public string SourceBlobId { get; set; }
+        public string VeryHighBlobId { get; set; }
+        public string HighBlobId { get; set; }
+        public string MediumBlobId { get; set; }
+        public string LowBlobId { get; set; }
 
         public int Order { get; set; }
 
