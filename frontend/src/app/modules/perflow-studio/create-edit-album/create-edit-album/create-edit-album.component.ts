@@ -107,10 +107,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.createPlaylist(data);
+    this.createAlbum(data);
   };
 
-  createPlaylist(album: AlbumEdit) {
+  createAlbum(album: AlbumEdit) {
     this._albumService.createAlbum(album)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
@@ -175,7 +175,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     this.isModalShown = !this.isModalShown;
 
     if (!this._isEditMode) {
-      this._router.navigateByUrl('albums');
+      this._router.navigateByUrl('/perflowstudio/albums');
     }
 
     this.editedAlbum = {
@@ -190,7 +190,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     this._albumService.removeAlbum(this.album.id)
       .subscribe({
         next: () => {
-          this._router.navigateByUrl('/albums');
+          this._router.navigateByUrl('/perflowstudio/albums');
         }
       });
   }
