@@ -54,12 +54,6 @@
                         </div>
                       </div>
                   </div>
-                  <div class="item" routerLink="/" [ngClass]="{'last':!isAuthor}">
-                    <span>
-                      <i class="hand peace outline icon"></i>
-                      About recommendations
-                    </span>
-                  </div>
                   <div *ngIf="isAuthor" class="item last" (click)="deletePlaylist()">
                     <span>
                       <i class="trash alternate outline icon"></i>
