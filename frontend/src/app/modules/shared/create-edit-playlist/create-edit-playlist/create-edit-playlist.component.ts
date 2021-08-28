@@ -61,13 +61,13 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     this._activatedRoute.paramMap.pipe(
       switchMap((params) => params.getAll('id'))
     ).subscribe((data) => {
-      this._id = +data;
+      if (data && this._id! !== +data) {
+        this._id = +data;
+        this.startEditMode();
+      }
     });
 
-    if (this._id) {
-      this.startEditMode();
-    }
-    else {
+    if (!this._id) {
       this.createPlaylist();
     }
 
