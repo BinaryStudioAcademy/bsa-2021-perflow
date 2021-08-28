@@ -113,28 +113,6 @@ namespace Perflow.Migrations
                     b.ToTable("ArtistApplicants");
                 });
 
-            modelBuilder.Entity("Perflow.Domain.ArtistFollower", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtistId");
-
-                    b.HasIndex("FollowerId");
-
-                    b.ToTable("ArtistFollower");
-                });
-
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>
                 {
                     b.Property<int>("Id")
@@ -409,9 +387,6 @@ namespace Perflow.Migrations
                     b.Property<int>("AuthorType")
                         .HasColumnType("int");
 
-                    b.Property<string>("BlobId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -424,11 +399,26 @@ namespace Perflow.Migrations
                     b.Property<bool>("HasCensorship")
                         .HasColumnType("bit");
 
+                    b.Property<string>("HighBlobId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LowBlobId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MediumBlobId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
+
+                    b.Property<string>("SourceBlobId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VeryHighBlobId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -601,25 +591,6 @@ namespace Perflow.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Perflow.Domain.ArtistFollower", b =>
-                {
-                    b.HasOne("Perflow.Domain.User", "Artist")
-                        .WithMany("Followers")
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Perflow.Domain.User", "Follower")
-                        .WithMany("Subscriptions")
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Artist");
-
-                    b.Navigation("Follower");
                 });
 
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>

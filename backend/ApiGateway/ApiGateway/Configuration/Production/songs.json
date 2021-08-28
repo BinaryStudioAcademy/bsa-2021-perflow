@@ -8,7 +8,6 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/liked",
       "UpstreamHttpMethod": [ "GET" ]
@@ -21,7 +20,6 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/likedCount",
       "UpstreamHttpMethod": [ "GET" ]
@@ -34,7 +32,6 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs",
       "UpstreamHttpMethod": [ "POST", "PUT" ]
@@ -47,7 +44,6 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/orders",
       "UpstreamHttpMethod": [ "PUT" ]
@@ -60,7 +56,6 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/{id}",
       "UpstreamHttpMethod": [
@@ -70,17 +65,16 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/api/Songs/file/{id}",
+      "DownstreamPathTemplate": "/api/Songs/{id}/file",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
-      "UpstreamPathTemplate": "/api/Songs/file/{id}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamPathTemplate": "/api/Songs/{id}/file",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     },
     {
       "DownstreamPathTemplate": "/api/Songs/top/{amount}",
@@ -90,7 +84,6 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/top/{amount}",
       "UpstreamHttpMethod": [ "GET" ]
@@ -103,7 +96,6 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/byAlbum/{id}",
       "UpstreamHttpMethod": [ "GET" ]

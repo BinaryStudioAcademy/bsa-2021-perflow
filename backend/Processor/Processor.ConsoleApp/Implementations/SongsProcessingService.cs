@@ -38,19 +38,20 @@ namespace Processor.ConsoleApp.Implementations
 
         public async Task ProcessSongs(SongProcessingOptions options)
         {
-            var tempGuid = Guid.NewGuid().ToString();
-            var tempFile = Path.Combine(_tempPath, $"{tempGuid}");
-            await File.WriteAllBytesAsync(tempFile, options.SongData.ToArray());
+            var sourceFile = Path.Combine(_tempPath, $"{options.SourceBlobId}");
+            await File.WriteAllBytesAsync(sourceFile, options.SongData.ToArray());
+
+            await UploadSong(sourceFile, options.SourceBlobId, options.SourceContentType);
 
             var processingTasks = options.QualityLevels
-                .Select(qualityLevel => ProcessAndUploadSong(tempFile, qualityLevel));
+                .Select(qualityLevel => ProcessSong(sourceFile, qualityLevel));
 
             await Task.WhenAll(processingTasks);
 
-            File.Delete(tempFile);
+            File.Delete(sourceFile);
         }
 
-        private async Task ProcessAndUploadSong(string sourcePath, QualityLevel qualityLevel)
+        private async Task ProcessSong(string sourcePath, QualityLevel qualityLevel)
         {
             var mediaInfo = await FFmpeg.GetMediaInfo(sourcePath);
 
@@ -65,19 +66,19 @@ namespace Processor.ConsoleApp.Implementations
                 .SetOutput(outputFile)
                 .Start();
 
-            await UploadSong(outputFile, qualityLevel.id);
+            await UploadSong(outputFile, qualityLevel.id, "audio/mp3");
+
+            File.Delete(outputFile);
         }
 
-        private async Task UploadSong(string sourcePath, string guid)
+        private async Task UploadSong(string sourcePath, string guid, string contentType)
         {
             var blob = new BlobDto
             {
                 Guid = guid,
-                ContentType = "audio/mp3",
+                ContentType = contentType,
                 Content = BinaryData.FromBytes(await File.ReadAllBytesAsync(sourcePath))
             };
-
-            File.Delete(sourcePath);
 
             await _blobService.UploadFileBlobAsync(_containerName, blob);
         }
