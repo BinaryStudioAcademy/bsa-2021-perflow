@@ -1,11 +1,13 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { from, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, mergeMap, takeUntil } from 'rxjs/operators';
 import { Song } from '../models/song/song';
 import { SongInfo } from '../models/song/song-info';
 import { HttpInternalService } from './http-internal.service';
 import { SongToolbarService } from './song-toolbar.service';
 import { SongsService } from './songs/songs.service';
+import { UserService } from './user.service';
+import { AudioQuality } from '../models/enums/audio-quality';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,7 @@ export class QueueService {
   static isInitialized = false;
 
   constructor(
+    private _usersService: UserService,
     private _songService: SongsService,
     private _toolbarService: SongToolbarService,
     private _httpService: HttpInternalService
@@ -71,24 +74,35 @@ export class QueueService {
     this._previousSong.next();
   };
 
-  initSong = (songForInit: Song, play: boolean = false) => {
-    this._songService.getSongById(songForInit.id).subscribe((song) => {
-      const songForPlay = new SongInfo(
-        song.id,
-        song.name,
-        (song?.artist?.userName ?? song?.group?.name)!,
-        this._httpService.buildUrl(`/api/Songs/${song.id}/file`),
-        song.album.iconURL
-      );
-      this._toolbarService.updateSong(songForPlay);
+  initSong(songForInit: Song, play: boolean = false) {
+    this._songService.getSongById(songForInit.id)
+      .pipe(
+        mergeMap((song) => this._usersService.getUserSettings().pipe(
+          map((settingsResponse) => ({
+            settings: settingsResponse.body!,
+            song
+          }))
+        ))
+      )
+      .subscribe((result) => {
+        const { settings, song } = result;
 
-      QueueService.isInitialized = true;
+        const songForPlay = new SongInfo(
+          song.id,
+          song.name,
+          (song?.artist?.userName ?? song?.group?.name)!,
+          this._httpService.buildUrl(`/api/Songs/${song.id}/file?quality=${AudioQuality[settings.quality]}`),
+          song.album.iconURL
+        );
+        this._toolbarService.updateSong(songForPlay);
 
-      if (play) this._toolbarService.togglePlay();
+        QueueService.isInitialized = true;
 
-      this.currentSongUpdate.emit(song);
-    });
-  };
+        if (play) this._toolbarService.togglePlay();
+
+        this.currentSongUpdate.emit(song);
+      });
+  }
 
   setPlaying = (value: boolean) => {
     this.playingToggled.emit(value);
