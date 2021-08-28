@@ -77,9 +77,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this._songsService.getSongsByAlbumId(id)
       .pipe(take(1))
       .subscribe((result) => {
-        const songs = result;
-
-        this.updateQueue(songs);
+        this.updateQueue(result);
       });
   };
 
@@ -103,6 +101,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         next: () => {
           this.idSaveButtonShown = !this.idSaveButtonShown;
           this.isSuccess = true;
+          this._newestAlbums.find((a) => a.id === id)!.isLiked = true;
 
           timer(3000).pipe(take(1)).subscribe((val) => {
             this.isSuccess = Boolean(val);
@@ -120,10 +119,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
           this.currentNewestAlbum = {
             ...this._newestAlbums[0]
           };
-          this.idSaveButtonShown = this.currentNewestAlbum.artistId !== this._userId
-            && !this.currentNewestAlbum.isLiked;
+          this.setButtonVisibility();
         }
       });
+  }
+
+  setButtonVisibility() {
+    this.idSaveButtonShown = this.currentNewestAlbum.artistId !== this._userId && !this.currentNewestAlbum.isLiked;
   }
 
   getRecentlyPlayed() {
@@ -182,7 +184,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       this._newestCounter = 0;
     }
     this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
-    this.idSaveButtonShown = this.currentNewestAlbum.artistId !== this._userId && !this.currentNewestAlbum.isLiked;
+    this.setButtonVisibility();
     this.accordionAnimation();
   };
 
@@ -193,7 +195,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       this._newestCounter = this._newestAlbumsMax - 1;
     }
     this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
-    this.idSaveButtonShown = this.currentNewestAlbum?.artistId !== this._userId && !this.currentNewestAlbum.isLiked;
+    this.setButtonVisibility();
     this.accordionAnimation();
   };
 
