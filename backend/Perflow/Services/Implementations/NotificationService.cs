@@ -48,7 +48,7 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
 
-            DeleteOlderThan(maxNumberOfDaysToStoreNotification);
+            _ = DeleteOlderThan(maxNumberOfDaysToStoreNotification);
         }
 
         public async Task SendNotificationToGroupAsync(NotificationWriteDTO notification, string groupName)

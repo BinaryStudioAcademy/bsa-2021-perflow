@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Hubs.Interfaces;
 using Shared.Auth.Constants;
@@ -20,13 +21,24 @@ namespace Perflow.Hubs.Implementations
         {
             _context = context;
         }
+
+        public async Task AddToGroup(ArtistNameDTO artist)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, $"{artist.Id}{artist.UserName}");
+        }
+
+        public async Task RemoveFromGroup(ArtistNameDTO artist)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, $"{artist.Id}{artist.UserName}");
+        }
+
         public override async Task OnConnectedAsync()
         {
             if (!int.TryParse(Context.User.FindFirst(Claims.Id).Value, out int id))
             {
                 throw new ArgumentException("Incorrect id");
             }
-            var subscriptions = await GetUserSubscribtionsAsync(id);
+            var subscriptions = await GetUserSubscriptionsAsync(id);
 
             subscriptions.ForEach(async s => await Groups.AddToGroupAsync(Context.ConnectionId, s));
 
@@ -39,14 +51,14 @@ namespace Perflow.Hubs.Implementations
             {
                 throw new ArgumentException("Incorrect id");
             }
-            var subscriptions = await GetUserSubscribtionsAsync(id);
+            var subscriptions = await GetUserSubscriptionsAsync(id);
 
             subscriptions.ForEach(async s => await Groups.RemoveFromGroupAsync(Context.ConnectionId, s));
 
             await base.OnDisconnectedAsync(exception);
         }
 
-        private async Task<List<string>> GetUserSubscribtionsAsync(int id)
+        private async Task<List<string>> GetUserSubscriptionsAsync(int id)
         {
             var artistSubscriptions = await _context.ArtistReactions
                     .Where(ar => ar.UserId == id)
