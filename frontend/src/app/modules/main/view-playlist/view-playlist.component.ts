@@ -180,7 +180,6 @@ export class ViewPlaylistComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.songs = this.songs.filter((s) => s.id !== data.songId);
-            this.playlist.songs = this.songs;
           }
         });
     }

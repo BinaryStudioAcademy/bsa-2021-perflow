@@ -64,7 +64,10 @@ export class SongRowComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserId();
     this.checkRoute();
+    this.subscribeToCreatePlaylistService();
+  }
 
+  subscribeToCreatePlaylistService() {
     this._createPlaylistService.getChachedPlaylists()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
@@ -73,10 +76,6 @@ export class SongRowComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.subscribeToCreatePlaylistService();
-  }
-
-  subscribeToCreatePlaylistService() {
     this._createPlaylistService.playlistChanged$
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((playlist) => {
