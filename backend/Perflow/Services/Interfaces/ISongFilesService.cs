@@ -8,7 +8,7 @@ namespace Perflow.Services.Interfaces
 {
     public interface ISongFilesService
     {
-        public Task<BlobDto> GetSongFileAsync(int songId, SongQualityLevel quality);
+        public Task<BlobDto> GetSongFileAsync(int songId, AudioQuality quality);
 
         public Task UploadSongFile(int songId, IFormFile songFile);
 
