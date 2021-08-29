@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
@@ -36,4 +37,13 @@ export class SearchAlbumsResultComponent {
     this._searchHistoryService.addSearchHistory(history)
       .pipe(take(1)).subscribe();
   };
+  drop(event: CdkDragDrop<any[]>) {
+    if (event.container.id === event.previousContainer.id) {
+      // move inside same list
+      moveItemInArray(this.albums, event.previousIndex, event.currentIndex);
+    }
+    else {
+      // move between lists
+    }
+  }
 }

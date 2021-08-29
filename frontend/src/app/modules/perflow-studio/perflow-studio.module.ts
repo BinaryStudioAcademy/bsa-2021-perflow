@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CreateEditAlbumComponent } from './create-edit-album/create-edit-album/create-edit-album.component';
 import { EditAlbumModalComponent } from './create-edit-album/edit-album-modal/edit-album-modal.component';
 import { SongsUploadModalComponent } from './create-edit-album/songs-upload-modal/songs-upload-modal.component';
-import { CreateEditContainerComponent } 
+import { CreateEditContainerComponent }
   from './constructor/create-edit-container/create-edit-container/create-edit-container.component';
 import { ContainersPageComponent } from './constructor/containers-page/containers-page/containers-page.component';
 import { ContainerSearchComponent } from './constructor/container-search/container-search/container-search.component';

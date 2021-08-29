@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
@@ -36,4 +37,14 @@ export class SearchPlaylistsResultComponent {
     this._searchHistoryService.addSearchHistory(history)
       .pipe(take(1)).subscribe();
   };
+
+  drop(event: CdkDragDrop<any[]>) {
+    if (event.container.id === event.previousContainer.id) {
+      // move inside same list
+      moveItemInArray(this.playlists, event.previousIndex, event.currentIndex);
+    }
+    else {
+      // move between lists
+    }
+  }
 }

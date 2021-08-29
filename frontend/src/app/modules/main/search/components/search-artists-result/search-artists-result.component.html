@@ -1,9 +1,22 @@
-<div class="result-container">
+<div class="result-container" 
+    cdkDropList id="search-artists" 
+    [cdkDropListConnectedTo]="[
+                                'section-1', 
+                                'section-2', 
+                                'section-3',
+                                'section-4',
+                                'section-5',
+                                'section-6',
+                                'section-7',
+                                'section-8',
+                                'section-9']" 
+    [cdkDropListData]="artists"
+    (cdkDropListDropped)="drop($event)">
   <div class="result-header">
     <a class="field-name" routerLink="/search/{{term}}/artists">Artists</a>
   </div>
   <div class="result-body">
     <app-artist-card (clickEmiter)="saveToSearchHistory(artist)" *ngFor="let artist of artists" 
-      [artist]="artist"></app-artist-card>
+      [artist]="artist" cdkDrag></app-artist-card>
   </div>
 </div>
