@@ -63,6 +63,11 @@
                     </div>
                     <div class="item" (click)="clickItem('Add to playlist')">
                         <i class="list icon"></i>Add to playlist
+                        <div class="left menu add-to-playlist">
+                            <div class="item" *ngFor="let playlist of createdPlaylistArray" (click)="saveToPlaylist(playlist.id, song.id)">
+                                {{ playlist.name }}
+                            </div>
+                        </div>
                     </div>
                     <div class="item" (click)="clickItem('Remove from playlist')">
                         <i class="trash icon"></i>Remove from playlist

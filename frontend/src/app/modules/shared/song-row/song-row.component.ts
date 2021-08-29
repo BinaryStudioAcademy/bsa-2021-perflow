@@ -1,15 +1,19 @@
 import { PlatformLocation } from '@angular/common';
 import {
-  Component, Input, Output, EventEmitter, OnInit
+  Component, Input, Output, EventEmitter, OnInit, OnDestroy
 } from '@angular/core';
 import { ClipboardService } from 'ngx-clipboard';
-import { timer } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subject, timer } from 'rxjs';
+import { filter, take, takeUntil } from 'rxjs/operators';
+import { PlaylistName } from 'src/app/models/playlist/playlist-name';
+import { PlaylistSongDTO } from 'src/app/models/playlist/playlistSongDTO';
 import { Song } from 'src/app/models/song/song';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
+import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-song-row',
@@ -17,10 +21,13 @@ import { SongsService } from 'src/app/services/songs/songs.service';
   styleUrls: ['./song-row.component.sass']
 })
 
-export class SongRowComponent implements OnInit {
+export class SongRowComponent implements OnInit, OnDestroy {
   private _userId: number;
+  private _unsubscribe$ = new Subject<void>();
+
   isEditing = false;
   isSuccess: boolean = false;
+  createdPlaylistArray = new Array<PlaylistName>();
 
   @Input() song: Song;
   @Input() number: number;
@@ -39,11 +46,55 @@ export class SongRowComponent implements OnInit {
     private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
-    private _songService: SongsService
+    private _songService: SongsService,
+    private _createPlaylistService: CreatePlaylistService,
+    private _playlistsService: PlaylistsService
   ) { }
+
+  ngOnDestroy(): void {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
+  }
 
   ngOnInit(): void {
     this.getUserId();
+
+    this._createPlaylistService.getChachedPlaylists()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.createdPlaylistArray = data;
+        }
+      });
+
+    this.subscribeToCreatePlaylistService();
+  }
+
+  subscribeToCreatePlaylistService() {
+    this._createPlaylistService.playlistChanged$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((playlist) => {
+        const playlistIndex = this.createdPlaylistArray.findIndex((pl) => pl.id === playlist?.id);
+
+        if (playlistIndex === -1) {
+          this.createdPlaylistArray.push({ id: playlist!.id, name: playlist!.name });
+        }
+        else {
+          this.createdPlaylistArray[playlistIndex] = { id: playlist!.id, name: playlist!.name };
+        }
+      });
+
+    this._createPlaylistService.playlistDeleted$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((id) => {
+        this.createdPlaylistArray = this.createdPlaylistArray.filter((pl) => pl.id !== id);
+      });
+
+    this._createPlaylistService.playlistEditName$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((playlist) => {
+        this.createdPlaylistArray.find((pl) => pl.id === playlist.id)!.name = playlist.name;
+      });
   }
 
   getUserId() {
@@ -54,6 +105,16 @@ export class SongRowComponent implements OnInit {
           this._userId = state!.id;
         }
       );
+  }
+
+  saveToPlaylist(pId: number, sId: number) {
+    const playlistSong = {
+      playlistId: pId,
+      songId: sId
+    } as PlaylistSongDTO;
+
+    this._playlistsService.addSongToPlaylist(playlistSong)
+      .pipe(take(1)).subscribe();
   }
 
   clickItem(menu: string) {
