@@ -150,25 +150,25 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
 
   nextSlide = () => {
 
-  }
+  };
 
   previousSlide = () => {
 
-  }
+  };
 
   drop(event: CdkDragDrop<PageSectionFull[]>) {
     moveItemInArray(this.container.pageSections, event.previousIndex, event.currentIndex);
-    //const orders = this.container.pageSections.map((s, index) => ({ previousPosition: s.position, currentPosition: index + 2 }));
+    // const orders = this.container.pageSections.map((s, index) => ({ previousPosition: s.position, currentPosition: index + 2 }));
   }
 
   dropSearch(event: CdkDragDrop<any[]>) {
     if (!(event.container.id === event.previousContainer.id)) {
       const newEntity = event.previousContainer.data[event.previousIndex];
       let newEntityType: EntityType;
-      if(this.instanceOfAlbum(newEntity)) {
+      if (this.instanceOfAlbum(newEntity)) {
         newEntityType = EntityType.album;
       }
-      else if(this.instanceOfArtist(newEntity)) {
+      else if (this.instanceOfArtist(newEntity)) {
         newEntityType = EntityType.artist;
       }
       else {
@@ -216,7 +216,7 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
       this.container.pageSections.push(newSection);
     }
   };
-
+  /* eslint-disable no-param-reassign */
   deleteSection = (position: number) => {
     const sectionIndex = this.container.pageSections.findIndex((ps) => ps.position === position);
     this.container.pageSections.splice(sectionIndex, 1);
@@ -227,12 +227,8 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     });
     this.maxPos -= 1;
   };
+  /* eslint-enable no-param-reassign */
+  instanceOfAlbum = (data: any): data is AlbumForReadDTO => 'releaseYear' in data;
 
-  instanceOfAlbum = (data: any): data is AlbumForReadDTO => {
-    return 'releaseYear' in data;
-  }
-
-  instanceOfArtist = (data: any): data is ArtistReadDTO => {
-    return 'userName' in data;
-  }
+  instanceOfArtist = (data: any): data is ArtistReadDTO => 'userName' in data;
 }
