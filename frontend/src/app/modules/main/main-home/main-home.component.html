@@ -15,8 +15,7 @@
       <img
         class="album-icon"
         alt="Album"
-        src="{{currentNewestAlbum.iconURL}}"
-      />
+        src="{{currentNewestAlbum.iconURL}}" routerLink="/albums/{{currentNewestAlbum.id}}"/>
       <div class="album-info">
         <p class="type">Album</p>
         <p class="album-title">{{currentNewestAlbum.name}}</p>
@@ -25,8 +24,8 @@
         </p>
 
         <div class="buttons">
-          <button class="ui btn-full button button-play">Play</button>
-          <button class="ui inverted basic button btn-ghost button-save">
+          <button class="ui btn-full button button-play" (click)="playAlbum(currentNewestAlbum.id)">Play</button>
+          <button *ngIf="idSaveButtonShown" class="ui inverted basic button btn-ghost button-save" (click)="saveAlbum(currentNewestAlbum.id)">
             Save
           </button>
         </div>
@@ -127,6 +126,12 @@
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
+    <div class="header">
+      Album was saved
     </div>
   </div>
 </main>

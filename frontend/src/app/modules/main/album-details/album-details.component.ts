@@ -110,7 +110,7 @@ export class AlbumDetailsComponent implements OnInit {
     this._service.removeAlbum(this.album.id)
       .subscribe(
         () => {
-          this._router.navigateByUrl('/playlists/albums');
+          this._router.navigateByUrl('/perflowstudio/albums');
         }
       );
   }

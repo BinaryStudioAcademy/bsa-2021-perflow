@@ -255,12 +255,14 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AlbumForNewestFiveDTO>> GetFiveNewestAlbumsAsync()
+        public async Task<IEnumerable<AlbumForNewestFiveDTO>> GetFiveNewestAlbumsAsync(int userId)
         {
             var newAlbumsToTake = 5;
 
             IEnumerable<AlbumForNewestFiveDTO> entities = await context.Albums
                 .Where(album => album.IsPublished)
+                .Include(album => album.Reactions)
+                .Include(album => album.Author)
                 .OrderByDescending(a => a.CreatedAt)
                 .Take(newAlbumsToTake)
                 .AsNoTracking()
@@ -269,7 +271,9 @@ namespace Perflow.Services.Implementations
                     Id = album.Id,
                     Name = album.Name,
                     Description = album.Description,
-                    IconURL = _imageService.GetImageUrl(album.IconURL)
+                    IconURL = _imageService.GetImageUrl(album.IconURL),
+                    IsLiked = album.Reactions.Any(ar => ar.UserId == userId),
+                    ArtistId = album.Author != null ? album.Author.Id : null
                 })
                 .ToListAsync();
 
