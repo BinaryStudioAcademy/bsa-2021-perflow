@@ -2,9 +2,10 @@ import { PlatformLocation } from '@angular/common';
 import {
   Component, Input, Output, EventEmitter, OnInit, OnDestroy
 } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import { Subject, timer } from 'rxjs';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { PlaylistSongDTO } from 'src/app/models/playlist/playlistSongDTO';
 import { Song } from 'src/app/models/song/song';
@@ -28,6 +29,8 @@ export class SongRowComponent implements OnInit, OnDestroy {
   isEditing = false;
   isSuccess: boolean = false;
   createdPlaylistArray = new Array<PlaylistName>();
+  playlistId: number | undefined;
+  notification: string;
 
   @Input() song: Song;
   @Input() number: number;
@@ -48,7 +51,9 @@ export class SongRowComponent implements OnInit, OnDestroy {
     private _location: PlatformLocation,
     private _songService: SongsService,
     private _createPlaylistService: CreatePlaylistService,
-    private _playlistsService: PlaylistsService
+    private _playlistsService: PlaylistsService,
+    private _activateRoute: ActivatedRoute,
+    private _router: Router
   ) { }
 
   ngOnDestroy(): void {
@@ -58,6 +63,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUserId();
+    this.checkRoute();
 
     this._createPlaylistService.getChachedPlaylists()
       .pipe(takeUntil(this._unsubscribe$))
@@ -99,12 +105,23 @@ export class SongRowComponent implements OnInit, OnDestroy {
 
   getUserId() {
     this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
+      .pipe(take(1))
       .subscribe(
         (state) => {
           this._userId = state!.id;
         }
       );
+  }
+
+  checkRoute() {
+    this._activateRoute.params
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((params: Params) => {
+        if (this._router.url === `/playlists/view-playlist/${params.id}`
+          || this._router.url === `/playlists/edit/${params.id}`) {
+          this.playlistId = +params?.id;
+        }
+      });
   }
 
   saveToPlaylist(pId: number, sId: number) {
@@ -113,8 +130,19 @@ export class SongRowComponent implements OnInit, OnDestroy {
       songId: sId
     } as PlaylistSongDTO;
 
-    this._playlistsService.addSongToPlaylist(playlistSong)
-      .pipe(take(1)).subscribe();
+    this._playlistsService.checkSongInPlaylist({ playlistId: pId, songId: sId })
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this.showNotification('There is the song in the playlist');
+          }
+          else {
+            this._playlistsService.addSongToPlaylist(playlistSong)
+              .pipe(take(1)).subscribe();
+          }
+        }
+      });
   }
 
   clickItem(menu: string) {
@@ -127,6 +155,12 @@ export class SongRowComponent implements OnInit, OnDestroy {
     this._clipboardApi.copyFromContent(
       `${this._location.hostname}:${this._location.port}/albums/${this.song.album.id}`
     );
+
+    this.showNotification('Link copied to clipboard!');
+  }
+
+  showNotification(text: string) {
+    this.notification = text;
     this.isSuccess = true;
     timer(3000).subscribe((val) => {
       this.isSuccess = Boolean(val);

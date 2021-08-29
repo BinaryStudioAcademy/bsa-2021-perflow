@@ -69,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item" (click)="clickItem('Remove from playlist')">
+                    <div class="item" (click)="clickItem('Remove from playlist')" *ngIf="playlistId">
                         <i class="trash icon"></i>Remove from playlist
                     </div>
                     <div class="item" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">
@@ -93,6 +93,6 @@
 </div>
 <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
     <div class="header">
-      Link copied to clipboard!
+      {{ notification }}   
     </div>
 </div>
