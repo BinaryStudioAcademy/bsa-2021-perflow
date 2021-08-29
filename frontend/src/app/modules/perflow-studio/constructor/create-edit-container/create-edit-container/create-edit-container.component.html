@@ -1,0 +1,120 @@
+<main>
+  <div class="accordion">
+    <div class="arrows">
+      <button (click)="nextSlide()" class="arrow">
+        <i class="chevron left icon"></i>
+      </button>
+      <button (click)="previousSlide()" class="arrow">
+        <i class="chevron right icon"></i>
+      </button>
+    </div>
+
+    <div class="accordion-information">
+      <img
+        class="album-icon"
+        alt="Album"
+        src="{{accordionSection.pageSectionEntities[currentAccordionAlbumId].entity.IconURL}}"
+      />
+      <div class="album-info">
+        <p class="type">Album</p>
+        <p class="album-title">{{accordionSection.pageSectionEntities[currentAccordionAlbumId].entity.name}}</p>
+        <p class="album-description">
+          {{accordionSection.pageSectionEntities[currentAccordionAlbumId].entity.description}}
+        </p>
+
+        <div class="buttons">
+          <button class="ui btn-full button button-play">Play</button>
+          <button class="ui inverted basic button btn-ghost button-save">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="options">
+      <div class="option ui checkbox">
+        <input type="checkbox" [(ngModel)]="this.container.showRecentlyPlayed" name="showRecentlyPlayed">
+        <label for="showRecentlyPlayed">Show Recently Played</label>
+      </div>
+      <div class="option ui checkbox">
+        <input type="checkbox" [(ngModel)]="this.container.showMix" name="showYourMix">
+        <label for="showYourMix">Show Your Mix</label>
+      </div>
+    </div>
+    <div class="recently-played" *ngIf="this.container.showRecentlyPlayed">
+      <span class="header">{{ showRecentlyPlayedSection.name }}</span>
+      <div class="ui grid recently-played-cont">
+        <app-song-card *ngFor="let song of showRecentlyPlayedSection.pageSectionEntities" 
+          [song]="song.entity"></app-song-card>
+      </div>
+    </div>
+    <div class="your-mix" *ngIf="this.container.showMix">
+      <div class="header">Your mix</div>
+      <div id="yourMix" class="ui grid your-mix-cont">
+        <app-your-mix-card></app-your-mix-card>
+        <app-your-mix-card></app-your-mix-card>
+        <app-your-mix-card></app-your-mix-card>
+        <app-your-mix-card></app-your-mix-card>
+        <app-your-mix-card></app-your-mix-card>
+        <app-your-mix-card></app-your-mix-card>
+        <app-your-mix-card></app-your-mix-card>
+        <app-your-mix-card></app-your-mix-card>
+      </div>
+    </div>
+      <div class="items-scroll-box" *ngFor="let pageSection of container.pageSections" cdkDrag>
+        <span class="header" *ngIf="!(editNamePosition === pageSection.position)">{{ pageSection.name }}</span>
+        <div class="ui input" *ngIf="editNamePosition === pageSection.position">
+          <input type="text" maxlength="50" placeholder="Section name" [(ngModel)]="pageSection.name" 
+          required>
+        </div>
+        <span class="nameedit" *ngIf="editNamePosition === -1" (click)="editName(pageSection.position)">
+          <i class="ui pencil alternate icon"></i>
+        </span>
+        <span class="namedelete" *ngIf="editNamePosition === -1" (click)="deleteSection(pageSection.position)">
+          <i class="ui trash alternate outline icon"></i>
+        </span>
+        <span class="namesave" *ngIf="editNamePosition === pageSection.position" (click)="saveName()">
+            <i class="ui save icon"></i>
+        </span>
+        <div class="list-of-items"
+             cdkDropList id="section-{{pageSection.position-1}}" 
+             [cdkDropListConnectedTo]="['search-playlists', 'search-artists', 'search-albums']" 
+             (cdkDropListDropped)="dropSearch($event)">
+          <div class="ui icon button scroll-button">
+            <i class="large inverted angle left icon"></i>
+          </div>
+          <div class="items" *ngFor="let pageSectionEntity of pageSection.pageSectionEntities" cdkDrag>
+            <!--<div class="ui icon button scroll-button" (click)="scrollLeft('playlist')">-->
+              <!-- <app-square-info-card *ngIf="pageSectionEntity.entityType === 1"
+                [name]="pageSectionEntity.entity.name"
+                [description]="pageSectionEntity.entity.description"
+                [iconUrl]="pageSectionEntity.entity.iconURL">
+              </app-square-info-card> -->
+              <app-album-card *ngIf="pageSectionEntity.entityType === 0" 
+                [album]="pageSectionEntity.entity">
+              </app-album-card>
+              <app-artist-card *ngIf="pageSectionEntity.entityType === 2"
+                [artist]="pageSectionEntity.entity">
+              </app-artist-card>
+              <app-playlist-card *ngIf="pageSectionEntity.entityType === 1"
+                [playlist]="pageSectionEntity.entity">
+              </app-playlist-card>
+            <!--<div class="ui icon button scroll-button" (click)="scrollRight('playlist')">-->
+          </div>
+          <div class="ui icon button scroll-button">
+            <i class="large inverted angle right icon"></i>
+          </div>
+        </div>
+      </div>
+    <div *ngIf="maxPos < 10" class="add-section" (click)="addNewSection()">
+      <i class="ui plus square icon large"></i>
+    </div>
+    <div class="search-bar">
+      <app-container-search></app-container-search>
+    </div>
+  </div>
+  <div class="container"></div>
+  
+</main>

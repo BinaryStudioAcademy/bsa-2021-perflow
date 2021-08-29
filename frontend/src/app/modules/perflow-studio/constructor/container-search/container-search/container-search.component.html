@@ -1,0 +1,16 @@
+<div class="search-container">
+  <div class="ui search">
+    <div class="ui icon input">
+      <input class="prompt input-dark" type="text" name="search" placeholder="Artists, albums or playlists..."
+        (input)="findSongsByName()" [(ngModel)]="searchValue" autocomplete="sss" aria-autocomplete="none"
+        (keyup)="clearSearch($event)">
+      <i class="search icon"></i>
+    </div>
+  </div>
+
+  <div  class="search-result">
+    <app-search-artists-result [term]="searchValue" [artists]="foundData.artists" *ngIf="foundData.artists?.length"></app-search-artists-result>
+    <app-search-albums-result [term]="searchValue" [albums]="foundData.albums" *ngIf="foundData.albums?.length"></app-search-albums-result>
+    <app-search-playlists-result [term]="searchValue" [playlists]="foundData.playlists" *ngIf="foundData.playlists?.length"></app-search-playlists-result>
+  </div>
+</div>

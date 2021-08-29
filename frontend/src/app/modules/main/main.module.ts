@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RouterModule } from '@angular/router';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -50,6 +51,8 @@ import { AllAlbumsComponent } from './search/components/all-albums/all-albums.co
 import { AllPlaylistsComponent } from './search/components/all-playlists/all-playlists.component';
 import { SongCardComponent } from './cards/song-card/song-card.component';
 import { GroupViewComponent } from './group-view/group-view.component';
+import { ConstructorContainerCardComponent }
+  from './cards/constructor-container-card/constructor-container-card/constructor-container-card.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +89,8 @@ import { GroupViewComponent } from './group-view/group-view.component';
     AllAlbumsComponent,
     AllPlaylistsComponent,
     SongCardComponent,
-    GroupViewComponent
+    GroupViewComponent,
+    ConstructorContainerCardComponent
   ],
   imports: [
     CommonModule,
@@ -99,12 +103,20 @@ import { GroupViewComponent } from './group-view/group-view.component';
     ClipboardModule,
     ImageCropperModule,
     RouterModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    DragDropModule
   ],
   exports: [
     ClickOutsideModule,
     AlbumCardComponent,
-    SquareInfoCardComponent
+    SquareInfoCardComponent,
+    YourMixCardComponent,
+    SongCardComponent,
+    SearchAlbumsResultComponent,
+    SearchArtistsResultComponent,
+    SearchPlaylistsResultComponent,
+    PlaylistCardComponent,
+    ArtistCardComponent
   ]
 })
 export class MainModule {

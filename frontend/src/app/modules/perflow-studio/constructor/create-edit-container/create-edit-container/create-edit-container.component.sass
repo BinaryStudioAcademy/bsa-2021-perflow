@@ -1,0 +1,338 @@
+@import "src/styles.sass"
+
+*
+    padding: 0
+    margin: 0
+    text-decoration: none
+
+%clickable
+    cursor: pointer
+
+main
+    background: $drk-gray
+    width: 100%
+    height: 100%
+    color: $text
+    .container
+      margin-left: 247px
+      padding-bottom: 100px !important
+      height: auto
+      width: auto
+      background: $drk-gray
+      &.hide
+          overflow: hidden
+          animation: display-vanish
+          animation-delay: 0.6s
+          animation-fill-mode: forwards
+.accordion
+    position: relative
+    width: 100%
+    height: 401px
+    border-radius: 0
+    display: grid
+    grid-template-columns: 100%
+    grid-template-rows: 66px auto
+    background: linear-gradient(90deg, #864099 0%, rgba(70, 65, 146, 0.95) 100%)
+
+    // Navigation arrows
+    .arrows
+        grid-column: 1
+        grid-row: 1
+        position: relative
+        height: 30px
+        min-height: 30px
+        width: 71px
+        min-width: 73px
+        max-width: 73px
+        position: relative
+        top: 38px
+        left: 37px
+        display: flex
+        justify-content: space-between
+        &>.arrow
+            background: #A859C0
+            border: 0px
+            width: 28px
+            height: 28px
+            border-radius: 2px
+            color: $text
+            display: flex
+            justify-content: center
+            align-items: center
+            &>i
+                margin: 0px
+            &:hover
+                cursor: pointer
+                background: #A859C0aa
+            &:active
+                border: 2px solid #A859C0
+
+    // Profile icon in top right corner
+    .profile-menu
+        grid-column: 1
+        grid-row: 1
+        position: absolute
+        right: 42px
+        top: 45px
+
+    // Accordion Information
+    .accordion-information
+        grid-column: 1
+        grid-row: 2
+        position: relative
+        left: 160px
+        top: 38px
+        width: 70%
+        height: 245px
+        overflow: visible
+        display: grid
+        grid-template-columns: 245px auto
+        grid-template-row: 100%
+        gap: 0px 0px
+        @media (max-width: 1300px)
+            left: 150px
+        @media (max-width: 1200px)
+            width: 750px
+        @media (max-width: 1050px)
+            transform: scale(0.9)
+            left: 100px
+        @media (max-width: 1000px)
+            left: 80px
+        @media (max-width: 900px)
+            left: 50px
+        @media (max-width: 800px)
+            grid-template-columns: 100%
+            width: 600px
+        @media (max-width: 600px)
+            left: 30px
+            width: 500px
+        @media (max-width: 500px)
+            left: 0px
+            width: 400px
+        @media (max-width: 500px)
+            transform: scale(0.9)
+        @media (max-width: 400px)
+            transform: scale(0.8)
+        .album-icon
+            grid-column: 1
+            grid-row: 1
+            width: 245px
+            height: 245px
+            border-radius: 50%
+            object-fit: cover
+            background: #C4C4C4
+            box-shadow: 0px 27px 36px 3px rgba(33, 41, 45, 0.25)
+            @media (max-width: 800px)
+                display: none
+        .album-info
+            grid-column: 2
+            grid-row: 1
+            margin-left: 35px
+            height: 245px
+            @media (max-width: 800px)
+                grid-column: 1
+            @media (max-width: 500px)
+                margin-left: 0px
+            .type
+                margin-top: 20px
+                font-family: Rubik
+                font-style: normal
+                font-weight: 300
+                font-size: 18px
+                line-height: 21px
+                color: $text
+                height: fit-content
+            .album-title
+                margin-top: 10px
+                font-family: Rubik
+                font-style: normal
+                font-weight: 700
+                font-size: 40px
+                line-height: 47px
+                color: $text
+                height: fit-content
+                text-overflow: ellipsis
+            .album-description
+                margin-top: 22px
+                font-family: Rubik
+                font-style: normal
+                font-weight: 300
+                font-size: 18px
+                line-height: 21px
+                color: $text
+                width: 100%
+                max-height: 42px
+                overflow: hidden
+                text-overflow: ellipsis
+            .buttons
+                margin-top: 20px
+                .button-play, .button-save
+                    width: 80px
+                    height: 43px
+                .button-play
+                    margin-right: 20px
+
+.main-content
+    background: $drk-gray
+    padding: 50px 30px 50px 40px
+    .add-section
+      width: 100%
+      background: $light-gray
+      border-radius: 50px
+      height: 65px
+      text-align: center
+      >i
+        position: relative 
+        top: calc(50% - 10px)
+      &:hover
+        cursor: pointer
+        background: #353e47
+    .options
+      background: $drk-gray
+      border-radius: 50px
+      display: flex
+      align-items: center
+      justify-content: space-around
+      .option.ui.checkbox 
+        color: white
+        input
+          &:active~label
+            color: $text
+          &:checked~label
+            color: $text
+            &::before, &::after
+              color: white
+        label
+          font-family: Rubik
+          color: white
+          &::before
+            background:  $drk-gray
+            opacity: 1
+            border: 1px solid #ffffff35
+
+// Recently played
+.recently-played
+    margin-bottom: 65px
+    @media (max-width: 800px)
+        margin-bottom: 10px !important
+        height: 220px
+    .recently-played-cont
+        overflow: hidden
+        max-height: 170px
+        align-content: stretch
+        margin-top: 30px
+        justify-content: start
+        @media (max-width: 800px)
+            justify-content: center
+        &::-webkit-scrollbar
+            display: none
+
+// Your mix
+.your-mix
+    height: 271px
+    width: 100%
+    margin-bottom: 50px
+    margin-top: 50px
+    @media (max-width: 800px)
+        margin-bottom: 20px !important
+        height: 291px
+    .your-mix-cont
+        overflow: hidden
+        height: 220px
+        width: 100%
+        margin-top: 30px
+        align-content: stretch
+        justify-content: start
+        @media (max-width: 800px)
+            justify-content: center
+        &::-webkit-scrollbar
+            display: none
+
+// This is for profile menu
+.show
+    display: block !important
+
+.header
+    font-weight: bold
+    font-size: 24px
+    line-height: 28px
+    color: $text
+
+.items-scroll-box
+    min-width: 100%
+    position: relative
+    margin: 25px 0px
+    &:hover
+      background-color: $light-gray
+      .nameedit,
+      .namesave,
+      .namedelete
+        visibility: visible
+        &:hover
+          @extend %clickable
+    .header
+        margin-bottom: 30px
+    .list-of-items
+        display: flex
+        align-items: center
+        .items
+            display: grid
+            overflow-x: auto
+            grid-gap: 25px
+            grid-auto-flow: column
+            grid-template-columns: repeat(auto-fill, minmax(230px , 1fr))
+            grid-auto-columns: minmax(230px , 1fr)
+            scrollbar-width: none
+            &::-webkit-scrollbar
+                display: none
+        .scroll-button
+            width: 33px
+            height: 33px
+            background: $drk-rain
+            color: white
+            padding: 5px
+            margin: 6px
+            display: flex
+            align-items: center
+            transition: background 0.4s ease
+            font-size: 1.2rem
+            &:hover
+                cursor: pointer
+                background: lighten($drk-rain, 8%)
+                
+.nameedit,
+.namesave,
+.namedelete
+    margin-left: 10px
+    visibility: hidden
+    &:hover
+        cursor: pointer  
+  
+::ng-deep .search-container
+  position: relative
+  height: 100%
+  width: 100%
+  // Fixed
+  ::ng-deep .ui.search
+    position: relative !important
+    height: 90px
+    background: $drk-gray
+    width: 300px
+    display: grid
+    grid-template-columns: 100%
+    ::ng-deep .ui.icon.input
+      grid-column: 1
+      align-self: center
+      justify-self: start
+      margin-left: 15px 
+      width: 50%
+      ::ng-deep i
+        color: $text
+      ::ng-deep .prompt.input-dark
+        background: $drk-rain
+        border: 1px solid $text
+        color: $text
+        ::ng-deep &:focus
+          background: $drk-rain
+        ::ng-deep &:active
+          background: $drk-rain

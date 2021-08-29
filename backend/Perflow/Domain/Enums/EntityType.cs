@@ -10,6 +10,7 @@ namespace Perflow.Domain.Enums
         Album = 0,
         Playlist,
         Artist,
-        Group
+        Group,
+        Song
     }
 }

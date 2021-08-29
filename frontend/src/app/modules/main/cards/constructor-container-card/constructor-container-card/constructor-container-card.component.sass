@@ -1,0 +1,36 @@
+@import "../../../../../styles"
+
+.card
+    padding: 16px
+    background: $light-gray
+    color: $text
+    width: 200px
+    height: 280px
+    position: relative
+    cursor: pointer
+    border-radius: 5px
+    box-shadow: 0 0 10px darken($drk-gray, 5%)
+    transition: background-color .2s ease-in-out
+    .image
+        width: 160px
+        height: 160px
+        border-radius: 3px !important
+        margin: auto
+        margin-bottom: 15px
+    img
+        width: 100%
+        height: 100%
+        object-fit: cover
+    &:hover
+        background-color: lighten($drk-rain, 5%)
+        cursor: pointer
+
+    .content
+        min-height: 64px
+        .card-name
+            text-overflow: ellipsis
+            white-space: nowrap
+            overflow: hidden
+        .card-name  
+            font-weight: $medium-weight
+            font-size: 16px
