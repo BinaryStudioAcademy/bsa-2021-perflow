@@ -78,6 +78,15 @@ namespace Perflow.Controllers
             return Ok();
         }
 
+        [HttpPost("checkSong")]
+        public async Task<ActionResult> CheckSongInPlaylistAsync([FromBody] PlaylistSongDTO playlistSongDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            return Ok(await _playlistService.CheckSongInPlaylistAsync(playlistSongDTO));
+        }
+
         [HttpDelete("songs")]
         public async Task<ActionResult> DeleteSongToPlaylistAsync([FromQuery] PlaylistSongDTO playlistSongDTO)
         {

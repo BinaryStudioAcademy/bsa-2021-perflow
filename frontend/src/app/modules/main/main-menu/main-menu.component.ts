@@ -68,6 +68,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       .subscribe(
         (resp: HttpResponse<PlaylistName[]>) => {
           this.playlists = resp.body!;
+          this._createdPlaylistService.fillCreatedPlylistsArray(resp.body! as PlaylistName[]);
         }
       );
   }
