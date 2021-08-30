@@ -2,10 +2,11 @@ import {
   Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, take, takeUntil } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ContentSynchronizationService } from 'src/app/services/content-synchronization.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
@@ -55,6 +56,9 @@ export class SongToolbarComponent implements OnInit {
   private _source: MediaElementAudioSourceNode;
 
   private readonly _fftSize = 256; // Fast Fourier Transform Size
+  private readonly _recordingFrequency = 30; // How often sync occurs
+  private _previousTime: number = 0;
+  private _startTime: number | undefined;
 
   constructor(
     authService: AuthService,
@@ -62,7 +66,8 @@ export class SongToolbarComponent implements OnInit {
     private _songsService: SongsService,
     private _reactionService: ReactionService,
     private _queueService: QueueService,
-    private _rpService: RecentlyPlayedService
+    private _rpService: RecentlyPlayedService,
+    private _syncService: ContentSynchronizationService
   ) {
     toolbarService.songUpdated$
       .pipe(takeUntil(this._unsubscribe$))
@@ -70,6 +75,7 @@ export class SongToolbarComponent implements OnInit {
         (song) => {
           this.updateSong(song);
           this._rpService.addSongViaId(song.id, this.userId, undefined).subscribe();
+          this._syncService.song$.next(song);
         }
       );
 
@@ -98,6 +104,25 @@ export class SongToolbarComponent implements OnInit {
     this.audio = document.querySelector('audio');
     this.audio!.crossOrigin = 'anonymous';
     this.initAudioContext();
+
+    if (!this.songForPlay || this.songForPlay.id === 0) {
+      this._syncService.getContentSyncAsync(this.userId)
+        .pipe(take(1))
+        .subscribe({
+          next: (data) => {
+            this._songsService.getSongById(data.songId)
+              .pipe(take(1))
+              .subscribe({
+                next: (song) => {
+                  this._queueService.clearQueue();
+                  this._queueService.addSongToQueue(song);
+                  this._queueService.initSong(song, false);
+                  this._startTime = data.time;
+                }
+              });
+          }
+        });
+    }
   }
 
   initAudioContext() {
@@ -115,6 +140,11 @@ export class SongToolbarComponent implements OnInit {
     this.show = true;
     this.audio!.loop = this.isRepeating;
     this.setLike();
+
+    if (this._startTime) {
+      this.audio!.currentTime = this._startTime;
+      this._startTime = undefined;
+    }
   };
 
   setTimeChanging = (value: boolean) => {
@@ -160,6 +190,12 @@ export class SongToolbarComponent implements OnInit {
 
   displayCurrentTime = () => {
     this.currentTimeContainer!.textContent = TimeConverter.secondsToMMSS(this.audio!.currentTime);
+    const time = Math.floor(this.audio!.currentTime);
+
+    if (time !== this._previousTime && time % this._recordingFrequency === 0) {
+      this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
+      this._previousTime = time;
+    }
   };
 
   setSeekSliderMax = () => {
@@ -172,6 +208,7 @@ export class SongToolbarComponent implements OnInit {
 
   getSeekSliderValue = (event: Event) => {
     this.audio!.currentTime = Number.parseInt((<HTMLInputElement>event.target).value, 10);
+    this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
   };
 
   getVolumeSliderValue = (event: Event) => {
@@ -211,6 +248,7 @@ export class SongToolbarComponent implements OnInit {
     }
 
     this._queueService.setPlaying(this.isPlaying);
+    this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
 
     return this.isPlaying;
   };

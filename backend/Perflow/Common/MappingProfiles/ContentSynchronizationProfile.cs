@@ -13,6 +13,7 @@ namespace Perflow.Common.MappingProfiles
         public ContentSynchronizationProfile()
         {
             CreateMap<ContentSyncWriteDTO, ContentSynchronization>();
+            CreateMap<ContentSynchronization, ContentSyncReadDTO>();
         }
     }
 }

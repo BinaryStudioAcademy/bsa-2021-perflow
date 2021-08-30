@@ -60,30 +60,10 @@ namespace Perflow.Services.Implementations
         public async Task<ContentSyncReadDTO> GetContentSyncAsync(int userId)
         {
             var content = await context.ContentSynchronization
-                .Where(cs => cs.UserId == userId)
-                .Include(cs => cs.Song)
-                    .ThenInclude(s => s.Album)
-                        .ThenInclude(a => a.Group)
-                    .Include(s => s.Song)
-                        .ThenInclude(a => a.Artist)
-                .Include(cs => cs.User)
                 .AsNoTracking()
-                .Select(cs => new ContentSyncReadDTO
-                {
-                    SongId = cs.SongId,
-                    Name = cs.Song.Name,
-                    ArtistName = cs.Song.Album.Group != null ? cs.Song.Album.Group.Name : cs.Song.Album.Author.UserName,
-                    ImageURL = cs.Song.Album.IconURL,
-                    SongURL = cs.Song.SourceBlobId
-                })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cs => cs.UserId == userId);
 
-            if (content == null)
-            {
-                throw new NotFoundExcepion($"There is no history for such a user");
-            }
-
-            return content;
+            return mapper.Map<ContentSyncReadDTO>(content);
         }
     }
 }
