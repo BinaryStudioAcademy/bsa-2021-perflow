@@ -1,4 +1,4 @@
 export interface ArtistName {
-    id: number;
-    userName: string;
+  id: number;
+  userName: string;
 }

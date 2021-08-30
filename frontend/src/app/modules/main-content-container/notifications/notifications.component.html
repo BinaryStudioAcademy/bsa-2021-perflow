@@ -9,7 +9,7 @@
                 Notifications
                 <span class="link" (click)="markAllAsRead()">Mark all as read</span>
             </div>
-            <div class="scrolling menu left">
+            <div class="scrolling menu left" *ngIf="notifications.length > 0">
                 <div class="item notification" *ngFor="let n of notifications">
                     <div class="ui empty circular label" [ngClass]="n.isRead ? 'is-read' : 'is-not-read'"></div>
                     <div class="text">
@@ -21,6 +21,13 @@
                             </a>
                         </div>
                         <div class="date">{{n.createdAt | date:'yyyy-MM-dd'}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="scrolling menu left" *ngIf="!notifications.length">
+                <div class="item">
+                    <div class="no-notifications">
+                        You don't have any notifications
                     </div>
                 </div>
             </div>
