@@ -7,13 +7,18 @@ namespace Perflow.Services.Interfaces
 {
     public interface INotificationService
     {
-        Task CreateNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type);
+        Task<IEnumerable<NotificationReadDTO>> CreateNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type);
 
-        Task SendNotificationToGroupAsync(NotificationWriteDTO notification, string groupName);
+        Task SendNotificationAsync(IEnumerable<NotificationReadDTO> notifications);
+
+        Task SendNotificationAsync(NotificationReadDTO notification);
 
         Task<IEnumerable<NotificationReadDTO>> GetAll(int userId);
 
-        Task MarkAllAsRead(int userId);
+        Task MarkAllAsReadAsync(int userId);
 
+        Task ChangeStateAsync(NotificationChangeStateDTO notificationChangeState);
+
+        Task DeleteNotificationAsync(int id);
     }
 }

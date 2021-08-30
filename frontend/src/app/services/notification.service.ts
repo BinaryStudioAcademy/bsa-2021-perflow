@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Notification } from '../models/notification/notification';
+import { NotificationChangeState } from '../models/notification/notification-change-state';
 import { HttpInternalService } from './http-internal.service';
 
 @Injectable({
@@ -16,5 +17,13 @@ export class NotificationService {
 
   markAllAsRead() {
     return this._httpService.postRequest(`${this.routePrefix}/markAllAsRead`, {});
+  }
+
+  changeState(notification: NotificationChangeState) {
+    return this._httpService.putRequest(`${this.routePrefix}/changeState`, notification);
+  }
+
+  delete(id: number) {
+    return this._httpService.deleteRequest(`${this.routePrefix}/${id}`);
   }
 }

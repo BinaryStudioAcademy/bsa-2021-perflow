@@ -46,10 +46,24 @@ $menu-item-width: 300px
             margin-left: auto
     .notification
         display: grid
-        grid-template-areas: 'label text'
+        grid-template-areas: 'close close''label text'
         grid-template-columns: 30px 1fr
+        grid-template-rows: 15px 1fr
+        cursor: auto !important
+        .close
+            grid-area: close
+            margin-left: auto
+            text-align: center
+            color: $text
+            i
+                margin-right: 0
+                &:hover
+                    color: lighten($gray, 15%)
+                    cursor: pointer
         .label
             grid-area: label
+            &:hover
+                cursor: pointer
         .text
             grid-area: text
             +flex-container(left, left)
