@@ -11,5 +11,7 @@ namespace Perflow.Common.DTO.Albums
         public string Name { get; set; }
         public string Description { get; set; }
         public string IconURL { get; set; }
+        public bool IsLiked { get; set; }
+        public int? ArtistId { get; set; }
     }
 }

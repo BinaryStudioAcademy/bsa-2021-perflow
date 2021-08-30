@@ -6,6 +6,11 @@ namespace Shared.Auth.Extensions
 {
     public static class ClaimsExtensions
     {
+        public static bool HasId(this ClaimsPrincipal user)
+        {
+            return user.HasClaim(claim => claim.Type == Claims.Id);
+        }
+        
         public static int GetId(this ClaimsPrincipal user)
         {
             var idString = user.Claims.First(claim => claim.Type == Claims.Id).Value;

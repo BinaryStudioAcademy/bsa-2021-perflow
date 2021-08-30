@@ -68,4 +68,8 @@ export class PlaylistsService {
   copyPlaylist(playlist: PlaylistName): Observable<PlaylistName> {
     return this._httpService.postRequest<PlaylistName>(`${this._endpoint}/copy`, playlist);
   }
+
+  checkSongInPlaylist(playlist: PlaylistSongDTO): Observable<boolean> {
+    return this._httpService.postRequest<boolean>(`${this._endpoint}/checkSong`, playlist);
+  }
 }

@@ -39,7 +39,7 @@ namespace Perflow.Services.Implementations
             _context = context;
         }
 
-        public async Task<BlobDto> GetSongFileAsync(int songId, SongQualityLevel quality)
+        public async Task<BlobDto> GetSongFileAsync(int songId, AudioQuality quality)
         {
             var song = await _context.Songs.FindAsync(songId);
 
