@@ -69,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item" (click)="clickItem('Remove from playlist')" *ngIf="playlistId">
+                    <div class="item" (click)="clickItem('Remove from playlist')" *ngIf="playlist && playlist?.author?.id === userId">
                         <i class="trash icon"></i>Remove from playlist
                     </div>
                     <div class="item" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">
