@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -50,6 +53,8 @@ namespace Processor.ConsoleApp.Implementations
 
             await DownloadFFmpegAsync();
 
+            await SetFFmpegPermissionsAsync();
+
             const string initializationMessage =
 @"{Data} Started SongProcessingHandler
   Exchange name: {ExchangeName}
@@ -89,6 +94,40 @@ namespace Processor.ConsoleApp.Implementations
             });
 
             await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official, progress);
+        }
+
+        private async Task SetFFmpegPermissionsAsync()
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return;
+            }
+
+            Logger.LogInformation("{Date} Setting FFmpeg permissions...", DateTime.Now.ToLongTimeString());
+
+            var permissionsSet = await RunBashCommand("chmod +x ffmpeg ffprobe");
+
+            if (!permissionsSet)
+            {
+                Logger.LogError("{Date} Couldn't set FFmpeg permissions, quiting SongProcessingHandler", DateTime.Now.ToLongTimeString());
+                Stop();
+            }
+        }
+
+        private async Task<bool> RunBashCommand(string arguments)
+        {
+            try
+            {
+                using var process = Process.Start("/bin/bash", arguments);
+                await process.WaitForExitAsync();
+                return process.ExitCode == 0;
+            }
+            catch (Exception exception)
+            {
+                Logger.LogError("Couldn't run command. Error: {Message}", exception.ToString());
+
+                return false;
+            }
         }
 
         protected override async Task HandleMessage(RabbitMQMessage message)
