@@ -22,7 +22,8 @@ export class LeftSideMenuComponent implements OnDestroy {
     this._authService.getAuthStateObservable()
       .pipe(
         takeUntil(this._unsubscribe$),
-        filter((state) => !!state))
+        filter((state) => !!state)
+      )
       .subscribe((state) => {
         this.userRole = state!.role;
       });
