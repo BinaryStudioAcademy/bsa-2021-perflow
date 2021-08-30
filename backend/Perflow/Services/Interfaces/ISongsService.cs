@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
 using Perflow.Domain.Enums;
-using Shared.AzureBlobStorage.Models;
 
 namespace Perflow.Services.Interfaces
 {
     public interface ISongsService
     {
         public Task<IEnumerable<SongLikedDTO>> GetLikedSongsAsync(int userId);
+        public Task<IEnumerable<SongReadDTO>> GetLikedFullSongsAsync(int userId);
         public Task<int> GetLikedSongsCountAsync(int userId);
         public Task<SongReadDTO> FindSongsByIdAsync(int id);
         public Task<SongReadDTO> AddSongInfoAsync(SongWriteDTO songInfo, int artistId);

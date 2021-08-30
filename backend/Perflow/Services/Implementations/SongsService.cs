@@ -194,5 +194,23 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<SongReadDTO>> GetLikedFullSongsAsync(int userId)
+        {
+            var songs = await context.SongReactions
+                .Where(songReaction => songReaction.UserId == userId)
+                .Include(songReaction => songReaction.Song)
+                    .ThenInclude(song => song.Artist)
+                .Include(songReaction => songReaction.Song)
+                    .ThenInclude(song => song.Group)
+                .Include(songReaction => songReaction.Song)
+                    .ThenInclude(song => song.Album)
+                .Select(songReaction =>
+                    mapper.Map<SongReadDTO>(songReaction.Song)
+                )
+                .ToListAsync();
+
+            return songs;
+        }
     }
 }

@@ -37,6 +37,14 @@ namespace Perflow.Controllers
             return Ok(songs);
         }
 
+        [HttpGet("likedfull")]
+        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetLikedFullSongs()
+        {
+            var songs = await _songsService.GetLikedFullSongsAsync(User.GetId());
+
+            return Ok(songs);
+        }
+
         [HttpGet("likedCount")]
         public async Task<ActionResult<int>> GetLikedSongsCount()
         {
