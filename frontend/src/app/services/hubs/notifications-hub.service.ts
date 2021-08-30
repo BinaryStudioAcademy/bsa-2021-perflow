@@ -3,7 +3,6 @@ import { HubConnection } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Notification } from 'src/app/models/notification/notification';
-import { ArtistName } from 'src/app/models/user/artist-name';
 import { SnackbarService } from '../snackbar.service';
 import { HubFactoryService } from './hub-factory.service';
 
@@ -43,14 +42,6 @@ export class NotificationsHubService {
     this._hubConnection.on('SendNotification', (n: Notification) => {
       this.notifications.next(n);
     });
-  }
-
-  async addSubscriber(artist: ArtistName) {
-    await this._hubConnection.invoke('AddToGroup', artist);
-  }
-
-  async removeSubscriber(artist: ArtistName) {
-    await this._hubConnection.invoke('RemoveFromGroup', artist);
   }
 
   async stop() {

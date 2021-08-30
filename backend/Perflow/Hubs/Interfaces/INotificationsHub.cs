@@ -5,6 +5,6 @@ namespace Perflow.Hubs.Interfaces
 {
     public interface INotificationsHub
     {
-        Task SendNotification(NotificationWriteDTO notification);
+        Task SendNotification(NotificationReadDTO notification);
     }
 }

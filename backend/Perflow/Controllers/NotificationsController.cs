@@ -30,7 +30,23 @@ namespace Perflow.Controllers
         [HttpPost("markAllAsRead")]
         public async Task<ActionResult> MarkAllAsRead()
         {
-            await _notificationService.MarkAllAsRead(User.GetId());
+            await _notificationService.MarkAllAsReadAsync(User.GetId());
+
+            return Ok();
+        }
+
+        [HttpPut("changeState")]
+        public async Task<ActionResult> ChangeState(NotificationChangeStateDTO notificationChangeState)
+        {
+            await _notificationService.ChangeStateAsync(notificationChangeState);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _notificationService.DeleteNotificationAsync(id);
 
             return Ok();
         }

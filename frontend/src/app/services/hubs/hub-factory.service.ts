@@ -13,6 +13,7 @@ import { AuthService } from '../auth/auth.service';
 export class HubFactoryService {
   private _hubs = new Map<string, HubConnection>();
   baseUrl: string = environment.apiUrl;
+  defaultTimeoutInMilliseconds = 180000; // 3 minutes
 
   constructor(private _authService: AuthService) { }
 
@@ -31,14 +32,20 @@ export class HubFactoryService {
   }
 
   private _buildHub(hubUrl: string, token: string) {
-    return new HubConnectionBuilder()
+    const connection = new HubConnectionBuilder()
       .withUrl(this._buildUrl(hubUrl), {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets,
         accessTokenFactory: () => token
       })
+      .withAutomaticReconnect()
       .configureLogging(LogLevel.Information)
       .build();
+
+    connection.keepAliveIntervalInMilliseconds = this.defaultTimeoutInMilliseconds;
+    connection.serverTimeoutInMilliseconds = this.defaultTimeoutInMilliseconds;
+
+    return connection;
   }
 
   private _buildUrl(hubUrl: string) {

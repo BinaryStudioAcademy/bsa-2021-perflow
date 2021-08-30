@@ -7,6 +7,7 @@ import { NotificationType } from 'src/app/models/enums/notification-type';
 import { Notification } from 'src/app/models/notification/notification';
 import { NotificationsHubService } from 'src/app/services/hubs/notifications-hub.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-notifications',
@@ -22,7 +23,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _notificationsHub: NotificationsHubService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,25 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         });
 
         this.isAnyNewNotification = false;
+      });
+  }
+
+  changeState(notification: Notification, isRead: boolean) {
+    this._notificationService.changeState({ id: notification.id, isRead })
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        this.notifications.find((n) => n.id === notification.id)!.isRead = isRead;
+      });
+  }
+
+  deleteNotification(id: number) {
+    this._notificationService.delete(id)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        const index = this.notifications.findIndex((n) => n.id === id);
+        this.notifications.splice(index, 1);
+      }, (e: Error) => {
+        this._snackbarService.show({ type: 'error', header: 'Error occured!', message: e.message });
       });
   }
 

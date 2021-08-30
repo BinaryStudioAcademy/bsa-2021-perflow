@@ -94,7 +94,9 @@ namespace Perflow.Services.Implementations
         public async Task<IEnumerable<AlbumShortDTO>> GetAlbumsByArtist(int artistId, AuthorType type)
         {
             var albums = await context.Albums
-                                        .Where(a => type == AuthorType.Artist ? a.AuthorId == artistId : a.GroupId == artistId)
+                                        .Where(a => type == AuthorType.Artist
+                                                    ? a.AuthorId == artistId && a.IsPublished
+                                                    : a.GroupId == artistId && a.IsPublished)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
                                         .Select(a => new AlbumShortDTO
@@ -149,7 +151,7 @@ namespace Perflow.Services.Implementations
                     Id = a.Id,
                     Name = a.Name,
                     IconURL = _imageService.GetImageUrl(a.IconURL),
-                    Author = a.AuthorId != null ? (new AlbumViewAuthorsDTO(a.Author.Id, a.Author.UserName, true)) 
+                    Author = a.AuthorId != null ? (new AlbumViewAuthorsDTO(a.Author.Id, a.Author.UserName, true))
                         : new AlbumViewAuthorsDTO(a.Group.Id, a.Group.Name, false)
                 })
                 .ToListAsync();
@@ -250,8 +252,8 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentNullException("Argument cannot be null");
 
             var album = await context.Albums
-                .Include(a=>a.Author)
-                .Include(a=>a.Group)
+                .Include(a => a.Author)
+                .Include(a => a.Group)
                 .FirstOrDefaultAsync(album => album.Id == status.Id);
 
             album.IsPublished = status.IsPublished;
@@ -299,13 +301,11 @@ namespace Perflow.Services.Implementations
                 Title = "New Album",
                 Description = $"{authorName} has released a new album!",
                 Reference = album.Id,
-                Type = isArtist ? NotificationType.ArtistSubscribtion : NotificationType.GroupSubscribtion,
-                IsRead = false,
-                CreatedAt = DateTimeOffset.Now
+                Type = isArtist ? NotificationType.ArtistSubscribtion : NotificationType.GroupSubscribtion
             };
 
-            await _notificationService.CreateNotificationAsync(notification, authorId, album.AuthorType);
-            await _notificationService.SendNotificationToGroupAsync(notification, $"{authorId}{authorName}");
+            var notifications = await _notificationService.CreateNotificationAsync(notification, authorId, album.AuthorType);
+            await _notificationService.SendNotificationAsync(notifications);
         }
     }
 }
