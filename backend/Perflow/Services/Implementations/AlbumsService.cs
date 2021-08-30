@@ -149,7 +149,7 @@ namespace Perflow.Services.Implementations
                     Id = a.Id,
                     Name = a.Name,
                     IconURL = _imageService.GetImageUrl(a.IconURL),
-                    Author = a.AuthorId != null ? (new AlbumViewAuthorsDTO(a.Author.Id, a.Author.UserName, true)) 
+                    Author = a.AuthorId != null ? (new AlbumViewAuthorsDTO(a.Author.Id, a.Author.UserName, true))
                         : new AlbumViewAuthorsDTO(a.Group.Id, a.Group.Name, false)
                 })
                 .ToListAsync();
@@ -250,8 +250,8 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentNullException("Argument cannot be null");
 
             var album = await context.Albums
-                .Include(a=>a.Author)
-                .Include(a=>a.Group)
+                .Include(a => a.Author)
+                .Include(a => a.Group)
                 .FirstOrDefaultAsync(album => album.Id == status.Id);
 
             album.IsPublished = status.IsPublished;
