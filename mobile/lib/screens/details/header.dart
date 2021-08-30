@@ -16,6 +16,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
   final bool isLiked;
   final bool isLikeAvailable;
   final Function()? onLikePress;
+  final Function()? onUnlikePress;
   final PerflowOutlinedButton? secondaryButton;
 
   const HeaderDelegate(
@@ -26,6 +27,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
       this.isLiked = false,
       this.isLikeAvailable = false,
       this.onLikePress,
+      this.onUnlikePress,
       this.secondaryButton,
       required this.expandedHeight});
 
@@ -82,6 +84,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
         isLikeAvailable: isLikeAvailable,
         isLiked: isLiked,
         onLikePress: onLikePress,
+        onUnlikePress: onUnlikePress,
         textTheme: textTheme,
         secondaryButton: secondaryButton,
         titleOpacity: titleOpacity);
@@ -105,6 +108,7 @@ class _StackedHeader extends StatelessWidget {
     this.isLiked = false,
     this.isLikeAvailable = false,
     this.onLikePress,
+    this.onUnlikePress,
     this.secondaryButton,
   }) : super(key: key);
 
@@ -123,6 +127,7 @@ class _StackedHeader extends StatelessWidget {
   final bool isLiked;
   final bool isLikeAvailable;
   final Function()? onLikePress;
+  final Function()? onUnlikePress;
   final PerflowOutlinedButton? secondaryButton;
 
   @override
@@ -201,6 +206,7 @@ class _StackedHeader extends StatelessWidget {
                         isLikeAvailable: isLikeAvailable,
                         isLiked: isLiked,
                         onLikePress: onLikePress,
+                        onUnlikePress: onUnlikePress,
                         secondaryButton: secondaryButton,
                       ),
                     ),

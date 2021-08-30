@@ -11,6 +11,7 @@ class HeaderInfo extends StatelessWidget {
   final bool isLiked;
   final bool isLikeAvailable;
   final Function()? onLikePress;
+  final Function()? onUnlikePress;
   final PerflowOutlinedButton? secondaryButton;
 
   const HeaderInfo(
@@ -22,6 +23,7 @@ class HeaderInfo extends StatelessWidget {
       this.isLiked = false,
       this.isLikeAvailable = false,
       this.onLikePress,
+      this.onUnlikePress,
       this.secondaryButton})
       : super(key: key);
 
@@ -34,8 +36,8 @@ class HeaderInfo extends StatelessWidget {
           ? IconButton(
               visualDensity: VisualDensity.compact,
               onPressed: () {
-                if (onLikePress != null) {
-                  onLikePress!.call();
+                if (onUnlikePress != null) {
+                  onUnlikePress!.call();
                 }
               },
               color: Perflow.primaryLightColor,

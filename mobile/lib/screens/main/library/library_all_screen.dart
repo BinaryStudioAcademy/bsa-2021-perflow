@@ -29,8 +29,8 @@ class LibraryAllScreen extends StatelessWidget {
           builder: (builder, state) =>
               _PlaylistsList(state: state, isUsersPlaylist: false),
         ),
-        const AlbumsList(),
-        const ArtistsList(),
+        const AlbumsList(isLikedPage: true,),
+        const ArtistsList(isLikedPage: true,),
       ],
     );
   }
@@ -76,6 +76,7 @@ class _PlaylistsList extends StatelessWidget {
             ),
             height: 80,
             isLikeAvailable: !isUsersPlaylist,
+            isLiked: true,
             onTap: () {
                 context.vRouter.to(
                   Routes.playlist(playlists.data[index].id),
