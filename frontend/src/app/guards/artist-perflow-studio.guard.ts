@@ -6,7 +6,7 @@ import { UserRoles } from '../models/enums/user-roles.enum';
 @Injectable({
   providedIn: 'root'
 })
-export class ModeratorPerflowStudioGuard extends AuthGuard {
+export class ArtistPerflowStudioGuard extends AuthGuard {
   protected canActivateObservable() {
     return this.authService.getAuthStateObservable()
       .pipe(
