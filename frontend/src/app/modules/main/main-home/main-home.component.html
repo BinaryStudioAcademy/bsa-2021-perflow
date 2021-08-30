@@ -15,7 +15,10 @@
       <img
         class="album-icon"
         alt="Album"
-        src="{{currentNewestAlbum.iconURL}}" routerLink="/albums/{{currentNewestAlbum.id}}"/>
+        src="{{currentNewestAlbum.iconURL}}" routerLink="/albums/{{currentNewestAlbum.id}}" *ngIf="currentNewestAlbum.iconURL"/>
+        <div class="album-icon icon-background" routerLink="/albums/{{currentNewestAlbum.id}}" *ngIf="!currentNewestAlbum.iconURL">
+          <i class="itunes note icon"></i>
+        </div>
       <div class="album-info">
         <p class="type">Album</p>
         <p class="album-title">{{currentNewestAlbum.name}}</p>
