@@ -1,7 +1,10 @@
 <div class="router-container">
     <router-outlet></router-outlet>
 </div>
+<div class="profile-notifications-container">
+<app-notifications></app-notifications>
 <app-profile-menu></app-profile-menu>
+</div>
 
 <app-queue 
     (opened)="hideContainer()" 

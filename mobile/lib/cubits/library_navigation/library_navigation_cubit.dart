@@ -12,4 +12,6 @@ class LibraryNavigationCubit extends Cubit<LibraryNavigationState> {
   void setArtists() => emit(LibraryNavigationState.artists());
 
   void setAlbums() => emit(LibraryNavigationState.albums());
+
+  void setSongs() => emit(LibraryNavigationState.songs());
 }

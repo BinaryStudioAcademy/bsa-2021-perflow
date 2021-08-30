@@ -1,5 +1,7 @@
 @import "src/styles.sass"
 
+$image-size: 245px
+
 *
     padding: 0
     margin: 0
@@ -101,8 +103,8 @@ main
         .album-icon
             grid-column: 1
             grid-row: 1
-            width: 245px
-            height: 245px
+            width: $image-size
+            height: $image-size
             border-radius: 50%
             object-fit: cover
             background: #C4C4C4
@@ -110,6 +112,18 @@ main
             cursor: pointer
             @media (max-width: 800px)
                 display: none
+        .icon-background
+            background: $gray-gradient
+            display: flex
+            align-items: center
+            justify-content: center
+            width: $image-size
+            height: $image-size
+            i
+                font-size: 92px
+                margin-top: 5rem
+                color: $text
+                margin-right: 0 !important
         .album-info
             grid-column: 2
             grid-row: 1

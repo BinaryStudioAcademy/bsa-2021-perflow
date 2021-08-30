@@ -8,6 +8,7 @@ class Routes {
   static const String libraryAll = '/library/all';
   static const String libraryArtists = '/library/artists';
   static const String libraryAlbums = '/library/albums';
+  static const String librarySongs = '/library/songs';
 
   static const String player = '/player';
 
