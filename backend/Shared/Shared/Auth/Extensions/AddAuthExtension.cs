@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,21 @@ namespace Shared.Auth.Extensions
                         ValidateAudience = true,
                         ValidAudience = firebaseProjectId,
                         ValidateLifetime = true
+                    };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = async context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notifications"))
+                            {
+                                context.Token = accessToken;
+                            }
+                            await Task.CompletedTask;
+                        },
+
                     };
                 });
 

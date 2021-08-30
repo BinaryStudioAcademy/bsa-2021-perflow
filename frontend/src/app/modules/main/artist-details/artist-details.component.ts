@@ -14,6 +14,7 @@ import { ArtistFull } from 'src/app/models/user/artist-full';
 import { AlbumService } from 'src/app/services/album.service';
 import { ArtistService } from 'src/app/services/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { NotificationsHubService } from 'src/app/services/hubs/notifications-hub.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
@@ -45,7 +46,8 @@ export class ArtistDetailsComponent implements OnInit {
     private _location: PlatformLocation,
     private _reactionService: ReactionService,
     private _authService: AuthService,
-    private _albumsService: AlbumService
+    private _albumsService: AlbumService,
+    private _notificationsHub: NotificationsHubService
   ) {
     _route.params.subscribe(() => {
       this.loadData();
@@ -102,8 +104,9 @@ export class ArtistDetailsComponent implements OnInit {
   likeArtist() {
     this._reactionService.addArtistReaction(this.artist.id, this._userId)
       .subscribe(
-        () => {
+        async () => {
           this.artist.isLiked = true;
+          await this._notificationsHub.addSubscriber({ id: this.artist.id, userName: this.artist.userName });
         }
       );
   }
@@ -111,8 +114,9 @@ export class ArtistDetailsComponent implements OnInit {
   dislikeArtist() {
     this._reactionService.removeArtistReaction(this.artist.id, this._userId)
       .subscribe(
-        () => {
+        async () => {
           this.artist.isLiked = false;
+          await this._notificationsHub.removeSubscriber({ id: this.artist.id, userName: this.artist.userName });
         }
       );
   }
