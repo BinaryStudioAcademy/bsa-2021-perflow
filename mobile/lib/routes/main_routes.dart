@@ -12,6 +12,7 @@ import 'package:perflow/screens/main/library/library_albums_screen.dart';
 import 'package:perflow/screens/main/library/library_all_screen.dart';
 import 'package:perflow/screens/main/library/library_artists_screen.dart';
 import 'package:perflow/screens/main/library/library_screen.dart';
+import 'package:perflow/screens/main/library/library_songs_screen.dart';
 import 'package:perflow/screens/main/main_screen.dart';
 import 'package:perflow/screens/main/player/player_screen.dart';
 import 'package:perflow/screens/main/search/search_screen.dart';
@@ -61,6 +62,10 @@ class MainRoutes extends VRouteElementBuilder {
               VWidget(
                 path: Routes.libraryAlbums,
                 widget: const LibraryAlbumsScreen(),
+              ),
+              VWidget(
+                path: Routes.librarySongs,
+                widget: const LibrarySongsScreen(),
               ),
             ],
           ),
@@ -118,6 +123,9 @@ class MainRoutes extends VRouteElementBuilder {
         break;
       case Routes.libraryAlbums:
         navCubit.setAlbums();
+        break;
+      case Routes.librarySongs:
+        navCubit.setSongs();
         break;
       default:
         navCubit.setAll();
