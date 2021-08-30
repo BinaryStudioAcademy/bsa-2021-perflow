@@ -31,7 +31,8 @@ namespace Processor.ConsoleApp.Implementations
             IOptions<BlobStorageOptions> blobStorageOptions,
             IQueueFactory queueFactory,
             ILogger<SongProcessingHandler> logger,
-            IBlobService blobService, ISongsProcessingService songsProcessingService) : base(logger)
+            IBlobService blobService,
+            ISongsProcessingService songsProcessingService) : base(logger)
         {
             _blobService = blobService;
 
@@ -118,7 +119,7 @@ namespace Processor.ConsoleApp.Implementations
         {
             try
             {
-                using var process = Process.Start("/bin/bash", arguments);
+                using var process = Process.Start("/bin/bash", $"-c \"{arguments}\"");
                 await process.WaitForExitAsync();
                 return process.ExitCode == 0;
             }
