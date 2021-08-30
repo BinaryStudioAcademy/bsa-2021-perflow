@@ -1,9 +1,10 @@
 import {
-  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild
+  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, OnDestroy
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, take, takeUntil } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
+import { Song } from 'src/app/models/song/song';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ContentSynchronizationService } from 'src/app/services/content-synchronization.service';
@@ -18,7 +19,7 @@ import { SongsService } from 'src/app/services/songs/songs.service';
   templateUrl: './song-toolbar.component.html',
   styleUrls: ['./song-toolbar.component.sass']
 })
-export class SongToolbarComponent implements OnInit {
+export class SongToolbarComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioRef! : ElementRef<HTMLAudioElement>;
 
   private _unsubscribe$ = new Subject<void>();
@@ -74,7 +75,9 @@ export class SongToolbarComponent implements OnInit {
       .subscribe(
         (song) => {
           this.updateSong(song);
-          this._rpService.addSongViaId(song.id, this.userId, undefined).subscribe();
+          this._rpService.addSongViaId(song.id, this.userId, undefined)
+            .pipe(take(1))
+            .subscribe();
           this._syncService.song$.next(song);
         }
       );
@@ -95,6 +98,11 @@ export class SongToolbarComponent implements OnInit {
       });
   }
 
+  public ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.playPauseButton = <HTMLButtonElement>document.getElementById('playbutton');
     this.seekSlider = <HTMLInputElement>document.getElementById('seek-slider');
@@ -103,26 +111,21 @@ export class SongToolbarComponent implements OnInit {
     this.durationContainer = document.getElementById('duration');
     this.audio = document.querySelector('audio');
     this.audio!.crossOrigin = 'anonymous';
-    this.initAudioContext();
 
-    if (!this.songForPlay || this.songForPlay.id === 0) {
-      this._syncService.getContentSyncAsync(this.userId)
-        .pipe(take(1))
-        .subscribe({
-          next: (data) => {
-            this._songsService.getSongById(data.songId)
-              .pipe(take(1))
-              .subscribe({
-                next: (song) => {
-                  this._queueService.clearQueue();
-                  this._queueService.addSongToQueue(song);
-                  this._queueService.initSong(song, false);
-                  this._startTime = data.time;
-                }
-              });
+    this._syncService.getContentSyncAsync(this.userId)
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            const temp = { id: data.songId } as Song;
+            this._queueService.clearQueue();
+            this._queueService.initSong(temp, false);
+            this._startTime = data.time;
           }
-        });
-    }
+        }
+      });
+
+    this.initAudioContext();
   }
 
   initAudioContext() {

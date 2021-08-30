@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { ContentSyncRead } from '../models/content-synchronization/content-sync-read';
 import { ContentSyncWrite } from '../models/content-synchronization/content-sync-write';
 import { SongInfo } from '../models/song/song-info';
@@ -26,7 +26,7 @@ export class ContentSynchronizationService {
     private _authService: AuthService
   ) {
     this._authService.getAuthStateObservable()
-      .pipe(take(1))
+      .pipe(filter((state) => !!state))
       .subscribe(
         (state) => {
           this._sInfo.userId = state!.id;
