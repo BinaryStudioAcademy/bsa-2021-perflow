@@ -20,15 +20,15 @@ namespace Perflow.Controllers
             _playlistEditorsService = playlistEditorsService;
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<ActionResult> Add([FromBody] PlaylistEditorDTO pe)
         {
-            await _playlistEditorsService.Add(pe)
+            await _playlistEditorsService.Add(pe);
 
             return Ok();
         }
 
-        [HttpDelete("remove")]
+        [HttpDelete]
         public async Task<ActionResult> Remove([FromBody] PlaylistEditorDTO pe)
         {
             await _playlistEditorsService.Remove(pe);
