@@ -109,7 +109,7 @@
       Create playlist
     </span>
   </div>
-  <div class="item last share-menu">
+  <div *ngIf="canShare()" class="item last share-menu">
     <span>
       <i class="share alternate icon"></i>Share<i class="caret right icon"></i>
     </span>

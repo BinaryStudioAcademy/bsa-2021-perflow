@@ -46,7 +46,7 @@
                       Start playlist radio
                     </span>
                   </div>
-                  <div class="item share">
+                  <div *ngIf="canShare(playlist.accessType)" class="item share">
                       <i class="share alternate icon"></i> Share<i class="dropdown icon"></i>
                       <div class="right menu">
                         <div class="item first last" (click)="copyLink()">

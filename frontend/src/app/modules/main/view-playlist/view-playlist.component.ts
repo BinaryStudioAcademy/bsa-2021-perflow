@@ -10,6 +10,7 @@ import { QueueService } from 'src/app/services/queue.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
 import { timer } from 'rxjs';
+import { AccessType } from 'src/app/models/playlist/accessType';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -183,5 +184,9 @@ export class ViewPlaylistComponent implements OnInit {
           }
         });
     }
+  }
+
+  canShare = (accessType: AccessType) =>{
+    return accessType !== AccessType.secret;
   }
 }

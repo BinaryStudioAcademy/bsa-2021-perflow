@@ -10,6 +10,7 @@ import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { AccessType } from 'src/app/models/playlist/accessType';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -199,5 +200,9 @@ export class MainMenuComponent implements OnDestroy, OnInit {
           this._tempPlaylist = {} as PlaylistName;
         }
       });
+  }
+
+  canShare() {
+    return this._tempPlaylist.accessType !== AccessType.secret;
   }
 }
