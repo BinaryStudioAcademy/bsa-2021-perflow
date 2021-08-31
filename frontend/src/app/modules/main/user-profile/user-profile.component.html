@@ -32,6 +32,22 @@
   </div>
 
   <div class="main-content-container">
+    <div class="items-scroll-box top-artists" *ngIf="myPlaylists.length > 0">
+      <h4 class="header">My Playlists</h4>
+      <div class="list-of-items">
+        <div class="ui icon button scroll-button" (click)="scrollGridLeft('playlists', '.items')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div id="playlists" class="items" appHideScrollButtons>
+          <app-playlist-card class="card" *ngFor="let pl of myPlaylists" [playlist]="pl">
+          </app-playlist-card>
+        </div>
+        <div class="ui icon button scroll-button" (click)="scrollGridRight('playlists', '.items')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+    </div>
+
     <div class="items-scroll-box top-artists">
       <h4 class="header">Top artists this month</h4>
       <div class="list-of-items">
