@@ -16,4 +16,5 @@ namespace Perflow.Common.MappingProfiles
 
             CreateMap<PlaylistEditorDTO, PlaylistEditor>();
         }
+    }
 }
