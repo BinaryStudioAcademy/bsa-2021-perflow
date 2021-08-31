@@ -34,7 +34,7 @@ export class HideScrollButtonsDirective implements OnInit, OnDestroy, AfterViewC
     const arrowLeft = this._el!.previousElementSibling;
     const arrowRight = this._el!.nextElementSibling;
 
-    if (this._el?.scrollWidth! / this._el?.clientWidth! > 1) {
+    if (this._el?.scrollWidth! / (this._el?.clientWidth! + arrowLeft?.clientWidth! + arrowRight?.clientWidth!) > 1) {
       arrowLeft?.classList.remove('hidden');
       arrowRight?.classList.remove('hidden');
     }
