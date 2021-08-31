@@ -13,7 +13,7 @@
       "UpstreamHttpMethod": [ "POST" ]
     },
     {
-      "DownstreamPathTemplate": "/api/ContentSynchronization/{userId}",
+      "DownstreamPathTemplate": "/api/ContentSynchronization/byUserId",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
@@ -21,7 +21,7 @@
           "Port": "5001"
         }
       ],
-      "UpstreamPathTemplate": "/api/ContentSynchronization/{userId}",
+      "UpstreamPathTemplate": "/api/ContentSynchronization/byUserId",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ]

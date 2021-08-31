@@ -112,7 +112,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     this.audio = document.querySelector('audio');
     this.audio!.crossOrigin = 'anonymous';
 
-    this._syncService.getContentSyncAsync(this.userId)
+    this._syncService.getContentSyncAsync()
       .pipe(take(1))
       .subscribe({
         next: (data) => {

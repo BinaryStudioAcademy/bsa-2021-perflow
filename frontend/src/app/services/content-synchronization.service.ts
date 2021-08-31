@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { ContentSyncRead } from '../models/content-synchronization/content-sync-read';
 import { ContentSyncWrite } from '../models/content-synchronization/content-sync-write';
 import { SongInfo } from '../models/song/song-info';
-import { AuthService } from './auth/auth.service';
 import { HttpInternalService } from './http-internal.service';
 
 @Injectable({
@@ -15,24 +14,14 @@ export class ContentSynchronizationService {
 
   private _sInfo = {
     songId: 0,
-    userId: 0,
     time: 0
   } as ContentSyncWrite;
 
   song$ = new Subject<SongInfo>();
 
   constructor(
-    private _httpServices: HttpInternalService,
-    private _authService: AuthService
+    private _httpServices: HttpInternalService
   ) {
-    this._authService.getAuthStateObservable()
-      .pipe(filter((state) => !!state))
-      .subscribe(
-        (state) => {
-          this._sInfo.userId = state!.id;
-        }
-      );
-
     this.song$.subscribe({
       next: (song) => {
         this._sInfo.songId = song.id;
@@ -52,7 +41,7 @@ export class ContentSynchronizationService {
     return this._httpServices.postRequest(this._routePrefix, contentSync);
   }
 
-  getContentSyncAsync(userId: number): Observable<ContentSyncRead> {
-    return this._httpServices.getRequest<ContentSyncRead>(`${this._routePrefix}/${userId}`);
+  getContentSyncAsync(): Observable<ContentSyncRead> {
+    return this._httpServices.getRequest<ContentSyncRead>(`${this._routePrefix}/byUserId`);
   }
 }

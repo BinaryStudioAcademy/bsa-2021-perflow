@@ -20,21 +20,21 @@ namespace Perflow.Services.Implementations
             _imageService = imageService;
         }
 
-        public async Task AddContentSyncAsync(ContentSyncWriteDTO contentDTO)
+        public async Task AddContentSyncAsync(ContentSyncWriteDTO contentDTO, int userId)
         {
             bool isNewUser = false;
 
             var content = await context.ContentSynchronization
                 .Include(cs => cs.Song)
                 .Include(cs => cs.User)
-                .FirstOrDefaultAsync(cs => cs.UserId == contentDTO.UserId);
+                .FirstOrDefaultAsync(cs => cs.UserId == userId);
 
             if (content == null)
             {
                 isNewUser = true;
                 content = mapper.Map<ContentSynchronization>(contentDTO);
                 content.Id = 0;
-                content.User = await context.Users.FirstOrDefaultAsync(u => u.Id == contentDTO.UserId);
+                content.User = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
                 content.Song = await context.Songs.FirstOrDefaultAsync(s => s.Id == contentDTO.SongId);
             }
 

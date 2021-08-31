@@ -4,6 +4,7 @@ using Perflow.Common.DTO.ContentSynchronization;
 using Perflow.Services.Implementations;
 using Shared.Auth.Constants;
 using System.Threading.Tasks;
+using Shared.Auth.Extensions;
 
 namespace Perflow.Controllers
 {
@@ -22,15 +23,15 @@ namespace Perflow.Controllers
         [HttpPost]
         public async Task<ActionResult> AddContentSyncAsync([FromBody] ContentSyncWriteDTO contentDTO)
         {
-            await _contentSynchronizationService.AddContentSyncAsync(contentDTO);
+            await _contentSynchronizationService.AddContentSyncAsync(contentDTO, User.GetId());
 
             return Ok();
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<ContentSyncReadDTO>> GetContentSyncAsync(int userId)
+        [HttpGet("byUserId")]
+        public async Task<ActionResult<ContentSyncReadDTO>> GetContentSyncAsync()
         {
-            return Ok(await _contentSynchronizationService.GetContentSyncAsync(userId));
+            return Ok(await _contentSynchronizationService.GetContentSyncAsync(User.GetId()));
         }
     }
 }
