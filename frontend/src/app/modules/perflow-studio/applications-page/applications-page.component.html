@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!applicants.length">
+<div class="container" *ngIf="applicants.length">
   <h2>Perflow Studio Applicants:</h2>
   <app-aplicant-row *ngFor="let applicant of applicants" [applicant]="applicant"
   (setStatus)="setApplicationStatus($event)"></app-aplicant-row>

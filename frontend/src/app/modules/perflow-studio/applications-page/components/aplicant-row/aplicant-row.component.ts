@@ -23,7 +23,7 @@ export class AplicantRowComponent {
   approve() {
     this._userApplicationStatus = {
       id: this.applicant.id,
-      status: ApplicationStatus.rejected
+      status: ApplicationStatus.approved
     };
 
     this.setStatus.emit(this._userApplicationStatus);
