@@ -195,17 +195,20 @@ export class SongRowComponent implements OnInit, OnDestroy {
     this.isEditing = true;
   };
 
-  saveName = () => {
-    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
-      this.isEditing = false;
-      subscription.unsubscribe();
-    });
-  };
+  saveName() {
+    this._songService.setSongName(this.song.id, this.song.name)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isEditing = false;
+      });
+  }
 
-  changeCensorship = () => {
+  changeCensorship() {
     this.song.hasCensorship = !this.song.hasCensorship;
-    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
-      subscription.unsubscribe();
-    });
-  };
+    this._songService.setSongCensorship(this.song.id, this.song.hasCensorship)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isEditing = false;
+      });
+  }
 }

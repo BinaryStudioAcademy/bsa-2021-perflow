@@ -25,30 +25,6 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Songs",
-      "DownstreamScheme": "http",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "perflow",
-          "Port": "4202"
-        }
-      ],
-      "UpstreamPathTemplate": "/api/Songs",
-      "UpstreamHttpMethod": [ "POST", "PUT" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/Songs/orders",
-      "DownstreamScheme": "http",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "perflow",
-          "Port": "4202"
-        }
-      ],
-      "UpstreamPathTemplate": "/api/Songs/orders",
-      "UpstreamHttpMethod": [ "PUT" ]
-    },
-    {
       "DownstreamPathTemplate": "/api/Songs/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
@@ -58,11 +34,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Songs/{id}",
-      "UpstreamHttpMethod": [
-        "POST",
-        "DELETE",
-        "GET"
-      ]
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/Songs/{id}/file",
@@ -74,7 +46,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Songs/{id}/file",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/Songs/top/{amount}",

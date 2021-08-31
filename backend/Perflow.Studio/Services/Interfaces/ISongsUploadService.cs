@@ -1,6 +1,6 @@
 ﻿using Shared.Processor.Models;
 
-namespace Perflow.Services.Interfaces
+namespace Perflow.Studio.Services.Interfaces
 {
     public interface ISongsUploadService
     {

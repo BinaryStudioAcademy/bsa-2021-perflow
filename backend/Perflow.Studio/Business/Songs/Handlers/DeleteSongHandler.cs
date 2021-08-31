@@ -1,32 +1,36 @@
-﻿using System.Threading;
+﻿using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using OneOf;
 using OneOf.Types;
 using Perflow.Studio.Business.Songs.Commands;
-using Perflow.Studio.Domain.Entities;
-using Perflow.Studio.Services.Interfaces.Repositories;
+using Perflow.Studio.Services.Extensions.DapperExtensions;
+using Perflow.Studio.Services.Interfaces;
 
 namespace Perflow.Studio.Business.Songs.Handlers
 {
     public class DeleteSongHandler : IRequestHandler<DeleteSongCommand, OneOf<Success, NotFound>>
     {
-        private readonly IRepository<Song> _songsRepository;
-        public DeleteSongHandler(IRepository<Song> songsRepository)
+        private readonly IDbConnection _connection;
+        private readonly ISongFilesService _songFilesService;
+
+        public DeleteSongHandler(ISongFilesService songFilesService, IDbConnection connection)
         {
-            _songsRepository = songsRepository;
+            _songFilesService = songFilesService;
+            _connection = connection;
         }
 
         public async Task<OneOf<Success, NotFound>> Handle(DeleteSongCommand request, CancellationToken cancellationToken)
         {
-            var song = await _songsRepository.ReadAsync(request.Id);
+            var filesDeletionResult = await _songFilesService.DeleteSongFilesAsync(request.Id);
 
-            if (song == null)
+            if (filesDeletionResult.IsT1)
             {
                 return new NotFound();
             }
 
-            await _songsRepository.DeleteAsync(song);
+            await _connection.SongDeleteAsync(request.Id);
 
             return new Success();
         }
