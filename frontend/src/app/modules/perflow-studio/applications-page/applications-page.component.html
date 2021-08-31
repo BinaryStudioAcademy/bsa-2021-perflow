@@ -1,0 +1,23 @@
+<div class="container" *ngIf="!applicants.length">
+  <h2>Perflow Studio Applicants:</h2>
+  <app-aplicant-row *ngFor="let applicant of applicants" [applicant]="applicant"
+  (setStatus)="setApplicationStatus($event)"></app-aplicant-row>
+</div>
+
+<div class="container" *ngIf="true">
+  <h2>Find artist by name:</h2>
+  <div class="ui search">
+    <div class="ui icon input">
+      <input class="prompt input-dark" type="text" name="search" placeholder="Type artist name..."
+          autocomplete="sss" aria-autocomplete="none">
+      <i class="search icon"></i>
+    </div>
+  </div>
+  <div class="search-result">
+    <app-role-row></app-role-row>
+  </div>
+</div>
+  <!-- (keyup)="clearSearch($event)"
+  (input)="findSongsByName()"
+  [(ngModel)]="searchValue"
+*ngIf="isSearchHistoryShown" -->

@@ -1,0 +1,36 @@
+<div class="ui padded grid song">
+  <div class="applicant-row">
+      <div class="column song-icon">
+        <img [src]="applicant.iconURL" *ngIf="applicant.iconURL">
+        <div class="icon-background" *ngIf="!applicant.iconURL">
+          <i class="user icon"></i>
+        </div>
+      </div>
+      <div class="column song-name text">
+        <a class="link text" [routerLink]="['/artists', applicant.id]">{{applicant.userName}}</a>
+      </div>
+      <div class="column status text">
+        TEAM MEMBER
+      </div>
+      <div class="column group text">
+        <a class="link text" [routerLink]="['/groups', applicant.id]"> Scorpions</a>
+      </div>
+      <div class="ui dropdown" appSmDropdown>
+        <i class="ellipsis vertical icon"></i>
+        <div class="menu left">
+          <div class="item first">
+              User
+          </div>
+          <div class="item" >
+              Artist
+          </div>
+          <div class="item" routerLink="/">
+              Team Member
+          </div>
+          <div  class="item last">
+              Moderator
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

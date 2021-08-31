@@ -1,0 +1,112 @@
+@import 'src/styles.sass'
+
+$image-size: 30px
+
+=flex-container($align-items, $justify-content)
+  display: flex
+  align-items: $align-items
+  justify-content: $justify-content
+
+%ellipsis-overflow
+  text-overflow: ellipsis
+  white-space: nowrap
+  overflow: hidden
+
+%album-cover
+  width: $image-size
+  height: $image-size
+  border-radius: 50%
+
+%font
+  color: $text
+  font-family: Rubik
+  font-style: normal
+
+.text
+  @extend %font
+  @extend %ellipsis-overflow
+
+.applicant
+  background-color: $drk-gray
+  color: $text
+  padding-left: 0.5rem
+  padding-right: 0.5rem
+  border-radius: 50px
+  &:hover
+    background-color: $light-gray
+
+.applicant-row
+  width: 100%
+  display: grid
+  grid-template-areas: "icon name status btn-approve btn-reject"
+  grid-template-columns: 50px 6fr 5fr 115px 115px
+  align-items: center
+  padding: 0.5rem 0
+
+.column
+  padding-right: 0.5rem
+  padding-left: 0.5rem
+
+.applicant-icon
+  grid-area: icon
+  img
+    @extend %album-cover
+    +flex-container(center, center)
+    object-fit: cover
+  .icon-background
+    @extend %album-cover
+    +flex-container(center, center)
+    background: $fire-orange
+    i
+      font-size: 18px
+      margin-right: 0 !important
+
+.applicant-name
+  grid-area: name
+
+.applicant-status
+  grid-area: status
+  justify-self: start
+
+.approve
+  grid-area: btn-approve
+  justify-self: start
+  button
+    @extend %font
+    cursor: pointer
+    width: 100px
+    height: 35px
+    background: none
+    border: 1px solid #afafaf
+    border-radius: 50px
+    i
+      color: green
+    &:hover
+      transform: scale(1.05)
+      border: 1px solid $text
+      color: $text
+    &:active
+      transform: scale(1)
+
+.reject
+  grid-area: btn-reject
+  justify-self: start
+  button
+    @extend %font
+    cursor: pointer
+    width: 100px
+    height: 35px
+    background: none
+    border: 1px solid #afafaf
+    border-radius: 50px
+    i
+      color: red
+    &:hover
+      transform: scale(1.05)
+      border: 1px solid $text
+      color: $text
+    &:active
+      transform: scale(1)
+
+.prefix
+  color: #aaaaaa

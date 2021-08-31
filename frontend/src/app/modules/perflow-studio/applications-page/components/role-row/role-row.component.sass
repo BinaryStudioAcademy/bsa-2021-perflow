@@ -1,0 +1,126 @@
+@import 'src/styles.sass'
+
+$image-size: 30px
+
+=flex-container($align-items, $justify-content)
+  display: flex
+  align-items: $align-items
+  justify-content: $justify-content
+
+%ellipsis-overflow
+  text-overflow: ellipsis
+  white-space: nowrap
+  overflow: hidden
+
+%album-cover
+  width: $image-size
+  height: $image-size
+  border-radius: 50%
+
+%font
+  color: $text
+  font-family: Rubik
+  font-style: normal
+
+.text
+  @extend %font
+  @extend %ellipsis-overflow
+
+.song
+  background-color: $drk-gray
+  color: $text
+  padding-left: 0.5rem
+  padding-right: 0.5rem
+  border-radius: 50px
+  &:hover
+    background-color: $light-gray
+    .ui.dropdown
+      background-color: $light-gray
+
+.applicant-row
+  width: 100%
+  display: grid
+  grid-template-areas: "song-icon song-name status group el-menu"
+  grid-template-columns: 50px 6fr 6fr 6fr 50px
+  align-items: center
+  padding: 0.5rem 0
+
+.column
+  padding-right: 0.5rem
+  padding-left: 0.5rem
+
+.song-icon
+  grid-area: song-icon
+  img
+    @extend %album-cover
+    +flex-container(center, center)
+    object-fit: cover
+  .icon-background
+    @extend %album-cover
+    +flex-container(center, center)
+    background: $fire-orange
+    i
+      font-size: 18px
+      margin-right: 0 !important
+
+.song-name
+  grid-area: song-name
+
+.album-name
+  text-decoration: none
+  grid-area: album-name
+  font-style: 0.9em
+  justify-self: start
+
+.status
+  grid-area: status
+  justify-self: start
+
+.group
+  grid-area: group
+
+.ui.dropdown
+  grid-area: el-menu
+  background: $drk-gray
+  &:hover
+    background: $drk-rain
+
+.approve
+  grid-area: btn-approve
+  justify-self: start
+  button
+    @extend %font
+    cursor: pointer
+    width: 100px
+    height: 35px
+    background: none
+    border: 1px solid #afafaf
+    border-radius: 50px
+    i
+      color: green
+    &:hover
+      transform: scale(1.05)
+      border: 1px solid $text
+      color: $text
+    &:active
+      transform: scale(1)
+
+.reject
+  grid-area: btn-reject
+  justify-self: start
+  button
+    @extend %font
+    cursor: pointer
+    width: 100px
+    height: 35px
+    background: none
+    border: 1px solid #afafaf
+    border-radius: 50px
+    i
+      color: red
+    &:hover
+      transform: scale(1.05)
+      border: 1px solid $text
+      color: $text
+    &:active
+      transform: scale(1)
