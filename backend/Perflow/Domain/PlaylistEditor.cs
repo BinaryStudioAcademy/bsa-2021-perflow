@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Perflow.Domain
 {
-    public class PlaylistEditor : AuditEntity
+    public class PlaylistEditor : BaseEntity
     {
         public int PlaylistId { get; set; }
         public Playlist Playlist { get; set; }

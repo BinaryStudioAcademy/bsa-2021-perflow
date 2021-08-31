@@ -10,7 +10,7 @@ using Perflow.DataAccess.Context;
 namespace Perflow.Migrations
 {
     [DbContext(typeof(PerflowContext))]
-    [Migration("20210831054749_AddPlaylistEditors")]
+    [Migration("20210831061640_AddPlaylistEditors")]
     partial class AddPlaylistEditors
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -256,9 +256,6 @@ namespace Perflow.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("PlaylistId")
                         .HasColumnType("int");

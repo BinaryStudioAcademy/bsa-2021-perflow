@@ -24,7 +24,10 @@ namespace Perflow.Services.Implementations
 
         public async Task Remove(PlaylistEditorDTO pe)
         {
-            context.PlaylistEditors.Remove(mapper.Map<PlaylistEditor>(pe));
+            var removeEntity = context.PlaylistEditors
+                                        .FirstOrDefault(_pe => _pe.PlaylistId == pe.PlaylistId &&
+                                                               _pe.UserId == pe.UserId);
+            context.PlaylistEditors.Remove(removeEntity);
             
             await context.SaveChangesAsync();
         }

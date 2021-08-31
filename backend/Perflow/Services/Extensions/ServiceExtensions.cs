@@ -63,6 +63,7 @@ namespace Perflow.Services.Extensions
             services.AddScoped<IImageService, ImageService>();
 
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<PlaylistEditorsService>();
         }
     }
 }
