@@ -19,9 +19,9 @@ export class AllSongsComponent implements OnInit, OnDestroy {
 
   // for Infinity Scrolling
   public throttle: number = 300;
-  public distance: number = 1;
+  public distance: number = 3;
   private _page: number = 0;
-  private _itemsOnPage: number = 7;
+  private _itemsOnPage: number = 20;
 
   private _query = {
     searchTerm: this.searchTerm,
