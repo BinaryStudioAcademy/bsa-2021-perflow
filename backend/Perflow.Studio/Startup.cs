@@ -8,6 +8,7 @@ using Perflow.Studio.Services.Extensions;
 using Shared.Auth.Extensions;
 using Shared.ExceptionsHandler.Filters;
 using Microsoft.Extensions.Configuration;
+using Shared.AzureBlobStorage.Extensions;
 
 namespace Perflow.Studio
 {
@@ -30,7 +31,11 @@ namespace Perflow.Studio
 
             services.AddAuth(Configuration["FirebaseProjectId"]);
 
-            services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
+            services.AddProcessorRabbitMQ(Configuration);
+
+            services.AddBlobStorage(Configuration["ConnectionStrings:BlobStorage"]);
+            
+            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
@@ -46,6 +51,12 @@ namespace Perflow.Studio
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Perflow.Studio v1"));
             }
+
+            app.UseCors(builder => builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .WithOrigins(Configuration["AngularAppURL"]));
 
             app.UseHttpsRedirection();
 

@@ -286,7 +286,7 @@ namespace Perflow.Services.Implementations
                     Description = album.Description,
                     IconURL = _imageService.GetImageUrl(album.IconURL),
                     IsLiked = album.Reactions.Any(ar => ar.UserId == userId),
-                    ArtistId = album.Author != null ? album.Author.Id : null
+                    ArtistId = album.Author != null ? album.Author.Id : (int?)null
                 })
                 .ToListAsync();
 

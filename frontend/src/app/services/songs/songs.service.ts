@@ -50,18 +50,18 @@ export class SongsService {
     formData.append('songFile', songFile, songFile.name);
 
     return this._httpService.postRequest(
-      `/api/songs/${songId}/file`,
+      `/api/studio/songs/${songId}/file`,
       formData
     );
   };
 
   private _uploadSongInfo = (songInfo: SongWriteDTO) => this._httpService.postRequest<Song>(
-    '/api/songs',
+    '/api/studio/songs',
     songInfo
   );
 
   deleteSong = (id: number) => this._httpService.deleteRequest(
-    `/api/Songs/delete/${id}`
+    `/api/studio/songs/${id}`
   );
 
   getTopSongsByAuthorId(id: number, count: number, authorType: AuthorType) {
@@ -81,16 +81,15 @@ export class SongsService {
     return this._httpService.getRequest<{ isLiked: boolean }>(`/api/songs/${id}/isLiked`);
   }
 
-  updateSongInfo(song: Song) {
-    const songForWrite = new SongWriteDTO();
-    songForWrite.id = song.id;
-    songForWrite.name = song.name;
-    songForWrite.hasCensorship = song.hasCensorship;
+  setSongName(songId: number, value: string) {
+    return this._httpService.putRequest(`/api/studio/songs/${songId}/name?value=${value}`, {});
+  }
 
-    return this._httpService.putRequest<SongWriteDTO>('/api/songs', songForWrite);
+  setSongCensorship(songId: number, value: boolean) {
+    return this._httpService.putRequest(`/api/studio/songs/${songId}/censorship?value=${value}`, {});
   }
 
   updateOrders(songOrders: SongOrder[]) {
-    return this._httpService.putRequest<SongWriteDTO>('/api/songs/orders', songOrders);
+    return this._httpService.putRequest<SongWriteDTO>('/api/studio/songs/orders', songOrders);
   }
 }

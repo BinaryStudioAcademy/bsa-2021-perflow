@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/studio/songs",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow-studio",
@@ -10,14 +10,23 @@
         }
       ],
       "UpstreamPathTemplate": "/api/studio/songs",
-      "UpstreamHttpMethod": [
-        "GET",
-        "POST"
-      ]
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/studio/songs/{id}/file",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow-studio",
+          "Port": "4203"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/studio/songs/{id}/file",
+      "UpstreamHttpMethod": [ "POST" ]
     },
     {
       "DownstreamPathTemplate": "/api/studio/songs/{id}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow-studio",
@@ -25,11 +34,43 @@
         }
       ],
       "UpstreamPathTemplate": "/api/studio/songs/{id}",
-      "UpstreamHttpMethod": [
-        "GET",
-        "PUT",
-        "DELETE"
-      ]
+      "UpstreamHttpMethod": [ "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/studio/songs/{id}/censorship?value={value}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow-studio",
+          "Port": "4203"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/studio/songs/{id}/censorship?value={value}",
+      "UpstreamHttpMethod": [ "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/studio/songs/{id}/name?value={value}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow-studio",
+          "Port": "4203"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/studio/songs/{id}/name?value={value}",
+      "UpstreamHttpMethod": [ "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/studio/songs/orders",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow-studio",
+          "Port": "4203"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/studio/songs/orders",
+      "UpstreamHttpMethod": [ "PUT" ]
     }
   ]
 }
