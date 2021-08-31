@@ -59,7 +59,7 @@ export class UserProfileComponent implements OnInit {
       .getPlaylistsByAuthorId(this.user.id)
       .pipe(first())
       .subscribe(
-        result => {
+        (result) => {
           this.myPlaylists = result;
         }
       );
