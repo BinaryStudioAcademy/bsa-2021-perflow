@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.PlaylistEditors;
+using Perflow.Common.DTO.Users;
 using Perflow.Services.Implementations;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace Perflow.Controllers
         public PlaylistEditorsController(PlaylistEditorsService playlistEditorsService)
         {
             _playlistEditorsService = playlistEditorsService;
+        }
+
+        [HttpGet("{playlistId}")]
+        public async Task<ActionResult<IEnumerable<ArtistReadDTO>>> GetCollaborators(int playlistId)
+        {
+            return Ok(await _playlistEditorsService.GetCollaborators(playlistId));
         }
 
         [HttpPost]
