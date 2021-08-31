@@ -26,6 +26,7 @@ namespace Perflow.Services.Extensions
                 cfg.AddProfile<ArtistProfile>();
                 cfg.AddProfile<RecentlyPlayedProfile>();
                 cfg.AddProfile<SearchHistoryProfile>();
+                cfg.AddProfile<PlaylistEditorProfile>();
             },
             Assembly.GetExecutingAssembly());
         }
