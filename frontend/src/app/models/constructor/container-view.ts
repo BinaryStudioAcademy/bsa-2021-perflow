@@ -1,5 +1,7 @@
 export interface ContainerView {
   id: number;
   name: string;
-  iconURL: string;
+  isPublished: boolean;
+  showRecentlyPlayed: boolean;
+  showMix: boolean;
 }

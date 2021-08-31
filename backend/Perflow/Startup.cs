@@ -11,6 +11,7 @@ using Shared.Auth.Extensions;
 using Shared.AzureBlobStorage.Extensions;
 using Shared.ExceptionsHandler.Filters;
 using Perflow.Hubs.Implementations;
+using System.Text.Json.Serialization;
 
 namespace Perflow
 {

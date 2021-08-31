@@ -1,8 +1,26 @@
-<div class="card" (click)="redirectTo()">
-  <div class="image">
-      <img [src]="container.iconURL">  
-  </div>
+<div class="card" (click)="redirectTo()" [ngClass]="{published: container.isPublished}">
+  <!-- <div class="image">
+      <img [src]="container.iconURL">
+  </div> -->
   <div class="content">
       <div class="card-name"> {{container.name}} </div>
+      <div class="options">
+        <div class="ui toggle checkbox my-checkbox">
+          <input *ngIf="container.showRecentlyPlayed" type="checkbox" name="public" checked disabled>
+          <input *ngIf="!container.showRecentlyPlayed" type="checkbox" name="public" disabled>
+          <label>Recently Played</label>
+        </div>
+        <div class="ui toggle checkbox my-checkbox">
+          <input *ngIf="container.showMix" type="checkbox" name="public" checked disabled>
+          <input *ngIf="!container.showMix" type="checkbox" name="public" disabled>
+          <label>Mix</label>
+        </div>
+      </div>
+  </div>
+  <div class="ui toggle checkbox my-checkbox publish">
+    <input *ngIf="!container.isPublished" type="checkbox" name="public" (click)="publishContainer()">
+    <label *ngIf="!container.isPublished">Publish</label>
+    <input *ngIf="container.isPublished" type="checkbox" name="public" checked disabled>
+    <label *ngIf="container.isPublished">Published</label>
   </div>
 </div>

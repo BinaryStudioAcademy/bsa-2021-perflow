@@ -17,6 +17,8 @@ import { CreateEditContainerComponent }
   from './constructor/create-edit-container/create-edit-container/create-edit-container.component';
 import { ContainersPageComponent } from './constructor/containers-page/containers-page/containers-page.component';
 import { ContainerSearchComponent } from './constructor/container-search/container-search/container-search.component';
+import { ContainerSearchModalComponent }
+  from './constructor/container-search-modal/container-search-modal/container-search-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { ContainerSearchComponent } from './constructor/container-search/contain
     SongsUploadModalComponent,
     CreateEditContainerComponent,
     ContainersPageComponent,
-    ContainerSearchComponent
+    ContainerSearchComponent,
+    ContainerSearchModalComponent
   ],
   imports: [
     CommonModule,

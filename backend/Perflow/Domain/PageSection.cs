@@ -11,7 +11,6 @@ namespace Perflow.Domain
         public int Position { get; set; }
         public string Name { get; set; }
         public int PageContainerId { get; set; }
-        public PageContainer PageContainer { get; set; }
         public ICollection<PageSectionEntity> PageSectionEntities { get; set; }
     }
 }

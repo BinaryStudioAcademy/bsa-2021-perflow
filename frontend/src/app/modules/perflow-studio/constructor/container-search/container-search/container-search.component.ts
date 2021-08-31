@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component, EventEmitter, Input, OnDestroy, OnInit, Output
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { of, Subject } from 'rxjs';
@@ -8,6 +10,9 @@ import {
 import { FoundData } from 'src/app/models/search/found-data';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { SearchService } from 'src/app/services/search.service';
+import { PageSectionFull } from 'src/app/models/constructor/page-section-full';
+import { EntityType } from 'src/app/models/enums/entity-type';
+import { PageSectionEntityFull } from 'src/app/models/constructor/page-section-entity-full';
 
 @Component({
   selector: 'app-container-search',
@@ -20,6 +25,17 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
 
   foundData = {} as FoundData;
   searchValue: string;
+  currentAlbums: PageSectionEntityFull[];
+  currentArtists: PageSectionEntityFull[];
+  currentPlaylists: PageSectionEntityFull[];
+
+  @Input()
+  editedSection: PageSectionFull = {} as PageSectionFull;
+  @Input()
+  isAccordion: boolean;
+
+  @Output()
+  addDeleteFromSection = new EventEmitter<any>();
 
   private readonly _regex = new RegExp('search.*');
   private _searchTerms$ = new Subject<string>();
@@ -50,6 +66,12 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
         this.searchValue = data;
         this._searchTerms$.next(data);
       });
+    this.currentAlbums = this.editedSection.pageSectionEntities
+      ?.filter((ps) => ps.entityType === EntityType.album);
+    this.currentArtists = this.editedSection.pageSectionEntities
+      ?.filter((ps) => ps.entityType === EntityType.artist);
+    this.currentPlaylists = this.editedSection.pageSectionEntities
+      ?.filter((ps) => ps.entityType === EntityType.playlist);
   }
 
   ngOnDestroy() {
@@ -96,5 +118,9 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
       this.foundData = {} as FoundData;
       this._location.replaceState(this._router.url.replace(this._regex, 'search'));
     }
+  }
+
+  addDeleteFromSectionEvent(entity: any) {
+    this.addDeleteFromSection.emit(entity);
   }
 }

@@ -29,6 +29,7 @@ namespace Perflow.Services.Extensions
                 cfg.AddProfile<ArtistProfile>();
                 cfg.AddProfile<RecentlyPlayedProfile>();
                 cfg.AddProfile<SearchHistoryProfile>();
+                cfg.AddProfile<ConstructorProfile>();
             },
             Assembly.GetExecutingAssembly());
         }
@@ -66,6 +67,8 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped(provider => new NotificationService(
                 provider.GetRequiredService<IHubContext<NotificationsHub, INotificationsHub>>()));
+
+            services.AddScoped<ConstructorService>();
         }
     }
 }

@@ -39,7 +39,8 @@ const routes: Routes = [{
       path: 'constructor',
       children: [
         { path: '', component: ContainersPageComponent },
-        { path: 'create', component: CreateEditContainerComponent }
+        { path: 'create', component: CreateEditContainerComponent },
+        { path: 'edit/:id', component: CreateEditContainerComponent }
         // { path: 'edit/:id', component: CreateEditAlbumComponent }
       ]
     }

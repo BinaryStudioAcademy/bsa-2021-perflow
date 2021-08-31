@@ -1,12 +1,12 @@
-<div class="card" (click)="redirectTo()">
+<div class="card" (click)="handleClick()" [ngClass]="{checked:isChecked}">
     <div class="image-block">
         <div class="image">
             <img [attr.src]="artist.iconURL" alt="Artist">    
         </div>
-        <div class="remove" *ngIf="isLiked" (click)="onDeleteClick(artist)" appClickStopPropagation>
+        <div class="remove" *ngIf="isLiked && !isCheckBox" (click)="onDeleteClick(artist)" appClickStopPropagation>
             <i class="like icon ui"></i>
         </div>
-        <button class="play-icon" appClickStopPropagation>
+        <button *ngIf="!isCheckBox" class="play-icon" appClickStopPropagation>
           <i class="play icon"></i>
         </button> 
     </div>
@@ -14,6 +14,6 @@
         <div class="artist-name tub">
             <h5>{{artist.userName}}</h5>
         </div>
-        <span>Artist</span>
+        <span [ngClass]="{checked:isChecked}">Artist</span>
     </div>
 </div>

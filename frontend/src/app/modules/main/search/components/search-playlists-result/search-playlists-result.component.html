@@ -1,22 +1,23 @@
-<div class="result-container" 
-    cdkDropList id="search-playlists" 
-    [cdkDropListConnectedTo]="[
-                                'section-1', 
-                                'section-2', 
-                                'section-3',
-                                'section-4',
-                                'section-5',
-                                'section-6',
-                                'section-7',
-                                'section-8',
-                                'section-9']" 
-    [cdkDropListData]="playlists"
-    (cdkDropListDropped)="drop($event)">
+<div class="result-container" *ngIf="!isCheckBox">
   <div class="result-header">
     <a class="field-name" routerLink="/search/{{term}}/playlists">Playlists</a>
   </div>
   <div class="result-body">
     <app-playlist-card (clickEmiter)="saveToSearchHistory(playlist)" *ngFor="let playlist of playlists" 
-      [playlist]="playlist" cdkDrag></app-playlist-card>
+      [playlist]="playlist"></app-playlist-card>
+  </div>
+</div>
+
+<div class="result-container" *ngIf="isCheckBox">
+  <div class="result-header">
+    <a class="field-name" routerLink="/search/{{term}}/playlists">Playlists</a>
+  </div>
+  <div class="result-body">
+    <app-playlist-card 
+      (addDeleteFromSection)="addDeleteFromSectionEvent($event)" 
+      [isCheckBox]="isCheckBox" 
+      *ngFor="let playlist of playlists" 
+      [isChecked]="isChecked(playlist)"
+      [playlist]="playlist"></app-playlist-card>
   </div>
 </div>

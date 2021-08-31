@@ -1,8 +1,9 @@
 import { EntityType } from '../enums/entity-type';
 
 export interface PageSectionEntityFull {
+  id?: number;
   entityType: EntityType;
   entity: any;
-  entityId: number | undefined;
+  referenceId: number | undefined;
   position: number;
 }

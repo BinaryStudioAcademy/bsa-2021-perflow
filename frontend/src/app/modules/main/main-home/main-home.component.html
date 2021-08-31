@@ -15,13 +15,13 @@
       <img
         class="album-icon"
         alt="Album"
-        src="{{currentNewestAlbum.iconURL}}"
+        src="{{currentAccordionAlbum.iconURL}}"
       />
       <div class="album-info">
         <p class="type">Album</p>
-        <p class="album-title">{{currentNewestAlbum.name}}</p>
+        <p class="album-title">{{currentAccordionAlbum.name}}</p>
         <p class="album-description">
-          {{currentNewestAlbum.description}}
+          {{currentAccordionAlbum.description}}
         </p>
 
         <div class="buttons">
@@ -36,7 +36,7 @@
 
   <div class="main-content">
     <!-- Recently played -->
-    <div class="recently-played" *ngIf="recentlyPlayed?.length">
+    <div class="recently-played" *ngIf="recentlyPlayed?.length && data.showRecentlyPlayed">
       <div class="header">Recently played</div>
       <div class="ui grid recently-played-cont">
         <app-song-card routerLink="/albums/{{song.album.id}}" *ngFor="let song of recentlyPlayed" 
@@ -67,8 +67,40 @@
       </div>
     </div>
 
+    <div class="items-scroll-box" *ngFor="let section of data.pageSections.slice(1)">
+      <div class="header">{{section.name}}</div>
+      <div class="list-of-items">
+        <div class="ui icon button scroll-button" (click)="scrollLeft('section-{{section.position}}')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div id="section-{{section.position}}" class="items" appHideScrollButtons>
+          <!-- <app-square-info-card
+            *ngFor="let playlist of calmRhythms"
+            [name]="playlist.name"
+            [description]="playlist.description"
+            [iconUrl]="playlist.iconURL"
+          >
+          </app-square-info-card> -->
+          <span *ngFor="let entity of section.pageSectionEntities">
+            <app-album-card *ngIf="entity.entityType === 0" 
+              [album]="entity.entity">
+            </app-album-card>
+            <app-artist-card *ngIf="entity.entityType === 2"
+              [artist]="entity.entity">
+            </app-artist-card>
+            <app-playlist-card *ngIf="entity.entityType === 1"
+              [playlist]="entity.entity">
+            </app-playlist-card>
+          </span>
+        </div>
+        <div class="ui icon button scroll-button" (click)="scrollRight('playlist')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+    </div>
+
     <!-- Calm rhythms -->
-    <div class="items-scroll-box calmRhythms">
+    <!-- <div class="items-scroll-box calmRhythms">
       <div class="header">Calm rhythms</div>
       <div class="list-of-items">
         <div class="ui icon button scroll-button" (click)="scrollLeft('playlist')">
@@ -87,10 +119,10 @@
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Your mix -->
-    <div class="your-mix">
+    <div class="your-mix" *ngIf="data.showMix">
       <div class="header">Your mix</div>
       <div id="yourMix" class="ui grid your-mix-cont">
         <!-- Demonstration cards (delete them) -->
@@ -108,7 +140,7 @@
     </div>
 
     <!-- Top 100 songs -->
-    <div class="items-scroll-box calmRhythms">
+    <!-- <div class="items-scroll-box calmRhythms">
       <div class="header">Top 100 songs</div>
       <div class="list-of-items">
         <div class="ui icon button scroll-button" (click)="scrollLeft('repeat')">
@@ -127,6 +159,6 @@
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </main>

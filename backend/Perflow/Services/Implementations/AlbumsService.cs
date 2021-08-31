@@ -145,7 +145,7 @@ namespace Perflow.Services.Implementations
                     Id = a.Id,
                     Name = a.Name,
                     IconURL = _imageService.GetImageUrl(a.IconURL),
-                    Author = a.AuthorId != null ? (new AlbumViewAuthorsDTO(a.Author.Id, a.Author.UserName, true)) 
+                    Author = a.AuthorId != null ? (new AlbumViewAuthorsDTO(a.Author.Id, a.Author.UserName, true))
                         : new AlbumViewAuthorsDTO(a.Group.Id, a.Group.Name, false)
                 })
                 .ToListAsync();

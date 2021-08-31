@@ -15,9 +15,15 @@ import { QueueService } from 'src/app/services/queue.service';
 export class PlaylistCardComponent {
   @Input()
   playlist: PlaylistView = {} as PlaylistView;
+  @Input()
+  isCheckBox: boolean = false;
+  @Input()
+  isChecked: boolean;
 
   @Output()
   clickEmiter = new EventEmitter<void>();
+  @Output()
+  addDeleteFromSection = new EventEmitter<PlaylistView>();
 
   constructor(
     private _playlistsService: PlaylistsService,
@@ -47,8 +53,14 @@ export class PlaylistCardComponent {
     this._queueService.initSong(first, true);
   }
 
-  redirectTo() {
-    this.clickEmiter.emit();
-    this._router.navigateByUrl(`/playlists/view-playlist/${this.playlist.id}`);
+  handleClick() {
+    if (!this.isCheckBox) {
+      this.clickEmiter.emit();
+      this._router.navigateByUrl(`/playlists/view-playlist/${this.playlist.id}`);
+    }
+    else {
+      this.isChecked = !this.isChecked;
+      this.addDeleteFromSection.emit(this.playlist);
+    }
   }
 }

@@ -22,8 +22,13 @@ export class ConstructorContainerCardComponent {
     private _router: Router
   ) { }
 
+  publishContainer = () => {
+    this._constructorService.publishContainer(this.container).subscribe();
+    this._router.navigateByUrl('/home');
+  };
+
   redirectTo() {
     this.clickEmiter.emit();
-    this._router.navigateByUrl(`/view-container/${this.container.id}`);
+    this._router.navigateByUrl(`/perflowstudio/constructor/edit/${this.container.id}`);
   }
 }

@@ -14,8 +14,14 @@ export class ArtistCardComponent {
   isLiked: boolean = false;
   @Input()
   artist: ArtistReadDTO;
+  @Input()
+  isCheckBox: boolean = false;
+  @Input()
+  isChecked: boolean;
   @Output()
   delete = new EventEmitter<ArtistReadDTO>();
+  @Output()
+  addDeleteFromSection = new EventEmitter<ArtistReadDTO>();
   @Output()
   clickEmiter = new EventEmitter<void>();
 
@@ -25,8 +31,14 @@ export class ArtistCardComponent {
     this.delete.emit(artist);
   }
 
-  redirectTo() {
-    this.clickEmiter.emit();
-    this._router.navigateByUrl(`/artists/${this.artist.id}`);
+  handleClick() {
+    if (!this.isCheckBox) {
+      this.clickEmiter.emit();
+      this._router.navigateByUrl(`/artists/${this.artist.id}`);
+    }
+    else {
+      this.isChecked = !this.isChecked;
+      this.addDeleteFromSection.emit(this.artist);
+    }
   }
 }

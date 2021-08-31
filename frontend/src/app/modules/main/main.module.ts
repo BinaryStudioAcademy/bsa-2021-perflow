@@ -116,7 +116,8 @@ import { ConstructorContainerCardComponent }
     SearchArtistsResultComponent,
     SearchPlaylistsResultComponent,
     PlaylistCardComponent,
-    ArtistCardComponent
+    ArtistCardComponent,
+    ConstructorContainerCardComponent
   ]
 })
 export class MainModule {

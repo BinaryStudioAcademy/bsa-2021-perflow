@@ -12,6 +12,9 @@ import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter } from 'rxjs/operators';
 import { NewestFiveAlbum } from 'src/app/models/album/newest-five';
+import { ConstructorService } from 'src/app/services/constructor.service';
+import { ContainerFull } from 'src/app/models/constructor/container-full';
+import { PageSectionFull } from 'src/app/models/constructor/page-section-full';
 
 @Component({
   selector: 'app-main-home',
@@ -23,9 +26,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   private _newestCounter: number = 0;
   private _newestAlbums = new Array<NewestFiveAlbum>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
 
-  private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
   private readonly _scrollingSize: number = 1530;
+
+  public data: ContainerFull = {} as ContainerFull;
+  public accordionSection: PageSectionFull = {} as PageSectionFull;
+  public currentAccordionAlbum: NewestFiveAlbum = {} as NewestFiveAlbum;
+  public accordionAlbumsLength: number;
 
   public currentNewestAlbum = {} as NewestFiveAlbum;
   public recentlyPlayed = new Array<RecentlyPlayedSong>();
@@ -40,7 +47,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   constructor(
     private _albumService: AlbumService,
     private _recentlyPlayedService: RecentlyPlayedService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _constructorService: ConstructorService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -50,6 +58,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this._constructorService.getPublishedContainer().subscribe(
+      (resp) => {
+        this.data = resp.body!;
+        this.getAccordionAlbums();
+      }
+    );
+
     this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
     this.getNewReleases();
@@ -70,6 +85,12 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   saveAlbum = () => {
     // Ability to save album - album is saved in the user playlist
   };
+
+  getAccordionAlbums() {
+    this.accordionSection = this.data.pageSections.find((ps) => ps.position === 1)!;
+    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[0].entity;
+    this.accordionAlbumsLength = [...this.accordionSection.pageSectionEntities].length;
+  }
 
   getNewestFiveAlbums() {
     this._albumService.getFiveNewestAlbums()
@@ -136,10 +157,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   nextSlide = () => {
     this.accordionAnimation();
     this._newestCounter += 1;
-    if (this._newestCounter > this._newestAlbumsMax - 1) {
+    if (this._newestCounter > this.accordionAlbumsLength - 1) {
       this._newestCounter = 0;
     }
-    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
+    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[this._newestCounter].entity;
     this.accordionAnimation();
   };
 
@@ -147,9 +168,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.accordionAnimation();
     this._newestCounter -= 1;
     if (this._newestCounter < 0) {
-      this._newestCounter = this._newestAlbumsMax - 1;
+      this._newestCounter = this.accordionAlbumsLength - 1;
     }
-    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
+    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[this._newestCounter].entity;
     this.accordionAnimation();
   };
 

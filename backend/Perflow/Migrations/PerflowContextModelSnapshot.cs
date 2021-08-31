@@ -717,24 +717,20 @@ namespace Perflow.Migrations
 
             modelBuilder.Entity("Perflow.Domain.PageSection", b =>
                 {
-                    b.HasOne("Perflow.Domain.PageContainer", "PageContainer")
+                    b.HasOne("Perflow.Domain.PageContainer", null)
                         .WithMany("PageSections")
                         .HasForeignKey("PageContainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("PageContainer");
                 });
 
             modelBuilder.Entity("Perflow.Domain.PageSectionEntity", b =>
                 {
-                    b.HasOne("Perflow.Domain.PageSection", "PageSection")
+                    b.HasOne("Perflow.Domain.PageSection", null)
                         .WithMany("PageSectionEntities")
                         .HasForeignKey("PageSectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("PageSection");
                 });
 
             modelBuilder.Entity("Perflow.Domain.Playlist", b =>

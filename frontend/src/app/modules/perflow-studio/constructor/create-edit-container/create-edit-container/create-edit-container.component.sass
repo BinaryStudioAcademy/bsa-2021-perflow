@@ -192,9 +192,21 @@ main
       border-radius: 50px
       display: flex
       align-items: center
-      justify-content: space-around
+      justify-content: flex-start
+      grid-gap: 100px
+      input[type="text"]
+        font-size: 24px
+        background: $drk-rain
+        border-radius: 50px
+        color: $text
+        font-family: Rubik
+        padding: 5px 1em 5px 1em
       .option.ui.checkbox 
         color: white
+        font-size: 24px
+        font-weight: bold
+        line-height: 28px
+        font-family: "Rubik", "sans-serif"
         input
           &:active~label
             color: $text
@@ -209,6 +221,8 @@ main
             background:  $drk-gray
             opacity: 1
             border: 1px solid #ffffff35
+          &::after
+            top: -5px
 
 // Recently played
 .recently-played
@@ -308,31 +322,3 @@ main
     &:hover
         cursor: pointer  
   
-::ng-deep .search-container
-  position: relative
-  height: 100%
-  width: 100%
-  // Fixed
-  ::ng-deep .ui.search
-    position: relative !important
-    height: 90px
-    background: $drk-gray
-    width: 300px
-    display: grid
-    grid-template-columns: 100%
-    ::ng-deep .ui.icon.input
-      grid-column: 1
-      align-self: center
-      justify-self: start
-      margin-left: 15px 
-      width: 50%
-      ::ng-deep i
-        color: $text
-      ::ng-deep .prompt.input-dark
-        background: $drk-rain
-        border: 1px solid $text
-        color: $text
-        ::ng-deep &:focus
-          background: $drk-rain
-        ::ng-deep &:active
-          background: $drk-rain

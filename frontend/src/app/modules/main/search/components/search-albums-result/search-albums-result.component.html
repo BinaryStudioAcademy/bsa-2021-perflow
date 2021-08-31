@@ -1,22 +1,23 @@
-<div class="result-container" 
-    cdkDropList id="search-albums" 
-    [cdkDropListConnectedTo]="[
-                                'section-1', 
-                                'section-2', 
-                                'section-3',
-                                'section-4',
-                                'section-5',
-                                'section-6',
-                                'section-7',
-                                'section-8',
-                                'section-9']" 
-    [cdkDropListData]="albums"
-    (cdkDropListDropped)="drop($event)">
+<div class="result-container" *ngIf="!isCheckBox">
   <div class="result-header">
     <a class="field-name" routerLink="/search/{{term}}/albums">Albums</a>
   </div>
   <div class="result-body">
     <app-album-card (clickEmiter)="saveToSearchHistory(album)" [isLiked]="false" *ngFor="let album of albums" 
-      [album]="album" cdkDrag></app-album-card>
+      [album]="album"></app-album-card>
+  </div>
+</div>
+
+<div class="result-container" *ngIf="isCheckBox">
+  <div class="result-header">
+    <a class="field-name" routerLink="/search/{{term}}/albums">Albums</a>
+  </div>
+  <div class="result-body">
+    <app-album-card 
+      (addDeleteFromSection)="addDeleteFromSectionEvent($event)" 
+      [isCheckBox]="isCheckBox" 
+      *ngFor="let album of albums" 
+      [isChecked]="isChecked(album)"
+      [album]="album"></app-album-card>
   </div>
 </div>

@@ -1,5 +1,5 @@
-<main>
-  <div class="accordion">
+<main *ngIf="!isLoading">
+  <!-- <div class="accordion">
     <div class="arrows">
       <button (click)="nextSlide()" class="arrow">
         <i class="chevron left icon"></i>
@@ -30,9 +30,8 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="main-content drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
+  </div> -->
+  <div id="my-node" class="main-content drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
     <div class="options">
       <div class="option ui checkbox">
         <input type="checkbox" [(ngModel)]="this.container.showRecentlyPlayed" name="showRecentlyPlayed">
@@ -42,56 +41,45 @@
         <input type="checkbox" [(ngModel)]="this.container.showMix" name="showYourMix">
         <label for="showYourMix">Show Your Mix</label>
       </div>
-    </div>
-    <div class="recently-played" *ngIf="this.container.showRecentlyPlayed">
-      <span class="header">{{ showRecentlyPlayedSection.name }}</span>
-      <div class="ui grid recently-played-cont">
-        <app-song-card *ngFor="let song of showRecentlyPlayedSection.pageSectionEntities" 
-          [song]="song.entity"></app-song-card>
-      </div>
-    </div>
-    <div class="your-mix" *ngIf="this.container.showMix">
-      <div class="header">Your mix</div>
-      <div id="yourMix" class="ui grid your-mix-cont">
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-      </div>
-    </div>
-      <div class="items-scroll-box" *ngFor="let pageSection of container.pageSections" cdkDrag>
-        <span class="header" *ngIf="!(editNamePosition === pageSection.position)">{{ pageSection.name }}</span>
-        <div class="ui input" *ngIf="editNamePosition === pageSection.position">
-          <input type="text" maxlength="50" placeholder="Section name" [(ngModel)]="pageSection.name" 
-          required>
+      <div class="option ui">
+        <div class="ui form ui field name">
+          <input type="text" maxlength="20" placeholder="Container name" [(ngModel)]="container.name">      
         </div>
-        <span class="nameedit" *ngIf="editNamePosition === -1" (click)="editName(pageSection.position)">
+      </div>
+      <button class="ui button submit btn-full" (click)="saveContainer()">Save container</button>
+    </div>
+    <div class="items-scroll-box">
+      <span class="header">Accordion</span>
+      <span class="nameedit" (click)="showEditSectionModal(getAccordionSection().position)">
+        <i class="ui pencil alternate icon"></i>
+      </span>
+      <div class="list-of-items">
+        <div class="ui icon button scroll-button">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div class="items" *ngFor="let accordionSectionEntity of getAccordionSection().pageSectionEntities">
+            <app-album-card *ngIf="accordionSectionEntity.entityType === 0" 
+              [album]="accordionSectionEntity.entity">
+            </app-album-card>
+        </div>
+        <div class="ui icon button scroll-button">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+    </div>
+      <div class="items-scroll-box" *ngFor="let pageSection of container.pageSections.slice(1)" cdkDrag>
+        <span class="header">{{ pageSection.name }}</span>
+        <span class="nameedit" (click)="showEditSectionModal(pageSection.position)">
           <i class="ui pencil alternate icon"></i>
         </span>
-        <span class="namedelete" *ngIf="editNamePosition === -1" (click)="deleteSection(pageSection.position)">
+        <span class="namedelete" (click)="deleteSection(pageSection.position)">
           <i class="ui trash alternate outline icon"></i>
         </span>
-        <span class="namesave" *ngIf="editNamePosition === pageSection.position" (click)="saveName()">
-            <i class="ui save icon"></i>
-        </span>
-        <div class="list-of-items"
-             cdkDropList id="section-{{pageSection.position-1}}" 
-             [cdkDropListConnectedTo]="['search-playlists', 'search-artists', 'search-albums']" 
-             (cdkDropListDropped)="dropSearch($event)">
+        <div class="list-of-items">
           <div class="ui icon button scroll-button">
             <i class="large inverted angle left icon"></i>
           </div>
-          <div class="items" *ngFor="let pageSectionEntity of pageSection.pageSectionEntities" cdkDrag>
-            <!--<div class="ui icon button scroll-button" (click)="scrollLeft('playlist')">-->
-              <!-- <app-square-info-card *ngIf="pageSectionEntity.entityType === 1"
-                [name]="pageSectionEntity.entity.name"
-                [description]="pageSectionEntity.entity.description"
-                [iconUrl]="pageSectionEntity.entity.iconURL">
-              </app-square-info-card> -->
+          <div class="items" *ngFor="let pageSectionEntity of pageSection.pageSectionEntities">
               <app-album-card *ngIf="pageSectionEntity.entityType === 0" 
                 [album]="pageSectionEntity.entity">
               </app-album-card>
@@ -101,7 +89,6 @@
               <app-playlist-card *ngIf="pageSectionEntity.entityType === 1"
                 [playlist]="pageSectionEntity.entity">
               </app-playlist-card>
-            <!--<div class="ui icon button scroll-button" (click)="scrollRight('playlist')">-->
           </div>
           <div class="ui icon button scroll-button">
             <i class="large inverted angle right icon"></i>
@@ -111,10 +98,14 @@
     <div *ngIf="maxPos < 10" class="add-section" (click)="addNewSection()">
       <i class="ui plus square icon large"></i>
     </div>
-    <div class="search-bar">
-      <app-container-search></app-container-search>
-    </div>
   </div>
+  <app-container-search-modal 
+    [editedSection]="editedSection"
+    [isAccordion]="editedSection.name === 'Accordion'" 
+    *ngIf="isModalShown" 
+    (editSection)="onSubmitModal($event)" 
+    (isClosed)="closeModal()">
+  </app-container-search-modal>
   <div class="container"></div>
   
 </main>

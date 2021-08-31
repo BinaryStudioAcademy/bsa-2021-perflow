@@ -1,6 +1,9 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
 import { take } from 'rxjs/operators';
+import { PageSectionEntityFull } from 'src/app/models/constructor/page-section-entity-full';
 import { WriteSearchHistory } from 'src/app/models/search/write-search-history';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -14,6 +17,11 @@ import { SearchHistoryService } from 'src/app/services/search-history.service';
 export class SearchArtistsResultComponent {
   @Input() artists: Array<ArtistReadDTO> = new Array<ArtistReadDTO>();
   @Input() term: string;
+  @Input() isCheckBox: boolean = false;
+  @Input() currentArtists: PageSectionEntityFull[];
+
+  @Output()
+  addDeleteFromSection = new EventEmitter<ArtistReadDTO>();
 
   private _userId: number;
 
@@ -45,5 +53,13 @@ export class SearchArtistsResultComponent {
     else {
       // move between lists
     }
+  }
+
+  addDeleteFromSectionEvent(artist: ArtistReadDTO) {
+    this.addDeleteFromSection.emit(artist);
+  }
+
+  isChecked(artist: ArtistReadDTO) {
+    return this.currentArtists.findIndex((a) => a.referenceId === artist.id) !== -1;
   }
 }

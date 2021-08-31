@@ -19,8 +19,14 @@ export class AlbumCardComponent {
   isLiked = true;
   @Input()
   album: AlbumForReadDTO;
+  @Input()
+  isCheckBox: boolean = false;
+  @Input()
+  isChecked: boolean;
   @Output()
   delete = new EventEmitter<AlbumForReadDTO>();
+  @Output()
+  addDeleteFromSection = new EventEmitter<AlbumForReadDTO>();
   @Output()
   clickEmiter = new EventEmitter<void>();
 
@@ -28,7 +34,8 @@ export class AlbumCardComponent {
     private _songsService: SongsService,
     private _queueService: QueueService,
     private _router: Router
-  ) { }
+  ) {
+  }
 
   onDeleteClick(album: AlbumForReadDTO) {
     this.delete.emit(album);
@@ -56,8 +63,14 @@ export class AlbumCardComponent {
     this._queueService.initSong(first, true);
   }
 
-  redirectTo() {
-    this.clickEmiter.emit();
-    this._router.navigateByUrl(`/albums/${this.album.id}`);
+  handleClick() {
+    if (!this.isCheckBox) {
+      this.clickEmiter.emit();
+      this._router.navigateByUrl(`/albums/${this.album.id}`);
+    }
+    else {
+      this.isChecked = !this.isChecked;
+      this.addDeleteFromSection.emit(this.album);
+    }
   }
 }

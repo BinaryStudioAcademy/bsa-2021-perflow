@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { ContainerFull } from 'src/app/models/constructor/container-full';
 import { PageSectionFull } from 'src/app/models/constructor/page-section-full';
 import { EntityType } from 'src/app/models/enums/entity-type';
-import { ConstructorRecentlyPlayedSong } from 'src/app/models/constructor/container-recently-played-song';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { PageSectionEntityFull } from 'src/app/models/constructor/page-section-entity-full';
+import { ConstructorService } from 'src/app/services/constructor.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-edit-container',
@@ -16,81 +18,38 @@ import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 })
 export class CreateEditContainerComponent implements OnInit, OnDestroy {
   container: ContainerFull = {} as ContainerFull;
-  accordionSection: PageSectionFull = {} as PageSectionFull;
   currentAccordionAlbumId: number = 0;
   editNamePosition: number = -1;
   maxPos: number;
+  isModalShown: boolean = false;
+  editedSection: PageSectionFull = {} as PageSectionFull;
+  isLoading: boolean = true;
 
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
   private _isEditMode: boolean = false;
 
-  showRecentlyPlayedSection: PageSectionFull = {
-    position: -1,
-    name: 'Recently played',
-    pageSectionEntities: [
-      {
-        entityType: EntityType.song,
-        entityId: undefined,
-        entity:
-          {
-            name: 'Song Name',
-            artist: 'Artist',
-            group: null,
-            album: { name: 'Album Name', iconURL: '' },
-            playlist: null
-          } as ConstructorRecentlyPlayedSong,
-        position: 1
-      },
-      {
-        entityType: EntityType.song,
-        entityId: undefined,
-        entity:
-          {
-            name: 'Song Name',
-            artist: null,
-            group: 'Group',
-            album: { name: 'Album Name', iconURL: '' },
-            playlist: null
-          } as ConstructorRecentlyPlayedSong,
-        position: 2
-      },
-      {
-        entityType: EntityType.song,
-        entityId: undefined,
-        entity:
-          {
-            name: 'Song Name',
-            artist: 'Artist',
-            group: null,
-            album: null,
-            playlist: 'Playlist Name'
-          } as ConstructorRecentlyPlayedSong,
-        position: 3
-      }
-    ]
-  };
-
   constructor(
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _constructorService: ConstructorService,
+    private _router: Router
   ) { }
 
   ngOnInit() {
-    this.container = this.getBasicContainerFull();
-    this.accordionSection = this.getAccordionSectionData()!;
-    this.maxPos = Math.max(...this.container.pageSections.map((o) => o.position));
-    /* this._activatedRoute.paramMap.pipe(
+    this._activatedRoute.paramMap.pipe(
       switchMap((params) => params.getAll('id'))
     ).subscribe((data) => {
       this._id = +data;
-    }); */
+    });
     if (this._id) {
       this._isEditMode = true;
-      // this.startEditMode();
+      this.startEditMode();
     }
     else {
       this._isEditMode = false;
-      // this.showEditAlbumModal();
+      this.container = this.getBasicContainerFull();
+      this.maxPos = Math.max(...this.container.pageSections.map((o: PageSectionFull) => o.position));
+      this.isLoading = false;
     }
   }
 
@@ -99,8 +58,18 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     this._unsubscribe$.complete();
   }
 
+  startEditMode = () => {
+    this._constructorService.getContainer(this._id!).subscribe(
+      (resp) => {
+        this.container = resp.body!;
+        this.maxPos = Math.max(...this.container.pageSections.map((o: PageSectionFull) => o.position));
+        this.isLoading = false;
+      }
+    );
+  };
+
   getBasicContainerFull = () => ({
-    name: 'New Container',
+    name: '',
     isPublished: false,
     showRecentlyPlayed: true,
     showMix: true,
@@ -108,6 +77,11 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
   });
 
   getBasicSectionsFull = () => ([
+    {
+      position: 1,
+      name: 'Accordion',
+      pageSectionEntities: []
+    },
     {
       position: 2,
       name: 'First section',
@@ -135,31 +109,17 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     } */
   ]);
 
-  getAccordionSectionData = () => ({
-    position: 1,
-    name: 'Accordion',
-    pageSectionEntities: [
-      {
-        entityType: EntityType.album,
-        entityId: undefined,
-        entity: { name: 'TESTING NAME' },
-        position: 1
-      }
-    ]
-  });
-
-  nextSlide = () => {
-
-  };
-
-  previousSlide = () => {
-
-  };
-
   drop(event: CdkDragDrop<PageSectionFull[]>) {
-    moveItemInArray(this.container.pageSections, event.previousIndex, event.currentIndex);
-    // const orders = this.container.pageSections.map((s, index) => ({ previousPosition: s.position, currentPosition: index + 2 }));
+    moveItemInArray(this.container.pageSections, event.previousIndex + 1, event.currentIndex + 1);
+    Object.keys(this.container.pageSections).forEach(
+      (i) => {
+        const index = parseInt(i, 10);
+        this.container.pageSections[index].position = index + 1;
+      }
+    );
   }
+
+  getAccordionSection = () => this.container.pageSections.find((ps) => ps.position === 1)!;
 
   dropSearch(event: CdkDragDrop<any[]>) {
     if (!(event.container.id === event.previousContainer.id)) {
@@ -178,12 +138,12 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
       const newEntityPageSection = this.container.pageSections[newEntityPageSectionId];
       const newEntityPosition = newEntityPageSection.pageSectionEntities.length !== 0
         ? Math.max(...newEntityPageSection.pageSectionEntities
-          .map((o) => o.position)) + 1
+          .map((o: PageSectionEntityFull) => o.position)) + 1
         : 1;
       const newPageSectionEntity = {
         entityType: newEntityType,
         entity: newEntity,
-        entityId: newEntity.Id,
+        referenceId: newEntity.Id,
         pageSection: newEntityPageSection,
         position: newEntityPosition
       };
@@ -196,6 +156,32 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     this.editNamePosition = position;
   };
 
+  showEditSectionModal = (position: number) => {
+    this.editedSection = this.container.pageSections.find((ps: PageSectionFull) => ps.position === position)!;
+    this.isModalShown = !this.isModalShown;
+  };
+
+  onSubmitModal = (data: PageSectionFull) => {
+    this.isModalShown = !this.isModalShown;
+    const pageSectionIndex = this.container.pageSections
+      .findIndex((ps: PageSectionFull) => ps.position === data.position);
+    this.container.pageSections[pageSectionIndex] = data;
+  };
+
+  closeModal() {
+    this.isModalShown = !this.isModalShown;
+
+    /* if (!this._isEditMode) {
+      this._router.navigateByUrl('albums');
+    } */
+
+    this.editedSection = {
+      position: -1,
+      name: '',
+      pageSectionEntities: []
+    };
+  }
+
   saveName = () => {
     this.editNamePosition = -1;
 
@@ -203,6 +189,16 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
       this.isEditing = false;
       subscription.unsubscribe();
     }); */
+  };
+
+  saveContainer = () => {
+    if (this._id) {
+      this._constructorService.updateContainer(this.container).subscribe();
+    }
+    else {
+      this._constructorService.createContainer(this.container).subscribe();
+    }
+    this._router.navigateByUrl('/perflowstudio/constructor');
   };
 
   addNewSection = () => {
@@ -218,15 +214,16 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
   };
   /* eslint-disable no-param-reassign */
   deleteSection = (position: number) => {
-    const sectionIndex = this.container.pageSections.findIndex((ps) => ps.position === position);
+    const sectionIndex = this.container.pageSections.findIndex((ps: PageSectionFull) => ps.position === position);
     this.container.pageSections.splice(sectionIndex, 1);
-    this.container.pageSections.forEach((ps) => {
+    this.container.pageSections.forEach((ps: PageSectionFull) => {
       if (ps.position > position) {
         ps.position -= 1;
       }
     });
     this.maxPos -= 1;
   };
+
   /* eslint-enable no-param-reassign */
   instanceOfAlbum = (data: any): data is AlbumForReadDTO => 'releaseYear' in data;
 

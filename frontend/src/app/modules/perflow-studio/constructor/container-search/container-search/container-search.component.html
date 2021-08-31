@@ -9,8 +9,29 @@
   </div>
 
   <div  class="search-result">
-    <app-search-artists-result [term]="searchValue" [artists]="foundData.artists" *ngIf="foundData.artists?.length"></app-search-artists-result>
-    <app-search-albums-result [term]="searchValue" [albums]="foundData.albums" *ngIf="foundData.albums?.length"></app-search-albums-result>
-    <app-search-playlists-result [term]="searchValue" [playlists]="foundData.playlists" *ngIf="foundData.playlists?.length"></app-search-playlists-result>
+    <app-search-artists-result 
+        (addDeleteFromSection)="addDeleteFromSectionEvent($event)"   
+        [isCheckBox]="true" 
+        [currentArtists]="currentArtists"
+        [term]="searchValue" 
+        [artists]="foundData.artists" 
+        *ngIf="foundData.artists?.length && !isAccordion">
+    </app-search-artists-result>
+    <app-search-albums-result 
+        (addDeleteFromSection)="addDeleteFromSectionEvent($event)"    
+        [isCheckBox]="true" 
+        [currentAlbums]="currentAlbums"
+        [term]="searchValue" 
+        [albums]="foundData.albums" 
+        *ngIf="foundData.albums?.length">
+    </app-search-albums-result>
+    <app-search-playlists-result 
+        (addDeleteFromSection)="addDeleteFromSectionEvent($event)" 
+        [isCheckBox]="true" 
+        [currentPlaylists]="currentPlaylists"
+        [term]="searchValue" 
+        [playlists]="foundData.playlists" 
+        *ngIf="foundData.playlists?.length && !isAccordion">
+    </app-search-playlists-result>
   </div>
 </div>

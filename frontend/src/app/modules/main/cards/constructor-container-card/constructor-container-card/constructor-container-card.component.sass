@@ -1,4 +1,4 @@
-@import "../../../../../styles"
+@import "src/styles"
 
 .card
     padding: 16px
@@ -27,10 +27,39 @@
 
     .content
         min-height: 64px
-        .card-name
-            text-overflow: ellipsis
-            white-space: nowrap
-            overflow: hidden
+        label
+            color: white !important
+            &:before
+                background: rgba($text-color-gray, 0.68)
+                height: 1.1rem
+                width: 2.5rem
+                top: 3px
+            &:after
+                background: $text-color-gray
+        .options
+            margin-top: 15px
+            display: flex
+            flex-direction: column
+            justify-items: space-between
+            grid-gap: 20px
+            .my-checkbox
+                width: 2.7rem
+            input:checked~label:before
+                background: rgba($checkbox-color, 0.38) !important
+            input:checked~label:after
+                left: 1.15rem
+                background: $checkbox-color
         .card-name  
+            height: 80px
             font-weight: $medium-weight
             font-size: 16px
+
+.publish
+    position: absolute !important
+    bottom: 10px !important
+    right: 10px !important
+    label 
+        color: white !important
+
+.published 
+    background: $orange-gradient
