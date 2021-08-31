@@ -8,6 +8,7 @@ import { timer } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
+import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { ArtistFull } from 'src/app/models/user/artist-full';
@@ -94,7 +95,7 @@ export class ArtistDetailsComponent implements OnInit {
     this._playlistsService.getPlaylistsByAuthorId(this.artist.id)
       .subscribe(
         (result) => {
-          this.artistPlaylists = result;
+          this.artistPlaylists = result.filter(p => p.accessType !== AccessType.secret);
         }
       );
   }

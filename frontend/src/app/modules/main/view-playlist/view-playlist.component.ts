@@ -186,7 +186,5 @@ export class ViewPlaylistComponent implements OnInit {
     }
   }
 
-  canShare = (accessType: AccessType) =>{
-    return accessType !== AccessType.secret;
-  }
+  canShare = (accessType: AccessType) => accessType !== AccessType.secret;
 }
