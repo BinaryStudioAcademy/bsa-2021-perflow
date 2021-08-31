@@ -34,7 +34,7 @@ namespace Perflow.Studio
             services.AddProcessorRabbitMQ(Configuration);
 
             services.AddBlobStorage(Configuration["ConnectionStrings:BlobStorage"]);
-            
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>

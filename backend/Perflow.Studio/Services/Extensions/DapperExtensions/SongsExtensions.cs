@@ -59,8 +59,17 @@ namespace Perflow.Studio.Services.Extensions.DapperExtensions
 
         public static async Task SongDeleteAsync(this IDbConnection connection, int songId)
         {
-            var sql = $"DELETE FROM {SongsTableName} WHERE Id = @Id";
-            await connection.ExecuteAsync(sql, new { Id = songId });
+            var data = new { Id = songId };
+
+            await connection.ExecuteAsync(
+                "DELETE FROM RecentlyPlayed WHERE SongId = @Id",
+                data
+            );
+
+            await connection.ExecuteAsync(
+                $"DELETE FROM {SongsTableName} WHERE Id = @Id",
+                data
+            );
         }
     }
 }
