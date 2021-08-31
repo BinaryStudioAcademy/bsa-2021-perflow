@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
+using Perflow.Common.Helpers;
 using Perflow.Domain.Enums;
 using Perflow.Services.Interfaces;
 using Shared.Auth.Constants;
@@ -16,13 +18,15 @@ namespace Perflow.Controllers
     [Authorize(Policy = Policies.IsUser)]
     public class SongsController : ControllerBase
     {
+        private readonly IUsersService _usersService;
         private readonly ISongsService _songsService;
         private readonly ISongFilesService _songFilesService;
 
-        public SongsController(ISongsService songsService, ISongFilesService songFilesService)
+        public SongsController(ISongsService songsService, ISongFilesService songFilesService, IUsersService usersService)
         {
             _songsService = songsService;
             _songFilesService = songFilesService;
+            _usersService = usersService;
         }
 
         [HttpGet("liked")]
@@ -64,14 +68,18 @@ namespace Perflow.Controllers
         }
 
         // TODO Add Auth
-        // TODO Add song loading based on user's quality settings
         [AllowAnonymous]
         [HttpGet("{id:int}/file")]
-        public async Task<FileResult> GetSongFile([FromRoute] int id, [FromQuery] SongQualityLevel? quality)
+        public async Task<ActionResult> GetSongFile([FromRoute] int id, [FromQuery] AudioQuality? quality = null)
         {
-            quality ??= SongQualityLevel.Medium;
+            quality ??= User.HasId() ? await _usersService.GetUserAudioQualityAsync(User.GetId()) : AudioQuality.Medium;
 
             var songBlob = await _songFilesService.GetSongFileAsync(id, quality.Value);
+
+            if (songBlob == null)
+            {
+                return NotFound();
+            }
 
             return File(
                 songBlob.Content.ToArray(),

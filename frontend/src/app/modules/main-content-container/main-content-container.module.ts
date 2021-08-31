@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PlayingComponent } from './music-components/playing/playing.component';
 import { SongToolbarComponent } from './music-components/song-toolbar/song-toolbar.component';
 import { QueueComponent } from './music-components/queue/queue.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { QueueComponent } from './music-components/queue/queue.component';
     MainContentComponent,
     SongToolbarComponent,
     QueueComponent,
-    PlayingComponent
+    PlayingComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule,

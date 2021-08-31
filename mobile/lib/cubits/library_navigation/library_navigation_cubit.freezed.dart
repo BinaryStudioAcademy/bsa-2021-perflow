@@ -27,6 +27,10 @@ class _$LibraryNavigationStateTearOff {
   LibraryNavigationAlbums albums() {
     return LibraryNavigationAlbums();
   }
+
+  LibraryNavigationSongs songs() {
+    return LibraryNavigationSongs();
+  }
 }
 
 /// @nodoc
@@ -39,6 +43,7 @@ mixin _$LibraryNavigationState {
     required TResult Function() all,
     required TResult Function() artists,
     required TResult Function() albums,
+    required TResult Function() songs,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -46,6 +51,7 @@ mixin _$LibraryNavigationState {
     TResult Function()? all,
     TResult Function()? artists,
     TResult Function()? albums,
+    TResult Function()? songs,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +60,7 @@ mixin _$LibraryNavigationState {
     required TResult Function(LibraryNavigationAll value) all,
     required TResult Function(LibraryNavigationArtists value) artists,
     required TResult Function(LibraryNavigationAlbums value) albums,
+    required TResult Function(LibraryNavigationSongs value) songs,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,6 +68,7 @@ mixin _$LibraryNavigationState {
     TResult Function(LibraryNavigationAll value)? all,
     TResult Function(LibraryNavigationArtists value)? artists,
     TResult Function(LibraryNavigationAlbums value)? albums,
+    TResult Function(LibraryNavigationSongs value)? songs,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -126,6 +134,7 @@ class _$LibraryNavigationAll implements LibraryNavigationAll {
     required TResult Function() all,
     required TResult Function() artists,
     required TResult Function() albums,
+    required TResult Function() songs,
   }) {
     return all();
   }
@@ -136,6 +145,7 @@ class _$LibraryNavigationAll implements LibraryNavigationAll {
     TResult Function()? all,
     TResult Function()? artists,
     TResult Function()? albums,
+    TResult Function()? songs,
     required TResult orElse(),
   }) {
     if (all != null) {
@@ -150,6 +160,7 @@ class _$LibraryNavigationAll implements LibraryNavigationAll {
     required TResult Function(LibraryNavigationAll value) all,
     required TResult Function(LibraryNavigationArtists value) artists,
     required TResult Function(LibraryNavigationAlbums value) albums,
+    required TResult Function(LibraryNavigationSongs value) songs,
   }) {
     return all(this);
   }
@@ -160,6 +171,7 @@ class _$LibraryNavigationAll implements LibraryNavigationAll {
     TResult Function(LibraryNavigationAll value)? all,
     TResult Function(LibraryNavigationArtists value)? artists,
     TResult Function(LibraryNavigationAlbums value)? albums,
+    TResult Function(LibraryNavigationSongs value)? songs,
     required TResult orElse(),
   }) {
     if (all != null) {
@@ -217,6 +229,7 @@ class _$LibraryNavigationArtists implements LibraryNavigationArtists {
     required TResult Function() all,
     required TResult Function() artists,
     required TResult Function() albums,
+    required TResult Function() songs,
   }) {
     return artists();
   }
@@ -227,6 +240,7 @@ class _$LibraryNavigationArtists implements LibraryNavigationArtists {
     TResult Function()? all,
     TResult Function()? artists,
     TResult Function()? albums,
+    TResult Function()? songs,
     required TResult orElse(),
   }) {
     if (artists != null) {
@@ -241,6 +255,7 @@ class _$LibraryNavigationArtists implements LibraryNavigationArtists {
     required TResult Function(LibraryNavigationAll value) all,
     required TResult Function(LibraryNavigationArtists value) artists,
     required TResult Function(LibraryNavigationAlbums value) albums,
+    required TResult Function(LibraryNavigationSongs value) songs,
   }) {
     return artists(this);
   }
@@ -251,6 +266,7 @@ class _$LibraryNavigationArtists implements LibraryNavigationArtists {
     TResult Function(LibraryNavigationAll value)? all,
     TResult Function(LibraryNavigationArtists value)? artists,
     TResult Function(LibraryNavigationAlbums value)? albums,
+    TResult Function(LibraryNavigationSongs value)? songs,
     required TResult orElse(),
   }) {
     if (artists != null) {
@@ -307,6 +323,7 @@ class _$LibraryNavigationAlbums implements LibraryNavigationAlbums {
     required TResult Function() all,
     required TResult Function() artists,
     required TResult Function() albums,
+    required TResult Function() songs,
   }) {
     return albums();
   }
@@ -317,6 +334,7 @@ class _$LibraryNavigationAlbums implements LibraryNavigationAlbums {
     TResult Function()? all,
     TResult Function()? artists,
     TResult Function()? albums,
+    TResult Function()? songs,
     required TResult orElse(),
   }) {
     if (albums != null) {
@@ -331,6 +349,7 @@ class _$LibraryNavigationAlbums implements LibraryNavigationAlbums {
     required TResult Function(LibraryNavigationAll value) all,
     required TResult Function(LibraryNavigationArtists value) artists,
     required TResult Function(LibraryNavigationAlbums value) albums,
+    required TResult Function(LibraryNavigationSongs value) songs,
   }) {
     return albums(this);
   }
@@ -341,6 +360,7 @@ class _$LibraryNavigationAlbums implements LibraryNavigationAlbums {
     TResult Function(LibraryNavigationAll value)? all,
     TResult Function(LibraryNavigationArtists value)? artists,
     TResult Function(LibraryNavigationAlbums value)? albums,
+    TResult Function(LibraryNavigationSongs value)? songs,
     required TResult orElse(),
   }) {
     if (albums != null) {
@@ -352,4 +372,98 @@ class _$LibraryNavigationAlbums implements LibraryNavigationAlbums {
 
 abstract class LibraryNavigationAlbums implements LibraryNavigationState {
   factory LibraryNavigationAlbums() = _$LibraryNavigationAlbums;
+}
+
+/// @nodoc
+abstract class $LibraryNavigationSongsCopyWith<$Res> {
+  factory $LibraryNavigationSongsCopyWith(LibraryNavigationSongs value,
+          $Res Function(LibraryNavigationSongs) then) =
+      _$LibraryNavigationSongsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$LibraryNavigationSongsCopyWithImpl<$Res>
+    extends _$LibraryNavigationStateCopyWithImpl<$Res>
+    implements $LibraryNavigationSongsCopyWith<$Res> {
+  _$LibraryNavigationSongsCopyWithImpl(LibraryNavigationSongs _value,
+      $Res Function(LibraryNavigationSongs) _then)
+      : super(_value, (v) => _then(v as LibraryNavigationSongs));
+
+  @override
+  LibraryNavigationSongs get _value => super._value as LibraryNavigationSongs;
+}
+
+/// @nodoc
+
+class _$LibraryNavigationSongs implements LibraryNavigationSongs {
+  _$LibraryNavigationSongs();
+
+  @override
+  String toString() {
+    return 'LibraryNavigationState.songs()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is LibraryNavigationSongs);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() all,
+    required TResult Function() artists,
+    required TResult Function() albums,
+    required TResult Function() songs,
+  }) {
+    return songs();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? all,
+    TResult Function()? artists,
+    TResult Function()? albums,
+    TResult Function()? songs,
+    required TResult orElse(),
+  }) {
+    if (songs != null) {
+      return songs();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LibraryNavigationAll value) all,
+    required TResult Function(LibraryNavigationArtists value) artists,
+    required TResult Function(LibraryNavigationAlbums value) albums,
+    required TResult Function(LibraryNavigationSongs value) songs,
+  }) {
+    return songs(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LibraryNavigationAll value)? all,
+    TResult Function(LibraryNavigationArtists value)? artists,
+    TResult Function(LibraryNavigationAlbums value)? albums,
+    TResult Function(LibraryNavigationSongs value)? songs,
+    required TResult orElse(),
+  }) {
+    if (songs != null) {
+      return songs(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LibraryNavigationSongs implements LibraryNavigationState {
+  factory LibraryNavigationSongs() = _$LibraryNavigationSongs;
 }

@@ -11,6 +11,7 @@ using Shared.Auth.Extensions;
 using Shared.AzureBlobStorage.Extensions;
 using Shared.ExceptionsHandler.Filters;
 using Perflow.Hubs.Implementations;
+using Perflow.Hubs.Extensions;
 
 namespace Perflow
 {
@@ -37,6 +38,7 @@ namespace Perflow
             services.AddHttpClient();
 
             services.AddSignalR();
+            services.AddUserIdProvider();
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 

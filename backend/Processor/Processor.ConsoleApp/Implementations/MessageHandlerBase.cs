@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,8 @@ namespace Processor.ConsoleApp.Implementations
 {
     public abstract class MessageHandlerBase : IAsyncMessageHandler, IDisposable
     {
+        private readonly CancellationTokenSource _cancellationTokenSource = new();
+
         protected ILogger<MessageHandlerBase> Logger { get; }
 
         protected abstract IQueue Queue { get; }
@@ -21,11 +24,15 @@ namespace Processor.ConsoleApp.Implementations
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            cancellationToken.Register(() => _cancellationTokenSource.Cancel());
+
+            var handlerCancellationToken = _cancellationTokenSource.Token;
+
             await Initialize();
 
-            do
+            while (!handlerCancellationToken.IsCancellationRequested)
             {
-                var message = await Queue.ListenAsync(cancellationToken);
+                var message = await Queue.ListenAsync(handlerCancellationToken);
 
                 try
                 {
@@ -35,18 +42,22 @@ namespace Processor.ConsoleApp.Implementations
                 {
                     Logger.LogError("{Date} Couldn't process message\n\tError: {Error}", DateTime.Now.ToLongTimeString(), exception.ToString());
                 }
-
-
-            } while (!cancellationToken.IsCancellationRequested);
+            }
         }
 
         protected abstract Task Initialize();
 
         protected abstract Task HandleMessage(RabbitMQMessage message);
 
+        protected void Stop()
+        {
+            _cancellationTokenSource.Cancel();
+        }
+
         public void Dispose()
         {
             Queue.Dispose();
+            _cancellationTokenSource.Dispose();
         }
     }
 }

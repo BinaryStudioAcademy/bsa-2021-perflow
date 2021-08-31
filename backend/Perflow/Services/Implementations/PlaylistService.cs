@@ -36,6 +36,14 @@ namespace Perflow.Services.Implementations
 
             return mapper.Map<PlaylistDTO>(entity);
         }
+        
+        public async Task<bool> CheckSongInPlaylistAsync(PlaylistSongDTO dto)
+        {
+            var song = await context.PlaylistSong
+                .FirstOrDefaultAsync(ps => ps.PlaylistId == dto.PlaylistId && ps.SongId == dto.SongId);
+
+            return song != null;
+        }
 
         public async Task<ICollection<PlaylistNameDTO>> GetCreatedPlaylistsAsync(int userId)
         {
