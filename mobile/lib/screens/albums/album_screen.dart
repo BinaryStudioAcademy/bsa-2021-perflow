@@ -11,6 +11,7 @@ import 'package:perflow/models/albums/album_info.dart';
 import 'package:perflow/screens/details/default_sliver_bar.dart';
 import 'package:perflow/screens/details/header.dart';
 import 'package:perflow/services/auth/auth_service.dart';
+import 'package:perflow/widgets/albums/album_like_button.dart';
 import 'package:perflow/widgets/songs/song_row.dart';
 
 class AlbumScreen extends StatelessWidget {
@@ -47,65 +48,57 @@ class AlbumScreen extends StatelessWidget {
                     context: context,
                     title: Text(error.message),
                     expandedHeight: headerExpandedHeight),
-                data: (value) =>
-                    BlocBuilder<AlbumReactionCubit, AlbumReactionState>(
-                  builder: (context, state) => SliverPersistentHeader(
-                    pinned: true,
-                    delegate: HeaderDelegate(
-                      expandedHeight: headerExpandedHeight,
-                      iconUrl: getValidUrl(value.data.iconURL),
-                      primaryText: Text(
-                        value.data.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.headline5,
-                      ),
-                      secondaryTextMain: Text(
-                        value.data.artist != null
-                            ? value.data.artist!.userName
-                            : value.data.group!.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.subtitle1,
-                      ),
-                      secondaryTextOther: Text(
-                        ' | ' +
-                            value.data.songs.length.toString() +
-                            ' songs | ' +
-                            timeConvert(
-                              Duration(
-                                seconds: value.data.songs
-                                    .map((e) => e.duration)
-                                    .reduce(
-                                        (value, element) => value + element),
-                              ),
-                            ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.caption,
-                      ),
-                      isLikeAvailable: (value.data.artist != null
-                          ? value.data.artist!.id !=
-                              _authService.currentAuthState!.id
-                          : value.data.group!.id !=
-                              _authService.currentAuthState!.id),
-                      isLiked: state.maybeMap(
-                        initial: (_) => value.data.isLiked,
-                        liked: (_) => true,
-                        unliked: (_) => false,
-                        orElse: () => value.data.isLiked,
-                      ),
-                      onLikePress: () {
-                        context
-                            .read<AlbumReactionCubit>()
-                            .likeAlbum(value.data.id);
-                      },
-                      onUnlikePress: () {
-                        context
-                            .read<AlbumReactionCubit>()
-                            .unlikeAlbum(value.data.id);
-                      },
+                data: (value) => SliverPersistentHeader(
+                  pinned: true,
+                  delegate: HeaderDelegate(
+                    expandedHeight: headerExpandedHeight,
+                    iconUrl: getValidUrl(value.data.iconURL),
+                    primaryText: Text(
+                      value.data.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.headline5,
                     ),
+                    secondaryTextMain: Text(
+                      value.data.artist != null
+                          ? value.data.artist!.userName
+                          : value.data.group!.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.subtitle1,
+                    ),
+                    secondaryTextOther: Text(
+                      ' | ' +
+                          value.data.songs.length.toString() +
+                          ' songs | ' +
+                          timeConvert(
+                            Duration(
+                              seconds: value.data.songs
+                                  .map((e) => e.duration)
+                                  .reduce((value, element) => value + element),
+                            ),
+                          ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.caption,
+                    ),
+                    likeButton: (value.data.artist == null ||
+                            value.data.artist!.id ==
+                                _authService.currentAuthState!.id)
+                        ? null
+                        : LikeButtonAlbum(
+                            isLikedInitial: value.data.isLiked,
+                            onLikePress: () {
+                              context
+                                  .read<AlbumReactionCubit>()
+                                  .likeAlbum(value.data.id);
+                            },
+                            onUnlikePress: () {
+                              context
+                                  .read<AlbumReactionCubit>()
+                                  .unlikeAlbum(value.data.id);
+                            },
+                          ),
                   ),
                 ),
               ),

@@ -13,10 +13,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
   final Text secondaryTextMain;
   final Text? secondaryTextOther;
   final String iconUrl;
-  final bool isLiked;
-  final bool isLikeAvailable;
-  final Function()? onLikePress;
-  final Function()? onUnlikePress;
+  final Widget? likeButton;
   final PerflowOutlinedButton? secondaryButton;
 
   const HeaderDelegate(
@@ -24,10 +21,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
       required this.secondaryTextMain,
       this.secondaryTextOther,
       required this.iconUrl,
-      this.isLiked = false,
-      this.isLikeAvailable = false,
-      this.onLikePress,
-      this.onUnlikePress,
+      this.likeButton,
       this.secondaryButton,
       required this.expandedHeight});
 
@@ -78,13 +72,10 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
         imageOpacity: imageOpacity,
         detailsOpacity: detailsOpacity,
         iconUrl: iconUrl,
+        likeButton: likeButton,
         primaryText: primaryText,
         secondaryTextMain: secondaryTextMain,
         secondaryTextOther: secondaryTextOther,
-        isLikeAvailable: isLikeAvailable,
-        isLiked: isLiked,
-        onLikePress: onLikePress,
-        onUnlikePress: onUnlikePress,
         textTheme: textTheme,
         secondaryButton: secondaryButton,
         titleOpacity: titleOpacity);
@@ -105,10 +96,7 @@ class _StackedHeader extends StatelessWidget {
     required this.secondaryTextMain,
     this.secondaryTextOther,
     required this.iconUrl,
-    this.isLiked = false,
-    this.isLikeAvailable = false,
-    this.onLikePress,
-    this.onUnlikePress,
+    this.likeButton,
     this.secondaryButton,
   }) : super(key: key);
 
@@ -124,10 +112,7 @@ class _StackedHeader extends StatelessWidget {
   final Text secondaryTextMain;
   final Text? secondaryTextOther;
   final String iconUrl;
-  final bool isLiked;
-  final bool isLikeAvailable;
-  final Function()? onLikePress;
-  final Function()? onUnlikePress;
+  final Widget? likeButton;
   final PerflowOutlinedButton? secondaryButton;
 
   @override
@@ -203,10 +188,7 @@ class _StackedHeader extends StatelessWidget {
                         primaryText: primaryText,
                         secondaryTextMain: secondaryTextMain,
                         secondaryTextOther: secondaryTextOther,
-                        isLikeAvailable: isLikeAvailable,
-                        isLiked: isLiked,
-                        onLikePress: onLikePress,
-                        onUnlikePress: onUnlikePress,
+                        likeButton: likeButton,
                         secondaryButton: secondaryButton,
                       ),
                     ),

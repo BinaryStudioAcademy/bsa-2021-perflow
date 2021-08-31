@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/buttons/perflow_elevated_button.dart';
 import 'package:perflow/widgets/buttons/perflow_outlined_button.dart';
 
@@ -8,10 +7,7 @@ class HeaderInfo extends StatelessWidget {
   final Text secondaryTextMain;
   final Text? secondaryTextOther;
   final String iconUrl;
-  final bool isLiked;
-  final bool isLikeAvailable;
-  final Function()? onLikePress;
-  final Function()? onUnlikePress;
+  final Widget? likeButton;
   final PerflowOutlinedButton? secondaryButton;
 
   const HeaderInfo(
@@ -20,68 +16,9 @@ class HeaderInfo extends StatelessWidget {
       required this.primaryText,
       required this.secondaryTextMain,
       this.secondaryTextOther,
-      this.isLiked = false,
-      this.isLikeAvailable = false,
-      this.onLikePress,
-      this.onUnlikePress,
-      this.secondaryButton})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    IconButton? likeButton;
-
-    if (isLikeAvailable) {
-      likeButton = isLiked
-          ? IconButton(
-              visualDensity: VisualDensity.compact,
-              onPressed: () {
-                if (onUnlikePress != null) {
-                  onUnlikePress!.call();
-                }
-              },
-              color: Perflow.primaryLightColor,
-              icon: const Icon(Icons.favorite),
-            )
-          : IconButton(
-              visualDensity: VisualDensity.compact,
-              onPressed: () {
-                if (onLikePress != null) {
-                  onLikePress!.call();
-                }
-              },
-              icon: const Icon(Icons.favorite_border),
-            );
-    }
-
-    return _Info(
-      likeButton: likeButton,
-      iconUrl: iconUrl,
-      primaryText: primaryText,
-      secondaryTextMain: secondaryTextMain,
-      secondaryTextOther: secondaryTextOther,
-    );
-  }
-}
-
-class _Info extends StatelessWidget {
-  final Text primaryText;
-  final Text secondaryTextMain;
-  final Text? secondaryTextOther;
-  final String iconUrl;
-  final PerflowOutlinedButton? secondaryButton;
-
-  const _Info(
-      {Key? key,
-      required this.iconUrl,
-      required this.primaryText,
-      required this.secondaryTextMain,
-      this.secondaryTextOther,
       this.likeButton,
       this.secondaryButton})
       : super(key: key);
-
-  final IconButton? likeButton;
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +36,7 @@ class _Info extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if(likeButton != null)
-                      likeButton!,
+                    if (likeButton != null) likeButton!,
                     IconButton(
                       onPressed: () {},
                       icon: const Icon(Icons.more_vert),
@@ -148,7 +84,7 @@ class _Info extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

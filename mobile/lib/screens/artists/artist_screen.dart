@@ -16,6 +16,7 @@ import 'package:perflow/routes.dart';
 import 'package:perflow/screens/details/default_sliver_bar.dart';
 import 'package:perflow/screens/details/header.dart';
 import 'package:perflow/services/auth/auth_service.dart';
+import 'package:perflow/widgets/artists/artist_like_button.dart';
 import 'package:perflow/widgets/common/content_row.dart';
 import 'package:perflow/widgets/songs/song_row.dart';
 import 'package:vrouter/vrouter.dart';
@@ -60,44 +61,39 @@ class ArtistScreen extends StatelessWidget {
                     context: context,
                     title: Text(error.message),
                     expandedHeight: headerExpandedHeight),
-                data: (value) =>
-                    BlocBuilder<ArtistReactionCubit, ArtistReactionState>(
-                  builder: (context, state) => SliverPersistentHeader(
-                    pinned: true,
-                    delegate: HeaderDelegate(
-                      expandedHeight: headerExpandedHeight,
-                      iconUrl: getValidUrl(value.data.iconURL),
-                      primaryText: Text(
-                        value.data.userName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.headline5,
-                      ),
-                      secondaryTextMain: Text(
-                        'Artist',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.subtitle1,
-                      ),
-                      isLikeAvailable:
-                          (value.data.id != _authService.currentAuthState!.id),
-                      isLiked: state.maybeMap(
-                        initial: (_) => value.data.isLiked,
-                        liked: (_) => true,
-                        unliked: (_) => false,
-                        orElse: () => value.data.isLiked,
-                      ),
-                      onLikePress: () {
-                        context
-                            .read<ArtistReactionCubit>()
-                            .likeArtist(value.data.id);
-                      },
-                      onUnlikePress: () {
-                        context
-                            .read<ArtistReactionCubit>()
-                            .unlikeArtist(value.data.id);
-                      },
+                data: (value) => SliverPersistentHeader(
+                  pinned: true,
+                  delegate: HeaderDelegate(
+                    expandedHeight: headerExpandedHeight,
+                    iconUrl: getValidUrl(value.data.iconURL),
+                    primaryText: Text(
+                      value.data.userName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.headline5,
                     ),
+                    secondaryTextMain: Text(
+                      'Artist',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.subtitle1,
+                    ),
+                    likeButton:
+                        (value.data.id == _authService.currentAuthState!.id)
+                            ? null
+                            : LikeButtonArtist(
+                                isLikedInitial: value.data.isLiked,
+                                onLikePress: () {
+                                  context
+                                      .read<ArtistReactionCubit>()
+                                      .likeArtist(value.data.id);
+                                },
+                                onUnlikePress: () {
+                                  context
+                                      .read<ArtistReactionCubit>()
+                                      .unlikeArtist(value.data.id);
+                                },
+                              ),
                   ),
                 ),
               ),
