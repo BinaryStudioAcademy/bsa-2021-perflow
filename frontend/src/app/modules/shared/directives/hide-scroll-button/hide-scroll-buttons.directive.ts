@@ -1,12 +1,12 @@
 import {
-  AfterViewInit, Directive, ElementRef, OnDestroy, OnInit
+  AfterViewChecked, Directive, ElementRef, OnDestroy, OnInit
 } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 
 @Directive({
   selector: '[appHideScrollButtons]'
 })
-export class HideScrollButtonsDirective implements OnInit, OnDestroy, AfterViewInit {
+export class HideScrollButtonsDirective implements OnInit, OnDestroy, AfterViewChecked {
   private _resizeObservable$: Observable<Event>;
   private _resizeSubscription$: Subscription;
   private _el: HTMLElement;
@@ -22,7 +22,7 @@ export class HideScrollButtonsDirective implements OnInit, OnDestroy, AfterViewI
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewChecked(): void {
     this.displayHideArrowButton();
   }
 
@@ -34,7 +34,7 @@ export class HideScrollButtonsDirective implements OnInit, OnDestroy, AfterViewI
     const arrowLeft = this._el!.previousElementSibling;
     const arrowRight = this._el!.nextElementSibling;
 
-    if (this._el?.scrollWidth! / this._el?.clientWidth! > 1) {
+    if (this._el?.scrollWidth! / (this._el?.clientWidth! + arrowLeft?.clientWidth! + arrowRight?.clientWidth!) > 1) {
       arrowLeft?.classList.remove('hidden');
       arrowRight?.classList.remove('hidden');
     }
