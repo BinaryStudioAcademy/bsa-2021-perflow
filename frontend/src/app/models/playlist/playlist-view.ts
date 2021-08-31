@@ -1,4 +1,4 @@
-import { AccessType } from "./accessType";
+import { AccessType } from './accessType';
 
 export interface PlaylistView {
   id: number;

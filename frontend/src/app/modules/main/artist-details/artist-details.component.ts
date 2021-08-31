@@ -95,7 +95,7 @@ export class ArtistDetailsComponent implements OnInit {
     this._playlistsService.getPlaylistsByAuthorId(this.artist.id)
       .subscribe(
         (result) => {
-          this.artistPlaylists = result.filter(p => p.accessType !== AccessType.secret);
+          this.artistPlaylists = result.filter((p) => p.accessType !== AccessType.secret);
         }
       );
   }
