@@ -460,6 +460,9 @@ namespace Perflow.Migrations
                     b.Property<int>("AuthorType")
                         .HasColumnType("int");
 
+                    b.Property<string>("BlobId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -472,26 +475,11 @@ namespace Perflow.Migrations
                     b.Property<bool>("HasCensorship")
                         .HasColumnType("bit");
 
-                    b.Property<string>("HighBlobId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LowBlobId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MediumBlobId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
-
-                    b.Property<string>("SourceBlobId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VeryHighBlobId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
