@@ -36,5 +36,19 @@ namespace Perflow.Controllers
 
             return Ok();
         }
+
+        [HttpGet("userstSearch")]
+        public async Task<ActionResult> GetUsersByNameAsync([FromQuery] string term)
+        {
+            return Ok(await _applicationService.GetUsersByNameAsync(term));
+        }
+        
+        [HttpPut("editRole")]
+        public async Task<ActionResult> EditUserRoleAsync(EditUserRoleDTO userRole)
+        {
+            await _applicationService.EditUserRoleAsync(userRole);
+
+            return Ok();
+        }
     }
 }

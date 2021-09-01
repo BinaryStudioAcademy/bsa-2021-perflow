@@ -5,6 +5,7 @@ using Perflow.DataAccess.Context;
 using Perflow.Domain.Enums;
 using Perflow.Services.Abstract;
 using Perflow.Services.Interfaces;
+using Shared.Auth;
 using Shared.ExceptionsHandler.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,41 @@ namespace Perflow.Services.Implementations
                 application.User.Role = application.MemberType;
 
             context.Update(application);
+
+            await context.SaveChangesAsync();
+        }
+        
+        public async Task<IEnumerable<UserWithStatusDTO>> GetUsersByNameAsync(string term)
+        {
+            var artists = await context.Users
+                .Where(user => user.UserName.Contains(term.Trim()))
+                .Include(user => user.Group)
+                .AsNoTracking()
+                .Select(user => new UserWithStatusDTO
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    IconURL = _imageService.GetImageUrl(user.IconURL),
+                    Role = user.Role,
+                    GroupId = user.Group.Id,
+                    Group = user.Group.Name
+                })
+                .ToListAsync();
+
+            return artists;
+        }
+        
+        public async Task EditUserRoleAsync(EditUserRoleDTO userRole)
+        {
+            var user = await context.Users
+                .FirstOrDefaultAsync(a => a.Id == userRole.Id);
+
+            if (user == null)
+                throw new NotFoundExcepion("There is no such a user");
+
+            user.Role = userRole.Role;
+
+            context.Update(user);
 
             await context.SaveChangesAsync();
         }

@@ -1,34 +1,35 @@
-<div class="ui padded grid song">
-  <div class="applicant-row">
-      <div class="column song-icon">
-        <img [src]="applicant.iconURL" *ngIf="applicant.iconURL">
-        <div class="icon-background" *ngIf="!applicant.iconURL">
+<div class="ui padded grid role">
+  <div class="role-row">
+      <div class="column icon">
+        <img [src]="artist.iconURL" *ngIf="artist.iconURL">
+        <div class="icon-background" *ngIf="!artist.iconURL">
           <i class="user icon"></i>
         </div>
       </div>
-      <div class="column song-name text">
-        <a class="link text" [routerLink]="['/artists', applicant.id]">{{applicant.userName}}</a>
+      <div class="column name text">
+        <a class="link text" [routerLink]="['/artists', artist.id]">{{artist.userName}}</a>
       </div>
-      <div class="column status text">
-        TEAM MEMBER
+      <div class="column role text">
+        {{ artist.role | userRole }}
       </div>
       <div class="column group text">
-        <a class="link text" [routerLink]="['/groups', applicant.id]"> Scorpions</a>
+        <a *ngIf="artist.group" class="link text" [routerLink]="['/groups',  artist.groupId]">{{ artist.group }}</a>
+        <span *ngIf="!artist.group" class="prefix">User has no any group</span>
       </div>
       <div class="ui dropdown" appSmDropdown>
         <i class="ellipsis vertical icon"></i>
         <div class="menu left">
-          <div class="item first">
-              User
+          <div class="item first" (click)="menuClick(userRolesArray[0], artist.id)">
+              {{ userRolesArray[0] | userRole}}
           </div>
-          <div class="item" >
-              Artist
+          <div class="item" (click)="menuClick(userRolesArray[1], artist.id)">
+            {{ userRolesArray[1] | userRole}}
           </div>
-          <div class="item" routerLink="/">
-              Team Member
+          <div class="item" (click)="menuClick(userRolesArray[2], artist.id)">
+            {{ userRolesArray[2] | userRole}}
           </div>
-          <div  class="item last">
-              Moderator
+          <div  class="item last" (click)="menuClick(userRolesArray[3], artist.id)">
+            {{ userRolesArray[3] | userRole}}
           </div>
         </div>
       </div>

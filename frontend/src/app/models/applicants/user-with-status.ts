@@ -5,4 +5,6 @@ export interface UserWithStatus {
   userName: string,
   iconURL: string,
   role: UserRoles
+  group?: string
+  groupId?: number
 }

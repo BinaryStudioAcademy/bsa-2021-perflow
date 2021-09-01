@@ -8,5 +8,7 @@ namespace Perflow.Common.DTO.Applicants
         public string UserName { get; set; }
         public string IconURL { get; set; }
         public UserRole Role { get; set; }
+        public int? GroupId { get; set; }
+        public string Group { get; set; }
     }
 }
