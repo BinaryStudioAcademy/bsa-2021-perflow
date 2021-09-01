@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { Injectable } from '@angular/core';
 import { HubConnection } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
@@ -23,6 +25,7 @@ export class NotificationsHubService {
   ) { }
 
   start() {
+    console.log('start: start createHub');
     this._hubFactory.createHub(this._hubUrl)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(async (hc) => {
@@ -33,6 +36,7 @@ export class NotificationsHubService {
   }
 
   async init() {
+    console.log('init: start hub');
     await this._hubConnection
       .start()
       .catch((error) => {
@@ -40,6 +44,7 @@ export class NotificationsHubService {
       });
 
     this._hubConnection.on('SendNotification', (n: Notification) => {
+      console.log(n);
       this.notifications.next(n);
     });
   }
