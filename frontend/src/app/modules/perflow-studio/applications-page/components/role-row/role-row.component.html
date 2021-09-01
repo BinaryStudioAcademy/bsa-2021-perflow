@@ -14,7 +14,7 @@
         {{ user.role | userRole }}
       </div>
       <div class="column group text">
-        <a *ngIf="user.group" class="link text" [routerLink]="['/groups',  user.groupId]">{{ user.group }}</a>
+        <a *ngIf="user.group && user.role===1" class="link text" [routerLink]="['/groups',  user.groupId]">{{ user.group }}</a>
         <span *ngIf="!user.group" class="prefix">User has no any group</span>
       </div>
       <div class="ui dropdown" appSmDropdown>
