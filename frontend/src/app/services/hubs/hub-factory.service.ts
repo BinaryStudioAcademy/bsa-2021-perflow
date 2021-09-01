@@ -34,7 +34,7 @@ export class HubFactoryService {
   private _buildHub(hubUrl: string, token: string) {
     const connection = new HubConnectionBuilder()
       .withUrl(this._buildUrl(hubUrl), {
-        skipNegotiation: false,
+        skipNegotiation: true,
         transport: HttpTransportType.WebSockets,
         accessTokenFactory: () => token
       })
