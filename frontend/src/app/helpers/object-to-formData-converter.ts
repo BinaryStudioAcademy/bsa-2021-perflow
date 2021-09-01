@@ -1,4 +1,5 @@
 import { AlbumEdit } from '../models/album/album-edit';
+import { CreatedGroup } from '../models/group/createdGroup';
 
 export function objectToFormData(o: object) {
   return Object.entries(o).reduce((d, e) => {
@@ -21,6 +22,20 @@ export function albumToFormData(a: AlbumEdit) {
 
   if (!a.authorId) {
     fd.delete('authorId');
+  }
+
+  if (!a.description) {
+    fd.delete('description');
+  }
+
+  return fd;
+}
+
+export function groupToFormData(g: CreatedGroup) {
+  const fd = objectToFormData(g);
+
+  if (!g.description) {
+    fd.delete('description');
   }
 
   return fd;

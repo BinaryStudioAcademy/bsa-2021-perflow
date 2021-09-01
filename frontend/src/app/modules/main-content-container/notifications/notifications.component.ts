@@ -60,6 +60,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(() => {
         this.notifications.find((n) => n.id === notification.id)!.isRead = isRead;
+
+        this.isAnyNewNotification = this.notifications.some((n) => !n.isRead);
       });
   }
 
@@ -69,6 +71,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         const index = this.notifications.findIndex((n) => n.id === id);
         this.notifications.splice(index, 1);
+
+        this.isAnyNewNotification = this.notifications?.some((n) => !n.isRead);
       }, (e: Error) => {
         this._snackbarService.show({ type: 'error', header: 'Error occured!', message: e.message });
       });
