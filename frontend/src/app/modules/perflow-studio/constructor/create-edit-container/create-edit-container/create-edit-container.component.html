@@ -29,9 +29,9 @@
             Add something!
           </span>
         </div>
-        <div class="items">
+        <div class="items" *ngIf="getAccordionSection().pageSectionEntities.length">
           <span *ngFor="let accordionSectionEntity of getAccordionSection().pageSectionEntities">
-            <app-album-card *ngIf="accordionSectionEntity.entityType === 0 && getAccordionSection().pageSectionEntities.length" 
+            <app-album-card *ngIf="accordionSectionEntity.entityType === 0" 
               [album]="accordionSectionEntity.entity"
               [isLikeButtonHidden]="true">
             </app-album-card>

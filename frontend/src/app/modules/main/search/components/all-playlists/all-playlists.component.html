@@ -1,7 +1,12 @@
 <div class="container">
   <h2>All playlists for <i>"{{searchTerm}}"</i></h2>
-  <div class="search-result" infinite-scroll [infiniteScrollDistance]="distance" [infiniteScrollThrottle]="throttle"
-    (scrolled)="onScroll()">
+  <div class="search-result" 
+    infinite-scroll
+    [infiniteScrollDistance]="distance"
+    [infiniteScrollThrottle]="throttle"
+    (scrolled)="onScroll()"
+    [scrollWindow]="false">
+    
     <app-playlist-card (clickEmiter)="saveToSearchHistory(playlist)" *ngFor="let playlist of playlists" [playlist]="playlist"></app-playlist-card>
   </div>
 </div>

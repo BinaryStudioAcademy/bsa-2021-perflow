@@ -4,14 +4,14 @@
       <img src="../../../../assets/Logo.png">
     </a>
   </div>
-  <div class="routers" >
-    <div class="router-link">
+  <div class="routers">
+    <div class="router-link" *ngIf="userRole === userRoles.moderator">
       <a routerLink="./playlists" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
         <span class="circle-fire"> <i class="music icon"></i></span>
         <h5 class="route-name">Playlists</h5>
       </a>
     </div>
-    <div class="router-link">
+    <div class="router-link" *ngIf="userRole === userRoles.artist || userRole === userRoles.teamMember">
       <a routerLink="./albums" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
         <span class="circle-fire"> <i class="gem outline icon"></i></span>
         <h5 class="route-name">Albums</h5>

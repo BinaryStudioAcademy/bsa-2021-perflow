@@ -12,6 +12,7 @@ import 'package:perflow/screens/main/library/library_albums_screen.dart';
 import 'package:perflow/screens/main/library/library_all_screen.dart';
 import 'package:perflow/screens/main/library/library_artists_screen.dart';
 import 'package:perflow/screens/main/library/library_screen.dart';
+import 'package:perflow/screens/main/library/library_songs_screen.dart';
 import 'package:perflow/screens/main/main_screen.dart';
 import 'package:perflow/screens/main/player/player_screen.dart';
 import 'package:perflow/screens/main/search/search_screen.dart';
@@ -32,46 +33,77 @@ class MainRoutes extends VRouteElementBuilder {
   List<VRouteElement> buildRoutes() {
     return [
       VNester(
-          path: null,
-          widgetBuilder: _buildMainRoot,
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
-          buildTransition: (animation, secondaryAnimation, child) => child,
-          nestedRoutes: [
-            VWidget(
-              path: Routes.home,
-              widget: const HomeScreen(),
-            ),
-            VWidget(
-              path: Routes.search,
-              widget: const SearchScreen(),
-            ),
-            VNester(path: "", widgetBuilder: _buildLibraryRoot, nestedRoutes: [
+        path: null,
+        widgetBuilder: _buildMainRoot,
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        buildTransition: (animation, secondaryAnimation, child) => child,
+        nestedRoutes: [
+          VWidget(
+            path: Routes.home,
+            widget: const HomeScreen(),
+          ),
+          VWidget(
+            path: Routes.search,
+            widget: const SearchScreen(),
+          ),
+          VNester(
+            path: null,
+            widgetBuilder: _buildLibraryRoot,
+            nestedRoutes: [
               VWidget(
-                  path: Routes.libraryAll, widget: const LibraryAllScreen()),
+                path: Routes.libraryAll,
+                widget: const LibraryAllScreen(),
+              ),
               VWidget(
-                  path: Routes.libraryArtists,
-                  widget: const LibraryArtistsScreen()),
+                path: Routes.libraryArtists,
+                widget: const LibraryArtistsScreen(),
+              ),
               VWidget(
-                  path: Routes.libraryAlbums,
-                  widget: const LibraryAlbumsScreen()),
-            ]),
-            VWidget(path: Routes.player, widget: const PlayerScreen()),
-            ContentRoutes()
-          ])
+                path: Routes.libraryAlbums,
+                widget: const LibraryAlbumsScreen(),
+              ),
+              VWidget(
+                path: Routes.librarySongs,
+                widget: const LibrarySongsScreen(),
+              ),
+            ],
+          ),
+          VWidget(path: Routes.player, widget: const PlayerScreen()),
+          ContentRoutes()
+        ],
+      )
     ];
   }
 
   Widget _buildLibraryRoot(Widget child) {
+    return BlocProvider<LibraryNavigationCubit>(
+      create: (_) => LibraryNavigationCubit(),
+      child: VWidgetGuard(
+        afterUpdate: _matchLibraryRoute,
+        child: LibraryScreen(
+          child: child,
+        ),
+        afterEnter: _matchLibraryRoute,
+      ),
+    );
+  }
+
+  Widget _buildMainRoot(Widget child) {
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (previous, current) => current is AuthStateSignedOut,
       listener: (context, state) =>
           context.vRouter.to(Routes.auth, isReplacement: true),
-      child: BlocProvider(
-        create: (_) => LibraryNavigationCubit(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<MainNavigationCubit>(
+            create: (_) => MainNavigationCubit(),
+          ),
+          BlocProvider<PlaybackCubit>(create: (_) => PlaybackCubit())
+        ],
         child: VWidgetGuard(
-          afterUpdate: _matchLibraryRoute,
-          child: LibraryScreen(
+          afterUpdate: _matchRoute,
+          child: MainScreen(
             child: child,
           ),
         ),
@@ -79,28 +111,9 @@ class MainRoutes extends VRouteElementBuilder {
     );
   }
 
-  Widget _buildMainRoot(Widget child) {
-    return BlocListener<AuthCubit, AuthState>(
-        listenWhen: (previous, current) => current is AuthStateSignedOut,
-        listener: (context, state) =>
-            context.vRouter.to(Routes.auth, isReplacement: true),
-        child: MultiBlocProvider(
-            providers: [
-              BlocProvider<MainNavigationCubit>(
-                create: (_) => MainNavigationCubit(),
-              ),
-              BlocProvider<PlaybackCubit>(create: (_) => PlaybackCubit())
-            ],
-            child: VWidgetGuard(
-              afterUpdate: _matchRoute,
-              child: MainScreen(
-                child: child,
-              ),
-            )));
-  }
-
   void _matchLibraryRoute(BuildContext context, String? from, String to) {
     final navCubit = context.read<LibraryNavigationCubit>();
+
     switch (to) {
       case Routes.libraryAll:
         navCubit.setAll();
@@ -110,6 +123,9 @@ class MainRoutes extends VRouteElementBuilder {
         break;
       case Routes.libraryAlbums:
         navCubit.setAlbums();
+        break;
+      case Routes.librarySongs:
+        navCubit.setSongs();
         break;
       default:
         navCubit.setAll();

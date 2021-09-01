@@ -1,17 +1,20 @@
 <div class="card" (click)="handleClick()" [ngClass]="{checked:isChecked}">
   <div class="image-block">
     <div class="image">
-      <img [attr.src]="album.iconURL" alt="Album" />
+      <img [attr.src]="album.iconURL" alt="Album" *ngIf="album.iconURL" />
+      <div class="icon-background" *ngIf="!album.iconURL">
+        <i class="itunes note icon"></i>
+      </div>
     </div>
     <div class="edit" routerLink="/perflowstudio/albums/edit/{{album.id}}" appClickStopPropagation *ngIf="isForEdit">
-        <i class="pencil icon ui"></i>
+      <i class="pencil icon ui"></i>
     </div>
     <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked && !isCheckBox && !isLikeButtonHidden">
       <i class="like icon ui"></i>
     </div>
     <button *ngIf="!isCheckBox" class="play-icon" appClickStopPropagation (click)="playAlbum(album.id)">
       <i class="play icon"></i>
-    </button> 
+    </button>
   </div>
   <div class="info-block">
     <div class="album-name tub">

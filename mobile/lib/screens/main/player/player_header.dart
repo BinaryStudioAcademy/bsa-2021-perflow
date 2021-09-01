@@ -158,7 +158,7 @@ class _PlayerHeaderInfo extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    song.artist.userName + ' | ' + song.album.name,
+                    (song.artist == null ? song.group!.name : song.artist!.userName) + ' | ' + song.album.name,
                     style: textTheme.caption,
                   )
                 ],

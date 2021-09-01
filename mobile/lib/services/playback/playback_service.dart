@@ -80,7 +80,7 @@ class PlaybackService {
       actions: _playbackSubject.value?.actions ?? _defaultActions
     ));
 
-    final songDuration = await _player.setUrl('${ApiUrls.base}/api/songs/file?blobId=${song.blobId}');
+    final songDuration = await _player.setUrl('${ApiUrls.base}/api/songs/${song.id}/file');
 
     if(songDuration != null) {
       _playbackSubject.add(PlaybackData(

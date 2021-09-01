@@ -79,7 +79,7 @@
       Make secret
     </span>
   </div>
-  <div class="item" (click)="clickOnMenuItem('')">
+  <div class="item" (click)="clickOnMenuItem('Edit details')">
     <span>
       <i class="edit outline icon"></i>
       Edit details
@@ -91,7 +91,7 @@
       Create similar playlist
     </span>
   </div>
-  <div class="item" (click)="clickOnMenuItem('')">
+  <div class="item" (click)="clickOnMenuItem('Delete')">
     <span>
       <i class="trash alternate outline icon"></i>
       Delete
@@ -103,18 +103,18 @@
       Rename
     </span>
   </div>
-  <div class="item" (click)="clickOnMenuItem('')">
+  <div class="item" (click)="clickOnMenuItem('Create playlist')">
     <span>
       <i class="file icon"></i>
       Create playlist
     </span>
   </div>
-  <div class="item last share-menu" (click)="clickOnMenuItem('')">
+  <div class="item last share-menu">
     <span>
       <i class="share alternate icon"></i>Share<i class="caret right icon"></i>
     </span>
     <div class="submenu">
-      <div class="item">
+      <div class="item" (click)="clickOnMenuItem('Copy link')" appClickStopPropagation>
         <span>
           Copy link
         </span>
@@ -126,4 +126,10 @@
 
 <div class="container">
   <router-outlet></router-outlet>
+</div>
+
+<div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
+  <div class="header">
+    Link copied to clipboard!
+  </div>
 </div>

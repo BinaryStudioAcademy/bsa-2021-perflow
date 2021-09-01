@@ -11,7 +11,7 @@ using Shared.Auth.Extensions;
 using Shared.AzureBlobStorage.Extensions;
 using Shared.ExceptionsHandler.Filters;
 using Perflow.Hubs.Implementations;
-using System.Text.Json.Serialization;
+using Perflow.Hubs.Extensions;
 
 namespace Perflow
 {
@@ -37,7 +37,7 @@ namespace Perflow
 
             services.AddHttpClient();
 
-            services.AddSignalR();
+            services.AddUserIdProvider();
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
@@ -51,6 +51,8 @@ namespace Perflow
             });
 
             services.AddBlobStorage(Configuration["ConnectionStrings:BlobStorage"]);
+
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,11 +63,12 @@ namespace Perflow
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Perflow v1"));
             }
+
             app.UseCors(builder => builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials()
-                .WithOrigins(Configuration["AngularAppURL"]));
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 

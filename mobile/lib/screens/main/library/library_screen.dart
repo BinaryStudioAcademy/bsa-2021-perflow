@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:perflow/cubits/albums/liked_albums_cubit.dart';
+import 'package:perflow/cubits/artists/liked_artists_cubit.dart';
 import 'package:perflow/cubits/library_navigation/library_navigation_cubit.dart';
+import 'package:perflow/cubits/playlists/liked_playlists_cubit.dart';
+import 'package:perflow/cubits/playlists/users_playlists_cubit.dart';
+import 'package:perflow/cubits/songs/liked_songs_cubit.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/theme.dart';
 import 'package:vrouter/vrouter.dart';
@@ -12,19 +17,38 @@ class LibraryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  _topNavmenu(),
-                ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UsersPlaylistsCubit>(
+          create: (context) => UsersPlaylistsCubit(),
+        ),
+        BlocProvider<LikedPlaylistsCubit>(
+          create: (context) => LikedPlaylistsCubit(),
+        ),
+        BlocProvider<LikedAlbumsCubit>(
+          create: (context) => LikedAlbumsCubit(),
+        ),
+        BlocProvider<LikedArtistsCubit>(
+          create: (context) => LikedArtistsCubit(),
+        ),
+        BlocProvider<LikedSongsCubit>(
+          create: (context) => LikedSongsCubit(),
+        ),
+      ],
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _topNavmenu(),
+                  ],
+                ),
               ),
-            ),
-            Expanded(child: child)
-          ],
+              Expanded(child: child)
+            ],
+          ),
         ),
       ),
     );
@@ -32,8 +56,8 @@ class LibraryScreen extends StatelessWidget {
 
   Widget _topNavmenu() {
     return Container(
-        child: BlocBuilder<LibraryNavigationCubit, LibraryNavigationState>(
-            builder: (context, state) {
+      child: BlocBuilder<LibraryNavigationCubit, LibraryNavigationState>(
+        builder: (context, state) {
           return Row(
             children: [
               _LibraryNavButton(
@@ -57,17 +81,26 @@ class LibraryScreen extends StatelessWidget {
                 title: "Artists",
                 selected: state is LibraryNavigationArtists,
               ),
+              _LibraryNavButton(
+                onTap: () {
+                  context.vRouter.to(Routes.librarySongs);
+                },
+                title: "Songs",
+                selected: state is LibraryNavigationSongs,
+              ),
             ],
           );
-        }),
-        decoration: const BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Color(0x3421292D),
-            spreadRadius: 7,
-            blurRadius: 5,
-            offset: Offset(0, 0), // changes position of shadow
-          ),
-        ], color: Perflow.surfaceColor));
+        },
+      ),
+      decoration: const BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Color(0x3421292D),
+          spreadRadius: 7,
+          blurRadius: 5,
+          offset: Offset(0, 0), // changes position of shadow
+        ),
+      ], color: Perflow.surfaceColor),
+    );
   }
 }
 
@@ -96,7 +129,10 @@ class _LibraryNavButton extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-                color: color, fontSize: 15, fontFamily: Perflow.title, fontWeight: FontWeight.normal),
+                color: color,
+                fontSize: 15,
+                fontFamily: Perflow.title,
+                fontWeight: FontWeight.normal),
           ),
         ),
       ),

@@ -45,7 +45,11 @@
     <!-- Added Songs -->
     <div class="song-container">
       <div class="search-result">
-        <app-songs-list (clickMenuItem)="clickMenuHandler($event)" [songs]="playlistSongs" *ngIf="playlistSongs.length"></app-songs-list>
+        <app-songs-list *ngIf="playlistSongs.length"
+          [songs]="playlistSongs"
+          [playlist]="playlist"
+          (clickMenuItem)="clickMenuHandler($event)">
+        </app-songs-list>
       </div>
     </div>
     <!-- Search Songs -->

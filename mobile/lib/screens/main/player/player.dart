@@ -119,7 +119,7 @@ class _PlayerMain extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  song.artist.userName,
+                  (song.artist == null ? song.group!.name : song.artist!.userName),
                   style: Perflow.textTheme.bodyText2!.apply(color: Perflow.textGrayColor),
                 ),
               ],

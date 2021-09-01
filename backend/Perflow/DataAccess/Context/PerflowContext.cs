@@ -29,6 +29,7 @@ namespace Perflow.DataAccess.Context
         public DbSet<PageContainer> PageContainers { get; set; }
         public DbSet<PageSection> PageSections { get; set; }
         public DbSet<PageSectionEntity> PageSectionEntities { get; set; }
+        public DbSet<ContentSynchronization> ContentSynchronization { get; set; }
 
         public PerflowContext(DbContextOptions<PerflowContext> options): base(options)
         { }

@@ -2,10 +2,13 @@ import { HttpResponse } from '@angular/common/http';
 import {
   Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { Subject, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Playlist } from 'src/app/models/playlist';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
+import { ClipboardService } from 'ngx-clipboard';
+import { PlatformLocation } from '@angular/common';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
@@ -20,13 +23,18 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   playlists: PlaylistName[] = [];
   editedPlaylist = {} as PlaylistName;
   isEditPlaylistMode: boolean = false;
+  isSuccess: boolean = false;
+
   private _tempPlaylist = {} as PlaylistName;
 
   private _unsubscribe$ = new Subject<void>();
 
   constructor(
     private _playlistsService: PlaylistsService,
-    private _createdPlaylistService: CreatePlaylistService
+    private _createdPlaylistService: CreatePlaylistService,
+    private _router: Router,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) { }
 
   public ngOnInit() {
@@ -60,6 +68,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       .subscribe(
         (resp: HttpResponse<PlaylistName[]>) => {
           this.playlists = resp.body!;
+          this._createdPlaylistService.fillCreatedPlylistsArray(resp.body! as PlaylistName[]);
         }
       );
   }
@@ -99,9 +108,53 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       case 'Create similar playlist':
         this.createSimilarPlaylist();
         break;
+      case 'Edit details':
+        this.editPlaylist();
+        break;
+      case 'Delete':
+        this.deletePlaylist();
+        break;
+      case 'Create playlist':
+        this.createPlaylist();
+        break;
+      case 'Copy link':
+        this.copyLink();
+        break;
       default:
         break;
     }
+  }
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(
+      `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this._tempPlaylist.id}`
+    );
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
+  }
+
+  createPlaylist() {
+    this._router.navigateByUrl('/playlists/create');
+  }
+
+  deletePlaylist() {
+    this._playlistsService.deletePlaylist(this._tempPlaylist.id)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (id) => {
+          this._createdPlaylistService.deletePlaylist(id);
+          if (this._router.url === `/playlists/view-playlist/${id}`
+            || this._router.url === `/playlists/edit/${id}`) {
+            this._router.navigateByUrl('/playlists/all');
+          }
+        }
+      });
+  }
+
+  editPlaylist() {
+    this._router.navigateByUrl(`/playlists/edit/${this._tempPlaylist.id}`);
   }
 
   createSimilarPlaylist() {

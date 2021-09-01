@@ -1,10 +1,10 @@
-﻿using Perflow.Domain;
+﻿using Perflow.Common.DTO.Notifications;
 using System.Threading.Tasks;
 
 namespace Perflow.Hubs.Interfaces
 {
     public interface INotificationsHub
     {
-        Task SendNotification(Notification notification);
+        Task SendNotification(NotificationReadDTO notification);
     }
 }
