@@ -4,5 +4,5 @@ export interface NewReleaseView {
   id: number,
   name: string,
   iconURL: string,
-  authors: Array<AlbumAuthor>
+  author: AlbumAuthor
 }

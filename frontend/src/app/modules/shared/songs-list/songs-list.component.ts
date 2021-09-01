@@ -1,8 +1,13 @@
 import {
-  Component, Input, Output, EventEmitter
+  Component, Input, Output, EventEmitter, OnInit, OnDestroy
 } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { SongsService } from 'src/app/services/songs/songs.service';
+import { UserService } from 'src/app/services/user.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Playlist } from 'src/app/models/playlist/playlist';
+import { AlbumFull } from 'src/app/models/album/album-full';
 import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type';
 
@@ -11,12 +16,19 @@ import { SongSortType } from '../../../models/song/song-sort-type';
   templateUrl: './songs-list.component.html',
   styleUrls: ['./songs-list.component.sass']
 })
-export class SongsListComponent {
+export class SongsListComponent implements OnInit, OnDestroy {
+  public filterExplicit: boolean;
+  public isLoading = false;
+
+  private _unsubscribe$ = new Subject<void>();
+
   @Input() songs: Song[];
   @Input() highlightId: number;
   @Input() isDraggable = false;
   @Input() isEditable = false;
   @Input() isPlaying = false;
+  @Input() playlist: Playlist | undefined;
+  @Input() album: AlbumFull | undefined;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
@@ -24,7 +36,27 @@ export class SongsListComponent {
 
   sortType: SongSortType | null = null;
 
-  constructor(private _songService: SongsService) { }
+  constructor(
+    private _songService: SongsService,
+    private _userService: UserService
+  ) {
+
+  }
+
+  public ngOnInit() {
+    this._userService.getUserSettings()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp) => {
+          this.filterExplicit = resp.body?.showExplicitContent!;
+        }
+      );
+  }
+
+  public ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
+  }
 
   drop(event: CdkDragDrop<Song[]>) {
     moveItemInArray(this.songs, event.previousIndex, event.currentIndex);

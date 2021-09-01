@@ -1,15 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component, OnDestroy, OnInit
+} from '@angular/core';
 import { Playlist } from 'src/app/models/playlist';
 import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumService } from 'src/app/services/album.service';
-import { Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import { NewReleaseView } from 'src/app/models/album/new-release-view';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
 import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { NewestFiveAlbum } from 'src/app/models/album/newest-five';
+import { SongsService } from 'src/app/services/songs/songs.service';
+import { QueueService } from 'src/app/services/queue.service';
+import { Song } from 'src/app/models/song/song';
+import { ReactionService } from 'src/app/services/reaction.service';
 
 @Component({
   selector: 'app-main-home',
@@ -32,13 +38,19 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   public yourMix = new Array<object>();
   public top100Songs = new Array<Playlist>();
 
+  isSuccess: boolean = false;
+  idSaveButtonShown: boolean = true;
+
   private _unsubscribe$ = new Subject<void>();
   private _userId: number;
 
   constructor(
     private _albumService: AlbumService,
     private _recentlyPlayedService: RecentlyPlayedService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _songsService: SongsService,
+    private _queueService: QueueService,
+    private _reactionService: ReactionService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -61,12 +73,41 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this._unsubscribe$.complete();
   }
 
-  playAlbum = () => {
-    // Ability to play album
+  playAlbum = (id: number) => {
+    this._songsService.getSongsByAlbumId(id)
+      .pipe(take(1))
+      .subscribe((result) => {
+        this.updateQueue(result);
+      });
   };
 
-  saveAlbum = () => {
-    // Ability to save album - album is saved in the user playlist
+  updateQueue(songs: Song[]) {
+    if (!songs.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(songs);
+
+    const [first] = songs;
+
+    this._queueService.initSong(first, true);
+  }
+
+  saveAlbum = (id: number) => {
+    this._reactionService.addAlbumReaction(id, this._userId)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.idSaveButtonShown = !this.idSaveButtonShown;
+          this.isSuccess = true;
+          this._newestAlbums.find((a) => a.id === id)!.isLiked = true;
+
+          timer(3000).pipe(take(1)).subscribe((val) => {
+            this.isSuccess = Boolean(val);
+          });
+        }
+      });
   };
 
   getNewestFiveAlbums() {
@@ -78,8 +119,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
           this.currentNewestAlbum = {
             ...this._newestAlbums[0]
           };
+          this.setButtonVisibility();
         }
       });
+  }
+
+  setButtonVisibility() {
+    this.idSaveButtonShown = this.currentNewestAlbum.artistId !== this._userId && !this.currentNewestAlbum.isLiked;
   }
 
   getRecentlyPlayed() {
@@ -138,6 +184,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       this._newestCounter = 0;
     }
     this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
+    this.setButtonVisibility();
     this.accordionAnimation();
   };
 
@@ -148,6 +195,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       this._newestCounter = this._newestAlbumsMax - 1;
     }
     this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
+    this.setButtonVisibility();
     this.accordionAnimation();
   };
 

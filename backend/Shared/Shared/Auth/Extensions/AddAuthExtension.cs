@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Auth.Constants;
@@ -29,6 +29,21 @@ namespace Shared.Auth.Extensions
                         ValidAudience = firebaseProjectId,
                         ValidateLifetime = true
                     };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = async context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notifications"))
+                            {
+                                context.Token = accessToken;
+                            }
+                            await Task.CompletedTask;
+                        },
+
+                    };
                 });
 
             services.AddAuthorization(options =>
@@ -47,6 +62,7 @@ namespace Shared.Auth.Extensions
                             UserRole.Artist,
                             UserRole.Moderator
                         })));
+
                 options.AddPolicy(Policies.IsArtist,
                     policy => policy.AddRequirements(
                         new RoleRequirement(new List<UserRole>
@@ -54,9 +70,14 @@ namespace Shared.Auth.Extensions
                             UserRole.Artist,
                             UserRole.Moderator
                         })));
+
                 options.AddPolicy(Policies.IsModerator,
                     policy => policy.AddRequirements(
                         new RoleRequirement(UserRole.Moderator)));
+
+                options.AddPolicy(Policies.IsArtistOnly,
+                    policy => policy.AddRequirements(
+                        new RoleRequirement(UserRole.Artist)));
             });
         }
     }

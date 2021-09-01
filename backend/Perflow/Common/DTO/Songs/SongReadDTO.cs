@@ -18,7 +18,6 @@ namespace Perflow.Common.DTO.Songs
         public AlbumReadDTO Album { get; set; }
         public int Duration { get; set; }
         public bool HasCensorship { get; set; }
-        public string BlobId { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public bool IsLiked { get; set; }
         public int Order { get; set; }

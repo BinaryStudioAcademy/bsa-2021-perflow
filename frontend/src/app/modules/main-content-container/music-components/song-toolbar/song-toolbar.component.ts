@@ -1,10 +1,13 @@
 import {
-  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild
+  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, OnDestroy
 } from '@angular/core';
-import { filter } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, take, takeUntil } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
+import { Song } from 'src/app/models/song/song';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ContentSynchronizationService } from 'src/app/services/content-synchronization.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
@@ -16,8 +19,10 @@ import { SongsService } from 'src/app/services/songs/songs.service';
   templateUrl: './song-toolbar.component.html',
   styleUrls: ['./song-toolbar.component.sass']
 })
-export class SongToolbarComponent implements OnInit {
+export class SongToolbarComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioRef! : ElementRef<HTMLAudioElement>;
+
+  private _unsubscribe$ = new Subject<void>();
 
   songForPlay: SongInfo = new SongInfo(0, 'NONAME', 'NOARTIST', '', '');
   userId: number;
@@ -47,32 +52,55 @@ export class SongToolbarComponent implements OnInit {
   volumeSlider! : HTMLInputElement | null;
   audio! : HTMLAudioElement | null;
 
+  private _analyser: AnalyserNode;
+  private _audioContext: AudioContext = new AudioContext();
+  private _source: MediaElementAudioSourceNode;
+
+  private readonly _fftSize = 256; // Fast Fourier Transform Size
+  private readonly _recordingFrequency = 30; // How often sync occurs
+  private _previousTime: number = 0;
+  private _startTime: number | undefined;
+
   constructor(
     authService: AuthService,
     toolbarService: SongToolbarService,
     private _songsService: SongsService,
     private _reactionService: ReactionService,
     private _queueService: QueueService,
-    private _rpService: RecentlyPlayedService
+    private _rpService: RecentlyPlayedService,
+    private _syncService: ContentSynchronizationService
   ) {
-    toolbarService.songUpdated$.subscribe(
-      (song) => {
-        this.updateSong(song);
-        this._rpService.addSongViaId(song.id, this.userId, undefined).subscribe();
-      }
-    );
+    toolbarService.songUpdated$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (song) => {
+          this.updateSong(song);
+          this._rpService.addSongViaId(song.id, this.userId, undefined)
+            .pipe(take(1))
+            .subscribe();
+          this._syncService.song$.next(song);
+        }
+      );
 
-    toolbarService.playToggled$.subscribe(
-      () => {
-        this.playPause();
-      }
-    );
+    toolbarService.playToggled$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        () => {
+          this.playPause();
+        }
+      );
 
     authService.getAuthStateObservableFirst()
+      .pipe(takeUntil(this._unsubscribe$))
       .pipe(filter((state) => !!state))
       .subscribe((authState) => {
         this.userId = authState!.id;
       });
+  }
+
+  public ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 
   ngOnInit(): void {
@@ -82,6 +110,30 @@ export class SongToolbarComponent implements OnInit {
     this.currentTimeContainer = document.getElementById('current-time');
     this.durationContainer = document.getElementById('duration');
     this.audio = document.querySelector('audio');
+    this.audio!.crossOrigin = 'anonymous';
+
+    this._syncService.getContentSyncAsync()
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            const temp = { id: data.songId } as Song;
+            this._queueService.clearQueue();
+            this._queueService.initSong(temp, false);
+            this._startTime = data.time;
+          }
+        }
+      });
+
+    this.initAudioContext();
+  }
+
+  initAudioContext() {
+    this._analyser = this._audioContext.createAnalyser();
+    this._source = this._audioContext.createMediaElementSource(this.audio!);
+    this._source.connect(this._audioContext.destination);
+    this._source.connect(this._analyser);
+    this._analyser.fftSize = this._fftSize;
   }
 
   updateSong = (songInfo: SongInfo) => {
@@ -91,6 +143,11 @@ export class SongToolbarComponent implements OnInit {
     this.show = true;
     this.audio!.loop = this.isRepeating;
     this.setLike();
+
+    if (this._startTime) {
+      this.audio!.currentTime = this._startTime;
+      this._startTime = undefined;
+    }
   };
 
   setTimeChanging = (value: boolean) => {
@@ -136,6 +193,12 @@ export class SongToolbarComponent implements OnInit {
 
   displayCurrentTime = () => {
     this.currentTimeContainer!.textContent = TimeConverter.secondsToMMSS(this.audio!.currentTime);
+    const time = Math.floor(this.audio!.currentTime);
+
+    if (time !== this._previousTime && time % this._recordingFrequency === 0) {
+      this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
+      this._previousTime = time;
+    }
   };
 
   setSeekSliderMax = () => {
@@ -148,15 +211,25 @@ export class SongToolbarComponent implements OnInit {
 
   getSeekSliderValue = (event: Event) => {
     this.audio!.currentTime = Number.parseInt((<HTMLInputElement>event.target).value, 10);
+    this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
   };
 
   getVolumeSliderValue = (event: Event) => {
     const volume = Number.parseInt((<HTMLInputElement>event.target).value, 10);
     this.savedVolume = volume;
+    localStorage.setItem('savedVolume', this.savedVolume.toString());
     this.audio!.volume = volume / 100;
   };
 
   setInitialVolume = () => {
+    let savedVolume = Number.parseInt(localStorage.getItem('savedVolume')!, 10);
+
+    if (!savedVolume) {
+      savedVolume = 40;
+      localStorage.setItem('savedVolume', savedVolume.toString());
+    }
+
+    this.volumeSlider!.value = savedVolume.toString();
     this.audio!.volume = Number.parseInt(this.volumeSlider!.value, 10) / 100;
   };
 
@@ -171,12 +244,14 @@ export class SongToolbarComponent implements OnInit {
       this.playPauseButton?.lastElementChild?.classList.replace('pause', 'play');
     }
     else {
+      this._audioContext.resume();
       this.audio?.play();
       this.isPlaying = true;
       this.playPauseButton?.lastElementChild?.classList.replace('play', 'pause');
     }
 
     this._queueService.setPlaying(this.isPlaying);
+    this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
 
     return this.isPlaying;
   };
@@ -196,6 +271,8 @@ export class SongToolbarComponent implements OnInit {
 
   toggleShuffle = () => {
     this.isShuffling = !this.isShuffling;
+    this._queueService.setShuffle(this.isShuffling);
+    return this.isShuffling;
   };
 
   toggleRepeat = () => {
@@ -205,22 +282,28 @@ export class SongToolbarComponent implements OnInit {
 
   toggleLike = () => {
     if (this.isLiked) {
-      this._reactionService.removeLike(this.songForPlay.id, this.userId).subscribe(() => {
-        this.isLiked = false;
-      });
+      this._reactionService.removeLike(this.songForPlay.id, this.userId)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe(() => {
+          this.isLiked = false;
+        });
       return;
     }
 
-    this._reactionService.likeSong(this.songForPlay.id, this.userId).subscribe(() => {
-      this.isLiked = true;
-    });
+    this._reactionService.likeSong(this.songForPlay.id, this.userId)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        this.isLiked = true;
+      });
   };
 
   setLike = () => {
-    const subscription = this._songsService.checkIfSongLiked(this.songForPlay.id).subscribe((response) => {
-      this.isLiked = response.isLiked;
-      subscription.unsubscribe();
-    });
+    const subscription = this._songsService.checkIfSongLiked(this.songForPlay.id)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((response) => {
+        this.isLiked = response.isLiked;
+        subscription.unsubscribe();
+      });
   };
 
   toggleQueue = () => {
@@ -243,4 +326,8 @@ export class SongToolbarComponent implements OnInit {
     this.audio!.src = this.songForPlay.songURL;
     this.displayDuration();
   };
+
+  getAnalyser() {
+    return this._analyser;
+  }
 }

@@ -5,7 +5,7 @@ import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { QueueService } from 'src/app/services/queue.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
@@ -38,7 +38,8 @@ export class ViewPlaylistComponent implements OnInit {
     private _queueService: QueueService,
     private _createdPlaylistService: CreatePlaylistService,
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _playlistService: PlaylistsService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -55,6 +56,18 @@ export class ViewPlaylistComponent implements OnInit {
       this.loadPlaylist();
       this.loadPlaylistSongs();
     });
+
+    this._createdPlaylistService.playlistEditName$
+      .subscribe({
+        next: (data) => {
+          if (this.playlist.id === data.id) {
+            this.playlist = {
+              ...this.playlist,
+              ...data
+            };
+          }
+        }
+      });
   }
 
   nextSlide = () => { };
@@ -89,9 +102,14 @@ export class ViewPlaylistComponent implements OnInit {
   loadPlaylist() {
     this._playlistsService
       .getPlaylist(this._playlistId)
-      .subscribe((playlist) => {
-        this.playlist = playlist;
-        this.isAuthor = this.userId === this.playlist.author.id;
+      .subscribe({
+        next: (playlist) => {
+          this.playlist = playlist;
+          this.isAuthor = this.userId === this.playlist.author.id;
+        },
+        error: () => {
+          this._router.navigateByUrl('/playlists/all');
+        }
       });
   }
 
@@ -125,6 +143,7 @@ export class ViewPlaylistComponent implements OnInit {
       this._queueService.initSong(first);
     }
   };
+
   deletePlaylist() {
     this._playlistsService.deletePlaylist(this.playlist.id)
       .subscribe({
@@ -141,5 +160,28 @@ export class ViewPlaylistComponent implements OnInit {
     timer(3000).subscribe((val) => {
       this.isSuccess = Boolean(val);
     });
+  }
+
+  clickMenuHandler(data: { menuItem: string, song: Song }) {
+    switch (data.menuItem) {
+      case 'Remove from playlist':
+        this.deleteSongFromPlaylist(data.song);
+        break;
+      default:
+        break;
+    }
+  }
+
+  deleteSongFromPlaylist(song: Song) {
+    if (this.songs.find((s) => s.id === song.id)) {
+      const playlistSong = { playlistId: this.playlist.id, songId: song.id };
+      this._playlistService.deleteSongToPlaylist(playlistSong)
+        .pipe(take(1))
+        .subscribe({
+          next: (data) => {
+            this.songs = this.songs.filter((s) => s.id !== data.songId);
+          }
+        });
+    }
   }
 }

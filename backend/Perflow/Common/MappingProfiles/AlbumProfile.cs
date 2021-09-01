@@ -18,6 +18,9 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<Album, AlbumForListDTO>();
             CreateMap<AlbumForListDTO, Album>();
 
+            CreateMap<Album, AlbumNameDTO>();
+            CreateMap<AlbumNameDTO, Album>();
+
             CreateMap<AlbumWriteDTO, Album>();
 
             CreateMap<Album, AlbumFullDTO>()
@@ -69,6 +72,11 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<Album, AlbumForPlaylistSongSearchDTO>();
 
             CreateMap<AlbumWithIcon, AlbumForPlaylistSongSearchDTO>()
+                .ForMember(p => p.Id, opt => opt.MapFrom(c => c.Album.Id))
+                .ForMember(p => p.Name, opt => opt.MapFrom(c => c.Album.Name))
+                .ForMember(p => p.IconURL, opt => opt.MapFrom(c => c.IconURL));
+
+            CreateMap<AlbumWithIcon, AlbumForPlaylistDTO>()
                 .ForMember(p => p.Id, opt => opt.MapFrom(c => c.Album.Id))
                 .ForMember(p => p.Name, opt => opt.MapFrom(c => c.Album.Name))
                 .ForMember(p => p.IconURL, opt => opt.MapFrom(c => c.IconURL));

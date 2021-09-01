@@ -1,17 +1,22 @@
 <div class="card">
   <div class="image" [routerLink]="['/albums', id]">
-      <img [src]="iconUrl">  
-      <button class="play-icon" appClickStopPropagation>
-          <i class="play icon"></i>
-      </button>  
+    <img [src]="iconUrl" *ngIf="iconUrl">
+    <div class="icon-background" *ngIf="!iconUrl">
+      <i class="itunes note icon"></i>
+    </div>
+    <button class="play-icon" appClickStopPropagation (click)="playAlbum(id)">
+      <i class="play icon"></i>
+    </button>
   </div>
   <div class="content">
-      <div class="card-name" [routerLink]="['/albums', id]"> {{name}} </div>
-      <div class="card-desc">
-        <span *ngFor="let author of authors; let last = last" appClickStopPropagation>
-          <span *ngIf="author.isArtist"><i routerLink="../artists/{{ author.id }}">{{author.name}}</i><span class="separator" [ngClass]="{'last-child': last}">, </span></span>
-          <span *ngIf="!author.isArtist"><i *ngIf="!author.isArtist" routerLink="../groups/{{ author.id }}">{{author.name}}</i><span class="separator" [ngClass]="{'last-child': last}">, </span></span>
-         </span> 
-      </div>
+    <div class="card-name" [routerLink]="['/albums', id]"> {{name}} </div>
+    <div class="card-desc">
+      <span *ngIf="author.isArtist">
+        <i routerLink="../artists/{{ author.id }}">{{author.name}}</i>
+      </span>
+      <span *ngIf="!author.isArtist">
+        <i *ngIf="!author.isArtist" routerLink="../groups/{{ author.id }}">{{author.name}}</i>
+      </span>
+    </div>
   </div>
 </div>

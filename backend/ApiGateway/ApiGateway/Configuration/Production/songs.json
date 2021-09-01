@@ -8,7 +8,6 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/liked",
       "UpstreamHttpMethod": [ "GET" ]
@@ -21,36 +20,9 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/likedCount",
       "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/Songs",
-      "DownstreamScheme": "http",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "perflow",
-          "Port": "4202"
-        }
-
-      ],
-      "UpstreamPathTemplate": "/api/Songs",
-      "UpstreamHttpMethod": [ "POST", "PUT" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/Songs/orders",
-      "DownstreamScheme": "http",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "perflow",
-          "Port": "4202"
-        }
-
-      ],
-      "UpstreamPathTemplate": "/api/Songs/orders",
-      "UpstreamHttpMethod": [ "PUT" ]
     },
     {
       "DownstreamPathTemplate": "/api/Songs/{id}",
@@ -60,26 +32,20 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/{id}",
-      "UpstreamHttpMethod": [
-        "POST",
-        "DELETE",
-        "GET"
-      ]
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Songs/file/{id}",
+      "DownstreamPathTemplate": "/api/Songs/{id}/file",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
-      "UpstreamPathTemplate": "/api/Songs/file/{id}",
+      "UpstreamPathTemplate": "/api/Songs/{id}/file",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
@@ -90,9 +56,20 @@
           "Host": "perflow",
           "Port": "4202"
         }
-
       ],
       "UpstreamPathTemplate": "/api/Songs/top/{amount}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Songs/byAlbum/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Songs/byAlbum/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ]

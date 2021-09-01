@@ -8,7 +8,10 @@ using Microsoft.OpenApi.Models;
 using Perflow.Services.Extensions;
 using Perflow.DataAccess.Context;
 using Shared.Auth.Extensions;
+using Shared.AzureBlobStorage.Extensions;
 using Shared.ExceptionsHandler.Filters;
+using Perflow.Hubs.Implementations;
+using Perflow.Hubs.Extensions;
 
 namespace Perflow
 {
@@ -34,9 +37,13 @@ namespace Perflow
 
             services.AddHttpClient();
 
+            services.AddUserIdProvider();
+
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
             services.AddAuth(Configuration["GOOGLE_CREDENTIALS:project_id"]);
+
+            services.AddProcessorRabbitMQ(Configuration);
 
             services.AddSwaggerGen(c =>
             {
@@ -44,6 +51,8 @@ namespace Perflow
             });
 
             services.AddBlobStorage(Configuration["ConnectionStrings:BlobStorage"]);
+
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -54,11 +63,12 @@ namespace Perflow
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Perflow v1"));
             }
+
             app.UseCors(builder => builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials()
-                .WithOrigins(Configuration["AngularAppURL"]));
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 
@@ -70,6 +80,7 @@ namespace Perflow
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationsHub>("/notifications");
             });
 
             InitializeDatabase(app);

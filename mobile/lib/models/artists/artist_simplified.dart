@@ -6,12 +6,12 @@ part 'artist_simplified.g.dart';
 class ArtistSimplified {
   final int id;
   final String userName;
-  final String? iconUrl;
+  final String? iconURL;
 
   const ArtistSimplified({
     required this.id,
     required this.userName,
-    this.iconUrl,
+    this.iconURL,
   });
 
   factory ArtistSimplified.fromJson(Map<String, dynamic> json) => _$ArtistSimplifiedFromJson(json);

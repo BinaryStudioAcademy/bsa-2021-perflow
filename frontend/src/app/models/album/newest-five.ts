@@ -3,4 +3,6 @@ export interface NewestFiveAlbum {
   name: string;
   description: string;
   iconURL: string;
+  isLiked: boolean;
+  artistId?: number
 }

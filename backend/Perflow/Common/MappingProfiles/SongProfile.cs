@@ -17,7 +17,6 @@ namespace Perflow.Common.MappingProfiles
             CreateMap<LikedSong, SongReadDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Song.Id))
                 .ForMember(d => d.AuthorType, opt => opt.MapFrom(s => s.Song.AuthorType))
-                .ForMember(d => d.BlobId, opt => opt.MapFrom(s => s.Song.BlobId))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Song.Name))
                 .ForMember(d => d.Duration, opt => opt.MapFrom(s => s.Song.Duration))
                 .ForMember(d => d.HasCensorship, opt => opt.MapFrom(s => s.Song.HasCensorship))
@@ -26,6 +25,17 @@ namespace Perflow.Common.MappingProfiles
                 .AfterMap((src, dest, context) => dest.Album = context.Mapper.Map<Album, AlbumReadDTO>(src.Song.Album))
                 .AfterMap((src, dest, context) => dest.Artist = context.Mapper.Map<User, ArtistReadDTO>(src.Song.Artist))
                 .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupReadDTO>(src.Song.Group));
+
+            CreateMap<LikedSong, SongLikedDTO>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Song.Id))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Song.Name))
+                .ForMember(d => d.Duration, opt => opt.MapFrom(s => s.Song.Duration))
+                .ForMember(d => d.HasCensorship, opt => opt.MapFrom(s => s.Song.HasCensorship))
+                .ForMember(d => d.IsLiked, opt => opt.MapFrom(s => s.IsLiked))
+                .ForMember(d => d.CreatedAt, opt => opt.MapFrom(s => s.Song.CreatedAt))
+                .AfterMap((src, dest, context) => dest.Album = context.Mapper.Map<Album, AlbumNameDTO>(src.Song.Album))
+                .AfterMap((src, dest, context) => dest.Artist = context.Mapper.Map<User, ArtistNameDTO>(src.Song.Artist))
+                .AfterMap((src, dest, context) => dest.Group = context.Mapper.Map<Group, GroupNameDTO>(src.Song.Group));
 
             CreateMap<LikedSong, SongForAlbumDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Song.Id))

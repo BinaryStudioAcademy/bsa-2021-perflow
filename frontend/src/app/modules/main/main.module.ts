@@ -23,17 +23,10 @@ import { SquareInfoCardComponent } from './cards/square-info-card/square-info-ca
 import { CircleInfoCardComponent } from './cards/circle-info-card/circle-info-card.component';
 import { UserModule } from '../user/user.module';
 import { AllComponent } from './playlist/all/all.component';
-import {
-  CreateEditPlaylistComponent
-} from './create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
-import {
-  EditPlaylistModalComponent
-} from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AlbumListComponent } from './playlist/album-list/album-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TopArtistsCardComponent } from './cards/top-artists-card/top-artists-card.component';
-import { CropImageComponent } from '../shared/crop-image/crop-image.component';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 import { NewReleaseCardComponent } from './cards/new-release-card/new-release-card/new-release-card.component';
 import { AlbumDetailsComponent } from './album-details/album-details.component';
@@ -77,11 +70,8 @@ import { GroupViewComponent } from './group-view/group-view.component';
     YourMixCardComponent,
     AlbumCardComponent,
     AllComponent,
-    CreateEditPlaylistComponent,
-    EditPlaylistModalComponent,
     SettingsComponent,
     AlbumListComponent,
-    CropImageComponent,
     ViewPlaylistComponent,
     NewReleaseCardComponent,
     AlbumDetailsComponent,
@@ -113,7 +103,8 @@ import { GroupViewComponent } from './group-view/group-view.component';
   ],
   exports: [
     ClickOutsideModule,
-    AlbumCardComponent
+    AlbumCardComponent,
+    SquareInfoCardComponent
   ]
 })
 export class MainModule {

@@ -78,6 +78,15 @@ namespace Perflow.Controllers
             return Ok();
         }
 
+        [HttpPost("checkSong")]
+        public async Task<ActionResult> CheckSongInPlaylistAsync([FromBody] PlaylistSongDTO playlistSongDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            return Ok(await _playlistService.CheckSongInPlaylistAsync(playlistSongDTO));
+        }
+
         [HttpDelete("songs")]
         public async Task<ActionResult> DeleteSongToPlaylistAsync([FromQuery] PlaylistSongDTO playlistSongDTO)
         {
@@ -122,6 +131,28 @@ namespace Perflow.Controllers
         public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetPlaylistsByGroupIdAsync(int groupId)
         {
             return Ok(await _playlistService.GetPlaylistsByGroupIdAsync(groupId));
+        }
+        
+        [HttpPut("editName")]
+        public async Task<ActionResult> EditPlaylistNameAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            await _playlistService.EditPlaylistNameAsync(playlistNameDTO);
+
+            return Ok();
+        }
+
+        [HttpPost("copy")]
+        public async Task<ActionResult<PlaylistNameDTO>> CopyPlaylistAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            var copyedPlaylist = await _playlistService.CopyPlaylistAsync(playlistNameDTO);
+
+            return Ok(copyedPlaylist);
         }
     }
 }

@@ -53,6 +53,9 @@
                             <img class="streaming icon" src="../../../../assets/images/streaming.svg" />
                         </div>Start radio
                     </div>
+                    <div class="item" (click)="clickItem('Remove from album')" *ngIf="album && album?.artist?.id === userId">
+                      <i class="trash icon"></i>Remove from album
+                    </div>
                     <div class="item" (click)="clickItem('Add to queue')">
                         <div class="img-wrapper">
                             <img class="playlist" src="../../../../assets/images/playlist.svg" />
@@ -63,8 +66,13 @@
                     </div>
                     <div class="item" (click)="clickItem('Add to playlist')">
                         <i class="list icon"></i>Add to playlist
+                        <div class="left menu add-to-playlist">
+                            <div class="item" *ngFor="let playlist of createdPlaylistArray" (click)="saveToPlaylist(playlist.id, song.id)">
+                                {{ playlist.name }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="item" (click)="clickItem('Remove from playlist')">
+                    <div class="item" (click)="clickItem('Remove from playlist')" *ngIf="playlist && playlist?.author?.id === userId">
                         <i class="trash icon"></i>Remove from playlist
                     </div>
                     <div class="item" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">
@@ -88,6 +96,6 @@
 </div>
 <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
     <div class="header">
-      Link copied to clipboard!
+      {{ notification }}   
     </div>
 </div>

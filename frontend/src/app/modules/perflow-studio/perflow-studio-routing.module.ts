@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ArtistPerflowStudioGuard } from 'src/app/guards/artist-perflow-studio.guard';
+import { ModeratorPerflowStudioGuard } from 'src/app/guards/moderator-perflow-studio.guard';
 import { PerflowStudioGuard } from 'src/app/guards/perflow-studio.guard';
+import {
+  CreateEditPlaylistComponent
+} from '../shared/create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
 import { AlbumsPageComponent } from './albums-page/albums-page.component';
 import { CreateEditAlbumComponent } from './create-edit-album/create-edit-album/create-edit-album.component';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -13,9 +18,20 @@ const routes: Routes = [{
   canActivateChild: [PerflowStudioGuard],
   children: [
     { path: '', redirectTo: 'playlists', pathMatch: 'full' },
-    { path: 'playlists', component: PlaylistsPageComponent },
+    {
+      path: 'playlists',
+      canActivate: [ModeratorPerflowStudioGuard],
+      canActivateChild: [ModeratorPerflowStudioGuard],
+      children: [
+        { path: '', component: PlaylistsPageComponent },
+        { path: 'create', component: CreateEditPlaylistComponent },
+        { path: 'edit/:id', component: CreateEditPlaylistComponent }
+      ]
+    },
     {
       path: 'albums',
+      canActivate: [ArtistPerflowStudioGuard],
+      canActivateChild: [ArtistPerflowStudioGuard],
       children: [
         { path: '', component: AlbumsPageComponent },
         { path: 'create', component: CreateEditAlbumComponent },

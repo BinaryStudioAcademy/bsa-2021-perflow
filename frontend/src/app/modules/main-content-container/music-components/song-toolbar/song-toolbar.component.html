@@ -1,4 +1,4 @@
-<audio controls id="audio" (loadedmetadata)="initSong()" (ended)="songEnded()" (timeupdate)="updateTime()">
+<audio controls id="audio" (loadedmetadata)="initSong()" (ended)="songEnded()" (timeupdate)="updateTime()" allow="autoplay">
     <source [attr.src]="songForPlay.songURL">
 </audio>
 

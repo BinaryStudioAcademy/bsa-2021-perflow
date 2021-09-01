@@ -9,7 +9,7 @@
     box-shadow: none
     width: 100%
     height: 100%
-    
+
     .image
         width: 100%
         padding-bottom: 100%
@@ -31,8 +31,21 @@
             width: 100%
             object-fit: cover
             &:hover
-            cursor: pointer
-    
+                cursor: pointer
+        .icon-background
+            position: absolute
+            background: $gray-gradient
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 100%
+            height: 100%
+            i
+                font-size: 84px
+                margin-top: 5rem
+                color: $text
+                margin-right: 0 !important
+
     .content
         min-height: 64px
         .card-name, .card-desc
@@ -41,12 +54,12 @@
             overflow: hidden
             text-align: center
             font-size: 16px
-        .card-name  
+        .card-name
             font-weight: $medium-weight
         .card-desc
             margin-top: 5px
             font-weight: $light-weight
             white-space: normal
             display: -webkit-box
-            -webkit-line-clamp: 2 
+            -webkit-line-clamp: 2
             -webkit-box-orient: vertical

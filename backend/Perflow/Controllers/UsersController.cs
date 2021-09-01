@@ -11,6 +11,7 @@ using System;
 using Perflow.Services.Implementations;
 using Perflow.Domain;
 using Perflow.Common.Helpers;
+using Shared.Auth;
 
 namespace Perflow.Controllers
 {
@@ -54,6 +55,14 @@ namespace Perflow.Controllers
         public async Task<ActionResult<UserSettings>> GetSettings()
         {
             var userSettings = await _usersService.GetUserSettingsAsync(User.GetId());
+
+            return Ok(userSettings);
+        }
+
+        [HttpGet("artistApplicant")]
+        public async Task<ActionResult<ArtistApplicant>> GetArtistApplicant()
+        {
+            var userSettings = await _usersService.GetArtistApplicantAsync(User.GetId());
 
             return Ok(userSettings);
         }
@@ -111,6 +120,13 @@ namespace Perflow.Controllers
             var uri = await _usersService.UpdateUserIconAsync(userChangeIconDTO);
 
             return Ok(new { uri });
+        }
+
+        [HttpPost("createApplicant")]
+        public async Task<ActionResult> CreateArtistApplicant([FromBody] ArtistApplicantDTO artistApplicant)
+        {
+            await _usersService.CreateArtistApplicantAsync(User.GetId(), (UserRole)artistApplicant.UserRole);
+            return Ok();
         }
     }
 }

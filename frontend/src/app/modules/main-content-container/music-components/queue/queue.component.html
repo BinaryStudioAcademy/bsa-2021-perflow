@@ -1,12 +1,17 @@
 <div class="queue-container" [ngClass]="isOpened ? 'show' : ''">
     <div class="song-info">
-        <div class="playing-label"><h4>Now playing</h4></div>
+        <div class="playing-label">
+            <h4>Now playing</h4>
+        </div>
         <div class="container" *ngIf="!!getCurrentSong()">
             <div class="playinganimation">
-                <app-playing [isPaused]="!isPlaying"></app-playing>
+                <app-playing></app-playing>
             </div>
             <div class="songicon">
-                <img [attr.src]="getCurrentSong().album.iconURL">
+                <img [attr.src]="getCurrentSong().album.iconURL" *ngIf="getCurrentSong().album.iconURL">
+                <div class="icon-background" *ngIf="!getCurrentSong().album.iconURL">
+                    <i class="itunes note icon"></i>
+                </div>
             </div>
             <h5 class="songname">{{getCurrentSong().name}}</h5>
             <div class="songauthor">
@@ -15,11 +20,13 @@
                 </h6>
             </div>
         </div>
-        <div class="queue-label"><h4>Queue</h4></div>
+        <div class="queue-label">
+            <h4>Queue</h4>
+        </div>
     </div>
-    <app-songs-list [songs]="songs" [isPlaying]="isPlaying"
-     (clickMenuItem)="clickMenuHandler($event)" 
-     [highlightId]="currentSongId" 
-     (togglePlayEvent)="togglePlay()">
+    <app-songs-list [songs]="isShuffling ? songs : unshuffledSongs" [isPlaying]="isPlaying"
+        (clickMenuItem)="clickMenuHandler($event)" 
+        [highlightId]="currentSongId" 
+        (togglePlayEvent)="togglePlay()">
     </app-songs-list>
 </div>

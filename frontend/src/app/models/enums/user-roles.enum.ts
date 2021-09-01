@@ -1,5 +1,6 @@
 export enum UserRoles {
   user,
   artist,
-  moderator
+  moderator,
+  teamMember
 }

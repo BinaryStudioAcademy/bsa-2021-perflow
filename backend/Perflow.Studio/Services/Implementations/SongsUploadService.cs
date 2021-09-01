@@ -1,0 +1,30 @@
+using System;
+using Microsoft.Extensions.Options;
+using Perflow.Studio.Services.Interfaces;
+using Shared.Processor.Models;
+using Shared.RabbitMQ.Interfaces;
+
+namespace Perflow.Studio.Services.Implementations
+{
+    public class SongsUploadService : ISongsUploadService, IDisposable
+    {
+        private readonly IQueue _songProcessingQueue;
+
+        public SongsUploadService(IOptions<SongProcessingRabbitMQOptions> options, IQueueFactory queueFactory)
+        {
+            var rabbitMqOptions = options.Value;
+
+            _songProcessingQueue = queueFactory.CreateQueue(rabbitMqOptions.ExchangeOptions, rabbitMqOptions.QueueOptions);
+        }
+
+        public void UploadSong(SongProcessingOptions options)
+        {
+            _songProcessingQueue.SendMessage(options.ToBytes());
+        }
+
+        public void Dispose()
+        {
+            _songProcessingQueue.Dispose();
+        }
+    }
+}

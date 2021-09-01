@@ -1,6 +1,6 @@
 import { PlatformLocation } from '@angular/common';
 import {
-  Component, ElementRef, OnInit, ViewChild
+  Component, OnInit
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -25,11 +26,9 @@ import { SongsService } from 'src/app/services/songs/songs.service';
   styleUrls: ['./artist-details.component.sass']
 })
 export class ArtistDetailsComponent implements OnInit {
-  private readonly _scrollingSize: number = 240;
   private _userId: number;
-
-  @ViewChild('albums') albumsElement: ElementRef;
-  @ViewChild('playlists') playlistsElement: ElementRef;
+  private readonly _decimalRadix = 10;
+  private readonly _gridScrollMultiplier = 3;
 
   artist: ArtistFull = {} as ArtistFull;
   topSongs: Song[] = [];
@@ -47,9 +46,10 @@ export class ArtistDetailsComponent implements OnInit {
     private _location: PlatformLocation,
     private _reactionService: ReactionService,
     private _authService: AuthService,
-    private _albumsService: AlbumService
+    private _albumsService: AlbumService,
+    private _snackbarService: SnackbarService
   ) {
-    _route.params.subscribe((routeParams) => {
+    _route.params.subscribe(() => {
       this.loadData();
     });
   }
@@ -106,6 +106,8 @@ export class ArtistDetailsComponent implements OnInit {
       .subscribe(
         () => {
           this.artist.isLiked = true;
+
+          this._snackbarService.show({ message: `You have subscribed to ${this.artist.userName}.` });
         }
       );
   }
@@ -115,6 +117,8 @@ export class ArtistDetailsComponent implements OnInit {
       .subscribe(
         () => {
           this.artist.isLiked = false;
+
+          this._snackbarService.show({ message: `You have unsubscribed from the ${this.artist.userName}.` });
         }
       );
   }
@@ -126,19 +130,6 @@ export class ArtistDetailsComponent implements OnInit {
           this.artistAlbums = result;
         }
       );
-  }
-
-  scroll(id: string, scrollingSize: number = this._scrollingSize) {
-    switch (id) {
-      case 'albums':
-        this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
-        break;
-      case 'playlists':
-        this.playlistsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
-        break;
-      default:
-        break;
-    }
   }
 
   playArtist = () => {
@@ -172,4 +163,25 @@ export class ArtistDetailsComponent implements OnInit {
       this.isSuccess = Boolean(val);
     });
   }
+
+  getGridScrollWidth = (selector: string) => {
+    const element = document.querySelector(selector);
+    const style = getComputedStyle(element!);
+    const gapWidth = parseInt(style.gridGap.split(' ')[0], this._decimalRadix);
+    const elementWidth = parseInt(style.gridTemplateColumns.split(' ')[0], this._decimalRadix);
+
+    return gapWidth + elementWidth;
+  };
+
+  scrollGridRight = (id: string, selector: string) => {
+    const grid = document.getElementById(id);
+
+    grid?.scrollBy({ left: this.getGridScrollWidth(selector) * this._gridScrollMultiplier, behavior: 'smooth' });
+  };
+
+  scrollGridLeft = (id: string, selector: string) => {
+    const grid = document.getElementById(id);
+
+    grid?.scrollBy({ left: -(this.getGridScrollWidth(selector) * this._gridScrollMultiplier), behavior: 'smooth' });
+  };
 }

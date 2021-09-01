@@ -38,7 +38,7 @@
         <div class="ui icon button scroll-button" (click)="scrollGridLeft('artists', '.items')"> 
           <i class="large inverted angle left icon"></i>
         </div>
-        <div id="artists" class="items">
+        <div id="artists" class="items" appHideScrollButtons>
             <app-artist-card *ngFor="let artist of topArtists" [artist]="artist">
             </app-artist-card>
         </div>

@@ -1,4 +1,4 @@
-<div class="card" [routerLink]="['/artists', artist.id]">
+<div class="card" (click)="redirectTo()">
     <div class="image-block">
         <div class="image">
             <img [attr.src]="artist.iconURL" alt="Artist">    

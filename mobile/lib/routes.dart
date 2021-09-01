@@ -5,10 +5,19 @@ class Routes {
 
   static const String home = '/home';
   static const String search = '/search';
-  static const String library = '/library';
+  static const String libraryAll = '/library/all';
+  static const String libraryArtists = '/library/artists';
+  static const String libraryAlbums = '/library/albums';
+  static const String librarySongs = '/library/songs';
 
   static const String player = '/player';
 
   static const String playlistTemplate = '/playlist/:id';
   static String playlist(int playlistId) => '/playlist/$playlistId';
+
+  static const String albumTemplate = '/album/:id';
+  static String album(int albumId) => '/album/$albumId';
+
+  static const String artistTemplate = '/artist/:id';
+  static String artist(int artistId) => '/artist/$artistId';
 }

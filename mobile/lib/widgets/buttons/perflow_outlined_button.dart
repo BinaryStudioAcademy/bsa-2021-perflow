@@ -6,12 +6,14 @@ class PerflowOutlinedButton extends StatelessWidget {
   final Widget child;
   final double height;
   final double borderRadius;
+  final Color color;
 
   const PerflowOutlinedButton({
     required this.onPressed,
     required this.child,
     this.height = 52,
     this.borderRadius = 30,
+    this.color = Perflow.primaryLightColor,
     Key? key
   }) : super(key: key);
 
@@ -20,6 +22,7 @@ class PerflowOutlinedButton extends StatelessWidget {
     required String text,
     this.height = 52,
     this.borderRadius = 30,
+    this.color = Perflow.primaryLightColor,
     Key? key
   }) :
     child = Text(text),
@@ -32,8 +35,8 @@ class PerflowOutlinedButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          primary: Perflow.primaryLightColor,
-          side: const BorderSide(color: Perflow.primaryLightColor),
+          primary: color,
+          side: BorderSide(color: color),
           shape: const StadiumBorder(),
         ),
         child: Center(child: child),

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
+using Perflow.Common.Helpers;
 using Perflow.Domain.Enums;
 using Perflow.Services.Interfaces;
 using Shared.Auth.Constants;
@@ -17,15 +16,19 @@ namespace Perflow.Controllers
     [Authorize(Policy = Policies.IsUser)]
     public class SongsController : ControllerBase
     {
+        private readonly IUsersService _usersService;
         private readonly ISongsService _songsService;
+        private readonly ISongFilesService _songFilesService;
 
-        public SongsController(ISongsService songsService)
+        public SongsController(ISongsService songsService, ISongFilesService songFilesService, IUsersService usersService)
         {
             _songsService = songsService;
+            _songFilesService = songFilesService;
+            _usersService = usersService;
         }
 
         [HttpGet("liked")]
-        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetLikedSongs()
+        public async Task<ActionResult<IEnumerable<SongLikedDTO>>> GetLikedSongs()
         {
             var songs = await _songsService.GetLikedSongsAsync(User.GetId());
 
@@ -39,49 +42,25 @@ namespace Perflow.Controllers
             return Ok(songsCount);
         }
 
-        [HttpPost("upload")]
-        public async Task<ActionResult<SongReadDTO>> AddSongInfo(SongWriteDTO songInfo)
-        {
-            var result = await _songsService.AddSongInfoAsync(songInfo, User.GetId());   
-            return Ok(result);
-        }
-
-        [HttpDelete("delete/{id}")]
-        public async Task<ActionResult<SongWriteDTO>> DeleteSongInfo(int id)
-        {
-            await _songsService.RemoveSongAsync(id);
-            return Ok();
-        }
-
-        [HttpPost("file/upload")]
-        public async Task<ActionResult<object>> AddSongFile()
-        {
-            var files = Request.Form.Files;
-            var result = await _songsService.UploadSongAsync(files.First());   
-            return Ok(new { blobId = result });
-        }
-
-        [HttpPut]
-        public async Task<ActionResult> UpdateNameCensorship([FromBody] SongWriteDTO songInfo)
-        {
-            await _songsService.Update(songInfo);
-            return Ok();
-        }
-
-        [HttpPut("orders")]
-        public async Task<ActionResult> UpdateOrders([FromBody] SongOrderDTO[] songOrders)
-        {
-            await _songsService.UpdateOrders(songOrders);
-            return Ok();
-        }
-
+        // TODO Add Auth
         [AllowAnonymous]
-        [HttpGet("file")]
-        public async Task<FileResult> GetSongFile([FromQuery] string blobId)
+        [HttpGet("{id:int}/file")]
+        public async Task<ActionResult> GetSongFile([FromRoute] int id, [FromQuery] AudioQuality? quality = null)
         {
-            var result = (FileResult) await _songsService.GetSongFileAsync(blobId);
-            result.EnableRangeProcessing = true;
-            return result;
+            quality ??= User.HasId() ? await _usersService.GetUserAudioQualityAsync(User.GetId()) : AudioQuality.Medium;
+
+            var songBlob = await _songFilesService.GetSongFileAsync(id, quality.Value);
+
+            if (songBlob == null)
+            {
+                return NotFound();
+            }
+
+            return File(
+                songBlob.Content.ToArray(),
+                songBlob.ContentType,
+                enableRangeProcessing: true
+            );
         }
 
         [HttpGet("{id}")]
@@ -112,5 +91,10 @@ namespace Perflow.Controllers
             return Ok(await _songsService.GetTopSongsByLikes(amount));
         }
 
+        [HttpGet("byAlbum/{id}")]
+        public async Task<ActionResult<IEnumerable<SongForAlbumDTO>>> GetSongsByAlbumIdAsync(int id)
+        {
+            return Ok(await _songsService.GetSongsByAlbumIdAsync(id, User.GetId()));
+        }
     }
 }
