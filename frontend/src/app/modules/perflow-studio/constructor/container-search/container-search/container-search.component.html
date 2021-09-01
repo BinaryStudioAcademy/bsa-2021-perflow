@@ -1,9 +1,16 @@
 <div class="search-container">
-  <div class="ui search">
+    <div class="ui search">
     <div class="ui icon input">
-      <input class="prompt input-dark" type="text" name="search" placeholder="Artists, albums or playlists..."
-        (input)="findSongsByName()" [(ngModel)]="searchValue" autocomplete="sss" aria-autocomplete="none"
-        (keyup)="clearSearch($event)">
+      <input id="search-input" 
+             class="prompt input-dark" 
+             type="text" 
+             name="search" 
+             placeholder="{{placeholder}}"
+             (input)="findSongsByName()" 
+             [(ngModel)]="searchValue" 
+             autocomplete="sss" 
+             aria-autocomplete="none"
+             (keyup)="clearSearch($event)">
       <i class="search icon"></i>
     </div>
   </div>

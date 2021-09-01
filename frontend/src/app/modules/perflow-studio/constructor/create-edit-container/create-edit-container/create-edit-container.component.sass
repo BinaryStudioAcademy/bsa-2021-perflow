@@ -203,7 +203,7 @@ main
         padding: 5px 1em 5px 1em
       .option.ui.checkbox 
         color: white
-        font-size: 24px
+        font-size: 16px
         font-weight: bold
         line-height: 28px
         font-family: "Rubik", "sans-serif"
@@ -218,11 +218,10 @@ main
           font-family: Rubik
           color: white
           &::before
+            top: 5px
             background:  $drk-gray
             opacity: 1
             border: 1px solid #ffffff35
-          &::after
-            top: -5px
 
 // Recently played
 .recently-played
@@ -266,18 +265,14 @@ main
 .show
     display: block !important
 
-.header
-    font-weight: bold
-    font-size: 24px
-    line-height: 28px
-    color: $text
-
 .items-scroll-box
     min-width: 100%
     position: relative
     margin: 25px 0px
+    padding: 15px
+    border-radius: 5px
     &:hover
-      background-color: $light-gray
+      background: #2f363f // #282F37
       .nameedit,
       .namesave,
       .namedelete
@@ -285,7 +280,12 @@ main
         &:hover
           @extend %clickable
     .header
-        margin-bottom: 30px
+        margin-bottom: 15px
+        font-weight: bold
+        .header-name
+            font-size: 24px
+            line-height: 28px
+            color: $text
     .list-of-items
         display: flex
         align-items: center

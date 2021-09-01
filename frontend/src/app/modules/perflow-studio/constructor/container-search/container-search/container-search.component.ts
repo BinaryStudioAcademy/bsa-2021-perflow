@@ -13,6 +13,9 @@ import { SearchService } from 'src/app/services/search.service';
 import { PageSectionFull } from 'src/app/models/constructor/page-section-full';
 import { EntityType } from 'src/app/models/enums/entity-type';
 import { PageSectionEntityFull } from 'src/app/models/constructor/page-section-entity-full';
+import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
+import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 
 @Component({
   selector: 'app-container-search',
@@ -28,6 +31,7 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
   currentAlbums: PageSectionEntityFull[];
   currentArtists: PageSectionEntityFull[];
   currentPlaylists: PageSectionEntityFull[];
+  placeholder: string;
 
   @Input()
   editedSection: PageSectionFull = {} as PageSectionFull;
@@ -66,6 +70,9 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
         this.searchValue = data;
         this._searchTerms$.next(data);
       });
+    this.placeholder = !this.isAccordion
+      ? 'Search for artists, albums or playlists...'
+      : 'Search for albums...';
     this.currentAlbums = this.editedSection.pageSectionEntities
       ?.filter((ps) => ps.entityType === EntityType.album);
     this.currentArtists = this.editedSection.pageSectionEntities
@@ -120,7 +127,59 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
     }
   }
 
+  instanceOfAlbum = (data: any): data is AlbumForReadDTO => 'releaseYear' in data;
+
+  instanceOfArtist = (data: any): data is ArtistReadDTO => 'userName' in data;
+
+  instanceOfPlaylist = (data: any): data is PlaylistView => !('releaseYear' in data) && !('userName' in data);
+
   addDeleteFromSectionEvent(entity: any) {
     this.addDeleteFromSection.emit(entity);
+    if (this.instanceOfAlbum(entity)) {
+      const albumsIndex = this.currentAlbums
+        .findIndex((a) => a.referenceId === entity.id);
+      if (albumsIndex === -1) {
+        this.currentAlbums.push(this.convertToSectionEntity(entity, EntityType.album));
+      }
+      else {
+        this.currentAlbums.splice(albumsIndex, 1);
+      }
+    }
+    else if (this.instanceOfArtist(entity)) {
+      const artistIndex = this.currentArtists
+        .findIndex((a) => a.referenceId === entity.id);
+      if (artistIndex === -1) {
+        this.currentArtists.push(this.convertToSectionEntity(entity, EntityType.artist));
+      }
+      else {
+        this.currentArtists.splice(artistIndex, 1);
+      }
+    }
+    else if (this.instanceOfPlaylist(entity)) {
+      const playlistIndex = this.currentPlaylists
+        .findIndex((a) => a.referenceId === entity.id);
+      if (playlistIndex === -1) {
+        this.currentPlaylists.push(this.convertToSectionEntity(entity, EntityType.playlist));
+      }
+      else {
+        this.currentPlaylists.splice(playlistIndex, 1);
+      }
+    }
+  }
+
+  convertToSectionEntity(entity: any, entityType: EntityType) {
+    const newEntityPageSection = this.editedSection;
+    const newEntityPosition = newEntityPageSection.pageSectionEntities.length !== 0
+      ? Math.max(...newEntityPageSection.pageSectionEntities
+        .map((o: PageSectionEntityFull) => o.position)) + 1
+      : 1;
+    const newPageSectionEntity = {
+      entityType,
+      entity,
+      referenceId: entity.id,
+      pageSection: newEntityPageSection,
+      position: newEntityPosition
+    };
+    return newPageSectionEntity;
   }
 }

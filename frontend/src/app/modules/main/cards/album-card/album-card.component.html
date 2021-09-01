@@ -6,7 +6,7 @@
     <div class="edit" routerLink="/perflowstudio/albums/edit/{{album.id}}" appClickStopPropagation *ngIf="isForEdit">
         <i class="pencil icon ui"></i>
     </div>
-    <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked && !isCheckBox">
+    <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked && !isCheckBox && !isLikeButtonHidden">
       <i class="like icon ui"></i>
     </div>
     <button *ngIf="!isCheckBox" class="play-icon" appClickStopPropagation (click)="playAlbum(album.id)">

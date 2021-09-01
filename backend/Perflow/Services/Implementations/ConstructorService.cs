@@ -74,7 +74,9 @@ namespace Perflow.Services.Implementations
         {
             var result = _mapper
                             .Map<ICollection<PageContainerViewDTO>>
-                                (await _context.PageContainers.ToListAsync());
+                                (await _context.PageContainers
+                                                .OrderByDescending(pc => pc.IsPublished)
+                                                .ToListAsync());
             return result;
         }
 
@@ -130,6 +132,20 @@ namespace Perflow.Services.Implementations
                                                     .ToList()
                                                 }).FirstOrDefaultAsync();
             return result;
+        }
+
+        public async Task<int> DeleteContainer(int id)
+        {
+            var deletedContainer = await _context.PageContainers
+                .Include(pc => pc.PageSections)
+                .ThenInclude(ps => ps.PageSectionEntities)
+                .FirstOrDefaultAsync(pc => pc.Id == id);
+
+            _context.PageContainers.Remove(deletedContainer);
+
+            await _context.SaveChangesAsync();
+
+            return id;
         }
     }
 }

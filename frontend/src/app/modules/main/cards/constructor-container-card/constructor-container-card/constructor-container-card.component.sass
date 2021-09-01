@@ -11,6 +11,14 @@
     border-radius: 5px
     box-shadow: 0 0 10px darken($drk-gray, 5%)
     transition: background-color .2s ease-in-out
+    .delete-icon
+        position: absolute
+        bottom: 10px
+        left: 10px
+        visibility: hidden
+        color: $medium-orange
+        &:hover
+            color: red
     .image
         width: 160px
         height: 160px
@@ -24,6 +32,8 @@
     &:hover
         background-color: lighten($drk-rain, 5%)
         cursor: pointer
+        .delete-icon
+            visibility: visible
 
     .content
         min-height: 64px
@@ -45,7 +55,7 @@
             .my-checkbox
                 width: 2.7rem
             input:checked~label:before
-                background: rgba($checkbox-color, 0.38) !important
+                background: rgba($gray, 0.38) !important
             input:checked~label:after
                 left: 1.15rem
                 background: $checkbox-color
@@ -62,4 +72,17 @@
         color: white !important
 
 .published 
-    background: $orange-gradient
+    color: $light-orange !important
+    input:checked~label:before
+        background: rgba($gray, 0.38) !important
+    input:checked~label:after
+        //left: 1.15rem
+        background: $checkbox-color
+
+.ui.toggle.checkbox.publish input:checked~.box, .ui.toggle.checkbox.publish input:checked~label
+    color: $light-orange !important
+
+.ui.toggle.checkbox.publish input~.box, .ui.toggle.checkbox.publish input~label
+    &::before
+        background: rgba($gray, 0.38) !important
+    

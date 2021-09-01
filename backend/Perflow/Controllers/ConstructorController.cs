@@ -79,5 +79,14 @@ namespace Perflow.Controllers
 
             return Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteContainer(int id)
+        {
+            if (id <= 0)
+                throw new ArgumentException("Container ID cannot be less than or equal to zero");
+
+            return Ok(await _constructorService.DeleteContainer(id));
+        }
     }
 }

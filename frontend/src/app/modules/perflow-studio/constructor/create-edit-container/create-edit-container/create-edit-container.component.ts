@@ -10,6 +10,7 @@ import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { PageSectionEntityFull } from 'src/app/models/constructor/page-section-entity-full';
 import { ConstructorService } from 'src/app/services/constructor.service';
 import { switchMap } from 'rxjs/operators';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-create-edit-container',
@@ -32,7 +33,8 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _constructorService: ConstructorService,
-    private _router: Router
+    private _router: Router,
+    private _snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -92,21 +94,6 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
       name: 'Second section',
       pageSectionEntities: []
     }
-    /* {
-      position: 4,
-      name: "Third section",
-      pageSectionEntities: []
-    },
-    {
-      position: 5,
-      name: "Fourth section",
-      pageSectionEntities: []
-    },
-    {
-      position: 6,
-      name: "Fifth section",
-      pageSectionEntities: []
-    } */
   ]);
 
   drop(event: CdkDragDrop<PageSectionFull[]>) {
@@ -157,7 +144,7 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
   };
 
   showEditSectionModal = (position: number) => {
-    this.editedSection = this.container.pageSections.find((ps: PageSectionFull) => ps.position === position)!;
+    this.editedSection = [...this.container.pageSections].find((ps: PageSectionFull) => ps.position === position)!;
     this.isModalShown = !this.isModalShown;
   };
 
@@ -170,11 +157,6 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
 
   closeModal() {
     this.isModalShown = !this.isModalShown;
-
-    /* if (!this._isEditMode) {
-      this._router.navigateByUrl('albums');
-    } */
-
     this.editedSection = {
       position: -1,
       name: '',
@@ -184,21 +166,31 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
 
   saveName = () => {
     this.editNamePosition = -1;
-
-    /* const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
-      this.isEditing = false;
-      subscription.unsubscribe();
-    }); */
   };
 
   saveContainer = () => {
     if (this._id) {
-      this._constructorService.updateContainer(this.container).subscribe();
+      this._constructorService.updateContainer(this.container).subscribe(
+        (resp) => {
+          this._snackbarService.show({
+            message: 'Your changes confirmed.',
+            header: 'Container edited successfully!'
+          });
+          this._router.navigateByUrl('/perflowstudio/constructor');
+        }
+      );
     }
     else {
-      this._constructorService.createContainer(this.container).subscribe();
+      this._constructorService.createContainer(this.container).subscribe(
+        (resp) => {
+          this._snackbarService.show({
+            message: 'Now you can publish it.',
+            header: 'Container created successfully!'
+          });
+          this._router.navigateByUrl('/perflowstudio/constructor');
+        }
+      );
     }
-    this._router.navigateByUrl('/perflowstudio/constructor');
   };
 
   addNewSection = () => {

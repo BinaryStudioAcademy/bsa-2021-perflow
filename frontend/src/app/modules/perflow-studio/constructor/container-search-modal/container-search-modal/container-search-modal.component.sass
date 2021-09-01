@@ -32,6 +32,7 @@
     border-radius: 10px 10px 0px 0px
     color: #FF792A
     font-family: Rubik
+    font-size: 24px
     background: $drk-gray !important
   .content
     background: $drk-gray
@@ -195,30 +196,6 @@
     &:last-child
       width: 30% !important
       
-::ng-deep .search-container
-  position: relative
-  height: 100%
+
+.search-bar
   width: 100%
-  // Fixed
-  ::ng-deep .ui.search
-    position: relative !important
-    height: 90px
-    background: $drk-gray
-    width: 300px
-    display: grid
-    grid-template-columns: 100%
-    ::ng-deep .ui.icon.input
-      grid-column: 1
-      align-self: center
-      justify-self: start 
-      width: 50%
-      ::ng-deep i
-        color: $text
-      ::ng-deep .prompt.input-dark
-        background: $drk-rain
-        border: 1px solid $text
-        color: $text
-        ::ng-deep &:focus
-          background: $drk-rain
-        ::ng-deep &:active
-          background: $drk-rain

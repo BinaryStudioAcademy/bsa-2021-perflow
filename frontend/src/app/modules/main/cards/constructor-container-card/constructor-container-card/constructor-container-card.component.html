@@ -1,7 +1,4 @@
 <div class="card" (click)="redirectTo()" [ngClass]="{published: container.isPublished}">
-  <!-- <div class="image">
-      <img [src]="container.iconURL">
-  </div> -->
   <div class="content">
       <div class="card-name"> {{container.name}} </div>
       <div class="options">
@@ -16,6 +13,9 @@
           <label>Mix</label>
         </div>
       </div>
+  </div>
+  <div class="delete-icon" *ngIf="!container.isPublished" (click)="deleteContainer()">
+    <i class="ui trash alternate outline icon"></i>
   </div>
   <div class="ui toggle checkbox my-checkbox publish">
     <input *ngIf="!container.isPublished" type="checkbox" name="public" (click)="publishContainer()">

@@ -23,6 +23,8 @@ export class AlbumCardComponent {
   isCheckBox: boolean = false;
   @Input()
   isChecked: boolean;
+  @Input()
+  isLikeButtonHidden: boolean = false;
   @Output()
   delete = new EventEmitter<AlbumForReadDTO>();
   @Output()

@@ -12,15 +12,7 @@
         <!-- Name -->
         <div class="ui field name">
           <input type="text" maxlength="20" placeholder="Section name" [(ngModel)]="editedSection.name" 
-            required #name="ngModel" pattern="[^<>^@]*" name="name" [attr.disabled]="isAccordion ? '' : null">
-          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="ui error message" autocomplete="off">
-            <div *ngIf="name.errors?.required">
-              Name is required!
-            </div>
-            <div *ngIf="name.errors?.pattern">
-              Symbols '< > ^ @' are prohibited
-            </div>
-          </div>       
+            required #name="ngModel" pattern="[^<>^@]*" name="name" [attr.disabled]="isAccordion ? '' : null">     
         </div>
 
         <div class="search-bar">
@@ -34,8 +26,8 @@
         <!-- Buttons -->
         <div class="ui field buttons-row">
           <div class="form-group">
-            <button type="submit" class="ui button submit btn-full" [disabled]="formEdit.form.invalid">Save</button>
-            <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
+            <button type="submit" class="ui button submit btn-full">Save</button>
+            <!-- <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button> -->
           </div>
         </div>
         <div class="container"></div>

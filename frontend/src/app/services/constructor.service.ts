@@ -31,6 +31,10 @@ export class ConstructorService {
     return this._httpService.postFullRequest<ContainerFull>(`${this.routePrefix}`, container);
   }
 
+  deleteContainer(containerId: number) {
+    return this._httpService.deleteFullRequest(`${this.routePrefix}/${containerId}`);
+  }
+
   publishContainer(container: ContainerView) {
     return this._httpService.postFullRequest<ContainerView>(`${this.routePrefix}/publish`, container);
   }

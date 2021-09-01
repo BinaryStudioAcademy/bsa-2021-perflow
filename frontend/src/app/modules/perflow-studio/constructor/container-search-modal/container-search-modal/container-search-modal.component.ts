@@ -41,18 +41,6 @@ export class ContainerSearchModalComponent {
 
   public onSubmit() {
     this.editSection.emit(this.editedSection);
-    /* this.editedAlbum.iconURL = this.tempIconURL;
-    this.editedAlbum.icon = this.file;
-
-    if (this.editedAlbum.authorType === AuthorType.artist) {
-      this.editedAlbum.authorId = this.userId;
-      this.editedAlbum.groupId = undefined;
-    }
-    else {
-      this.editedAlbum.authorId = undefined;
-    }
-
-    this.editAlbum.emit(this.editedAlbum); */
   }
   /* eslint-disable no-param-reassign */
   public onEntityAddDelete(entity: any) {

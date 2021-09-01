@@ -16,7 +16,7 @@ const routes: Routes = [{
   path: '',
   component: MainPageComponent,
   canActivate: [PerflowStudioGuard],
-  canActivateChild: [PerflowStudioGuard],
+  // canActivateChild: [PerflowStudioGuard],
   children: [
     { path: '', redirectTo: 'playlists', pathMatch: 'full' },
     {
