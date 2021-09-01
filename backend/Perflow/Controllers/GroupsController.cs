@@ -35,7 +35,7 @@ namespace Perflow.Controllers
         [HttpPost]
         public async Task<ActionResult<GroupShortDTO>> CreateGroupAsync([FromForm] GroupWriteDTO group)
         {
-            return Ok(await _groupService.CreateGroupAsync(group);
+            return Ok(await _groupService.CreateGroupAsync(group));
         }
     }
 }
