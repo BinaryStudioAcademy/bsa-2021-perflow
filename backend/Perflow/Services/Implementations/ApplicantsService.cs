@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Applicants;
+using Perflow.Common.DTO.Notifications;
 using Perflow.DataAccess.Context;
 using Perflow.Domain.Enums;
 using Perflow.Services.Abstract;
@@ -17,11 +18,13 @@ namespace Perflow.Services.Implementations
     public class ApplicantsService : BaseService
     {
         private readonly IImageService _imageService;
+        private readonly INotificationService _notificationService;
 
-        public ApplicantsService(PerflowContext context, IMapper mapper, IImageService imageService) 
+        public ApplicantsService(PerflowContext context, IMapper mapper, IImageService imageService, INotificationService notificationService) 
             : base(context, mapper)
         {
             _imageService = imageService;
+            _notificationService = notificationService;
         }
 
         public async Task<IEnumerable<UserWithStatusDTO>> GetApplicantsAsync()
@@ -52,9 +55,11 @@ namespace Perflow.Services.Implementations
                 throw new NotFoundExcepion("There is no such an application");
 
             application.Status = status.Status;
-            
-            if(application.Status != ApplicationStatus.Rejected)
+
+            if (application.Status != ApplicationStatus.Rejected)
                 application.User.Role = application.MemberType;
+            else
+                await Notify(status.Id);
 
             context.Update(application);
 
@@ -94,6 +99,20 @@ namespace Perflow.Services.Implementations
             context.Update(user);
 
             await context.SaveChangesAsync();
+        }
+
+        private async Task Notify(int applicantId)
+        {
+            var notification = new NotificationWriteDTO
+            {
+                Title = "Your application was executed",
+                Description = $"Moderator rejected your applications. Your current status: user. ",
+                Reference = 0,
+                Type = NotificationType.ArtistSubscribtion
+            };
+
+            var notifications = await _notificationService.CreateApplicantNotificationAsync(notification, applicantId);
+            await _notificationService.SendNotificationAsync(notifications);
         }
     }
 }
