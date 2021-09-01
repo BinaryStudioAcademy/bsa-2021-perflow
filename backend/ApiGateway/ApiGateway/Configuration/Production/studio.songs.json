@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/studio/songs",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow-studio",
@@ -14,7 +14,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/studio/songs/{id}/file",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow-studio",
@@ -26,7 +26,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/studio/songs/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow-studio",
@@ -38,7 +38,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/studio/songs/{id}/censorship?value={value}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow-studio",
@@ -50,7 +50,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/studio/songs/{id}/name?value={value}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow-studio",
@@ -62,7 +62,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/studio/songs/orders",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow-studio",
