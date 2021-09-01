@@ -146,7 +146,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   setButtonVisibility() {
-    this.idSaveButtonShown = this.currentAccordionAlbum.artistId !== this._userId 
+    this.idSaveButtonShown = this.currentAccordionAlbum.artistId !== this._userId
                           && !this.currentAccordionAlbum.isLiked;
   }
 
