@@ -1,4 +1,4 @@
-@import "../../../../styles.sass"
+@import "src/styles.sass"
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400")
 
 $image-size: 245px
@@ -163,35 +163,97 @@ main
     .header
         margin-bottom: 30px
 
+.menu
+    border: 0.5px solid #373C43 !important
+    border-radius: 2px
+
+.ui.dropdown
+    background-color: transparent !important
 
 .ui.floating.dropdown
-    .menu
-        background: $light-gray
-        border: 0.5px solid #373C43 !important
-        border-radius: 4px
+    >.menu
         box-shadow: none !important
-        .item
-          i
-            margin-right: 10px
-            padding: 0
-            font-size: 14px
-          span
-            color: $text !important
-            font-family: Montserrat !important
-            font-weight: $normal-weight !important
-            line-height: 135%
-          &:hover
-              background-color: $drk-gray !important
-          &:active
-              background-color: $light-gray !important
-              font-weight: $normal-weight !important
-        .item.first
+        >.item.first
             padding-top: 18px !important
-        .item.last
+        >.item.last
             padding-bottom: 18px !important
+        >i.dropdown.icon 
+            margin-left: 3rem !important
+            margin-right: 0em !important
+
+.item.first.share
+    >.menu
+        font-family: 'Montserrat' !important
+        box-shadow: none !important
+        margin-left: 0px !important
+        >.item.first.last
+          padding: 18px !important
+          padding-top: 14px !important
+          padding-bottom: 14px !important
+
+.item
+    background-color: $light-gray
+    color: $text !important
+    font-family: 'Montserrat' !important
+    font-style: normal !important
+    &:hover
+        background-color: $drk-gray !important
+        cursor: pointer
+    &:active
+        background-color: $drk-gray !important
+        font-weight: $medium-weight !important
+    >i, >.img-wrapper
+        margin-right: 1rem !important
 
 .item.active.selected
     background-color: $light-gray !important
     font-weight: $normal-weight !important
     &:hover
         background-color: $drk-gray !important
+
+
+// .ui.floating.dropdown
+//     .menu
+//         background: $light-gray
+//         border: 0.5px solid #373C43 !important
+//         border-radius: 4px
+//         box-shadow: none !important
+//         .item
+//             background-color: $light-gray
+//             color: $text !important
+//             font-family: 'Montserrat' !important
+//             font-style: normal !important
+//             i
+//                 margin-right: 10px
+//                 padding: 0
+//                 font-size: 14px
+//             span
+//                 color: $text !important
+//                 font-family: Montserrat !important
+//                 font-weight: $normal-weight !important
+//                 line-height: 135%
+//             &:hover
+//                 background-color: $drk-gray !important
+//             &:active
+//                 background-color: $light-gray !important
+//                 font-weight: $normal-weight !important
+//             .item.first
+//                 padding-top: 18px !important
+//             .item.last
+//                 padding-bottom: 18px !important
+
+// .item.active.selected
+//     background-color: $light-gray !important
+//     font-weight: $normal-weight !important
+//     &:hover
+//         background-color: $drk-gray !important
+
+// .item.last.share
+//     >.menu
+//         font-family: 'Montserrat' !important
+//         box-shadow: none !important
+//         margin-left: 0px !important
+//         >.item.first.last
+//           padding: 18px !important
+//           padding-top: 14px !important
+//           padding-bottom: 14px !important

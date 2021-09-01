@@ -11,18 +11,17 @@
         <div class="user-profile">Profile</div>
         <div class="ui floating dropdown" appSmDropdown>
           <i class="ellipsis vertical icon"></i>
-          <div class="menu right">
-            <div class="item first" routerLink="/profile/edit">
-              <span>
-                <i class="edit icon"></i>
-                Edit Profile
-              </span>
+          <div class="right menu">
+            <div class="item first share">
+              <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
+              <div class="right menu">
+                <div class="item first last" (click)="copyLink()">
+                  Copy link
+                </div>
+              </div>
             </div>
-            <div class="item last" routerLink="/">
-              <span>
-                <i class="share alternate icon"></i>
-                Share Profile
-              </span>
+            <div class="item last" routerLink="/profile/edit">
+              <i class="edit icon"></i>Edit Profile
             </div>
           </div>
         </div>
@@ -67,6 +66,12 @@
     <div class="top-songs">
       <h4 class="header">Top songs this month</h4>
       <app-songs-list [songs]="topSongs"></app-songs-list>
+    </div>
+    
+    <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
+      <div class="header">
+        Link copied to clipboard!
+      </div>
     </div>
   </div>
 </main>

@@ -1,4 +1,7 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ClipboardService } from 'ngx-clipboard';
+import { timer } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
@@ -27,13 +30,16 @@ export class UserProfileComponent implements OnInit {
   topArtists: ArtistReadDTO[] = [];
   topSongs: Song[] = [];
   myPlaylists: PlaylistView[] = [];
+  isSuccess: boolean = false;
 
   constructor(
     private _songService: SongsService,
     private _artistService: ArtistsService,
     private _authService: AuthService,
     private _userService: UserService,
-    private _playlistsService: PlaylistsService
+    private _playlistsService: PlaylistsService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) { }
 
   ngOnInit(): void {
@@ -108,6 +114,14 @@ export class UserProfileComponent implements OnInit {
   previousSlide = () => {
 
   };
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
+  }
 
   scroll = (id: string) => {
     const element = document.getElementById(id);
