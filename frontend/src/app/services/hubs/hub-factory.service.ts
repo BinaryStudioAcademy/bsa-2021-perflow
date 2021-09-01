@@ -34,12 +34,12 @@ export class HubFactoryService {
   private _buildHub(hubUrl: string, token: string) {
     const connection = new HubConnectionBuilder()
       .withUrl(this._buildUrl(hubUrl), {
-        skipNegotiation: true,
+        skipNegotiation: false,
         transport: HttpTransportType.WebSockets,
         accessTokenFactory: () => token
       })
       .withAutomaticReconnect()
-      .configureLogging(LogLevel.Information)
+      .configureLogging(LogLevel.Trace)
       .build();
 
     connection.keepAliveIntervalInMilliseconds = this.defaultTimeoutInMilliseconds;
