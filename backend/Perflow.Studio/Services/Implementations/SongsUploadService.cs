@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using Microsoft.Extensions.Options;
-using Perflow.Services.Interfaces;
+using Perflow.Studio.Services.Interfaces;
 using Shared.Processor.Models;
 using Shared.RabbitMQ.Interfaces;
 
-namespace Perflow.Services.Implementations
+namespace Perflow.Studio.Services.Implementations
 {
     public class SongsUploadService : ISongsUploadService, IDisposable
     {
@@ -24,7 +24,7 @@ namespace Perflow.Services.Implementations
 
         public void Dispose()
         {
-            _songProcessingQueue?.Dispose();
+            _songProcessingQueue.Dispose();
         }
     }
 }

@@ -53,6 +53,9 @@
                             <img class="streaming icon" src="../../../../assets/images/streaming.svg" />
                         </div>Start radio
                     </div>
+                    <div class="item" (click)="clickItem('Remove from album')" *ngIf="album && album?.artist?.id === userId">
+                      <i class="trash icon"></i>Remove from album
+                    </div>
                     <div class="item" (click)="clickItem('Add to queue')">
                         <div class="img-wrapper">
                             <img class="playlist" src="../../../../assets/images/playlist.svg" />
@@ -69,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item" (click)="clickItem('Remove from playlist')" *ngIf="playlistId">
+                    <div class="item" (click)="clickItem('Remove from playlist')" *ngIf="playlist && playlist?.author?.id === userId">
                         <i class="trash icon"></i>Remove from playlist
                     </div>
                     <div class="item" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ArtistPerflowStudioGuard } from 'src/app/guards/artist-perflow-studio.guard';
+import { ModeratorPerflowStudioGuard } from 'src/app/guards/moderator-perflow-studio.guard';
 import { PerflowStudioGuard } from 'src/app/guards/perflow-studio.guard';
 import {
   CreateEditPlaylistComponent
@@ -18,6 +20,8 @@ const routes: Routes = [{
     { path: '', redirectTo: 'playlists', pathMatch: 'full' },
     {
       path: 'playlists',
+      canActivate: [ModeratorPerflowStudioGuard],
+      canActivateChild: [ModeratorPerflowStudioGuard],
       children: [
         { path: '', component: PlaylistsPageComponent },
         { path: 'create', component: CreateEditPlaylistComponent },
@@ -26,6 +30,8 @@ const routes: Routes = [{
     },
     {
       path: 'albums',
+      canActivate: [ArtistPerflowStudioGuard],
+      canActivateChild: [ArtistPerflowStudioGuard],
       children: [
         { path: '', component: AlbumsPageComponent },
         { path: 'create', component: CreateEditAlbumComponent },

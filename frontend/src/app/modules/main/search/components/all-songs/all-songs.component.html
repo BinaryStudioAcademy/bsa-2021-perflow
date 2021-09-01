@@ -1,7 +1,12 @@
 <div class="container">
   <h2>All songs for <i>"{{searchTerm}}"</i></h2>
-  <div class="search-result" infinite-scroll [infiniteScrollDistance]="distance" [infiniteScrollThrottle]="throttle"
-    (scrolled)="onScroll()">
+  <div class="search-result" 
+    infinite-scroll 
+    [infiniteScrollDistance]="distance" 
+    [infiniteScrollThrottle]="throttle"
+    (scrolled)="onScroll()"
+    [scrollWindow]="false">
+
     <app-songs-list [songs]="songs"></app-songs-list>
   </div>
 </div>
