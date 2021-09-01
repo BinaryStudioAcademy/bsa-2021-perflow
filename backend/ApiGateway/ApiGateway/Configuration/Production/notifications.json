@@ -50,7 +50,7 @@
     },
     {
       "DownstreamPathTemplate": "/{anyHub}",
-      "DownstreamScheme": "ws",
+      "DownstreamScheme": "wss",
       "DownstreamHostAndPorts": [
         {
           "Host": "perflow",
