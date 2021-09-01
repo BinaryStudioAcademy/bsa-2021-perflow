@@ -9,6 +9,10 @@
       <div class="column applicant-name text">
         {{applicant.userName}}
       </div>
+      <div class="column applicant-group text">
+        <span *ngIf="applicant.group" class="prefix">GROUP: </span>
+        <a *ngIf="applicant.group" class="link text" [routerLink]="['/groups',  applicant.groupId]">{{ applicant.group }}</a>
+      </div>
       <div class="column applicant-status">
         <span class="prefix">REQUESTED: </span><span> {{ applicant.role | userRole | uppercase }}</span>
       </div>

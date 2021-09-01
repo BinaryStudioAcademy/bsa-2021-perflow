@@ -148,27 +148,5 @@ namespace Perflow.Services.Implementations
                     .Select(ar => ar.UserId)
                     .ToArrayAsync();
         }
-
-        public async Task<IEnumerable<NotificationReadDTO>> CreateApplicantNotificationAsync(NotificationWriteDTO notification, int applicantId)
-        {
-            var notifications = new List<Notification>();
-
-            var entity = await context.Notifications.AddAsync(new Notification
-            {
-                Description = notification.Description,
-                Title = notification.Title,
-                Type = notification.Type,
-                UserId = applicantId,
-                Reference = notification.Reference
-            });
-            
-            notifications.Add(entity.Entity);
-
-            await context.SaveChangesAsync();
-
-            _ = DeleteOlderThanAsync(maxNumberOfDaysToStoreNotification);
-
-            return mapper.Map<IEnumerable<NotificationReadDTO>>(notifications);
-        }
     }
 }

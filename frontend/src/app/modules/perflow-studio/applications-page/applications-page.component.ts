@@ -17,7 +17,7 @@ export class ApplicationsPageComponent implements OnInit, OnDestroy {
   readonly debounceTime: number = 750;
 
   applicants = [] as UserWithStatus[];
-  artists = [] as UserWithStatus[];
+  users = [] as UserWithStatus[];
   searchValue: string;
 
   private _unsubscribe$ = new Subject<void>();
@@ -52,7 +52,7 @@ export class ApplicationsPageComponent implements OnInit, OnDestroy {
       switchMap((term: string) => this._applicantsService.getArtistByName(term))
     ).subscribe({
       next: (data) => {
-        this.artists = data;
+        this.users = data;
       }
     });
   }
@@ -69,7 +69,7 @@ export class ApplicationsPageComponent implements OnInit, OnDestroy {
   clearSearch(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       this.searchValue = '';
-      this.artists = [] as UserWithStatus[];
+      this.users = [] as UserWithStatus[];
     }
   }
 
@@ -88,8 +88,8 @@ export class ApplicationsPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
-          const index = this.artists.findIndex((a) => a.id === userRole.id);
-          this.artists[index].role = userRole.role;
+          const index = this.users.findIndex((a) => a.id === userRole.id);
+          this.users[index].role = userRole.role;
         }
       });
   }

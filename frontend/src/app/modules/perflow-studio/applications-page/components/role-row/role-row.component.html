@@ -1,35 +1,28 @@
 <div class="ui padded grid role">
   <div class="role-row">
       <div class="column icon">
-        <img [src]="artist.iconURL" *ngIf="artist.iconURL">
-        <div class="icon-background" *ngIf="!artist.iconURL">
+        <img [src]="user.iconURL" *ngIf="user.iconURL">
+        <div class="icon-background" *ngIf="!user.iconURL">
           <i class="user icon"></i>
         </div>
       </div>
       <div class="column name text">
-        <a class="link text" [routerLink]="['/artists', artist.id]">{{artist.userName}}</a>
+        <a class="link text" *ngIf="user.role === 1" [routerLink]="['/artists', user.id]">{{user.userName}}</a>
+        <span class="text" *ngIf="user.role !== 1">{{user.userName}}</span>
       </div>
       <div class="column role text">
-        {{ artist.role | userRole }}
+        {{ user.role | userRole }}
       </div>
       <div class="column group text">
-        <a *ngIf="artist.group" class="link text" [routerLink]="['/groups',  artist.groupId]">{{ artist.group }}</a>
-        <span *ngIf="!artist.group" class="prefix">User has no any group</span>
+        <a *ngIf="user.group" class="link text" [routerLink]="['/groups',  user.groupId]">{{ user.group }}</a>
+        <span *ngIf="!user.group" class="prefix">User has no any group</span>
       </div>
       <div class="ui dropdown" appSmDropdown>
         <i class="ellipsis vertical icon"></i>
         <div class="menu left">
-          <div class="item first" (click)="menuClick(userRolesArray[0], artist.id)">
-              {{ userRolesArray[0] | userRole}}
-          </div>
-          <div class="item" (click)="menuClick(userRolesArray[1], artist.id)">
-            {{ userRolesArray[1] | userRole}}
-          </div>
-          <div class="item" (click)="menuClick(userRolesArray[2], artist.id)">
-            {{ userRolesArray[2] | userRole}}
-          </div>
-          <div  class="item last" (click)="menuClick(userRolesArray[3], artist.id)">
-            {{ userRolesArray[3] | userRole}}
+
+          <div *ngFor="let role of userRolesArray" class="item" (click)="menuClick(role, user.id)">
+              {{ role | userRole}}
           </div>
         </div>
       </div>

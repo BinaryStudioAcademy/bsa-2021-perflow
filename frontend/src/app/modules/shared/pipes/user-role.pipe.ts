@@ -9,7 +9,6 @@ export class UserRolePipe implements PipeTransform {
     switch (value as UserRoles) {
       case UserRoles.user: return 'User';
       case UserRoles.artist: return 'Artist';
-      case UserRoles.teamMember: return 'Team Member';
       case UserRoles.moderator: return 'Moderator';
       default: return 'User';
     }

@@ -1,5 +1,5 @@
 <div class="page"> 
-  <div class="container" *ngIf="true">
+  <div class="container">
     <h2>Find artist by name:</h2>
     <div class="ui search">
       <div class="ui icon input">
@@ -10,11 +10,11 @@
       </div>
     </div>
     <div class="search-result">
-      <app-role-row *ngFor="let artist of artists" [artist]="artist" (editRole)="editRole($event)"></app-role-row>
+      <app-role-row *ngFor="let user of users" [user]="user" (editRole)="editRole($event)"></app-role-row>
     </div>
   </div>
 
-  <div class="container" *ngIf="applicants.length">
+  <div class="container" *ngIf="applicants?.length">
     <h2>Perflow Studio Applicants:</h2>
     <app-aplicant-row *ngFor="let applicant of applicants" [applicant]="applicant"
     (setStatus)="setApplicationStatus($event)"></app-aplicant-row>

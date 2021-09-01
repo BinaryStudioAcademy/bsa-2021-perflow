@@ -38,8 +38,8 @@ $image-size: 30px
 .applicant-row
   width: 100%
   display: grid
-  grid-template-areas: "icon name status btn-approve btn-reject"
-  grid-template-columns: 50px 6fr 5fr 115px 115px
+  grid-template-areas: "icon name group status btn-approve btn-reject"
+  grid-template-columns: 50px 6fr 6fr 5fr 115px 115px
   align-items: center
   padding: 0.5rem 0
 
@@ -63,6 +63,9 @@ $image-size: 30px
 
 .applicant-name
   grid-area: name
+
+.applicant-group
+  grid-area: group
 
 .applicant-status
   grid-area: status

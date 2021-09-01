@@ -12,10 +12,10 @@ import { ApplicantsService } from 'src/app/services/applicants.service';
   styleUrls: ['./role-row.component.sass']
 })
 export class RoleRowComponent {
-  @Input() artist = {} as UserWithStatus;
+  @Input() user = {} as UserWithStatus;
 
   @Output() editRole = new EventEmitter<EditUserRole>();
-  readonly userRolesArray = [UserRoles.user, UserRoles.artist, UserRoles.teamMember, UserRoles.moderator];
+  readonly userRolesArray = [UserRoles.user, UserRoles.artist, UserRoles.moderator];
 
   constructor(private _applicantsService: ApplicantsService) {}
 
