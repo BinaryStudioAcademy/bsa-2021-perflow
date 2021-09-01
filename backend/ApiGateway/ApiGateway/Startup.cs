@@ -32,12 +32,6 @@ namespace ApiGateway
                 endpoints.MapControllers();
             });
 
-            app.UseCors(cors => cors
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .SetIsOriginAllowed(_ => true)
-                .AllowCredentials());
-
             app.UseWebSockets();
 
             await app.UseOcelot();
