@@ -48,7 +48,7 @@ namespace Perflow.Services.Implementations
         {
             var application = await context.PerflowStudioApplicants
                 .Include(a => a.User)
-                .FirstOrDefaultAsync(a => a.UserId == status.Id);
+                .FirstOrDefaultAsync(a => a.UserId == status.Id && a.Status == ApplicationStatus.Pending);
 
             if (application == null)
                 throw new NotFoundExcepion("There is no such an application");
