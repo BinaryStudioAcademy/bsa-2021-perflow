@@ -32,20 +32,20 @@ export class HubFactoryService {
   }
 
   private _buildHub(hubUrl: string, token: string) {
-    const connection = new HubConnectionBuilder()
+    return new HubConnectionBuilder()
       .withUrl(this._buildUrl(hubUrl), {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets,
         accessTokenFactory: () => token
       })
-      .withAutomaticReconnect()
+      //.withAutomaticReconnect()
       .configureLogging(LogLevel.Trace)
       .build();
 
-    connection.keepAliveIntervalInMilliseconds = this.defaultTimeoutInMilliseconds;
-    connection.serverTimeoutInMilliseconds = this.defaultTimeoutInMilliseconds;
+    //connection.keepAliveIntervalInMilliseconds = this.defaultTimeoutInMilliseconds;
+    //connection.serverTimeoutInMilliseconds = this.defaultTimeoutInMilliseconds;
 
-    return connection;
+    //return connection;
   }
 
   private _buildUrl(hubUrl: string) {
