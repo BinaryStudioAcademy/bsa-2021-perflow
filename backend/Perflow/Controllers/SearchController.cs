@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Songs;
 using Perflow.Common.DTO.Search;
+using Perflow.Common.DTO.Groups;
 
 namespace Perflow.Controllers
 {
@@ -36,6 +37,13 @@ namespace Perflow.Controllers
             (string searchTerm, int page, int itemsOnPage)
         {
             return Ok(await _searchService.FindArtistsByNameAsync(searchTerm, page, itemsOnPage));
+        }
+
+        [HttpGet("groups")]
+        public async Task<ActionResult<ICollection<GroupShortDTO>>> FindGroupsByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
+        {
+            return Ok(await _searchService.FindGroupsByNameAsync(searchTerm, page, itemsOnPage));
         }
 
         [HttpGet("albums")]
