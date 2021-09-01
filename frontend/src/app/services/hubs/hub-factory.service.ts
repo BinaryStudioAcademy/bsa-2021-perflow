@@ -38,14 +38,14 @@ export class HubFactoryService {
         transport: HttpTransportType.WebSockets,
         accessTokenFactory: () => token
       })
-      //.withAutomaticReconnect()
+      // .withAutomaticReconnect()
       .configureLogging(LogLevel.Trace)
       .build();
 
-    //connection.keepAliveIntervalInMilliseconds = this.defaultTimeoutInMilliseconds;
-    //connection.serverTimeoutInMilliseconds = this.defaultTimeoutInMilliseconds;
+    // connection.keepAliveIntervalInMilliseconds = this.defaultTimeoutInMilliseconds;
+    // connection.serverTimeoutInMilliseconds = this.defaultTimeoutInMilliseconds;
 
-    //return connection;
+    // return connection;
   }
 
   private _buildUrl(hubUrl: string) {
