@@ -63,6 +63,17 @@
                     </select>
                   </div>
                 </div>
+                <div class="form-group collaborators">
+                  <div class="field">
+                    <button 
+                    *ngIf="isCollaborative(editedPlaylist.accessType)" 
+                    (click)="switchColaborativeModal()"
+                    type="button" 
+                    class="ui btn-collaborators inverted basic button">
+                    Collaborators
+                  </button>
+                  </div>
+                </div>
                 <!-- Buttons Row -->
                 <div class="row buttons-row">
                   <div class="form-group">
@@ -76,9 +87,13 @@
         </div>
       </form>
       <!-- Modal cropper window -->
-      <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchModal()"></app-crop-image>
+      <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
     </div>
+    <!-- Colaborative modal -->
+    <app-colaborative-modal 
+    *ngIf="isColaborativeModalShown" 
+    (isClosed)="switchColaborativeModal()"
+    [(collaborators)]="collaborators">
+  </app-colaborative-modal>
   </div>
-
-
 </div>

@@ -35,10 +35,26 @@ namespace Perflow.Controllers
             return Ok();
         }
 
+        [HttpPost("addCollaborators/{playlistId}")]
+        public async Task<ActionResult> AddCollaborators(int playlistId, [FromBody] IEnumerable<ArtistReadDTO> collaborators)
+        {
+            await _playlistEditorsService.AddCollaborators(playlistId, collaborators);
+
+            return Ok();
+        }
+
         [HttpDelete]
         public async Task<ActionResult> Remove([FromBody] PlaylistEditorDTO pe)
         {
             await _playlistEditorsService.Remove(pe);
+
+            return Ok();
+        }
+
+        [HttpDelete("{playlistId}")]
+        public async Task<ActionResult> RemovePlaylist(int playlistId)
+        {
+            await _playlistEditorsService.RemovePlaylist(playlistId);
 
             return Ok();
         }

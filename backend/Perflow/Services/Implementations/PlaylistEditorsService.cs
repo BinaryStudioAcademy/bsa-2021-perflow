@@ -34,6 +34,20 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
+        public async Task AddCollaborators(int playlistId, IEnumerable<ArtistReadDTO> collaborators)
+        {
+            await this.RemovePlaylist(playlistId);
+            var pes = collaborators
+                        .Select(u => 
+                        new PlaylistEditorDTO { 
+                            PlaylistId = playlistId, 
+                            UserId = u.Id 
+                        });
+            await context.PlaylistEditors.AddRangeAsync(mapper.Map<IEnumerable<PlaylistEditor>>(pes));
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task Remove(PlaylistEditorDTO pe)
         {
             var removeEntity = context.PlaylistEditors
@@ -41,6 +55,16 @@ namespace Perflow.Services.Implementations
                                                                _pe.UserId == pe.UserId);
             context.PlaylistEditors.Remove(removeEntity);
             
+            await context.SaveChangesAsync();
+        }
+
+        public async Task RemovePlaylist(int playlistId)
+        {
+            var removeEntities = context.PlaylistEditors
+                                        .Where(_pe => _pe.PlaylistId == playlistId);
+
+            context.PlaylistEditors.RemoveRange(removeEntities);
+
             await context.SaveChangesAsync();
         }
     }

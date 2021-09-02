@@ -19,7 +19,15 @@ export class PlaylistEditorsService {
     return this._httpService.postRequest<PlaylistEditor>(this._endpoint, pe);
   }
 
+  addCollaborators(playlistId: number, pes: Array<ArtistReadDTO>): Observable<Array<ArtistReadDTO>> {
+    return this._httpService.postRequest<Array<ArtistReadDTO>>(`${this._endpoint}/addCollaborators/${playlistId}`, pes);
+  }
+
   remove(pe: PlaylistEditor): Observable<PlaylistEditor> {
     return this._httpService.deleteRequest<PlaylistEditor>(this._endpoint, pe);
+  }
+
+  removePlaylist(playlistId: number): Observable<number> {
+    return this._httpService.deleteRequest<number>(`${this._endpoint}/${playlistId}`);
   }
 }
