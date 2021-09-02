@@ -303,8 +303,4 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.isSuccess = Boolean(val);
     });
   }
-
-  isAuthor() {
-    return this.playlist.author.id === this.userId;
-  }
 }
