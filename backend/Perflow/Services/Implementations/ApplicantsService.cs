@@ -62,6 +62,7 @@ namespace Perflow.Services.Implementations
             }
 
             context.Update(application);
+            context.PerflowStudioApplicants.Remove(application);
 
             await context.SaveChangesAsync();
         }
