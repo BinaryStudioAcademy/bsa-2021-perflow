@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:perflow/cubits/search/search_songs_cubit.dart';
+import 'package:perflow/models/search/search_params.dart';
 import 'package:perflow/models/songs/song.dart';
+import 'package:perflow/services/search/search_text_edit_service.dart';
 import 'package:perflow/widgets/songs/song_row.dart';
 
 class SearchSongsScreen extends StatefulWidget {
@@ -15,6 +17,9 @@ class SearchSongsScreen extends StatefulWidget {
 class _SearchSongsScreenState extends State<SearchSongsScreen> {
   Function()? onScrollEnd;
   List<Song> songs = <Song>[];
+  SearchParams searchParams =
+      SearchParams(SearchTextEditService().text ?? '', 1, 12);
+  bool isFirstCall = true;
   late final ScrollController _scrollController;
 
   @override
@@ -40,6 +45,25 @@ class _SearchSongsScreenState extends State<SearchSongsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (isFirstCall) {
+      SearchTextEditService().onTextEdit = (String text) {
+        setState(
+          () {
+            searchParams.searchTerm = text;
+            searchParams.page = 1;
+            songs.clear();
+            if (!context.read<SearchSongsCubit>().isLoading) {
+              context.read<SearchSongsCubit>().loadInfo(searchParams);
+            }
+          },
+        );
+      };
+
+      context.read<SearchSongsCubit>().loadInfo(searchParams);
+
+      isFirstCall = false;
+    }
+
     return BlocListener<SearchSongsCubit, ApiCallState<List<Song>>>(
       listener: (context, state) => _getSongs(context, state),
       child: ListView.builder(
@@ -62,8 +86,8 @@ class _SearchSongsScreenState extends State<SearchSongsScreen> {
         () => {
           songs.addAll(value.data),
           onScrollEnd = () {
-            context.read<SearchSongsCubit>().searchParams.page += 1;
-            context.read<SearchSongsCubit>().loadInfo();
+            searchParams.page += 1;
+            context.read<SearchSongsCubit>().loadInfo(searchParams);
           },
         },
       ),

@@ -1,36 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
-import 'package:perflow/cubits/search/search_songs_cubit.dart';
-import 'package:perflow/models/songs/song.dart';
-import 'package:perflow/widgets/songs/song_row.dart';
+import 'package:perflow/cubits/search/search_playlists_cubit.dart';
+import 'package:perflow/models/playlists/playlist_simplified.dart';
+import 'package:perflow/models/search/search_params.dart';
+import 'package:perflow/services/search/search_text_edit_service.dart';
+import 'package:perflow/widgets/playlists/playlist_row.dart';
 
-class SearchPlaylistsScreen extends StatelessWidget {
+class SearchPlaylistsScreen extends StatefulWidget {
   const SearchPlaylistsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Coming soon..."),
-    );
+  _SearchPlaylistsScreenState createState() => _SearchPlaylistsScreenState();
+}
 
-    return BlocBuilder<SearchSongsCubit, ApiCallState<List<Song>>>(
-        builder: _buildSongsList);
+class _SearchPlaylistsScreenState extends State<SearchPlaylistsScreen> {
+  Function()? onScrollEnd;
+  List<PlaylistSimplified> playlists = <PlaylistSimplified>[];
+  SearchParams searchParams =
+      SearchParams(SearchTextEditService().text ?? '', 1, 12);
+  bool isFirstCall = true;
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController = ScrollController();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent &&
+          onScrollEnd != null) {
+        onScrollEnd!.call();
+      }
+    });
   }
 
-  Widget _buildSongsList(BuildContext context, ApiCallState<List<Song>> state) {
-    return state.map(
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isFirstCall) {
+      SearchTextEditService().onTextEdit = (String text) {
+        setState(
+          () {
+            searchParams.searchTerm = text;
+            searchParams.page = 1;
+            playlists.clear();
+            if (!context.read<SearchPlaylistsCubit>().isLoading) {
+              context.read<SearchPlaylistsCubit>().loadInfo(searchParams);
+            }
+          },
+        );
+      };
+
+      context.read<SearchPlaylistsCubit>().loadInfo(searchParams);
+
+      isFirstCall = false;
+    }
+
+    return BlocListener<SearchPlaylistsCubit,
+        ApiCallState<List<PlaylistSimplified>>>(
+      listener: (context, state) => _getPlaylists(context, state),
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: playlists.length,
+        itemBuilder: (context, index) {
+          return PlaylistRow(playlist: playlists[index]);
+        },
+      ),
+    );
+  }
+
+  void _getPlaylists(
+      BuildContext context, ApiCallState<List<PlaylistSimplified>> state) {
+    state.map(
       loading: (_) => const Center(
         child: CircularProgressIndicator(),
       ),
       error: (error) => Center(child: Text(error.message)),
-      data: (value) => ListView.builder(
-        itemBuilder: (context, index) {
-          return SongRow(song: value.data[index]);
+      data: (value) => setState(
+        () => {
+          playlists.addAll(value.data),
+          onScrollEnd = () {
+            searchParams.page += 1;
+            context.read<SearchPlaylistsCubit>().loadInfo(searchParams);
+          },
         },
-        itemCount: value.data.length,
-        shrinkWrap: true,
-        physics: const ClampingScrollPhysics(),
       ),
     );
   }
