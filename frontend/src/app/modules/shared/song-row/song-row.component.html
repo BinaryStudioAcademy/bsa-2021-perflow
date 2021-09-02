@@ -56,7 +56,7 @@
                     <div class="item" (click)="clickItem('Remove from album')" *ngIf="album && album?.artist?.id === userId">
                       <i class="trash icon"></i>Remove from album
                     </div>
-                    <div class="item" (click)="clickItem('Add to queue')">
+                    <div class="item" *ngIf="!isRemoveFromQueueShonw" (click)="clickItem('Add to queue')">
                         <div class="img-wrapper">
                             <img class="playlist" src="../../../../assets/images/playlist.svg" />
                         </div>Add to queue
