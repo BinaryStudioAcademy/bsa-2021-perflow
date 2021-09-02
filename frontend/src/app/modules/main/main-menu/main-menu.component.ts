@@ -4,13 +4,15 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, first, takeUntil } from 'rxjs/operators';
 import { Playlist } from 'src/app/models/playlist';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { AccessType } from 'src/app/models/playlist/accessType';
+import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -22,9 +24,11 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   @ViewChild('ddmenu') menu: ElementRef;
 
   playlists: PlaylistName[] = [];
+  collaborativePlaylists: PlaylistName[] = [];
   editedPlaylist = {} as PlaylistName;
   isEditPlaylistMode: boolean = false;
   isSuccess: boolean = false;
+  userId: number;
 
   private _tempPlaylist = {} as PlaylistName;
 
@@ -35,10 +39,18 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     private _createdPlaylistService: CreatePlaylistService,
     private _router: Router,
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _playlistEditorsService: PlaylistEditorsService,
+    private _authService: AuthService
   ) { }
 
   public ngOnInit() {
+    this._authService.getAuthStateObservableFirst()
+      .pipe(filter((state) => !!state))
+      .subscribe((authState) => {
+        this.userId = authState!.id;
+      });
+
     this.getUserCreatedPlaylists();
 
     this._createdPlaylistService.playlistChanged$.subscribe((playlist) => {
@@ -70,6 +82,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         (resp: HttpResponse<PlaylistName[]>) => {
           this.playlists = resp.body!;
           this._createdPlaylistService.fillCreatedPlylistsArray(resp.body! as PlaylistName[]);
+          this.loadCollaborativePlaylists();
         }
       );
   }
@@ -204,5 +217,23 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   canShare() {
     return this._tempPlaylist.accessType !== AccessType.secret;
+  }
+
+  loadCollaborativePlaylists() {
+    this._playlistEditorsService.getCollaborativePlaylists(this.userId)
+      .pipe(first())
+      .subscribe(
+        (reuslt) => {
+          this.collaborativePlaylists = reuslt.filter((p) => !this.isByThisAuthor(p.id));
+        }
+      );
+  }
+
+  isByThisAuthor(playlistId: number) {
+    return this.playlists.find((p) => p.id === playlistId) !== undefined;
+  }
+
+  isPlaylistCollaborativeSettings() {
+    return this.collaborativePlaylists.find((p) => p.id === this._tempPlaylist.id) !== undefined;
   }
 }

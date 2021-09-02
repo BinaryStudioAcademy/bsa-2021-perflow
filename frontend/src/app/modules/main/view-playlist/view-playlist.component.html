@@ -28,13 +28,13 @@
               <div class="ui floating dropdown ellipsis-button" appSmDropdown>
                 <i class="ellipsis vertical icon"></i>
                 <div class="menu">
-                  <div *ngIf="isAuthor" class="item first" routerLink="../../edit/{{playlist.id}}">
+                  <div *ngIf="isAuthor || isCollaborative" class="item first" routerLink="../../edit/{{playlist.id}}">
                     <span>
                       <i class="edit outline icon"></i>
                       Edit playlist
                     </span>
                   </div>
-                  <div class="item" (click)="addToQueue()" [ngClass]="{'first':!isAuthor}">
+                  <div class="item" (click)="addToQueue()" [ngClass]="{'first':!isAuthor && !isCollaborative}">
                     <span>
                       <i class="outdent icon"></i>
                       Add to queue
