@@ -24,6 +24,7 @@ export class EditPlaylistModalComponent implements OnInit {
   public tempIconURL: string;
 
   @Input() editedPlaylist: EditedPlaylist;
+  @Input() isAuthor: boolean;
 
   @Output() isClosed = new EventEmitter<void>();
   @Output() editPlaylist = new EventEmitter<EditedPlaylist>();

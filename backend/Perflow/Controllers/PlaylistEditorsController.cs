@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.PlaylistEditors;
+using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.Users;
 using Perflow.Services.Implementations;
 using System;
@@ -57,6 +58,12 @@ namespace Perflow.Controllers
             await _playlistEditorsService.RemovePlaylist(playlistId);
 
             return Ok();
+        }
+
+        [HttpGet("collaborativePlaylists/{userId}")]
+        public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetCollaborativePlaylists(int userId)
+        {
+            return Ok(await _playlistEditorsService.GetCollaborativePlaylists(userId));
         }
     }
 }

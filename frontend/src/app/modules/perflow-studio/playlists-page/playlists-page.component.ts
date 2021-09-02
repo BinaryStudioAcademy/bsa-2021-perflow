@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators';
+import { filter, first } from 'rxjs/operators';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 
 @Component({
@@ -11,11 +12,13 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 })
 export class PlaylistsPageComponent implements OnInit {
   playlists: PlaylistView[] = [];
+  collaborativePlaylists: PlaylistView[] = [];
   userId: number = -1;
 
   constructor(
     private _authService: AuthService,
-    private _playlistService: PlaylistsService
+    private _playlistService: PlaylistsService,
+    private _playlistEditorsService: PlaylistEditorsService
   ) {
   }
 
@@ -31,8 +34,24 @@ export class PlaylistsPageComponent implements OnInit {
 
   loadPlaylist() {
     this._playlistService.getPlaylistsByAuthorId(this.userId)
-      .subscribe((ps) => {
-        this.playlists = ps;
-      });
+    .pipe(first())
+    .subscribe((ps) => {
+      this.playlists = ps;
+      this.loadCollaborativePlaylists();
+    });
+  }
+
+  loadCollaborativePlaylists() {
+    this._playlistEditorsService.getCollaborativePlaylists(this.userId)
+    .pipe(first())
+    .subscribe(
+      reuslt => {
+        this.collaborativePlaylists = reuslt.filter(p => !this.isByThisAuthor(p.id));
+      }
+    )
+  }
+
+  isByThisAuthor(playlistId: number) {
+    return this.playlists.find(p => p.id === playlistId) !== undefined;
   }
 }

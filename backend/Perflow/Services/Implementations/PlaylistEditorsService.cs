@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Perflow.Common.DTO.Playlists;
 
 namespace Perflow.Services.Implementations
 {
@@ -66,6 +67,17 @@ namespace Perflow.Services.Implementations
             context.PlaylistEditors.RemoveRange(removeEntities);
 
             await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<PlaylistViewDTO>> GetCollaborativePlaylists(int userId)
+        {
+            var collaborators = await context.PlaylistEditors
+                                            .Where(pe => pe.UserId == userId)
+                                            .Include(pe => pe.Playlist)
+                                            .Select(pe => pe.Playlist)
+                                            .ToListAsync();
+
+            return mapper.Map<IEnumerable<PlaylistViewDTO>>(collaborators);
         }
     }
 }
