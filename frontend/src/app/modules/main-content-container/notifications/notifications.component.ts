@@ -110,9 +110,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  displayLink = (notif: Notification) => {
-    return notif.type === NotificationType.artistSubscribtion
+  displayLink = (notif: Notification) => notif.type === NotificationType.artistSubscribtion
     || notif.type === NotificationType.groupSubscribtion
     || notif.type === NotificationType.collaborativePlaylistSubscription;
-  }
 }
