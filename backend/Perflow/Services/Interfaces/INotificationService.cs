@@ -7,7 +7,8 @@ namespace Perflow.Services.Interfaces
 {
     public interface INotificationService
     {
-        Task<IEnumerable<NotificationReadDTO>> CreateNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type);
+        Task<IEnumerable<NotificationReadDTO>> CreateSubscriberNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type);
+        Task<NotificationReadDTO> CreateNotificationAsync(NotificationWriteDTO notification, int subscriberId, bool autoSaveChanges = true);
 
         Task SendNotificationAsync(IEnumerable<NotificationReadDTO> notifications);
 
