@@ -45,16 +45,21 @@ namespace Perflow.Services.Implementations
         public async Task AddCollaborators(int playlistId, IEnumerable<ArtistReadDTO> collaborators)
         {
             await this.RemovePlaylist(playlistId);
-            var pes = collaborators
-                        .Select(u => 
-                        new PlaylistEditorDTO { 
-                            PlaylistId = playlistId, 
-                            UserId = u.Id 
+            if(collaborators.Any())
+            {
+                var pes = collaborators
+                        .Select(u =>
+                        new PlaylistEditorDTO
+                        {
+                            PlaylistId = playlistId,
+                            UserId = u.Id
                         });
 
-            await context.PlaylistEditors.AddRangeAsync(mapper.Map<IEnumerable<PlaylistEditor>>(pes));
+                await context.PlaylistEditors.AddRangeAsync(mapper.Map<IEnumerable<PlaylistEditor>>(pes));
+                await SendAddedToCollaborativeNotificationsAsync(pes);
+            }
+            
             await context.SaveChangesAsync();
-            await SendAddedToCollaborativeNotificationsAsync(pes);
         }
 
         public async Task Remove(PlaylistEditorDTO pe)

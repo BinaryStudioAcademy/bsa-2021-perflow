@@ -189,8 +189,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe();
     }
-    else if (editedPlaylist.accessType === AccessType.collaborative
-              && this._editPlaylistModal.collaborators.length > 0) {
+    else if (editedPlaylist.accessType === AccessType.collaborative) {
       this._playlistEditorsService.addCollaborators(editedPlaylist.id, this._editPlaylistModal.collaborators)
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe();
