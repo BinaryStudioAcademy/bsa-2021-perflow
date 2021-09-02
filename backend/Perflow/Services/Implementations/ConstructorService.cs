@@ -122,8 +122,26 @@ namespace Perflow.Services.Implementations
                                                                                                                                 ReleaseYear = a.ReleaseYear
                                                                                                                             })
                                                                                                                             .FirstOrDefault(a => a.Id == pse.ReferenceId)
-                                                                    : pse.EntityType == Domain.Enums.EntityType.Artist ? _mapper.Map<ArtistReadDTO>(_context.Users.FirstOrDefault(a => a.Id == pse.ReferenceId)) 
-                                                                    : pse.EntityType == Domain.Enums.EntityType.Playlist ? _mapper.Map<PlaylistViewDTO>(_context.Playlists.FirstOrDefault(p => p.Id == pse.ReferenceId)) : null
+                                                                    : pse.EntityType == Domain.Enums.EntityType.Artist ? _context.Users
+                                                                                                                            .Select(a => new ArtistReadDTO
+                                                                                                                            {
+                                                                                                                                Id = a.Id,
+                                                                                                                                UserName = a.UserName,
+                                                                                                                                IsArtist = a.Role == Shared.Auth.UserRole.Artist,
+                                                                                                                                IconURL = _imageService.GetImageUrl(a.IconURL)
+                                                                                                                            })
+                                                                                                                            .FirstOrDefault(a => a.Id == pse.ReferenceId) 
+                                                                    : pse.EntityType == Domain.Enums.EntityType.Playlist ? _context.Playlists
+                                                                                                                            .Select(p => new PlaylistViewDTO
+                                                                                                                            {
+                                                                                                                                Id = p.Id,
+                                                                                                                                Name = p.Name,
+                                                                                                                                Description = p.Description,
+                                                                                                                                AccessType = _mapper.Map<AccessTypeDTO>(p.AccessType),
+                                                                                                                                IconURL = _imageService.GetImageUrl(p.IconURL)
+                                                                                                                            })
+                                                                                                                            .FirstOrDefault(a => a.Id == pse.ReferenceId) 
+                                                                    : null
                                                         })
                                                         .OrderBy(pse => pse.Position)
                                                         .ToList()
