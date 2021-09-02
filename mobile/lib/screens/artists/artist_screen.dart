@@ -143,26 +143,28 @@ class ArtistScreen extends StatelessWidget {
       data: (value) => SliverList(
         delegate: SliverChildBuilderDelegate((context, index) {
           return ContentRow(
-              contentType: RowType.album,
-              iconUrl: getValidUrl(value.data[index].iconURL),
-              primaryText: Text(
-                value.data[index].name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: textTheme.subtitle2,
-              ),
-              secondaryText: Text(
-                value.data[index].authorName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: textTheme.caption,
-              ),
-              onTap: () {
-                context.vRouter.to(
-                  Routes.album(value.data[index].id),
-                );
-              });
-        }, childCount: value.data.length),
+            contentType: RowType.album,
+            iconUrl: getValidUrl(value.data[index].iconURL),
+            primaryText: Text(
+              value.data[index].name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: textTheme.subtitle2,
+            ),
+            secondaryText: Text(
+              value.data[index].authorName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: textTheme.caption,
+            ),
+            onTap: () {
+              context.vRouter.to(
+                Routes.album(value.data[index].id),
+              );
+            },
+          );
+        }, 
+        childCount: value.data.length),
       ),
     );
   }
@@ -186,7 +188,8 @@ class ArtistScreen extends StatelessWidget {
         delegate: SliverChildBuilderDelegate((context, index) {
           final song = value.data[index];
           return SongRow(song: song);
-        }, childCount: value.data.length),
+        }, 
+        childCount: value.data.length),
       ),
     );
   }
