@@ -34,24 +34,24 @@ export class PlaylistsPageComponent implements OnInit {
 
   loadPlaylist() {
     this._playlistService.getPlaylistsByAuthorId(this.userId)
-    .pipe(first())
-    .subscribe((ps) => {
-      this.playlists = ps;
-      this.loadCollaborativePlaylists();
-    });
+      .pipe(first())
+      .subscribe((ps) => {
+        this.playlists = ps;
+        this.loadCollaborativePlaylists();
+      });
   }
 
   loadCollaborativePlaylists() {
     this._playlistEditorsService.getCollaborativePlaylists(this.userId)
-    .pipe(first())
-    .subscribe(
-      reuslt => {
-        this.collaborativePlaylists = reuslt.filter(p => !this.isByThisAuthor(p.id));
-      }
-    )
+      .pipe(first())
+      .subscribe(
+        (reuslt) => {
+          this.collaborativePlaylists = reuslt.filter((p) => !this.isByThisAuthor(p.id));
+        }
+      );
   }
 
   isByThisAuthor(playlistId: number) {
-    return this.playlists.find(p => p.id === playlistId) !== undefined;
+    return this.playlists.find((p) => p.id === playlistId) !== undefined;
   }
 }
