@@ -82,7 +82,8 @@ export class ColaborativeModalComponent implements OnInit, OnDestroy {
   }
 
   removeFromCollaborative(user: ArtistReadDTO) {
-    this.collaborators = this.collaborators.filter((u) => u.id !== user.id);
+    const index = this.collaborators.indexOf(user);
+    this.collaborators.splice(index, 1);
   }
 
   findUsersByName() {
