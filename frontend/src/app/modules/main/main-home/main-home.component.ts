@@ -13,12 +13,13 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter, take } from 'rxjs/operators';
 import { NewestFiveAlbum } from 'src/app/models/album/newest-five';
 import { ConstructorService } from 'src/app/services/constructor.service';
-import { ContainerFull } from 'src/app/models/constructor/container-full';
 import { PageSectionFull } from 'src/app/models/constructor/page-section-full';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { Song } from 'src/app/models/song/song';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { UserService } from 'src/app/services/user.service';
+import { ContainerFull } from 'src/app/models/constructor/container-full';
 
 @Component({
   selector: 'app-main-home',
@@ -47,6 +48,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   isSuccess: boolean = false;
   idSaveButtonShown: boolean = true;
+  showNewReleases: boolean;
 
   private _unsubscribe$ = new Subject<void>();
   private _userId: number;
@@ -58,7 +60,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private _constructorService: ConstructorService,
     private _songsService: SongsService,
     private _queueService: QueueService,
-    private _reactionService: ReactionService
+    private _reactionService: ReactionService,
+    private _userService: UserService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -68,10 +71,15 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this._userService.getUserSettings().pipe(takeUntil(this._unsubscribe$)).subscribe(
+      (resp) => {
+        this.showNewReleases = resp.body?.showNewReleases!;
+      }
+    );
     this._constructorService.getPublishedContainer()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
-        (resp) => {
+        (resp: HttpResponse<ContainerFull>) => {
           this.data = resp.body!;
           this.getAccordionAlbums();
         }
