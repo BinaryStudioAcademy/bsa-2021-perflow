@@ -56,16 +56,18 @@ namespace Perflow.Services.Implementations
             return userEntity.Entity;
         }
 
-        public async Task<ArtistApplicant> CreateArtistApplicantAsync(int userId, UserRole userRole)
+        public async Task<PerflowStudioApplicant> CreateArtistApplicantAsync(int userId, ArtistApplicantDTO artistApplicant)
         {
-            var result = await _context.ArtistApplicants.AddAsync(new ArtistApplicant(userId, userRole));
+            var applicant = new PerflowStudioApplicant(userId, (UserRole)artistApplicant.UserRole, artistApplicant.GroupId);
+
+            var result = await _context.PerflowStudioApplicants.AddAsync(applicant);
             await _context.SaveChangesAsync();
             return result.Entity;
         }
 
-        public async Task<ArtistApplicant> GetArtistApplicantAsync(int userId)
+        public async Task<PerflowStudioApplicant> GetArtistApplicantAsync(int userId)
         {
-            return await _context.ArtistApplicants.FirstOrDefaultAsync(us => us.UserId == userId && us.Status != Domain.Enums.ApplicationStatus.Approved);
+            return await _context.PerflowStudioApplicants.FirstOrDefaultAsync(us => us.UserId == userId && us.Status != Domain.Enums.ApplicationStatus.Approved);
         }
 
         public async Task<UserSettings> GetUserSettingsAsync(int userId)
