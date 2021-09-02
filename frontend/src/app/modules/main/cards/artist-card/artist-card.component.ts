@@ -16,8 +16,20 @@ export class ArtistCardComponent {
   isLiked: boolean = false;
   @Input()
   artist: ArtistReadDTO;
+  @Input()
+  isCheckBox: boolean = false;
+  @Input()
+  isCheckedConstructor: boolean;
+  @Input()
+  isDeletable: boolean = false;
+  @Input()
+  artistSection: number;
   @Output()
   delete = new EventEmitter<ArtistReadDTO>();
+  @Output()
+  deleteFromSection = new EventEmitter<any>();
+  @Output()
+  addDeleteFromSection = new EventEmitter<ArtistReadDTO>();
   @Output()
   apply = new EventEmitter<ArtistReadDTO>();
   @Output()
@@ -29,18 +41,32 @@ export class ArtistCardComponent {
     this.delete.emit(artist);
   }
 
+  onDeleteFromSectionClick(artist: ArtistReadDTO) {
+    const emitEntity = {
+      ...artist,
+      section: this.artistSection
+    };
+    this.deleteFromSection.emit(emitEntity);
+  }
+
   onApplyClick(artist: ArtistReadDTO) {
     this.apply.emit(artist);
   }
 
-  redirectTo() {
-    this.clickEmiter.emit();
+  handleClick() {
+    if (!this.isCheckBox) {
+      this.clickEmiter.emit();
 
-    if (this.artist.isArtist) {
-      this._router.navigateByUrl(`/artists/${this.artist.id}`);
+      if (this.artist.isArtist) {
+        this._router.navigateByUrl(`/artists/${this.artist.id}`);
+      }
+      else {
+        this._router.navigateByUrl(`/groups/${this.artist.id}`);
+      }
     }
     else {
-      this._router.navigateByUrl(`/groups/${this.artist.id}`);
+      this.isChecked = !this.isChecked;
+      this.addDeleteFromSection.emit(this.artist);
     }
   }
 }

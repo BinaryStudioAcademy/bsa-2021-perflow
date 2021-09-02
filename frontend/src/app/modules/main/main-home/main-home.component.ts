@@ -12,10 +12,14 @@ import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter, take } from 'rxjs/operators';
 import { NewestFiveAlbum } from 'src/app/models/album/newest-five';
+import { ConstructorService } from 'src/app/services/constructor.service';
+import { PageSectionFull } from 'src/app/models/constructor/page-section-full';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { Song } from 'src/app/models/song/song';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { UserService } from 'src/app/services/user.service';
+import { ContainerFull } from 'src/app/models/constructor/container-full';
 
 @Component({
   selector: 'app-main-home',
@@ -27,9 +31,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   private _newestCounter: number = 0;
   private _newestAlbums = new Array<NewestFiveAlbum>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
 
-  private readonly _newestAlbumsMax: number = 5;
   private readonly _animationDuration: number = 800;
   private readonly _scrollingSize: number = 1530;
+
+  public data: ContainerFull = {} as ContainerFull;
+  public accordionSection: PageSectionFull = {} as PageSectionFull;
+  public currentAccordionAlbum: NewestFiveAlbum = {} as NewestFiveAlbum;
+  public accordionAlbumsLength: number;
 
   public currentNewestAlbum = {} as NewestFiveAlbum;
   public recentlyPlayed = new Array<RecentlyPlayedSong>();
@@ -40,6 +48,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   isSuccess: boolean = false;
   idSaveButtonShown: boolean = true;
+  showNewReleases: boolean;
 
   private _unsubscribe$ = new Subject<void>();
   private _userId: number;
@@ -48,9 +57,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private _albumService: AlbumService,
     private _recentlyPlayedService: RecentlyPlayedService,
     private _authService: AuthService,
+    private _constructorService: ConstructorService,
     private _songsService: SongsService,
     private _queueService: QueueService,
-    private _reactionService: ReactionService
+    private _reactionService: ReactionService,
+    private _userService: UserService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -60,6 +71,20 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this._userService.getUserSettings().pipe(takeUntil(this._unsubscribe$)).subscribe(
+      (resp) => {
+        this.showNewReleases = resp.body?.showNewReleases!;
+      }
+    );
+    this._constructorService.getPublishedContainer()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp: HttpResponse<ContainerFull>) => {
+          this.data = resp.body!;
+          this.getAccordionAlbums();
+        }
+      );
+
     this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
     this.getNewReleases();
@@ -110,6 +135,12 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       });
   };
 
+  getAccordionAlbums() {
+    this.accordionSection = this.data.pageSections.find((ps) => ps.position === 1)!;
+    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[0]?.entity;
+    this.accordionAlbumsLength = [...this.accordionSection.pageSectionEntities].length;
+  }
+
   getNewestFiveAlbums() {
     this._albumService.getFiveNewestAlbums()
       .pipe(takeUntil(this._unsubscribe$))
@@ -125,7 +156,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   setButtonVisibility() {
-    this.idSaveButtonShown = this.currentNewestAlbum.artistId !== this._userId && !this.currentNewestAlbum.isLiked;
+    this.idSaveButtonShown = this.currentAccordionAlbum.artistId !== this._userId
+                          && !this.currentAccordionAlbum.isLiked;
   }
 
   getRecentlyPlayed() {
@@ -180,10 +212,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   nextSlide = () => {
     this.accordionAnimation();
     this._newestCounter += 1;
-    if (this._newestCounter > this._newestAlbumsMax - 1) {
+    if (this._newestCounter > this.accordionAlbumsLength - 1) {
       this._newestCounter = 0;
     }
-    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
+    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[this._newestCounter].entity;
     this.setButtonVisibility();
     this.accordionAnimation();
   };
@@ -192,9 +224,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.accordionAnimation();
     this._newestCounter -= 1;
     if (this._newestCounter < 0) {
-      this._newestCounter = this._newestAlbumsMax - 1;
+      this._newestCounter = this.accordionAlbumsLength - 1;
     }
-    this.currentNewestAlbum = this._newestAlbums[this._newestCounter];
+    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[this._newestCounter].entity;
     this.setButtonVisibility();
     this.accordionAnimation();
   };

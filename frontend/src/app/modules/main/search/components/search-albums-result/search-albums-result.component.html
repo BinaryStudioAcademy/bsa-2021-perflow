@@ -1,9 +1,23 @@
-<div class="result-container">
+<div class="result-container" *ngIf="!isCheckBox">
   <div class="result-header">
     <a class="field-name" routerLink="/search/{{term}}/albums">Albums</a>
   </div>
   <div class="result-body">
     <app-album-card (clickEmiter)="saveToSearchHistory(album)" [isLiked]="false" *ngFor="let album of albums" 
+      [album]="album"></app-album-card>
+  </div>
+</div>
+
+<div class="result-container checkbox" *ngIf="isCheckBox">
+  <div class="result-header">
+    <a class="field-name" routerLink="/search/{{term}}/albums">Albums</a>
+  </div>
+  <div class="result-body">
+    <app-album-card 
+      (addDeleteFromSection)="addDeleteFromSectionEvent($event)" 
+      [isCheckBox]="isCheckBox" 
+      *ngFor="let album of albums" 
+      [isChecked]="isChecked(album)"
       [album]="album"></app-album-card>
   </div>
 </div>
