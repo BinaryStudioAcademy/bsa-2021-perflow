@@ -18,8 +18,14 @@ export class ArtistCardComponent {
   isCheckBox: boolean = false;
   @Input()
   isChecked: boolean;
+  @Input()
+  isDeletable: boolean = false;
+  @Input()
+  artistSection: number;
   @Output()
   delete = new EventEmitter<ArtistReadDTO>();
+  @Output()
+  deleteFromSection = new EventEmitter<any>();
   @Output()
   addDeleteFromSection = new EventEmitter<ArtistReadDTO>();
   @Output()
@@ -29,6 +35,14 @@ export class ArtistCardComponent {
 
   onDeleteClick(artist: ArtistReadDTO) {
     this.delete.emit(artist);
+  }
+
+  onDeleteFromSectionClick(artist: ArtistReadDTO) {
+    const emitEntity = {
+      ...artist,
+      section: this.artistSection
+    };
+    this.deleteFromSection.emit(emitEntity);
   }
 
   handleClick() {

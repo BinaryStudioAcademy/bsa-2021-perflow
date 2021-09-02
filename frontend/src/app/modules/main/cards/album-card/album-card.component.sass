@@ -14,6 +14,15 @@
             margin-top: 3rem
             color: $text
             margin-right: 0 !important
+    .section-delete
+        visibility: hidden
+        position: absolute
+        text-align: center
+        top: 1px
+        right: 1px
+        color: $medium-orange
+        &:hover
+            color: red
     .remove
         right: 25px
         bottom: 25px
@@ -40,6 +49,8 @@
         top: 32px
         right: 32px
     &:hover
+        .section-delete
+            visibility: visible
         .play-icon
             opacity: 1
 

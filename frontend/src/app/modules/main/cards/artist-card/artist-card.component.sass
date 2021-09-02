@@ -1,6 +1,15 @@
 @import ../playlist-card-styles
     
 .card
+    .section-delete
+        visibility: hidden
+        position: absolute
+        text-align: center
+        top: 1px
+        right: 1px
+        color: $medium-orange
+        &:hover
+            color: red
     .image
         border-radius: 50%
         box-shadow: 0 0 20px black
@@ -21,6 +30,8 @@
         top: 28px
         right: 28px
     &:hover
+        .section-delete
+            visibility: visible
         .play-icon
             opacity: 1
 

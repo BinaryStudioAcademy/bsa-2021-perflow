@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ContainerView } from 'src/app/models/constructor/container-view';
 import { ConstructorService } from 'src/app/services/constructor.service';
 
@@ -10,6 +12,8 @@ import { ConstructorService } from 'src/app/services/constructor.service';
 export class ContainersPageComponent implements OnInit {
   containers: ContainerView[] = [] as ContainerView[];
 
+  private _unsubscribe$ = new Subject<void>();
+
   constructor(
     private _constructorService: ConstructorService
   ) {
@@ -17,10 +21,12 @@ export class ContainersPageComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this._constructorService.getAllContainersViews().subscribe(
-      (resp) => {
-        this.containers = resp.body!;
-      }
-    );
+    this._constructorService.getAllContainersViews()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp) => {
+          this.containers = resp.body!;
+        }
+      );
   }
 }

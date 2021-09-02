@@ -1,5 +1,8 @@
 <div class="card" (click)="handleClick()" [ngClass]="{checked:isChecked}">
   <div class="image-block">
+    <div class="section-delete" (click)="onDeleteFromSectionClick(album)" appClickStopPropagation *ngIf="!isCheckBox && isDeletable">
+      <i class="trash alternate outline icon"></i>
+    </div>
     <div class="image">
       <img [attr.src]="album.iconURL" alt="Album" *ngIf="album.iconURL" />
       <div class="icon-background" *ngIf="!album.iconURL">

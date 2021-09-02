@@ -19,9 +19,15 @@ export class PlaylistCardComponent {
   isCheckBox: boolean = false;
   @Input()
   isChecked: boolean;
+  @Input()
+  isDeletable: boolean = false;
+  @Input()
+  playlistSection: number;
 
   @Output()
   clickEmiter = new EventEmitter<void>();
+  @Output()
+  deleteFromSection = new EventEmitter<any>();
   @Output()
   addDeleteFromSection = new EventEmitter<PlaylistView>();
 
@@ -39,6 +45,14 @@ export class PlaylistCardComponent {
         this.updateQueue(songs);
       });
   };
+
+  onDeleteFromSectionClick(playlist: PlaylistView) {
+    const emitEntity = {
+      ...playlist,
+      section: this.playlistSection
+    };
+    this.deleteFromSection.emit(emitEntity);
+  }
 
   updateQueue(songs: Song[]) {
     if (!songs.length) {

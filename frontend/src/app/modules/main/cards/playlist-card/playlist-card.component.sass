@@ -11,6 +11,15 @@
     border-radius: 5px
     box-shadow: 0 0 10px darken($drk-gray, 5%)
     transition: background-color .2s ease-in-out
+    .section-delete
+        visibility: hidden
+        position: absolute
+        text-align: center
+        top: 1px
+        right: 1px
+        color: $medium-orange
+        &:hover
+            color: red
     .image
         width: 160px
         height: 160px
@@ -25,6 +34,8 @@
         height: 100%
         object-fit: cover
     &:hover
+        .section-delete
+            visibility: visible
         .play-icon
                 opacity: 1
         background-color: lighten($drk-rain, 5%)

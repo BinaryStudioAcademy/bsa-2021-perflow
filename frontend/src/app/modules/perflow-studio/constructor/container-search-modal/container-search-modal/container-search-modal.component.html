@@ -11,6 +11,7 @@
 
         <!-- Name -->
         <div class="ui field name">
+          <div class="section-name">Section name</div>
           <input type="text" maxlength="20" placeholder="Section name" [(ngModel)]="editedSection.name" 
             required #name="ngModel" pattern="[^<>^@]*" name="name" [attr.disabled]="isAccordion ? '' : null">     
         </div>

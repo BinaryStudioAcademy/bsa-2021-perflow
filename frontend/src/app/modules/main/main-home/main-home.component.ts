@@ -68,12 +68,14 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this._constructorService.getPublishedContainer().subscribe(
-      (resp) => {
-        this.data = resp.body!;
-        this.getAccordionAlbums();
-      }
-    );
+    this._constructorService.getPublishedContainer()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp) => {
+          this.data = resp.body!;
+          this.getAccordionAlbums();
+        }
+      );
 
     this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
@@ -127,7 +129,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   getAccordionAlbums() {
     this.accordionSection = this.data.pageSections.find((ps) => ps.position === 1)!;
-    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[0].entity;
+    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[0]?.entity;
     this.accordionAlbumsLength = [...this.accordionSection.pageSectionEntities].length;
   }
 

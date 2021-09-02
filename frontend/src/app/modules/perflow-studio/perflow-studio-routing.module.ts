@@ -18,7 +18,7 @@ const routes: Routes = [{
   path: '',
   component: MainPageComponent,
   canActivate: [PerflowStudioGuard],
-  // canActivateChild: [PerflowStudioGuard],
+  canActivateChild: [PerflowStudioGuard],
   children: [
     { path: '', redirectTo: 'playlists', pathMatch: 'full' },
     {
@@ -47,7 +47,6 @@ const routes: Routes = [{
         { path: '', component: ContainersPageComponent },
         { path: 'create', component: CreateEditContainerComponent },
         { path: 'edit/:id', component: CreateEditContainerComponent }
-        // { path: 'edit/:id', component: CreateEditAlbumComponent }
       ]
     }
   ]

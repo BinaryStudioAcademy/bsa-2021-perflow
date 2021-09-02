@@ -24,9 +24,15 @@ export class AlbumCardComponent {
   @Input()
   isChecked: boolean;
   @Input()
+  isDeletable: boolean = false;
+  @Input()
   isLikeButtonHidden: boolean = false;
+  @Input()
+  albumSection: number;
   @Output()
   delete = new EventEmitter<AlbumForReadDTO>();
+  @Output()
+  deleteFromSection = new EventEmitter<any>();
   @Output()
   addDeleteFromSection = new EventEmitter<AlbumForReadDTO>();
   @Output()
@@ -41,6 +47,14 @@ export class AlbumCardComponent {
 
   onDeleteClick(album: AlbumForReadDTO) {
     this.delete.emit(album);
+  }
+
+  onDeleteFromSectionClick(album: AlbumForReadDTO) {
+    const emitEntity = {
+      ...album,
+      section: this.albumSection
+    };
+    this.deleteFromSection.emit(emitEntity);
   }
 
   playAlbum = (id: number) => {

@@ -175,6 +175,11 @@ main
 .main-content
     background: $drk-gray
     padding: 50px 30px 50px 40px
+    .container-options
+        display: flex
+        justify-content: space-evenly
+        align-items: flex-start
+        margin-bottom: 15px
     .add-section
       width: 100%
       background: $light-gray
@@ -191,9 +196,11 @@ main
       background: $drk-gray
       border-radius: 50px
       display: flex
-      align-items: center
+      flex-direction: column
       justify-content: flex-start
-      grid-gap: 100px
+      grid-gap: 15px
+      align-items: flex-start
+      margin-left: 15px
       input[type="text"]
         font-size: 24px
         background: $drk-rain

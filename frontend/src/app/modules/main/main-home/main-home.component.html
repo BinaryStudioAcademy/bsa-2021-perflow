@@ -27,8 +27,8 @@
         </p>
 
         <div class="buttons">
-          <button class="ui btn-full button button-play" (click)="playAlbum(currentNewestAlbum.id)">Play</button>
-          <button *ngIf="idSaveButtonShown" class="ui inverted basic button btn-ghost button-save" (click)="saveAlbum(currentNewestAlbum.id)">
+          <button class="ui btn-full button button-play" (click)="playAlbum(currentAccordionAlbum.id)">Play</button>
+          <button *ngIf="idSaveButtonShown" class="ui inverted basic button btn-ghost button-save" (click)="saveAlbum(currentAccordionAlbum.id)">
             Save
           </button>
         </div>
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <div class="items-scroll-box" *ngFor="let section of data.pageSections.slice(1)">
+    <div class="items-scroll-box" *ngFor="let section of data.pageSections?.slice(1)">
       <div class="header">{{section.name}}</div>
       <div class="list-of-items">
         <div class="ui icon button scroll-button" (click)="scrollLeft('section-{{section.position}}')">

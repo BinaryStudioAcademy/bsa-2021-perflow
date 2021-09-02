@@ -9,7 +9,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { PageSectionEntityFull } from 'src/app/models/constructor/page-section-entity-full';
 import { ConstructorService } from 'src/app/services/constructor.service';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
@@ -61,13 +61,15 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
   }
 
   startEditMode = () => {
-    this._constructorService.getContainer(this._id!).subscribe(
-      (resp) => {
-        this.container = resp.body!;
-        this.maxPos = Math.max(...this.container.pageSections.map((o: PageSectionFull) => o.position));
-        this.isLoading = false;
-      }
-    );
+    this._constructorService.getContainer(this._id!)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (resp) => {
+          this.container = resp.body!;
+          this.maxPos = Math.max(...this.container.pageSections.map((o: PageSectionFull) => o.position));
+          this.isLoading = false;
+        }
+      );
   };
 
   getBasicContainerFull = () => ({
@@ -170,26 +172,30 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
 
   saveContainer = () => {
     if (this._id) {
-      this._constructorService.updateContainer(this.container).subscribe(
-        (resp) => {
-          this._snackbarService.show({
-            message: 'Your changes confirmed.',
-            header: 'Container edited successfully!'
-          });
-          this._router.navigateByUrl('/perflowstudio/constructor');
-        }
-      );
+      this._constructorService.updateContainer(this.container)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe(
+          (resp) => {
+            this._snackbarService.show({
+              message: 'Your changes confirmed.',
+              header: 'Container edited successfully!'
+            });
+            this._router.navigateByUrl('/perflowstudio/constructor');
+          }
+        );
     }
     else {
-      this._constructorService.createContainer(this.container).subscribe(
-        (resp) => {
-          this._snackbarService.show({
-            message: 'Now you can publish it.',
-            header: 'Container created successfully!'
-          });
-          this._router.navigateByUrl('/perflowstudio/constructor');
-        }
-      );
+      this._constructorService.createContainer(this.container)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe(
+          (resp) => {
+            this._snackbarService.show({
+              message: 'Now you can publish it.',
+              header: 'Container created successfully!'
+            });
+            this._router.navigateByUrl('/perflowstudio/constructor');
+          }
+        );
     }
   };
 
@@ -215,6 +221,21 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     });
     this.maxPos -= 1;
   };
+
+  onDeleteFromSectionClick(entity: any) {
+    const sectionIndex = this.container.pageSections
+      .findIndex((ps: PageSectionFull) => ps.position === entity.section);
+    const entityIndex = this.container.pageSections[sectionIndex]
+                                      .pageSectionEntities
+                                        .findIndex((pse) => pse.referenceId === entity.id);
+    const entityPosition = this.container.pageSections[sectionIndex].pageSectionEntities[entityIndex].position;
+    this.container.pageSections[sectionIndex].pageSectionEntities.forEach((pse: PageSectionEntityFull) => {
+      if (pse.position > entityPosition) {
+        pse.position -= 1;
+      }
+    });
+    this.container.pageSections[sectionIndex].pageSectionEntities.splice(entityIndex, 1);
+  }
 
   /* eslint-enable no-param-reassign */
   instanceOfAlbum = (data: any): data is AlbumForReadDTO => 'releaseYear' in data;
