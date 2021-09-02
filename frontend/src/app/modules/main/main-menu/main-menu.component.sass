@@ -64,42 +64,47 @@ $left-padding: 30px
     margin-top: 40px
     color: $text
     position: relative
-    span > h6
-        margin-left: $left-padding
-    ul
-        height: 100%
-        margin-top: 10px
-        li
-            display: flex
-            align-items: center
-            padding: 10px 0
-            padding-left: $left-padding
-            span
-              display: grid
-              grid-template-columns: 180px 10px
-              width: 200px !important
-              max-width: 200px !important
-              position: relative
-              span
-                grid-column: 1
-                display: inline
-                width: 170px !important
-                overflow: hidden !important
-                white-space: nowrap !important
-                text-overflow: ellipsis !important
-              i
-                display: none
-                grid-column: 2
-                justify-self: end
+    .section
+        position: relative
+        margin-bottom: 20px
+        &:last-child
+            margin-bottom: 0px
+        span > h6
+            margin-left: $left-padding
+        ul
+            height: 100%
+            margin-top: 10px
+            li
+                display: flex
+                align-items: center
+                padding: 10px 0
+                padding-left: $left-padding
+                span
+                    display: grid
+                    grid-template-columns: 180px 10px
+                    width: 200px !important
+                    max-width: 200px !important
+                    position: relative
+                    span
+                        grid-column: 1
+                        display: inline
+                        width: 170px !important
+                        overflow: hidden !important
+                        white-space: nowrap !important
+                        text-overflow: ellipsis !important
+                    i
+                        display: none
+                        grid-column: 2
+                        justify-self: end
 
-            &::before
-                content: "•"
-                color: #FD5D34
-                font-size: 35px
-            &:hover
-                background: $light-gray
-                .ellipsis.vertical.icon.pl-settings
-                    display: inline !important
+                &::before
+                    content: "•"
+                    color: #FD5D34
+                    font-size: 35px
+                &:hover
+                    background: $light-gray
+                    .ellipsis.vertical.icon.pl-settings
+                        display: inline !important
                     
 
 .pl-menu

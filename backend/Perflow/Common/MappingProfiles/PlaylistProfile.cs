@@ -26,7 +26,8 @@ namespace Perflow.Common.MappingProfiles
                 .ForMember(p => p.Id, opt => opt.MapFrom(c => c.Playlist.Id))
                 .ForMember(p => p.Name, opt => opt.MapFrom(c => c.Playlist.Name))
                 .ForMember(p => p.Description, opt => opt.MapFrom(c => c.Playlist.Description))
-                .ForMember(p => p.IconURL, opt => opt.MapFrom(c => c.IconURL));
+                .ForMember(p => p.IconURL, opt => opt.MapFrom(c => c.IconURL))
+                .ForMember(p => p.AccessType, opt => opt.MapFrom(c => c.Playlist.AccessType));
 
             CreateMap<PlaylistWithIcon, PlaylistDTO>()
                 .ForMember(p => p.Id, opt => opt.MapFrom(c => c.Playlist.Id))

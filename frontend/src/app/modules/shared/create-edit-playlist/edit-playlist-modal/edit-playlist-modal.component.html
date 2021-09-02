@@ -55,12 +55,22 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="isAuthor">
                   <div class="field">
                     <select class="ui dropdown dropdown-input" name="accessType" [ngModel]="editedPlaylist.accessType" 
                       (ngModelChange)="editedPlaylist.accessType=$event"  #accessType="ngModel" required>
                       <option *ngFor="let accessType of selectControlValues" [ngValue]="accessType">{{accessType | accessType}}</option>
                     </select>
+                  </div>
+                </div>
+                <div class="form-group collaborators">
+                  <div class="field">
+                    <a 
+                    *ngIf="isCollaborative(editedPlaylist.accessType) && isAuthor" 
+                    (click)="switchColaborativeModal()"
+                    class="link-collaborators">
+                    Collaborators
+                  </a>
                   </div>
                 </div>
                 <!-- Buttons Row -->
@@ -76,9 +86,13 @@
         </div>
       </form>
       <!-- Modal cropper window -->
-      <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchModal()"></app-crop-image>
+      <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
     </div>
+    <!-- Colaborative modal -->
+    <app-colaborative-modal 
+    *ngIf="isColaborativeModalShown" 
+    (isClosed)="switchColaborativeModal()"
+    [(collaborators)]="collaborators">
+  </app-colaborative-modal>
   </div>
-
-
 </div>

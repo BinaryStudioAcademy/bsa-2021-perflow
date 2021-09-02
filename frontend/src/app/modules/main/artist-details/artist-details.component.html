@@ -47,7 +47,7 @@
   </div>
 
   <div class="main-content-container">
-    <app-songs-list [songs]="topSongs"></app-songs-list>
+    <app-songs-list *ngIf="topSongs.length > 0" [songs]="topSongs"></app-songs-list>
     <div class="items-scroll-box top-artists" *ngIf="artistAlbums.length > 0">
       <h4 class="header">Albums</h4>
       <div class="list-of-items">

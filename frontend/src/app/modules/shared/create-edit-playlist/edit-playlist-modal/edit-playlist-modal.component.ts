@@ -1,9 +1,12 @@
 import {
   Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
+import { first } from 'rxjs/operators';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 import { CroppedImageData } from 'src/app/models/shared/cropped.model';
+import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 
 @Component({
   selector: 'app-edit-playlist-modal',
@@ -12,6 +15,7 @@ import { CroppedImageData } from 'src/app/models/shared/cropped.model';
 })
 export class EditPlaylistModalComponent implements OnInit {
   isCropperModalShown = false;
+  isColaborativeModalShown = false;
 
   readonly pattern = '.*(.jpg$|.png$|.jpeg$)';
 
@@ -20,12 +24,28 @@ export class EditPlaylistModalComponent implements OnInit {
   public tempIconURL: string;
 
   @Input() editedPlaylist: EditedPlaylist;
+  @Input() isAuthor: boolean;
 
   @Output() isClosed = new EventEmitter<void>();
   @Output() editPlaylist = new EventEmitter<EditedPlaylist>();
 
+  collaborators = new Array<ArtistReadDTO>();
+
+  constructor(
+    private _playlistEditorsService: PlaylistEditorsService
+  ) {}
+
   ngOnInit() {
     this.tempIconURL = this.editedPlaylist.iconURL;
+    if (this.editedPlaylist.accessType === AccessType.collaborative) {
+      this._playlistEditorsService.getCollaborators(this.editedPlaylist.id)
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            this.collaborators = result;
+          }
+        );
+    }
   }
 
   public onSubmit() {
@@ -34,8 +54,12 @@ export class EditPlaylistModalComponent implements OnInit {
     this.editPlaylist.emit(this.editedPlaylist);
   }
 
-  switchModal() {
+  switchCropperImageModal() {
     this.isCropperModalShown = !this.isCropperModalShown;
+  }
+
+  switchColaborativeModal() {
+    this.isColaborativeModalShown = !this.isColaborativeModalShown;
   }
 
   cancelModal() {
@@ -68,4 +92,6 @@ export class EditPlaylistModalComponent implements OnInit {
     this.file = croppedFile.croppedFile;
     this.tempIconURL = croppedFile.croppedImage;
   };
+
+  isCollaborative = (accessType: AccessType) => accessType === AccessType.collaborative;
 }
