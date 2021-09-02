@@ -37,7 +37,7 @@ namespace Perflow.Controllers
             return Ok();
         }
 
-        [HttpGet("userstSearch")]
+        [HttpGet("usersSearch")]
         public async Task<ActionResult> GetUsersByNameAsync([FromQuery] string term)
         {
             return Ok(await _applicationService.GetUsersByNameAsync(term));

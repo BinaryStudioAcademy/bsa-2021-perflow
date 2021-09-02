@@ -25,7 +25,7 @@ export class ApplicantsService {
 
   getArtistByName(term: string): Observable<UserWithStatus[]> {
     const httpParams = { term };
-    return this._httpService.getRequest<UserWithStatus[]>(`${this._routePrefix}/userstSearch`, httpParams);
+    return this._httpService.getRequest<UserWithStatus[]>(`${this._routePrefix}/usersSearch`, httpParams);
   }
 
   editUserRole(userRole: EditUserRole): Observable<EditUserRole> {
