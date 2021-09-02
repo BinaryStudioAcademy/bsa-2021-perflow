@@ -1,0 +1,63 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/constructor",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/constructor",
+      "UpstreamHttpMethod": [
+        "GET",
+        "PUT",
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/constructor/published",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/constructor/published",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/constructor/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/constructor/{id}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "DELETE"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/constructor/publish",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/constructor/publish",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    }
+  ]
+}

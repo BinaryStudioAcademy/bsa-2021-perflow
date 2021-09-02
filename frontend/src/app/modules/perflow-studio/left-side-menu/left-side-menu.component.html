@@ -18,6 +18,12 @@
       </a>
     </div>
     <div class="router-link" *ngIf="userRole === userRoles.moderator">
+      <a routerLink="./constructor" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+        <span class="circle-fire"> <i class="gem outline icon"></i></span>
+        <h5 class="route-name">Constructor</h5>
+      </a>
+    </div>
+    <div class="router-link" *ngIf="userRole === userRoles.moderator">
       <a routerLink="./applicants" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
         <span class="circle-fire"> <i class="user plus icon"></i></span>
         <h5 class="route-name">Applicants</h5>
