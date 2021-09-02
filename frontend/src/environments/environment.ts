@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  apiUrl: 'https://localhost:5001',
+  apiUrl: 'https://localhost:44328',
 
   firebaseConfig: {
     apiKey: process.env.FIREBASE_KEY,
