@@ -37,7 +37,6 @@ namespace Perflow
 
             services.AddHttpClient();
 
-            services.AddSignalR();
             services.AddUserIdProvider();
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
@@ -52,6 +51,8 @@ namespace Perflow
             });
 
             services.AddBlobStorage(Configuration["ConnectionStrings:BlobStorage"]);
+
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -66,8 +67,8 @@ namespace Perflow
             app.UseCors(builder => builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials()
-                .WithOrigins(Configuration["AngularAppURL"]));
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 
