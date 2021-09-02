@@ -16,6 +16,7 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { Song } from 'src/app/models/song/song';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-main-home',
@@ -40,6 +41,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   isSuccess: boolean = false;
   idSaveButtonShown: boolean = true;
+  showNewReleases: boolean;
 
   private _unsubscribe$ = new Subject<void>();
   private _userId: number;
@@ -50,7 +52,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _songsService: SongsService,
     private _queueService: QueueService,
-    private _reactionService: ReactionService
+    private _reactionService: ReactionService,
+    private _userService: UserService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -60,6 +63,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this._userService.getUserSettings().pipe(takeUntil(this._unsubscribe$)).subscribe(
+      resp => {
+        this.showNewReleases = resp.body?.showNewReleases!;
+      }
+    )
     this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
     this.getNewReleases();

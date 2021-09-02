@@ -47,7 +47,7 @@
     </div>
 
     <!-- New Releases -->
-    <div class="items-scroll-box calmRhythms">
+    <div class="items-scroll-box calmRhythms" *ngIf="showNewReleases">
       <div class="header">New releases</div>
       <div class="list-of-items">
         <div class="ui icon button scroll-button" (click)="scrollLeft('album')">
