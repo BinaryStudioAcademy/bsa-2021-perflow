@@ -1,32 +1,29 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/models/reactions/new_artist_reaction.dart';
 import 'package:perflow/services/auth/auth_service.dart';
 import 'package:perflow/services/reactions/artists_reactions_api.dart';
+import 'package:perflow/cubits/reactions/reaction_state.dart';
 
-part 'artist_reaction_state.dart';
-part 'artist_reaction_cubit.freezed.dart';
-
-class ArtistReactionCubit extends Cubit<ArtistReactionState> {
+class ArtistReactionCubit extends Cubit<ReactionState> {
   final _artistReactionsApi = getService<ArtistsReactionsApi>();
   final _authService = getService<AuthService>();
 
-  ArtistReactionCubit() : super(ArtistReactionState.initial());
+  ArtistReactionCubit() : super(ReactionState.loading());
 
   Future<void> likeArtist(int artistId) async {
-    emit(ArtistReactionState.loading());
+    emit(ReactionState.loading());
 
     final reaction = NewArtistReaction(
         artistId: artistId, userId: _authService.currentAuthState!.id);
 
     try {
       await _artistReactionsApi.likeArtist(reaction);
-      
-      emit(ArtistReactionState.liked());
+
+      emit(ReactionState.liked());
     } catch (error) {
       emit(
-        ArtistReactionState.error(
+        ReactionState.error(
           error.toString(),
         ),
       );
@@ -34,7 +31,7 @@ class ArtistReactionCubit extends Cubit<ArtistReactionState> {
   }
 
   Future<void> unlikeArtist(int artistId) async {
-    emit(ArtistReactionState.loading());
+    emit(ReactionState.loading());
 
     final reaction = NewArtistReaction(
         artistId: artistId, userId: _authService.currentAuthState!.id);
@@ -42,10 +39,10 @@ class ArtistReactionCubit extends Cubit<ArtistReactionState> {
     try {
       await _artistReactionsApi.unlikeArtist(reaction);
 
-      emit(ArtistReactionState.unliked());
+      emit(ReactionState.unliked());
     } catch (error) {
       emit(
-        ArtistReactionState.error(
+        ReactionState.error(
           error.toString(),
         ),
       );

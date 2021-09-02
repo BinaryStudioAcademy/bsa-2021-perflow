@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/reactions/playlist_reaction_cubit.dart';
+import 'package:perflow/cubits/reactions/reaction_state.dart';
 import 'package:perflow/theme.dart';
 
 class LikeButtonPlaylist extends StatelessWidget {
@@ -17,7 +18,7 @@ class LikeButtonPlaylist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PlaylistReactionCubit, PlaylistReactionState>(
+    return BlocBuilder<PlaylistReactionCubit, ReactionState>(
       builder: (context, state) => state.maybeMap(
         liked: (_) => IconButton(
           visualDensity: VisualDensity.compact,
