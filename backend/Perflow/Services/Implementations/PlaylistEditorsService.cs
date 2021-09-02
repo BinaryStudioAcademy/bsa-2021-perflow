@@ -12,6 +12,7 @@ using Perflow.Common.DTO.Playlists;
 using Perflow.Services.Interfaces;
 using Perflow.Common.DTO.Notifications;
 using Perflow.Domain.Enums;
+using System;
 
 namespace Perflow.Services.Implementations
 {
@@ -44,8 +45,24 @@ namespace Perflow.Services.Implementations
 
         public async Task AddCollaborators(int playlistId, IEnumerable<ArtistReadDTO> collaborators)
         {
+            var currentCollab = await context.PlaylistEditors.ToListAsync();
+            var newCollab = collaborators
+                    .Where(a => !currentCollab.Any(pe => pe.UserId == a.Id && pe.PlaylistId == playlistId));
+
+            if (newCollab.Any())
+            {
+                var pes = newCollab
+                        .Select(u =>
+                        new PlaylistEditorDTO
+                        {
+                            PlaylistId = playlistId,
+                            UserId = u.Id
+                        });
+                await SendAddedToCollaborativeNotificationsAsync(pes);
+            }
+
             await this.RemovePlaylist(playlistId);
-            if(collaborators.Any())
+            if (collaborators.Any())
             {
                 var pes = collaborators
                         .Select(u =>
@@ -56,7 +73,6 @@ namespace Perflow.Services.Implementations
                         });
 
                 await context.PlaylistEditors.AddRangeAsync(mapper.Map<IEnumerable<PlaylistEditor>>(pes));
-                await SendAddedToCollaborativeNotificationsAsync(pes);
             }
             
             await context.SaveChangesAsync();

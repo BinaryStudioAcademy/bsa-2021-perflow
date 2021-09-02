@@ -53,7 +53,7 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
 
-            _ = DeleteOlderThanAsync(maxNumberOfDaysToStoreNotification);
+            await DeleteOlderThanAsync(maxNumberOfDaysToStoreNotification);
 
             return mapper.Map<IEnumerable<NotificationReadDTO>>(notifications);
         }
@@ -72,7 +72,7 @@ namespace Perflow.Services.Implementations
             if (autoSaveChanges)
                 await context.SaveChangesAsync();
 
-            _ = DeleteOlderThanAsync(maxNumberOfDaysToStoreNotification);
+            await DeleteOlderThanAsync(maxNumberOfDaysToStoreNotification);
 
             return mapper.Map<NotificationReadDTO>(notif.Entity);
         }
