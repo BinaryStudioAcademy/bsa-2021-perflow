@@ -1,10 +1,15 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { filter, switchMap } from 'rxjs/operators';
+import { ClipboardService } from 'ngx-clipboard';
+import { timer } from 'rxjs';
+import { filter, first, switchMap } from 'rxjs/operators';
+import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { User } from 'src/app/models/user/user';
 import { ArtistsService } from 'src/app/services/artists/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -24,12 +29,17 @@ export class UserProfileComponent implements OnInit {
   user: User = {} as User;
   topArtists: ArtistReadDTO[] = [];
   topSongs: Song[] = [];
+  myPlaylists: PlaylistView[] = [];
+  isSuccess: boolean = false;
 
   constructor(
     private _songService: SongsService,
     private _artistService: ArtistsService,
     private _authService: AuthService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _playlistsService: PlaylistsService,
+    private _clipboardApi: ClipboardService,
+    private _location: PlatformLocation
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +56,19 @@ export class UserProfileComponent implements OnInit {
       )
       .subscribe((result) => {
         this.user = result;
+        this.getUserCreatedPlaylists();
       });
+  }
+
+  public getUserCreatedPlaylists() {
+    this._playlistsService
+      .getPlaylistsByAuthorId(this.user.id)
+      .pipe(first())
+      .subscribe(
+        (result) => {
+          this.myPlaylists = result;
+        }
+      );
   }
 
   getTopArtists() {
@@ -92,6 +114,14 @@ export class UserProfileComponent implements OnInit {
   previousSlide = () => {
 
   };
+
+  copyLink() {
+    this._clipboardApi.copyFromContent(this._location.href);
+    this.isSuccess = true;
+    timer(3000).subscribe((val) => {
+      this.isSuccess = Boolean(val);
+    });
+  }
 
   scroll = (id: string) => {
     const element = document.getElementById(id);

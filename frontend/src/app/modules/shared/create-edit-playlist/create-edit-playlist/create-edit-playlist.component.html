@@ -24,7 +24,9 @@
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon"></i>
               <div class="right menu">
-                  <div class="item first" (click)="deletePlaylist()">
+                  <div class="item first" 
+                  (click)="deletePlaylist()"
+                  *ngIf="isAuthor">
                       <i class="trash icon"></i>
                       Remove playlist
                   </div>
@@ -66,7 +68,12 @@
     </div>
 
     <!-- Modal window -->
-    <app-edit-playlist-modal [editedPlaylist]="previousPlaylistData" *ngIf="isModalShown" (editPlaylist)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-playlist-modal>
+    <app-edit-playlist-modal 
+    [editedPlaylist]="previousPlaylistData" 
+    [isAuthor]="isAuthor"
+    *ngIf="isModalShown" 
+    (editPlaylist)="onSubmitModal($event)" 
+    (isClosed)="closeModal()"></app-edit-playlist-modal>
     <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
       <div class="header">
         Link copied to clipboard!

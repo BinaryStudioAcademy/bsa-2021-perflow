@@ -253,6 +253,28 @@ namespace Perflow.Migrations
                     b.ToTable("Playlists");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.PlaylistEditor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlaylistId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PlaylistEditors");
+                });
+
             modelBuilder.Entity("Perflow.Domain.PlaylistReaction", b =>
                 {
                     b.Property<int>("Id")
@@ -668,6 +690,25 @@ namespace Perflow.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("Perflow.Domain.PlaylistEditor", b =>
+                {
+                    b.HasOne("Perflow.Domain.Playlist", "Playlist")
+                        .WithMany()
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Perflow.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Playlist");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Perflow.Domain.PlaylistReaction", b =>

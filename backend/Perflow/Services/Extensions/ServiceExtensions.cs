@@ -27,6 +27,7 @@ namespace Perflow.Services.Extensions
                 cfg.AddProfile<RecentlyPlayedProfile>();
                 cfg.AddProfile<SearchHistoryProfile>();
                 cfg.AddProfile<ConstructorProfile>();
+                cfg.AddProfile<PlaylistEditorProfile>();
                 cfg.AddProfile<ContentSynchronizationProfile>();
             },
             Assembly.GetExecutingAssembly());
@@ -68,6 +69,7 @@ namespace Perflow.Services.Extensions
             services.AddScoped<ConstructorService>();
             
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<PlaylistEditorsService>();
         }
     }
 }

@@ -34,6 +34,7 @@ import {
 } from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
 import { CropImageComponent } from './crop-image/crop-image.component';
 import { FilterExplicitPipe } from './pipes/filter-explicit.pipe';
+import { ColaborativeModalComponent } from './create-edit-playlist/colaborative-modal/colaborative-modal.component';
 import { UserRolePipe } from './pipes/user-role.pipe';
 
 @NgModule({
@@ -64,6 +65,7 @@ import { UserRolePipe } from './pipes/user-role.pipe';
     EditPlaylistModalComponent,
     CropImageComponent,
     FilterExplicitPipe,
+    ColaborativeModalComponent,
     UserRolePipe
   ],
   imports: [

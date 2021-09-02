@@ -10,6 +10,8 @@ import { QueueService } from 'src/app/services/queue.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
 import { timer } from 'rxjs';
+import { AccessType } from 'src/app/models/playlist/accessType';
+import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -28,6 +30,7 @@ export class ViewPlaylistComponent implements OnInit {
   private _playlistId: number;
   public isSuccess: boolean = false;
   isAuthor: boolean;
+  isCollaborative: boolean;
 
   constructor(
     private _activateRoute: ActivatedRoute,
@@ -39,7 +42,8 @@ export class ViewPlaylistComponent implements OnInit {
     private _createdPlaylistService: CreatePlaylistService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
-    private _playlistService: PlaylistsService
+    private _playlistService: PlaylistsService,
+    private _playlistEditorsService: PlaylistEditorsService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -106,6 +110,13 @@ export class ViewPlaylistComponent implements OnInit {
         next: (playlist) => {
           this.playlist = playlist;
           this.isAuthor = this.userId === this.playlist.author.id;
+          this._playlistEditorsService.getCollaborators(playlist.id)
+            .pipe(take(1))
+            .subscribe(
+              (result) => {
+                this.isCollaborative = result.find((u) => u.id === this.userId) !== undefined;
+              }
+            );
         },
         error: () => {
           this._router.navigateByUrl('/playlists/all');
@@ -184,4 +195,6 @@ export class ViewPlaylistComponent implements OnInit {
         });
     }
   }
+
+  canShare = (accessType: AccessType) => accessType !== AccessType.secret;
 }

@@ -31,22 +31,42 @@
     </div>
   </div>
   <div class="playlists-menu">
-    <span class="title" *ngIf="playlists.length > 0">
-      <h6>Created playlists</h6>
-    </span>
-    <ul>
-      <li *ngFor="let playlist of playlists" [routerLink]="['/playlists/view-playlist', playlist.id]" 
-        routerLinkActive="active-link"  class="clickable">
-          <span class="show-name" *ngIf="playlist.id !== editedPlaylist.id">
-            <span>{{ playlist.name }}</span>
-            <i class="ellipsis vertical icon pl-settings" (click)="playlistSettingsClick(playlist, $event)" appClickStopPropagation></i>
-          </span>
-          <span class="edit-name" *ngIf="isEditPlaylistMode && playlist.id === editedPlaylist.id">
-            <input type="text" [(ngModel)]="editedPlaylist.name" (clickOutside)="clickOutsidePlaylistName()" 
-              appClickStopPropagation (keyup)="inputKeyup($event)">
-          </span>
-      </li>
-    </ul>
+    <div class="section">
+      <span class="title" *ngIf="playlists.length > 0">
+        <h6>Created playlists</h6>
+      </span>
+      <ul>
+        <li *ngFor="let playlist of playlists" [routerLink]="['/playlists/view-playlist', playlist.id]" 
+          routerLinkActive="active-link"  class="clickable">
+            <span class="show-name" *ngIf="playlist.id !== editedPlaylist.id">
+              <span>{{ playlist.name }}</span>
+              <i class="ellipsis vertical icon pl-settings" (click)="playlistSettingsClick(playlist, $event)" appClickStopPropagation></i>
+            </span>
+            <span class="edit-name" *ngIf="isEditPlaylistMode && playlist.id === editedPlaylist.id">
+              <input type="text" [(ngModel)]="editedPlaylist.name" (clickOutside)="clickOutsidePlaylistName()" 
+                appClickStopPropagation (keyup)="inputKeyup($event)">
+            </span>
+        </li>
+      </ul>
+    </div>
+    <div class="section"> 
+      <span class="title" *ngIf="collaborativePlaylists.length > 0">
+        <h6>Collaborative</h6>
+      </span>
+      <ul>
+        <li *ngFor="let playlist of collaborativePlaylists" [routerLink]="['/playlists/view-playlist', playlist.id]" 
+          routerLinkActive="active-link"  class="clickable">
+            <span class="show-name" *ngIf="playlist.id !== editedPlaylist.id">
+              <span>{{ playlist.name }}</span>
+              <i class="ellipsis vertical icon pl-settings" (click)="playlistSettingsClick(playlist, $event)" appClickStopPropagation></i>
+            </span>
+            <span class="edit-name" *ngIf="isEditPlaylistMode && playlist.id === editedPlaylist.id">
+              <input type="text" [(ngModel)]="editedPlaylist.name" (clickOutside)="clickOutsidePlaylistName()" 
+                appClickStopPropagation (keyup)="inputKeyup($event)">
+            </span>
+        </li>
+      </ul>
+    </div>
     <button class="ui btn-full button create-playlist" routerLink="/playlists/create">
       Create Playlist
     </button>
@@ -73,7 +93,7 @@
       Collaborative playlist
     </span>
   </div>
-  <div class="item" (click)="clickOnMenuItem('')">
+  <div class="item" *ngIf="!isPlaylistCollaborativeSettings()" (click)="clickOnMenuItem('')">
     <span>
       <i class="user secret icon"></i>
       Make secret
@@ -91,7 +111,7 @@
       Create similar playlist
     </span>
   </div>
-  <div class="item" (click)="clickOnMenuItem('Delete')">
+  <div class="item" *ngIf="!isPlaylistCollaborativeSettings()" (click)="clickOnMenuItem('Delete')">
     <span>
       <i class="trash alternate outline icon"></i>
       Delete
@@ -109,7 +129,7 @@
       Create playlist
     </span>
   </div>
-  <div class="item last share-menu">
+  <div *ngIf="canShare()" class="item last share-menu">
     <span>
       <i class="share alternate icon"></i>Share<i class="caret right icon"></i>
     </span>
