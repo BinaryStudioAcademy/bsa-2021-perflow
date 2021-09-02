@@ -15,20 +15,20 @@
       <img
         class="album-icon"
         alt="Album"
-        src="{{currentNewestAlbum.iconURL}}" routerLink="/albums/{{currentNewestAlbum.id}}" *ngIf="currentNewestAlbum.iconURL"/>
-        <div class="album-icon icon-background" routerLink="/albums/{{currentNewestAlbum.id}}" *ngIf="!currentNewestAlbum.iconURL">
+        src="{{currentAccordionAlbum.iconURL}}" routerLink="/albums/{{currentAccordionAlbum.id}}" *ngIf="currentAccordionAlbum.iconURL"/>
+        <div class="album-icon icon-background" routerLink="/albums/{{currentAccordionAlbum.id}}" *ngIf="!currentAccordionAlbum.iconURL">
           <i class="itunes note icon"></i>
         </div>
       <div class="album-info">
         <p class="type">Album</p>
-        <p class="album-title">{{currentNewestAlbum.name}}</p>
+        <p class="album-title">{{currentAccordionAlbum.name}}</p>
         <p class="album-description">
-          {{currentNewestAlbum.description}}
+          {{currentAccordionAlbum.description}}
         </p>
 
         <div class="buttons">
-          <button class="ui btn-full button button-play" (click)="playAlbum(currentNewestAlbum.id)">Play</button>
-          <button *ngIf="idSaveButtonShown" class="ui inverted basic button btn-ghost button-save" (click)="saveAlbum(currentNewestAlbum.id)">
+          <button class="ui btn-full button button-play" (click)="playAlbum(currentAccordionAlbum.id)">Play</button>
+          <button *ngIf="idSaveButtonShown" class="ui inverted basic button btn-ghost button-save" (click)="saveAlbum(currentAccordionAlbum.id)">
             Save
           </button>
         </div>
@@ -38,7 +38,7 @@
 
   <div class="main-content">
     <!-- Recently played -->
-    <div class="recently-played" *ngIf="recentlyPlayed?.length">
+    <div class="recently-played" *ngIf="recentlyPlayed?.length && data.showRecentlyPlayed">
       <div class="header">Recently played</div>
       <div class="ui grid recently-played-cont">
         <app-song-card routerLink="/albums/{{song.album.id}}" *ngFor="let song of recentlyPlayed" 
@@ -69,21 +69,24 @@
       </div>
     </div>
 
-    <!-- Calm rhythms -->
-    <div class="items-scroll-box calmRhythms">
-      <div class="header">Calm rhythms</div>
+    <div class="items-scroll-box" *ngFor="let section of data.pageSections?.slice(1)">
+      <div class="header">{{section.name}}</div>
       <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollLeft('playlist')">
+        <div class="ui icon button scroll-button" (click)="scrollLeft('section-{{section.position}}')">
           <i class="large inverted angle left icon"></i>
         </div>
-        <div id="playlist" class="items" appHideScrollButtons>
-          <app-square-info-card
-            *ngFor="let playlist of calmRhythms"
-            [name]="playlist.name"
-            [description]="playlist.description"
-            [iconUrl]="playlist.iconURL"
-          >
-          </app-square-info-card>
+        <div id="section-{{section.position}}" class="items" appHideScrollButtons>
+          <span *ngFor="let entity of section.pageSectionEntities">
+            <app-album-card *ngIf="entity.entityType === 0" 
+              [album]="entity.entity">
+            </app-album-card>
+            <app-artist-card *ngIf="entity.entityType === 2"
+              [artist]="entity.entity">
+            </app-artist-card>
+            <app-playlist-card *ngIf="entity.entityType === 1"
+              [playlist]="entity.entity">
+            </app-playlist-card>
+          </span>
         </div>
         <div class="ui icon button scroll-button" (click)="scrollRight('playlist')">
           <i class="large inverted angle right icon"></i>
@@ -92,7 +95,7 @@
     </div>
 
     <!-- Your mix -->
-    <div class="your-mix">
+    <div class="your-mix" *ngIf="data.showMix">
       <div class="header">Your mix</div>
       <div id="yourMix" class="ui grid your-mix-cont">
         <!-- Demonstration cards (delete them) -->
@@ -109,27 +112,6 @@
       </div>
     </div>
 
-    <!-- Top 100 songs -->
-    <div class="items-scroll-box calmRhythms">
-      <div class="header">Top 100 songs</div>
-      <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollLeft('repeat')">
-          <i class="large inverted angle left icon"></i>
-        </div>
-        <div id="repeat" class="items" appHideScrollButtons>
-          <app-square-info-card
-            *ngFor="let song of top100Songs"
-            [name]="song.name"
-            [description]="song.description"
-            [iconUrl]="song.iconURL"
-          >
-          </app-square-info-card>
-        </div>
-        <div class="ui icon button scroll-button" (click)="scrollRight('repeat')">
-          <i class="large inverted angle right icon"></i>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">

@@ -1,7 +1,10 @@
-<div class="card" (click)="redirectTo()">
+<div class="card" (click)="handleClick()" [ngClass]="{checked:isChecked}">
   <div class="image">
+    <div class="section-delete" (click)="onDeleteFromSectionClick(playlist)" appClickStopPropagation *ngIf="!isCheckBox && isDeletable">
+        <i class="trash alternate outline icon"></i>
+    </div>
       <img [src]="playlist.iconURL">  
-      <button class="play-icon" appClickStopPropagation (click)="play(playlist.id)">
+      <button *ngIf="!isCheckBox" class="play-icon" appClickStopPropagation (click)="play(playlist.id)">
           <i class="play icon"></i>
       </button>  
   </div>

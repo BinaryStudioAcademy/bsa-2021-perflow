@@ -5,10 +5,10 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OtherPageComponent } from './other-page/other-page/other-page.component';
 import { LoginOtherRoutingModule } from './login-other-routing.module';
-import { ArtistApplicantPageComponent } from './other-page/artist-applicant-page/artist-applicant-page.component';
 import { MainModule } from '../main/main.module';
 import { SharedModule } from '../shared/shared.module';
 import { GroupModalComponent } from './other-page/group-modal/group-modal.component';
+import { ArtistApplicantPageComponent } from './other-page/artist-applicant-page/artist-applicant-page.component';
 
 @NgModule({
   declarations: [

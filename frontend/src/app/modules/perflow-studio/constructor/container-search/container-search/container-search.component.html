@@ -1,0 +1,44 @@
+<div class="search-container">
+    <div class="ui search">
+    <div class="ui icon input">
+      <input id="search-input" 
+             class="prompt input-dark" 
+             type="text" 
+             name="search" 
+             placeholder="{{placeholder}}"
+             (input)="findSongsByName()" 
+             [(ngModel)]="searchValue" 
+             autocomplete="sss" 
+             aria-autocomplete="none"
+             (keyup)="clearSearch($event)">
+      <i class="search icon"></i>
+    </div>
+  </div>
+
+  <div  class="search-result">
+    <app-search-artists-result 
+        (addDeleteFromSection)="addDeleteFromSectionEvent($event)"   
+        [isCheckBox]="true" 
+        [currentArtists]="currentArtists"
+        [term]="searchValue" 
+        [artists]="foundData.artists" 
+        *ngIf="foundData.artists?.length && !isAccordion">
+    </app-search-artists-result>
+    <app-search-albums-result 
+        (addDeleteFromSection)="addDeleteFromSectionEvent($event)"    
+        [isCheckBox]="true" 
+        [currentAlbums]="currentAlbums"
+        [term]="searchValue" 
+        [albums]="foundData.albums" 
+        *ngIf="foundData.albums?.length">
+    </app-search-albums-result>
+    <app-search-playlists-result 
+        (addDeleteFromSection)="addDeleteFromSectionEvent($event)" 
+        [isCheckBox]="true" 
+        [currentPlaylists]="currentPlaylists"
+        [term]="searchValue" 
+        [playlists]="foundData.playlists" 
+        *ngIf="foundData.playlists?.length && !isAccordion">
+    </app-search-playlists-result>
+  </div>
+</div>
