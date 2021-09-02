@@ -1,5 +1,6 @@
 /* eslint no-param-reassign: "error" */
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { map } from 'jquery';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -24,7 +25,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   constructor(
     private _notificationsHub: NotificationsHubService,
     private _notificationService: NotificationService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _router: Router
   ) { }
 
   ngOnInit() {
@@ -93,5 +95,24 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._unsubscribe$.next();
     this._notificationsHub.stop();
+  }
+
+  navigateViaLink(type: string, notif: Notification) {
+    switch (type) {
+      case 'album':
+        this._router.navigateByUrl(`/albums/${notif.reference}`);
+        break;
+      case 'playlist':
+        this._router.navigateByUrl(`/playlists/view-playlist/${notif.reference}`);
+        break;
+      default:
+        break;
+    }
+  }
+
+  displayLink = (notif: Notification) => {
+    return notif.type === NotificationType.artistSubscribtion
+    || notif.type === NotificationType.groupSubscribtion
+    || notif.type === NotificationType.collaborativePlaylistSubscription;
   }
 }
