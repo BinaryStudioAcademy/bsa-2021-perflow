@@ -64,10 +64,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this._userService.getUserSettings().pipe(takeUntil(this._unsubscribe$)).subscribe(
-      resp => {
+      (resp) => {
         this.showNewReleases = resp.body?.showNewReleases!;
       }
-    )
+    );
     this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
     this.getNewReleases();
