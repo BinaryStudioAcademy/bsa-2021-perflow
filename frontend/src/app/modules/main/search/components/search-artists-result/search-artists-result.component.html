@@ -17,7 +17,7 @@
       (addDeleteFromSection)="addDeleteFromSectionEvent($event)" 
       [isCheckBox]="isCheckBox" 
       *ngFor="let artist of artists" 
-      [isChecked]="isChecked(artist)"
+      [isCheckedConstructor]="isChecked(artist)"
       [artist]="artist"></app-artist-card>
   </div>
 </div>

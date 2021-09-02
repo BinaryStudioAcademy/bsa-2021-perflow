@@ -34,6 +34,7 @@ import {
 } from './create-edit-playlist/edit-playlist-modal/edit-playlist-modal.component';
 import { CropImageComponent } from './crop-image/crop-image.component';
 import { FilterExplicitPipe } from './pipes/filter-explicit.pipe';
+import { UserRolePipe } from './pipes/user-role.pipe';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { FilterExplicitPipe } from './pipes/filter-explicit.pipe';
     CreateEditPlaylistComponent,
     EditPlaylistModalComponent,
     CropImageComponent,
-    FilterExplicitPipe
+    FilterExplicitPipe,
+    UserRolePipe
   ],
   imports: [
     CommonModule,
@@ -97,7 +99,8 @@ import { FilterExplicitPipe } from './pipes/filter-explicit.pipe';
     HideScrollButtonsDirective,
     CreateEditPlaylistComponent,
     EditPlaylistModalComponent,
-    CropImageComponent
+    CropImageComponent,
+    UserRolePipe
   ]
 })
 

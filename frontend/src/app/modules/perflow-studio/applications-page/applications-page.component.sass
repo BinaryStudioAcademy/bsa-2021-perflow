@@ -1,0 +1,39 @@
+@import 'src/styles.sass'
+
+.page
+  height: calc( 100vh - 105px )
+  overflow: auto
+
+.container
+  width: 100%
+  height: max-content
+  margin: 0px auto
+  padding: 1.5rem 1rem
+  h2
+    padding: 25px 0px
+    color: $text
+
+  .ui.search
+    background: $drk-gray
+    width: 100%
+    display: grid
+    grid-template-columns: 100%
+    .ui.icon.input
+      grid-column: 1
+      align-self: center
+      justify-self: start
+      width: 50%
+      i
+        color: $text
+      .prompt.input-dark
+        background: $drk-rain
+        border: 1px solid $text
+        color: $text
+        &:focus
+          background: $drk-rain
+        &:active
+          background: $drk-rain
+  .search-result
+    width: 100%
+    padding: 1.5rem 0px
+    height: max-content

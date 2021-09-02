@@ -19,6 +19,9 @@ import { ContainersPageComponent } from './constructor/containers-page/container
 import { ContainerSearchComponent } from './constructor/container-search/container-search/container-search.component';
 import { ContainerSearchModalComponent }
   from './constructor/container-search-modal/container-search-modal/container-search-modal.component';
+import { ApplicationsPageComponent } from './applications-page/applications-page.component';
+import { AplicantRowComponent } from './applications-page/components/aplicant-row/aplicant-row.component';
+import { RoleRowComponent } from './applications-page/components/role-row/role-row.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { ContainerSearchModalComponent }
     CreateEditContainerComponent,
     ContainersPageComponent,
     ContainerSearchComponent,
-    ContainerSearchModalComponent
+    ContainerSearchModalComponent,
+    ApplicationsPageComponent,
+    AplicantRowComponent,
+    RoleRowComponent
   ],
   imports: [
     CommonModule,

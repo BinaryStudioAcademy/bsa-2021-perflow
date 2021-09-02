@@ -11,13 +11,15 @@ import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 })
 export class ArtistCardComponent {
   @Input()
+  isChecked: boolean = false;
+  @Input()
   isLiked: boolean = false;
   @Input()
   artist: ArtistReadDTO;
   @Input()
   isCheckBox: boolean = false;
   @Input()
-  isChecked: boolean;
+  isCheckedConstructor: boolean;
   @Input()
   isDeletable: boolean = false;
   @Input()
@@ -29,9 +31,11 @@ export class ArtistCardComponent {
   @Output()
   addDeleteFromSection = new EventEmitter<ArtistReadDTO>();
   @Output()
+  apply = new EventEmitter<ArtistReadDTO>();
+  @Output()
   clickEmiter = new EventEmitter<void>();
 
-  constructor(private _router: Router) {}
+  constructor(private _router: Router) { }
 
   onDeleteClick(artist: ArtistReadDTO) {
     this.delete.emit(artist);
@@ -45,10 +49,20 @@ export class ArtistCardComponent {
     this.deleteFromSection.emit(emitEntity);
   }
 
+  onApplyClick(artist: ArtistReadDTO) {
+    this.apply.emit(artist);
+  }
+
   handleClick() {
     if (!this.isCheckBox) {
       this.clickEmiter.emit();
-      this._router.navigateByUrl(`/artists/${this.artist.id}`);
+
+      if (this.artist.isArtist) {
+        this._router.navigateByUrl(`/artists/${this.artist.id}`);
+      }
+      else {
+        this._router.navigateByUrl(`/groups/${this.artist.id}`);
+      }
     }
     else {
       this.isChecked = !this.isChecked;

@@ -10,6 +10,7 @@ import { AlbumsPageComponent } from './albums-page/albums-page.component';
 import { ContainersPageComponent } from './constructor/containers-page/containers-page/containers-page.component';
 import { CreateEditContainerComponent }
   from './constructor/create-edit-container/create-edit-container/create-edit-container.component';
+import { ApplicationsPageComponent } from './applications-page/applications-page.component';
 import { CreateEditAlbumComponent } from './create-edit-album/create-edit-album/create-edit-album.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { PlaylistsPageComponent } from './playlists-page/playlists-page.component';
@@ -48,6 +49,11 @@ const routes: Routes = [{
         { path: 'create', component: CreateEditContainerComponent },
         { path: 'edit/:id', component: CreateEditContainerComponent }
       ]
+    },
+    {
+      path: 'applicants',
+      component: ApplicationsPageComponent,
+      canActivate: [ModeratorPerflowStudioGuard]
     }
   ]
 }];

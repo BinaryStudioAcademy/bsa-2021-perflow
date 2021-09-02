@@ -117,7 +117,9 @@ import { ConstructorContainerCardComponent }
     SearchPlaylistsResultComponent,
     PlaylistCardComponent,
     ArtistCardComponent,
-    ConstructorContainerCardComponent
+    ConstructorContainerCardComponent,
+    ArtistCardComponent,
+    SquareInfoCardComponent
   ]
 })
 export class MainModule {

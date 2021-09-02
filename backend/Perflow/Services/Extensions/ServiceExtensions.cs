@@ -54,6 +54,7 @@ namespace Perflow.Services.Extensions
             services.AddScoped<GroupReactionService>();
             services.AddScoped<SearchHistoryService>();
             services.AddScoped<ContentSynchronizationService>();
+            services.AddScoped<ApplicantsService>();
 
             services.AddScoped<ISongFilesService, SongFilesService>();
             services.AddScoped<ISongsService, SongsService>();

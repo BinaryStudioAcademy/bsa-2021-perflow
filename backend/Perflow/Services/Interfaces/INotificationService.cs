@@ -20,5 +20,7 @@ namespace Perflow.Services.Interfaces
         Task ChangeStateAsync(NotificationChangeStateDTO notificationChangeState);
 
         Task DeleteNotificationAsync(int id);
+
+        Task<NotificationReadDTO> CreateApplicantNotificationAsync(NotificationWriteDTO notification, int applicantId);
     }
 }

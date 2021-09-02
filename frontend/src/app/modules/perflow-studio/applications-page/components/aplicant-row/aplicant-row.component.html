@@ -1,0 +1,26 @@
+<div class="ui padded grid applicant">
+  <div class="applicant-row">
+      <div class="column applicant-icon">
+        <img [src]="applicant.iconURL" *ngIf="applicant.iconURL">
+        <div class="icon-background" *ngIf="!applicant.iconURL">
+          <i class="user icon"></i>
+        </div>
+      </div>
+      <div class="column applicant-name text">
+        {{applicant.userName}}
+      </div>
+      <div class="column applicant-group text">
+        <span *ngIf="applicant.group" class="prefix">GROUP: </span>
+        <a *ngIf="applicant.group" class="link text" [routerLink]="['/groups',  applicant.groupId]">{{ applicant.group }}</a>
+      </div>
+      <div class="column applicant-status">
+        <span class="prefix">REQUESTED: </span><span> {{ applicant.role | userRole | uppercase }}</span>
+      </div>
+      <div class="column button approve">
+        <button type="button" (click)="approve()"><i class="check icon"></i>Approve</button>
+      </div>
+      <div class="column button reject">
+        <button type="button" (click)="reject()"><i class="x icon"></i>Reject</button>
+      </div>
+  </div>
+</div>

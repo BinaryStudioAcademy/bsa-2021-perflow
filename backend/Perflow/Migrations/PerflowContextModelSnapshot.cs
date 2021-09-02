@@ -90,29 +90,6 @@ namespace Perflow.Migrations
                     b.ToTable("AlbumReactions");
                 });
 
-            modelBuilder.Entity("Perflow.Domain.ArtistApplicant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("MemberType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ArtistApplicants");
-                });
-
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>
                 {
                     b.Property<int>("Id")
@@ -133,33 +110,6 @@ namespace Perflow.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ArtistReactions");
-                });
-
-            modelBuilder.Entity("Perflow.Domain.ContentSynchronization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("SongId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Time")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SongId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ContentSynchronization");
                 });
 
             modelBuilder.Entity("Perflow.Domain.Group", b =>
@@ -243,77 +193,32 @@ namespace Perflow.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("Perflow.Domain.PageContainer", b =>
+            modelBuilder.Entity("Perflow.Domain.PerflowStudioApplicant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ShowMix")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ShowRecentlyPlayed")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PageContainers");
-                });
-
-            modelBuilder.Entity("Perflow.Domain.PageSection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PageContainerId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Position")
+                    b.Property<int>("MemberType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PageContainerId");
+                    b.HasIndex("GroupId");
 
-                    b.ToTable("PageSections");
-                });
+                    b.HasIndex("UserId");
 
-            modelBuilder.Entity("Perflow.Domain.PageSectionEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("EntityType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PageSectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReferenceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PageSectionId");
-
-                    b.ToTable("PageSectionEntities");
+                    b.ToTable("PerflowStudioApplicants");
                 });
 
             modelBuilder.Entity("Perflow.Domain.Playlist", b =>
@@ -688,17 +593,6 @@ namespace Perflow.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Perflow.Domain.ArtistApplicant", b =>
-                {
-                    b.HasOne("Perflow.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Perflow.Domain.ArtistReaction", b =>
                 {
                     b.HasOne("Perflow.Domain.User", "Artist")
@@ -714,25 +608,6 @@ namespace Perflow.Migrations
                         .IsRequired();
 
                     b.Navigation("Artist");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Perflow.Domain.ContentSynchronization", b =>
-                {
-                    b.HasOne("Perflow.Domain.Song", "Song")
-                        .WithMany()
-                        .HasForeignKey("SongId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Perflow.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Song");
 
                     b.Navigation("User");
                 });
@@ -767,22 +642,21 @@ namespace Perflow.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Perflow.Domain.PageSection", b =>
+            modelBuilder.Entity("Perflow.Domain.PerflowStudioApplicant", b =>
                 {
-                    b.HasOne("Perflow.Domain.PageContainer", null)
-                        .WithMany("PageSections")
-                        .HasForeignKey("PageContainerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    b.HasOne("Perflow.Domain.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
 
-            modelBuilder.Entity("Perflow.Domain.PageSectionEntity", b =>
-                {
-                    b.HasOne("Perflow.Domain.PageSection", null)
-                        .WithMany("PageSectionEntities")
-                        .HasForeignKey("PageSectionId")
+                    b.HasOne("Perflow.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Perflow.Domain.Playlist", b =>
@@ -979,16 +853,6 @@ namespace Perflow.Migrations
                     b.Navigation("Reactions");
 
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Perflow.Domain.PageContainer", b =>
-                {
-                    b.Navigation("PageSections");
-                });
-
-            modelBuilder.Entity("Perflow.Domain.PageSection", b =>
-                {
-                    b.Navigation("PageSectionEntities");
                 });
 
             modelBuilder.Entity("Perflow.Domain.Playlist", b =>
