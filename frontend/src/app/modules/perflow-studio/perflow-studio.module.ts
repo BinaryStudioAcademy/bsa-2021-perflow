@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CreateEditAlbumComponent } from './create-edit-album/create-edit-album/create-edit-album.component';
 import { EditAlbumModalComponent } from './create-edit-album/edit-album-modal/edit-album-modal.component';
 import { SongsUploadModalComponent } from './create-edit-album/songs-upload-modal/songs-upload-modal.component';
+import { ApplicationsPageComponent } from './applications-page/applications-page.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SongsUploadModalComponent } from './create-edit-album/songs-upload-moda
     PlaylistsPageComponent,
     CreateEditAlbumComponent,
     EditAlbumModalComponent,
-    SongsUploadModalComponent
+    SongsUploadModalComponent,
+    ApplicationsPageComponent
   ],
   imports: [
     CommonModule,
