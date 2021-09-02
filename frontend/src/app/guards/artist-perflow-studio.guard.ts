@@ -11,7 +11,7 @@ export class ArtistPerflowStudioGuard extends AuthGuard {
     return this.authService.getAuthStateObservable()
       .pipe(
         map((state) => {
-          if (state?.role === UserRoles.artist || state?.role === UserRoles.teamMember) {
+          if (state?.role === UserRoles.artist) {
             return true;
           }
 

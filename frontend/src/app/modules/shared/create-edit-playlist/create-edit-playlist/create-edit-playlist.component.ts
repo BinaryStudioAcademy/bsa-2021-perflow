@@ -35,6 +35,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   searchValue: string;
   userId: number;
   isSuccess: boolean = false;
+  isAuthor: boolean;
 
   private _id: number | undefined;
 
@@ -103,6 +104,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.playlist = data;
+          this.isAuthor = this.playlist.author.id === this.userId;
         },
         error: (err) => {
           this._router.navigate(['../../../playlists'], { relativeTo: this._activatedRoute });
@@ -127,6 +129,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       accessType: AccessType.default,
       author: { id: this.userId } as User
     };
+
+    this.isAuthor = true;
 
     this._playlistService.createPlaylist(this.playlist)
       .pipe(takeUntil(this._unsubscribe$))
@@ -241,7 +245,6 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       accessType: this.playlist.accessType,
       iconURL: this.playlist.iconURL
     };
-
     this.isModalShown = !this.isModalShown;
   };
 

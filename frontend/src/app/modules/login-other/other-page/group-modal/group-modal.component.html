@@ -1,0 +1,65 @@
+<div class="bg-modal-fader" (click)="cancelModal()">
+  <div class="ui modal modal-upload" appClickStopPropagation>
+    <div class="ui icon header">
+      Create a group
+    </div>
+    <div class="content">
+      <form #createForm="ngForm" (ngSubmit)="onSubmit()" class="ui form error">
+        <div class="cross-validation" [class.cross-validation-error]="createForm.errors?.identityRevealed && (createForm.touched || createForm.dirty)">
+          <div class="ui two column divided equal height grid">
+            <div class="row">
+              <div class="column">
+                <div class="image-upload-cont" >
+                  <div class="hover-content">
+                    <img id="image" src="{{tempIconURL}}">
+                    <i class="edit outline icon"></i>
+                    <input pattern="{{pattern}}" type="file" (change)="loadIcon($event)" name="iconURL" 
+                      [ngModel] #iconURL="ngModel" accept=".jpeg,.png,.jpg">
+                    <div *ngIf="iconURL.invalid && (iconURL.dirty || iconURL.touched)" class="ui error message">
+                      <div *ngIf="iconURL.errors?.pattern">
+                        Invalid file type.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+              <div class="column">
+                <div class="form-group">
+                  <div class="field">
+                    <input type="text" maxlength="50" placeholder="Group name..." class="form-control" [(ngModel)]="createdGroup.name" 
+                      required #name="ngModel" name="name">
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="ui error message" autocomplete="off">
+                      <div *ngIf="name.errors?.required">
+                        Name is required!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="field">
+                    <textarea form="createForm" placeholder="Group description..." class="form-control input-modal" maxlength="200"
+                      [(ngModel)]="createdGroup.description" #description="ngModel" name="description"></textarea>
+                    <div *ngIf="description.invalid && (description.dirty || description.touched)" class="ui error message">
+                      <div *ngIf="description.errors?.maxLength">
+                        Description should be less than 200 characters.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row buttons-row">
+                  <div class="form-group">
+                    <button type="submit" class="ui btn-full submit button" [disabled]="createForm.form.invalid">Save</button>
+                    <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchModal()"></app-crop-image>
+    </div>
+  </div>
+
+
+</div>

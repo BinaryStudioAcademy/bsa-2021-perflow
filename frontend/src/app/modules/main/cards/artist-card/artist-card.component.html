@@ -1,19 +1,26 @@
 <div class="card" (click)="redirectTo()">
     <div class="image-block">
         <div class="image">
-            <img [attr.src]="artist.iconURL" alt="Artist">    
+            <img [attr.src]="artist.iconURL" alt="Artist" *ngIf="artist.iconURL">
+            <div class="icon-background" *ngIf="!artist.iconURL">
+                <i class="user icon"></i>
+            </div>
         </div>
         <div class="remove" *ngIf="isLiked" (click)="onDeleteClick(artist)" appClickStopPropagation>
             <i class="like icon ui"></i>
         </div>
-        <button class="play-icon" appClickStopPropagation>
-          <i class="play icon"></i>
-        </button> 
+        <button class="play-icon" *ngIf="!isChecked" appClickStopPropagation>
+            <i class="play icon"></i>
+        </button>
     </div>
     <div class="info-block">
         <div class="artist-name tub">
             <h5>{{artist.userName}}</h5>
         </div>
         <span>Artist</span>
+        <button class="ui btn-full button apply-btn" *ngIf="isChecked" (click)="onApplyClick(artist)"
+            appClickStopPropagation>
+            Apply
+        </button>
     </div>
 </div>

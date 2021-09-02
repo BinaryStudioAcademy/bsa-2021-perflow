@@ -4,6 +4,8 @@
     {
         ArtistSubscribtion = 0,
         GroupSubscribtion,
-        CollaborativePlaylistSubscription
+        CollaborativePlaylistSubscription,
+        ApplicantNotification,
+        UserNotification
     }
 }

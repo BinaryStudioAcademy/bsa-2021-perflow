@@ -65,13 +65,12 @@
                 </div>
                 <div class="form-group collaborators">
                   <div class="field">
-                    <button 
+                    <a 
                     *ngIf="isCollaborative(editedPlaylist.accessType) && isAuthor" 
                     (click)="switchColaborativeModal()"
-                    type="button" 
-                    class="ui btn-collaborators inverted basic button">
+                    class="link-collaborators">
                     Collaborators
-                  </button>
+                  </a>
                   </div>
                 </div>
                 <!-- Buttons Row -->

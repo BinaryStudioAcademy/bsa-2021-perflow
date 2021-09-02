@@ -42,7 +42,7 @@ export class PlaylistsPageComponent implements OnInit {
   }
 
   loadCollaborativePlaylists() {
-    this._playlistEditorsService.getCollaborativePlaylists(this.userId)
+    this._playlistEditorsService.getCollaborativePlaylistsOfCurrentUser()
       .pipe(first())
       .subscribe(
         (reuslt) => {

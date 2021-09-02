@@ -26,7 +26,7 @@
               <div class="right menu">
                   <div class="item first" 
                   (click)="deletePlaylist()"
-                  *ngIf="isAuthor()">
+                  *ngIf="isAuthor">
                       <i class="trash icon"></i>
                       Remove playlist
                   </div>
@@ -70,7 +70,7 @@
     <!-- Modal window -->
     <app-edit-playlist-modal 
     [editedPlaylist]="previousPlaylistData" 
-    [isAuthor]="isAuthor()"
+    [isAuthor]="isAuthor"
     *ngIf="isModalShown" 
     (editPlaylist)="onSubmitModal($event)" 
     (isClosed)="closeModal()"></app-edit-playlist-modal>

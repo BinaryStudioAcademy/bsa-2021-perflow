@@ -1,4 +1,4 @@
-@import "../../../../../styles.sass"
+@import "src/styles.sass"
 
 .bg-modal-fader
   position: fixed
@@ -103,13 +103,6 @@
         border-radius: 50px !important
         width: 100px
 
-.collaborators
-  display: flex
-  justify-content: center
-  .btn-collaborators
-    border-radius: 50px
-    line-height: 135%
-
 .ui.error.message
   border-radius: 25px !important
   height: 30px !important
@@ -117,3 +110,10 @@
   text-align: center !important
   font-size: 14px !important
   background: #fff6f6
+
+.link-collaborators
+  color: $text
+  margin-left: calc(0.5em + 5px)
+  &:hover
+        text-decoration: underline
+        cursor: pointer

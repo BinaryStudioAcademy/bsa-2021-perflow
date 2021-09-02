@@ -104,6 +104,7 @@ import { GroupViewComponent } from './group-view/group-view.component';
   exports: [
     ClickOutsideModule,
     AlbumCardComponent,
+    ArtistCardComponent,
     SquareInfoCardComponent
   ]
 })
