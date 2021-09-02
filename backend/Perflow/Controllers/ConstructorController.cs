@@ -16,7 +16,6 @@ namespace Perflow.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = Policies.IsModerator)]
     public class ConstructorController : ControllerBase
     {
         private readonly ConstructorService _constructorService;
@@ -28,6 +27,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = Policies.IsModerator)]
         public async Task<ActionResult<ICollection<PageContainerViewDTO>>> GetAllContainersViews()
         {
             var result = await _constructorService.GetAllContainersViews();
@@ -42,6 +42,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = Policies.IsModerator)]
         public async Task<ActionResult<PageContainerDTO>> GetContainer(int id)
         {
             var result = await _constructorService.GetContainer(containerId: id);
@@ -49,6 +50,7 @@ namespace Perflow.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = Policies.IsModerator)]
         public async Task<ActionResult<string>> CreateContainer([FromBody] PageContainerDTO pageContainer)
         {
             var json = JsonSerializer.Serialize(await _constructorService.CreatePageContainer(pageContainer), new JsonSerializerOptions()
@@ -61,6 +63,7 @@ namespace Perflow.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = Policies.IsModerator)]
         public async Task<ActionResult<string>> UpdateContainer([FromBody] PageContainerDTO pageContainer)
         {
             var json = JsonSerializer.Serialize(await _constructorService.UpdatePageContainer(pageContainer), new JsonSerializerOptions()
@@ -73,6 +76,7 @@ namespace Perflow.Controllers
         }
 
         [HttpPost("publish")]
+        [Authorize(Policy = Policies.IsModerator)]
         public async Task<ActionResult<PageContainerViewDTO>> PublishContainer([FromBody] PageContainerViewDTO pageContainer)
         {
             var result = await _constructorService.PublishContainer(pageContainer);
@@ -81,6 +85,7 @@ namespace Perflow.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = Policies.IsModerator)]
         public async Task<ActionResult> DeleteContainer(int id)
         {
             if (id <= 0)
