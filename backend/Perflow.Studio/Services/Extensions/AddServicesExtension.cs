@@ -1,11 +1,8 @@
+using System.Data;
 using Microsoft.Extensions.DependencyInjection;
-using Perflow.Studio.DataAccess.Extensions;
 using Perflow.Studio.DataAccess.Implementations;
-using Perflow.Studio.DataAccess.Repositories;
-using Perflow.Studio.Domain.Entities;
 using Perflow.Studio.Services.Implementations;
 using Perflow.Studio.Services.Interfaces;
-using Perflow.Studio.Services.Interfaces.Repositories;
 
 namespace Perflow.Studio.Services.Extensions
 {
@@ -17,7 +14,13 @@ namespace Perflow.Studio.Services.Extensions
 
             services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
-            services.AddRepository<Song, ISongsRepository, SongsRepository>();
+            services.AddSingleton<ISongsUploadService, SongsUploadService>();
+
+            services.AddScoped<ISongFilesService, SongFilesService>();
+
+            services.AddScoped<IDbConnection>(provider => provider
+                .GetRequiredService<IDbConnectionFactory>()
+                .GetConnection());
         }
     }
 }

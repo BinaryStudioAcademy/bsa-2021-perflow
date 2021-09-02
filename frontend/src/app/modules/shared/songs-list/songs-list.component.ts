@@ -6,6 +6,8 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 import { UserService } from 'src/app/services/user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Playlist } from 'src/app/models/playlist/playlist';
+import { AlbumFull } from 'src/app/models/album/album-full';
 import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type';
 
@@ -25,6 +27,8 @@ export class SongsListComponent implements OnInit, OnDestroy {
   @Input() isDraggable = false;
   @Input() isEditable = false;
   @Input() isPlaying = false;
+  @Input() playlist: Playlist | undefined;
+  @Input() album: AlbumFull | undefined;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();

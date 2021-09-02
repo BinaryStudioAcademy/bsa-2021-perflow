@@ -213,15 +213,15 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
     switch (data.menuItem) {
-      case 'Remove from playlist':
-        this.deleteSongFromPlaylist(data.song);
+      case 'Remove from album':
+        this.deleteSongFromAlbum(data.song);
         break;
       default:
         break;
     }
   }
 
-  deleteSongFromPlaylist = (song: Song) => {
+  deleteSongFromAlbum = (song: Song) => {
     if (this.album.songs.find((s) => s.id === song.id)) {
       this._songsService.deleteSong(song.id)
         .pipe(takeUntil(this._unsubscribe$))

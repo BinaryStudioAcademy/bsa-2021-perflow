@@ -7,8 +7,11 @@ namespace Perflow.Studio.Business.Songs.Commands
     {
         public SongWriteDTO Dto { get; }
 
-        public CreateSongCommand(SongWriteDTO dto)
+        public int AuthorId { get; }
+
+        public CreateSongCommand(int authorId, SongWriteDTO dto)
         {
+            AuthorId = authorId;
             Dto = dto;
         }
     }

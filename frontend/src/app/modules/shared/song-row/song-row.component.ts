@@ -2,12 +2,13 @@ import { PlatformLocation } from '@angular/common';
 import {
   Component, Input, Output, EventEmitter, OnInit, OnDestroy
 } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import { Subject, timer } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { PlaylistSongDTO } from 'src/app/models/playlist/playlistSongDTO';
+import { Playlist } from 'src/app/models/playlist/playlist';
+import { AlbumFull } from 'src/app/models/album/album-full';
 import { Song } from 'src/app/models/song/song';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
@@ -23,13 +24,12 @@ import { CreatePlaylistService } from '../playlist/create-playlist/create-playli
 })
 
 export class SongRowComponent implements OnInit, OnDestroy {
-  private _userId: number;
   private _unsubscribe$ = new Subject<void>();
 
+  userId: number;
   isEditing = false;
   isSuccess: boolean = false;
   createdPlaylistArray = new Array<PlaylistName>();
-  playlistId: number | undefined;
   notification: string;
 
   @Input() song: Song;
@@ -38,6 +38,8 @@ export class SongRowComponent implements OnInit, OnDestroy {
   @Input() isInQueue = false;
   @Input() isEditable = false;
   @Input() isPlaying = false;
+  @Input() playlist: Playlist | undefined;
+  @Input() album: AlbumFull | undefined;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
@@ -51,9 +53,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
     private _location: PlatformLocation,
     private _songService: SongsService,
     private _createPlaylistService: CreatePlaylistService,
-    private _playlistsService: PlaylistsService,
-    private _activateRoute: ActivatedRoute,
-    private _router: Router
+    private _playlistsService: PlaylistsService
   ) { }
 
   ngOnDestroy(): void {
@@ -63,7 +63,6 @@ export class SongRowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUserId();
-    this.checkRoute();
     this.subscribeToCreatePlaylistService();
   }
 
@@ -107,20 +106,9 @@ export class SongRowComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe(
         (state) => {
-          this._userId = state!.id;
+          this.userId = state!.id;
         }
       );
-  }
-
-  checkRoute() {
-    this._activateRoute.params
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe((params: Params) => {
-        if (this._router.url === `/playlists/view-playlist/${params.id}`
-          || this._router.url === `/playlists/edit/${params.id}`) {
-          this.playlistId = +params?.id;
-        }
-      });
   }
 
   saveToPlaylist(pId: number, sId: number) {
@@ -169,7 +157,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
   dislikeSong(songId: number) {
     this.clickDislike.emit(songId);
 
-    this._reactionService.removeLike(songId, this._userId)
+    this._reactionService.removeLike(songId, this.userId)
       .subscribe(
         () => {
           this.song.isLiked = false;
@@ -178,7 +166,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
   }
 
   likeSong(songId: number) {
-    this._reactionService.likeSong(songId, this._userId)
+    this._reactionService.likeSong(songId, this.userId)
       .subscribe(
         () => {
           this.song.isLiked = true;
@@ -207,17 +195,20 @@ export class SongRowComponent implements OnInit, OnDestroy {
     this.isEditing = true;
   };
 
-  saveName = () => {
-    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
-      this.isEditing = false;
-      subscription.unsubscribe();
-    });
-  };
+  saveName() {
+    this._songService.setSongName(this.song.id, this.song.name)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isEditing = false;
+      });
+  }
 
-  changeCensorship = () => {
+  changeCensorship() {
     this.song.hasCensorship = !this.song.hasCensorship;
-    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
-      subscription.unsubscribe();
-    });
-  };
+    this._songService.setSongCensorship(this.song.id, this.song.hasCensorship)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isEditing = false;
+      });
+  }
 }

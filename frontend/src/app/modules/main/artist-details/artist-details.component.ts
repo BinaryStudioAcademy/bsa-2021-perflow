@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -46,7 +47,8 @@ export class ArtistDetailsComponent implements OnInit {
     private _location: PlatformLocation,
     private _reactionService: ReactionService,
     private _authService: AuthService,
-    private _albumsService: AlbumService
+    private _albumsService: AlbumService,
+    private _snackbarService: SnackbarService
   ) {
     _route.params.subscribe(() => {
       this.loadData();
@@ -105,6 +107,8 @@ export class ArtistDetailsComponent implements OnInit {
       .subscribe(
         () => {
           this.artist.isLiked = true;
+
+          this._snackbarService.show({ message: `You have subscribed to ${this.artist.userName}.` });
         }
       );
   }
@@ -114,6 +118,8 @@ export class ArtistDetailsComponent implements OnInit {
       .subscribe(
         () => {
           this.artist.isLiked = false;
+
+          this._snackbarService.show({ message: `You have unsubscribed from the ${this.artist.userName}.` });
         }
       );
   }
