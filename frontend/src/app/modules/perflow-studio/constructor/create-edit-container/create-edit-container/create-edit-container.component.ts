@@ -226,8 +226,8 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     const sectionIndex = this.container.pageSections
       .findIndex((ps: PageSectionFull) => ps.position === entity.section);
     const entityIndex = this.container.pageSections[sectionIndex]
-                                      .pageSectionEntities
-                                        .findIndex((pse) => pse.referenceId === entity.id);
+      .pageSectionEntities
+      .findIndex((pse) => pse.referenceId === entity.id);
     const entityPosition = this.container.pageSections[sectionIndex].pageSectionEntities[entityIndex].position;
     this.container.pageSections[sectionIndex].pageSectionEntities.forEach((pse: PageSectionEntityFull) => {
       if (pse.position > entityPosition) {
