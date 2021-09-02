@@ -36,6 +36,7 @@ export class ArtistDetailsComponent implements OnInit {
   artistPlaylists: PlaylistView[] = [];
   isSuccess: boolean = false;
   artistAlbums: AlbumForReadDTO[] = [];
+  isArtist: boolean;
 
   constructor(
     private _route: ActivatedRoute,
@@ -77,6 +78,8 @@ export class ArtistDetailsComponent implements OnInit {
       .subscribe(
         (result) => {
           this.artist = result;
+          this.isArtist = this._userId === this.artist.id;
+
           this.loadTopSongs();
           this.loadPlaylists();
           this.loadAlbums();
