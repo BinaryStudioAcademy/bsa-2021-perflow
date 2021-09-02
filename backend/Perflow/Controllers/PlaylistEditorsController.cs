@@ -4,6 +4,7 @@ using Perflow.Common.DTO.PlaylistEditors;
 using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.Users;
 using Perflow.Services.Implementations;
+using Shared.Auth.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,12 @@ namespace Perflow.Controllers
             await _playlistEditorsService.RemovePlaylist(playlistId);
 
             return Ok();
+        }
+
+        [HttpGet("collaborativePlaylists")]
+        public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetCollaborativePlaylists()
+        {
+            return Ok(await _playlistEditorsService.GetCollaborativePlaylists(User.GetId()));
         }
 
         [HttpGet("collaborativePlaylists/{userId}")]

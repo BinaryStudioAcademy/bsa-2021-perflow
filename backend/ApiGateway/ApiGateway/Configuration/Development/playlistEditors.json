@@ -45,6 +45,20 @@
       ]
     },
     {
+      "DownstreamPathTemplate": "/api/PlaylistEditors/collaborativePlaylists",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/PlaylistEditors/collaborativePlaylists",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/PlaylistEditors/collaborativePlaylists/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [

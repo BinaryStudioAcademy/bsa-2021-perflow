@@ -35,4 +35,8 @@ export class PlaylistEditorsService {
   getCollaborativePlaylists(userId: number): Observable<PlaylistView[]> {
     return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/collaborativePlaylists/${userId}`);
   }
+
+  getCollaborativePlaylistsOfCurrentUser(): Observable<PlaylistView[]> {
+    return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/collaborativePlaylists`);
+  }
 }

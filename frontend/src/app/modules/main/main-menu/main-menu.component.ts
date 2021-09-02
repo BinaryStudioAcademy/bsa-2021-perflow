@@ -220,7 +220,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   }
 
   loadCollaborativePlaylists() {
-    this._playlistEditorsService.getCollaborativePlaylists(this.userId)
+    this._playlistEditorsService.getCollaborativePlaylistsOfCurrentUser()
       .pipe(first())
       .subscribe(
         (reuslt) => {
