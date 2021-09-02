@@ -10,18 +10,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shared.Auth;
+using Perflow.Common.DTO.Notifications;
 
 namespace Perflow.Services.Implementations
 {
     public class ApplicantsService : BaseService
     {
         private readonly IImageService _imageService;
+        private readonly INotificationService _notificationService;
 
-        public ApplicantsService(PerflowContext context, IMapper mapper, IImageService imageService) 
+        public ApplicantsService(PerflowContext context, IMapper mapper, IImageService imageService, 
+            INotificationService notificationService)
             : base(context, mapper)
         {
             _imageService = imageService;
+            _notificationService = notificationService;
         }
+
 
         public async Task<IEnumerable<UserWithStatusDTO>> GetApplicantsAsync()
         {
@@ -65,6 +70,16 @@ namespace Perflow.Services.Implementations
             context.PerflowStudioApplicants.Remove(application);
 
             await context.SaveChangesAsync();
+
+            var notification = new NotificationWriteDTO
+            {
+                Title = $"Application {status.Status.ToString().ToLower()}",
+                Description = $"Your role: {application.User.Role}",
+                Reference = 0,
+                Type = NotificationType.ApplicantNotification
+            };
+
+            await Notify(notification, application.User.Id);
         }
 
         public async Task<IEnumerable<UserWithStatusDTO>> GetUsersByNameAsync(string term)
@@ -104,6 +119,23 @@ namespace Perflow.Services.Implementations
             context.Update(user);
 
             await context.SaveChangesAsync();
+
+            var notification = new NotificationWriteDTO
+            {
+                Title = $"Role was changed",
+                Description = $"Your role: {user.Role}",
+                Reference = 0,
+                Type = NotificationType.UserNotification
+            };
+
+            await Notify(notification, user.Id);
         }
+
+        private async Task Notify(NotificationWriteDTO notification, int applicantId)
+        {
+            var message = await _notificationService.CreateApplicantNotificationAsync(notification, applicantId);
+            await _notificationService.SendNotificationAsync(message);
+        }
+
     }
 }
