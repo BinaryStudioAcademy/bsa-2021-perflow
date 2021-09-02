@@ -1,5 +1,6 @@
 import { AlbumEdit } from '../models/album/album-edit';
 import { CreatedGroup } from '../models/group/createdGroup';
+import { PlaylistForSave } from '../models/playlist/playlist-for-save';
 
 export function objectToFormData(o: object) {
   return Object.entries(o).reduce((d, e) => {
@@ -25,6 +26,16 @@ export function albumToFormData(a: AlbumEdit) {
   }
 
   if (!a.description) {
+    fd.delete('description');
+  }
+
+  return fd;
+}
+
+export function playlistToFormData(p: PlaylistForSave) {
+  const fd = objectToFormData(p);
+
+  if (!p.description) {
     fd.delete('description');
   }
 
