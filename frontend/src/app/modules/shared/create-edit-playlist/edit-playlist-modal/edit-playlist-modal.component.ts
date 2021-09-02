@@ -92,7 +92,5 @@ export class EditPlaylistModalComponent implements OnInit {
     this.tempIconURL = croppedFile.croppedImage;
   };
 
-  isCollaborative = (accessType: AccessType) => {
-    return accessType === AccessType.collaborative;
-  }
+  isCollaborative = (accessType: AccessType) => accessType === AccessType.collaborative;
 }
