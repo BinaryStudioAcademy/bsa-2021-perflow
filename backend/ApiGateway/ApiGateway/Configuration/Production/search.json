@@ -27,7 +27,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/Search/groups",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
           "Host": "perflow",
