@@ -19,9 +19,9 @@ namespace Perflow.Services.Interfaces
 
         public Task<UserSettings> GetUserSettingsAsync(int userId);
 
-        public Task<ArtistApplicant> GetArtistApplicantAsync(int userId);
+        public Task<PerflowStudioApplicant> GetArtistApplicantAsync(int userId);
 
-        public Task<ArtistApplicant> CreateArtistApplicantAsync(int userId, UserRole userRole);
+        public Task<PerflowStudioApplicant> CreateArtistApplicantAsync(int userId, ArtistApplicantDTO artistApplicant);
         
         public Task DeleteUserAsync(User user);
 

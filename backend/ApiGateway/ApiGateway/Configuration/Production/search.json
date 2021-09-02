@@ -26,6 +26,19 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownstreamPathTemplate": "/api/Search/groups",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Search/groups",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Search/albums",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
