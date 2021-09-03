@@ -6,11 +6,8 @@ import 'package:perflow/models/albums/album_simplified.dart';
 import 'package:perflow/widgets/albums/album_row.dart';
 
 class AlbumsList extends StatelessWidget {
-  final bool isLikedPage;
-
   const AlbumsList({
     Key? key,
-    this.isLikedPage = false,
   }) : super(key: key);
 
   @override
@@ -27,7 +24,6 @@ class AlbumsList extends StatelessWidget {
           itemBuilder: (context, index) {
             return AlbumRow(
               album: albums.data[index],
-              isLiked: isLikedPage,
             );
           },
           itemCount: albums.data.length,

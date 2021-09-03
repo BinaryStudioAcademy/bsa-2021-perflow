@@ -32,7 +32,7 @@ class PlaylistRow extends StatelessWidget {
         style: textTheme.caption,
       ),
       height: 80,
-      isLikeAvailable: true,
+      isLikeAvailable: false,
       onTap: () {
         context.vRouter.to(
           Routes.playlist(playlist.id),
