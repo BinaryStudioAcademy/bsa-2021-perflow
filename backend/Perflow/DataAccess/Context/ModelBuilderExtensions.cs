@@ -91,7 +91,7 @@ namespace Perflow.DataAccess.Context
                     CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 29)),
                     Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                     Gender = true,
-                    GroupId = null,
+                    Groups = null,
                     IconURL = avatar
                 },
                 new User
@@ -106,7 +106,7 @@ namespace Perflow.DataAccess.Context
                     CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 28)),
                     Description = " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
                     Gender = true,
-                    GroupId = null,
+                    Groups = null,
                     IconURL = "https://cdn.ananasposter.ru/image/cache/catalog/poster/music/85/8817-1000x830.jpg",
                 },
                 new User
@@ -121,7 +121,7 @@ namespace Perflow.DataAccess.Context
                     CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 27)),
                     Description = "It was popularised in the 1960s.",
                     Gender = true,
-                    GroupId = null,
+                    Groups = null,
                     IconURL = "https://sites.google.com/site/korolevstvoanglia/_/rsrc/1468862873851/anglijskie-znamenitosti/the-beatles/pol-makkartni/ihJe5HHUxrE.jpg"
                 }
             };
