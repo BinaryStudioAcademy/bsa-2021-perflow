@@ -46,7 +46,7 @@ namespace Perflow.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Remove([FromBody] PlaylistEditorDTO pe)
+        public async Task<ActionResult> Remove([FromQuery] PlaylistEditorDTO pe)
         {
             await _playlistEditorsService.Remove(pe);
 

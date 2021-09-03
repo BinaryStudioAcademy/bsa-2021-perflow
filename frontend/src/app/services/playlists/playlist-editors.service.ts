@@ -25,7 +25,7 @@ export class PlaylistEditorsService {
   }
 
   remove(pe: PlaylistEditor): Observable<PlaylistEditor> {
-    return this._httpService.deleteRequest<PlaylistEditor>(this._endpoint, pe);
+    return this._httpService.deleteRequest(this._endpoint, pe);
   }
 
   removePlaylist(playlistId: number): Observable<number> {

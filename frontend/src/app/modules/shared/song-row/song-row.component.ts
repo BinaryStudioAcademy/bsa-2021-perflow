@@ -15,9 +15,9 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
-import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarInfo } from 'src/app/models/common/snackbar-info';
+import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-song-row',
