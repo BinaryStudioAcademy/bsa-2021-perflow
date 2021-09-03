@@ -73,6 +73,7 @@
     [isAuthor]="isAuthor"
     *ngIf="isModalShown" 
     (editPlaylist)="onSubmitModal($event)" 
+    [(collaborators)]="collaborators"
     (isClosed)="closeModal()"></app-edit-playlist-modal>
     <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
       <div class="header">

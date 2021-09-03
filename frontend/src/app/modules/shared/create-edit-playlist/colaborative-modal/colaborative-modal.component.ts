@@ -3,9 +3,10 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, switchMap, takeUntil
+  debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
 } from 'rxjs/operators';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -16,6 +17,7 @@ import { SearchService } from 'src/app/services/search.service';
 export class ColaborativeModalComponent implements OnInit, OnDestroy {
   readonly debounceTime: number = 750;
 
+  userId: number;
   searchValue: string;
   foundUsers: Array<ArtistReadDTO> = new Array<ArtistReadDTO>();
 
@@ -31,8 +33,15 @@ export class ColaborativeModalComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
 
   constructor(
-    private _searchService: SearchService
-  ) { }
+    private _searchService: SearchService,
+    private _authService: AuthService
+  ) {
+    this._authService.getAuthStateObservableFirst()
+      .pipe(filter((state) => !!state))
+      .subscribe((authState) => {
+        this.userId = authState!.id;
+      });
+  }
 
   ngOnInit(): void {
     this.setSearch();
@@ -48,12 +57,12 @@ export class ColaborativeModalComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe$),
       debounceTime(500),
       distinctUntilChanged(),
-      switchMap((term: string) => this._searchService.getArtistByName({
+      switchMap((term: string) => this._searchService.getUsersByName({
         searchTerm: term, page: 1, itemsOnPage: 30
       }))
     ).subscribe({
       next: (data) => {
-        this.foundUsers = data;
+        this.foundUsers = data.filter((u) => u.id !== this.userId);
       }
     });
   }

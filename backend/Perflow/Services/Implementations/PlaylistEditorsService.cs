@@ -9,13 +9,21 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Perflow.Common.DTO.Playlists;
+using Perflow.Services.Interfaces;
+using Perflow.Common.DTO.Notifications;
+using Perflow.Domain.Enums;
+using System;
 
 namespace Perflow.Services.Implementations
 {
     public class PlaylistEditorsService : BaseService
     {
-        public PlaylistEditorsService(PerflowContext context, IMapper mapper) : base(context, mapper)
-        {}
+        private readonly INotificationService _notificationService;
+
+        public PlaylistEditorsService(PerflowContext context, IMapper mapper, INotificationService notificationService) : base(context, mapper)
+        {
+            _notificationService = notificationService;
+        }
 
         public async Task<IEnumerable<ArtistReadDTO>> GetCollaborators(int playlistId)
         {
@@ -31,21 +39,42 @@ namespace Perflow.Services.Implementations
         public async Task Add(PlaylistEditorDTO pe)
         {
             await context.PlaylistEditors.AddAsync(mapper.Map<PlaylistEditor>(pe));
-
             await context.SaveChangesAsync();
+            await SendAddedToCollaborativeNotificationsAsync(new List<PlaylistEditorDTO> { pe });
         }
 
         public async Task AddCollaborators(int playlistId, IEnumerable<ArtistReadDTO> collaborators)
         {
-            await this.RemovePlaylist(playlistId);
-            var pes = collaborators
-                        .Select(u => 
-                        new PlaylistEditorDTO { 
-                            PlaylistId = playlistId, 
-                            UserId = u.Id 
-                        });
-            await context.PlaylistEditors.AddRangeAsync(mapper.Map<IEnumerable<PlaylistEditor>>(pes));
+            var currentCollab = await context.PlaylistEditors.ToListAsync();
+            var newCollab = collaborators
+                    .Where(a => !currentCollab.Any(pe => pe.UserId == a.Id && pe.PlaylistId == playlistId));
 
+            if (newCollab.Any())
+            {
+                var pes = newCollab
+                        .Select(u =>
+                        new PlaylistEditorDTO
+                        {
+                            PlaylistId = playlistId,
+                            UserId = u.Id
+                        });
+                await SendAddedToCollaborativeNotificationsAsync(pes);
+            }
+
+            await this.RemovePlaylist(playlistId);
+            if (collaborators.Any())
+            {
+                var pes = collaborators
+                        .Select(u =>
+                        new PlaylistEditorDTO
+                        {
+                            PlaylistId = playlistId,
+                            UserId = u.Id
+                        });
+
+                await context.PlaylistEditors.AddRangeAsync(mapper.Map<IEnumerable<PlaylistEditor>>(pes));
+            }
+            
             await context.SaveChangesAsync();
         }
 
@@ -78,6 +107,28 @@ namespace Perflow.Services.Implementations
                                             .ToListAsync();
 
             return mapper.Map<IEnumerable<PlaylistViewDTO>>(collaborators);
+        }
+
+        private async Task SendAddedToCollaborativeNotificationsAsync(IEnumerable<PlaylistEditorDTO> pes)
+        {
+            var notifications = new List<NotificationReadDTO>();
+            foreach (var pe in pes)
+            {
+                var playlist = await context.Playlists.FirstOrDefaultAsync(p => p.Id == pe.PlaylistId);
+                var notifWrite = new NotificationWriteDTO
+                {
+                    Title = "New Collaborative",
+                    Description = $"You've been added as a collaborative to \"{playlist.Name}\" playlist",
+                    Reference = pe.PlaylistId,
+                    Type = NotificationType.CollaborativePlaylistSubscription
+                };
+
+                var notif = await _notificationService.CreateNotificationAsync(notifWrite, pe.UserId, false);
+                notifications.Add(notif);
+            }
+
+            await _notificationService.SendNotificationAsync(notifications);
+            await context.SaveChangesAsync();
         }
     }
 }

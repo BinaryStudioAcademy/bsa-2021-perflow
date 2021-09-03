@@ -6,6 +6,7 @@
         GroupSubscribtion,
         ApplicantNotification,
         UserNotification,
+        CollaborativePlaylistSubscription,
         GroupMembersNotification
     }
 }

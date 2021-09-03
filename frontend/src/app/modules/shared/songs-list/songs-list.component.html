@@ -11,7 +11,8 @@
         [isPlaying]="isPlaying"
         [playlist]="playlist"
         [album]="album"
-        
+        [isRemoveFromQueueShonw]="isRemoveFromQueueShonw"
+
         (clickMenuItem)="rowMenuClick($event)" 
         (clickDislike)="clickDislikeIcon($event)"
         (togglePlay)="togglePlay()">
@@ -28,6 +29,7 @@
       [isPlaying]="isPlaying"
       [playlist]="playlist"
       [album]="album"
+      [isRemoveFromQueueShonw]="isRemoveFromQueueShonw"
 
       (clickMenuItem)="rowMenuClick($event)" 
       (clickDislike)="clickDislikeIcon($event)"

@@ -25,6 +25,11 @@ export class SearchService {
     return this._httpService.getRequest<ArtistReadDTO[]>('/api/Search/artists', httpParams);
   };
 
+  getUsersByName = (data: SearchParam): Observable<ArtistReadDTO[]> => {
+    const httpParams = { ...data };
+    return this._httpService.getRequest<ArtistReadDTO[]>('/api/Search/users', httpParams);
+  };
+
   getGroupsByName = (data: SearchParam): Observable<ArtistReadDTO[]> => {
     const httpParams = { ...data };
     return this._httpService.getRequest<ArtistReadDTO[]>('/api/Search/groups', httpParams);
