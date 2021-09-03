@@ -5,11 +5,15 @@ import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
 import 'package:perflow/cubits/playlists/playlist_info_cubit.dart';
 import 'package:perflow/cubits/playlists/playlist_songs_cubit.dart';
+import 'package:perflow/cubits/reactions/playlist_reaction_cubit.dart';
+import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/helpers/icon_url_convert.dart';
 import 'package:perflow/models/playlists/playlist_info.dart';
 import 'package:perflow/models/songs/playlist_song.dart';
 import 'package:perflow/screens/details/default_sliver_bar.dart';
 import 'package:perflow/screens/details/header.dart';
+import 'package:perflow/services/auth/auth_service.dart';
+import 'package:perflow/widgets/playlists/playlist_like_button.dart';
 import 'package:perflow/widgets/songs/song_row.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -22,6 +26,7 @@ class PlaylistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final headerExpandedHeight = MediaQuery.of(context).size.height * 0.6;
     final textTheme = Theme.of(context).textTheme;
+    final _authService = getService<AuthService>();
 
     return VWidgetGuard(
       afterEnter: (context, from, to) =>
@@ -34,6 +39,9 @@ class PlaylistScreen extends StatelessWidget {
           ),
           BlocProvider<PlaylistInfoCubit>(
             create: (context) => PlaylistInfoCubit(playlistId),
+          ),
+          BlocProvider<PlaylistReactionCubit>(
+            create: (context) => PlaylistReactionCubit(),
           ),
         ],
         child: CustomScrollView(
@@ -72,6 +80,22 @@ class PlaylistScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.caption,
                     ),
+                    likeButton: (value.data.author.id ==
+                            _authService.currentAuthState!.id)
+                        ? null
+                        : LikeButtonPlaylist(
+                            isLikedInitial: value.data.isLiked,
+                            onLikePress: () {
+                              context
+                                  .read<PlaylistReactionCubit>()
+                                  .likePlaylist(value.data.id);
+                            },
+                            onUnlikePress: () {
+                              context
+                                  .read<PlaylistReactionCubit>()
+                                  .unlikePlaylist(value.data.id);
+                            },
+                          ),
                   ),
                 ),
               ),

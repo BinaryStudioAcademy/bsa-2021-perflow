@@ -21,6 +21,7 @@ interface Author {
 })
 export class EditAlbumModalComponent implements OnInit {
   readonly pattern = '.*(.jpg$|.png$|.jpeg$)';
+  readonly currentYear: number = new Date().getFullYear();
   file: File;
 
   readonly albumRegionValues: AlbumRegion[] = [

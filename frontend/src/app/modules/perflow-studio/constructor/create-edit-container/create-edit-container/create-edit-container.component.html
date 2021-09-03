@@ -33,7 +33,10 @@
             Add something!
           </span>
         </div>
-        <div class="items" *ngIf="getAccordionSection().pageSectionEntities.length">
+        <div class="ui icon button scroll-button" *ngIf="isTextOverflow('section-accordion')" (click)="scrollLeft('section-accordion')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div id="section-accordion" class="items" *ngIf="getAccordionSection().pageSectionEntities.length">
           <span *ngFor="let accordionSectionEntity of getAccordionSection().pageSectionEntities">
             <app-album-card *ngIf="accordionSectionEntity.entityType === 0" 
               [album]="accordionSectionEntity.entity"
@@ -43,6 +46,9 @@
               (deleteFromSection)="onDeleteFromSectionClick($event)">
             </app-album-card>
           </span>
+        </div>
+        <div class="ui icon button scroll-button" *ngIf="isTextOverflow('section-accordion')" (click)="scrollRight('section-accordion')">
+          <i class="large inverted angle right icon"></i>
         </div>
       </div>
     </div>
@@ -56,11 +62,14 @@
           <i class="ui trash alternate outline icon"></i>
         </span>
       </div>
-      <div class="list-of-items">
+      <div #theElementYouWantToCheck class="list-of-items">
         <div id="section-{{section.position}}" *ngIf="!section.pageSectionEntities.length" class="items" appHideScrollButtons>
           <span>
             Add something!
           </span>
+        </div>
+        <div class="ui icon button scroll-button" *ngIf="isTextOverflow('section-'+ section.position)" (click)="scrollLeft('section-'+ section.position)">
+          <i class="large inverted angle left icon"></i>
         </div>
         <div id="section-{{section.position}}" *ngIf="section.pageSectionEntities.length" class="items" appHideScrollButtons cdkDrop>
           <span *ngFor="let entity of section.pageSectionEntities">
@@ -84,6 +93,9 @@
               (deleteFromSection)="onDeleteFromSectionClick($event)">
             </app-playlist-card>
           </span>
+        </div>
+        <div class="ui icon button scroll-button" *ngIf="isTextOverflow('section-'+ section.position)" (click)="scrollRight('section-'+ section.position)">
+          <i class="large inverted angle right icon"></i>
         </div>
       </div>
     </div>

@@ -22,4 +22,20 @@ class _$AlbumsReactionsApi extends AlbumsReactionsApi {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> likeAlbum(NewAlbumReaction reaction) {
+    final $url = 'api/albumreaction/like';
+    final $body = reaction;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> unlikeAlbum(NewAlbumReaction reaction) {
+    final $url = 'api/albumreaction/removeLike';
+    final $body = reaction;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

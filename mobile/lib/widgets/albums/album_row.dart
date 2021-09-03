@@ -9,8 +9,9 @@ import 'package:vrouter/vrouter.dart';
 
 class AlbumRow extends StatelessWidget {
   final AlbumSimplified album;
+  final bool isLiked;
 
-  const AlbumRow({Key? key, required this.album}) : super(key: key);
+  const AlbumRow({Key? key, required this.album, this.isLiked = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class AlbumRow extends StatelessWidget {
       ),
       contentType: RowType.album,
       isLikeAvailable: true,
+      isLiked: isLiked,
       onTap: () {
         context.vRouter.to(
           Routes.album(album.id),

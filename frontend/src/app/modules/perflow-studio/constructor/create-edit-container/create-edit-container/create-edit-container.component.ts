@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component, OnDestroy, OnInit
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
@@ -28,7 +30,7 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
 
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
-  private _isEditMode: boolean = false;
+  private readonly _scrollingSize: number = 1530;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -44,11 +46,9 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
       this._id = +data;
     });
     if (this._id) {
-      this._isEditMode = true;
       this.startEditMode();
     }
     else {
-      this._isEditMode = false;
       this.container = this.getBasicContainerFull();
       this.maxPos = Math.max(...this.container.pageSections.map((o: PageSectionFull) => o.position));
       this.isLoading = false;
@@ -170,6 +170,14 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     this.editNamePosition = -1;
   };
 
+  isTextOverflow = (elementId: string): boolean => {
+    const elem = document.getElementById(elementId);
+    if (elem) {
+      return (elem.offsetWidth < elem.scrollWidth);
+    }
+    return false;
+  };
+
   saveContainer = () => {
     if (this._id) {
       this._constructorService.updateContainer(this.container)
@@ -236,6 +244,16 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     });
     this.container.pageSections[sectionIndex].pageSectionEntities.splice(entityIndex, 1);
   }
+
+  scrollRight = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollBy({ left: this._scrollingSize, behavior: 'smooth' });
+  };
+
+  scrollLeft = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollBy({ left: -this._scrollingSize, behavior: 'smooth' });
+  };
 
   /* eslint-enable no-param-reassign */
   instanceOfAlbum = (data: any): data is AlbumForReadDTO => 'releaseYear' in data;

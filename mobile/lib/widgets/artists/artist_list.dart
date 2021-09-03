@@ -6,8 +6,11 @@ import 'package:perflow/models/artists/artist_simplified.dart';
 import 'package:perflow/widgets/artists/artist_row.dart';
 
 class ArtistsList extends StatelessWidget {
+  final bool isLikedPage;
+
   const ArtistsList({
     Key? key,
+    this.isLikedPage = false,
   }) : super(key: key);
 
   @override
@@ -22,7 +25,10 @@ class ArtistsList extends StatelessWidget {
         ),
         data: (artists) => ListView.builder(
           itemBuilder: (context, index) {
-            return ArtistRow(artist: artists.data[index]);
+            return ArtistRow(
+              artist: artists.data[index],
+              isLiked: isLikedPage,
+            );
           },
           itemCount: artists.data.length,
           shrinkWrap: true,
