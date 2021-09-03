@@ -29,7 +29,7 @@ namespace Perflow.Services.Implementations
             _hubContext = hubContext;
         }
 
-        public async Task<IEnumerable<NotificationReadDTO>> CreateNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type)
+        public async Task<IEnumerable<NotificationReadDTO>> CreateSubscriberNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type)
         {
             var subscribersIds = (type == AuthorType.Artist)
                 ? await GetArtistSubscribersAsync(id)
@@ -53,9 +53,28 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
 
-            _ = DeleteOlderThanAsync(maxNumberOfDaysToStoreNotification);
+            await DeleteOlderThanAsync(maxNumberOfDaysToStoreNotification);
 
             return mapper.Map<IEnumerable<NotificationReadDTO>>(notifications);
+        }
+
+        public async Task<NotificationReadDTO> CreateNotificationAsync(NotificationWriteDTO notification, int subscriberId, bool autoSaveChanges = true)
+        {
+            var notif = await context.Notifications.AddAsync(new Notification
+            {
+                Description = notification.Description,
+                Title = notification.Title,
+                Type = notification.Type,
+                UserId = subscriberId,
+                Reference = notification.Reference
+            });
+
+            if (autoSaveChanges)
+                await context.SaveChangesAsync();
+
+            await DeleteOlderThanAsync(maxNumberOfDaysToStoreNotification);
+
+            return mapper.Map<NotificationReadDTO>(notif.Entity);
         }
 
         public async Task SendNotificationAsync(IEnumerable<NotificationReadDTO> notifications)

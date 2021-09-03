@@ -21,8 +21,8 @@
                     <div class="text">
                         <div class="title">{{n.title}}</div>
                         <div class="message">{{n.description}}
-                            <a class="link" routerLink="/albums/{{n.reference}}"
-                                *ngIf="n.type === notificationType.artistSubscribtion || n.type === notificationType.groupSubscribtion">
+                            <a class="link" (click)="navigateViaLink(n)"
+                                *ngIf="displayLink(n)">
                                 Link
                             </a>
                         </div>
