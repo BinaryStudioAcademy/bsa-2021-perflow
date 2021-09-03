@@ -97,12 +97,13 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     this._notificationsHub.stop();
   }
 
-  navigateViaLink(type: string, notif: Notification) {
-    switch (type) {
-      case 'album':
+  navigateViaLink(notif: Notification) {
+    switch (notif.type) {
+      case NotificationType.groupSubscribtion:
+      case NotificationType.artistSubscribtion:
         this._router.navigateByUrl(`/albums/${notif.reference}`);
         break;
-      case 'playlist':
+      case NotificationType.collaborativePlaylistSubscription:
         this._router.navigateByUrl(`/playlists/view-playlist/${notif.reference}`);
         break;
       default:

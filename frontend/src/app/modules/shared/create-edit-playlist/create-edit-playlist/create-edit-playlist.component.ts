@@ -90,16 +90,6 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
           }
         }
       });
-
-    if (this.playlist.accessType === AccessType.collaborative) {
-      this._playlistEditorsService.getCollaborators(this.playlist.id)
-        .pipe(first())
-        .subscribe(
-          (result) => {
-            this.collaborators = result;
-          }
-        );
-    }
   }
 
   public ngOnDestroy() {
@@ -114,6 +104,15 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.playlist = data;
           this.isAuthor = this.playlist.author.id === this.userId;
+          if (this.playlist.accessType === AccessType.collaborative) {
+            this._playlistEditorsService.getCollaborators(this.playlist.id)
+              .pipe(first())
+              .subscribe(
+                (result) => {
+                  this.collaborators = result;
+                }
+              );
+          }
         },
         error: (err) => {
           this._router.navigate(['../../../playlists'], { relativeTo: this._activatedRoute });
@@ -194,7 +193,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
           if (editedPlaylist.accessType !== AccessType.collaborative) {
             this._playlistEditorsService.removePlaylist(editedPlaylist.id)
               .pipe(takeUntil(this._unsubscribe$))
-              .subscribe();
+              .subscribe((_) => {
+                this.collaborators = [];
+              });
           }
           else if (editedPlaylist.accessType === AccessType.collaborative) {
             this._playlistEditorsService.addCollaborators(editedPlaylist.id, this.collaborators)
