@@ -67,8 +67,6 @@ namespace Perflow.Services.Implementations
                 application.User.Group = await context.Groups.FirstOrDefaultAsync(g => g.Id == application.GroupId);
             }
 
-            string applicantName = application.User.UserName;
-
             context.Update(application);
             context.PerflowStudioApplicants.Remove(application);
 
@@ -100,7 +98,7 @@ namespace Perflow.Services.Implementations
                     var notification = new NotificationWriteDTO
                     {
                         Title = isDeleted ? "Deleted group member" : "New group member",
-                        Description = isDeleted ? $"{user.UserName} was deleted from {user.Group.Name}" 
+                        Description = isDeleted ? $"{user.UserName} left the {user.Group.Name}" 
                             : $"{user.UserName} was added to {user.Group.Name}",
                         Reference = user.Id,
                         Type = isDeleted ? NotificationType.UserNotification : NotificationType.GroupMembersNotification
