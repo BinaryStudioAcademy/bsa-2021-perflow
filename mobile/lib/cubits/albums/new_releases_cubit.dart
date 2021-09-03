@@ -22,8 +22,6 @@ class NewReleasesCubit extends ApiCallCubit<List<AlbumSimplified>> {
       throw const ApiCallException("Couldn't load liked albums");
     }
 
-    print(response.body);
-
     return (response.body as List<dynamic>)
         .map((dynamic albumJson) => AlbumSimplified.fromJson(albumJson))
         .toList();
