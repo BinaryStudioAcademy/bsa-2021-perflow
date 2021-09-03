@@ -71,20 +71,22 @@ class AlbumScreen extends StatelessWidget {
                       ' | ' +
                           value.data.songs.length.toString() +
                           ' songs | ' +
-                          timeConvert(
-                            Duration(
-                              seconds: value.data.songs
-                                  .map((e) => e.duration)
-                                  .reduce((value, element) => value + element),
-                            ),
-                          ),
+                          (value.data.songs.isNotEmpty
+                              ? timeConvert(
+                                  Duration(
+                                    seconds: value.data.songs
+                                        .map((e) => e.duration)
+                                        .reduce((value, element) =>
+                                            value + element),
+                                  ),
+                                )
+                              : '0 min'),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.caption,
                     ),
-                    likeButton: (value.data.artist == null ||
-                            value.data.artist!.id ==
-                                _authService.currentAuthState!.id)
+                    likeButton: (value.data.artist?.id ==
+                            _authService.currentAuthState!.id)
                         ? null
                         : LikeButtonAlbum(
                             isLikedInitial: value.data.isLiked,
@@ -113,6 +115,7 @@ class AlbumScreen extends StatelessWidget {
   }
 
   Widget _buildSongsList(BuildContext context, ApiCallState<AlbumInfo> state) {
+    final textTheme = Theme.of(context).textTheme;
     return state.map(
       loading: (_) => const SliverFillRemaining(
         hasScrollBody: false,
@@ -121,13 +124,28 @@ class AlbumScreen extends StatelessWidget {
         ),
       ),
       error: (error) => SliverFillRemaining(
-          hasScrollBody: false, child: Center(child: Text(error.message))),
-      data: (value) => SliverList(
-        delegate: SliverChildBuilderDelegate((context, index) {
-          final song = value.data.songs[index];
-          return SongRow(song: song);
-        }, childCount: value.data.songs.length),
+        hasScrollBody: false,
+        child: Center(
+          child: Text(error.message),
+        ),
       ),
+      data: (value) {
+        if (value.data.songs.isNotEmpty) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final song = value.data.songs[index];
+              return SongRow(song: song);
+            }, childCount: value.data.songs.length),
+          );
+        } else {
+          return SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(
+              child: Text('No songs', style: textTheme.headline6),
+            ),
+          );
+        }
+      },
     );
   }
 }
