@@ -86,6 +86,8 @@ namespace Perflow.Services.Implementations
             context.PlaylistEditors.Remove(removeEntity);
             
             await context.SaveChangesAsync();
+
+            await SendCollaboratorLeftNotificationsAsync(pe);
         }
 
         public async Task RemovePlaylist(int playlistId)
@@ -124,6 +126,44 @@ namespace Perflow.Services.Implementations
                 };
 
                 var notif = await _notificationService.CreateNotificationAsync(notifWrite, pe.UserId, false);
+                notifications.Add(notif);
+            }
+
+            await _notificationService.SendNotificationAsync(notifications);
+            await context.SaveChangesAsync();
+        }
+
+        private async Task SendCollaboratorLeftNotificationsAsync(PlaylistEditorDTO dto)
+        {
+            var user = await context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == dto.UserId);
+
+            var playlist = await context.Playlists
+                .Include(p => p.Author)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == dto.PlaylistId);
+
+            var userIds = await context.PlaylistEditors
+                    .Where(pe => pe.PlaylistId == dto.PlaylistId)
+                    .Select(pe => pe.UserId)
+                    .ToListAsync();
+
+            userIds.Add(playlist.Author.Id);
+
+            var notifications = new List<NotificationReadDTO>();
+
+            foreach (var userId in userIds)
+            {
+                var notifWrite = new NotificationWriteDTO
+                {
+                    Title = "Collaborator left",
+                    Description = $"{user.UserName} left \"{playlist.Name}\" playlist",
+                    Reference = playlist.Id,
+                    Type = NotificationType.CollaborativePlaylistSubscription
+                };
+
+                var notif = await _notificationService.CreateNotificationAsync(notifWrite, userId, false);
                 notifications.Add(notif);
             }
 

@@ -4,7 +4,9 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, timer } from 'rxjs';
-import { filter, first, takeUntil } from 'rxjs/operators';
+import {
+  filter, first, take, takeUntil
+} from 'rxjs/operators';
 import { Playlist } from 'src/app/models/playlist';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { ClipboardService } from 'ngx-clipboard';
@@ -31,6 +33,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   userId: number;
 
   private _tempPlaylist = {} as PlaylistName;
+  private _isOnCollaborativePlaylistClick: boolean = false;
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -87,7 +90,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       );
   }
 
-  playlistSettingsClick = (playist: PlaylistName, e: MouseEvent) => {
+  playlistSettingsClick = (playist: PlaylistName, e: MouseEvent, isCollaborative: boolean = false) => {
     const menu = (this.menu.nativeElement as HTMLDivElement);
     const height = window.innerHeight - e.clientY;
     const menuHeight: number = 500;
@@ -108,6 +111,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       menu.classList.add('show');
     }
 
+    this._isOnCollaborativePlaylistClick = isCollaborative;
     this._tempPlaylist = playist;
   };
 
@@ -154,17 +158,29 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   }
 
   deletePlaylist() {
-    this._playlistsService.deletePlaylist(this._tempPlaylist.id)
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: (id) => {
-          this._createdPlaylistService.deletePlaylist(id);
-          if (this._router.url === `/playlists/view-playlist/${id}`
-            || this._router.url === `/playlists/edit/${id}`) {
-            this._router.navigateByUrl('/playlists/all');
+    if (this._isOnCollaborativePlaylistClick) {
+      this._playlistEditorsService.remove({ playlistId: this._tempPlaylist.id, userId: this.userId })
+        .pipe(take(1))
+        .subscribe({
+          next: () => {
+            this.collaborativePlaylists = this.collaborativePlaylists.filter((cp) => cp.id !== this._tempPlaylist.id);
+            this._isOnCollaborativePlaylistClick = false;
           }
-        }
-      });
+        });
+    }
+    else {
+      this._playlistsService.deletePlaylist(this._tempPlaylist.id)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe({
+          next: (id) => {
+            this._createdPlaylistService.deletePlaylist(id);
+            if (this._router.url === `/playlists/view-playlist/${id}`
+              || this._router.url === `/playlists/edit/${id}`) {
+              this._router.navigateByUrl('/playlists/all');
+            }
+          }
+        });
+    }
   }
 
   editPlaylist() {

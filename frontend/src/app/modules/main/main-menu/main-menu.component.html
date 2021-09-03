@@ -58,7 +58,7 @@
           routerLinkActive="active-link"  class="clickable">
             <span class="show-name" *ngIf="playlist.id !== editedPlaylist.id">
               <span>{{ playlist.name }}</span>
-              <i class="ellipsis vertical icon pl-settings" (click)="playlistSettingsClick(playlist, $event)" appClickStopPropagation></i>
+              <i class="ellipsis vertical icon pl-settings" (click)="playlistSettingsClick(playlist, $event, true)" appClickStopPropagation></i>
             </span>
             <span class="edit-name" *ngIf="isEditPlaylistMode && playlist.id === editedPlaylist.id">
               <input type="text" [(ngModel)]="editedPlaylist.name" (clickOutside)="clickOutsidePlaylistName()" 
@@ -111,7 +111,7 @@
       Create similar playlist
     </span>
   </div>
-  <div class="item" *ngIf="!isPlaylistCollaborativeSettings()" (click)="clickOnMenuItem('Delete')">
+  <div class="item" (click)="clickOnMenuItem('Delete')">
     <span>
       <i class="trash alternate outline icon"></i>
       Delete
