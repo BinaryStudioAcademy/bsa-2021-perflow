@@ -83,11 +83,10 @@ namespace Perflow.Services.Implementations
             };
 
             await Notify(notification, application.User.Id);
-
-            await NotifyGroupMembers(applicantName, application.User);
+            await NotifyGroupMembers(application.User);
         }
 
-        private async Task NotifyGroupMembers(string applicantName, User user)
+        private async Task NotifyGroupMembers(User user, bool isDeleted = false)
         {
             if (user.Group != null)
             {
@@ -100,10 +99,11 @@ namespace Perflow.Services.Implementations
                 {
                     var notification = new NotificationWriteDTO
                     {
-                        Title = $"New group member",
-                        Description = $"{applicantName} was added to {user.Group.Name}",
+                        Title = isDeleted ? "Deleted group member" : "New group member",
+                        Description = isDeleted ? $"{user.UserName} was deleted from {user.Group.Name}" 
+                            : $"{user.UserName} was added to {user.Group.Name}",
                         Reference = user.Id,
-                        Type = NotificationType.GroupMembersNotification
+                        Type = isDeleted ? NotificationType.UserNotification : NotificationType.GroupMembersNotification
                     };
 
                     await Notify(notification, userId);
@@ -142,9 +142,12 @@ namespace Perflow.Services.Implementations
             
             user.Role = userRole.Role;
 
-            if (user.Role != UserRole.Artist)
+            if (user.Role != UserRole.Artist && user.Group != null)
+            {
+                await NotifyGroupMembers(user, isDeleted: true);
                 user.Group = null;
-
+            }
+                
             context.Update(user);
 
             await context.SaveChangesAsync();
