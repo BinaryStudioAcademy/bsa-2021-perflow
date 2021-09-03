@@ -22,4 +22,20 @@ class _$PlaylistsReactionsApi extends PlaylistsReactionsApi {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> likePlaylist(NewPlaylistReaction reaction) {
+    final $url = 'api/playlistreaction/like';
+    final $body = reaction;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> unlikePlaylist(NewPlaylistReaction reaction) {
+    final $url = 'api/playlistreaction/removeLike';
+    final $body = reaction;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

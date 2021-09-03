@@ -26,6 +26,9 @@ namespace Perflow.Services.Extensions
                 cfg.AddProfile<ArtistProfile>();
                 cfg.AddProfile<RecentlyPlayedProfile>();
                 cfg.AddProfile<SearchHistoryProfile>();
+                cfg.AddProfile<ConstructorProfile>();
+                cfg.AddProfile<PlaylistEditorProfile>();
+                cfg.AddProfile<ContentSynchronizationProfile>();
             },
             Assembly.GetExecutingAssembly());
         }
@@ -51,6 +54,8 @@ namespace Perflow.Services.Extensions
             services.AddScoped<SearchService>();
             services.AddScoped<GroupReactionService>();
             services.AddScoped<SearchHistoryService>();
+            services.AddScoped<ContentSynchronizationService>();
+            services.AddScoped<ApplicantsService>();
 
             services.AddScoped<ISongFilesService, SongFilesService>();
             services.AddScoped<ISongsService, SongsService>();
@@ -61,7 +66,10 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<IImageService, ImageService>();
 
+            services.AddScoped<ConstructorService>();
+            
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<PlaylistEditorsService>();
         }
     }
 }

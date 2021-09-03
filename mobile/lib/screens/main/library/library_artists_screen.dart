@@ -6,6 +6,6 @@ class LibraryArtistsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ArtistsList();
+    return const ArtistsList(isLikedPage: true,);
   }
 }

@@ -1,0 +1,38 @@
+<div class="bg-modal-fader" (click)="cancelModal()">
+  <div class="ui modal modal-upload" (click)="clickOnModal($event)">
+    <div class="ui icon header">
+      Edit Section
+    </div>
+    <!-- Modal Content -->
+    <div class="content">
+      <form #formEdit="ngForm" (ngSubmit)="onSubmit()" class="ui form error" >
+        <!-- Hidden -->
+        <input type="hidden" [(ngModel)]="editedSection.position" required name="position" #position="ngModel">
+
+        <!-- Name -->
+        <div class="ui field name">
+          <div class="section-name">Section name</div>
+          <input type="text" maxlength="20" placeholder="Section name" [(ngModel)]="editedSection.name" 
+            required #name="ngModel" pattern="[^<>^@]*" name="name" [attr.disabled]="isAccordion ? '' : null">     
+        </div>
+
+        <div class="search-bar">
+          <app-container-search 
+            [editedSection]="editedSection" 
+            (addDeleteFromSection)="onEntityAddDelete($event)"
+            [isAccordion]="isAccordion">
+          </app-container-search>
+        </div>
+      
+        <!-- Buttons -->
+        <div class="ui field buttons-row">
+          <div class="form-group">
+            <button type="submit" class="ui button submit btn-full">Save</button>
+            <!-- <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button> -->
+          </div>
+        </div>
+        <div class="container"></div>
+      </form>
+    </div>
+  </div>
+</div>

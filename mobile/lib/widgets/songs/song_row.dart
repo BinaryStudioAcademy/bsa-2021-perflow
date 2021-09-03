@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:perflow/cubits/reactions/reaction_state.dart';
+import 'package:perflow/cubits/reactions/song_reaction_cubit.dart';
 import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/helpers/icon_url_convert.dart';
 import 'package:perflow/models/common/content_row_type.dart';
@@ -13,6 +16,15 @@ class SongRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider<SongReactionCubit>(
+      create: (context) => SongReactionCubit(),
+      child: BlocBuilder<SongReactionCubit, ReactionState>(
+        builder: (context, state) => _buildRow(context, state),
+      ),
+    );
+  }
+
+  ContentRow _buildRow(BuildContext context, ReactionState state) {
     final textTheme = Theme.of(context).textTheme;
 
     return ContentRow(
@@ -32,8 +44,19 @@ class SongRow extends StatelessWidget {
       ),
       contentType: RowType.album,
       isLikeAvailable: true,
+      isLiked: state.maybeMap(
+        liked: (_) => true,
+        unliked: (_) => false,
+        orElse: () => song.isLiked,
+      ),
       onTap: () {
         getService<PlaybackService>().setSongById(song.id);
+      },
+      onLikePressed: () {
+        context.read<SongReactionCubit>().likeSong(song.id);
+      },
+      onUnlikePressed: () {
+        context.read<SongReactionCubit>().unlikeSong(song.id);
       },
     );
   }

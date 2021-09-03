@@ -9,5 +9,6 @@ namespace Perflow.Common.DTO.Playlists
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public AccessTypeDTO? AccessType { get; set; }
     }
 }

@@ -16,6 +16,8 @@ import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { SnackbarInfo } from 'src/app/models/common/snackbar-info';
 
 @Component({
   selector: 'app-song-row',
@@ -40,6 +42,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
   @Input() isPlaying = false;
   @Input() playlist: Playlist | undefined;
   @Input() album: AlbumFull | undefined;
+  @Input() isRemoveFromQueueShonw: boolean = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
@@ -53,7 +56,8 @@ export class SongRowComponent implements OnInit, OnDestroy {
     private _location: PlatformLocation,
     private _songService: SongsService,
     private _createPlaylistService: CreatePlaylistService,
-    private _playlistsService: PlaylistsService
+    private _playlistsService: PlaylistsService,
+    private _snackbarService: SnackbarService
   ) { }
 
   ngOnDestroy(): void {
@@ -135,7 +139,12 @@ export class SongRowComponent implements OnInit, OnDestroy {
   clickItem(menu: string) {
     this.clickMenuItem.emit({ menuItem: menu, song: this.song });
 
-    if (menu === 'Add to queue') this._queueService.addSongToQueue(this.song);
+    if (menu === 'Add to queue') {
+      this._queueService.addSongToQueue(this.song);
+      this._snackbarService.show({
+        message: 'The song was added to queue', duration: 1500
+      } as SnackbarInfo);
+    }
   }
 
   copyLink() {
@@ -195,17 +204,20 @@ export class SongRowComponent implements OnInit, OnDestroy {
     this.isEditing = true;
   };
 
-  saveName = () => {
-    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
-      this.isEditing = false;
-      subscription.unsubscribe();
-    });
-  };
+  saveName() {
+    this._songService.setSongName(this.song.id, this.song.name)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isEditing = false;
+      });
+  }
 
-  changeCensorship = () => {
+  changeCensorship() {
     this.song.hasCensorship = !this.song.hasCensorship;
-    const subscription = this._songService.updateSongInfo(this.song).subscribe(() => {
-      subscription.unsubscribe();
-    });
-  };
+    this._songService.setSongCensorship(this.song.id, this.song.hasCensorship)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isEditing = false;
+      });
+  }
 }

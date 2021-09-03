@@ -1,11 +1,33 @@
 @import ../playlist-card-styles
-    
+
 .card
+    .section-delete
+        visibility: hidden
+        position: absolute
+        text-align: center
+        top: 1px
+        right: 1px
+        color: $medium-orange
+        &:hover
+            color: red
     .image
         border-radius: 50%
         box-shadow: 0 0 20px black
         img
             border-radius: 50%
+        .icon-background
+            background: $gray-gradient
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 100%
+            height: 100%
+            border-radius: 50%
+            i
+                font-size: 62px
+                margin-top: 3rem
+                color: $text
+                margin-right: 0 !important
     .remove
         bottom: 15px
         right: 20px
@@ -14,9 +36,26 @@
             font-size: 15px
             font-weight: $light-weight
             color: lighten($gray, 15%)
+        > span.checked
+            color: white
+            background: transparent
     .play-icon
         top: 28px
         right: 28px
     &:hover
+        .section-delete
+            visibility: visible
         .play-icon
             opacity: 1
+    .apply-btn
+        position: absolute
+        bottom: 10px
+        right: 10px
+        padding: 0.65em 1em !important
+
+.checkedConstructor
+    background: $orange-gradient
+    .info-block
+        span
+            color: white
+            background: transparent

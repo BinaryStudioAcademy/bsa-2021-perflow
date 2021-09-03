@@ -32,6 +32,8 @@ namespace ApiGateway
                 endpoints.MapControllers();
             });
 
+            app.UseWebSockets();
+
             await app.UseOcelot();
         }
     }

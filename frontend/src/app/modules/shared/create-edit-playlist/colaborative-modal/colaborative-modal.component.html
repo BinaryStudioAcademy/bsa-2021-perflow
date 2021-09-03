@@ -1,0 +1,53 @@
+<div class="bg-modal-fader" (click)="cancelModal()">
+  <div class="content-container" (click)="clickOnModal($event)">
+    <div class="ui search">
+      <div class="ui icon input">
+        <i class="search icon"></i>
+        <input #searchBox name="search" [(ngModel)]="searchValue" (input)="findUsersByName()" class="prompt" type="text"
+          autocomplete="sss" aria-autocomplete="none" placeholder="Search for users..." (keyup)="clearSearch($event)">
+      </div>
+      <div class="collaborators-list" *ngIf="collaborators.length > 0 && foundUsers.length === 0">
+        <h4>Collaborators</h4>
+        <div class="collablorator" *ngFor="let user of collaborators">
+          <div class="user-info">
+            <div class="user-icon">
+              <img [src]="user.iconURL" *ngIf="user.iconURL" />
+              <div class="icon-background" *ngIf="!user.iconURL">
+                <i class="user icon"></i>
+              </div>
+            </div>
+            <h5>{{user.userName}}</h5>
+          </div>
+          <button class="ui inverted basic button btn-ghost button-remove"
+          *ngIf="isUserCollaborative(user)"
+          (click)="removeFromCollaborative(user)">
+            Remove
+          </button>
+        </div>
+      </div>
+      <div class="search-result" *ngIf="foundUsers.length">
+        <div class="search-row" *ngFor="let user of foundUsers">
+          <div class="user-info">
+            <div class="user-icon">
+              <img [src]="user.iconURL" *ngIf="user.iconURL" />
+              <div class="icon-background" *ngIf="!user.iconURL">
+                <i class="user icon"></i>
+              </div>
+            </div>
+            <h5>{{user.userName}}</h5>
+          </div>
+          <button class="ui inverted basic button btn-ghost button-add"
+          *ngIf="!isUserCollaborative(user)"
+          (click)="addToCollaborative(user)">
+            Add
+          </button>
+          <button class="ui inverted basic button btn-ghost button-remove"
+          *ngIf="isUserCollaborative(user)"
+          (click)="removeFromCollaborative(user)">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

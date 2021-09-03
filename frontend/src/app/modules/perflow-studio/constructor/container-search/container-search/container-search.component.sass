@@ -1,0 +1,32 @@
+@import "src/styles"
+
+.search-container
+  position: relative
+  height: 100%
+  width: 100%
+  margin-top: 15px
+  margin-bottom: 25px
+  .search-result
+    display: flex
+    flex-direction: column
+    grid-gap: 20px
+  // Fixed
+  .ui.search
+    position: relative !important
+    height: 90px
+    background: $drk-gray
+    width: 100%
+    .ui.icon.input
+      #search-input
+        border-radius: 500rem !important
+      width: 100%
+      i
+        color: $text
+      .prompt.input-dark
+        background: $drk-rain
+        border: 1px solid $text
+        color: $text
+        &:focus
+          background: $drk-rain
+        &:active
+          background: $drk-rain

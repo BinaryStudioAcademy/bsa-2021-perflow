@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/albums/album_info_cubit.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
+import 'package:perflow/cubits/reactions/album_reaction_cubit.dart';
+import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/helpers/icon_url_convert.dart';
 import 'package:perflow/helpers/time/time_convert.dart';
 import 'package:perflow/models/albums/album_info.dart';
 import 'package:perflow/screens/details/default_sliver_bar.dart';
 import 'package:perflow/screens/details/header.dart';
+import 'package:perflow/services/auth/auth_service.dart';
+import 'package:perflow/widgets/albums/album_like_button.dart';
 import 'package:perflow/widgets/songs/song_row.dart';
 
 class AlbumScreen extends StatelessWidget {
@@ -19,10 +23,18 @@ class AlbumScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final headerExpandedHeight = MediaQuery.of(context).size.height * 0.6;
     final textTheme = Theme.of(context).textTheme;
+    final _authService = getService<AuthService>();
 
     return Scaffold(
-      body: BlocProvider<AlbumInfoCubit>(
-        create: (context) => AlbumInfoCubit(albumId),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<AlbumInfoCubit>(
+            create: (context) => AlbumInfoCubit(albumId),
+          ),
+          BlocProvider<AlbumReactionCubit>(
+            create: (context) => AlbumReactionCubit(),
+          )
+        ],
         child: CustomScrollView(
           slivers: [
             const SliverToBoxAdapter(),
@@ -70,6 +82,23 @@ class AlbumScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.caption,
                     ),
+                    likeButton: (value.data.artist == null ||
+                            value.data.artist!.id ==
+                                _authService.currentAuthState!.id)
+                        ? null
+                        : LikeButtonAlbum(
+                            isLikedInitial: value.data.isLiked,
+                            onLikePress: () {
+                              context
+                                  .read<AlbumReactionCubit>()
+                                  .likeAlbum(value.data.id);
+                            },
+                            onUnlikePress: () {
+                              context
+                                  .read<AlbumReactionCubit>()
+                                  .unlikeAlbum(value.data.id);
+                            },
+                          ),
                   ),
                 ),
               ),

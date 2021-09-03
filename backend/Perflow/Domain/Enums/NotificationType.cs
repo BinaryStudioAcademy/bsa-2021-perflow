@@ -3,6 +3,9 @@
     public enum NotificationType
     {
         ArtistSubscribtion = 0,
-        GroupSubscribtion
+        GroupSubscribtion,
+        ApplicantNotification,
+        UserNotification,
+        CollaborativePlaylistSubscription
     }
 }

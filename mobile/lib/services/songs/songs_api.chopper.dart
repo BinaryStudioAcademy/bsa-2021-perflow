@@ -24,6 +24,15 @@ class _$SongsApi extends SongsApi {
   }
 
   @override
+  Future<Response<dynamic>> getTopSongsByAuthor(
+      int authorId, int count, int authorType) {
+    final $url = 'api/songs/topSongs/$authorId';
+    final $params = <String, dynamic>{'count': count, 'authorType': authorType};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> getLiked() {
     final $url = 'api/songs/liked';
     final $request = Request('GET', $url, client.baseUrl);

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -80,7 +81,16 @@ class PlaybackService {
       actions: _playbackSubject.value?.actions ?? _defaultActions
     ));
 
-    final songDuration = await _player.setUrl('${ApiUrls.base}/api/songs/${song.id}/file');
+    final token = await _authService.getToken();
+
+    final headers = token != null ? {
+      HttpHeaders.authorizationHeader: 'Bearer ' + token
+    } : null;
+
+    final songDuration = await _player.setUrl(
+      '${ApiUrls.base}/api/songs/${song.id}/file', 
+      headers: headers,
+    );
 
     if(songDuration != null) {
       _playbackSubject.add(PlaybackData(

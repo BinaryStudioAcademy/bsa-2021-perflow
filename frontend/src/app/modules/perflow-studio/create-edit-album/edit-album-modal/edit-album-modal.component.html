@@ -79,7 +79,15 @@
           <!-- Year -->
           <div class="ui field year">
             <input type="number" class="ui number-input"  name="releaseYear" [(ngModel)]="editedAlbum.releaseYear"  
-              #releaseYear="ngModel" placeholder="Release year">
+              #releaseYear="ngModel" placeholder="Release year" min="0" max="{{currentYear}}">
+              <div *ngIf="releaseYear.invalid && (releaseYear.dirty || releaseYear.touched)" class="ui error message">
+                <div *ngIf="releaseYear.errors?.max" class="error-message">
+                  Year cannot be in the future.
+                </div>
+                <div *ngIf="releaseYear.errors?.min" class="error-message">
+                  Year cannot be negative.
+                </div>
+              </div>
           </div>
         </div>
       

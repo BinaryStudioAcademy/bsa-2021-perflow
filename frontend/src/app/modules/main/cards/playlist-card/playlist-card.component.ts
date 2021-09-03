@@ -15,9 +15,21 @@ import { QueueService } from 'src/app/services/queue.service';
 export class PlaylistCardComponent {
   @Input()
   playlist: PlaylistView = {} as PlaylistView;
+  @Input()
+  isCheckBox: boolean = false;
+  @Input()
+  isChecked: boolean;
+  @Input()
+  isDeletable: boolean = false;
+  @Input()
+  playlistSection: number;
 
   @Output()
   clickEmiter = new EventEmitter<void>();
+  @Output()
+  deleteFromSection = new EventEmitter<any>();
+  @Output()
+  addDeleteFromSection = new EventEmitter<PlaylistView>();
 
   constructor(
     private _playlistsService: PlaylistsService,
@@ -34,6 +46,14 @@ export class PlaylistCardComponent {
       });
   };
 
+  onDeleteFromSectionClick(playlist: PlaylistView) {
+    const emitEntity = {
+      ...playlist,
+      section: this.playlistSection
+    };
+    this.deleteFromSection.emit(emitEntity);
+  }
+
   updateQueue(songs: Song[]) {
     if (!songs.length) {
       return;
@@ -47,8 +67,14 @@ export class PlaylistCardComponent {
     this._queueService.initSong(first, true);
   }
 
-  redirectTo() {
-    this.clickEmiter.emit();
-    this._router.navigateByUrl(`/playlists/view-playlist/${this.playlist.id}`);
+  handleClick() {
+    if (!this.isCheckBox) {
+      this.clickEmiter.emit();
+      this._router.navigateByUrl(`/playlists/view-playlist/${this.playlist.id}`);
+    }
+    else {
+      this.isChecked = !this.isChecked;
+      this.addDeleteFromSection.emit(this.playlist);
+    }
   }
 }

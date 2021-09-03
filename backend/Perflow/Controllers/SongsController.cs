@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -44,29 +43,6 @@ namespace Perflow.Controllers
             return Ok(songsCount);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<SongReadDTO>> AddSongInfo(SongWriteDTO songInfo)
-        {
-            var result = await _songsService.AddSongInfoAsync(songInfo, User.GetId());
-            return Ok(result);
-        }
-
-        [HttpDelete("delete/{id}")]
-        public async Task<ActionResult<SongWriteDTO>> DeleteSong(int id)
-        {
-            await _songsService.RemoveSongAsync(id);
-            return Ok();
-        }
-
-        // TODO Prevent artist from uploading files to songs of other artists
-        [HttpPost("{songId:int}/file")]
-        public async Task<ActionResult> AddSongFile([FromRoute] int songId, [FromForm] IFormFile songFile)
-        {
-            await _songFilesService.UploadSongFile(songId, songFile);
-
-            return Ok();
-        }
-
         // TODO Add Auth
         [AllowAnonymous]
         [HttpGet("{id:int}/file")]
@@ -86,20 +62,6 @@ namespace Perflow.Controllers
                 songBlob.ContentType,
                 enableRangeProcessing: true
             );
-        }
-
-        [HttpPut]
-        public async Task<ActionResult> UpdateNameCensorship([FromBody] SongWriteDTO songInfo)
-        {
-            await _songsService.Update(songInfo);
-            return Ok();
-        }
-
-        [HttpPut("orders")]
-        public async Task<ActionResult> UpdateOrders([FromBody] SongOrderDTO[] songOrders)
-        {
-            await _songsService.UpdateOrders(songOrders);
-            return Ok();
         }
 
         [HttpGet("{id}")]
@@ -135,6 +97,5 @@ namespace Perflow.Controllers
         {
             return Ok(await _songsService.GetSongsByAlbumIdAsync(id, User.GetId()));
         }
-
     }
 }

@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Studio.Business.Songs.Commands;
 using Perflow.Studio.Business.Songs.DTOs;
-using Perflow.Studio.Business.Songs.Queries;
+using Shared.Auth.Constants;
+using Shared.Auth.Extensions;
 
 namespace Perflow.Studio.Controllers
 {
     [ApiController]
     [Route("api/studio/songs")]
+    [Authorize(Policy = Policies.IsArtistOnly)]
     public class SongsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,58 +22,71 @@ namespace Perflow.Studio.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetAllSongs()
-        {
-            var request = new GetAllSongsQuery();
-            var songs = await _mediator.Send(request);
-
-            return songs.Any() ? Ok(songs) : NoContent();
-        }
-
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<SongReadDTO>> GetSpecificSong([FromRoute] int id)
-        {
-            var request = new GetSpecificSongQuery(id);
-            var result = await _mediator.Send(request);
-
-            return result.Match<ActionResult>(
-                song => Ok(song),
-                notFound => NotFound()
-            );
-        }
-
         [HttpPost]
-        public async Task<ActionResult<SongReadDTO>> CreateSong([FromBody] SongWriteDTO songDto)
+        public async Task<ActionResult<SongReadDTO>> AddSong([FromBody] SongWriteDTO songInfo)
         {
-            var request = new CreateSongCommand(songDto);
-            var createdSong = await _mediator.Send(request);
+            var request = new CreateSongCommand(User.GetId(), songInfo);
+            var addedSong = await _mediator.Send(request);
 
-            return Ok(createdSong);
+            return Ok(addedSong);
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult> UpdateSong([FromRoute] int id, [FromBody] SongWriteDTO songDto)
+        // TODO Prevent artist from uploading files to songs of other artists
+        [HttpPost("{songId:int}/file")]
+        public async Task<ActionResult> AddSongFile([FromRoute] int songId, [FromForm] IFormFile songFile)
         {
-            var request = new UpdateSongCommand(id, songDto);
+            var request = new UploadSongFileCommand(songId, songFile);
             var result = await _mediator.Send(request);
 
             return result.Match<ActionResult>(
-                success => NoContent(),
-                notFound => NotFound()
+                success => Accepted(),
+                error => BadRequest(error.Value)
             );
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<ActionResult> DeleteSong([FromRoute] int id)
+        [HttpDelete("{songId:int}")]
+        public async Task<ActionResult> DeleteSong([FromRoute] int songId)
         {
-            var request = new DeleteSongCommand(id);
+            var request = new DeleteSongCommand(songId);
             var result = await _mediator.Send(request);
 
             return result.Match<ActionResult>(
                 success => Ok(),
-                notFound => NotFound()
+                found => NotFound()
             );
+        }
+
+        [HttpPut("{songId:int}/censorship")]
+        public async Task<ActionResult> SetCensorship([FromRoute] int songId, [FromQuery] bool value)
+        {
+            var request = new SetSongCensorshipCommand(songId, value);
+            var result = await _mediator.Send(request);
+
+            return result.Match<ActionResult>(
+                success => Ok(),
+                found => NotFound()
+            );
+        }
+
+        [HttpPut("{songId:int}/name")]
+        public async Task<ActionResult> SetName([FromRoute] int songId, [FromQuery] string value)
+        {
+            var request = new SetSongNameCommand(songId, value);
+            var result = await _mediator.Send(request);
+
+            return result.Match<ActionResult>(
+                success => Ok(),
+                found => NotFound()
+            );
+        }
+
+        [HttpPut("orders")]
+        public async Task<ActionResult> UpdateOrders([FromBody] SongOrderDTO[] songOrders)
+        {
+            var request = new SetSongOrderCommand(songOrders);
+            await _mediator.Send(request);
+
+            return Ok();
         }
     }
 }

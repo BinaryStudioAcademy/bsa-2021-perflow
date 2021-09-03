@@ -16,6 +16,8 @@ import 'package:perflow/services/reactions/albums_reactions_api.dart' as _i9;
 import 'package:perflow/services/reactions/artists_reactions_api.dart' as _i10;
 import 'package:perflow/services/reactions/playlists_reactions_api.dart' as _i5;
 import 'package:perflow/services/search/search_api.dart' as _i6;
+import 'package:perflow/services/artists/artists_api.dart' as _i10;
+import 'package:perflow/services/reactions/song_reactions_api.dart' as _i7;
 import 'package:perflow/services/songs/songs_api.dart'
     as _i7; // ignore_for_file: unnecessary_lambdas
 
@@ -40,6 +42,20 @@ _i1.GetIt $configureServices(_i1.GetIt get,
       signalsReady: true);
   gh.singleton<_i13.PlaybackService>(
       _i13.PlaybackService(get<_i12.AuthService>(), get<_i7.SongsApi>()),
+  gh.singleton<_i6.SongsApi>(_i6.SongsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i7.SongsReactionsApi>(
+      _i7.SongsReactionsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i8.AlbumsApi>(_i8.AlbumsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i9.AlbumsReactionsApi>(
+      _i9.AlbumsReactionsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i10.ArtistsApi>(_i10.ArtistsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i11.ArtistsReactionsApi>(
+      _i11.ArtistsReactionsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i12.AuthApi>(_i12.AuthApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i13.AuthService>(_i13.AuthService(get<_i12.AuthApi>()),
+      signalsReady: true);
+  gh.singleton<_i14.PlaybackService>(
+      _i14.PlaybackService(get<_i13.AuthService>(), get<_i6.SongsApi>()),
       signalsReady: true,
       dispose: (i) => i.dispose());
   return get;

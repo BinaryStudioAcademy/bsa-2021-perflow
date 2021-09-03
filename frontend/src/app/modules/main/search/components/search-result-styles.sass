@@ -34,14 +34,25 @@
 
 
 .container
-  height: 100%
-  min-height: 100vh
+  max-height: calc(100vh - 100px)
+  min-height: calc(100vh - 100px)
   padding: 1.5rem 1rem
+  overflow: hidden
   h2
     padding: 20px 5px
     color: $text
   .search-result
+    max-height: calc(100vh - 210px) !important
+    overflow: auto
     display: grid
     grid-template-columns: repeat(auto-fit,  200px)
     grid-template-rows: auto
     gap: 30px 15px
+
+
+.checkbox
+  .result-header
+    display: block
+    text-align: center !important
+    .field-name
+      font-size: 20px !important

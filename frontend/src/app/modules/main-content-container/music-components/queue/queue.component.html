@@ -27,6 +27,7 @@
     <app-songs-list [songs]="isShuffling ? songs : unshuffledSongs" [isPlaying]="isPlaying"
         (clickMenuItem)="clickMenuHandler($event)" 
         [highlightId]="currentSongId" 
-        (togglePlayEvent)="togglePlay()">
+        (togglePlayEvent)="togglePlay()"
+        [isRemoveFromQueueShonw]="true">
     </app-songs-list>
 </div>

@@ -3,7 +3,8 @@
       <button class="play-icon" appClickStopPropagation>
           <i class="play icon"></i>
       </button>  
-    <img src="{{ song.album?.iconURL }}" alt="Artist Avatar" />
+    <img *ngIf="instanceOfRecentlyPlayedSong(song)" src="{{ song.album?.iconURL }}" alt="Artist Avatar" />
+    <img *ngIf="!instanceOfRecentlyPlayedSong(song)" src="/assets/images/playlist2.png" alt="Artist Avatar" />
   </div>
   <div class="card-description">
     <h5 class="card-name">{{ song.name }}</h5>
