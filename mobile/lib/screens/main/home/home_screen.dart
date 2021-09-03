@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:perflow/cubits/albums/new_releases_cubit.dart';
 import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:perflow/cubits/home/home_playlists_cubit.dart';
-import 'package:perflow/models/playlists/playlist_info.dart';
+import 'package:perflow/cubits/recently_played/recently_played_cubit.dart';
+import 'package:perflow/cubits/songs/songs_cubit.dart';
+import 'package:perflow/helpers/icon_url_convert.dart';
+import 'package:perflow/models/albums/album_simplified.dart';
+import 'package:perflow/models/recently_played/recently_played_song.dart';
+import 'package:perflow/models/songs/song.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/theme.dart';
-import 'package:perflow/widgets/cards/content_row.dart';
 import 'package:perflow/widgets/cards/medium_content_card.dart';
 import 'package:perflow/widgets/cards/small_content_card.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
+import 'package:perflow/widgets/songs/song_row.dart';
 import 'package:vrouter/vrouter.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,19 +25,16 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   _buildHeader(context),
                   _buildSmallCards(context),
-                  const _HomeSectionHeader(title: 'New songs added', showMoreLabel: true),
-                  _buildContentRow(),
                   const _HomeSectionHeader(title: 'Recently played'),
+                  _buildContentRow(),
+                  const _HomeSectionHeader(title: 'New releases'),
                   _buildMediumCards(),
                 ],
               ),
@@ -43,9 +45,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  static void f() {
-
-  }
+  static void f() {}
 
   Widget _buildHeader(BuildContext context) {
     final theme = Theme.of(context);
@@ -61,9 +61,8 @@ class HomeScreen extends StatelessWidget {
             style: theme.textTheme.headline6,
           ),
           IconButton(
-            onPressed: () => context.read<AuthCubit>().signOut(),
-            icon: const Icon(Icons.logout)
-          )
+              onPressed: () => context.read<AuthCubit>().signOut(),
+              icon: const Icon(Icons.logout))
         ],
       ),
     );
@@ -78,12 +77,14 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877998049207660614/unknown.png',
+              imageUrl:
+                  'https://media.discordapp.net/attachments/763282727826227202/877998049207660614/unknown.png',
               title: "Indie",
               onTap: f,
             ),
             SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997420305350707/unknown.png',
+              imageUrl:
+                  'https://media.discordapp.net/attachments/763282727826227202/877997420305350707/unknown.png',
               title: 'Rock',
               onTap: f,
             ),
@@ -93,12 +94,14 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997441234923571/unknown.png',
+              imageUrl:
+                  'https://media.discordapp.net/attachments/763282727826227202/877997441234923571/unknown.png',
               title: 'Club',
               onTap: f,
             ),
             SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997488978665512/unknown.png',
+              imageUrl:
+                  'https://media.discordapp.net/attachments/763282727826227202/877997488978665512/unknown.png',
               title: 'Electro',
               onTap: f,
             ),
@@ -108,12 +111,14 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997505969791006/unknown.png',
+              imageUrl:
+                  'https://media.discordapp.net/attachments/763282727826227202/877997505969791006/unknown.png',
               title: 'Relax',
               onTap: f,
             ),
             SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997460193177620/unknown.png',
+              imageUrl:
+                  'https://media.discordapp.net/attachments/763282727826227202/877997460193177620/unknown.png',
               title: 'Work',
               onTap: f,
             ),
@@ -124,40 +129,67 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildContentRow() {
-    return const ContentRow(
-      imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877648551121915984/unknown.png',
-      title: 'We are who',
-      subtitle: 'Olivia Whodrigo | ONLY WHO',
+    return BlocProvider<RecentlyPlayedCubit>(
+      create: (context) => RecentlyPlayedCubit(),
+      child: BlocBuilder<RecentlyPlayedCubit,
+          ApiCallState<List<RecentlyPlayedSong>>>(
+        builder: (context, state) => state.map(
+          loading: (_) => const SizedBox(),
+          error: (_) => const SizedBox(),
+          data: (rpSongs) => BlocProvider<SongsCubit>(
+            create: (context) => SongsCubit(
+              rpSongs.data.map((e) => e.id).toList(),
+            ),
+            child: BlocBuilder<SongsCubit, ApiCallState<List<Song>>>(
+              builder: (context, state) => state.map(
+                loading: (_) => const SizedBox(),
+                error: (_) => const SizedBox(),
+                data: (songs) => SizedBox(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => SongRow(
+                      song: songs.data[index],
+                      isLikeAvailable: false,
+                    ),
+                    itemCount: songs.data.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                  ),
+                  height: 320,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildMediumCards() {
-    return BlocProvider<HomePlaylistsCubit>(
-      create: (context) => HomePlaylistsCubit([
-        190,
-        167,
-        187,
-      ]),
-      child: BlocBuilder<HomePlaylistsCubit, ApiCallState<List<PlaylistInfo>>>(
+    return BlocProvider<NewReleasesCubit>(
+      create: (context) => NewReleasesCubit(),
+      child: BlocBuilder<NewReleasesCubit, ApiCallState<List<AlbumSimplified>>>(
         builder: (context, state) => state.map(
           loading: (_) => const SizedBox(),
           error: (_) => const SizedBox(),
-          data: (state) => SingleChildScrollView(
+          data: (albums) => SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: state.data.map((playlist) =>
-                MediumContentCard(
-                  cardSize: 142,
-                  imageUrl: playlist.iconURL,
-                  title: playlist.name,
-                  subtitle: playlist.author.userName,
-                  onTap: () => context.vRouter.to(Routes.playlist(playlist.id)),
-                )
-              ).toList(),
+              children: albums.data
+                  .map(
+                    (album) => MediumContentCard(
+                      cardSize: 142,
+                      imageUrl: getValidUrl(album.iconURL),
+                      title: album.name,
+                      subtitle: album.author == null
+                          ? album.group!.name
+                          : album.author!.name,
+                      onTap: () => context.vRouter.to(Routes.album(album.id)),
+                    ),
+                  )
+                  .toList(),
             ),
-          )
+          ),
         ),
       ),
     );
@@ -186,16 +218,14 @@ class _HomeSectionHeader extends StatelessWidget {
             title,
             style: textTheme.subtitle1,
           ),
-          if(showMoreLabel)
+          if (showMoreLabel)
             Text(
               'See more',
-              style: textTheme.subtitle2!.copyWith(
-                color: Perflow.primaryLightColor
-              ),
+              style: textTheme.subtitle2!
+                  .copyWith(color: Perflow.primaryLightColor),
             )
         ],
       ),
     );
   }
 }
-
