@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:perflow/cubits/search/search_albums_cubit.dart';
 import 'package:perflow/cubits/search/search_artists_cubit.dart';
 import 'package:perflow/cubits/search/search_playlists_cubit.dart';
@@ -57,10 +58,11 @@ class SearchScreen extends StatelessWidget {
   Widget searchBar(BuildContext context) {
     return TextField(
       onChanged: (text) {
-        if (SearchTextEditService().onTextEdit != null) {
-          SearchTextEditService().onTextEdit!.call(text);
+        var textEditService = GetIt.instance.get<SearchTextEditService>();
+        if (textEditService.onTextEdit != null) {
+          textEditService.onTextEdit!.call(text);
         }
-        SearchTextEditService().text = text;
+        textEditService.text = text;
       },
       decoration: Perflow.inputDecoration,
     );

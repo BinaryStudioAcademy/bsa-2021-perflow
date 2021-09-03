@@ -4,8 +4,16 @@ import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:perflow/cubits/library_navigation/library_navigation_cubit.dart';
 import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
 import 'package:perflow/cubits/playback/playback_cubit.dart';
+import 'package:perflow/cubits/search/search_albums_cubit.dart';
+import 'package:perflow/cubits/search/search_artists_cubit.dart';
+import 'package:perflow/cubits/search/search_playlists_cubit.dart';
+import 'package:perflow/cubits/search/search_songs_cubit.dart';
 import 'package:perflow/cubits/search_navigation/search_navigation_cubit.dart';
 import 'package:perflow/helpers/get_service.dart';
+import 'package:perflow/models/albums/album_simplified.dart';
+import 'package:perflow/models/artists/artist_simplified.dart';
+import 'package:perflow/models/playlists/playlist_simplified.dart';
+import 'package:perflow/models/songs/song.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/routes/content_routes.dart';
 import 'package:perflow/screens/main/home/home_screen.dart';
@@ -16,11 +24,8 @@ import 'package:perflow/screens/main/library/library_screen.dart';
 import 'package:perflow/screens/main/library/library_songs_screen.dart';
 import 'package:perflow/screens/main/main_screen.dart';
 import 'package:perflow/screens/main/player/player_screen.dart';
-import 'package:perflow/screens/main/search/search_albums_screen.dart';
-import 'package:perflow/screens/main/search/search_artists_screen.dart';
-import 'package:perflow/screens/main/search/search_playlists_screen.dart';
+import 'package:perflow/screens/main/search/search_base_screen.dart';
 import 'package:perflow/screens/main/search/search_screen.dart';
-import 'package:perflow/screens/main/search/search_songs_screen.dart';
 import 'package:perflow/services/auth/auth_service.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -54,19 +59,22 @@ class MainRoutes extends VRouteElementBuilder {
             nestedRoutes: [
               VWidget(
                 path: Routes.searchSongs,
-                widget: const SearchSongsScreen(),
+                widget: const SearchCommonScreen<SearchSongsCubit, Song>(),
               ),
               VWidget(
                 path: Routes.searchAlbums,
-                widget: const SearchAlbumsScreen(),
+                widget: const SearchCommonScreen<SearchAlbumsCubit,
+                    AlbumSimplified>(),
               ),
               VWidget(
                 path: Routes.searchArtists,
-                widget: const SearchArtistsScreen(),
+                widget: const SearchCommonScreen<SearchArtistsCubit,
+                    ArtistSimplified>(),
               ),
               VWidget(
                 path: Routes.searchPlaylists,
-                widget: const SearchPlaylistsScreen(),
+                widget: const SearchCommonScreen<SearchPlaylistsCubit,
+                    PlaylistSimplified>(),
               ),
             ],
           ),
