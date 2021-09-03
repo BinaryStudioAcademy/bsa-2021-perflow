@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shared.Auth;
 using Perflow.Common.DTO.Notifications;
+using Perflow.Domain;
 
 namespace Perflow.Services.Implementations
 {
@@ -66,6 +67,8 @@ namespace Perflow.Services.Implementations
                 application.User.Group = await context.Groups.FirstOrDefaultAsync(g => g.Id == application.GroupId);
             }
 
+            string applicantName = application.User.UserName;
+
             context.Update(application);
             context.PerflowStudioApplicants.Remove(application);
 
@@ -80,6 +83,32 @@ namespace Perflow.Services.Implementations
             };
 
             await Notify(notification, application.User.Id);
+
+            await NotifyGroupMembers(applicantName, application.User);
+        }
+
+        private async Task NotifyGroupMembers(string applicantName, User user)
+        {
+            if (user.Group != null)
+            {
+                var participants = await context.Users
+                    .Where(u => u.Group.Id == user.GroupId)
+                    .Select(u => u.Id)
+                    .ToListAsync();
+
+                foreach (var userId in participants)
+                {
+                    var notification = new NotificationWriteDTO
+                    {
+                        Title = $"New group member",
+                        Description = $"{applicantName} was added to {user.Group.Name}",
+                        Reference = user.Id,
+                        Type = NotificationType.GroupMembersNotification
+                    };
+
+                    await Notify(notification, userId);
+                }
+            }
         }
 
         public async Task<IEnumerable<UserWithStatusDTO>> GetUsersByNameAsync(string term)

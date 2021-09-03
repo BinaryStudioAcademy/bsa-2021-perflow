@@ -1,4 +1,7 @@
 export enum NotificationType {
   artistSubscribtion,
-  groupSubscribtion
+  groupSubscribtion,
+  applicantNotification,
+  userNotification,
+  groupMembersNotification
 }

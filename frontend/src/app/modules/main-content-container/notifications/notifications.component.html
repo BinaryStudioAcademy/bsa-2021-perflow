@@ -25,6 +25,10 @@
                                 *ngIf="n.type === notificationType.artistSubscribtion || n.type === notificationType.groupSubscribtion">
                                 Link
                             </a>
+                            <a class="link" routerLink="/artists/{{n.reference}}"
+                              *ngIf="n.type === notificationType.groupMembersNotification">
+                              Link
+                            </a>
                         </div>
                         <div class="date">{{n.createdAt | date:'yyyy-MM-dd'}}</div>
                     </div>

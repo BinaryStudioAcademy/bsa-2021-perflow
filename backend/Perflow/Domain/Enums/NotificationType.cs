@@ -5,6 +5,7 @@
         ArtistSubscribtion = 0,
         GroupSubscribtion,
         ApplicantNotification,
-        UserNotification
+        UserNotification,
+        GroupMembersNotification
     }
 }
