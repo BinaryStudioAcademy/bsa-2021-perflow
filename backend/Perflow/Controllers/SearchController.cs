@@ -39,6 +39,13 @@ namespace Perflow.Controllers
             return Ok(await _searchService.FindArtistsByNameAsync(searchTerm, page, itemsOnPage));
         }
 
+        [HttpGet("users")]
+        public async Task<ActionResult<ICollection<ArtistReadDTO>>> FindUsersByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
+        {
+            return Ok(await _searchService.FindUsersByNameAsync(searchTerm, page, itemsOnPage));
+        }
+
         [HttpGet("groups")]
         public async Task<ActionResult<ICollection<GroupShortDTO>>> FindGroupsByNameAsync
             (string searchTerm, int page, int itemsOnPage)

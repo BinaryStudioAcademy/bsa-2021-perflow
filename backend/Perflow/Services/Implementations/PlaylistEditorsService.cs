@@ -118,7 +118,7 @@ namespace Perflow.Services.Implementations
                 var notifWrite = new NotificationWriteDTO
                 {
                     Title = "New Collaborative",
-                    Description = $"You've been added as a collaborative to {playlist.Name} playlist",
+                    Description = $"You've been added as a collaborative to \"{playlist.Name}\" playlist",
                     Reference = pe.PlaylistId,
                     Type = NotificationType.CollaborativePlaylistSubscription
                 };

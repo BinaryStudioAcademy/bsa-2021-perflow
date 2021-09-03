@@ -57,7 +57,7 @@ export class ColaborativeModalComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe$),
       debounceTime(500),
       distinctUntilChanged(),
-      switchMap((term: string) => this._searchService.getArtistByName({
+      switchMap((term: string) => this._searchService.getUsersByName({
         searchTerm: term, page: 1, itemsOnPage: 30
       }))
     ).subscribe({

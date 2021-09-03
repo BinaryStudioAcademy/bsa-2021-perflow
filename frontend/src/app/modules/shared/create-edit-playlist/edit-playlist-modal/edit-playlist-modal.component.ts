@@ -1,12 +1,10 @@
 import {
   Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
-import { first } from 'rxjs/operators';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { EditedPlaylist } from 'src/app/models/playlist/editedPlaylist';
 import { CroppedImageData } from 'src/app/models/shared/cropped.model';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
-import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 
 @Component({
   selector: 'app-edit-playlist-modal',
@@ -29,23 +27,13 @@ export class EditPlaylistModalComponent implements OnInit {
   @Output() isClosed = new EventEmitter<void>();
   @Output() editPlaylist = new EventEmitter<EditedPlaylist>();
 
+  @Input()
   collaborators = new Array<ArtistReadDTO>();
-
-  constructor(
-    private _playlistEditorsService: PlaylistEditorsService
-  ) {}
+  @Output()
+  collaboratorsChange = new EventEmitter<Array<ArtistReadDTO>>();
 
   ngOnInit() {
     this.tempIconURL = this.editedPlaylist.iconURL;
-    if (this.editedPlaylist.accessType === AccessType.collaborative) {
-      this._playlistEditorsService.getCollaborators(this.editedPlaylist.id)
-        .pipe(first())
-        .subscribe(
-          (result) => {
-            this.collaborators = result;
-          }
-        );
-    }
   }
 
   public onSubmit() {

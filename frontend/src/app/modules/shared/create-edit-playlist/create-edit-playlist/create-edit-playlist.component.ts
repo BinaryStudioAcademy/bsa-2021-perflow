@@ -1,9 +1,9 @@
 import {
-  Component, OnInit, OnDestroy, ViewChild
+  Component, OnInit, OnDestroy
 } from '@angular/core';
 import { Subject, timer } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
+  debounceTime, distinctUntilChanged, filter, first, switchMap, takeUntil
 } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { AccessType } from 'src/app/models/playlist/accessType';
@@ -19,7 +19,7 @@ import { PlatformLocation } from '@angular/common';
 import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
 import { SearchService } from 'src/app/services/search.service';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
-import { EditPlaylistModalComponent } from '../edit-playlist-modal/edit-playlist-modal.component';
+import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -42,8 +42,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   private _searchTerms = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
 
-  @ViewChild(EditPlaylistModalComponent)
-  private _editPlaylistModal: EditPlaylistModalComponent;
+  collaborators = new Array<ArtistReadDTO>();
 
   constructor(
     private _playlistService: PlaylistsService,
@@ -91,6 +90,16 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
           }
         }
       });
+
+    if (this.playlist.accessType === AccessType.collaborative) {
+      this._playlistEditorsService.getCollaborators(this.playlist.id)
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            this.collaborators = result;
+          }
+        );
+    }
   }
 
   public ngOnDestroy() {
@@ -181,19 +190,19 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.playlist = data;
           this._createdPlaylistService.addPlaylist(data);
+
+          if (editedPlaylist.accessType !== AccessType.collaborative) {
+            this._playlistEditorsService.removePlaylist(editedPlaylist.id)
+              .pipe(takeUntil(this._unsubscribe$))
+              .subscribe();
+          }
+          else if (editedPlaylist.accessType === AccessType.collaborative) {
+            this._playlistEditorsService.addCollaborators(editedPlaylist.id, this.collaborators)
+              .pipe(takeUntil(this._unsubscribe$))
+              .subscribe();
+          }
         }
       });
-
-    if (editedPlaylist.accessType !== AccessType.collaborative) {
-      this._playlistEditorsService.removePlaylist(editedPlaylist.id)
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe();
-    }
-    else if (editedPlaylist.accessType === AccessType.collaborative) {
-      this._playlistEditorsService.addCollaborators(editedPlaylist.id, this._editPlaylistModal.collaborators)
-        .pipe(takeUntil(this._unsubscribe$))
-        .subscribe();
-    }
   };
 
   deletePlaylist() {
