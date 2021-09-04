@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SignalR;
+using Perflow.Hubs.Implementations;
 
 namespace Perflow.Hubs.Extensions
 {
