@@ -140,8 +140,6 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   };
 
   private _updateSongFromSync = (syncData: ContentSyncRead | undefined | null) => {
-    console.log(syncData);
-
     if (!syncData) {
       return;
     }
