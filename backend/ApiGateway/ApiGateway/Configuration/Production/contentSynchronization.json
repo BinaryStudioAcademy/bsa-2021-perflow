@@ -33,7 +33,7 @@
           "Port": "4202"
         }
       ],
-      "UpstreamPathTemplate": "/notifications",
+      "UpstreamPathTemplate": "/content-sync",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
     }
   ]
