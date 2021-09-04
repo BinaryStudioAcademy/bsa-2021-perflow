@@ -1,5 +1,8 @@
-<div class="card" (click)="redirectTo()">
+<div class="card" (click)="handleClick()" [ngClass]="{checked:isChecked}">
   <div class="image-block">
+    <div class="section-delete" (click)="onDeleteFromSectionClick(album)" appClickStopPropagation *ngIf="!isCheckBox && isDeletable">
+      <i class="trash alternate outline icon"></i>
+    </div>
     <div class="image">
       <img [attr.src]="album.iconURL" alt="Album" *ngIf="album.iconURL" />
       <div class="icon-background" *ngIf="!album.iconURL">
@@ -9,10 +12,10 @@
     <div class="edit" routerLink="/perflowstudio/albums/edit/{{album.id}}" appClickStopPropagation *ngIf="isForEdit">
       <i class="pencil icon ui"></i>
     </div>
-    <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked">
+    <div class="remove" (click)="onDeleteClick(album)" appClickStopPropagation *ngIf="!isForEdit && isLiked && !isCheckBox && !isLikeButtonHidden">
       <i class="like icon ui"></i>
     </div>
-    <button class="play-icon" appClickStopPropagation (click)="playAlbum(album.id)">
+    <button *ngIf="!isCheckBox" class="play-icon" appClickStopPropagation (click)="playAlbum(album.id)">
       <i class="play icon"></i>
     </button>
   </div>
@@ -23,7 +26,7 @@
     <div class="album-author tub">
       <span>{{ album.authorName }}</span>
     </div>
-    <div class="album-year tub">
+    <div class="album-year tub" [ngClass]="{checked:isChecked}">
       <span>{{ album.releaseYear }}</span>
     </div>
   </div>

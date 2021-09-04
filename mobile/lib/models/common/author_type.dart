@@ -1,0 +1,4 @@
+enum AuthorType{
+  artist,
+  group
+}

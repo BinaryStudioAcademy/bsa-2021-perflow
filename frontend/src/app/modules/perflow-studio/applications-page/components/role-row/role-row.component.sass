@@ -1,0 +1,88 @@
+@import 'src/styles.sass'
+
+$image-size: 30px
+
+=flex-container($align-items, $justify-content)
+  display: flex
+  align-items: $align-items
+  justify-content: $justify-content
+
+%ellipsis-overflow
+  text-overflow: ellipsis
+  white-space: nowrap
+  overflow: hidden
+
+%album-cover
+  width: $image-size
+  height: $image-size
+  border-radius: 50%
+
+%font
+  color: $text
+  font-family: Rubik
+  font-style: normal
+
+.text
+  @extend %font
+  @extend %ellipsis-overflow
+
+.role
+  background-color: transparent
+  color: $text
+  padding-left: 0.5rem
+  padding-right: 0.5rem
+  border-radius: 50px
+  &:hover
+    background-color: $light-gray
+    .ui.dropdown
+      background-color: $light-gray
+
+.role-row
+  width: 100%
+  display: grid
+  grid-template-areas: "icon name role group menu"
+  grid-template-columns: 50px 6fr 6fr 6fr 50px
+  align-items: center
+  padding: 0.5rem 0
+
+.column
+  padding-right: 0.5rem
+  padding-left: 0.5rem
+
+.icon
+  grid-area: icon
+  img
+    @extend %album-cover
+    +flex-container(center, center)
+    object-fit: cover
+  .icon-background
+    @extend %album-cover
+    +flex-container(center, center)
+    background: $fire-orange
+    i
+      font-size: 18px
+      margin-right: 0 !important
+
+.name
+  grid-area: name
+
+.role
+  grid-area: role
+  justify-self: start
+
+.group
+  grid-area: group
+
+.ui.dropdown
+  grid-area: menu
+  background: $drk-gray
+  &:hover
+    background: $drk-rain
+
+.link
+  cursor: pointer
+  &:hover
+    text-decoration: underline
+
+.prefix
+  color: #888888

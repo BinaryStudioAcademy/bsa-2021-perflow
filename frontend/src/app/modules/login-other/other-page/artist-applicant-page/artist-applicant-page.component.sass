@@ -1,0 +1,128 @@
+@import "src/styles"
+
+=text($color, $font-size, $font-weight)
+  color: $color
+  font-size: $font-size
+  font-weight: $font-weight
+
+main
+  background: $drk-gray
+  width: 100vw
+  height: 100vh
+  overflow-y: scroll
+  display: grid
+  grid-template-areas: "header""main-content"
+  grid-template-columns: 1fr
+  grid-template-rows: 80px 1fr
+  .header
+    grid-area: header
+    border-bottom: 1.5px solid #373C43
+    .logo
+      padding: 15px
+      .ui.logo.icon.image
+        display: flex
+        align-items: center
+  .main-content
+    grid-area: main-content
+    display: grid
+    grid-template-areas: "left-col content right-col"
+    grid-template-columns: 30px 1fr 30px
+    .content
+      height: 100%
+      grid-area: content
+      display: flex
+      align-items: center
+      flex-direction: column
+      .checkbox-container
+        margin-top: 1em
+        display: flex
+        align-items: center
+        justify-content: center
+      .group
+        height: 100%
+        width: 100%
+        display: flex
+        align-items: center
+        flex-direction: column
+      .card
+        margin-top: 2em
+      .create-btn
+        margin-top: 3em
+      .text
+        +text($text, 18px, $medium-weight)
+        margin-top: 1em
+      .ui.search
+        margin-top: 1em
+        background: $drk-gray
+        width: 100%
+        display: flex
+        align-items: center
+        justify-content: center
+        .ui.icon.input
+          width: 20em
+          i
+            color: $text
+          .prompt.input-dark
+            background: $drk-rain
+            border: 1px solid $text
+            color: $text
+            &:focus
+              background: $drk-rain
+            &:active
+              background: $drk-rain
+
+.container
+  max-height: 600px 
+  min-height: 600px 
+  overflow: scroll
+  width: 100%
+  display: flex
+  flex-direction: column
+  margin: 2em 
+  &::-webkit-scrollbar
+    display: none
+  .search-result
+    max-height: 600px !important
+    overflow: auto
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+    grid-gap: 2em 1em
+    justify-items: center
+    &::-webkit-scrollbar
+      display: none
+
+.title
+  +text($text, 26px, $medium-weight)
+  margin-top: 1.5em
+
+.checkbox-container
+  margin-top: 1em
+  display: flex
+  align-items: center
+  justify-content: center
+
+.roles
+    color: white
+    margin: 1em 2em
+    display: flex
+    align-items: center
+    label
+        +text($text, 16px, $normal-weight)
+        margin-left: 4px
+
+input[type="radio"] 
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  display: inline-block
+  width: 17px
+  height: 17px
+  background-clip: content-box
+  border: none
+  background-color: $gray
+  border-radius: 50%
+  &:checked 
+    background-color: $light-orange
+
+.spinner-text
+  +text($text, 16px, $normal-weight)

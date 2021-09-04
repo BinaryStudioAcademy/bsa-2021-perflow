@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RouterModule } from '@angular/router';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RecentlyPlayedCardComponent } from './cards/recently-played-card/recently-played-card.component';
 import { YourMixCardComponent } from './cards/your-mix-card/your-mix-card.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -56,6 +57,8 @@ import {
 import {
   SearchSortOrderIconComponent
 } from './search/components/search-songs-list-header/search-sort-order-icon/search-sort-order-icon.component';
+import { ConstructorContainerCardComponent }
+  from './cards/constructor-container-card/constructor-container-card/constructor-container-card.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +97,8 @@ import {
     SongCardComponent,
     GroupViewComponent,
     SearchSongsListHeaderComponent,
-    SearchSortOrderIconComponent
+    SearchSortOrderIconComponent,
+    ConstructorContainerCardComponent
   ],
   imports: [
     CommonModule,
@@ -107,11 +111,22 @@ import {
     ClipboardModule,
     ImageCropperModule,
     RouterModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    DragDropModule
   ],
   exports: [
     ClickOutsideModule,
     AlbumCardComponent,
+    SquareInfoCardComponent,
+    YourMixCardComponent,
+    SongCardComponent,
+    SearchAlbumsResultComponent,
+    SearchArtistsResultComponent,
+    SearchPlaylistsResultComponent,
+    PlaylistCardComponent,
+    ArtistCardComponent,
+    ConstructorContainerCardComponent,
+    ArtistCardComponent,
     SquareInfoCardComponent
   ]
 })

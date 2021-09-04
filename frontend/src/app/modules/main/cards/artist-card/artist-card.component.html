@@ -1,12 +1,18 @@
-<div class="card" (click)="redirectTo()">
+<div class="card" (click)="handleClick()" [ngClass]="{checkedConstructor:isCheckedConstructor}">
     <div class="image-block">
-        <div class="image">
-            <img [attr.src]="artist.iconURL" alt="Artist">    
+        <div class="section-delete" (click)="onDeleteFromSectionClick(artist)" appClickStopPropagation *ngIf="!isCheckBox && isDeletable">
+            <i class="trash alternate outline icon"></i>
         </div>
-        <div class="remove" *ngIf="isLiked" (click)="onDeleteClick(artist)" appClickStopPropagation>
+        <div class="image">
+            <img [attr.src]="artist.iconURL" alt="Artist" *ngIf="artist.iconURL">
+            <div class="icon-background" *ngIf="!artist.iconURL">
+                <i class="user icon"></i>
+            </div>
+        </div>
+        <div class="remove" *ngIf="isLiked && !isCheckBox" (click)="onDeleteClick(artist)" appClickStopPropagation>
             <i class="like icon ui"></i>
         </div>
-        <button class="play-icon" appClickStopPropagation>
+        <button *ngIf="!isCheckBox && !isChecked" class="play-icon" appClickStopPropagation>
           <i class="play icon"></i>
         </button> 
     </div>
@@ -14,6 +20,10 @@
         <div class="artist-name tub">
             <h5>{{artist.userName}}</h5>
         </div>
-        <span>Artist</span>
+        <span [ngClass]="{checkedConstructor:isCheckedConstructor}">Artist</span>
+        <button class="ui btn-full button apply-btn" *ngIf="isChecked && !isCheckBox" (click)="onApplyClick(artist)"
+            appClickStopPropagation>
+            Apply
+        </button>
     </div>
 </div>

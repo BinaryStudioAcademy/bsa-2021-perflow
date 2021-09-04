@@ -14,6 +14,7 @@ using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Search;
 using Perflow.Services.Interfaces;
 using Perflow.Common.Helpers;
+using System;
 
 namespace Perflow.Services.Implementations
 {
@@ -83,6 +84,43 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             return artists;
+        }
+
+        public async Task<ICollection<ArtistReadDTO>> FindUsersByNameAsync
+            (string searchTerm, int page, int itemsOnPage)
+        {
+            int skip = (page - 1) * itemsOnPage;
+
+            var artists = await context.Users
+                .Where(user => user.UserName.Contains(searchTerm.Trim()))
+                .Include(user => user.Reactions)
+                .OrderByDescending(user => user.Reactions.GroupBy(r => r.UserId).Count())
+                .Skip(skip)
+                .Take(itemsOnPage)
+                .AsNoTracking()
+                .Select(
+                    u => mapper.Map<ArtistReadDTO>(new UserWithIcon(u, _imageService.GetImageUrl(u.IconURL)))
+                 )
+                .ToListAsync();
+
+            return artists;
+        }
+
+        public async Task<ICollection<GroupShortDTO>> FindGroupsByNameAsync(string searchTerm, int page, int itemsOnPage)
+        {
+            int skip = (page - 1) * itemsOnPage;
+
+            var groups = await context.Groups
+                .Where(g => g.Name.Contains(searchTerm.Trim()))
+                .Skip(skip)
+                .Take(itemsOnPage)
+                .AsNoTracking()
+                .Select(
+                    g => mapper.Map<GroupShortDTO>(new GroupWithIcon(g, _imageService.GetImageUrl(g.IconURL)))
+                 )
+                .ToListAsync();
+
+            return groups;
         }
 
         public async Task<ICollection<AlbumForListDTO>> FindAlbumsByNameAsync

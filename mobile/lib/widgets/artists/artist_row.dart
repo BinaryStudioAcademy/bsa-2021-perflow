@@ -15,7 +15,7 @@ class ArtistRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    
+
     return ContentRow(
       height: 80,
       iconUrl: getValidUrl(artist.iconURL),
@@ -26,7 +26,7 @@ class ArtistRow extends StatelessWidget {
         style: textTheme.subtitle2,
       ),
       contentType: RowType.artist,
-      isLikeAvailable: true,
+      isLikeAvailable: false,
       onTap: () {
         context.vRouter.to(
           Routes.artist(artist.id),

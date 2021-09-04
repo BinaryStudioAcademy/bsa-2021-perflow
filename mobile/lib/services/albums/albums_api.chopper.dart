@@ -29,4 +29,12 @@ class _$AlbumsApi extends AlbumsApi {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getTopAlbumsByAuthor(int authorId, int authorType) {
+    final $url = 'api/albums/byArtist/$authorId';
+    final $params = <String, dynamic>{'authorType': authorType};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

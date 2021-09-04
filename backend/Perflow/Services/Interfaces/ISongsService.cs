@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Perflow.Common.DTO.Songs;
 using Perflow.Domain.Enums;
+using Shared.AzureBlobStorage.Models;
 
 namespace Perflow.Services.Interfaces
 {

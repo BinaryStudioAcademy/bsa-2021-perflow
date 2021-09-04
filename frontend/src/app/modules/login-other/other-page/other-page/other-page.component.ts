@@ -1,5 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { ArtistApplicant } from 'src/app/models/user/artist-applicant';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -10,19 +9,12 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './other-page.component.html',
   styleUrls: ['./other-page.component.sass']
 })
-export class OtherPageComponent implements OnDestroy {
-  private _unsubscribe$ = new Subject<void>();
-
+export class OtherPageComponent {
   constructor(
     private _userService: UserService,
     private _snackbarService: SnackbarService
   ) {
 
-  }
-
-  public ngOnDestroy() {
-    this._unsubscribe$.next();
-    this._unsubscribe$.complete();
   }
 
   createUserApplicant(userRole: number) {

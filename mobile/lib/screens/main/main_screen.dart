@@ -10,58 +10,54 @@ import 'package:vrouter/vrouter.dart';
 class MainScreen extends StatelessWidget {
   final Widget child;
 
-  const MainScreen({
-    required this.child,
-    Key? key
-  }) : super(key: key);
+  const MainScreen({required this.child, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: child,
-      bottomNavigationBar: BlocBuilder<MainNavigationCubit, MainNavigationState>(
-        builder: (context, state) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            verticalDirection: VerticalDirection.up,
-            children: [
-              BottomAppBar(
-                color: Perflow.surfaceColor,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      _BottomNavButton(
-                        selected: state is MainNavigationHome,
-                        icon: Icons.local_fire_department,
-                        title: 'Home',
-                        onTap: () => context.vRouter.to(Routes.home),
-                      ),
-                      _BottomNavButton(
-                        selected: state is MainNavigationSearch,
-                        icon: Icons.search,
-                        title: 'Search',
-                        onTap: () => context.vRouter.to(Routes.search),
-                      ),
-                      _BottomNavButton(
-                        selected: state is MainNavigationLibrary,
-                        icon: Icons.music_note,
-                        title: 'Library',
-                        onTap: () => context.vRouter.to(Routes.libraryAll),
-                      ),
-                    ],
-                  ),
+      bottomNavigationBar:
+          BlocBuilder<MainNavigationCubit, MainNavigationState>(
+              builder: (context, state) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          verticalDirection: VerticalDirection.up,
+          children: [
+            BottomAppBar(
+              color: Perflow.surfaceColor,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    _BottomNavButton(
+                      selected: state is MainNavigationHome,
+                      icon: Icons.local_fire_department,
+                      title: 'Home',
+                      onTap: () => context.vRouter.to(Routes.home),
+                    ),
+                    _BottomNavButton(
+                      selected: state is MainNavigationSearch,
+                      icon: Icons.search,
+                      title: 'Search',
+                      onTap: () => context.vRouter.to(Routes.searchSongs),
+                    ),
+                    _BottomNavButton(
+                      selected: state is MainNavigationLibrary,
+                      icon: Icons.music_note,
+                      title: 'Library',
+                      onTap: () => context.vRouter.to(Routes.libraryAll),
+                    ),
+                  ],
                 ),
               ),
-              Visibility(
+            ),
+            Visibility(
                 visible: state is! MainNavigationPlayer,
                 maintainState: true,
-                child: const Player()
-              ),
-            ],
-          );
-        }
-      ),
+                child: const Player()),
+          ],
+        );
+      }),
     );
   }
 }
@@ -95,9 +91,7 @@ class _BottomNavButton extends StatelessWidget {
             ),
             Text(
               title,
-              style: TextStyle(
-                color: color
-              ),
+              style: TextStyle(color: color),
             )
           ],
         ),

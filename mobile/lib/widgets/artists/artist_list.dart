@@ -22,7 +22,9 @@ class ArtistsList extends StatelessWidget {
         ),
         data: (artists) => ListView.builder(
           itemBuilder: (context, index) {
-            return ArtistRow(artist: artists.data[index]);
+            return ArtistRow(
+              artist: artists.data[index],
+            );
           },
           itemCount: artists.data.length,
           shrinkWrap: true,

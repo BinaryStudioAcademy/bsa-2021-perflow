@@ -1,0 +1,115 @@
+<main *ngIf="!isLoading">
+  <div id="my-node" class="main-content drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="container-options">
+    <div class="options">
+        <div class="option ui">
+          <div class="ui form ui field name">
+            <input type="text" maxlength="20" placeholder="Container name" [(ngModel)]="container.name">      
+          </div>
+        </div>
+      </div>
+      <button class="ui button submit btn-full" (click)="saveContainer()">Save container</button>
+    </div>
+    <div class="options">
+      <div class="option ui checkbox">
+        <input type="checkbox" [(ngModel)]="this.container.showRecentlyPlayed" name="showRecentlyPlayed">
+        <label>Show Recently Played</label>
+      </div>
+      <div class="option ui checkbox">
+        <input type="checkbox" [(ngModel)]="this.container.showMix" name="showYourMix">
+        <label>Show Your Mix</label>
+      </div>
+    </div>
+    <div class="items-scroll-box">
+      <div class="header">
+        <span class="header-name">Accordion</span>
+        <span class="nameedit" (click)="showEditSectionModal(getAccordionSection().position)">
+          <i class="ui pencil alternate icon"></i>
+        </span>
+      </div>
+      <div class="list-of-items">
+        <div *ngIf="!getAccordionSection().pageSectionEntities.length" class="items" appHideScrollButtons>
+          <span>
+            Add something!
+          </span>
+        </div>
+        <div class="ui icon button scroll-button" *ngIf="isTextOverflow('section-accordion')" (click)="scrollLeft('section-accordion')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div id="section-accordion" class="items" *ngIf="getAccordionSection().pageSectionEntities.length">
+          <span *ngFor="let accordionSectionEntity of getAccordionSection().pageSectionEntities">
+            <app-album-card *ngIf="accordionSectionEntity.entityType === 0" 
+              [album]="accordionSectionEntity.entity"
+              [isLikeButtonHidden]="true"
+              [isDeletable]="true"
+              [albumSection]="getAccordionSection().position"
+              (deleteFromSection)="onDeleteFromSectionClick($event)">
+            </app-album-card>
+          </span>
+        </div>
+        <div class="ui icon button scroll-button" *ngIf="isTextOverflow('section-accordion')" (click)="scrollRight('section-accordion')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+    </div>
+    <div class="items-scroll-box" *ngFor="let section of container.pageSections.slice(1)" cdkDrag>
+      <div class="header">
+        <span class="header-name">{{section.name}}</span>
+        <span class="nameedit" (click)="showEditSectionModal(section.position)">
+          <i class="ui pencil alternate icon"></i>
+        </span>
+        <span class="namedelete" (click)="deleteSection(section.position)">
+          <i class="ui trash alternate outline icon"></i>
+        </span>
+      </div>
+      <div #theElementYouWantToCheck class="list-of-items">
+        <div id="section-{{section.position}}" *ngIf="!section.pageSectionEntities.length" class="items" appHideScrollButtons>
+          <span>
+            Add something!
+          </span>
+        </div>
+        <div class="ui icon button scroll-button" *ngIf="isTextOverflow('section-'+ section.position)" (click)="scrollLeft('section-'+ section.position)">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div id="section-{{section.position}}" *ngIf="section.pageSectionEntities.length" class="items" appHideScrollButtons cdkDrop>
+          <span *ngFor="let entity of section.pageSectionEntities">
+            <app-album-card *ngIf="entity.entityType === 0" 
+              [album]="entity.entity"
+              [isLikeButtonHidden]="true"
+              [isDeletable]="true"
+              [albumSection]="section.position"
+              (deleteFromSection)="onDeleteFromSectionClick($event)">
+            </app-album-card>
+            <app-artist-card *ngIf="entity.entityType === 2"
+              [artist]="entity.entity"
+              [isDeletable]="true"
+              [artistSection]="section.position"
+              (deleteFromSection)="onDeleteFromSectionClick($event)">
+            </app-artist-card>
+            <app-playlist-card *ngIf="entity.entityType === 1"
+              [playlist]="entity.entity"
+              [isDeletable]="true"
+              [playlistSection]="section.position"
+              (deleteFromSection)="onDeleteFromSectionClick($event)">
+            </app-playlist-card>
+          </span>
+        </div>
+        <div class="ui icon button scroll-button" *ngIf="isTextOverflow('section-'+ section.position)" (click)="scrollRight('section-'+ section.position)">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="maxPos < 10" class="add-section" (click)="addNewSection()">
+      <i class="ui plus icon large"></i>
+    </div>
+  </div>
+  <app-container-search-modal 
+    [editedSection]="editedSection"
+    [isAccordion]="editedSection.name === 'Accordion'" 
+    *ngIf="isModalShown" 
+    (editSection)="onSubmitModal($event)" 
+    (isClosed)="closeModal()">
+  </app-container-search-modal>
+  <div class="container"></div>
+  
+</main>

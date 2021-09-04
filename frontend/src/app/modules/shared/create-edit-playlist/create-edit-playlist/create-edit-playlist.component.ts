@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { Subject, timer } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, filter, switchMap, takeUntil
+  debounceTime, distinctUntilChanged, filter, first, switchMap, takeUntil
 } from 'rxjs/operators';
 import { Song } from 'src/app/models/song/song';
 import { AccessType } from 'src/app/models/playlist/accessType';
@@ -18,6 +18,8 @@ import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
 import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
 import { SearchService } from 'src/app/services/search.service';
+import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
+import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -33,11 +35,14 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   searchValue: string;
   userId: number;
   isSuccess: boolean = false;
+  isAuthor: boolean;
 
   private _id: number | undefined;
 
   private _searchTerms = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
+
+  collaborators = new Array<ArtistReadDTO>();
 
   constructor(
     private _playlistService: PlaylistsService,
@@ -46,6 +51,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _createdPlaylistService: CreatePlaylistService,
     private _searchService: SearchService,
+    private _playlistEditorsService: PlaylistEditorsService,
 
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation
@@ -97,6 +103,16 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.playlist = data;
+          this.isAuthor = this.playlist.author.id === this.userId;
+          if (this.playlist.accessType === AccessType.collaborative) {
+            this._playlistEditorsService.getCollaborators(this.playlist.id)
+              .pipe(first())
+              .subscribe(
+                (result) => {
+                  this.collaborators = result;
+                }
+              );
+          }
         },
         error: (err) => {
           this._router.navigate(['../../../playlists'], { relativeTo: this._activatedRoute });
@@ -121,6 +137,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       accessType: AccessType.default,
       author: { id: this.userId } as User
     };
+
+    this.isAuthor = true;
 
     this._playlistService.createPlaylist(this.playlist)
       .pipe(takeUntil(this._unsubscribe$))
@@ -162,8 +180,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     };
 
     const pl: PlaylistForSave = {
-      ...editedPlaylist,
-      id: this.playlist.id
+      ...editedPlaylist
     };
 
     this._playlistService.editPlaylist(pl)
@@ -172,6 +189,19 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.playlist = data;
           this._createdPlaylistService.addPlaylist(data);
+
+          if (editedPlaylist.accessType !== AccessType.collaborative) {
+            this._playlistEditorsService.removePlaylist(editedPlaylist.id)
+              .pipe(takeUntil(this._unsubscribe$))
+              .subscribe((_) => {
+                this.collaborators = [];
+              });
+          }
+          else if (editedPlaylist.accessType === AccessType.collaborative) {
+            this._playlistEditorsService.addCollaborators(editedPlaylist.id, this.collaborators)
+              .pipe(takeUntil(this._unsubscribe$))
+              .subscribe();
+          }
         }
       });
   };
@@ -218,12 +248,12 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
 
   showEditPlaylistModal = () => {
     this.previousPlaylistData = {
+      id: this.playlist.id,
       name: this.playlist.name,
       description: this.playlist.description,
       accessType: this.playlist.accessType,
       iconURL: this.playlist.iconURL
     };
-
     this.isModalShown = !this.isModalShown;
   };
 
@@ -236,6 +266,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     this.isModalShown = !this.isModalShown;
 
     this.previousPlaylistData = {
+      id: 0,
       name: '',
       description: '',
       accessType: AccessType.default,

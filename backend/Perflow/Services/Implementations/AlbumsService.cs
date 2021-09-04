@@ -308,7 +308,7 @@ namespace Perflow.Services.Implementations
                 Type = isArtist ? NotificationType.ArtistSubscribtion : NotificationType.GroupSubscribtion
             };
 
-            var notifications = await _notificationService.CreateNotificationAsync(notification, authorId, album.AuthorType);
+            var notifications = await _notificationService.CreateSubscriberNotificationAsync(notification, authorId, album.AuthorType);
             await _notificationService.SendNotificationAsync(notifications);
         }
     }

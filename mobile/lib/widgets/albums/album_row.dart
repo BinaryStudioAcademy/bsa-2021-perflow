@@ -32,7 +32,7 @@ class AlbumRow extends StatelessWidget {
         style: textTheme.caption,
       ),
       contentType: RowType.album,
-      isLikeAvailable: true,
+      isLikeAvailable: false,
       onTap: () {
         context.vRouter.to(
           Routes.album(album.id),

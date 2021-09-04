@@ -1,9 +1,23 @@
-<div class="result-container">
+<div class="result-container" *ngIf="!isCheckBox">
   <div class="result-header">
     <a class="field-name" routerLink="/search/{{term}}/artists">Artists</a>
   </div>
   <div class="result-body">
     <app-artist-card (clickEmiter)="saveToSearchHistory(artist)" *ngFor="let artist of artists" 
+      [artist]="artist"></app-artist-card>
+  </div>
+</div>
+
+<div class="result-container checkbox" *ngIf="isCheckBox">
+  <div class="result-header">
+    <a class="field-name" routerLink="/search/{{term}}/artists">Artists</a>
+  </div>
+  <div class="result-body">
+    <app-artist-card 
+      (addDeleteFromSection)="addDeleteFromSectionEvent($event)" 
+      [isCheckBox]="isCheckBox" 
+      *ngFor="let artist of artists" 
+      [isCheckedConstructor]="isChecked(artist)"
       [artist]="artist"></app-artist-card>
   </div>
 </div>

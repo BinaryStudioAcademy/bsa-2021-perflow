@@ -1,0 +1,63 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/constructor",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/constructor",
+      "UpstreamHttpMethod": [
+        "GET",
+        "PUT",
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/constructor/published",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/constructor/published",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/constructor/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/constructor/{id}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "DELETE"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/constructor/publish",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/constructor/publish",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    }
+  ]
+}

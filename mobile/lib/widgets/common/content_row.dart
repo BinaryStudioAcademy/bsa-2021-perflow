@@ -6,20 +6,26 @@ class ContentRow extends StatelessWidget {
   final double height;
 
   final void Function()? onLikePressed;
+  final Function()? onUnlikePressed;
   final void Function()? onTap;
 
   final RowType contentType;
   final String iconUrl;
   final Text primaryText;
   final Text? secondaryText;
+  final bool isLiked;
   final bool isLikeAvailable;
+
+  set isLiked(bool val) => isLiked = val;
 
   const ContentRow(
       {required this.contentType,
       required this.iconUrl,
       required this.primaryText,
+      this.isLiked = false,
       this.secondaryText,
       this.onLikePressed,
+      this.onUnlikePressed,
       this.onTap,
       this.height = 80,
       this.isLikeAvailable = false,
@@ -45,7 +51,9 @@ class ContentRow extends StatelessWidget {
                 height: height - 8,
                 width: height - 8,
                 decoration: BoxDecoration(
-                  shape: contentType == RowType.artist ? BoxShape.circle : BoxShape.rectangle,
+                  shape: contentType == RowType.artist
+                      ? BoxShape.circle
+                      : BoxShape.rectangle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(iconUrl),
@@ -70,18 +78,32 @@ class ContentRow extends StatelessWidget {
               ),
             ),
             if (isLikeAvailable)
-              IconButton(
-                onPressed: () {
-                  if (onLikePressed != null) {
-                    onLikePressed!.call();
-                  }
-                },
-                iconSize: 18,
-                splashRadius: 22,
-                color: Perflow.primaryLightColor,
-                icon: const Icon(Icons.favorite),
-              ),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+              isLiked
+                  ? IconButton(
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        if (onUnlikePressed != null) {
+                          onUnlikePressed!.call();
+                        }
+                      },
+                      iconSize: 18,
+                      color: Perflow.primaryLightColor,
+                      icon: const Icon(Icons.favorite),
+                    )
+                  : IconButton(
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        if (onLikePressed != null) {
+                          onLikePressed!.call();
+                        }
+                      },
+                      iconSize: 18,
+                      icon: const Icon(Icons.favorite_border),
+                    ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.more_vert),
+            ),
           ],
         ),
       ),

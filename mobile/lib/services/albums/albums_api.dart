@@ -13,6 +13,9 @@ abstract class AlbumsApi extends ChopperService {
   @Get(path: 'songs/{id}')
   Future<Response> getAlbumSongs(@Path() int id);
 
+  @Get(path: 'byArtist/{authorId}')
+  Future<Response> getTopAlbumsByAuthor(@Path() int authorId, @Query() int authorType);
+
   @factoryMethod
   static AlbumsApi create(Chopper chopper) => _$AlbumsApi(chopper.client);
 }
