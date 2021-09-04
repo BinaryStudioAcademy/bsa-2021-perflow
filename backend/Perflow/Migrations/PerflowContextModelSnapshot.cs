@@ -163,6 +163,31 @@ namespace Perflow.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.GroupArtist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("GroupArtist");
+                });
+
             modelBuilder.Entity("Perflow.Domain.GroupReaction", b =>
                 {
                     b.Property<int>("Id")
@@ -617,9 +642,6 @@ namespace Perflow.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
                     b.Property<string>("IconURL")
                         .HasColumnType("nvarchar(max)");
 
@@ -630,8 +652,6 @@ namespace Perflow.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
 
                     b.ToTable("Users");
                 });
@@ -754,6 +774,25 @@ namespace Perflow.Migrations
                     b.Navigation("Song");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Perflow.Domain.GroupArtist", b =>
+                {
+                    b.HasOne("Perflow.Domain.User", "Artist")
+                        .WithMany("Groups")
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Perflow.Domain.Group", "Group")
+                        .WithMany("Artists")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Perflow.Domain.GroupReaction", b =>
@@ -1002,15 +1041,6 @@ namespace Perflow.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Perflow.Domain.User", b =>
-                {
-                    b.HasOne("Perflow.Domain.Group", "Group")
-                        .WithMany("Users")
-                        .HasForeignKey("GroupId");
-
-                    b.Navigation("Group");
-                });
-
             modelBuilder.Entity("Perflow.Domain.UserSettings", b =>
                 {
                     b.HasOne("Perflow.Domain.User", "User")
@@ -1031,11 +1061,11 @@ namespace Perflow.Migrations
 
             modelBuilder.Entity("Perflow.Domain.Group", b =>
                 {
+                    b.Navigation("Artists");
+
                     b.Navigation("Albums");
 
                     b.Navigation("Reactions");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Perflow.Domain.PageContainer", b =>
@@ -1069,6 +1099,8 @@ namespace Perflow.Migrations
                     b.Navigation("ArtistReactions");
 
                     b.Navigation("GroupReactions");
+
+                    b.Navigation("Groups");
 
                     b.Navigation("Reactions");
                 });

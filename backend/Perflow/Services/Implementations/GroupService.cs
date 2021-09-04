@@ -32,8 +32,11 @@ namespace Perflow.Services.Implementations
 
         public async Task<ICollection<GroupForAlbumDTO>> GetGroupsByArtistAsync(int id)
         {
-            var groups = await context.Groups
-                .Where(group => group.Users.Any(user => user.Id == id))
+            var groups = await context.GroupArtist
+                .Include(ga => ga.Group)
+                .Include(ga => ga.Artist)
+                .Where(ga => ga.Artist.Id == id)
+                .Select(ga => ga.Group)
                 .AsNoTracking()
                 .ToListAsync();
 

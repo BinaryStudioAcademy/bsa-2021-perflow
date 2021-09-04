@@ -223,8 +223,9 @@ namespace Perflow.Services.Implementations
         {
             var groupUsers = await context.Groups
                 .Where(g => g.Id == groupId)
-                .SelectMany(g => g.Users)
-                .Select(u => u.Id)
+                .SelectMany(g => g.Artists)
+                    .Include(a => a.Artist)
+                .Select(a => a.ArtistId)
                 .ToListAsync();
 
             var playlists = await context.Playlists
