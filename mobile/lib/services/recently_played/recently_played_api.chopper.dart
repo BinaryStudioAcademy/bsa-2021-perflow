@@ -17,14 +17,6 @@ class _$RecentlyPlayedApi extends RecentlyPlayedApi {
   final definitionType = RecentlyPlayedApi;
 
   @override
-  Future<Response<dynamic>> addInfo(RecentlyPlayed rpInfo) {
-    final $url = 'api/recentlyplayed/add';
-    final $body = rpInfo;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
   Future<Response<dynamic>> getSongs(int userid, int amount) {
     final $url = 'api/recentlyplayed/get/recent/songs/$amount';
     final $params = <String, dynamic>{'userid': userid};
