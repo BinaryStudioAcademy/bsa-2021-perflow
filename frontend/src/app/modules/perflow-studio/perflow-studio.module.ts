@@ -22,7 +22,6 @@ import { ContainerSearchModalComponent }
 import { ApplicationsPageComponent } from './applications-page/applications-page.component';
 import { AplicantRowComponent } from './applications-page/components/aplicant-row/aplicant-row.component';
 import { RoleRowComponent } from './applications-page/components/role-row/role-row.component';
-import { JoinToGroupComponent } from './join-to-group/join-to-group/join-to-group.component';
 import { LoginOtherModule } from '../login-other/login-other.module';
 
 @NgModule({
@@ -40,8 +39,7 @@ import { LoginOtherModule } from '../login-other/login-other.module';
     ContainerSearchModalComponent,
     ApplicationsPageComponent,
     AplicantRowComponent,
-    RoleRowComponent,
-    JoinToGroupComponent
+    RoleRowComponent
   ],
   imports: [
     CommonModule,
