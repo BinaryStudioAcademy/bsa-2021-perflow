@@ -1,11 +1,11 @@
 import { PlatformLocation } from '@angular/common';
 import {
-  Component, OnInit
+  Component, OnInit, OnDestroy
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
-import { timer } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subject, timer } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { AccessType } from 'src/app/models/playlist/accessType';
@@ -26,10 +26,11 @@ import { SongsService } from 'src/app/services/songs/songs.service';
   templateUrl: './artist-details.component.html',
   styleUrls: ['./artist-details.component.sass']
 })
-export class ArtistDetailsComponent implements OnInit {
+export class ArtistDetailsComponent implements OnInit, OnDestroy {
   private _userId: number;
   private readonly _decimalRadix = 10;
   private readonly _gridScrollMultiplier = 3;
+  private _unsubscribe$ = new Subject<void>();
 
   artist: ArtistFull = {} as ArtistFull;
   topSongs: Song[] = [];
@@ -51,14 +52,21 @@ export class ArtistDetailsComponent implements OnInit {
     private _albumsService: AlbumService,
     private _snackbarService: SnackbarService
   ) {
-    _route.params.subscribe(() => {
-      this.loadData();
-    });
+    _route.params
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        this.loadData();
+      });
   }
 
   ngOnInit() {
     this.loadData();
     this.getUserId();
+  }
+
+  ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 
   getUserId() {
@@ -75,6 +83,7 @@ export class ArtistDetailsComponent implements OnInit {
     const artistId = this._route.snapshot.params.id;
 
     this._artistService.getArtist(artistId)
+      .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (result) => {
           this.artist = result;
@@ -89,6 +98,7 @@ export class ArtistDetailsComponent implements OnInit {
 
   loadTopSongs() {
     this._songService.getTopSongsByAuthorId(this.artist.id, 10, AuthorType.artist)
+      .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (result) => {
           this.topSongs = result;
@@ -98,6 +108,7 @@ export class ArtistDetailsComponent implements OnInit {
 
   loadPlaylists() {
     this._playlistsService.getPlaylistsByAuthorId(this.artist.id)
+      .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (result) => {
           this.artistPlaylists = result.filter((p) => p.accessType !== AccessType.secret);
@@ -107,6 +118,7 @@ export class ArtistDetailsComponent implements OnInit {
 
   likeArtist() {
     this._reactionService.addArtistReaction(this.artist.id, this._userId)
+      .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         () => {
           this.artist.isLiked = true;
@@ -118,6 +130,7 @@ export class ArtistDetailsComponent implements OnInit {
 
   dislikeArtist() {
     this._reactionService.removeArtistReaction(this.artist.id, this._userId)
+      .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         () => {
           this.artist.isLiked = false;
@@ -129,6 +142,7 @@ export class ArtistDetailsComponent implements OnInit {
 
   loadAlbums() {
     this._albumsService.getAlbumsByArtist(this.artist.id, AuthorType.artist)
+      .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (result) => {
           this.artistAlbums = result;
@@ -154,10 +168,7 @@ export class ArtistDetailsComponent implements OnInit {
       return;
     }
 
-    if (!QueueService.isInitialized) {
-      const [first] = this.topSongs;
-      this._queueService.initSong(first);
-    }
+    this._queueService.addSongsToQueue(this.topSongs);
   };
 
   copyLink() {
