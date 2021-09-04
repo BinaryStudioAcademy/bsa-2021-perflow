@@ -21,6 +21,8 @@ import 'package:perflow/services/recently_played/recently_played_api.dart'
     as _i6;
 import 'package:perflow/services/songs/songs_api.dart'
     as _i7; // ignore_for_file: unnecessary_lambdas
+import 'package:perflow/services/search/search_api.dart' as _i6;
+    as _i8; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -31,22 +33,22 @@ _i1.GetIt $configureServices(_i1.GetIt get,
   gh.singleton<_i4.PlaylistsApi>(_i4.PlaylistsApi.create(get<_i3.Chopper>()));
   gh.singleton<_i5.PlaylistsReactionsApi>(
       _i5.PlaylistsReactionsApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i6.RecentlyPlayedApi>(
-      _i6.RecentlyPlayedApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i7.SongsApi>(_i7.SongsApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i8.SongsReactionsApi>(
-      _i8.SongsReactionsApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i9.AlbumsApi>(_i9.AlbumsApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i10.AlbumsReactionsApi>(
-      _i10.AlbumsReactionsApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i11.ArtistsApi>(_i11.ArtistsApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i12.ArtistsReactionsApi>(
-      _i12.ArtistsReactionsApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i13.AuthApi>(_i13.AuthApi.create(get<_i3.Chopper>()));
-  gh.singleton<_i14.AuthService>(_i14.AuthService(get<_i13.AuthApi>()),
+  gh.singleton<_i6.SearchApi>(_i6.SearchApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i7.SearchTextEditService>(_i7.SearchTextEditService());
+  gh.singleton<_i8.SongsApi>(_i8.SongsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i9.SongsReactionsApi>(
+      _i9.SongsReactionsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i10.AlbumsApi>(_i10.AlbumsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i11.AlbumsReactionsApi>(
+      _i11.AlbumsReactionsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i12.ArtistsApi>(_i12.ArtistsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i13.ArtistsReactionsApi>(
+      _i13.ArtistsReactionsApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i14.AuthApi>(_i14.AuthApi.create(get<_i3.Chopper>()));
+  gh.singleton<_i15.AuthService>(_i15.AuthService(get<_i14.AuthApi>()),
       signalsReady: true);
-  gh.singleton<_i15.PlaybackService>(
-      _i15.PlaybackService(get<_i14.AuthService>(), get<_i7.SongsApi>()),
+  gh.singleton<_i16.PlaybackService>(
+      _i16.PlaybackService(get<_i15.AuthService>(), get<_i8.SongsApi>()),
       signalsReady: true,
       dispose: (i) => i.dispose());
   return get;

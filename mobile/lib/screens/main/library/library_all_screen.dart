@@ -3,14 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:perflow/cubits/playlists/liked_playlists_cubit.dart';
 import 'package:perflow/cubits/playlists/users_playlists_cubit.dart';
-import 'package:perflow/helpers/icon_url_convert.dart';
-import 'package:perflow/models/common/content_row_type.dart';
 import 'package:perflow/models/playlists/playlist_simplified.dart';
-import 'package:perflow/routes.dart';
 import 'package:perflow/widgets/albums/album_list.dart';
 import 'package:perflow/widgets/artists/artist_list.dart';
-import 'package:perflow/widgets/common/content_row.dart';
-import 'package:vrouter/vrouter.dart';
+import 'package:perflow/widgets/playlists/playlist_row.dart';
 
 class LibraryAllScreen extends StatelessWidget {
   const LibraryAllScreen({Key? key}) : super(key: key);
@@ -29,8 +25,8 @@ class LibraryAllScreen extends StatelessWidget {
           builder: (builder, state) =>
               _PlaylistsList(state: state, isUsersPlaylist: false),
         ),
-        const AlbumsList(isLikedPage: true,),
-        const ArtistsList(isLikedPage: true,),
+        const AlbumsList(),
+        const ArtistsList(),
       ],
     );
   }
@@ -48,8 +44,6 @@ class _PlaylistsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return state.map(
       loading: (_) => const Center(
         child: CircularProgressIndicator(),
@@ -59,30 +53,7 @@ class _PlaylistsList extends StatelessWidget {
       ),
       data: (playlists) => ListView.builder(
         itemBuilder: (context, index) {
-          return ContentRow(
-            contentType: RowType.playlist,
-            iconUrl: getValidUrl(playlists.data[index].iconURL),
-            primaryText: Text(
-              playlists.data[index].name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: textTheme.subtitle2,
-            ),
-            secondaryText: Text(
-              "Playlist",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: textTheme.caption,
-            ),
-            height: 80,
-            isLikeAvailable: !isUsersPlaylist,
-            isLiked: true,
-            onTap: () {
-                context.vRouter.to(
-                  Routes.playlist(playlists.data[index].id),
-                );
-              },
-          );
+          return PlaylistRow(playlist: playlists.data[index]);
         },
         itemCount: playlists.data.length,
         shrinkWrap: true,

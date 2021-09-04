@@ -4,7 +4,10 @@ class Routes {
   static const String auth = '/auth';
 
   static const String home = '/home';
-  static const String search = '/search';
+  static const String searchSongs = '/search/songs';
+  static const String searchAlbums = '/search/albums';
+  static const String searchArtists = '/search/artists';
+  static const String searchPlaylists = '/search/playlists';
   static const String libraryAll = '/library/all';
   static const String libraryArtists = '/library/artists';
   static const String libraryAlbums = '/library/albums';

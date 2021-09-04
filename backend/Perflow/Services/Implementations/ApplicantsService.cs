@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shared.Auth;
 using Perflow.Common.DTO.Notifications;
+using Perflow.Domain;
 
 namespace Perflow.Services.Implementations
 {
@@ -80,6 +81,32 @@ namespace Perflow.Services.Implementations
             };
 
             await Notify(notification, application.User.Id);
+            await NotifyGroupMembers(application.User);
+        }
+
+        private async Task NotifyGroupMembers(User user, bool isDeleted = false)
+        {
+            if (user.Group != null)
+            {
+                var participants = await context.Users
+                    .Where(u => u.Group.Id == user.GroupId)
+                    .Select(u => u.Id)
+                    .ToListAsync();
+
+                foreach (var userId in participants)
+                {
+                    var notification = new NotificationWriteDTO
+                    {
+                        Title = isDeleted ? "Deleted group member" : "New group member",
+                        Description = isDeleted ? $"{user.UserName} left the {user.Group.Name}" 
+                            : $"{user.UserName} was added to {user.Group.Name}",
+                        Reference = user.Id,
+                        Type = isDeleted ? NotificationType.UserNotification : NotificationType.GroupMembersNotification
+                    };
+
+                    await Notify(notification, userId);
+                }
+            }
         }
 
         public async Task<IEnumerable<UserWithStatusDTO>> GetUsersByNameAsync(string term)
@@ -113,9 +140,12 @@ namespace Perflow.Services.Implementations
             
             user.Role = userRole.Role;
 
-            if (user.Role != UserRole.Artist)
+            if (user.Role != UserRole.Artist && user.Group != null)
+            {
+                await NotifyGroupMembers(user, isDeleted: true);
                 user.Group = null;
-
+            }
+                
             context.Update(user);
 
             await context.SaveChangesAsync();
