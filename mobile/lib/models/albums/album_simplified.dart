@@ -13,16 +13,16 @@ class AlbumSimplified {
   final AlbumArtistSimplified? author;
   final GroupSimplified? group;
 
-  const AlbumSimplified({
-    required this.id,
-    required this.name,
-    this.releaseYear,
-    this.iconURL,
-    this.author,
-    this.group
-  });
+  const AlbumSimplified(
+      {required this.id,
+      required this.name,
+      this.releaseYear,
+      this.iconURL,
+      this.author,
+      this.group});
 
-  factory AlbumSimplified.fromJson(Map<String, dynamic> json) => _$AlbumSimplifiedFromJson(json);
+  factory AlbumSimplified.fromJson(Map<String, dynamic> json) =>
+      _$AlbumSimplifiedFromJson(json);
 
   Map<String, dynamic> toJson() => _$AlbumSimplifiedToJson(this);
 }

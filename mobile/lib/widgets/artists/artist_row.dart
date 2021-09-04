@@ -9,10 +9,8 @@ import 'package:vrouter/vrouter.dart';
 
 class ArtistRow extends StatelessWidget {
   final ArtistSimplified artist;
-  final bool isLiked;
 
-  const ArtistRow({Key? key, required this.artist, this.isLiked = false})
-      : super(key: key);
+  const ArtistRow({Key? key, required this.artist}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +26,7 @@ class ArtistRow extends StatelessWidget {
         style: textTheme.subtitle2,
       ),
       contentType: RowType.artist,
-      isLikeAvailable: true,
-      isLiked: isLiked,
+      isLikeAvailable: false,
       onTap: () {
         context.vRouter.to(
           Routes.artist(artist.id),
