@@ -9,8 +9,8 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder
-                .HasOne(u => u.Group)
-                .WithMany(gr => gr.Users);
+                .HasMany(u => u.Groups)
+                .WithOne(g => g.Artist);
 
             builder
                 .HasMany(u => u.ArtistReactions)
