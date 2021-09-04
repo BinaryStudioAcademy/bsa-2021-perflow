@@ -7,7 +7,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Perflow.Services.Extensions;
 using Perflow.DataAccess.Context;
-using Shared.Auth.Extensions;
 using Shared.AzureBlobStorage.Extensions;
 using Shared.ExceptionsHandler.Filters;
 using Perflow.Hubs.Implementations;
@@ -41,7 +40,7 @@ namespace Perflow
 
             services.AddControllers(options => options.Filters.Add(new CustomExceptionFilterAttribute()));
 
-            services.AddAuth(Configuration["GOOGLE_CREDENTIALS:project_id"]);
+            services.AddPerflowAuth(Configuration);
 
             services.AddProcessorRabbitMQ(Configuration);
 
@@ -70,7 +69,7 @@ namespace Perflow
                 .SetIsOriginAllowed(origin => true)
                 .AllowCredentials());
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -81,6 +80,7 @@ namespace Perflow
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<NotificationsHub>("/notifications");
+                endpoints.MapHub<SynchronizationHub>("/content-sync");
             });
 
             InitializeDatabase(app);

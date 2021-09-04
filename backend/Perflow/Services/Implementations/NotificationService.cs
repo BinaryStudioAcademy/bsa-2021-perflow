@@ -31,7 +31,7 @@ namespace Perflow.Services.Implementations
 
         public async Task<IEnumerable<NotificationReadDTO>> CreateSubscriberNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type)
         {
-            var subscribersIds = (type == AuthorType.Artist)
+            var subscribersIds = type == AuthorType.Artist
                 ? await GetArtistSubscribersAsync(id)
                 : await GetGroupSubscribersAsync(id);
 
@@ -39,7 +39,7 @@ namespace Perflow.Services.Implementations
 
             foreach (var subscriberId in subscribersIds)
             {
-                var entity = await context.Notifications.AddAsync(new Notification
+                var entity = context.Notifications.Add(new Notification
                 {
                     Description = notification.Description,
                     Title = notification.Title,
