@@ -1,30 +1,6 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/ContentSynchronization",
-      "DownstreamScheme": "http",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "perflow",
-          "Port": "4202"
-        }
-      ],
-      "UpstreamPathTemplate": "/api/ContentSynchronization",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/ContentSynchronization/byUserId",
-      "DownstreamScheme": "http",
-      "DownstreamHostandPorts": [
-        {
-          "Host": "perflow",
-          "Port": "4202"
-        }
-      ],
-      "UpstreamPathTemplate": "/api/ContentSynchronization/byUserId",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
       "DownstreamPathTemplate": "/content-sync",
       "DownstreamScheme": "ws",
       "DownstreamHostAndPorts": [
