@@ -50,6 +50,12 @@ import { AllAlbumsComponent } from './search/components/all-albums/all-albums.co
 import { AllPlaylistsComponent } from './search/components/all-playlists/all-playlists.component';
 import { SongCardComponent } from './cards/song-card/song-card.component';
 import { GroupViewComponent } from './group-view/group-view.component';
+import {
+  SearchSongsListHeaderComponent
+} from './search/components/search-songs-list-header/search-songs-list-header.component';
+import {
+  SearchSortOrderIconComponent
+} from './search/components/search-songs-list-header/search-sort-order-icon/search-sort-order-icon.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +92,9 @@ import { GroupViewComponent } from './group-view/group-view.component';
     AllAlbumsComponent,
     AllPlaylistsComponent,
     SongCardComponent,
-    GroupViewComponent
+    GroupViewComponent,
+    SearchSongsListHeaderComponent,
+    SearchSortOrderIconComponent
   ],
   imports: [
     CommonModule,

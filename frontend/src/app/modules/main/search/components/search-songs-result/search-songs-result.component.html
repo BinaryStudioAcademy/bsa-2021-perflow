@@ -2,9 +2,16 @@
   <div class="result-header">
     <a class="field-name" routerLink="/search/{{term}}/songs">Songs</a>
   </div>
+
   <div class="song-result-body">
+    <app-search-songs-list-header (sortTypeChanged)="setSortType($event)"></app-search-songs-list-header>
     <div class="search-result" *ngIf="songs.length" >
-      <app-song-row *ngFor="let song of songs" [song]="song"></app-song-row>
+      <div *ngFor="let song of songs | sortSongs:sortType; let i = index" cdkDrag class="song-row">
+        <app-song-row 
+          [song]="song" 
+        >
+        </app-song-row>
+      </div>
     </div>
   </div>
 </div>

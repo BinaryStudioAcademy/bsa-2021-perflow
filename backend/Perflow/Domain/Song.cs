@@ -33,5 +33,6 @@ namespace Perflow.Domain
         public ICollection<PlaylistSong> Playlists { get; set; }
 
         public ICollection<SongReaction> Reactions { get; set; }
+        //public ICollection<RecentlyPlayed> RecentlyPlayeds { get; set; }
     }
 }

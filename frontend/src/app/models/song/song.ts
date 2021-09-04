@@ -11,6 +11,7 @@ export interface Song {
   duration: number;
   hasCensorship: boolean;
   album: Album;
+  frequency: number;
   artist?: User;
   authorType: AuthorType;
   isLiked: boolean;

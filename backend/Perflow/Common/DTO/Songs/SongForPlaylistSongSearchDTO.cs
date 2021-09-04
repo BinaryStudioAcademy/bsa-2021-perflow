@@ -14,5 +14,6 @@ namespace Perflow.Common.DTO.Songs
         public int Duration { get; set; }
         public bool HasCensorship { get; set; }
         public bool IsLiked { get; set; }
+        public int Frequency { get; set; }
     }
 }

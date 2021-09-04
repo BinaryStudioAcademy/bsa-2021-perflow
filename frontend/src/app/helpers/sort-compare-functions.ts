@@ -38,6 +38,8 @@ export function getCompareFunctionFromSortType(sortType: SongSortType): SongsCom
       return (a, b) => compareStrings(a.album.name, b.album.name, sortType.order);
     case SongSortProperty.time:
       return (a, b) => compare<number>(a.duration, b.duration, sortType.order);
+    case SongSortProperty.frequency:
+      return (a, b) => compare<number>(a.frequency, b.frequency, sortType.order);
     default:
       return (a, b) => compare<Date>(a.createdAt, b.createdAt, sortType.order);
   }

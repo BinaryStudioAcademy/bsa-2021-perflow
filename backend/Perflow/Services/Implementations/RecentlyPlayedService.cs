@@ -126,5 +126,18 @@ namespace Perflow.Services.Implementations
                                 .ToListAsync();
             return songs; 
         }
+        public async Task<IEnumerable<RecentlyPlayedFrequencyDTO>> GetFrequencyRecentSongsAsync(int[] songIds)
+        {
+            var songs = await context.RecentlyPlayed
+                                .Where(rp => songIds.Contains(rp.SongId))
+                                .GroupBy(rp => rp.SongId)
+                                .Select(rp => new RecentlyPlayedFrequencyDTO
+                                {
+                                    SongId = rp.Key,
+                                    Frequency = rp.Sum(rp => rp.Frequency)
+                                })
+                                .ToListAsync();
+            return songs;
+        }
     }
 }

@@ -20,10 +20,12 @@ namespace Perflow.Services.Implementations
     public class SearchService : BaseService
     {
         private readonly IImageService _imageService;
+        private readonly RecentlyPlayedService _recentlyPlayedService;
 
-        public SearchService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        public SearchService(PerflowContext context, IMapper mapper, IImageService imageService, RecentlyPlayedService recentlyPlayedService) : base(context, mapper)
         {
             _imageService = imageService;
+            _recentlyPlayedService = recentlyPlayedService;
         }
 
         public async Task<ICollection<SongForPlaylistSongSearchDTO>> FindSongsByNameAsync
@@ -54,10 +56,15 @@ namespace Perflow.Services.Implementations
                     IsLiked = song.Reactions.Any(r => r.UserId == userId)
                 })
                 .ToListAsync();
-
+            var frequency = await _recentlyPlayedService.GetFrequencyRecentSongsAsync(songs.ConvertAll(s => s.Id).ToArray());
+            foreach (SongForPlaylistSongSearchDTO s in songs)
+            {
+                int f = frequency.Where(f => f.SongId == s.Id).FirstOrDefault().Frequency;
+                s.Frequency = f;
+            }
             return songs;
         }
-
+        
         public async Task<ICollection<ArtistReadDTO>> FindArtistsByNameAsync
             (string searchTerm, int page, int itemsOnPage)
         {

@@ -2,6 +2,7 @@ export enum SongSortProperty {
   name,
   artist,
   album,
+  frequency,
   added,
   time
 }
