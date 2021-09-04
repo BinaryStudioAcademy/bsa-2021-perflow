@@ -15,12 +15,16 @@ using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Groups;
 using Perflow.Services.Interfaces;
 using Perflow.Common.Helpers;
+using Perflow.Domain.Enums;
 
 namespace Perflow.Services.Implementations
 {
     public class PlaylistService : BaseService
     {
         private readonly IImageService _imageService;
+        private const int numberOfDaysToStoreMix = 7;
+        private const int numberOfUserMixes = 3;
+        private const int numberOfSongs = 8;
 
         public PlaylistService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
         {
@@ -36,7 +40,7 @@ namespace Perflow.Services.Implementations
 
             return mapper.Map<PlaylistDTO>(entity);
         }
-        
+
         public async Task<bool> CheckSongInPlaylistAsync(PlaylistSongDTO dto)
         {
             var song = await context.PlaylistSong
@@ -50,7 +54,7 @@ namespace Perflow.Services.Implementations
             var entities = await context.Playlists
                                             .Include((pl) => pl.Author)
                                             .AsNoTracking()
-                                            .Where(pl => pl.Author.Id == userId)
+                                            .Where(pl => pl.Author.Id == userId && pl.Type == PlaylistType.Playlist)
                                             .ToListAsync();
 
             return mapper.Map<ICollection<PlaylistNameDTO>>(entities);
@@ -70,6 +74,7 @@ namespace Perflow.Services.Implementations
                     CreatedAt = p.CreatedAt,
                     Description = p.Description,
                     Author = mapper.Map<UserForPlaylistDTO>(p.Author),
+                    Type = p.Type,
                     IsLiked = p.Reactions.Any(r => r.UserId == userId)
                 })
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -205,7 +210,7 @@ namespace Perflow.Services.Implementations
         public async Task<IEnumerable<PlaylistViewDTO>> GetPlaylistsByAuthorIdAsync(int authorId)
         {
             var playlists = await context.Playlists
-                .Where(p => p.AuthorId == authorId)
+                .Where(p => p.AuthorId == authorId && p.Type == PlaylistType.Playlist)
                 .Select(
                     p => mapper.Map<PlaylistViewDTO>(new PlaylistWithIcon(p, _imageService.GetImageUrl(p.IconURL)))
                  )
@@ -223,7 +228,7 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
 
             var playlists = await context.Playlists
-                .Where(p => groupUsers.Contains(p.AuthorId))
+                .Where(p => groupUsers.Contains(p.AuthorId) && p.Type == PlaylistType.Playlist)
                 .Select(
                     p => mapper.Map<PlaylistViewDTO>(new PlaylistWithIcon(p, _imageService.GetImageUrl(p.IconURL)))
                  )
@@ -244,7 +249,7 @@ namespace Perflow.Services.Implementations
 
             await context.SaveChangesAsync();
         }
-        
+
         public async Task<PlaylistNameDTO> CopyPlaylistAsync(PlaylistNameDTO playlistNameDTO)
         {
             if (playlistNameDTO == null)
@@ -265,7 +270,8 @@ namespace Perflow.Services.Implementations
                 .AsNoTracking()
                 .ToListAsync();
 
-            songs.ForEach(p => {
+            songs.ForEach(p =>
+            {
                 p.PlaylistId = playlist.Id;
                 p.Id = 0;
             });
@@ -274,6 +280,144 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
 
             return new PlaylistNameDTO { Id = playlist.Id, Name = playlist.Name };
+        }
+
+        public async Task<IEnumerable<PlaylistViewDTO>> GetUserMixAsync(int userId)
+        {
+            var mixes = await context.Playlists
+                .Where(p => p.AuthorId == userId && p.Type == PlaylistType.Mix && p.CreatedAt > DateTimeOffset.Now.AddDays(-numberOfDaysToStoreMix))
+                .ToListAsync();
+
+            await DeleteOlderThanAsync(numberOfDaysToStoreMix, PlaylistType.Mix);
+
+            if (mixes.Count == 0)
+            {
+                mixes = await CreateUserMixesAsync(userId);
+            }
+
+            return mapper.Map<IEnumerable<PlaylistViewDTO>>(mixes);
+        }
+
+        private async Task<List<Playlist>> CreateUserMixesAsync(int userId, int amount = numberOfUserMixes)
+        {
+            var mixes = new List<Playlist>(amount);
+
+            for (int i = 1; i <= amount; i++)
+            {
+                var mix = await context.Playlists.AddAsync(new Playlist
+                {
+                    Description = "Tracks in the mix especially for you.",
+                    Name = $"Mix #{i}",
+                    AccessType = AccessType.Secret,
+                    AuthorId = userId,
+                    Type = PlaylistType.Mix
+                });
+
+                mixes.Add(mix.Entity);
+            }
+
+            await context.SaveChangesAsync();
+
+            foreach (var mix in mixes)
+            {
+                await AddSongsToMixAsync(mix);
+            }
+
+            return mixes;
+        }
+
+        private async Task AddSongsToMixAsync(Playlist mix)
+        {
+            var artistsSongs = await GetRandomLikedArtistsSongsAsync(mix.AuthorId);
+            var groupSongs = await GetRandomLikedGroupsSongsAsync(mix.AuthorId);
+            var recentlyPlayed = await GetRecentlyPlayedSongsAsync(mix.AuthorId);
+            var likedSongs = await GetRandomLikedSongsAsync(mix.AuthorId);
+
+            var songs = artistsSongs.Concat(groupSongs).Concat(recentlyPlayed).Concat(likedSongs)
+                .Distinct()
+                .Select(s => new PlaylistSong
+                {
+                    PlaylistId = mix.Id,
+                    SongId = s.Id
+                });
+
+            await context.PlaylistSong.AddRangeAsync(songs);
+
+            await context.SaveChangesAsync();
+        }
+
+        private async Task<ICollection<Song>> GetRandomLikedArtistsSongsAsync(int userId, int numberOfSongs = numberOfSongs)
+        {
+            var numberOfArtists = 3;
+
+            return await context.ArtistReactions
+                .Where(ar => ar.UserId == userId)
+                .Include(ar => ar.Artist)
+                .ThenInclude(a => a.Albums)
+                .ThenInclude(a => a.Songs)
+                .AsNoTracking()
+                .AsSplitQuery()
+                .OrderBy(_ => Guid.NewGuid())
+                .Take(numberOfArtists)
+                .SelectMany(ar => ar.Artist.Albums)
+                .SelectMany(a => a.Songs)
+                .OrderBy(_ => Guid.NewGuid())
+                .Take(numberOfSongs)
+                .ToListAsync();
+        }
+
+        private async Task<ICollection<Song>> GetRandomLikedGroupsSongsAsync(int userId, int numberOfSongs = numberOfSongs)
+        {
+            var numberOfArtists = 3;
+
+            return await context.GroupReactions
+                .Where(gr => gr.UserId == userId)
+                .Include(gr => gr.Group)
+                .ThenInclude(g => g.Albums)
+                .ThenInclude(a => a.Songs)
+                .AsNoTracking()
+                .AsSplitQuery()
+                .OrderBy(_ => Guid.NewGuid())
+                .Take(numberOfArtists)
+                .SelectMany(gr => gr.Group.Albums)
+                .SelectMany(a => a.Songs)
+                .OrderBy(_ => Guid.NewGuid())
+                .Take(numberOfSongs)
+                .ToListAsync();
+        }
+
+        private async Task<ICollection<Song>> GetRecentlyPlayedSongsAsync(int userId, int numberOfSongs = numberOfSongs)
+        {
+            return await context.RecentlyPlayed
+                    .Where(rp => rp.UserId == userId)
+                    .AsNoTracking()
+                    .OrderByDescending(rp => rp.LastTimeListened)
+                    .Take(numberOfSongs)
+                    .Select(rp => rp.Song)
+                    .ToListAsync();
+        }
+
+        private async Task<ICollection<Song>> GetRandomLikedSongsAsync(int userId, int numberOfSongs = numberOfSongs)
+        {
+            return await context.SongReactions
+                    .Where(sr => sr.UserId == userId)
+                    .AsNoTracking()
+                    .OrderBy(_ => Guid.NewGuid())
+                    .Take(numberOfSongs)
+                    .Select(sr => sr.Song)
+                    .ToListAsync();
+        }
+
+        private async Task DeleteOlderThanAsync(int numberOfDays, PlaylistType type)
+        {
+            var date = DateTimeOffset.Now.AddDays(-numberOfDays);
+
+            var oldPlaylists = context.Playlists
+                .Where(p => p.CreatedAt < date && p.Type == type);
+
+            context.Playlists.RemoveRange(oldPlaylists);
+
+            await context.SaveChangesAsync();
         }
     }
 }

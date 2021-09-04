@@ -1,5 +1,6 @@
 using System;
 using Perflow.Common.DTO.Users;
+using Perflow.Domain.Enums;
 
 namespace Perflow.Common.DTO.Playlists
 {
@@ -16,6 +17,8 @@ namespace Perflow.Common.DTO.Playlists
         public UserForPlaylistDTO Author { get; set; }
 
         public AccessTypeDTO AccessType { get; set; }
+
+        public PlaylistType Type { get; set; }
 
         public bool IsLiked { get; set; }
     }

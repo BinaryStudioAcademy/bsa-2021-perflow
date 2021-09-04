@@ -20,6 +20,8 @@ import { Song } from 'src/app/models/song/song';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { UserService } from 'src/app/services/user.service';
 import { ContainerFull } from 'src/app/models/constructor/container-full';
+import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 
 @Component({
   selector: 'app-main-home',
@@ -43,7 +45,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   public recentlyPlayed = new Array<RecentlyPlayedSong>();
   public newReleases: NewReleaseView[] = [];
   public calmRhythms = new Array<Playlist>();
-  public yourMix = new Array<object>();
+  public yourMix: PlaylistView[] = [];
   public top100Songs = new Array<Playlist>();
 
   isSuccess: boolean = false;
@@ -56,6 +58,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   constructor(
     private _albumService: AlbumService,
     private _recentlyPlayedService: RecentlyPlayedService,
+    private _playlistService: PlaylistsService,
     private _authService: AuthService,
     private _constructorService: ConstructorService,
     private _songsService: SongsService,
@@ -89,7 +92,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.getRecentlyPlayed();
     this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
-    this.yourMix = this.getYourMix();
+    this.getYourMix();
     this.top100Songs = this.getTop100Songs();
   }
 
@@ -195,7 +198,15 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   );
 
   // User should be able to play Your mix - take songs from all playlists plus liked songs and show in random order
-  getYourMix = (): Array<object> => new Array<object>();
+  getYourMix() {
+    this._playlistService.getYourMix()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.yourMix = data;
+        }
+      });
+  }
 
   // User should be able to play Top 100 songs - 100 song ordering by amount of likes by all users
   getTop100Songs = (): Array<Playlist> => new Array<Playlist>(15).fill(

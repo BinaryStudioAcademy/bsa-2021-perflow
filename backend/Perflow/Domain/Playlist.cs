@@ -18,6 +18,8 @@ namespace Perflow.Domain
 
         public AccessType AccessType { get; set; }
 
+        public PlaylistType Type { get; set; }
+
         public ICollection<PlaylistSong> Songs { get; set; } 
 
         public ICollection<PlaylistReaction> Reactions { get; set; }
