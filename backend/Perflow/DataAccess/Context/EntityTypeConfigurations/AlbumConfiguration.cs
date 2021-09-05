@@ -20,6 +20,10 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
             builder
                 .HasOne(al => al.Author)
                 .WithMany(u => u.Albums);
+
+            builder
+                .HasOne(al => al.Group)
+                .WithMany(g => g.Albums);
         }
     }
 }

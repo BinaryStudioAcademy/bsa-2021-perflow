@@ -3,13 +3,24 @@
     <div class="hat-view-playlist">
       <div class="content-view-playlist">
         <div class="image">
-          <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" />
+          <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" *ngIf="playlist.type === playlistType.playlist" />
+          <div class="icon-background" *ngIf="playlist.type === playlistType.mix">
+            <img class="icon" src="../../../../assets/images/playlist.svg" />
+            <p class="playlist-name">
+              {{ playlist?.name }}
+            </p>
+          </div>
         </div>
         <div class="menu-view-playlist">
           <div class="text">Playlist</div>
           <h3>{{ playlist?.name }}</h3>
           <div>
-            <span class="total-all"> {{ playlist?.author?.userName }} </span>
+            <span class="total-all" *ngIf="playlist.type === playlistType.playlist">
+              {{ playlist?.author?.userName }} 
+            </span>
+            <span class="total-all" *ngIf="playlist.type === playlistType.mix">
+              Perflow
+            </span>
             <span class="menu-view-playlist-description">
               |
               <span class="total-count-songs">{{ totalCountSongs }} songs

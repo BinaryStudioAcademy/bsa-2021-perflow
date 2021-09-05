@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +13,7 @@ namespace Shared.Auth.Extensions
 {
     public static class AddAuthExtension
     {
-        public static void AddAuth(this IServiceCollection services, string firebaseProjectId)
+        public static void AddAuth(this IServiceCollection services, string firebaseProjectId, Action<JwtBearerOptions>? optionsBuilder = null)
         {
             services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
 
@@ -30,20 +30,7 @@ namespace Shared.Auth.Extensions
                         ValidateLifetime = true
                     };
 
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = async context =>
-                        {
-                            var accessToken = context.Request.Query["access_token"];
-                            var path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notifications"))
-                            {
-                                context.Token = accessToken;
-                            }
-                            await Task.CompletedTask;
-                        },
-
-                    };
+                    optionsBuilder?.Invoke(options);
                 });
 
             services.AddAuthorization(options =>

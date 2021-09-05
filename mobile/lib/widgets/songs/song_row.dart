@@ -49,8 +49,10 @@ class SongRow extends StatelessWidget {
         unliked: (_) => false,
         orElse: () => song.isLiked,
       ),
-      onTap: () {
-        getService<PlaybackService>().setSongById(song.id);
+      onTap: () async {
+        final playbackService = getService<PlaybackService>();
+        await playbackService.setSongById(song.id);
+        playbackService.play();
       },
       onLikePressed: () {
         context.read<SongReactionCubit>().likeSong(song.id);

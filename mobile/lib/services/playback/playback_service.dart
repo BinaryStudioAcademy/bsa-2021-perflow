@@ -4,15 +4,18 @@ import 'package:audio_service/audio_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:logger/logger.dart';
 import 'package:perflow/api_urls.dart';
 import 'package:perflow/models/auth/auth_user.dart';
 import 'package:perflow/models/playback/playback_actions.dart';
 import 'package:perflow/models/playback/playback_data.dart';
 import 'package:perflow/models/playback/playback_duration.dart';
 import 'package:perflow/models/playback/playback_repeat_mode.dart';
+import 'package:perflow/models/playback_sync/playback_sync_data.dart';
 import 'package:perflow/models/songs/song.dart';
 import 'package:perflow/services/auth/auth_service.dart';
 import 'package:perflow/services/playback/playback_handler.dart';
+import 'package:perflow/services/playback/playback_sync_hub.dart';
 import 'package:perflow/services/songs/songs_api.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -20,11 +23,14 @@ import 'package:rxdart/rxdart.dart';
 class PlaybackService {
   final _player = AudioPlayer();
   late final PlaybackHandler _audioHandler;
+
   final AuthService _authService;
+  final PlaybackSyncHub _syncHub;
   final SongsApi _songsApi;
 
   late final StreamSubscription<AuthUser?> _authSubscription;
   late final StreamSubscription<bool> _playingSubscription;
+  late final StreamSubscription<PlaybackSyncData> _syncSubscription;
 
   final _playbackSubject = BehaviorSubject<PlaybackData?>.seeded(null);
 
@@ -36,10 +42,12 @@ class PlaybackService {
 
   PlaybackService(
     this._authService,
+    this._syncHub,
     this._songsApi
   ) {
     _authSubscription = _authService.authStateChanges.listen(_handleAuthChange);
     _playingSubscription = _player.playingStream.listen(_handlePlayingChange);
+    _syncSubscription = _syncHub.syncDataChanges.listen(_handleSyncChange);
     _initialize();
   }
 
@@ -48,16 +56,14 @@ class PlaybackService {
   Stream<PlaybackData?> get playbackChanges => _playbackSubject
     .distinct((dataA, dataB) => dataA == dataB);
 
-  Stream<bool> get playbackStatusChanges => _player.playingStream;
-
   Future<void> _initialize() async {
     _audioHandler = await AudioService.init(
-      builder: () => PlaybackHandler(_player, this),
+      builder: () => PlaybackHandler(_player, this, _syncHub),
       config: const AudioServiceConfig(
         androidNotificationChannelId: 'com.bsa.perflow.channel.audio',
         androidNotificationChannelName: 'Perflow playback',
-        artDownscaleWidth: 384,
-        artDownscaleHeight: 384
+        artDownscaleWidth: 512,
+        artDownscaleHeight: 512
       ),
     );
 
@@ -78,7 +84,7 @@ class PlaybackService {
   Future<void> setSong(Song song) async {
     _playbackSubject.add(PlaybackData(
       song: song,
-      actions: _playbackSubject.value?.actions ?? _defaultActions
+      actions: _playbackSubject.valueOrNull?.actions ?? _defaultActions
     ));
 
     final token = await _authService.getToken();
@@ -95,15 +101,13 @@ class PlaybackService {
     if(songDuration != null) {
       _playbackSubject.add(PlaybackData(
         song: song,
-        actions: _playbackSubject.value?.actions ?? _defaultActions,
+        actions: _playbackSubject.valueOrNull?.actions ?? _defaultActions,
         duration: PlaybackDuration(
           max: songDuration,
           timeChanges: BehaviorSubject<Duration>()..addStream(_player.positionStream)
         ),
       ));
     }
-
-    play();
   }
 
   Future<void> stop() {
@@ -127,6 +131,16 @@ class PlaybackService {
     }
   }
 
+  Future<void> _handleSyncChange(PlaybackSyncData syncData) async {
+    Logger().i('Set sync\nid: ${syncData.songId}\ntime: ${syncData.time}');
+
+    if(currentPlayback?.song.id != syncData.songId) {
+      await setSongById(syncData.songId);
+    }
+
+    await _player.seek(Duration(seconds: syncData.time));
+  }
+
   void _handlePlayingChange(bool playing) {
     final currentPlaybackData = _playbackSubject.value;
 
@@ -135,7 +149,7 @@ class PlaybackService {
     }
 
     _playbackSubject.add(
-      _playbackSubject.value?.copyWith(
+      _playbackSubject.valueOrNull?.copyWith(
         actions: currentPlaybackData.actions.copyWith(
           playing: playing
         )
@@ -147,6 +161,7 @@ class PlaybackService {
   void dispose() {
     _authSubscription.cancel();
     _playingSubscription.cancel();
+    _syncSubscription.cancel();
     _player.dispose();
   }
 }

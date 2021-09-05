@@ -1,16 +1,20 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:perflow/models/playback/playback_event_data.dart';
+import 'package:perflow/models/playback_sync/playback_sync_data.dart';
 import 'package:perflow/services/playback/playback_service.dart';
+import 'package:perflow/services/playback/playback_sync_hub.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final AudioPlayer _player;
   final PlaybackService _playbackService;
+  final PlaybackSyncHub _syncHub;
 
   PlaybackHandler(
     this._player,
-    this._playbackService
+    this._playbackService,
+    this._syncHub
   ) {
     CombineLatestStream<dynamic, PlaybackEventData>(
       [
@@ -52,17 +56,26 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> play() {
-    return _player.play();
+    return Future.wait([
+      _player.play(),
+      _syncHub.sendSyncData(getCurrentSyncData())
+    ]);
   }
 
   @override
-  Future<void> pause() async {
-    await _player.pause();
+  Future<void> pause() {
+    return Future.wait([
+      _player.pause(),
+      _syncHub.sendSyncData(getCurrentSyncData())
+    ]);
   }
 
   @override
-  Future<void> seek(Duration position) async {
-    await _player.seek(position);
+  Future<void> seek(Duration position) {
+    return Future.wait([
+      _player.seek(position),
+      _syncHub.sendSyncData(getCurrentSyncData()?.copyWith(time: position.inSeconds))
+    ]);
   }
 
   @override
@@ -103,6 +116,19 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       speed: _player.speed,
       queueIndex: eventData.event.currentIndex,
       errorMessage: "Couldn't load music"
+    );
+  }
+
+  PlaybackSyncData? getCurrentSyncData() {
+    final playback = _playbackService.currentPlayback;
+
+    if(playback == null || playback.duration == null) {
+      return null;
+    }
+
+    return PlaybackSyncData(
+      playback.song.id,
+      playback.duration!.current.inSeconds
     );
   }
 }
