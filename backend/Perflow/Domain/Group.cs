@@ -11,8 +11,10 @@ namespace Perflow.Domain
 
         public string Description { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<GroupArtist> Artists { get; set; }
 
         public ICollection<GroupReaction> Reactions { get; set; }
+
+        public ICollection<Album> Albums { get; set; }
     }
 }

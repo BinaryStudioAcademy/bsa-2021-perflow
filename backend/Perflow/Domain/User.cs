@@ -25,10 +25,8 @@ namespace Perflow.Domain
 
         public bool Gender { get; set; }
 
-        public int? GroupId { get; set; }
+        public ICollection<GroupArtist> Groups { get; set; }
 
-        public Group Group { get; set; }
-        
         public ICollection<Album> Albums { get; set; }
 
         public ICollection<SongReaction> Reactions { get; set; }

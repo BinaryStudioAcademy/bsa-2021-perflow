@@ -4,21 +4,16 @@ using Perflow.Common.DTO.ContentSynchronization;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
-using Perflow.Services.Interfaces;
-using Shared.ExceptionsHandler.Exceptions;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Perflow.Services.Implementations
 {
     public class ContentSynchronizationService : BaseService
     {
-        private readonly IImageService _imageService;
-        public ContentSynchronizationService(PerflowContext context, IMapper mapper, IImageService imageService)
-            : base(context, mapper)
-        {
-            _imageService = imageService;
-        }
+        public ContentSynchronizationService(
+            PerflowContext context,
+            IMapper mapper
+        ) : base(context, mapper) { }
 
         public async Task AddContentSyncAsync(ContentSyncWriteDTO contentDTO, int userId)
         {

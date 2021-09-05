@@ -126,7 +126,7 @@ namespace Perflow.Services.Implementations
                                             Author = new AlbumViewAuthorsDTO(
                                             a.Author.Id,
                                             a.Author.UserName,
-                                            !a.Author.GroupId.HasValue),
+                                            a.Group == null),
 
                                         })
                                         .ToListAsync();

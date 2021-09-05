@@ -95,20 +95,10 @@
     </div>
 
     <!-- Your mix -->
-    <div class="your-mix" *ngIf="data.showMix">
+    <div class="your-mix" *ngIf="yourMix.length > 0 && data.showMix">
       <div class="header">Your mix</div>
       <div id="yourMix" class="ui grid your-mix-cont">
-        <!-- Demonstration cards (delete them) -->
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <app-your-mix-card></app-your-mix-card>
-        <!-- Work component -->
-        <app-your-mix-card *ngFor="let card of yourMix"></app-your-mix-card>
+        <app-your-mix-card [mix]=mix *ngFor="let mix of yourMix"></app-your-mix-card> 
       </div>
     </div>
 
