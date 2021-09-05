@@ -81,7 +81,7 @@ namespace Perflow.Services.Implementations
             }
             else
             {
-                if (!application.Group.Approved)
+                if (application.GroupId != null && !application.Group.Approved)
                 {
                     context.Groups.Remove(application.Group);
                 }
