@@ -154,5 +154,13 @@ namespace Perflow.Controllers
 
             return Ok(copyedPlaylist);
         }
+
+        [HttpGet("userMix")]
+        public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetUserMixAsync()
+        {
+            var playlists = await _playlistService.GetUserMixAsync(User.GetId());
+
+            return Ok(playlists);
+        }
     }
 }

@@ -1,47 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { ContentSyncRead } from '../models/content-synchronization/content-sync-read';
 import { ContentSyncWrite } from '../models/content-synchronization/content-sync-write';
-import { SongInfo } from '../models/song/song-info';
 import { HttpInternalService } from './http-internal.service';
+import { SongToolbarService } from './song-toolbar.service';
+import { ContentSyncHubService } from './hubs/content-sync-hub.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContentSynchronizationService {
-  private readonly _routePrefix = '/api/ContentSynchronization';
-
-  private _sInfo = {
-    songId: 0,
-    time: 0
-  } as ContentSyncWrite;
-
-  song$ = new Subject<SongInfo>();
-
   constructor(
-    private _httpServices: HttpInternalService
-  ) {
-    this.song$.subscribe({
-      next: (song) => {
-        this._sInfo.songId = song.id;
-      }
-    });
+    private _httpService: HttpInternalService,
+    private _hub: ContentSyncHubService,
+    private _toolbarService: SongToolbarService
+  ) {}
+
+  get syncData$() {
+    return this._hub.syncData$;
   }
 
-  writeSynchronizationInfo(time: number) {
-    this._sInfo.time = time;
+  async writeSynchronizationInfo(time: number) {
+    const currentSong = this._toolbarService.getCurrentSong();
 
-    this.writeContentSyncAsync(this._sInfo)
-      .pipe(take(1))
-      .subscribe();
-  }
+    if (!currentSong) {
+      return;
+    }
 
-  writeContentSyncAsync(contentSync: ContentSyncWrite) {
-    return this._httpServices.postRequest(this._routePrefix, contentSync);
-  }
+    const syncData: ContentSyncWrite = {
+      songId: currentSong.id,
+      time
+    };
 
-  getContentSyncAsync(): Observable<ContentSyncRead> {
-    return this._httpServices.getRequest<ContentSyncRead>(`${this._routePrefix}/byUserId`);
+    await this._hub.sendSyncData(syncData);
   }
 }

@@ -13,7 +13,7 @@ namespace Perflow.Hubs.Implementations
     {
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.SendNotification(new NotificationReadDTO { Description= "OnConnectedAsync" });
+            await Clients.All.SendNotification(new NotificationReadDTO { Description = "OnConnectedAsync" });
             await base.OnConnectedAsync();
         }
 

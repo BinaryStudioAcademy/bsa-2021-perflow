@@ -13,6 +13,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
+import { ContentSyncRead } from '../../../../models/content-synchronization/content-sync-read';
 
 @Component({
   selector: 'app-song-toolbar',
@@ -78,7 +79,6 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
           this._rpService.addSongViaId(song.id, this.userId, undefined)
             .pipe(take(1))
             .subscribe();
-          this._syncService.song$.next(song);
         }
       );
 
@@ -112,18 +112,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     this.audio = document.querySelector('audio');
     this.audio!.crossOrigin = 'anonymous';
 
-    this._syncService.getContentSyncAsync()
-      .pipe(take(1))
-      .subscribe({
-        next: (data) => {
-          if (data) {
-            const temp = { id: data.songId } as Song;
-            this._queueService.clearQueue();
-            this._queueService.initSong(temp, false);
-            this._startTime = data.time;
-          }
-        }
-      });
+    this._syncService.syncData$.subscribe(this._updateSongFromSync);
 
     this.initAudioContext();
   }
@@ -148,6 +137,18 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
       this.audio!.currentTime = this._startTime;
       this._startTime = undefined;
     }
+  };
+
+  private _updateSongFromSync = (syncData: ContentSyncRead | undefined | null) => {
+    if (!syncData) {
+      return;
+    }
+
+    const songInfo = { id: syncData.songId } as Song;
+
+    this._queueService.clearQueue();
+    this._queueService.initSong(songInfo, false);
+    this._startTime = syncData.time;
   };
 
   setTimeChanging = (value: boolean) => {

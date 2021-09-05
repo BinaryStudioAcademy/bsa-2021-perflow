@@ -1,10 +1,11 @@
 ﻿using Perflow.Domain.Abstract;
 using Perflow.Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Perflow.Domain
 {
-    public sealed class Song : AuditEntity
+    public sealed class Song : AuditEntity, IEquatable<Song>
     {
         public string Name { get; set; }
 
@@ -33,5 +34,17 @@ namespace Perflow.Domain
         public ICollection<PlaylistSong> Playlists { get; set; }
 
         public ICollection<SongReaction> Reactions { get; set; }
+
+        public bool Equals(Song other)
+        {
+            if (other is null) return false;
+
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

@@ -72,4 +72,8 @@ export class PlaylistsService {
   checkSongInPlaylist(playlist: PlaylistSongDTO): Observable<boolean> {
     return this._httpService.postRequest<boolean>(`${this._endpoint}/checkSong`, playlist);
   }
+
+  getYourMix() {
+    return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/userMix`);
+  }
 }
