@@ -13,6 +13,8 @@ import { GroupService } from 'src/app/services/group.service';
 })
 export class LeftSideMenuComponent implements OnDestroy {
   private _unsubscribe$ = new Subject<void>();
+  private _userId: number;
+
   userRole: UserRoles;
   userRoles = UserRoles;
   artistGroups: Group[] = [];
@@ -32,17 +34,17 @@ export class LeftSideMenuComponent implements OnDestroy {
         filter((state) => !!state)
       )
       .subscribe((state) => {
+        this._userId = state!.id;
         this.userRole = state!.role;
       });
   }
 
   getUserGroups() {
-    this._groupService.getUserGroups()
+    this._groupService.getGroupsByArtist(this._userId)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (resp) => {
-          this.artistGroups = resp.body!;
-          console.log(resp);
+          this.artistGroups = resp;
         }
       );
   }
