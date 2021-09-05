@@ -1,0 +1,67 @@
+<div class="bg-modal-fader" (click)="cancelModal()">
+  <div class="ui modal modal-upload" (click)="clickOnModal($event)">
+    <div class="ui icon header">
+      Edit group
+    </div>
+    <!-- Modal Content -->
+    <div class="content">
+      <form #formEdit="ngForm" (ngSubmit)="onSubmit()" class="ui form error" >
+        <!-- Hidden -->
+        <input type="hidden" [(ngModel)]="editedGroup.id" required name="id" #id="ngModel">
+        <!-- Image -->
+        <div class="ui field image">
+          <div class="image-upload-cont" >
+            <div class="hover-content">
+              <img id="image" src="{{tempIconURL}}">
+              <i class="edit outline icon"></i>
+              <input pattern="{{pattern}}" type="file" (change)="loadIcon($event)" name="iconURL" 
+                [ngModel] #iconURL="ngModel" accept=".jpeg,.png,.jpg">
+              <div *ngIf="iconURL.invalid && (iconURL.dirty || iconURL.touched)" class="ui error message">
+                <div *ngIf="iconURL.errors?.pattern">
+                  Invalid file type.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div class="ui field name">
+          <input type="text" maxlength="50" placeholder="Album title" [(ngModel)]="editedGroup.name" 
+            required #name="ngModel" pattern="[^<>^@]*" name="name">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="ui error message" autocomplete="off">
+            <div *ngIf="name.errors?.required">
+              Name is required!
+            </div>
+            <div *ngIf="name.errors?.pattern">
+              Symbols '< > ^ @' are prohibited
+            </div>
+          </div>       
+        </div>
+
+        <!-- Description -->
+        <div class="ui field description">
+          <textarea form="formEdit" placeholder="Group description" maxlength="200"
+            [(ngModel)]="editedGroup.description" #description="ngModel" name="description" pattern="[^<>^@]*"></textarea>
+          <div *ngIf="description.invalid && (description.dirty || description.touched)" class="ui error message">
+            <div *ngIf="description.errors?.maxLength">
+              Description should be less than 200 characters.
+            </div>
+            <div *ngIf="description.errors?.pattern">
+              Symbols '< > ^ @' are prohibited
+            </div>
+          </div>
+        </div>
+      
+        <!-- Buttons -->
+        <div class="ui field buttons-row">
+          <div class="form-group">
+            <button type="submit" class="ui button submit btn-full" [disabled]="formEdit.form.invalid">Save</button>
+            <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
