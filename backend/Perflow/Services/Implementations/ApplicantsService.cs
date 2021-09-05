@@ -68,16 +68,25 @@ namespace Perflow.Services.Implementations
 
                 if (application.GroupId != null)
                 {
+                    application.Group.Approved = true;
+
                     var groupArtist = new GroupArtist
                     {
                         Artist = application.User,
                         Group = application.Group
                     };
                     context.GroupArtist.Add(groupArtist);
+                    context.Update(application);
+                }
+            }
+            else
+            {
+                if (!application.Group.Approved)
+                {
+                    context.Groups.Remove(application.Group);
                 }
             }
 
-            context.Update(application);
             context.PerflowStudioApplicants.Remove(application);
 
             await context.SaveChangesAsync();

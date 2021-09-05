@@ -99,12 +99,15 @@ namespace Perflow.Services.Implementations
             return artists;
         }
 
-        public async Task<ICollection<GroupShortDTO>> FindGroupsByNameAsync(string searchTerm, int page, int itemsOnPage)
+        public async Task<ICollection<GroupShortDTO>> FindGroupsByNameAsync(string searchTerm, int page, int itemsOnPage, int userId)
         {
             int skip = (page - 1) * itemsOnPage;
 
             var groups = await context.Groups
-                .Where(g => g.Name.Contains(searchTerm.Trim()))
+                .Include(g => g.Artists)
+                .Where(g => g.Name.Contains(searchTerm.Trim()) 
+                                && g.Artists.All(a => a.Artist.Id != userId)
+                                && g.Approved == true)
                 .Skip(skip)
                 .Take(itemsOnPage)
                 .AsNoTracking()
