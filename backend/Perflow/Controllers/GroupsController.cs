@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Shared.Auth.Constants;
 using Shared.Auth.Extensions;
+using System.Collections.Generic;
 
 namespace Perflow.Controllers
 {
@@ -24,6 +25,12 @@ namespace Perflow.Controllers
         public async Task<ActionResult<GroupForAlbumDTO>> GetGroupsByArtistAsync(int id)
         {
             return Ok(await _groupService.GetGroupsByArtistAsync(id));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ICollection<GroupForAlbumDTO>>> GetUserGroupsAsync()
+        {
+            return Ok(await _groupService.GetUserGroupsAsync(User.GetId()));
         }
 
         [HttpGet("{id}")]

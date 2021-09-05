@@ -30,6 +30,14 @@
       </a>
     </div>
   </div>
+  <div class="artist-groups" *ngIf="userRole === userRoles.artist">
+    <a 
+      *ngFor="let group of artistGroups" 
+      routerLink="./groups/{group.id}" 
+      routerLinkActive="active-link" 
+      [routerLinkActiveOptions]="{exact: true}">{{ group.name }}
+    </a>
+  </div>
   <div class="ui divider"></div>
 </div>
 

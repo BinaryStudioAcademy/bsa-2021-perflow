@@ -40,6 +40,16 @@ namespace Perflow.Services.Implementations
             return mapper.Map<ICollection<GroupForAlbumDTO>>(groups);
         }
 
+        public async Task<ICollection<GroupForAlbumDTO>> GetUserGroupsAsync(int id)
+        {
+            var groups = await context.Groups
+                                      .Include(gr => gr.Users)
+                                      .Where(gr => gr.Users.Any(u => u.Id == id))
+                                      .ToListAsync();
+
+            return mapper.Map<ICollection<GroupForAlbumDTO>>(groups);
+        }
+
         public async Task<GroupShortDTO> CreateGroupAsync(GroupWriteDTO group)
         {
             if (group == null)

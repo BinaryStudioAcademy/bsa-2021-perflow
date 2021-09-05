@@ -19,6 +19,10 @@ export class GroupService {
     return this._httpService.getRequest<Group[]>(`${this.routePrefix}/artist/${id}`);
   }
 
+  getUserGroups() {
+    return this._httpService.getFullRequest<Group[]>(`${this.routePrefix}`);
+  }
+
   getGroup(id: number): Observable<GroupFull> {
     return this._httpService.getRequest<GroupFull>(`${this.routePrefix}/${id}`);
   }
