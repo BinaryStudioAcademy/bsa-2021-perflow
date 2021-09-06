@@ -179,7 +179,8 @@ namespace Perflow.Services.Implementations
                 Songs = await FindSongsByNameAsync(searchTerm, page, maxSongAmount, userId),
                 Albums = await FindAlbumsByNameAsync(searchTerm, page, maxEntitiesAmount),
                 Artists = await FindArtistsByNameAsync(searchTerm, page, maxEntitiesAmount),
-                Playlists = await FindPlaylistsByNameAsync(searchTerm, page, maxEntitiesAmount)
+                Playlists = await FindPlaylistsByNameAsync(searchTerm, page, maxEntitiesAmount),
+                Groups = await FindGroupsByNameAsync(searchTerm, page, maxSongAmount, userId)
             };
 
             return result;
