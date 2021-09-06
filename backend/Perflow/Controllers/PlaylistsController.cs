@@ -144,6 +144,17 @@ namespace Perflow.Controllers
             return Ok();
         }
 
+        [HttpPut("changeAccessType")]
+        public async Task<ActionResult<PlaylistNameDTO>> ChangeAccessTypeAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            var result = await _playlistService.ChangeAccessTypeAsync(playlistNameDTO);
+
+            return Ok(result);
+        }
+
         [HttpPost("copy")]
         public async Task<ActionResult<PlaylistNameDTO>> CopyPlaylistAsync(PlaylistNameDTO playlistNameDTO)
         {
