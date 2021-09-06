@@ -121,8 +121,6 @@ namespace Perflow.Services.Implementations
         {
             int skip = (page - 1) * itemsOnPage;
 
-            Console.WriteLine(onlyPublished);
-
             var albums = await context.Albums
                 .Where(album => album.Name.Contains(searchTerm.Trim()) &&
                                 (onlyPublished ? album.IsPublished : true))
