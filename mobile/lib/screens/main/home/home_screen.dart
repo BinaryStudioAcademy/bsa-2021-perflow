@@ -131,32 +131,19 @@ class HomeScreen extends StatelessWidget {
   Widget _buildContentRow() {
     return BlocProvider<RecentlyPlayedCubit>(
       create: (context) => RecentlyPlayedCubit(),
-      child: BlocBuilder<RecentlyPlayedCubit,
-          ApiCallState<List<RecentlyPlayedSong>>>(
+      child: BlocBuilder<RecentlyPlayedCubit, ApiCallState<List<Song>>>(
         builder: (context, state) => state.map(
           loading: (_) => const SizedBox(),
           error: (_) => const SizedBox(),
-          data: (rpSongs) => BlocProvider<SongsCubit>(
-            create: (context) => SongsCubit(
-              rpSongs.data.map((e) => e.id).toList(),
-            ),
-            child: BlocBuilder<SongsCubit, ApiCallState<List<Song>>>(
-              builder: (context, state) => state.map(
-                loading: (_) => const SizedBox(),
-                error: (_) => const SizedBox(),
-                data: (songs) => SizedBox(
-                  child: ListView.builder(
-                    itemBuilder: (context, index) => SongRow(
-                      song: songs.data[index],
-                      isLikeAvailable: false,
-                    ),
-                    itemCount: songs.data.length,
-                    physics: const NeverScrollableScrollPhysics(),
+          data: (songs) => Column(
+            children: songs.data
+                .map(
+                  (e) => SongRow(
+                    song: e,
                   ),
-                  height: 320,
-                ),
-              ),
-            ),
+                )
+                .toList(),
+            crossAxisAlignment: CrossAxisAlignment.stretch,
           ),
         ),
       ),
