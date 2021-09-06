@@ -95,10 +95,10 @@ export class SearchComponent implements OnInit, OnDestroy {
       })
     ).subscribe({
       next: (data) => {
-        if (data.albums?.length 
-            || data.artists?.length 
-            || data.playlists?.length 
-            || data.songs?.length 
+        if (data.albums?.length
+            || data.artists?.length
+            || data.playlists?.length
+            || data.songs?.length
             || data.groups?.length) {
           this.foundData = data;
           this.isSearchHistoryShown = false;
