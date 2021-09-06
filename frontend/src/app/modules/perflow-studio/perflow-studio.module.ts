@@ -25,6 +25,7 @@ import { ContainerSearchModalComponent }
   from './constructor/container-search-modal/container-search-modal/container-search-modal.component';
 import { EditGroupModalComponent } from './edit-group/edit-group-modal/edit-group-modal.component';
 import { EditGroupComponent } from './edit-group/edit-group/edit-group/edit-group.component';
+import { LoginOtherModule } from '../login-other/login-other.module';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { EditGroupComponent } from './edit-group/edit-group/edit-group/edit-grou
     SharedModule,
     RouterModule,
     FormsModule,
-    DragDropModule
+    DragDropModule,
+    LoginOtherModule
   ],
   exports: [
     EditAlbumModalComponent

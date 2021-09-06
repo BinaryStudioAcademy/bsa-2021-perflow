@@ -24,6 +24,11 @@ import { ArtistApplicantPageComponent } from './other-page/artist-applicant-page
     SharedModule,
     InfiniteScrollModule,
     NgxSpinnerModule
+  ],
+  exports: [
+    NgxSpinnerModule,
+    InfiniteScrollModule,
+    GroupModalComponent
   ]
 })
 export class LoginOtherModule { }

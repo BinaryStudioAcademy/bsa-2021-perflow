@@ -8,8 +8,8 @@
   </div>
   <div class="main-content">
     <div class="content">
-      <h4 class="title">You are:</h4>
-      <div class="checkbox-container">
+      <h4 class="title" *ngIf="!isJoinToGroupRoute">You are:</h4>
+      <div class="checkbox-container" *ngIf="!isJoinToGroupRoute">
         <div class="roles">
           <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="isArtist">
           <label>Artist</label>
@@ -19,10 +19,10 @@
           <label>Group</label>
         </div>
       </div>
-      <button class="ui btn-full button create-btn" *ngIf="isArtist" (click)="createArtistApplicant()">
+      <button class="ui btn-full button create-btn" *ngIf="isArtist && !isJoinToGroupRoute" (click)="createArtistApplicant()">
         Apply
       </button>
-      <div class="group" *ngIf="!isArtist">
+      <div class="group" *ngIf="!isArtist || isJoinToGroupRoute">
         <button class="ui btn-full button create-btn" (click)="showModal()" *ngIf="!createdGroup">
           Create a group
         </button>

@@ -15,6 +15,9 @@ import { CreateEditAlbumComponent } from './create-edit-album/create-edit-album/
 import { MainPageComponent } from './main-page/main-page.component';
 import { PlaylistsPageComponent } from './playlists-page/playlists-page.component';
 import { EditGroupComponent } from './edit-group/edit-group/edit-group/edit-group.component';
+import {
+  ArtistApplicantPageComponent
+} from '../login-other/other-page/artist-applicant-page/artist-applicant-page.component';
 
 const routes: Routes = [{
   path: '',
@@ -64,6 +67,11 @@ const routes: Routes = [{
       path: 'applicants',
       component: ApplicationsPageComponent,
       canActivate: [ModeratorPerflowStudioGuard]
+    },
+    {
+      path: 'jointogroup',
+      component: ArtistApplicantPageComponent,
+      canActivate: [ArtistPerflowStudioGuard]
     }
   ]
 }];
