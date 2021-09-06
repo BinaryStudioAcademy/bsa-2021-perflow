@@ -4,6 +4,7 @@ import {
 import { Subject } from 'rxjs';
 import { filter, take, takeUntil } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
+import { SharePlayData } from 'src/app/models/share-play/share-play-data';
 import { Song } from 'src/app/models/song/song';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -12,6 +13,7 @@ import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
+import { SharePlayService } from 'src/app/services/share-play.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { ContentSyncRead } from '../../../../models/content-synchronization/content-sync-read';
 
@@ -61,6 +63,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   private readonly _recordingFrequency = 30; // How often sync occurs
   private _previousTime: number = 0;
   private _startTime: number | undefined;
+  private _isJustLoaded: boolean = true;
 
   constructor(
     authService: AuthService,
@@ -69,7 +72,9 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     private _reactionService: ReactionService,
     private _queueService: QueueService,
     private _rpService: RecentlyPlayedService,
-    private _syncService: ContentSynchronizationService
+    private _syncService: ContentSynchronizationService,
+    private _sharePlayService: SharePlayService,
+    private _songToolbarService: SongToolbarService
   ) {
     toolbarService.songUpdated$
       .pipe(takeUntil(this._unsubscribe$))
@@ -113,6 +118,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     this.audio!.crossOrigin = 'anonymous';
 
     this._syncService.syncData$.subscribe(this._updateSongFromSync);
+    this._sharePlayService.syncData$.subscribe(this._sharePlaySync);
 
     this.initAudioContext();
   }
@@ -140,15 +146,34 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   };
 
   private _updateSongFromSync = (syncData: ContentSyncRead | undefined | null) => {
-    if (!syncData) {
+    if (!syncData && this._isJustLoaded) {
       return;
     }
-
-    const songInfo = { id: syncData.songId } as Song;
+    const songInfo = { id: syncData?.songId } as Song;
 
     this._queueService.clearQueue();
     this._queueService.initSong(songInfo, false);
-    this._startTime = syncData.time;
+    this._startTime = syncData?.time;
+    this._isJustLoaded = false;
+  };
+
+  private _sharePlaySync = (syncData: SharePlayData | undefined | null) => {
+    if (!syncData && !this._isJustLoaded) {
+      return;
+    }
+
+    const currentSong = this._songToolbarService.getCurrentSong();
+
+    if (currentSong?.id !== syncData?.songId) {
+      this._queueService.initSong({ id: syncData?.songId } as Song, syncData?.isPlaying);
+    }
+    else {
+      this.audio!.currentTime = syncData!.time;
+
+      if (this.isPlaying !== syncData?.isPlaying) {
+        this.playPause(true);
+      }
+    }
   };
 
   setTimeChanging = (value: boolean) => {
@@ -198,6 +223,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
 
     if (time !== this._previousTime && time % this._recordingFrequency === 0) {
       this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
+      this._sharePlayService.sendSynchronizationInfo(Math.floor(this.audio!.currentTime), this.isPlaying);
       this._previousTime = time;
     }
   };
@@ -213,6 +239,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   getSeekSliderValue = (event: Event) => {
     this.audio!.currentTime = Number.parseInt((<HTMLInputElement>event.target).value, 10);
     this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
+    this._sharePlayService.sendSynchronizationInfo(Math.floor(this.audio!.currentTime), this.isPlaying);
   };
 
   getVolumeSliderValue = (event: Event) => {
@@ -234,7 +261,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     this.audio!.volume = Number.parseInt(this.volumeSlider!.value, 10) / 100;
   };
 
-  playPause = () => {
+  playPause = (isFromSync: boolean = false) => {
     if (!this.show) {
       return false;
     }
@@ -253,6 +280,10 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
 
     this._queueService.setPlaying(this.isPlaying);
     this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
+
+    if (!isFromSync) {
+      this._sharePlayService.sendSynchronizationInfo(Math.floor(this.audio!.currentTime), this.isPlaying);
+    }
 
     return this.isPlaying;
   };

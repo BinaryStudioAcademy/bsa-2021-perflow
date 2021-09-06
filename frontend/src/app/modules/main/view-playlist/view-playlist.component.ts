@@ -5,11 +5,12 @@ import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { filter, take } from 'rxjs/operators';
+import { filter, take, takeUntil } from 'rxjs/operators';
 import { QueueService } from 'src/app/services/queue.service';
 import { ClipboardService } from 'ngx-clipboard';
+import { SharePlayService } from 'src/app/services/share-play.service';
 import { PlatformLocation } from '@angular/common';
-import { timer } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
@@ -29,9 +30,12 @@ export class ViewPlaylistComponent implements OnInit {
   public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
+  private _unsubscribe$ = new Subject<void>();
   public isSuccess: boolean = false;
   isAuthor: boolean;
   isCollaborative: boolean;
+  isGroupNotified: boolean = false;
+  isConnected: boolean = false;
   readonly playlistType = PlaylistType;
 
   constructor(
@@ -45,7 +49,8 @@ export class ViewPlaylistComponent implements OnInit {
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
     private _playlistService: PlaylistsService,
-    private _playlistEditorsService: PlaylistEditorsService
+    private _playlistEditorsService: PlaylistEditorsService,
+    private _sharePlayService: SharePlayService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -108,6 +113,7 @@ export class ViewPlaylistComponent implements OnInit {
   loadPlaylist() {
     this._playlistsService
       .getPlaylist(this._playlistId)
+      .pipe(take(1))
       .subscribe({
         next: (playlist) => {
           this.playlist = playlist;
@@ -119,6 +125,7 @@ export class ViewPlaylistComponent implements OnInit {
                 this.isCollaborative = result.find((u) => u.id === this.userId) !== undefined;
               }
             );
+          this.getSharePlayState(playlist.id);
         },
         error: () => {
           this._router.navigateByUrl('/playlists/all');
@@ -199,4 +206,50 @@ export class ViewPlaylistComponent implements OnInit {
   }
 
   canShare = (accessType: AccessType) => accessType !== AccessType.secret;
+
+  sharePlay(pl: Playlist) {
+    this._sharePlayService.sharePlayAsync({ masterId: 0, playlistId: pl.id })
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: () => {
+          this.isGroupNotified = true;
+        }
+      });
+  }
+
+  getSharePlayState(id: number) {
+    this._sharePlayService.getSharePlayState(id)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.isGroupNotified = data;
+        }
+      });
+  }
+
+  connectToSharePlay(playlistId: number) {
+    this._sharePlayService.connectToSharePlay(playlistId)
+      .then(() => {
+        this.isConnected = true;
+      });
+
+    if (!this.songs.length) {
+      return;
+    }
+
+    this._queueService.addSongsToQueue(this.songs);
+
+    if (!QueueService.isInitialized) {
+      const [first] = this.songs;
+      this._queueService.initSong(first);
+    }
+  }
+
+  disconnectSharePlay(playlistId: number) {
+    this._sharePlayService.disconectHub()
+      .then(() => {
+        this.isConnected = false;
+        this.isGroupNotified = false;
+      });
+  }
 }

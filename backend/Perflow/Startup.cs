@@ -81,6 +81,7 @@ namespace Perflow
                 endpoints.MapControllers();
                 endpoints.MapHub<NotificationsHub>("/notifications");
                 endpoints.MapHub<SynchronizationHub>("/content-sync");
+                endpoints.MapHub<SharePlayHub>("/share-play");
             });
 
             InitializeDatabase(app);

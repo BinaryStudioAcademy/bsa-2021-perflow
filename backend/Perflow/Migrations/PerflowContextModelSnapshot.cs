@@ -535,6 +535,24 @@ namespace Perflow.Migrations
                     b.ToTable("SearchHistory");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.SharePlay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MasterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SharePlay");
+                });
+
             modelBuilder.Entity("Perflow.Domain.Song", b =>
                 {
                     b.Property<int>("Id")
@@ -1064,9 +1082,9 @@ namespace Perflow.Migrations
 
             modelBuilder.Entity("Perflow.Domain.Group", b =>
                 {
-                    b.Navigation("Artists");
-
                     b.Navigation("Albums");
+
+                    b.Navigation("Artists");
 
                     b.Navigation("Reactions");
                 });
