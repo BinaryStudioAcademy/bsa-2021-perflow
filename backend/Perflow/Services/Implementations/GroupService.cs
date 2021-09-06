@@ -25,15 +25,20 @@ namespace Perflow.Services.Implementations
 
         public async Task<ICollection<GroupForAlbumDTO>> GetAllGroupsAsync()
         {
-            var groups = await context.Groups.AsNoTracking().ToListAsync();
+            var groups = await context.Groups
+                .Where(g => g.Approved == true)
+                .AsNoTracking().ToListAsync();
 
             return mapper.Map<ICollection<GroupForAlbumDTO>>(groups);
         }
 
         public async Task<ICollection<GroupForAlbumDTO>> GetGroupsByArtistAsync(int id)
         {
-            var groups = await context.Groups
-                .Where(group => group.Users.Any(user => user.Id == id))
+            var groups = await context.GroupArtist
+                .Include(ga => ga.Group)
+                .Include(ga => ga.Artist)
+                .Where(ga => ga.Artist.Id == id && ga.Group.Approved == true)
+                .Select(ga => ga.Group)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -46,6 +51,7 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentNullException("Argument cannot be null");
 
             var groupEntity = mapper.Map<Group>(group);
+            groupEntity.Approved = false;
 
             if (group.Icon != null)
             {

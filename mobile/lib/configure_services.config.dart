@@ -11,7 +11,8 @@ import 'package:perflow/services/artists/artists_api.dart' as _i12;
 import 'package:perflow/services/auth/auth_api.dart' as _i14;
 import 'package:perflow/services/auth/auth_service.dart' as _i15;
 import 'package:perflow/services/chopper/chopper_service.dart' as _i3;
-import 'package:perflow/services/playback/playback_service.dart' as _i16;
+import 'package:perflow/services/playback/playback_service.dart' as _i18;
+import 'package:perflow/services/playback/playback_sync_hub.dart' as _i17;
 import 'package:perflow/services/playlists/playlists_api.dart' as _i4;
 import 'package:perflow/services/reactions/albums_reactions_api.dart' as _i11;
 import 'package:perflow/services/reactions/artists_reactions_api.dart' as _i13;
@@ -19,6 +20,7 @@ import 'package:perflow/services/reactions/playlists_reactions_api.dart' as _i5;
 import 'package:perflow/services/reactions/song_reactions_api.dart' as _i9;
 import 'package:perflow/services/search/search_api.dart' as _i6;
 import 'package:perflow/services/search/search_text_edit_service.dart' as _i7;
+import 'package:perflow/services/signalr/hub_factory_service.dart' as _i16;
 import 'package:perflow/services/songs/songs_api.dart'
     as _i8; // ignore_for_file: unnecessary_lambdas
 
@@ -45,8 +47,13 @@ _i1.GetIt $configureServices(_i1.GetIt get,
   gh.singleton<_i14.AuthApi>(_i14.AuthApi.create(get<_i3.Chopper>()));
   gh.singleton<_i15.AuthService>(_i15.AuthService(get<_i14.AuthApi>()),
       signalsReady: true);
-  gh.singleton<_i16.PlaybackService>(
-      _i16.PlaybackService(get<_i15.AuthService>(), get<_i8.SongsApi>()),
+  gh.singleton<_i16.HubFactoryService>(
+      _i16.HubFactoryService(get<_i15.AuthService>()));
+  gh.singleton<_i17.PlaybackSyncHub>(
+      _i17.PlaybackSyncHub(get<_i16.HubFactoryService>()));
+  gh.singleton<_i18.PlaybackService>(
+      _i18.PlaybackService(get<_i15.AuthService>(), get<_i17.PlaybackSyncHub>(),
+          get<_i8.SongsApi>()),
       signalsReady: true,
       dispose: (i) => i.dispose());
   return get;

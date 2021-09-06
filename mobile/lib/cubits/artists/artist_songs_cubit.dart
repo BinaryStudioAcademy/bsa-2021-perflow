@@ -1,4 +1,5 @@
 import 'package:perflow/cubits/common/api_call_exception.dart';
+import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/cubits/common/api_call_cubit.dart';
 import 'package:perflow/models/common/author_type.dart';
@@ -31,13 +32,13 @@ class ArtistSongsCubit extends ApiCallCubit<List<ArtistSong>> {
   }
 
   Future<void> play() async {
-    state.maybeWhen(
-      orElse: () {},
-      data: (songs) {
-        if(songs.isNotEmpty) {
-          _playbackService.setSongById(songs.first.id);
-        }
-      }
-    );
+    final currentState = state;
+
+    if(currentState is! ApiCallStateData<List<ArtistSong>>) {
+      return;
+    }
+
+    _playbackService.setSongById(currentState.data.first.id);
+    _playbackService.play();
   }
 }

@@ -12,6 +12,7 @@ import { PlatformLocation } from '@angular/common';
 import { timer } from 'rxjs';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
+import { PlaylistType } from 'src/app/models/enums/playlist-type';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -31,6 +32,7 @@ export class ViewPlaylistComponent implements OnInit {
   public isSuccess: boolean = false;
   isAuthor: boolean;
   isCollaborative: boolean;
+  readonly playlistType = PlaylistType;
 
   constructor(
     private _activateRoute: ActivatedRoute,

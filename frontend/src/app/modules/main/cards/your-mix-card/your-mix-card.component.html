@@ -1,9 +1,9 @@
-<div class="four wide column ym-card">
+<div class="four wide column ym-card" routerLink="/playlists/view-playlist/{{mix.id}}">
     <div class="fader">
         <button class="play-icon">
-            <i class="play icon"></i>
-        </button> 
-        <img src="../../../../../assets/images/mix-4.jpg" alt="Icon">    
+            <i class="play icon" appClickStopPropagation (click)="play(mix.id)"></i>
+        </button>
+        <img src="../../../../../assets/images/mix-4.jpg" alt="Icon">
     </div>
-    <div class="card-name">Positions</div>
+    <div class="card-name">{{mix.name}}</div>
 </div>

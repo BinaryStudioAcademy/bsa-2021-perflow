@@ -120,6 +120,18 @@
       ],
       "UpstreamPathTemplate": "/api/Playlists/checkSong",
       "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Playlists/userMix",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Playlists/userMix",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ]
 }
