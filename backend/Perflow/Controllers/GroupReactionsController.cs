@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Reactions;
+using Perflow.Common.DTO.Users;
 using Perflow.Services.Implementations;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Perflow.Controllers
@@ -14,6 +16,12 @@ namespace Perflow.Controllers
         public GroupReactionsController(GroupReactionService groupReactionService)
         {
             _groupReactionService = groupReactionService;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ICollection<ArtistReadDTO>>> Get(int id)
+        {
+            return Ok(await _groupReactionService.GetGroupsByUserId(id));
         }
 
         [HttpPost("like")]

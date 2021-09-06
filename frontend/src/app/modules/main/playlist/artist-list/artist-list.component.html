@@ -13,5 +13,18 @@
                 <h5>There are no available artists now</h5>
             </div> 
         </ng-container>
+        <div class="artistslabel">
+            <h4>Groups</h4>
+        </div>
+        <ng-container *ngIf="groups?.length">
+            <div *ngFor="let group of groups" class="artist-card">
+                <app-artist-card [artist]="group" (delete)="deleteGroup($event)" [isLiked]=true></app-artist-card>
+            </div>    
+        </ng-container>
+        <ng-container *ngIf="!groups?.length">
+            <div class="artistslabel">
+                <h5>There are no available groups now</h5>
+            </div> 
+        </ng-container>
     </div>    
 </div>
