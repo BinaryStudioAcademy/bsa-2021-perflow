@@ -117,12 +117,15 @@ namespace Perflow.Services.Implementations
         }
 
         public async Task<ICollection<AlbumForListDTO>> FindAlbumsByNameAsync
-            (string searchTerm, int page, int itemsOnPage)
+            (bool onlyPublished, string searchTerm, int page, int itemsOnPage)
         {
             int skip = (page - 1) * itemsOnPage;
 
+            Console.WriteLine(onlyPublished);
+
             var albums = await context.Albums
-                .Where(album => album.Name.Contains(searchTerm.Trim()))
+                .Where(album => album.Name.Contains(searchTerm.Trim()) &&
+                                (onlyPublished ? album.IsPublished : true))
                 .Include(album => album.Author)
                 .Include(album => album.Reactions)
                 .Include(album => album.Group)
@@ -173,7 +176,7 @@ namespace Perflow.Services.Implementations
             var result = new SearchResultDTO
             {
                 Songs = await FindSongsByNameAsync(searchTerm, page, maxSongAmount, userId),
-                Albums = await FindAlbumsByNameAsync(searchTerm, page, maxEntitiesAmount),
+                Albums = await FindAlbumsByNameAsync(true, searchTerm, page, maxEntitiesAmount),
                 Artists = await FindArtistsByNameAsync(searchTerm, page, maxEntitiesAmount),
                 Playlists = await FindPlaylistsByNameAsync(searchTerm, page, maxEntitiesAmount)
             };

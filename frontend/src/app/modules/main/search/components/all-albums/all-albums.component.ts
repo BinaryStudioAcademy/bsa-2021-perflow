@@ -59,7 +59,7 @@ export class AllAlbumsComponent implements OnInit, OnDestroy {
         this.searchTerm = data;
       });
 
-    this.getAlbumsByName(this._query);
+    this.getAlbumsByName(true, this._query);
   }
 
   ngOnDestroy() {
@@ -73,11 +73,11 @@ export class AllAlbumsComponent implements OnInit, OnDestroy {
       page: this._query.page += 1
     };
 
-    this.getAlbumsByName(this._query);
+    this.getAlbumsByName(true, this._query);
   }
 
-  getAlbumsByName(query: SearchParam) {
-    this._searchService.getAlbumsByName(query)
+  getAlbumsByName(onlyPublished: boolean, query: SearchParam) {
+    this._searchService.getAlbumsByName(onlyPublished, query)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (result) => {
