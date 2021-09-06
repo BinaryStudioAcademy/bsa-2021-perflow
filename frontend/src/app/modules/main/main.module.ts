@@ -59,6 +59,7 @@ import {
 } from './search/components/search-songs-list-header/search-sort-order-icon/search-sort-order-icon.component';
 import { ConstructorContainerCardComponent }
   from './cards/constructor-container-card/constructor-container-card/constructor-container-card.component';
+import { SearchSongsListComponent } from '../shared/search-songs-list/search-songs-list.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { ConstructorContainerCardComponent }
     GroupViewComponent,
     SearchSongsListHeaderComponent,
     SearchSortOrderIconComponent,
-    ConstructorContainerCardComponent
+    ConstructorContainerCardComponent,
+    SearchSongsListComponent
   ],
   imports: [
     CommonModule,

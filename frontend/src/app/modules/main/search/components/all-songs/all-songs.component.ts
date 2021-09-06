@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { SearchParam } from 'src/app/models/search/search-param';
 import { Song } from 'src/app/models/song/song';
+import { SongSortType } from 'src/app/models/song/song-sort-type';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -22,6 +23,11 @@ export class AllSongsComponent implements OnInit, OnDestroy {
   public distance: number = 3;
   private _page: number = 0;
   private _itemsOnPage: number = 20;
+  sortType: SongSortType | null = null;
+
+  setSortType(sortType: SongSortType | null) {
+    this.sortType = sortType;
+  }
 
   private _query = {
     searchTerm: this.searchTerm,

@@ -38,11 +38,11 @@
         <div class="column album-name text">
             <a class="link" *ngIf="song.album" [routerLink]="['/albums', song.album.id]">{{song.album.name}}</a>
         </div>
-        <div class="column added frequency text">
-            {{song.frequency}}
-        </div>
         <div class="column added text">
             {{song.createdAt | date:'yyyy-MM-dd'}}
+        </div>
+        <div class="column frequency text">
+            {{song.frequency}}
         </div>
         <div class="column duration text">
             <span>{{song.duration * 1000 | date:'mm:ss'}}</span>

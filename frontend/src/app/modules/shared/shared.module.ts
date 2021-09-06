@@ -102,7 +102,9 @@ import { UserRolePipe } from './pipes/user-role.pipe';
     CreateEditPlaylistComponent,
     EditPlaylistModalComponent,
     CropImageComponent,
-    UserRolePipe
+    UserRolePipe,
+    FilterExplicitPipe
+
   ]
 })
 
