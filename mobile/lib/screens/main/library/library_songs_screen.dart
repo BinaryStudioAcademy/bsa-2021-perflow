@@ -10,8 +10,11 @@ class LibrarySongsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LikedSongsCubit, ApiCallState<List<Song>>>(
-      builder: _buildSongsList,
+    return BlocProvider<LikedSongsCubit>(
+      create: (context) => LikedSongsCubit(),
+      child: BlocBuilder<LikedSongsCubit, ApiCallState<List<Song>>>(
+        builder: _buildSongsList,
+      ),
     );
   }
 
