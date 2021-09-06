@@ -120,6 +120,7 @@ import { AllGroupsComponent } from './search/components/all-groups/all-groups/al
     SearchAlbumsResultComponent,
     SearchArtistsResultComponent,
     SearchPlaylistsResultComponent,
+    SearchGroupsResultComponent,
     PlaylistCardComponent,
     ArtistCardComponent,
     ConstructorContainerCardComponent,

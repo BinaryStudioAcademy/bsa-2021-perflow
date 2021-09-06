@@ -83,6 +83,9 @@
             <app-artist-card *ngIf="entity.entityType === 2"
               [artist]="entity.entity">
             </app-artist-card>
+            <app-artist-card *ngIf="entity.entityType === 3"
+              [artist]="entity.entity">
+            </app-artist-card>
             <app-playlist-card *ngIf="entity.entityType === 1"
               [playlist]="entity.entity">
             </app-playlist-card>
