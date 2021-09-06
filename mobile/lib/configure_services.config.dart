@@ -11,16 +11,18 @@ import 'package:perflow/services/artists/artists_api.dart' as _i13;
 import 'package:perflow/services/auth/auth_api.dart' as _i15;
 import 'package:perflow/services/auth/auth_service.dart' as _i16;
 import 'package:perflow/services/chopper/chopper_service.dart' as _i3;
-import 'package:perflow/services/playback/playback_service.dart' as _i18;
-import 'package:perflow/services/playback/playback_sync_hub.dart' as _i17;
+import 'package:perflow/services/playback/playback_service.dart' as _i19;
+import 'package:perflow/services/playback/playback_sync_hub.dart' as _i18;
 import 'package:perflow/services/playlists/playlists_api.dart' as _i4;
 import 'package:perflow/services/reactions/albums_reactions_api.dart' as _i12;
 import 'package:perflow/services/reactions/artists_reactions_api.dart' as _i14;
 import 'package:perflow/services/reactions/playlists_reactions_api.dart' as _i5;
-import 'package:perflow/services/reactions/song_reactions_api.dart' as _i9;
-import 'package:perflow/services/search/search_api.dart' as _i6;
-import 'package:perflow/services/search/search_text_edit_service.dart' as _i7;
-import 'package:perflow/services/signalr/hub_factory_service.dart' as _i16;
+import 'package:perflow/services/reactions/song_reactions_api.dart' as _i10;
+import 'package:perflow/services/recently_played/recently_played_api.dart'
+    as _i6;
+import 'package:perflow/services/search/search_api.dart' as _i7;
+import 'package:perflow/services/search/search_text_edit_service.dart' as _i8;
+import 'package:perflow/services/signalr/hub_factory_service.dart' as _i17;
 import 'package:perflow/services/songs/songs_api.dart'
     as _i9; // ignore_for_file: unnecessary_lambdas
 
@@ -49,13 +51,13 @@ _i1.GetIt $configureServices(_i1.GetIt get,
   gh.singleton<_i15.AuthApi>(_i15.AuthApi.create(get<_i3.Chopper>()));
   gh.singleton<_i16.AuthService>(_i16.AuthService(get<_i15.AuthApi>()),
       signalsReady: true);
-  gh.singleton<_i16.HubFactoryService>(
-      _i16.HubFactoryService(get<_i15.AuthService>()));
-  gh.singleton<_i17.PlaybackSyncHub>(
-      _i17.PlaybackSyncHub(get<_i16.HubFactoryService>()));
-  gh.singleton<_i18.PlaybackService>(
-      _i18.PlaybackService(get<_i15.AuthService>(), get<_i17.PlaybackSyncHub>(),
-          get<_i8.SongsApi>()),
+  gh.singleton<_i17.HubFactoryService>(
+      _i17.HubFactoryService(get<_i16.AuthService>()));
+  gh.singleton<_i18.PlaybackSyncHub>(
+      _i18.PlaybackSyncHub(get<_i17.HubFactoryService>()));
+  gh.singleton<_i19.PlaybackService>(
+      _i19.PlaybackService(get<_i16.AuthService>(), get<_i18.PlaybackSyncHub>(),
+          get<_i9.SongsApi>()),
       signalsReady: true,
       dispose: (i) => i.dispose());
   return get;

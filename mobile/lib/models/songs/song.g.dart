@@ -7,8 +7,6 @@ part of 'song.dart';
 // **************************************************************************
 
 Song _$SongFromJson(Map<String, dynamic> json) {
-  print(json['duration']);
-
   return Song(
     id: json['id'] as int,
     name: json['name'] as String,
@@ -19,9 +17,9 @@ Song _$SongFromJson(Map<String, dynamic> json) {
     group: json['group'] == null
         ? null
         : GroupSimplified.fromJson(json['group'] as Map<String, dynamic>),
-    duration: 1,
+    duration: json['duration'] as int,
     blobId: json['blobId'] as String?,
-    isLiked: true,
+    isLiked: json['isLiked'] as bool,
   );
 }
 
