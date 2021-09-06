@@ -1,5 +1,5 @@
 <div class="bg-modal-fader" (click)="cancelModal()">
-  <div class="ui modal modal-upload" appClickStopPropagation>
+  <div class="ui modal modal-upload" [ngClass]="{centering: isJoinToGroupRoute}" appClickStopPropagation>
     <div class="ui icon header">
       Create a group
     </div>

@@ -34,6 +34,7 @@ export class ArtistApplicantPageComponent implements OnInit, OnDestroy {
   previousGroupData: CreatedGroup = { name: '', description: '' };
   createdGroup: ArtistReadDTO;
   groups: ArtistReadDTO[] = [];
+  isJoinToGroupRoute: boolean = false;
 
   private _searchTerms$ = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
@@ -50,6 +51,10 @@ export class ArtistApplicantPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setSearch();
+
+    if (this._router.url === '/perflowstudio/jointogroup') {
+      this.isJoinToGroupRoute = true;
+    }
   }
 
   createArtistApplicant(group?: ArtistReadDTO) {
