@@ -8,6 +8,7 @@ using Perflow.Services.Implementations;
 using Shared.Auth.Constants;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Perflow.Hubs.Implementations
 {
@@ -26,11 +27,6 @@ namespace Perflow.Hubs.Implementations
 
         public override async Task OnConnectedAsync()
         {
-            if (Context.User == null)
-            {
-                return;
-            }
-
             await base.OnConnectedAsync();
         }
 
@@ -39,6 +35,15 @@ namespace Perflow.Hubs.Implementations
             int id = int.Parse(Context.User.FindFirst(Claims.Id).Value);
             await RemoveFromGroup(_groups[id]);
             _groups.Remove(id);
+
+            var master = await _context.SharePlay.FirstOrDefaultAsync(sp => sp.MasterId == id);
+
+            if (master != null)
+            {
+                _context.SharePlay.Remove(master);
+                await _context.SaveChangesAsync();
+            }
+
             await base.OnDisconnectedAsync(exception);
         }
 
