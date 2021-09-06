@@ -16,6 +16,20 @@
       ]
     },
     {
+      "DownstreamPathTemplate": "/api/Playlists/changeAccessType",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Playlists/changeAccessType",
+      "UpstreamHttpMethod": [
+        "PUT"
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Playlists/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
