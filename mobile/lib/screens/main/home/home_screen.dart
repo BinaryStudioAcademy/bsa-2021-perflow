@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/home/home_playlists_cubit.dart';
+import 'package:perflow/cubits/playlists/recommended_playlists_cubit.dart';
+import 'package:perflow/helpers/icon_url_convert.dart';
 import 'package:perflow/models/playlists/playlist_info.dart';
+import 'package:perflow/models/playlists/playlist_simplified.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/theme.dart';
 import 'package:perflow/widgets/cards/content_row.dart';
@@ -20,17 +23,15 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   _buildHeader(context),
                   _buildSmallCards(context),
-                  const _HomeSectionHeader(title: 'New songs added', showMoreLabel: true),
+                  const _HomeSectionHeader(
+                      title: 'New songs added', showMoreLabel: true),
                   _buildContentRow(),
                   const _HomeSectionHeader(title: 'Recently played'),
                   _buildMediumCards(),
@@ -43,9 +44,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  static void f() {
-
-  }
+  static void f() {}
 
   Widget _buildHeader(BuildContext context) {
     final theme = Theme.of(context);
@@ -62,7 +61,7 @@ class HomeScreen extends StatelessWidget {
           ),
           IconButton(
             onPressed: () => context.read<AuthCubit>().signOut(),
-            icon: const Icon(Icons.logout)
+            icon: const Icon(Icons.logout),
           )
         ],
       ),
@@ -70,62 +69,41 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildSmallCards(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877998049207660614/unknown.png',
-              title: "Indie",
-              onTap: f,
+    return BlocProvider<RecommendedPlaylistsCubit>(
+      create: (context) => RecommendedPlaylistsCubit(),
+      child: BlocBuilder<RecommendedPlaylistsCubit,
+          ApiCallState<List<PlaylistSimplified>>>(
+        builder: (context, state) => state.map(
+          loading: (_) => const SizedBox(),
+          error: (_) => const SizedBox(),
+          data: (playlists) => SizedBox(
+            child: GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: (3 / 1),
+              children: playlists.data
+                  .map(
+                    (e) => SmallContentCard(
+                      title: e.name,
+                      imageUrl: getValidUrl(e.iconURL),
+                      onTap: () => context.vRouter.to(
+                        Routes.playlist(e.id),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              physics: const NeverScrollableScrollPhysics(),
             ),
-            SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997420305350707/unknown.png',
-              title: 'Rock',
-              onTap: f,
-            ),
-          ],
+            height: (playlists.data.length / 2).round() * 62,
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997441234923571/unknown.png',
-              title: 'Club',
-              onTap: f,
-            ),
-            SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997488978665512/unknown.png',
-              title: 'Electro',
-              onTap: f,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997505969791006/unknown.png',
-              title: 'Relax',
-              onTap: f,
-            ),
-            SmallContentCard(
-              imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877997460193177620/unknown.png',
-              title: 'Work',
-              onTap: f,
-            ),
-          ],
-        ),
-      ],
+      ),
     );
   }
 
   Widget _buildContentRow() {
     return const ContentRow(
-      imageUrl: 'https://media.discordapp.net/attachments/763282727826227202/877648551121915984/unknown.png',
+      imageUrl:
+          'https://media.discordapp.net/attachments/763282727826227202/877648551121915984/unknown.png',
       title: 'We are who',
       subtitle: 'Olivia Whodrigo | ONLY WHO',
     );
@@ -147,17 +125,18 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: state.data.map((playlist) =>
-                MediumContentCard(
-                  cardSize: 142,
-                  imageUrl: playlist.iconURL,
-                  title: playlist.name,
-                  subtitle: playlist.author.userName,
-                  onTap: () => context.vRouter.to(Routes.playlist(playlist.id)),
-                )
-              ).toList(),
+              children: state.data
+                  .map((playlist) => MediumContentCard(
+                        cardSize: 142,
+                        imageUrl: playlist.iconURL,
+                        title: playlist.name,
+                        subtitle: playlist.author.userName,
+                        onTap: () =>
+                            context.vRouter.to(Routes.playlist(playlist.id)),
+                      ))
+                  .toList(),
             ),
-          )
+          ),
         ),
       ),
     );
@@ -186,11 +165,11 @@ class _HomeSectionHeader extends StatelessWidget {
             title,
             style: textTheme.subtitle1,
           ),
-          if(showMoreLabel)
+          if (showMoreLabel)
             Text(
               'See more',
               style: textTheme.subtitle2!.copyWith(
-                color: Perflow.primaryLightColor
+                color: Perflow.primaryLightColor,
               ),
             )
         ],
@@ -198,4 +177,3 @@ class _HomeSectionHeader extends StatelessWidget {
     );
   }
 }
-
