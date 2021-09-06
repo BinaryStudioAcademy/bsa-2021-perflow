@@ -129,6 +129,12 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       case 'Edit details':
         this.editPlaylist();
         break;
+      case 'Make Secret':
+        this.makeSecret();
+        break;
+      case 'Make Default':
+          this.makeDefault();
+          break;
       case 'Delete':
         this.deletePlaylist();
         break;
@@ -181,6 +187,34 @@ export class MainMenuComponent implements OnDestroy, OnInit {
           }
         });
     }
+  }
+
+  makeSecret() {
+    this._tempPlaylist.accessType = AccessType.secret;
+    this._playlistsService.changeAccessType(this._tempPlaylist)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          const playlistIndex = this.playlists.findIndex((pl) => pl.id === this._tempPlaylist?.id);
+          this.playlists[playlistIndex].accessType = data.accessType;
+          this.editedPlaylist = {} as PlaylistName;
+          this._tempPlaylist = {} as PlaylistName;
+        }
+      })
+  }
+
+  makeDefault() {
+    this._tempPlaylist.accessType = AccessType.default;
+    this._playlistsService.changeAccessType(this._tempPlaylist)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          const playlistIndex = this.playlists.findIndex((pl) => pl.id === this._tempPlaylist?.id);
+          this.playlists[playlistIndex].accessType = data.accessType;
+          this.editedPlaylist = {} as PlaylistName;
+          this._tempPlaylist = {} as PlaylistName;
+        }
+      })
   }
 
   editPlaylist() {
@@ -251,5 +285,9 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   isPlaylistCollaborativeSettings() {
     return this.collaborativePlaylists.find((p) => p.id === this._tempPlaylist.id) !== undefined;
+  }
+
+  isPlaylistSecret() {
+    return this._tempPlaylist.accessType === AccessType.secret;
   }
 }
