@@ -3,12 +3,14 @@ import 'package:perflow/cubits/common/api_call_state.dart';
 import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/cubits/common/api_call_cubit.dart';
 import 'package:perflow/models/songs/playlist_song.dart';
-import 'package:perflow/services/playback/playback_service.dart';
+import 'package:perflow/services/playback/playback_handler.dart';
+import 'package:perflow/services/playback/playback_queue.dart';
 import 'package:perflow/services/playlists/playlists_api.dart';
 
 class PlaylistSongsCubit extends ApiCallCubit<List<PlaylistSong>> {
   final _playlistsApi = getService<PlaylistsApi>();
-  final _playbackService = getService<PlaybackService>();
+  final _playbackQueue = getService<PlaybackQueue>();
+  final _playbackHandler = getService<PlaybackHandler>();
 
   PlaylistSongsCubit(int id) : super() {
     loadSongs(id);
@@ -37,7 +39,7 @@ class PlaylistSongsCubit extends ApiCallCubit<List<PlaylistSong>> {
       return;
     }
 
-    _playbackService.setSongById(currentState.data.first.id);
-    _playbackService.play();
+    await _playbackQueue.setSongs(currentState.data);
+    await _playbackHandler.play();
   }
 }

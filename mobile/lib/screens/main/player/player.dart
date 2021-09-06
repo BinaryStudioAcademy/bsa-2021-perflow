@@ -1,14 +1,12 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perflow/cubits/playback/playback_cubit.dart';
-import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/models/playback/playback_actions.dart';
 import 'package:perflow/models/playback/playback_duration.dart';
 import 'package:perflow/models/songs/song.dart';
 import 'package:perflow/routes.dart';
-import 'package:perflow/services/playback/playback_service.dart';
+import 'package:perflow/screens/main/player/player_functions_mixin.dart';
 import 'package:perflow/theme.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -168,7 +166,7 @@ class _PlayerProgressBar extends StatelessWidget {
   }
 }
 
-class _PlayerActions extends StatelessWidget {
+class _PlayerActions extends StatelessWidget with PlayerFunctionsMixin {
   final double size;
 
   const _PlayerActions({
@@ -196,16 +194,16 @@ class _PlayerActions extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: actions == null ? null : () {},
+                    onPressed: actions == null ? null : skipToPrevious,
                     icon: const Icon(Icons.skip_previous),
                     visualDensity: VisualDensity.compact,
                   ),
                   IconButton(
-                    onPressed: actions == null ? null : () => _setPlaying(!actions.playing),
+                    onPressed: actions == null ? null : () => setPlaying(!actions.playing),
                     icon: Icon(actions?.playing == true ? Icons.pause : Icons.play_arrow)
                   ),
                   IconButton(
-                    onPressed: actions == null ? null : () {},
+                    onPressed: actions == null ? null : skipToNext,
                     icon: const Icon(Icons.skip_next),
                     visualDensity: VisualDensity.compact,
                   )
@@ -216,15 +214,6 @@ class _PlayerActions extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _setPlaying(bool playing) {
-    if(playing) {
-      getService<PlaybackService>().play();
-    }
-    else {
-      getService<PlaybackService>().pause();
-    }
   }
 }
 

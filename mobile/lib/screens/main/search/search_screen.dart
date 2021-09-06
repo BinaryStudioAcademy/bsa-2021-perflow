@@ -40,13 +40,7 @@ class SearchScreen extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _topNavmenu(),
-                  ],
-                ),
-              ),
+              _topNavmenu(),
               Expanded(child: child)
             ],
           ),
@@ -70,6 +64,7 @@ class SearchScreen extends StatelessWidget {
 
   Widget _topNavmenu() {
     return Container(
+      color: Perflow.surfaceColor,
       child: BlocBuilder<SearchNavigationCubit, SearchNavigationState>(
         builder: (context, state) {
           return Row(
@@ -105,15 +100,7 @@ class SearchScreen extends StatelessWidget {
             ],
           );
         },
-      ),
-      decoration: const BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Color(0x3421292D),
-          spreadRadius: 7,
-          blurRadius: 5,
-          offset: Offset(0, 0), // changes position of shadow
-        ),
-      ], color: Perflow.surfaceColor),
+      )
     );
   }
 }
