@@ -1,4 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component, Input, OnDestroy, OnInit
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
@@ -28,7 +30,7 @@ export class ArtistListComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this._unsubscribe$.next();
     this._unsubscribe$.complete();
   }
@@ -47,7 +49,7 @@ export class ArtistListComponent implements OnInit, OnDestroy {
         (response) => {
           this.groups = response;
         }
-      )
+      );
   }
 
   deleteArtist(artist: ArtistReadDTO) {
