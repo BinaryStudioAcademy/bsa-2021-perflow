@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/content-sync",
-      "DownstreamScheme": "wss",
+      "DownstreamScheme": "ws",
       "DownstreamHostAndPorts": [
         {
           "Host": "perflow",
