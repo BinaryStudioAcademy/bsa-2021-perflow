@@ -87,12 +87,12 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   loadData() {
     const groupId = this._route.snapshot.params.id;
     this._groupService.checkGroupMember(groupId)
-    .pipe(takeUntil(this._unsubscribe$))
-    .subscribe(
-      (result) => {
-        this.isGroupMember = result.body!;
-      }
-    );
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (result) => {
+          this.isGroupMember = result.body!;
+        }
+      );
     this._groupService.getGroup(groupId)
       .subscribe(
         (result) => {
