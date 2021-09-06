@@ -15,6 +15,7 @@ using Perflow.Common.DTO.Search;
 using Perflow.Services.Interfaces;
 using Perflow.Common.Helpers;
 using System;
+using Perflow.Domain.Enums;
 
 namespace Perflow.Services.Implementations
 {
@@ -150,7 +151,7 @@ namespace Perflow.Services.Implementations
             int skip = (page - 1) * itemsOnPage;
 
             var playlists = await context.Playlists
-                .Where(playlist => playlist.Name.Contains(searchTerm.Trim()))
+                .Where(playlist => playlist.Name.Contains(searchTerm.Trim()) && playlist.Type == PlaylistType.Playlist)
                 .Include(playlist => playlist.Reactions)
                 .OrderByDescending(playlist => playlist.Reactions.GroupBy(r => r.UserId).Count())
                 .Skip(skip)

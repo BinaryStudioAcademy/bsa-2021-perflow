@@ -115,8 +115,9 @@ class __$PlaybackDurationCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PlaybackDuration implements _PlaybackDuration {
-  _$_PlaybackDuration({required this.max, required this.timeChanges});
+class _$_PlaybackDuration extends _PlaybackDuration {
+  _$_PlaybackDuration({required this.max, required this.timeChanges})
+      : super._();
 
   @override
   final Duration max;
@@ -151,10 +152,11 @@ class _$_PlaybackDuration implements _PlaybackDuration {
       __$PlaybackDurationCopyWithImpl<_PlaybackDuration>(this, _$identity);
 }
 
-abstract class _PlaybackDuration implements PlaybackDuration {
+abstract class _PlaybackDuration extends PlaybackDuration {
   factory _PlaybackDuration(
       {required Duration max,
       required BehaviorSubject<Duration> timeChanges}) = _$_PlaybackDuration;
+  _PlaybackDuration._() : super._();
 
   @override
   Duration get max => throw _privateConstructorUsedError;

@@ -28,16 +28,23 @@ namespace Perflow.Services.Implementations
         {
             var albums = await context.AlbumReactions
                 .Include(ar => ar.Album)
-                .ThenInclude(al => al.Author)
+                    .ThenInclude(al => al.Author)
+                .Include(ar => ar.Album)
+                    .ThenInclude(al => al.Group)
                 .Where(r => r.UserId == userId)
                 .Select(albumReaction => new AlbumForListDTO
                 {
                     Id = albumReaction.Album.Id,
                     Name = albumReaction.Album.Name,
-                    Author = new AlbumViewAuthorsDTO(
-                        albumReaction.Album.Author.Id,
-                        albumReaction.Album.Author.UserName,
-                        albumReaction.Album.Author.GroupId.HasValue ? false : true),
+                    Author = albumReaction.Album.Group == null ?
+                        new AlbumViewAuthorsDTO(
+                            albumReaction.Album.Author.Id,
+                            albumReaction.Album.Author.UserName,
+                            albumReaction.Album.Group == null) :
+                        new AlbumViewAuthorsDTO(
+                            albumReaction.Album.Group.Id,
+                            albumReaction.Album.Group.Name,
+                            albumReaction.Album.Group == null),
                     IconURL = _imageService.GetImageUrl(albumReaction.Album.IconURL),
                     ReleaseYear = albumReaction.Album.ReleaseYear
                 })

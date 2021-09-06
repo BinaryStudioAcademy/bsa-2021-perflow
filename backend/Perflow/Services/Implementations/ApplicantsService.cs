@@ -54,6 +54,7 @@ namespace Perflow.Services.Implementations
         {
             var application = await context.PerflowStudioApplicants
                 .Include(a => a.User)
+                .Include(a => a.Group)
                 .FirstOrDefaultAsync(a => a.UserId == status.Id && a.Status == ApplicationStatus.Pending);
 
             if (application == null)
@@ -64,7 +65,16 @@ namespace Perflow.Services.Implementations
             if (application.Status != ApplicationStatus.Rejected)
             {
                 application.User.Role = application.MemberType;
-                application.User.Group = await context.Groups.FirstOrDefaultAsync(g => g.Id == application.GroupId);
+
+                if (application.GroupId != null)
+                {
+                    var groupArtist = new GroupArtist
+                    {
+                        Artist = application.User,
+                        Group = application.Group
+                    };
+                    context.GroupArtist.Add(groupArtist);
+                }
             }
 
             context.Update(application);
@@ -81,16 +91,17 @@ namespace Perflow.Services.Implementations
             };
 
             await Notify(notification, application.User.Id);
-            await NotifyGroupMembers(application.User);
+            await NotifyGroupMembers(application.User, application.Group);
         }
 
-        private async Task NotifyGroupMembers(User user, bool isDeleted = false)
+        private async Task NotifyGroupMembers(User user, Group group, bool isDeleted = false)
         {
-            if (user.Group != null)
+            if (group != null)
             {
-                var participants = await context.Users
-                    .Where(u => u.Group.Id == user.GroupId)
-                    .Select(u => u.Id)
+                var participants = await context.GroupArtist
+                    .Where(g => g.GroupId == group.Id)
+                    .Include(g => g.Artist)
+                    .Select(g => g.Artist.Id)
                     .ToListAsync();
 
                 foreach (var userId in participants)
@@ -98,8 +109,8 @@ namespace Perflow.Services.Implementations
                     var notification = new NotificationWriteDTO
                     {
                         Title = isDeleted ? "Deleted group member" : "New group member",
-                        Description = isDeleted ? $"{user.UserName} left the {user.Group.Name}" 
-                            : $"{user.UserName} was added to {user.Group.Name}",
+                        Description = isDeleted ? $"{user.UserName} left the {group.Name}" 
+                            : $"{user.UserName} was added to {group.Name}",
                         Reference = user.Id,
                         Type = isDeleted ? NotificationType.UserNotification : NotificationType.GroupMembersNotification
                     };
@@ -113,7 +124,8 @@ namespace Perflow.Services.Implementations
         {
             var artists = await context.Users
                 .Where(user => user.UserName.Contains(term.Trim()))
-                .Include(user => user.Group)
+                .Include(user => user.Groups)
+                    .ThenInclude(gs => gs.Group)
                 .AsNoTracking()
                 .Select(user => new UserWithStatusDTO
                 {
@@ -121,8 +133,8 @@ namespace Perflow.Services.Implementations
                     UserName = user.UserName,
                     IconURL = _imageService.GetImageUrl(user.IconURL),
                     Role = user.Role,
-                    GroupId = user.Group.Id,
-                    Group = user.Group.Name
+                    GroupId = user.Groups.FirstOrDefault().Group.Id,
+                    Group = user.Groups.FirstOrDefault().Group.Name
                 })
                 .ToListAsync();
 
@@ -132,20 +144,27 @@ namespace Perflow.Services.Implementations
         public async Task EditUserRoleAsync(EditUserRoleDTO userRole)
         {
             var user = await context.Users
-                .Include(u => u.Group)
                 .FirstOrDefaultAsync(a => a.Id == userRole.Id);
+
+            var groups = await context.GroupArtist
+                .Include(ga => ga.Group)
+                .Where(ga => ga.ArtistId == userRole.Id)
+                .ToListAsync();
 
             if (user == null)
                 throw new NotFoundExcepion("There is no such a user");
             
             user.Role = userRole.Role;
 
-            if (user.Role != UserRole.Artist && user.Group != null)
+            if (user.Role != UserRole.Artist && groups != null)
             {
-                await NotifyGroupMembers(user, isDeleted: true);
-                user.Group = null;
+                foreach (var group in groups.Select(g => g.Group))
+                {
+                    await NotifyGroupMembers(user, group, isDeleted: true);
+                }
             }
-                
+
+            context.RemoveRange(groups);
             context.Update(user);
 
             await context.SaveChangesAsync();
