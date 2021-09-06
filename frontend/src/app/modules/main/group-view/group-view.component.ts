@@ -186,11 +186,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     }
   };
 
-  redirectTo(){
-    console.log("TST");
-    this._router.navigateByUrl(`/perflowstudio/groups/${this.groupId}`);
-  }
-
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
     this.isSuccess = true;
