@@ -27,30 +27,14 @@
 
         <!-- Name -->
         <div class="ui field name">
-          <input type="text" maxlength="50" placeholder="Album title" [(ngModel)]="editedGroup.name" 
-            required #name="ngModel" pattern="[^<>^@]*" name="name">
-          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="ui error message" autocomplete="off">
-            <div *ngIf="name.errors?.required">
-              Name is required!
-            </div>
-            <div *ngIf="name.errors?.pattern">
-              Symbols '< > ^ @' are prohibited
-            </div>
-          </div>       
+          <input type="text" maxlength="50" placeholder="Album title" value="{{ editedGroup.name }}" 
+           required pattern="[^<>^@]*" [(ngModel)]="this.name" name="name">    
         </div>
 
         <!-- Description -->
         <div class="ui field description">
-          <textarea form="formEdit" placeholder="Group description" maxlength="200"
-            [(ngModel)]="editedGroup.description" #description="ngModel" name="description" pattern="[^<>^@]*"></textarea>
-          <div *ngIf="description.invalid && (description.dirty || description.touched)" class="ui error message">
-            <div *ngIf="description.errors?.maxLength">
-              Description should be less than 200 characters.
-            </div>
-            <div *ngIf="description.errors?.pattern">
-              Symbols '< > ^ @' are prohibited
-            </div>
-          </div>
+          <textarea form="formEdit" placeholder="Group description" value="{{ editedGroup.description }}" maxlength="200"
+            name="description" [(ngModel)]="this.description" pattern="[^<>^@]*"></textarea>
         </div>
       
         <!-- Buttons -->

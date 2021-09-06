@@ -21,7 +21,7 @@
                       <div class="ui floating dropdown icon" appSmDropdown>
                           <i class="ellipsis vertical icon icons"></i>
                           <div class="right menu">
-                              <div class="item first" *ngIf="isGroupMember" (click)="startEditMode()">
+                              <div class="item first" (click)="startEditMode()" *ngIf="isGroupMember" >
                                   <i class="edit outline icon"></i>Edit group
                               </div>
                               <div class="item" [ngClass]="{first:!isGroupMember}">
@@ -46,7 +46,7 @@
       </div>
   </div>
 
-  <app-songs-list [songs]="topSongs"></app-songs-list>
+  <app-songs-list *ngIf="topSongs.length > 0" [songs]="topSongs"></app-songs-list>
   <div class="groupAlbums" *ngIf="groupAlbums.length > 0">
       <div class="header">
           Albums

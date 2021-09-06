@@ -17,6 +17,8 @@ export class EditGroupModalComponent implements OnInit {
   userId: number;
   userName: string;
   tempIconURL: string;
+  description: string;
+  name: string;
 
   @Input() editedGroup: GroupEdit = { } as GroupEdit;
 
@@ -35,11 +37,14 @@ export class EditGroupModalComponent implements OnInit {
 
   ngOnInit() {
     this.tempIconURL = this.editedGroup.iconURL;
+    this.description = this.editedGroup.description;
+    this.name = this.editedGroup.name;
   }
 
   public onSubmit() {
     this.editedGroup.iconURL = this.tempIconURL;
-    this.editedGroup.icon = this.file;
+    this.editedGroup.description = this.description;
+    this.editedGroup.name = this.name;
 
     this.editGroup.emit(this.editedGroup);
   }

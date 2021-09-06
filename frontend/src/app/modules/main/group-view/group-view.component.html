@@ -21,10 +21,7 @@
                         <div class="ui floating dropdown icon" appSmDropdown>
                             <i class="ellipsis vertical icon icons"></i>
                             <div class="right menu">
-                                <!-- <div class="item first" *ngIf="isGroupMember">
-                                    <i class="edit outline icon"></i>Edit group
-                                </div> -->
-                                <div class="item" [ngClass]="{first:!isGroupMember}">
+                                <div class="item first">
                                     <i class="bell icon"></i>Subscribe
                                 </div>
                                 <div class="item last share">
@@ -46,16 +43,11 @@
         </div>
     </div>
 
-    <app-songs-list [songs]="topSongs"></app-songs-list>
+    <app-songs-list *ngIf="topSongs.length > 0" [songs]="topSongs"></app-songs-list>
     <div class="groupAlbums" *ngIf="groupAlbums.length > 0">
         <div class="header">
             Albums
         </div>
-        <!-- <button *ngIf="isGroupMember" 
-            class="btn-full button-create-album" 
-            routerLink="/perflowstudio/albums/createAsGroup/{{group.id}}">
-            Create Album
-        </button> -->
         <div class="items">
             <div #albums name="albums" class="cards">
                 <app-album-card class="card" *ngFor="let album of groupAlbums" [album]="album" [isLiked]=false>
@@ -84,12 +76,6 @@
             </div>
         </div>
     </div>
-    <!-- <app-edit-group-modal
-        [editedGroup]="group"
-        *ngIf="isModalShown" 
-        (editGroup)="onSubmitModal($event)" 
-        (isClosed)="closeModal()">
-    </app-edit-group-modal> -->
     <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
         <div class="header">
             Link copied to clipboard!

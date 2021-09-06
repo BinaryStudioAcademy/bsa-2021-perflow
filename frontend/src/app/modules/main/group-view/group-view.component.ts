@@ -2,10 +2,10 @@ import { PlatformLocation } from '@angular/common';
 import {
   Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import { Subject, timer } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
@@ -56,7 +56,8 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     private _reactionService: ReactionService,
     private _authService: AuthService,
     private _albumsService: AlbumService,
-    private _activateRoute: ActivatedRoute
+    private _activateRoute: ActivatedRoute,
+    private _router: Router
   ) {
     this.getUserId();
   }
@@ -85,13 +86,13 @@ export class GroupViewComponent implements OnInit, OnDestroy {
 
   loadData() {
     const groupId = this._route.snapshot.params.id;
-    // this._groupService.checkGroupMember(groupId)
-    //   .pipe(takeUntil(this._unsubscribe$))
-    //   .subscribe(
-    //     (result) => {
-    //       this.isGroupMember = result.body!;
-    //     }
-    //   );
+    this._groupService.checkGroupMember(groupId)
+    .pipe(takeUntil(this._unsubscribe$))
+    .subscribe(
+      (result) => {
+        this.isGroupMember = result.body!;
+      }
+    );
     this._groupService.getGroup(groupId)
       .subscribe(
         (result) => {
@@ -128,22 +129,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
           this.groupAlbums = result;
         }
       );
-    // if (!this.isGroupMember) {
-    //   this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
-    //     .subscribe(
-    //       (result) => {
-    //         this.groupAlbums = result;
-    //       }
-    //     );
-    // }
-    // else {
-    //   this._albumsService.getAlbumsByGroupUnpublished(this.group.id)
-    //     .subscribe(
-    //       (result) => {
-    //         this.groupAlbums = result.body!;
-    //       }
-    //     );
-    // }
   }
 
   likeGroup() {
@@ -201,34 +186,10 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     }
   };
 
-  // onSubmitModal = (data: GroupEdit) => {
-  //   this.isModalShown = !this.isModalShown;
-  //   this.editGroup(data);
-  // };
-
-  // editGroup = (group: GroupEdit) => {
-  //   this.editedGroup = {
-  //     ...group,
-  //     name: group.name.trim() === '' ? 'Group name' : group.name
-  //   };
-
-  //   this._groupService.editGroup(this.editedGroup)
-  //     .pipe(takeUntil(this._unsubscribe$))
-  //     .subscribe({
-  //       next: (data) => {
-  //         this._groupService.getGroup(data.id)
-  //           .subscribe({
-  //             next: (result) => {
-  //               this.group = result;
-  //             }
-  //           });
-  //       }
-  //     });
-  // };
-
-  // closeModal() {
-  //   this.isModalShown = !this.isModalShown;
-  // }
+  redirectTo(){
+    console.log("TST");
+    this._router.navigateByUrl(`/perflowstudio/groups/${this.groupId}`);
+  }
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
