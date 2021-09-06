@@ -78,6 +78,6 @@ export class PlaylistsService {
   }
 
   changeAccessType(playlist: PlaylistName) {
-    return this._httpService.putRequest<PlaylistName>(`${this._endpoint}/changeAccessType/`, playlist)
+    return this._httpService.putRequest<PlaylistName>(`${this._endpoint}/changeAccessType/`, playlist);
   }
 }

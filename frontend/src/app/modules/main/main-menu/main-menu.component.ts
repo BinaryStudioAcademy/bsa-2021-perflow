@@ -133,8 +133,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         this.makeSecret();
         break;
       case 'Make Default':
-          this.makeDefault();
-          break;
+        this.makeDefault();
+        break;
       case 'Delete':
         this.deletePlaylist();
         break;
@@ -200,7 +200,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
           this.editedPlaylist = {} as PlaylistName;
           this._tempPlaylist = {} as PlaylistName;
         }
-      })
+      });
   }
 
   makeDefault() {
@@ -214,7 +214,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
           this.editedPlaylist = {} as PlaylistName;
           this._tempPlaylist = {} as PlaylistName;
         }
-      })
+      });
   }
 
   editPlaylist() {
