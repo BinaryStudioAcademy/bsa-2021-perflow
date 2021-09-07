@@ -41,7 +41,7 @@ class Perflow {
     border: const OutlineInputBorder(),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
-      borderSide: const BorderSide(style: BorderStyle.none)
+      borderSide: const BorderSide(color: textDarkColor, width: 2),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
@@ -77,11 +77,9 @@ class Perflow {
     primaryColor: primaryColor,
     accentColor: primaryLightColor,
     errorColor: errorColor,
-
     backgroundColor: backgroundColor,
     canvasColor: backgroundColor,
     cardColor: surfaceColor,
-
     primarySwatch: createMaterialColor(primaryLightColor),
   );
 

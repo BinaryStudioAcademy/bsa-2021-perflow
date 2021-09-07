@@ -5,7 +5,6 @@ import 'package:perflow/cubits/artists/liked_artists_cubit.dart';
 import 'package:perflow/cubits/library_navigation/library_navigation_cubit.dart';
 import 'package:perflow/cubits/playlists/liked_playlists_cubit.dart';
 import 'package:perflow/cubits/playlists/users_playlists_cubit.dart';
-import 'package:perflow/cubits/songs/liked_songs_cubit.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/theme.dart';
 import 'package:vrouter/vrouter.dart';
@@ -30,9 +29,6 @@ class LibraryScreen extends StatelessWidget {
         ),
         BlocProvider<LikedArtistsCubit>(
           create: (context) => LikedArtistsCubit(),
-        ),
-        BlocProvider<LikedSongsCubit>(
-          create: (context) => LikedSongsCubit(),
         ),
       ],
       child: Scaffold(
