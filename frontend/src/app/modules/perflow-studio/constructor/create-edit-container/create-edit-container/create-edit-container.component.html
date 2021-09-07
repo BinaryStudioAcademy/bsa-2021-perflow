@@ -80,13 +80,7 @@
               [albumSection]="section.position"
               (deleteFromSection)="onDeleteFromSectionClick($event)">
             </app-album-card>
-            <app-artist-card *ngIf="entity.entityType === 2"
-              [artist]="entity.entity"
-              [isDeletable]="true"
-              [artistSection]="section.position"
-              (deleteFromSection)="onDeleteFromSectionClick($event)">
-            </app-artist-card>
-            <app-artist-card *ngIf="entity.entityType === 3"
+            <app-artist-card *ngIf="entity.entityType === 2 || entity.entityType === 3"
               [artist]="entity.entity"
               [isDeletable]="true"
               [artistSection]="section.position"
