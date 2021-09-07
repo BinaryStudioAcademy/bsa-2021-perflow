@@ -81,13 +81,13 @@ namespace Perflow.Services.Implementations
             return result;
         }
 
-        public async Task<PageContainerDTO> GetPublishedContainer()
+        public async Task<PageContainerDTO> GetPublishedContainer(int userId)
         {
-            var result = await GetContainer(findPublished: true);
+            var result = await GetContainer(userId, findPublished: true);
             return result;
         }
 
-        public async Task<PageContainerDTO> GetContainer(int containerId = 0, bool findPublished = false)
+        public async Task<PageContainerDTO> GetContainer(int userId, int containerId = 0, bool findPublished = false)
         {
             var result = await _context.PageContainers
                                                 .Include(pc => pc.PageSections)
@@ -114,13 +114,15 @@ namespace Perflow.Services.Implementations
                                                             Entity = pse.EntityType == Domain.Enums.EntityType.Album ? _context.Albums
                                                                                                                             .Include(a => a.Author)
                                                                                                                             .Include(a => a.Group)
+                                                                                                                            .Include(a => a.Reactions)
                                                                                                                             .Select(a => new AlbumShortDTO
                                                                                                                             {
                                                                                                                                 Id = a.Id,
                                                                                                                                 Name = a.Name,
                                                                                                                                 AuthorName = a.AuthorType == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
                                                                                                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
-                                                                                                                                ReleaseYear = a.ReleaseYear
+                                                                                                                                ReleaseYear = a.ReleaseYear,
+                                                                                                                                IsLiked = a.Reactions.Any(r => r.UserId == userId)
                                                                                                                             })
                                                                                                                             .FirstOrDefault(a => a.Id == pse.ReferenceId)
                                                                     : pse.EntityType == Domain.Enums.EntityType.Artist ? _context.Users

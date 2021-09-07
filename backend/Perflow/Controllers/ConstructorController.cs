@@ -5,6 +5,7 @@ using Perflow.Common.DTO.Constructor;
 using Perflow.Domain;
 using Perflow.Services.Implementations;
 using Shared.Auth.Constants;
+using Shared.Auth.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Perflow.Controllers
         [HttpGet("published")]
         public async Task<ActionResult<PageContainerDTO>> GetPublishedContainer()
         {
-            var result = await _constructorService.GetPublishedContainer();
+            var result = await _constructorService.GetPublishedContainer(User.GetId());
             return Ok(result);
         }
 
@@ -45,7 +46,7 @@ namespace Perflow.Controllers
         [Authorize(Policy = Policies.IsModerator)]
         public async Task<ActionResult<PageContainerDTO>> GetContainer(int id)
         {
-            var result = await _constructorService.GetContainer(containerId: id);
+            var result = await _constructorService.GetContainer(User.GetId(), containerId: id);
             return Ok(result);
         }
 

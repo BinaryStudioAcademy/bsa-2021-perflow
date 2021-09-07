@@ -7,5 +7,6 @@
         public int? ReleaseYear { get; set; }
         public string IconURL { get; set; }
         public string AuthorName { get; set; }
+        public bool IsLiked { get; set; }
     }
 }
