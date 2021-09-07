@@ -40,5 +40,13 @@
         [playlists]="foundData.playlists" 
         *ngIf="foundData.playlists?.length && !isAccordion">
     </app-search-playlists-result>
+    <app-search-groups-result 
+        (addDeleteFromSection)="addDeleteFromSectionEvent($event)"   
+        [isCheckBox]="true" 
+        [currentGroups]="currentGroups"
+        [term]="searchValue" 
+        [groups]="foundData.groups" 
+        *ngIf="foundData.groups?.length && !isAccordion">
+    </app-search-groups-result>
   </div>
 </div>

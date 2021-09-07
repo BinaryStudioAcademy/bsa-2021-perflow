@@ -14,6 +14,7 @@ import { Subject, timer } from 'rxjs';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -51,7 +52,8 @@ export class ViewPlaylistComponent implements OnInit {
     private _location: PlatformLocation,
     private _playlistService: PlaylistsService,
     private _playlistEditorsService: PlaylistEditorsService,
-    private _sharePlayService: SharePlayService
+    private _sharePlayService: SharePlayService,
+    private _snackBarService: SnackbarService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -215,6 +217,9 @@ export class ViewPlaylistComponent implements OnInit {
         next: () => {
           this.isGroupNotified = true;
           this.connectToSharePlay(pl.id);
+        },
+        error: () => {
+          this._snackBarService.show({ message: 'Connection is closed! Try reload the page' });
         }
       });
   }
@@ -233,18 +238,16 @@ export class ViewPlaylistComponent implements OnInit {
     this._sharePlayService.connectToSharePlay(playlistId)
       .then(() => {
         this.isConnected = true;
+      })
+      .then(() => {
+        if (!this.songs.length) {
+          return;
+        }
+
+        this._queueService.clearQueue();
+        this._queueService.addSongsToQueue(this.songs);
+        this._queueService.initSong(this.songs[0], false);
       });
-
-    if (!this.songs.length) {
-      return;
-    }
-
-    this._queueService.addSongsToQueue(this.songs);
-
-    if (!QueueService.isInitialized) {
-      const [first] = this.songs;
-      this._queueService.initSong(first);
-    }
   }
 
   disconnectSharePlay(playlistId: number) {

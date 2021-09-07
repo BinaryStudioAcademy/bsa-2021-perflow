@@ -50,10 +50,10 @@
     <div class="items-scroll-box calmRhythms" *ngIf="showNewReleases">
       <div class="header">New releases</div>
       <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollLeft('album')">
+        <div class="ui icon button scroll-button" (click)="scrollLeft('new-releases')">
           <i class="large inverted angle left icon"></i>
         </div>
-        <div id="album" class="items" appHideScrollButtons>
+        <div id="new-releases" class="items" appHideScrollButtons>
           <app-new-release-card
             *ngFor="let album of newReleases"
             [id]="album.id"
@@ -63,7 +63,7 @@
           >
           </app-new-release-card>
         </div>
-        <div class="ui icon button scroll-button" (click)="scrollRight('album')">
+        <div class="ui icon button scroll-button" (click)="scrollRight('new-releases')">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>
@@ -72,7 +72,7 @@
     <div class="items-scroll-box" *ngFor="let section of data.pageSections?.slice(1)">
       <div class="header">{{section.name}}</div>
       <div class="list-of-items">
-        <div class="ui icon button scroll-button" (click)="scrollLeft('section-{{section.position}}')">
+        <div class="ui icon button scroll-button" (click)="scrollLeft('section-' + section.position)">
           <i class="large inverted angle left icon"></i>
         </div>
         <div id="section-{{section.position}}" class="items" appHideScrollButtons>
@@ -80,7 +80,7 @@
             <app-album-card *ngIf="entity.entityType === 0" 
               [album]="entity.entity">
             </app-album-card>
-            <app-artist-card *ngIf="entity.entityType === 2"
+            <app-artist-card *ngIf="entity.entityType === 2 || entity.entityType === 3"
               [artist]="entity.entity">
             </app-artist-card>
             <app-playlist-card *ngIf="entity.entityType === 1"
@@ -88,7 +88,7 @@
             </app-playlist-card>
           </span>
         </div>
-        <div class="ui icon button scroll-button" (click)="scrollRight('playlist')">
+        <div class="ui icon button scroll-button" (click)="scrollRight('section-' + section.position)">
           <i class="large inverted angle right icon"></i>
         </div>
       </div>

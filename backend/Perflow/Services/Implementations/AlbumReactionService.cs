@@ -31,7 +31,7 @@ namespace Perflow.Services.Implementations
                     .ThenInclude(al => al.Author)
                 .Include(ar => ar.Album)
                     .ThenInclude(al => al.Group)
-                .Where(r => r.UserId == userId)
+                .Where(r => r.UserId == userId && r.Album.IsPublished)
                 .Select(albumReaction => new AlbumForListDTO
                 {
                     Id = albumReaction.Album.Id,
@@ -58,7 +58,7 @@ namespace Perflow.Services.Implementations
             var likedPlaylists = await context.Albums
                 .Include(album => album.Reactions
                     .Where(r => r.UserId == userId))
-                .Where(album => album.Reactions.Any())
+                .Where(album => album.Reactions.Any() && album.IsPublished)
                 .Select(a => new AlbumLikedDTO
                 {
                     Id = a.Id,

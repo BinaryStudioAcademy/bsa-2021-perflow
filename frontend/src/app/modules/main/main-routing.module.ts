@@ -23,6 +23,7 @@ import { GroupViewComponent } from './group-view/group-view.component';
 import {
   CreateEditPlaylistComponent
 } from '../shared/create-edit-playlist/create-edit-playlist/create-edit-playlist.component';
+import { AllGroupsComponent } from './search/components/all-groups/all-groups/all-groups.component';
 
 const routes: Routes = [{
   path: '',
@@ -37,6 +38,7 @@ const routes: Routes = [{
     { path: 'search/:term/artists', component: AllArtistsComponent },
     { path: 'search/:term/albums', component: AllAlbumsComponent },
     { path: 'search/:term/playlists', component: AllPlaylistsComponent },
+    { path: 'search/:term/groups', component: AllGroupsComponent },
     { path: 'search/:term', component: SearchComponent },
     {
       path: 'profile',

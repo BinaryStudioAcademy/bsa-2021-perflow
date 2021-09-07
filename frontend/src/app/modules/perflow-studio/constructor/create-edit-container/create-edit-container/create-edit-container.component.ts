@@ -120,6 +120,9 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
       else if (this.instanceOfArtist(newEntity)) {
         newEntityType = EntityType.artist;
       }
+      else if (this.instanceOfGroup(newEntity)) {
+        newEntityType = EntityType.group;
+      }
       else {
         newEntityType = EntityType.playlist;
       }
@@ -258,5 +261,7 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
   /* eslint-enable no-param-reassign */
   instanceOfAlbum = (data: any): data is AlbumForReadDTO => 'releaseYear' in data;
 
-  instanceOfArtist = (data: any): data is ArtistReadDTO => 'userName' in data;
+  instanceOfArtist = (data: any): data is ArtistReadDTO => 'isArtist' in data && data.isArtist;
+
+  instanceOfGroup = (data: any): data is ArtistReadDTO => 'isArtist' in data && !data.isArtist;
 }

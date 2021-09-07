@@ -12,7 +12,7 @@
             <div class="scrolling menu left" *ngIf="notifications.length > 0">
                 <div class="item notification" *ngFor="let n of notifications">
                     <div class="close">
-                        <i class="close icon" (click)="deleteNotification(n.id)" appClickStopPropagation></i>
+                        <i class="close icon" (click)="deleteNotification(n)" appClickStopPropagation></i>
                     </div>
                     <div class="ui empty circular label" [ngClass]="n.isRead ? 'is-read' : 'is-not-read'"
                         [title]="n.isRead ? 'Mark as unread' : 'Mark as read'" (click)="changeState(n, !n.isRead)"

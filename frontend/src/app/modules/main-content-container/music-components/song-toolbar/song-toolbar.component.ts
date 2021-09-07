@@ -63,7 +63,6 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   private readonly _recordingFrequency = 30; // How often sync occurs
   private _previousTime: number = 0;
   private _startTime: number | undefined;
-  private _isJustLoaded: boolean = true;
 
   constructor(
     authService: AuthService,
@@ -117,8 +116,13 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     this.audio = document.querySelector('audio');
     this.audio!.crossOrigin = 'anonymous';
 
-    this._syncService.syncData$.subscribe(this._updateSongFromSync);
-    this._sharePlayService.syncData$.subscribe(this._sharePlaySync);
+    this._syncService.syncData$
+      .pipe(take(1))
+      .subscribe(this._updateSongFromSync);
+
+    this._sharePlayService.syncData$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(this._sharePlaySync);
 
     this.initAudioContext();
   }
@@ -134,7 +138,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   updateSong = (songInfo: SongInfo) => {
     this.songForPlay = songInfo;
     this.resetPlaying();
-    this.audio!.load();
+    this.audio?.load();
     this.show = true;
     this.audio!.loop = this.isRepeating;
     this.setLike();
@@ -146,19 +150,22 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   };
 
   private _updateSongFromSync = (syncData: ContentSyncRead | undefined | null) => {
-    if (!syncData && this._isJustLoaded) {
-      return;
+    if (syncData) {
+      this._songsService.getSongById(syncData.songId)
+        .pipe(take(1))
+        .subscribe({
+          next: (song) => {
+            this._queueService.clearQueue();
+            this._queueService.addSongToQueue(song);
+            this._queueService.initSong(song, false);
+            this._startTime = syncData.time;
+          }
+        });
     }
-    const songInfo = { id: syncData?.songId } as Song;
-
-    this._queueService.clearQueue();
-    this._queueService.initSong(songInfo, false);
-    this._startTime = syncData?.time;
-    this._isJustLoaded = false;
   };
 
   private _sharePlaySync = (syncData: SharePlayData | undefined | null) => {
-    if (!syncData && !this._isJustLoaded) {
+    if (!syncData) {
       return;
     }
 
