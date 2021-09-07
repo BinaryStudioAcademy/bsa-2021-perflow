@@ -68,4 +68,8 @@ export class AlbumService {
   public getFiveNewestAlbums() {
     return this._httpService.getRequest<NewestFiveAlbum[]>(`${this.routePrefix}/newestFive`);
   }
+
+  public getAlbumsByGroupUnpublished(id: number) {
+    return this._httpService.getFullRequest<AlbumForReadDTO[]>(`${this.routePrefix}/byGroup/unpublished/${id}`);
+  }
 }

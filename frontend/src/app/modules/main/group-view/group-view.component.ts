@@ -1,13 +1,15 @@
 import { PlatformLocation } from '@angular/common';
 import {
-  Component, ElementRef, OnInit, ViewChild
+  Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
-import { timer } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subject, timer } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
+import { GroupEdit } from 'src/app/models/group/group-edit';
 import { GroupFull } from 'src/app/models/group/groupFull';
 import { Song } from 'src/app/models/song/song';
 import { AlbumService } from 'src/app/services/album.service';
@@ -22,17 +24,23 @@ import { SongsService } from 'src/app/services/songs/songs.service';
   templateUrl: './group-view.component.html',
   styleUrls: ['./group-view.component.sass']
 })
-export class GroupViewComponent implements OnInit {
+export class GroupViewComponent implements OnInit, OnDestroy {
   private readonly _scrollingSize: number = 240;
   private _userId: number;
+  private _unsubscribe$ = new Subject<void>();
 
   @ViewChild('albums') albumsElement: ElementRef;
   @ViewChild('playlists') playlistsElement: ElementRef;
 
   group: GroupFull = {} as GroupFull;
+  editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
   isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
+  isGroupMember: boolean;
+  isModalShown: boolean;
+  newAlbum: AlbumEdit = {} as AlbumEdit;
+  groupId: number;
 
   constructor(
     private _route: ActivatedRoute,
@@ -43,13 +51,23 @@ export class GroupViewComponent implements OnInit {
     private _location: PlatformLocation,
     private _reactionService: ReactionService,
     private _authService: AuthService,
-    private _albumsService: AlbumService
+    private _albumsService: AlbumService,
+    private _activateRoute: ActivatedRoute,
+    private _router: Router
   ) {
     this.getUserId();
   }
 
+  ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
+  }
+
   ngOnInit() {
-    this.loadData();
+    this._activateRoute.params.subscribe((params: Params) => {
+      this.groupId = params.id;
+      this.loadData();
+    });
   }
 
   getUserId() {
@@ -64,7 +82,13 @@ export class GroupViewComponent implements OnInit {
 
   loadData() {
     const groupId = this._route.snapshot.params.id;
-
+    this._groupService.checkGroupMember(groupId)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (result) => {
+          this.isGroupMember = result.body!;
+        }
+      );
     this._groupService.getGroup(groupId)
       .subscribe(
         (result) => {

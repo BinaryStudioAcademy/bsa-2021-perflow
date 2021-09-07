@@ -11,8 +11,10 @@ import 'package:perflow/widgets/common/content_row.dart';
 
 class SongRow extends StatelessWidget {
   final Song song;
+  final bool isLikeAvailable;
 
-  const SongRow({required this.song, Key? key}) : super(key: key);
+  const SongRow({required this.song, this.isLikeAvailable = true, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class SongRow extends StatelessWidget {
         style: textTheme.caption,
       ),
       contentType: RowType.album,
-      isLikeAvailable: true,
+      isLikeAvailable: isLikeAvailable,
       isLiked: state.maybeMap(
         liked: (_) => true,
         unliked: (_) => false,

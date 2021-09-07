@@ -16,6 +16,10 @@ namespace Perflow.Common.MappingProfiles
 
             CreateMap<Group, GroupForPlaylistDTO>();
 
+            CreateMap<Group, GroupEditDTO>().ReverseMap();
+
+            CreateMap<Group, GroupFullDTO>().ReverseMap();
+
             CreateMap<Group, GroupLikedDTO>();
 
             CreateMap<Group, GroupNameDTO>();
@@ -27,12 +31,18 @@ namespace Perflow.Common.MappingProfiles
                 .ForMember(p => p.UserName, opt => opt.MapFrom(c => c.Group.Name))
                 .ForMember(p => p.IconURL, opt => opt.MapFrom(c => c.Group.IconURL));
 
+
             CreateMap<GroupWithIcon, ArtistReadDTO>()
                 .BeforeMap((s, d) => d.IsArtist = false)
                 .ForMember(p => p.Id, opt => opt.MapFrom(c => c.Group.Id))
                 .ForMember(p => p.UserName, opt => opt.MapFrom(c => c.Group.Name))
                 .ForMember(p => p.IconURL, opt => opt.MapFrom(c => c.Group.IconURL));
 
+            CreateMap<GroupWithIcon, GroupFullDTO>()
+                .ForMember(p => p.Id, opt => opt.MapFrom(c => c.Group.Id))
+                .ForMember(p => p.Name, opt => opt.MapFrom(c => c.Group.Name))
+                .ForMember(p => p.IconURL, opt => opt.MapFrom(c => c.Group.IconURL))
+                .ForMember(p => p.Description, opt => opt.MapFrom(c => c.Group.Description));
         }
     }
 }

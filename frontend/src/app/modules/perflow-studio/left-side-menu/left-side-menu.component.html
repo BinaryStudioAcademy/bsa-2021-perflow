@@ -37,6 +37,20 @@
     </div>
   </div>
   <div class="ui divider"></div>
+  <div class="artist-groups" *ngIf="userRole === userRoles.artist">
+    <div class="section">
+      <span class="title" *ngIf="artistGroups.length > 0">
+        <h6>Your groups</h6>
+      </span>
+      <ul>
+        <li *ngFor="let group of artistGroups" class="clickable" [routerLink]="['/perflowstudio/groups/view-group', group.id]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+          <span class="show-name">
+            {{ group.name }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <div class="router-container">
