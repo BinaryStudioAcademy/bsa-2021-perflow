@@ -39,7 +39,7 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Search/albums",
+      "DownstreamPathTemplate": "/api/Search/albums/{onlyPublished}",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
@@ -48,7 +48,7 @@
         }
 
       ],
-      "UpstreamPathTemplate": "/api/Search/albums",
+      "UpstreamPathTemplate": "/api/Search/albums/{onlyPublished}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {

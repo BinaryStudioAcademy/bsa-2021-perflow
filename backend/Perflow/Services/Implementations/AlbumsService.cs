@@ -154,6 +154,24 @@ namespace Perflow.Services.Implementations
             return albums;
         }
 
+        public async Task<IEnumerable<AlbumShortDTO>> GetAlbumsByArtistUnpublished(int groupId)
+        {
+            var albums = await context.Albums
+                                        .Where(a => a.GroupId == groupId)
+                                        .Include(a => a.Group)
+                                        .Select(a => new AlbumShortDTO
+                                        {
+                                            Id = a.Id,
+                                            Name = a.Name,
+                                            AuthorName = a.Group.Name,
+                                            IconURL = _imageService.GetImageUrl(a.IconURL),
+                                            ReleaseYear = a.ReleaseYear
+                                        })
+                                        .ToListAsync();
+
+            return albums;
+        }
+
         public async Task<ICollection<AlbumForListDTO>> GetAlbumShortInfosByArtist(int artistId)
         {
             var albums = await context.Albums

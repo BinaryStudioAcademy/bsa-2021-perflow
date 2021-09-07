@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Shared.Auth.Constants;
 using Shared.Auth.Extensions;
+using System.Collections.Generic;
 
 namespace Perflow.Controllers
 {
@@ -32,10 +33,22 @@ namespace Perflow.Controllers
             return Ok(await _groupService.GetGroupAsync(id, User.GetId()));
         }
 
+        [HttpGet("isMember/{id}")]
+        public async Task<ActionResult<bool>> CheckGroupMemberAsync(int id)
+        {
+            return Ok(await _groupService.CheckGroupMemberAsync(id, User.GetId()));
+        }
+
         [HttpPost]
         public async Task<ActionResult<GroupShortDTO>> CreateGroupAsync([FromForm] GroupWriteDTO group)
         {
             return Ok(await _groupService.CreateGroupAsync(group));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<GroupFullDTO>> UpdateGroupAsync([FromForm] GroupEditDTO groupEditDTO)
+        {
+            return Ok(await _groupService.EditGroupAsync(groupEditDTO));
         }
     }
 }

@@ -65,6 +65,20 @@
       ]
     },
     {
+      "DownstreamPathTemplate": "/api/Albums/byGroup/unpublished/{groupId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Albums/byGroup/unpublished/{groupId}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Albums/publicStatus",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [

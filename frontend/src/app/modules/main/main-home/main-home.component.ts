@@ -34,7 +34,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   private _newestAlbums = new Array<NewestFiveAlbum>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
 
   private readonly _animationDuration: number = 800;
-  private readonly _scrollingSize: number = 1530;
+  private readonly _scrollingSize: number = 1000;
 
   public data: ContainerFull = {} as ContainerFull;
   public accordionSection: PageSectionFull = {} as PageSectionFull;

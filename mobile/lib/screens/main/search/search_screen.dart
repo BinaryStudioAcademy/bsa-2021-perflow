@@ -33,6 +33,7 @@ class SearchScreen extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: searchBar(context),
           backgroundColor: Perflow.surfaceColor,
@@ -56,15 +57,19 @@ class SearchScreen extends StatelessWidget {
   }
 
   Widget searchBar(BuildContext context) {
+    var textEditService = GetIt.instance.get<SearchTextEditService>();
     return TextField(
+      controller: TextEditingController()..text = textEditService.text ?? '',
       onChanged: (text) {
-        var textEditService = GetIt.instance.get<SearchTextEditService>();
-        if (textEditService.onTextEdit != null) {
+        if (textEditService.onTextEdit != null &&
+            textEditService.text != text) {
           textEditService.onTextEdit!.call(text);
         }
         textEditService.text = text;
       },
-      decoration: Perflow.inputDecoration,
+      decoration: Perflow.inputDecoration.copyWith(
+        hintText: "Search...",
+      ),
     );
   }
 
