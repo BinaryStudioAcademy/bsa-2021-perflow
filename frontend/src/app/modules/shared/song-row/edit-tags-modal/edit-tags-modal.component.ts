@@ -125,9 +125,9 @@ export class EditTagsModalComponent implements OnInit, OnDestroy {
         this.clear();
         $(`.edit.${this.class}`).modal('hide');
       },
-        (e: Error) => {
-          this._snackbarService.show({ message: e.message, type: 'error', header: 'Error occured!' });
-        });
+      (e: Error) => {
+        this._snackbarService.show({ message: e.message, type: 'error', header: 'Error occured!' });
+      });
   }
 
   ngOnDestroy() {
