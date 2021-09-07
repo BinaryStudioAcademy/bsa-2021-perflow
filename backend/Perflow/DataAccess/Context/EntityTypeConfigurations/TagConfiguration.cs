@@ -8,10 +8,9 @@ namespace Perflow.DataAccess.Context.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
-
             builder.Property(t => t.Name).HasMaxLength(100);
 
-            builder.Property(t => t.Color).HasMaxLength(10);
+            builder.HasIndex(t => t.Name).IsUnique();
         }
     }
 }

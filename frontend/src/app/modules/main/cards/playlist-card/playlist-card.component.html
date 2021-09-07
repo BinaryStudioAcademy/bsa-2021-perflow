@@ -3,7 +3,10 @@
     <div class="section-delete" (click)="onDeleteFromSectionClick(playlist)" appClickStopPropagation *ngIf="!isCheckBox && isDeletable">
         <i class="trash alternate outline icon"></i>
     </div>
-      <img [src]="playlist.iconURL">  
+      <img [src]="playlist.iconURL" *ngIf="playlist.iconURL">
+      <div class="icon-background" *ngIf="!playlist.iconURL">
+        <img class="icon" src="../../../../../assets/images/playlist.svg" />
+      </div>  
       <button *ngIf="!isCheckBox" class="play-icon" appClickStopPropagation (click)="play(playlist.id)">
           <i class="play icon"></i>
       </button>  

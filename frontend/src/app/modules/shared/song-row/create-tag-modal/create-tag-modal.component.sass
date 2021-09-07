@@ -1,0 +1,59 @@
+@import ./../../../../../styles
+
+$image-size: 245px
+
+.bg-modal-fader
+  position: fixed
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100vh
+  background: #00000060
+  z-index: 1000
+
+.modal-create
+  z-index: 1001
+  display: block
+  width: 400px
+  position: relative
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  border-radius: 10px
+  background: $drk-gray !important
+  .header
+    border-radius: 10px 10px 0px 0px
+    color: #FF792A
+    font-family: Rubik
+    background: $drk-gray !important
+  .content
+    background: $drk-gray
+    input[type='text']
+      background: $drk-rain
+      border-radius: 50px
+      color: $text
+      font-family: Rubik
+    .buttons
+      margin-top: 2em
+      display: flex
+      justify-content: center
+      text-align: center
+      .btn-cancel
+        border-radius: 50px
+        font-size: 16px
+        margin-left: 20px
+        font-weight: $bold-weight
+
+.ui.error.message
+  border-radius: 25px !important
+  height: 30px !important
+  padding: 5px 5px !important
+  text-align: center !important
+  font-size: 14px !important
+  background: #fff6f6
+
+.ui.error.message
+  z-index: 1000
+
+.ui.form .field
+  margin: 15px !important

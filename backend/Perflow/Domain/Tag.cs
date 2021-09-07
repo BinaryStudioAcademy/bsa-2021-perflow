@@ -8,7 +8,5 @@ namespace Perflow.Domain
         public string Name { get; set; }
 
         public TagType Type { get; set; }
-
-        public string Color { get; set; }
     }
 }

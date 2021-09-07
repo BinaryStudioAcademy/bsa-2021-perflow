@@ -19,7 +19,7 @@ namespace Perflow.Common.DTO.Albums
         public string IconURL { get; set; }
         public ArtistForAlbumDTO Artist { get; set; }
         public GroupForAlbumDTO Group { get; set; }
-        public IEnumerable<SongForAlbumDTO> Songs { get; set; }
+        public IEnumerable<SongForEditAlbumDTO> Songs { get; set; }
         public bool IsLiked { get; set; }
     }
 }

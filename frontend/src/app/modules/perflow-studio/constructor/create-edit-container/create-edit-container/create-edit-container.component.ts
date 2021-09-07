@@ -77,6 +77,7 @@ export class CreateEditContainerComponent implements OnInit, OnDestroy {
     isPublished: false,
     showRecentlyPlayed: true,
     showMix: true,
+    showRecommendations: true,
     pageSections: this.getBasicSectionsFull()
   });
 

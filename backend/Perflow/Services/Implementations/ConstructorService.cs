@@ -98,6 +98,7 @@ namespace Perflow.Services.Implementations
                                                     Name = pc.Name,
                                                     IsPublished = pc.IsPublished,
                                                     ShowMix = pc.ShowMix,
+                                                    ShowRecommendations = pc.ShowRecommendations,
                                                     ShowRecentlyPlayed = pc.ShowRecentlyPlayed,
                                                     PageSections = pc.PageSections.Select(ps => new PageSectionDTO
                                                     {

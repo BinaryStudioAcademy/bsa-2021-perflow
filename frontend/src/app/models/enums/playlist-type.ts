@@ -1,4 +1,4 @@
-export enum PlaylistType{
+export enum PlaylistType {
   playlist,
   mix,
   recommendations

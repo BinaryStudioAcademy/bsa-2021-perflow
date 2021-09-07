@@ -31,6 +31,10 @@ export class AlbumService {
     return this._httpService.getRequest<AlbumFull>(`${this.routePrefix}/${id}`);
   }
 
+  public getAlbumWithSongs(id: number) {
+    return this._httpService.getRequest<AlbumFull>(`${this.routePrefix}/withSongs/${id}`);
+  }
+
   public getAlbumsByArtist(artistId: number, authorType:AuthorType) {
     const httpParams = { authorType };
 

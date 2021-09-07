@@ -4,7 +4,7 @@
       <div class="content-view-playlist">
         <div class="image">
           <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" *ngIf="playlist.type === playlistType.playlist" />
-          <div class="icon-background" *ngIf="playlist.type === playlistType.mix">
+          <div class="icon-background" *ngIf="playlist.type !== playlistType.playlist">
             <img class="icon" src="../../../../assets/images/playlist.svg" />
             <p class="playlist-name">
               {{ playlist?.name }}
@@ -18,7 +18,7 @@
             <span class="total-all" *ngIf="playlist.type === playlistType.playlist">
               {{ playlist?.author?.userName }} 
             </span>
-            <span class="total-all" *ngIf="playlist.type === playlistType.mix">
+            <span class="total-all" *ngIf="playlist.type !== playlistType.playlist">
               Perflow
             </span>
             <span class="menu-view-playlist-description">

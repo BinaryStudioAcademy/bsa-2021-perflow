@@ -264,6 +264,9 @@ namespace Perflow.Migrations
                     b.Property<bool>("ShowRecentlyPlayed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("ShowRecommendations")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("PageContainers");
@@ -643,10 +646,6 @@ namespace Perflow.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Color")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -655,6 +654,10 @@ namespace Perflow.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Tags");
                 });
