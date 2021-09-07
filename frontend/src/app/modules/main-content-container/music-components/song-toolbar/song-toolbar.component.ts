@@ -4,7 +4,6 @@ import {
 import { Subject } from 'rxjs';
 import { filter, take, takeUntil } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
-import { Song } from 'src/app/models/song/song';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ContentSynchronizationService } from 'src/app/services/content-synchronization.service';
@@ -112,7 +111,9 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     this.audio = document.querySelector('audio');
     this.audio!.crossOrigin = 'anonymous';
 
-    this._syncService.syncData$.subscribe(this._updateSongFromSync);
+    this._syncService.syncData$
+      .pipe(take(1))
+      .subscribe(this._updateSongFromSync);
 
     this.initAudioContext();
   }
@@ -140,15 +141,18 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   };
 
   private _updateSongFromSync = (syncData: ContentSyncRead | undefined | null) => {
-    if (!syncData) {
-      return;
+    if (syncData) {
+      this._songsService.getSongById(syncData.songId)
+        .pipe(take(1))
+        .subscribe({
+          next: (song) => {
+            this._queueService.clearQueue();
+            this._queueService.addSongToQueue(song);
+            this._queueService.initSong(song, false);
+            this._startTime = syncData.time;
+          }
+        });
     }
-
-    const songInfo = { id: syncData.songId } as Song;
-
-    this._queueService.clearQueue();
-    this._queueService.initSong(songInfo, false);
-    this._startTime = syncData.time;
   };
 
   setTimeChanging = (value: boolean) => {
