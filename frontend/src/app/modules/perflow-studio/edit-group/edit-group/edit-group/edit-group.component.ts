@@ -44,6 +44,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   isModalShown: boolean;
   newAlbum: AlbumEdit = {} as AlbumEdit;
   groupId: number;
+  isPublishedFirst: boolean = true;
 
   constructor(
     private _route: ActivatedRoute,
@@ -81,6 +82,20 @@ export class EditGroupComponent implements OnInit, OnDestroy {
           this._userId = state!.id;
         }
       );
+  }
+
+  changeOrder(publishedFirst: boolean) {
+    if (this.isPublishedFirst === publishedFirst) {
+      return;
+    }
+    this.isPublishedFirst = publishedFirst;
+    if(this.isPublishedFirst) {
+      this.groupAlbums.sort((a) => a.isPublished ? -1 : 1)
+      
+    }
+    else {
+      this.groupAlbums.sort((a) => a.isPublished ? 1 : -1)
+    }
   }
 
   loadData() {
@@ -134,7 +149,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       this._albumsService.getAlbumsByGroupUnpublished(this.group.id)
         .subscribe(
           (result) => {
-            this.groupAlbums = result.body!;
+            this.groupAlbums = result.body!.sort((a) => a.isPublished ? -1 : 1);
           }
         );
     }
