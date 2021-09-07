@@ -15,6 +15,7 @@ namespace ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOcelot();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -24,6 +25,12 @@ namespace ApiGateway
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true)
+               .AllowCredentials());
 
             app.UseRouting();
 
