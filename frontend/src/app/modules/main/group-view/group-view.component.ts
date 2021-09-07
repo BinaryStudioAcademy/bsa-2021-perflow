@@ -149,7 +149,7 @@ export class GroupViewComponent implements OnInit, OnDestroy {
       );
   }
 
-  scroll(id: string, scrollingSize: number = this._scrollingSize) {
+  scrollRight(id: string, scrollingSize: number = this._scrollingSize) {
     switch (id) {
       case 'albums':
         this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
@@ -161,6 +161,27 @@ export class GroupViewComponent implements OnInit, OnDestroy {
         break;
     }
   }
+
+  scrollLeft(id: string, scrollingSize: number = this._scrollingSize) {
+    switch (id) {
+      case 'albums':
+        this.albumsElement.nativeElement?.scrollBy({ right: scrollingSize, behavior: 'smooth' });
+        break;
+      case 'playlists':
+        this.playlistsElement.nativeElement?.scrollBy({ right: scrollingSize, behavior: 'smooth' });
+        break;
+      default:
+        break;
+    }
+  }
+
+  isTextOverflow = (elementId: string): boolean => {
+    const elem = document.getElementById(elementId);
+    if (elem) {
+      return (elem.offsetWidth < elem.scrollWidth);
+    }
+    return false;
+  };
 
   playArtist = () => {
     if (!this.topSongs.length) {

@@ -158,13 +158,34 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       );
   }
 
-  scroll(id: string, scrollingSize: number = this._scrollingSize) {
+  isTextOverflow = (elementId: string): boolean => {
+    const elem = document.getElementById(elementId);
+    if (elem) {
+      return (elem.offsetWidth < elem.scrollWidth);
+    }
+    return false;
+  };
+
+  scrollRight(id: string, scrollingSize: number = this._scrollingSize) {
     switch (id) {
       case 'albums':
         this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
         break;
       case 'playlists':
         this.playlistsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+        break;
+      default:
+        break;
+    }
+  }
+
+  scrollLeft(id: string, scrollingSize: number = this._scrollingSize) {
+    switch (id) {
+      case 'albums':
+        this.albumsElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
+        break;
+      case 'playlists':
+        this.playlistsElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
         break;
       default:
         break;
