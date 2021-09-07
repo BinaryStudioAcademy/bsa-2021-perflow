@@ -15,6 +15,7 @@ import { AlbumPublicStatus } from 'src/app/models/album/аlbum-public-status';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
+import { GroupService } from 'src/app/services/group.service';
 
 @Component({
   selector: 'app-create-edit-album',
@@ -30,6 +31,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   isSongUploadShown = false;
   publishButtonTitle: string = 'Publish';
   isSuccess: boolean = false;
+  isGroupAlbum: boolean = false;
 
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
@@ -42,19 +44,20 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _songsService: SongsService,
     private _authService: AuthService,
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _groupService: GroupService
   ) { }
 
   ngOnInit() {
+    this.isGroupAlbum = this._router.url.indexOf('createAsGroup') !== -1;
     this.album = this.getBasicAlbumFull();
-
     this._activatedRoute.paramMap.pipe(
       switchMap((params) => params.getAll('id'))
     ).subscribe((data) => {
       this._id = +data;
     });
 
-    if (this._id) {
+    if (this._id && !this.isGroupAlbum) {
       this.startEditMode();
     }
     else {
@@ -86,10 +89,17 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   }
 
   showEditAlbumModal = () => {
+    let groupId: number | undefined;
+    if (this.isGroupAlbum) {
+      groupId = this._id;
+    }
+    else {
+      groupId = this.album.group ? this.album.group?.id : undefined;
+    }
     this.editedAlbum = {
       ...this.album,
       authorId: this.album.artist ? this.album.artist?.id : undefined,
-      groupId: this.album.group ? this.album.group?.id : undefined,
+      groupId,
       createdAt: new Date()
     };
     this.isModalShown = !this.isModalShown;
@@ -115,7 +125,12 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
-          this._router.navigateByUrl(`/perflowstudio/albums/edit/${data.id}`);
+          if (this.isGroupAlbum) {
+            this._router.navigateByUrl(`/perflowstudio/groups/view-group/${this._id}`);
+          }
+          else {
+            this._router.navigateByUrl(`/perflowstudio/albums/edit/${data.id}`);
+          }
         }
       });
   }
@@ -197,7 +212,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
 
   getBasicAlbumFull = () => ({
     id: 0,
-    authorType: AuthorType.artist,
+    authorType: this.isGroupAlbum ? AuthorType.group : AuthorType.artist,
     description: '',
     iconURL: '',
     isPublished: false,

@@ -43,8 +43,7 @@
         </div>
     </div>
 
-    <app-songs-list [songs]="topSongs"></app-songs-list>
-
+    <app-songs-list *ngIf="topSongs.length > 0" [songs]="topSongs"></app-songs-list>
     <div class="groupAlbums" *ngIf="groupAlbums.length > 0">
         <div class="header">
             Albums
