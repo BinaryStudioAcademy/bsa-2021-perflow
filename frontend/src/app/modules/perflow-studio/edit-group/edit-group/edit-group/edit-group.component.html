@@ -13,6 +13,10 @@
               </div>
               <div class="buttons">
                   <button class="btn-full button-play" (click)="playArtist()">Play</button>
+                  <div class="action-icon" *ngIf="!isGroupMember">
+                    <i class="heart outline icon icons" (click)="likeGroup()" *ngIf="!group.isLiked"></i>
+                    <i class="heart icon icons" (click)="dislikeGroup()" *ngIf="group.isLiked"></i>
+                </div>
                   <button 
                     *ngIf="isGroupMember" 
                     class="ui button button-create-album" 
@@ -20,30 +24,26 @@
                     Create an album
                   </button>
                   <div class="action-icon">
-                      <i class="heart outline icon icons" (click)="likeGroup()" *ngIf="!group.isLiked"></i>
-                      <i class="heart icon icons" (click)="dislikeGroup()" *ngIf="group.isLiked"></i>
-                  </div>
-                  <div class="action-icon">
                       <div class="ui floating dropdown icon" appSmDropdown>
                           <i class="ellipsis vertical icon icons"></i>
                           <div class="right menu">
                               <div class="item first" (click)="startEditMode()" *ngIf="isGroupMember" >
                                   <i class="edit outline icon"></i>Edit group
                               </div>
-                              <div class="item" [ngClass]="{first:!isGroupMember}">
+                              <div class="item first" *ngIf="!isGroupMember">
                                   <i class="bell icon"></i>Subscribe
                               </div>
-                              <div class="item last share">
-                                  <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
-                                  <div class="right menu">
-                                      <div class="item first last" (click)="copyLink()">
-                                          Copy link
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="item last" (click)="addToQueue()">
+                              <div class="item" (click)="addToQueue()">
                                   <i class="outdent alternate icon"></i>Add to queue
                               </div>
+                              <div class="item last share" [ngClass]="{first:!isGroupMember}">
+                                <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
+                                <div class="right menu">
+                                    <div class="item first last" (click)="copyLink()">
+                                        Copy link
+                                    </div>
+                                </div>
+                            </div>
                           </div>
                       </div>
                   </div>
