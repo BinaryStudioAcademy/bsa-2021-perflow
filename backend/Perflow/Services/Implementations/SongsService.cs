@@ -116,6 +116,11 @@ namespace Perflow.Services.Implementations
                 .AsNoTracking()
                 .ToListAsync();
 
+
+            songs.ForEach((song) => {
+                song.Album.IconURL = _imageService.GetImageUrl(song.Album.IconURL);
+            });
+
             return mapper.Map<IEnumerable<SongReadDTO>>(songs);
         }
 
