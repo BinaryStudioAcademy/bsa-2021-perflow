@@ -89,12 +89,11 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       return;
     }
     this.isPublishedFirst = publishedFirst;
-    if(this.isPublishedFirst) {
-      this.groupAlbums.sort((a) => a.isPublished ? -1 : 1)
-      
+    if (this.isPublishedFirst) {
+      this.groupAlbums.sort((a) => (a.isPublished ? -1 : 1));
     }
     else {
-      this.groupAlbums.sort((a) => a.isPublished ? 1 : -1)
+      this.groupAlbums.sort((a) => (a.isPublished ? 1 : -1));
     }
   }
 
@@ -149,7 +148,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       this._albumsService.getAlbumsByGroupUnpublished(this.group.id)
         .subscribe(
           (result) => {
-            this.groupAlbums = result.body!.sort((a) => a.isPublished ? -1 : 1);
+            this.groupAlbums = result.body!.sort((a) => (a.isPublished ? -1 : 1));
           }
         );
     }
