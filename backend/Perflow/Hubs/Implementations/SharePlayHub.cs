@@ -9,6 +9,7 @@ using Shared.Auth.Constants;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Perflow.Hubs.Implementations
 {
@@ -34,7 +35,20 @@ namespace Perflow.Hubs.Implementations
         {
             int id = int.Parse(Context.User.FindFirst(Claims.Id).Value);
             await RemoveFromGroup(_groups[id]);
+            string temp = _groups[id];
             _groups.Remove(id);
+
+            var remained = _groups.Where(kvp => kvp.Value == temp)
+                .Select(kvp => kvp.Key)
+                .Count();
+
+            if (remained == 0)
+            {
+                int playlistId = int.Parse(temp);
+                var deleted = await _context.SharePlay.FirstOrDefaultAsync(sp => sp.PlaylistId == playlistId);
+                _context.SharePlay.Remove(deleted);
+                await _context.SaveChangesAsync();
+            }
 
             var master = await _context.SharePlay.FirstOrDefaultAsync(sp => sp.MasterId == id);
 
@@ -58,12 +72,12 @@ namespace Perflow.Hubs.Implementations
             _groups.TryAdd(int.Parse(Context.User.FindFirst(Claims.Id).Value), dto.PlaylistId.ToString());
         }
 
-        public async Task AddToGroup(string groupName)
+        private async Task AddToGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         }
 
-        public async Task RemoveFromGroup(string groupName)
+        private async Task RemoveFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
