@@ -205,7 +205,6 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       ...group,
       name: group.name.trim() === '' ? 'Group name' : group.name
     };
-
     this._groupService.editGroup(this.editedGroup)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
