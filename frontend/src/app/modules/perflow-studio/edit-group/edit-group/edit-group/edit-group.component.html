@@ -1,0 +1,98 @@
+<main>
+  <div class="group">
+      <div class="group-details">
+          <div class="group-image">
+              <img class="image" alt="group" [src]="group.iconURL">
+          </div>
+          <div class="group-info">
+              <p class="group-title">
+                  {{group.name}}
+              </p>
+              <div class="group-description">
+                  {{group.description}}
+              </div>
+              <div class="buttons">
+                  <button class="btn-full button-play" (click)="playArtist()">Play</button>
+                  <div class="action-icon">
+                      <i class="heart outline icon icons" (click)="likeGroup()" *ngIf="!group.isLiked"></i>
+                      <i class="heart icon icons" (click)="dislikeGroup()" *ngIf="group.isLiked"></i>
+                  </div>
+                  <div class="action-icon">
+                      <div class="ui floating dropdown icon" appSmDropdown>
+                          <i class="ellipsis vertical icon icons"></i>
+                          <div class="right menu">
+                              <div class="item first" (click)="startEditMode()" *ngIf="isGroupMember" >
+                                  <i class="edit outline icon"></i>Edit group
+                              </div>
+                              <div class="item" [ngClass]="{first:!isGroupMember}">
+                                  <i class="bell icon"></i>Subscribe
+                              </div>
+                              <div class="item last share">
+                                  <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
+                                  <div class="right menu">
+                                      <div class="item first last" (click)="copyLink()">
+                                          Copy link
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="item last" (click)="addToQueue()">
+                                  <i class="outdent alternate icon"></i>Add to queue
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <app-songs-list *ngIf="topSongs.length > 0" [songs]="topSongs"></app-songs-list>
+  <div class="groupAlbums" *ngIf="groupAlbums.length > 0">
+      <div class="header">
+          Albums
+      </div>
+      <button *ngIf="isGroupMember" 
+          class="btn-full button-create-album" 
+          routerLink="/perflowstudio/albums/createAsGroup/{{group.id}}">
+          Create Album
+      </button>
+      <div class="items">
+          <div #albums name="albums" class="cards">
+              <app-album-card class="card" *ngFor="let album of groupAlbums" [album]="album" [isLiked]=false>
+              </app-album-card>
+          </div>
+          <div class="scroll-box">
+              <button class="scroll-button" (click)="scroll('albums')">
+                  <i class="chevron right icon"></i>
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <div class="groupPlaylists" *ngIf="groupPlaylists.length > 0">
+      <div class="header">
+          Playlists
+      </div>
+      <div class="items">
+          <div #playlists name="playlists" class="cards">
+              <app-playlist-card class="card" *ngFor="let pl of groupPlaylists" [playlist]="pl"></app-playlist-card>
+          </div>
+          <div class="scroll-box">
+              <button class="scroll-button" (click)="scroll('playlists')">
+                  <i class="chevron right icon"></i>
+              </button>
+          </div>
+      </div>
+  </div>
+  <app-edit-group-modal
+      [editedGroup]="group"
+      *ngIf="isModalShown" 
+      (editGroup)="onSubmitModal($event)" 
+      (isClosed)="closeModal()">
+  </app-edit-group-modal>
+  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
+      <div class="header">
+          Link copied to clipboard!
+      </div>
+  </div>
+</main>

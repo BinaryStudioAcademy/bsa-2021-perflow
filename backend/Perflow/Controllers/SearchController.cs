@@ -53,11 +53,11 @@ namespace Perflow.Controllers
             return Ok(await _searchService.FindGroupsByNameAsync(searchTerm, page, itemsOnPage, User.GetId()));
         }
 
-        [HttpGet("albums")]
+        [HttpGet("albums/{onlyPublished}")]
         public async Task<ActionResult<ICollection<AlbumForListDTO>>> FindAlbumsByNameAsync
-            (string searchTerm, int page, int itemsOnPage)
+            (bool onlyPublished, string searchTerm, int page, int itemsOnPage)
         {
-            return Ok(await _searchService.FindAlbumsByNameAsync(searchTerm, page, itemsOnPage));
+            return Ok(await _searchService.FindAlbumsByNameAsync(onlyPublished, searchTerm, page, itemsOnPage));
         }
 
         [HttpGet("playlists")]

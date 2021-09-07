@@ -14,6 +14,7 @@ import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { Subject, timer } from 'rxjs';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { Song } from 'src/app/models/song/song';
+import { GroupService } from 'src/app/services/group.service';
 
 @Component({
   selector: 'app-album-details',
@@ -42,7 +43,8 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
     private _location: PlatformLocation,
     private _authService: AuthService,
     private _queueService: QueueService,
-    private _songsService: SongsService
+    private _songsService: SongsService,
+    private _groupService: GroupService
   ) {
     this.getUserId();
   }
@@ -76,8 +78,18 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
       .subscribe(
         (result) => {
           this.album = result;
-          this.isAuthor = this._userId === (this.album?.artist?.id ?? this.album?.group?.id);
-
+          if (this.album.group) {
+            this._groupService.checkGroupMember(this.album.group.id)
+              .pipe(takeUntil(this._unsubscribe$))
+              .subscribe(
+                (resp) => {
+                  this.isAuthor = resp.body!;
+                }
+              );
+          }
+          if (this.album.artist) {
+            this.isAuthor = this._userId === this.album?.artist?.id;
+          }
           this.loadAnotherAlbums();
         }
       );
