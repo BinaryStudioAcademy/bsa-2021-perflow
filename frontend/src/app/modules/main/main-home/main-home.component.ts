@@ -122,7 +122,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   saveAlbum = (id: number) => {
-    console.log(this.currentAccordionAlbum);
     this._reactionService.addAlbumReaction(id, this._userId)
       .pipe(take(1))
       .subscribe({
@@ -146,7 +145,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   setButtonVisibility() {
-    this.idSaveButtonShown = this.currentAccordionAlbum.artistId !== this._userId
+    this.idSaveButtonShown = !this.currentAccordionAlbum.artistIds?.includes(this._userId)
                           && !this.currentAccordionAlbum.isLiked;
   }
 
@@ -208,8 +207,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   );
 
   nextSlide = () => {
-    console.log(this.currentAccordionAlbum);
-
     this.accordionAnimation();
     this._newestCounter += 1;
     if (this._newestCounter > this.accordionAlbumsLength - 1) {

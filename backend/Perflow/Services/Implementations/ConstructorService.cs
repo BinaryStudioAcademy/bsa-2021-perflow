@@ -114,12 +114,14 @@ namespace Perflow.Services.Implementations
                                                             Entity = pse.EntityType == Domain.Enums.EntityType.Album ? _context.Albums
                                                                                                                             .Include(a => a.Author)
                                                                                                                             .Include(a => a.Group)
+                                                                                                                                .ThenInclude(g => g.Artists)
                                                                                                                             .Include(a => a.Reactions)
                                                                                                                             .Select(a => new AlbumShortDTO
                                                                                                                             {
                                                                                                                                 Id = a.Id,
                                                                                                                                 Name = a.Name,
                                                                                                                                 AuthorName = a.AuthorType == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
+                                                                                                                                ArtistIds = a.AuthorType == AuthorType.Artist ? new List<int>() { a.Author.Id } : a.Group.Artists.Select(a => a.Artist.Id).ToList(),
                                                                                                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                                                                                                 ReleaseYear = a.ReleaseYear,
                                                                                                                                 IsLiked = a.Reactions.Any(r => r.UserId == userId)
