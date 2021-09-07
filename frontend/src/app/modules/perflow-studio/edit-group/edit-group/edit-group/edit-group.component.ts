@@ -2,7 +2,7 @@ import { PlatformLocation } from '@angular/common';
 import {
   Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import { Subject, timer } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -22,11 +22,11 @@ import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
-  selector: 'app-group-view',
-  templateUrl: './group-view.component.html',
-  styleUrls: ['./group-view.component.sass']
+  selector: 'app-edit-group',
+  templateUrl: './edit-group.component.html',
+  styleUrls: ['./edit-group.component.sass']
 })
-export class GroupViewComponent implements OnInit, OnDestroy {
+export class EditGroupComponent implements OnInit, OnDestroy {
   private readonly _scrollingSize: number = 240;
   private _userId: number;
   private _unsubscribe$ = new Subject<void>();
@@ -56,8 +56,7 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     private _reactionService: ReactionService,
     private _authService: AuthService,
     private _albumsService: AlbumService,
-    private _activateRoute: ActivatedRoute,
-    private _router: Router
+    private _activateRoute: ActivatedRoute
   ) {
     this.getUserId();
   }
@@ -123,12 +122,22 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   }
 
   loadAlbums() {
-    this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
-      .subscribe(
-        (result) => {
-          this.groupAlbums = result;
-        }
-      );
+    if (!this.isGroupMember) {
+      this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
+        .subscribe(
+          (result) => {
+            this.groupAlbums = result;
+          }
+        );
+    }
+    else {
+      this._albumsService.getAlbumsByGroupUnpublished(this.group.id)
+        .subscribe(
+          (result) => {
+            this.groupAlbums = result.body!;
+          }
+        );
+    }
   }
 
   likeGroup() {
@@ -185,6 +194,39 @@ export class GroupViewComponent implements OnInit, OnDestroy {
       this._queueService.initSong(first);
     }
   };
+
+  onSubmitModal = (data: GroupEdit) => {
+    this.isModalShown = !this.isModalShown;
+    this.editGroup(data);
+  };
+
+  editGroup = (group: GroupEdit) => {
+    this.editedGroup = {
+      ...group,
+      name: group.name.trim() === '' ? 'Group name' : group.name
+    };
+
+    this._groupService.editGroup(this.editedGroup)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this._groupService.getGroup(data.body!.id)
+            .subscribe({
+              next: (result) => {
+                this.group = result;
+              }
+            });
+        }
+      });
+  };
+
+  startEditMode() {
+    this.isModalShown = true;
+  }
+
+  closeModal() {
+    this.isModalShown = !this.isModalShown;
+  }
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);

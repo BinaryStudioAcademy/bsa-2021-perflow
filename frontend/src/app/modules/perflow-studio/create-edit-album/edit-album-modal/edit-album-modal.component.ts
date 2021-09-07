@@ -69,7 +69,6 @@ export class EditAlbumModalComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.groups = data;
-
           if (this.groups?.length) {
             this.fillAuthors(this.groups);
           }
