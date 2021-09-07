@@ -134,7 +134,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   updateSong = (songInfo: SongInfo) => {
     this.songForPlay = songInfo;
     this.resetPlaying();
-    this.audio?.load();
+    this.audio!.load();
     this.show = true;
     this.audio!.loop = this.isRepeating;
     this.setLike();

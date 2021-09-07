@@ -74,8 +74,8 @@
                 </div>
               </div>
             </span>
-            <button *ngIf="!isGroupNotified && playlist.author?.id === userId" class="ui button-upload button" (click)="sharePlay(playlist)">Share Play</button>
-            <button *ngIf="isGroupNotified && !isConnected" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
+            <button *ngIf="playlist.accessType === playlistAccessType.collaborative && playlist.author?.id === userId && !isConnected" class="ui button-upload button" (click)="sharePlay(playlist)">Share Play</button>
+            <button *ngIf="isGroupNotified && !isConnected && playlist.author?.id !== userId" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
             <button *ngIf="isConnected" class="ui button-upload button" (click)="disconnectSharePlay(playlist.id)">Disconnect</button>
           </div>
         </div>

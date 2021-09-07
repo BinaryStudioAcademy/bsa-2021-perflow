@@ -37,6 +37,7 @@ export class ViewPlaylistComponent implements OnInit {
   isGroupNotified: boolean = false;
   isConnected: boolean = false;
   readonly playlistType = PlaylistType;
+  readonly playlistAccessType = AccessType;
 
   constructor(
     private _activateRoute: ActivatedRoute,
@@ -213,6 +214,7 @@ export class ViewPlaylistComponent implements OnInit {
       .subscribe({
         next: () => {
           this.isGroupNotified = true;
+          this.connectToSharePlay(pl.id);
         }
       });
   }
