@@ -3,75 +3,18 @@
     Edit Tags
   </div>
   <div class="content">
-    <div class="tags" *ngIf="selectedMusicStyleTags.length > 0">
-      <span class="tag-wrap orange" *ngFor="let tag of selectedMusicStyleTags">
-        <span class="tag">{{tag.name}}
-          <i class="close icon" (click)="deleteMusicStyleTag(tag)" appClickStopPropagation></i>
-        </span>
-      </span>
-    </div>
-    <div class="tags-dropdown">
-      <span>
-        Music Style
-      </span>
-      <div class="ui floating dropdown" appSmDropdown>
-        <i class="dropdown icon"></i>
-        <div class="menu left">
-          <div class="scrolling menu left" *ngIf="musicStyleTags.length > 0">
-            <div class="item" *ngFor="let tag of musicStyleTags" (click)="addMusicStyleTag(tag)"
-              appClickStopPropagation>
-              {{tag.name}}
-            </div>
-          </div>
-          <div class="scrolling menu left" *ngIf="!musicStyleTags.length">
-            <div class="item no-results">
-              <div>
-                No results found
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tags" *ngIf="selectedOtherTags.length > 0">
-      <span class="tag-wrap" *ngFor="let tag of selectedOtherTags">
-        <span class="tag">{{tag.name}}
-          <i class="close icon" (click)="deleteOtherTag(tag)" appClickStopPropagation></i>
-        </span>
-      </span>
-    </div>
-    <div class="tags-dropdown">
-      <span>
-        Other
-      </span>
-      <div class="ui floating dropdown icon" appSmDropdown>
-        <i class="dropdown icon"></i>
-        <div class="menu left">
-          <div class="scrolling menu left" *ngIf="otherTags.length > 0">
-            <div class="item" *ngFor="let tag of otherTags" (click)="addOtherTag(tag)" appClickStopPropagation>
-              {{tag.name}}
-            </div>
-          </div>
-          <div class="scrolling menu left" *ngIf="!otherTags.length">
-            <div class="item no-results">
-              <div>
-                No results found
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="link-wrap">
-      <a class="link" (click)="updateModal()">Create tag</a>
-    </div>
+
+    <select id={{class}} name="tags" multiple="" class="ui search fluid dropdown" appSmDropdown [allowAdditions]=true>
+      <option *ngFor="let tag of tags" [value]=tag.name>
+        {{tag.name}}
+      </option>
+    </select>
+
     <div class="actions">
       <div class="buttons">
-        <button class="ui button btn-full" (click)="addTagsToSong()">Save</button>
-        <button class="ui deny inverted basic button btn-cancel" (click)="clear()">Cancel</button>
+        <button class="ui button btn-full" (click)="onSubmit()">Save</button>
+        <button class="ui deny inverted basic button btn-cancel" (click)="close()">Cancel</button>
       </div>
     </div>
   </div>
 </div>
-
-<app-create-tag-modal *ngIf="isModalShown" [tags]="tags" (isClosed)="updateModal()"></app-create-tag-modal>

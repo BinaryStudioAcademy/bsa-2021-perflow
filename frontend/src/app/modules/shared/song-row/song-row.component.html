@@ -28,7 +28,7 @@
             <span class="e foredit" *ngIf="isEditable" [ngClass]="song.hasCensorship ? 'active' : ''" (click)="changeCensorship()">E</span>
         </div>
         <div class="column tags text" *ngIf="isEditable">
-                <span class="tag-wrap" *ngFor="let tag of song.tags" [ngClass]="tag.type === types.other ? 'gray-wrap' : 'orange-wrap'">
+                <span class="tag-wrap" *ngFor="let tag of song.tags?.slice(0, 3)">
                   <span class="tag text">
                       {{tag.name}}
                   </span>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CreatedTags } from 'src/app/models/tag/created-tags';
 import { SongTags } from 'src/app/models/tag/song-tags';
 import { CreatedTag } from '../../models/tag/created-tag';
 import { Tag } from '../../models/tag/tag';
@@ -18,6 +19,10 @@ export class TagService {
 
   createTag(tag: CreatedTag) {
     return this._httpService.postRequest<Tag>(this.routePrefix, tag);
+  }
+
+  createTags(tags: CreatedTags) {
+    return this._httpService.postRequest<Tag[]>(`${this.routePrefix}/createTags`, tags);
   }
 
   addTagsToSong(songTags: SongTags) {

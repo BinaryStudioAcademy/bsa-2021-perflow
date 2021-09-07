@@ -11,5 +11,7 @@ namespace Perflow.Services.Interfaces
         Task<IEnumerable<TagReadDTO>> GetAllAsync();
 
         Task AddTagsAsync(SongTagsDTO tags);
+
+        Task<IEnumerable<TagReadDTO>> CreateTagsAsync(TagsCreateDTO tagsDto);
     }
 }

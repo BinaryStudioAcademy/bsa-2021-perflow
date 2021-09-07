@@ -325,7 +325,7 @@ namespace Perflow.Services.Implementations
         {
             var numberOfRecentlyPlayedSongs = 50;
             var songs = await GetRecentlyPlayedSongsWithTagsAsync(userId, numberOfRecentlyPlayedSongs);
-            var tags = GetRecentlyPlayedTags(songs, TagType.MusicStyle);
+            var tags = GetRecentlyPlayedTags(songs);
 
             if (tags.Count == 0)
             {
@@ -402,12 +402,11 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
         }
 
-        private ICollection<string> GetRecentlyPlayedTags(ICollection<Song> songs, TagType type, int amount = maxNumberOfRecommendations)
+        private ICollection<string> GetRecentlyPlayedTags(ICollection<Song> songs, int amount = maxNumberOfRecommendations)
         {
             return songs
                 .SelectMany(s => s.Tags)
                 .Select(st => st.Tag)
-                .Where(t => t.Type == type)
                 .GroupBy(t => t.Name)
                 .OrderByDescending(g => g.Count())
                 .Take(amount)

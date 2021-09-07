@@ -18,8 +18,6 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarInfo } from 'src/app/models/common/snackbar-info';
 import { Tag } from 'src/app/models/tag/tag';
-import { TagService } from 'src/app/services/tags/tag.service';
-import { TagType } from 'src/app/models/enums/tag-type';
 import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -37,7 +35,6 @@ export class SongRowComponent implements OnInit, OnDestroy {
   createdPlaylistArray = new Array<PlaylistName>();
   notification: string;
   songTags: Tag[];
-  types = TagType;
 
   @Input() song: Song;
   @Input() tags: Tag[];
@@ -63,8 +60,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
     private _songService: SongsService,
     private _createPlaylistService: CreatePlaylistService,
     private _playlistsService: PlaylistsService,
-    private _snackbarService: SnackbarService,
-    private _tagService: TagService
+    private _snackbarService: SnackbarService
   ) { }
 
   ngOnDestroy(): void {

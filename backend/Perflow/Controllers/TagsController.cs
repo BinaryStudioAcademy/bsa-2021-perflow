@@ -32,6 +32,12 @@ namespace Perflow.Controllers
             return Ok(await _tagService.CreateTagAsync(tag));
         }
 
+        [HttpPost("createTags")]
+        public async Task<ActionResult<IEnumerable<TagReadDTO>>> CreateTagsAsync([FromBody] TagsCreateDTO tags)
+        {
+            return Ok(await _tagService.CreateTagsAsync(tags));
+        }
+
         [HttpPost("addTagsToSong")]
         public async Task<ActionResult> AddTagsToSong([FromBody] SongTagsDTO tags)
         {

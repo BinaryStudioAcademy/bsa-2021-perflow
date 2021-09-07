@@ -1,9 +1,9 @@
 import {
+  AfterViewInit,
   Component, EventEmitter, Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { TagType } from 'src/app/models/enums/tag-type';
 import { Song } from 'src/app/models/song/song';
 import { Tag } from 'src/app/models/tag/tag';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -15,9 +15,8 @@ import { TagService } from 'src/app/services/tags/tag.service';
   templateUrl: './edit-tags-modal.component.html',
   styleUrls: ['./edit-tags-modal.component.sass']
 })
-export class EditTagsModalComponent implements OnInit, OnDestroy {
+export class EditTagsModalComponent implements OnInit, OnDestroy, AfterViewInit {
   private _unsubscribe$ = new Subject<void>();
-  private readonly _maxNumberOfTags = 3;
 
   @Input() tags: Tag[];
   @Input() song: Song;
@@ -25,30 +24,31 @@ export class EditTagsModalComponent implements OnInit, OnDestroy {
   @Output() isClosed = new EventEmitter<void>();
   @Output() updatedTags = new EventEmitter<Tag[]>();
 
-  musicStyleTags: Tag[] = [];
-  otherTags: Tag[] = [];
-  selectedMusicStyleTags: Tag[] = [];
-  selectedOtherTags: Tag[] = [];
-  isModalShown = false;
   class: string;
+  selected: string[] = [];
 
   constructor(
     private _tagService: TagService,
     private _songTagsService: SongTagsService,
     private _snackbarService: SnackbarService
   ) {
+
+  }
+
+  ngAfterViewInit() {
+    this.initSelected();
   }
 
   ngOnInit() {
-    this.updateSelectedTags();
-    this.updateTags();
     this.class = this.song.id.toString();
     this.subscribeToTagUpdates();
   }
 
-  clear() {
-    this.updateSelectedTags();
-    this.updateTags();
+  initSelected() {
+    if (this.song.tags && this.song.tags!.length > 0) {
+      this.selected = this.song.tags!.map((t) => t.name);
+      $(`#${this.class}`).dropdown('set selected', this.selected);
+    }
   }
 
   subscribeToTagUpdates() {
@@ -59,75 +59,49 @@ export class EditTagsModalComponent implements OnInit, OnDestroy {
           if (!this.tags.some((t) => t.name === tag.name)) {
             this.tags.push(tag);
           }
-
-          this.updateTags();
         }
       );
   }
 
-  updateModal() {
-    this.isModalShown = !this.isModalShown;
+  close() {
+    $(`#${this.class}`).dropdown('clear');
+    this.initSelected();
   }
 
-  updateTags() {
-    this.musicStyleTags = this.tags
-      .filter((tag) => tag.type === TagType.musicStyle
-        && !this.selectedMusicStyleTags.find((t) => t.name === tag.name));
-    this.otherTags = this.tags
-      .filter((tag) => tag.type === TagType.other && !this.selectedOtherTags.find((t) => t.name === tag.name));
-  }
+  onSubmit() {
+    this.selected = this.getTags();
+    const newTags = this.selected.filter((tag) => !this.tags.find((t) => t.name === tag));
 
-  updateSelectedTags() {
-    this.selectedMusicStyleTags = this.song.tags!.filter((t) => t.type === TagType.musicStyle);
-    this.selectedOtherTags = this.song.tags!.filter((t) => t.type === TagType.other);
-  }
-
-  addMusicStyleTag(tag: Tag) {
-    this.selectedMusicStyleTags.push(tag);
-
-    const index = this.musicStyleTags.indexOf(tag);
-    this.musicStyleTags.splice(index, 1);
-  }
-
-  addOtherTag(tag: Tag) {
-    this.selectedOtherTags.push(tag);
-
-    const index = this.otherTags.indexOf(tag);
-    this.otherTags.splice(index, 1);
-  }
-
-  deleteOtherTag(tag: Tag) {
-    this.otherTags.push(tag);
-
-    const index = this.selectedOtherTags.indexOf(tag);
-    this.selectedOtherTags.splice(index, 1);
-  }
-
-  deleteMusicStyleTag(tag: Tag) {
-    this.musicStyleTags.push(tag);
-
-    const index = this.selectedMusicStyleTags.indexOf(tag);
-    this.selectedMusicStyleTags.splice(index, 1);
-  }
-
-  addTagsToSong() {
-    const newTags: Tag[] = this.selectedOtherTags.concat(this.selectedMusicStyleTags);
-
-    if (newTags.length > this._maxNumberOfTags) {
-      this._snackbarService.show({ message: `No more than ${this._maxNumberOfTags} tags`, type: 'error' });
+    if (newTags.length > 0) {
+      this._tagService.createTags({ tags: newTags })
+        .pipe(take(1))
+        .subscribe((tags) => {
+          tags.forEach((tag) => {
+            this._songTagsService.update(tag);
+          });
+          this.addTagsToSong(this.tags.filter((tag) => this.selected.find((t) => t === tag.name)));
+        });
       return;
     }
 
+    this.addTagsToSong(this.tags.filter((tag) => this.selected.find((t) => t === tag.name)));
+  }
+
+  addTagsToSong(newTags: Tag[]) {
     this._tagService.addTagsToSong({ songId: this.song.id, tags: newTags })
       .pipe(take(1))
       .subscribe(() => {
         this.updatedTags.emit(newTags);
-        this.clear();
+        this.initSelected();
         $(`.edit.${this.class}`).modal('hide');
       },
       (e: Error) => {
         this._snackbarService.show({ message: e.message, type: 'error', header: 'Error occured!' });
       });
+  }
+
+  getTags() {
+    return $(`#${this.class}`).val() as string[];
   }
 
   ngOnDestroy() {

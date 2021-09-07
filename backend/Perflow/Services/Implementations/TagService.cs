@@ -36,6 +36,25 @@ namespace Perflow.Services.Implementations
             return mapper.Map<TagReadDTO>(tagEntity.Entity);
         }
 
+        public async Task<IEnumerable<TagReadDTO>> CreateTagsAsync(TagsCreateDTO tagsDto)
+        {
+            var tags = context.Tags.Select(t => t.Name);
+
+            var newTags = tagsDto.Tags.Where(t => !tags.Contains(t));
+
+            var createdTags = new List<Tag>();
+
+            foreach (var tag in newTags)
+            {
+                var createdTag = context.Tags.Add(new Tag { Name = tag });
+                createdTags.Add(createdTag.Entity);
+            }
+
+            await context.SaveChangesAsync();
+
+            return mapper.Map<IEnumerable<TagReadDTO>>(createdTags);
+        }
+
         public async Task<IEnumerable<TagReadDTO>> GetAllAsync()
         {
             var tags = await context.Tags
