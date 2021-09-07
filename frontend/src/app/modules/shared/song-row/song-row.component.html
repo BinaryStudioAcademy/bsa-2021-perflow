@@ -22,7 +22,7 @@
                 <i class="ui pencil alternate icon"></i>
             </span>
             <span class="namesave" *ngIf="isEditable && isEditing" (click)="saveName()">
-                <i class="ui save icon"></i>
+                <i class="ui check"></i>
             </span>
 
             <span class="e foredit" *ngIf="isEditable" [ngClass]="song.hasCensorship ? 'active' : ''" (click)="changeCensorship()">E</span>
