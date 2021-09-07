@@ -188,9 +188,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.playlist = data;
-          this._createdPlaylistService.addPlaylist(data);
 
           if (editedPlaylist.accessType !== AccessType.collaborative) {
+            this._createdPlaylistService.addPlaylist(data);
             this._playlistEditorsService.removePlaylist(editedPlaylist.id)
               .pipe(takeUntil(this._unsubscribe$))
               .subscribe((_) => {
@@ -198,6 +198,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
               });
           }
           else if (editedPlaylist.accessType === AccessType.collaborative) {
+            this._createdPlaylistService.editCollaborativePlaylist(data);
             this._playlistEditorsService.addCollaborators(editedPlaylist.id, this.collaborators)
               .pipe(takeUntil(this._unsubscribe$))
               .subscribe();
