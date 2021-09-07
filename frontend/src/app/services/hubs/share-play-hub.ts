@@ -33,6 +33,10 @@ export class SharePlayHub extends BaseHubService {
     );
   }
 
+  getHubStatus() {
+    return this.hubConnection?.state;
+  }
+
   sendSyncData(syncData: SharePlayData) {
     if (this.hubConnection.state === HubConnectionState.Connected) {
       this.hubConnection.invoke('SendSynchronization', syncData);

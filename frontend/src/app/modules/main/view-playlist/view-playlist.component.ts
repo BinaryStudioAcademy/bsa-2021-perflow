@@ -14,6 +14,7 @@ import { Subject, timer } from 'rxjs';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
+import { HubConnectionState } from '@microsoft/signalr';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
@@ -82,6 +83,8 @@ export class ViewPlaylistComponent implements OnInit {
           }
         }
       });
+
+    this.isConnected = this._sharePlayService.getHubStatus() === HubConnectionState.Connected;
   }
 
   nextSlide = () => { };
@@ -215,8 +218,8 @@ export class ViewPlaylistComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: () => {
-          this.isGroupNotified = true;
           this.connectToSharePlay(pl.id);
+          this.isGroupNotified = true;
         },
         error: () => {
           this._snackBarService.show({ message: 'Connection is closed! Try reload the page' });

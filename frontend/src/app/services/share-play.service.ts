@@ -54,6 +54,10 @@ export class SharePlayService {
     await this._hub.sendSyncData(syncData);
   }
 
+  getHubStatus() {
+    return this._hub?.getHubStatus();
+  }
+
   async disconectHub() {
     await this._hub.stop();
   }
