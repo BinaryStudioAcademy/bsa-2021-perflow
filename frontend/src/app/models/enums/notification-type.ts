@@ -4,5 +4,6 @@ export enum NotificationType {
   applicantNotification,
   userNotification,
   collaborativePlaylistSubscription,
-  groupMembersNotification
+  groupMembersNotification,
+  sharePlayNotification
 }
