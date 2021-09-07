@@ -13,6 +13,12 @@
               </div>
               <div class="buttons">
                   <button class="btn-full button-play" (click)="playArtist()">Play</button>
+                  <button 
+                    *ngIf="isGroupMember" 
+                    class="ui button button-create-album" 
+                    routerLink="/perflowstudio/albums/createAsGroup/{{group.id}}">
+                    Create an album
+                  </button>
                   <div class="action-icon">
                       <i class="heart outline icon icons" (click)="likeGroup()" *ngIf="!group.isLiked"></i>
                       <i class="heart icon icons" (click)="dislikeGroup()" *ngIf="group.isLiked"></i>
@@ -51,11 +57,6 @@
       <div class="header">
           Albums
       </div>
-      <button *ngIf="isGroupMember" 
-          class="btn-full button-create-album" 
-          routerLink="/perflowstudio/albums/createAsGroup/{{group.id}}">
-          Create Album
-      </button>
       <div class="items">
           <div #albums name="albums" class="cards">
               <app-album-card class="card" *ngFor="let album of groupAlbums" [album]="album" [isLiked]=false>
