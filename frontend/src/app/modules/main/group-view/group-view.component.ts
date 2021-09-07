@@ -11,12 +11,10 @@ import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { GroupEdit } from 'src/app/models/group/group-edit';
 import { GroupFull } from 'src/app/models/group/groupFull';
-import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { AlbumService } from 'src/app/services/album.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GroupService } from 'src/app/services/group.service';
-import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
@@ -37,7 +35,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   group: GroupFull = {} as GroupFull;
   editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
-  groupPlaylists: PlaylistView[] = [];
   isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
   isGroupMember: boolean;
@@ -49,7 +46,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _groupService: GroupService,
     private _songService: SongsService,
-    private _playlistsService: PlaylistsService,
     private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
@@ -98,7 +94,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
         (result) => {
           this.group = result;
           this.loadTopSongs();
-          this.loadPlaylists();
           this.loadAlbums();
         }
       );
@@ -109,15 +104,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
       .subscribe(
         (result) => {
           this.topSongs = result;
-        }
-      );
-  }
-
-  loadPlaylists() {
-    this._playlistsService.getPlaylistsByGroupId(this.group.id)
-      .subscribe(
-        (result) => {
-          this.groupPlaylists = result;
         }
       );
   }
@@ -153,9 +139,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     switch (id) {
       case 'albums':
         this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
-        break;
-      case 'playlists':
-        this.playlistsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
         break;
       default:
         break;

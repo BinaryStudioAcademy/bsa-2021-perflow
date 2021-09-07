@@ -1,0 +1,12 @@
+<div class="container">
+  <h2>All groups for <i>"{{searchTerm}}"</i></h2>
+  <div class="search-result" 
+    infinite-scroll 
+    [infiniteScrollDistance]="distance" 
+    [infiniteScrollThrottle]="throttle"
+    (scrolled)="onScroll()"
+    [scrollWindow]="false">
+  
+    <app-artist-card (clickEmiter)="saveToSearchHistory(group)" *ngFor="let group of groups" [artist]="group"></app-artist-card>
+  </div>
+</div>

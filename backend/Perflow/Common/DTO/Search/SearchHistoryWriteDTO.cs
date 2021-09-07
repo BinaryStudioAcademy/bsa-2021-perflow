@@ -11,5 +11,6 @@ namespace Perflow.Common.DTO.Search
         public int? AlbumId { get; set; }
         public int? ArtistId { get; set; }
         public int? PlaylistId { get; set; }
+        public int? GroupId { get; set; }
     }
 }

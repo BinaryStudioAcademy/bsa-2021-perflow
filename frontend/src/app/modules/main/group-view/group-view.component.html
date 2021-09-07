@@ -60,22 +60,6 @@
             </div>
         </div>
     </div>
-
-    <div class="groupPlaylists" *ngIf="groupPlaylists.length > 0">
-        <div class="header">
-            Playlists
-        </div>
-        <div class="items">
-            <div #playlists name="playlists" class="cards">
-                <app-playlist-card class="card" *ngFor="let pl of groupPlaylists" [playlist]="pl"></app-playlist-card>
-            </div>
-            <div class="scroll-box">
-                <button class="scroll-button" (click)="scroll('playlists')">
-                    <i class="chevron right icon"></i>
-                </button>
-            </div>
-        </div>
-    </div>
     <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
         <div class="header">
             Link copied to clipboard!
