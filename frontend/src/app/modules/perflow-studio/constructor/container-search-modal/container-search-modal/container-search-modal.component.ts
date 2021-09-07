@@ -51,6 +51,9 @@ export class ContainerSearchModalComponent {
     else if (this.instanceOfArtist(entity)) {
       newEntityType = EntityType.artist;
     }
+    else if (this.instanceOfGroup(entity)) {
+      newEntityType = EntityType.group;
+    }
     else {
       newEntityType = EntityType.playlist;
     }
@@ -90,5 +93,7 @@ export class ContainerSearchModalComponent {
 
   instanceOfAlbum = (data: any): data is AlbumForReadDTO => 'releaseYear' in data;
 
-  instanceOfArtist = (data: any): data is ArtistReadDTO => 'userName' in data;
+  instanceOfArtist = (data: any): data is ArtistReadDTO => 'isArtist' in data && data.isArtist;
+
+  instanceOfGroup = (data: any): data is ArtistReadDTO => 'isArtist' in data && !data.isArtist;
 }

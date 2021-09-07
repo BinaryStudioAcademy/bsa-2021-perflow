@@ -1,0 +1,98 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
+import { SearchParam } from 'src/app/models/search/search-param';
+import { WriteSearchHistory } from 'src/app/models/search/write-search-history';
+import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { SearchHistoryService } from 'src/app/services/search-history.service';
+import { SearchService } from 'src/app/services/search.service';
+
+@Component({
+  selector: 'app-all-groups',
+  templateUrl: './all-groups.component.html',
+  styleUrls: ['./all-groups.component.sass']
+})
+export class AllGroupsComponent implements OnInit, OnDestroy {
+  groups: Array<ArtistReadDTO> = Array<ArtistReadDTO>();
+  searchTerm: string = '';
+
+  private _unsubscribe$ = new Subject<void>();
+  private _userId: number;
+
+  // for Infinity Scrolling
+  public throttle: number = 300;
+  public distance: number = 3;
+  private _page: number = 0;
+  private _itemsOnPage: number = 15;
+
+  private _query = {
+    searchTerm: this.searchTerm,
+    page: this._page += 1,
+    itemsOnPage: this._itemsOnPage
+  } as SearchParam;
+
+  constructor(
+    private _searchService: SearchService,
+    private _activatedRoute: ActivatedRoute,
+    private _searchHistoryService: SearchHistoryService,
+    private _authService: AuthService
+  ) {
+    this._authService.getAuthStateObservable()
+      .pipe(take(1))
+      .subscribe((authState) => {
+        this._userId = authState!.id;
+      });
+  }
+
+  ngOnInit() {
+    this._activatedRoute.paramMap.pipe(
+      switchMap((params) => params.getAll('term'))
+    ).pipe(take(1))
+      .subscribe((data) => {
+        this._query = {
+          ...this._query,
+          searchTerm: data
+        };
+
+        this.searchTerm = data;
+      });
+
+    this.getGroupByName(this._query);
+  }
+
+  ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
+  }
+
+  onScroll() {
+    this._query = {
+      ...this._query,
+      page: this._query.page += 1
+    };
+
+    this.getGroupByName(this._query);
+  }
+
+  getGroupByName(query: SearchParam) {
+    this._searchService.getGroupsByName(query)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (result) => {
+          this.groups = [...this.groups, ...result];
+        }
+      });
+  }
+
+  saveToSearchHistory = (artist: ArtistReadDTO) => {
+    const history = {
+      userId: this._userId,
+      artistId: artist.id
+    } as WriteSearchHistory;
+
+    this._searchHistoryService.addSearchHistory(history)
+      .pipe(take(1)).subscribe();
+  };
+}

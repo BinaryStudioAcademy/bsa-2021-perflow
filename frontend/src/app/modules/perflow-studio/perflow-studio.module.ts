@@ -13,15 +13,19 @@ import { SharedModule } from '../shared/shared.module';
 import { CreateEditAlbumComponent } from './create-edit-album/create-edit-album/create-edit-album.component';
 import { EditAlbumModalComponent } from './create-edit-album/edit-album-modal/edit-album-modal.component';
 import { SongsUploadModalComponent } from './create-edit-album/songs-upload-modal/songs-upload-modal.component';
-import { CreateEditContainerComponent }
-  from './constructor/create-edit-container/create-edit-container/create-edit-container.component';
-import { ContainersPageComponent } from './constructor/containers-page/containers-page/containers-page.component';
-import { ContainerSearchComponent } from './constructor/container-search/container-search/container-search.component';
-import { ContainerSearchModalComponent }
-  from './constructor/container-search-modal/container-search-modal/container-search-modal.component';
 import { ApplicationsPageComponent } from './applications-page/applications-page.component';
 import { AplicantRowComponent } from './applications-page/components/aplicant-row/aplicant-row.component';
 import { RoleRowComponent } from './applications-page/components/role-row/role-row.component';
+import { CreateEditContainerComponent }
+  from './constructor/create-edit-container/create-edit-container/create-edit-container.component';
+import { ContainersPageComponent } from './constructor/containers-page/containers-page/containers-page.component';
+import { ContainerSearchComponent }
+  from './constructor/container-search/container-search/container-search.component';
+import { ContainerSearchModalComponent }
+  from './constructor/container-search-modal/container-search-modal/container-search-modal.component';
+import { EditGroupModalComponent } from './edit-group/edit-group-modal/edit-group-modal.component';
+import { EditGroupComponent } from './edit-group/edit-group/edit-group/edit-group.component';
+import { LoginOtherModule } from '../login-other/login-other.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,9 @@ import { RoleRowComponent } from './applications-page/components/role-row/role-r
     ContainerSearchModalComponent,
     ApplicationsPageComponent,
     AplicantRowComponent,
-    RoleRowComponent
+    RoleRowComponent,
+    EditGroupModalComponent,
+    EditGroupComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +53,11 @@ import { RoleRowComponent } from './applications-page/components/role-row/role-r
     SharedModule,
     RouterModule,
     FormsModule,
-    DragDropModule
+    DragDropModule,
+    LoginOtherModule
+  ],
+  exports: [
+    EditAlbumModalComponent
   ]
 })
 export class PerflowStudioModule { }

@@ -17,6 +17,12 @@
         <h5 class="route-name">Albums</h5>
       </a>
     </div>
+    <div class="router-link" *ngIf="userRole === userRoles.artist">
+      <a routerLink="./jointogroup" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+        <span class="circle-fire"> <i class="users icon"></i></span>
+        <h5 class="route-name">Join to group</h5>
+      </a>
+    </div>
     <div class="router-link" *ngIf="userRole === userRoles.moderator">
       <a routerLink="./constructor" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
         <span class="circle-fire"> <i class="gem outline icon"></i></span>
@@ -31,6 +37,20 @@
     </div>
   </div>
   <div class="ui divider"></div>
+  <div class="artist-groups" *ngIf="userRole === userRoles.artist">
+    <div class="section">
+      <span class="title" *ngIf="artistGroups.length > 0">
+        <h6>Your groups</h6>
+      </span>
+      <ul>
+        <li *ngFor="let group of artistGroups" class="clickable" [routerLink]="['/perflowstudio/groups/view-group', group.id]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+          <span class="show-name">
+            {{ group.name }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <div class="router-container">

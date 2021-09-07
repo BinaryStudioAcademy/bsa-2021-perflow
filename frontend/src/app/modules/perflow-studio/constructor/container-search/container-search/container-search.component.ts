@@ -31,6 +31,7 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
   currentAlbums: PageSectionEntityFull[];
   currentArtists: PageSectionEntityFull[];
   currentPlaylists: PageSectionEntityFull[];
+  currentGroups: PageSectionEntityFull[];
   placeholder: string;
 
   @Input()
@@ -71,7 +72,7 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
         this._searchTerms$.next(data);
       });
     this.placeholder = !this.isAccordion
-      ? 'Search for artists, albums or playlists...'
+      ? 'Search for artists, groups, albums or playlists...'
       : 'Search for albums...';
     this.currentAlbums = this.editedSection.pageSectionEntities
       ?.filter((ps) => ps.entityType === EntityType.album);
@@ -79,6 +80,8 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
       ?.filter((ps) => ps.entityType === EntityType.artist);
     this.currentPlaylists = this.editedSection.pageSectionEntities
       ?.filter((ps) => ps.entityType === EntityType.playlist);
+    this.currentGroups = this.editedSection.pageSectionEntities
+      ?.filter((ps) => ps.entityType === EntityType.group);
   }
 
   ngOnDestroy() {
@@ -109,7 +112,11 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
       })
     ).subscribe({
       next: (data) => {
-        if (data.albums?.length || data.artists?.length || data.playlists?.length || data.songs?.length) {
+        if (data.albums?.length
+            || data.artists?.length
+            || data.playlists?.length
+            || data.songs?.length
+            || data.groups?.length) {
           this.foundData = data;
         }
         else {
@@ -129,7 +136,9 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
 
   instanceOfAlbum = (data: any): data is AlbumForReadDTO => 'releaseYear' in data;
 
-  instanceOfArtist = (data: any): data is ArtistReadDTO => 'userName' in data;
+  instanceOfArtist = (data: any): data is ArtistReadDTO => 'isArtist' in data && data.isArtist;
+
+  instanceOfGroup = (data: any): data is ArtistReadDTO => 'isArtist' in data && !data.isArtist;
 
   instanceOfPlaylist = (data: any): data is PlaylistView => !('releaseYear' in data) && !('userName' in data);
 
@@ -153,6 +162,16 @@ export class ContainerSearchComponent implements OnInit, OnDestroy {
       }
       else {
         this.currentArtists.splice(artistIndex, 1);
+      }
+    }
+    else if (this.instanceOfGroup(entity)) {
+      const groupIndex = this.currentGroups
+        .findIndex((a) => a.referenceId === entity.id);
+      if (groupIndex === -1) {
+        this.currentGroups.push(this.convertToSectionEntity(entity, EntityType.group));
+      }
+      else {
+        this.currentGroups.splice(groupIndex, 1);
       }
     }
     else if (this.instanceOfPlaylist(entity)) {
