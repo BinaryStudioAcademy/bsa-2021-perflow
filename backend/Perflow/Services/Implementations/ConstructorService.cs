@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Albums;
 using Perflow.Common.DTO.Constructor;
+using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
@@ -141,7 +142,16 @@ namespace Perflow.Services.Implementations
                                                                                                                                 AccessType = _mapper.Map<AccessTypeDTO>(p.AccessType),
                                                                                                                                 IconURL = _imageService.GetImageUrl(p.IconURL)
                                                                                                                             })
-                                                                                                                            .FirstOrDefault(a => a.Id == pse.ReferenceId) 
+                                                                                                                            .FirstOrDefault(a => a.Id == pse.ReferenceId)
+                                                                    : pse.EntityType == Domain.Enums.EntityType.Group ? _context.Groups
+                                                                                                                            .Select(g => new GroupShortDTO
+                                                                                                                            {
+                                                                                                                                Id = g.Id,
+                                                                                                                                UserName = g.Name,
+                                                                                                                                IsArtist = false,
+                                                                                                                                IconURL = _imageService.GetImageUrl(g.IconURL)
+                                                                                                                            })
+                                                                                                                            .FirstOrDefault(a => a.Id == pse.ReferenceId)
                                                                     : null
                                                         })
                                                         .OrderBy(pse => pse.Position)

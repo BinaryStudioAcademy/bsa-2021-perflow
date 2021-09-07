@@ -519,6 +519,9 @@ namespace Perflow.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PlaylistId")
                         .HasColumnType("int");
 
@@ -530,6 +533,8 @@ namespace Perflow.Migrations
                     b.HasIndex("AlbumId");
 
                     b.HasIndex("ArtistId");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("PlaylistId");
 
@@ -1028,6 +1033,10 @@ namespace Perflow.Migrations
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Perflow.Domain.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
                     b.HasOne("Perflow.Domain.Playlist", "Playlist")
                         .WithMany()
                         .HasForeignKey("PlaylistId")
@@ -1042,6 +1051,8 @@ namespace Perflow.Migrations
                     b.Navigation("Album");
 
                     b.Navigation("Artist");
+
+                    b.Navigation("Group");
 
                     b.Navigation("Playlist");
 

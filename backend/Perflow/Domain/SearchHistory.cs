@@ -12,5 +12,7 @@ namespace Perflow.Domain
         public Playlist Playlist { get; set; }
         public int? ArtistId { get; set; }
         public User Artist { get; set; }
+        public int? GroupId { get; set; }
+        public Group Group { get; set; }
     }
 }
