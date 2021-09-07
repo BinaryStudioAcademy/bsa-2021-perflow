@@ -11,16 +11,5 @@ namespace Perflow.Hubs.Implementations
     [Authorize(Policy = Policies.IsUser)]
     public class NotificationsHub : Hub<INotificationsHub>
     {
-        public override async Task OnConnectedAsync()
-        {
-            await Clients.All.SendNotification(new NotificationReadDTO { Description = "OnConnectedAsync" });
-            await base.OnConnectedAsync();
-        }
-
-        public override async Task OnDisconnectedAsync(Exception exception)
-        {
-            await Clients.All.SendNotification(new NotificationReadDTO { Description = "OnDisconnectedAsync" });
-            await base.OnDisconnectedAsync(exception);
-        }
     }
 }
