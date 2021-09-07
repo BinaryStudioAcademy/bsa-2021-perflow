@@ -38,6 +38,7 @@ export class ViewPlaylistComponent implements OnInit {
   isCollaborative: boolean;
   isGroupNotified: boolean = false;
   isConnected: boolean = false;
+  isHidden: boolean = false;
   readonly playlistType = PlaylistType;
   readonly playlistAccessType = AccessType;
 
@@ -214,11 +215,12 @@ export class ViewPlaylistComponent implements OnInit {
   canShare = (accessType: AccessType) => accessType !== AccessType.secret;
 
   sharePlay(pl: Playlist) {
+    this.connectToSharePlay(pl.id);
+
     this._sharePlayService.sharePlayAsync({ masterId: 0, playlistId: pl.id })
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: () => {
-          this.connectToSharePlay(pl.id);
           this.isGroupNotified = true;
         },
         error: () => {
@@ -253,11 +255,12 @@ export class ViewPlaylistComponent implements OnInit {
       });
   }
 
-  disconnectSharePlay(playlistId: number) {
+  disconnectSharePlay() {
     this._sharePlayService.disconectHub()
       .then(() => {
         this.isConnected = false;
         this.isGroupNotified = false;
+        this.isHidden = true;
       });
   }
 }
