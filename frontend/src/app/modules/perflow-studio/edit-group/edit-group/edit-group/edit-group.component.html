@@ -36,13 +36,16 @@
                               <div class="item" (click)="addToQueue()">
                                   <i class="outdent alternate icon"></i>Add to queue
                               </div>
-                              <div class="item last share" [ngClass]="{first:!isGroupMember}">
+                              <div class="item share" [ngClass]="{first:!isGroupMember}">
                                 <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
                                 <div class="right menu">
                                     <div class="item first last" (click)="copyLink()">
                                         Copy link
                                     </div>
                                 </div>
+                              </div>
+                              <div class="item last leave" (click)="leaveGroup()" *ngIf="isGroupMember">
+                                <i class="sign-out icon"></i>Leave group
                             </div>
                           </div>
                       </div>

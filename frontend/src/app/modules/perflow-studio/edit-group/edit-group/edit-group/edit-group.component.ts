@@ -2,7 +2,7 @@ import { PlatformLocation } from '@angular/common';
 import {
   Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import { Subject, timer } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -19,6 +19,7 @@ import { GroupService } from 'src/app/services/group.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -57,7 +58,9 @@ export class EditGroupComponent implements OnInit, OnDestroy {
     private _reactionService: ReactionService,
     private _authService: AuthService,
     private _albumsService: AlbumService,
-    private _activateRoute: ActivatedRoute
+    private _activateRoute: ActivatedRoute,
+    private _router: Router,
+    private _snackbarService: SnackbarService
   ) {
     this.getUserId();
   }
@@ -229,6 +232,20 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       this._queueService.initSong(first);
     }
   };
+
+  leaveGroup() {
+    this._groupService.deleteMember(this.groupId)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        () => {
+          this._snackbarService.show({
+            message: 'You successfully left the group.',
+            header: 'Done!'
+          });
+          this._router.navigateByUrl('/home');
+        }
+      );
+  }
 
   onSubmitModal = (data: GroupEdit) => {
     this.isModalShown = !this.isModalShown;
