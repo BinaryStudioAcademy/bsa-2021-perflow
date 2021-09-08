@@ -154,15 +154,36 @@ main
         overflow: hidden
         .cards
             position: relative
+            margin-left: 40px
             display: flex
-            width: 100%
             height: 280px
             overflow-y: scroll
             &::-webkit-scrollbar 
                 display: none  
             .card
-                margin-right: 42px       
-    .scroll-box
+                margin-right: 42px    
+    .scroll-box-left
+        width: 40px
+        position: absolute
+        left: 0px
+        top: 0px
+        bottom: 0px
+        display: flex
+        align-items: center
+        justify-content: center
+        background: $drk-gray
+        .scroll-button
+            width: 30px
+            height: 30px
+            font-size: 1.2rem
+            color: $text
+            border: none
+            border-radius: 3px
+            background: $light-gray
+            cursor: pointer
+            &:hover
+                background: #373C43   
+    .scroll-box-right
         width: 40px
         position: absolute
         right: 0px

@@ -53,7 +53,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("byGroup/unpublished/{groupId}")]
-        public async Task<ActionResult<ICollection<AlbumForListDTO>>> GetByGroupIdUnpublished(int groupId)
+        public async Task<ActionResult<ICollection<AlbumForEditGroupViewDTO>>> GetByGroupIdUnpublished(int groupId)
         {
             return Ok(await _albumsService.GetAlbumsByArtistUnpublished(groupId));
         }

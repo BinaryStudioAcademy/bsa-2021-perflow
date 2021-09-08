@@ -43,6 +43,7 @@ export class EditGroupModalComponent implements OnInit {
 
   public onSubmit() {
     this.editedGroup.iconURL = this.tempIconURL;
+    this.editedGroup.icon = this.file;
     this.editedGroup.description = this.description;
     this.editedGroup.name = this.name;
 
