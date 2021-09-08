@@ -1,0 +1,42 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/share-play",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/share-play",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/SharePlay/{playlistId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/SharePlay/{playlistId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/SharePlay",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/SharePlay",
+      "UpstreamHttpMethod": [ "POST" ]
+    }
+  ]
+}

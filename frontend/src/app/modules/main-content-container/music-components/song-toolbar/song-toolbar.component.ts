@@ -4,6 +4,8 @@ import {
 import { Subject } from 'rxjs';
 import { filter, take, takeUntil } from 'rxjs/operators';
 import { TimeConverter } from 'src/app/helpers/TimeConverter';
+import { SharePlayData } from 'src/app/models/share-play/share-play-data';
+import { Song } from 'src/app/models/song/song';
 import { SongInfo } from 'src/app/models/song/song-info';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ContentSynchronizationService } from 'src/app/services/content-synchronization.service';
@@ -11,6 +13,7 @@ import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
 import { SongToolbarService } from 'src/app/services/song-toolbar.service';
+import { SharePlayService } from 'src/app/services/share-play.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { ContentSyncRead } from '../../../../models/content-synchronization/content-sync-read';
 
@@ -68,7 +71,9 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     private _reactionService: ReactionService,
     private _queueService: QueueService,
     private _rpService: RecentlyPlayedService,
-    private _syncService: ContentSynchronizationService
+    private _syncService: ContentSynchronizationService,
+    private _sharePlayService: SharePlayService,
+    private _songToolbarService: SongToolbarService
   ) {
     toolbarService.songUpdated$
       .pipe(takeUntil(this._unsubscribe$))
@@ -115,6 +120,10 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe(this._updateSongFromSync);
 
+    this._sharePlayService.syncData$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(this._sharePlaySync);
+
     this.initAudioContext();
   }
 
@@ -152,6 +161,25 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
             this._startTime = syncData.time;
           }
         });
+    }
+  };
+
+  private _sharePlaySync = (syncData: SharePlayData | undefined | null) => {
+    if (!syncData) {
+      return;
+    }
+
+    const currentSong = this._songToolbarService.getCurrentSong();
+
+    if (currentSong?.id !== syncData?.songId) {
+      this._queueService.initSong({ id: syncData?.songId } as Song, syncData?.isPlaying);
+    }
+    else {
+      this.audio!.currentTime = syncData!.time;
+
+      if (this.isPlaying !== syncData?.isPlaying) {
+        this.playPause(true);
+      }
     }
   };
 
@@ -202,6 +230,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
 
     if (time !== this._previousTime && time % this._recordingFrequency === 0) {
       this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
+      this._sharePlayService.sendSynchronizationInfo(Math.floor(this.audio!.currentTime), this.isPlaying);
       this._previousTime = time;
     }
   };
@@ -217,6 +246,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
   getSeekSliderValue = (event: Event) => {
     this.audio!.currentTime = Number.parseInt((<HTMLInputElement>event.target).value, 10);
     this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
+    this._sharePlayService.sendSynchronizationInfo(Math.floor(this.audio!.currentTime), this.isPlaying);
   };
 
   getVolumeSliderValue = (event: Event) => {
@@ -238,7 +268,7 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     this.audio!.volume = Number.parseInt(this.volumeSlider!.value, 10) / 100;
   };
 
-  playPause = () => {
+  playPause = (isFromSync: boolean = false) => {
     if (!this.show) {
       return false;
     }
@@ -257,6 +287,10 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
 
     this._queueService.setPlaying(this.isPlaying);
     this._syncService.writeSynchronizationInfo(Math.floor(this.audio!.currentTime));
+
+    if (!isFromSync) {
+      this._sharePlayService.sendSynchronizationInfo(Math.floor(this.audio!.currentTime), this.isPlaying);
+    }
 
     return this.isPlaying;
   };

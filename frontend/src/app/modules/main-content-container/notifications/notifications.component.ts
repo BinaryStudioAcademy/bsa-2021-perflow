@@ -67,11 +67,18 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       });
   }
 
-  deleteNotification(id: number) {
-    this._notificationService.delete(id)
+  deleteNotification(not: Notification) {
+    if (not.type === NotificationType.sharePlayNotification) {
+      const index = this.notifications.findIndex((n) => n.id === not.id);
+      this.notifications.splice(index, 1);
+      this.isAnyNewNotification = this.notifications?.some((n) => !n.isRead);
+      return;
+    }
+
+    this._notificationService.delete(not.id)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(() => {
-        const index = this.notifications.findIndex((n) => n.id === id);
+        const index = this.notifications.findIndex((n) => n.id === not.id);
         this.notifications.splice(index, 1);
 
         this.isAnyNewNotification = this.notifications?.some((n) => !n.isRead);
