@@ -29,7 +29,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   constructor(
     private _router: Router,
     private _confirmationService: ConfirmationPageService
-    ) {
+  ) {
     _router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
         this._queue.closeView();
@@ -37,13 +37,13 @@ export class MainContentComponent implements OnInit, OnDestroy {
     });
 
     this._confirmationService
-    .isModalShownObservable$
-    .pipe(takeUntil(this._unsubscribe$))
-    .subscribe(
-      isModalShown => {
-        this.isConfirmationModalShown = isModalShown;
-      }
-    )
+      .isModalShownObservable$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (isModalShown) => {
+          this.isConfirmationModalShown = isModalShown;
+        }
+      );
   }
 
   ngOnInit() {

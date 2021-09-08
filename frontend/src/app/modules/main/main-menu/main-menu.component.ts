@@ -15,8 +15,8 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
+import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-main-menu',
