@@ -106,5 +106,6 @@ export class EditTagsModalComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnDestroy() {
     this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }
