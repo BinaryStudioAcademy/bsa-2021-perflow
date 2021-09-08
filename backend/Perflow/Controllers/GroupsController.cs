@@ -39,6 +39,12 @@ namespace Perflow.Controllers
             return Ok(await _groupService.CheckGroupMemberAsync(id, User.GetId()));
         }
 
+        [HttpDelete("{groupId}")]
+        public async Task<ActionResult<int>> DeleteMemberAsync(int groupId)
+        {
+            return Ok(await _groupService.DeleteMemberAsync(groupId, User.GetId()));
+        }
+
         [HttpPost]
         public async Task<ActionResult<GroupShortDTO>> CreateGroupAsync([FromForm] GroupWriteDTO group)
         {

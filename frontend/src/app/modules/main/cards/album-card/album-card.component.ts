@@ -29,6 +29,8 @@ export class AlbumCardComponent {
   isLikeButtonHidden: boolean = false;
   @Input()
   albumSection: number;
+  @Input()
+  showPublishedStatus: boolean = false;
   @Output()
   delete = new EventEmitter<AlbumForReadDTO>();
   @Output()

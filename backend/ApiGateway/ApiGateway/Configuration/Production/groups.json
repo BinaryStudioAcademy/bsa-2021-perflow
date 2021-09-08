@@ -25,6 +25,18 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownstreamPathTemplate": "/api/Groups/{groupId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Groups/{groupId}",
+      "UpstreamHttpMethod": [ "DELETE" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Groups/isMember/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
