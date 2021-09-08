@@ -42,9 +42,7 @@
             right: 10px
             bottom: 5px
             color: lighten($gray, 15%)
-        .album-year.checked,
-        .album-year.published,
-        .album-author.published
+        .album-year.checked
             color: white
             background: transparent
     .play-icon
@@ -56,6 +54,11 @@
         .play-icon
             opacity: 1
 
-.checked,
-.published
+.checked
     background: $orange-gradient
+
+.unpublished
+    position: absolute
+    right: 24px //21
+    bottom: 22px //0
+    color: gray
