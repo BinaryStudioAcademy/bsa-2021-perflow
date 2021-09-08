@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 </div>
-                <div class="item last" (click)="confirm('Remove Album', 'Are you sure you want to delete album?')">
+                <div class="item last" (click)="removeAlbum()">
                   <i class="trash icon"></i>Remove album
                 </div>
               </div>
@@ -66,14 +66,6 @@
   </app-songs-list>
 
   <app-edit-album-modal [editedAlbum]="editedAlbum" *ngIf="isModalShown" (editAlbum)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-album-modal>
-  <app-confirmation-modal
-  *ngIf="isConfirmationModalShown"
-  (isClosed)="switchConfirmationModal()"
-  (discard)="switchConfirmationModal()"
-  (confirm)="onConfirmed()"
-  [message]="confirmMessage"
-  >
-  </app-confirmation-modal>
   <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
     <div class="header">
       Link copied to clipboard!

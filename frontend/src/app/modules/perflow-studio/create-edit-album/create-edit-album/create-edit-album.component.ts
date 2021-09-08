@@ -32,10 +32,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   publishButtonTitle: string = 'Publish';
   isSuccess: boolean = false;
   isGroupAlbum: boolean = false;
-  isConfirmationModalShown: boolean = false;
-  confirmMessage: string;
 
-  private _action: string;
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
   private _isEditMode: boolean = false;
@@ -273,25 +270,5 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     timer(3000).subscribe((val) => {
       this.isSuccess = Boolean(val);
     });
-  }
-
-  switchConfirmationModal() {
-    this.isConfirmationModalShown = !this.isConfirmationModalShown;
-  }
-
-  confirm(action: string, message: string) {
-    this._action = action;
-    this.confirmMessage = message;
-    this.switchConfirmationModal();
-  }
-
-  onConfirmed() {
-    switch (this._action) {
-      case 'Remove Album':
-        this.removeAlbum();
-        break;
-      default:
-        break;
-    }
   }
 }
