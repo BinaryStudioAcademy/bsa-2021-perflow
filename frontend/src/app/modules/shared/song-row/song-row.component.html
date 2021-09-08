@@ -1,5 +1,5 @@
 <div class="ui padded grid song" [ngClass]="highlightId === song.id ? 'playing' : ''">
-    <div class="sm-row">
+    <div class="sm-row"  [ngClass]="isEditable ? 'is-editable' : 'is-not-editable'">
         <div class="column song-number">
             <span class="number">{{number}}</span>
             <i class="pause icon" (click)="pauseSong()" *ngIf="isPlaying && highlightId === song.id"></i>
@@ -26,6 +26,14 @@
             </span>
 
             <span class="e foredit" *ngIf="isEditable" [ngClass]="song.hasCensorship ? 'active' : ''" (click)="changeCensorship()">E</span>
+        </div>
+        <div class="column tags text" *ngIf="isEditable">
+                <span class="tag-wrap" *ngFor="let tag of song.tags?.slice(0, 3)">
+                  <span class="tag text">
+                      {{tag.name}}
+                  </span>
+                </span>
+            <span class="plus" (click)="addTag()">+</span>
         </div>
         <div class="column artist-name text">
             <a class="link" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">
@@ -99,3 +107,5 @@
       {{ notification }}   
     </div>
 </div>
+
+<app-edit-tags-modal *ngIf="isEditable" [tags]="tags" [song]="song" (updatedTags)="updateTags($event)"></app-edit-tags-modal>

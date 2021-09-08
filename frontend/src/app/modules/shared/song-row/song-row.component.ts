@@ -17,6 +17,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarInfo } from 'src/app/models/common/snackbar-info';
+import { Tag } from 'src/app/models/tag/tag';
 import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -33,8 +34,10 @@ export class SongRowComponent implements OnInit, OnDestroy {
   isSuccess: boolean = false;
   createdPlaylistArray = new Array<PlaylistName>();
   notification: string;
+  songTags: Tag[];
 
   @Input() song: Song;
+  @Input() tags: Tag[];
   @Input() number: number;
   @Input() highlightId: number;
   @Input() isInQueue = false;
@@ -181,6 +184,14 @@ export class SongRowComponent implements OnInit, OnDestroy {
           this.song.isLiked = true;
         }
       );
+  }
+
+  addTag() {
+    $(`.edit.${this.song.id.toString()}`).modal('show');
+  }
+
+  updateTags(tags: Tag[]) {
+    this.song.tags = tags;
   }
 
   playSong = () => {

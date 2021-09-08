@@ -74,7 +74,7 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
   loadData() {
     const albumId = this._route.snapshot.params.id;
 
-    this._service.getAlbum(albumId)
+    this._service.getAlbumWithSongs(albumId)
       .subscribe(
         (result) => {
           this.album = result;

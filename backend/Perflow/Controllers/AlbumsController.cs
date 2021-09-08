@@ -40,6 +40,12 @@ namespace Perflow.Controllers
             return Ok(await _albumsService.GetAlbumFullAsync(id, User.GetId()));
         }
 
+        [HttpGet("withSongs/{id}")]
+        public async Task<ActionResult<AlbumForViewDTO>> GetAlbumWithSongsById(int id)
+        {
+            return Ok(await _albumsService.GetAlbumAsync(id, User.GetId()));
+        }
+
         [HttpGet("byArtist/{artistId}")]
         public async Task<ActionResult<ICollection<AlbumForListDTO>>> GetByArtistId(int artistId, AuthorType authorType)
         {

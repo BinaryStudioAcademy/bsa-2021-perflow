@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Perflow.Common.DTO.Constructor
+﻿namespace Perflow.Common.DTO.Constructor
 {
     public class PageContainerViewDTO
     {

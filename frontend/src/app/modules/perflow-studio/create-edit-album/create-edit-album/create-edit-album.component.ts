@@ -15,6 +15,8 @@ import { AlbumPublicStatus } from 'src/app/models/album/аlbum-public-status';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
+import { Tag } from 'src/app/models/tag/tag';
+import { TagService } from 'src/app/services/tags/tag.service';
 import { GroupService } from 'src/app/services/group.service';
 
 @Component({
@@ -32,6 +34,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   publishButtonTitle: string = 'Publish';
   isSuccess: boolean = false;
   isGroupAlbum: boolean = false;
+  tags: Tag[] = [];
 
   private _unsubscribe$ = new Subject<void>();
   private _id: number | undefined;
@@ -45,8 +48,11 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
+    private _tagService: TagService,
     private _groupService: GroupService
-  ) { }
+  ) {
+    this.getTags();
+  }
 
   ngOnInit() {
     this.isGroupAlbum = this._router.url.indexOf('createAsGroup') !== -1;
@@ -64,6 +70,14 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       this._isEditMode = false;
       this.showEditAlbumModal();
     }
+  }
+
+  getTags() {
+    this._tagService.getAllTags()
+      .pipe(take(1))
+      .subscribe((tags) => {
+        this.tags = tags;
+      });
   }
 
   public ngOnDestroy() {

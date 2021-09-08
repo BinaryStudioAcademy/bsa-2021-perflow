@@ -76,4 +76,8 @@ export class PlaylistsService {
   getYourMix() {
     return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/userMix`);
   }
+
+  getRecommendations() {
+    return this._httpService.getRequest<PlaylistView[]>(`${this._endpoint}/recommendations`);
+  }
 }
