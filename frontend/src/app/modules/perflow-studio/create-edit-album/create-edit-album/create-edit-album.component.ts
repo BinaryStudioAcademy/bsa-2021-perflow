@@ -258,6 +258,9 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
           next: () => {
             this.albumSongs = this.album.songs.filter((s) => s.id !== song.id);
             this.album.songs = this.albumSongs;
+            if(!this.album.songs.length && this.album.isPublished){
+              this.setPublicStatus();
+            }
           }
         });
     }
