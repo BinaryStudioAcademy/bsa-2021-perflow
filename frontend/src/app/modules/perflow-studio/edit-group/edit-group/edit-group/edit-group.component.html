@@ -1,0 +1,127 @@
+<main>
+  <div class="group">
+      <div class="group-details">
+          <div class="group-image">
+              <img class="image" alt="group" [src]="group.iconURL">
+          </div>
+          <div class="group-info">
+              <p class="group-title">
+                  {{group.name}}
+              </p>
+              <div class="group-description">
+                  {{group.description}}
+              </div>
+              <div class="buttons">
+                  <button class="btn-full button-play" (click)="playArtist()">Play</button>
+                  <div class="action-icon" *ngIf="!isGroupMember">
+                    <i class="heart outline icon icons" (click)="likeGroup()" *ngIf="!group.isLiked"></i>
+                    <i class="heart icon icons" (click)="dislikeGroup()" *ngIf="group.isLiked"></i>
+                </div>
+                  <button 
+                    *ngIf="isGroupMember" 
+                    class="ui button button-create-album" 
+                    routerLink="/perflowstudio/albums/createAsGroup/{{group.id}}">
+                    Create an album
+                  </button>
+                  <div class="action-icon">
+                      <div class="ui floating dropdown icon" appSmDropdown>
+                          <i class="ellipsis vertical icon icons"></i>
+                          <div class="right menu">
+                              <div class="item first" (click)="startEditMode()" *ngIf="isGroupMember" >
+                                  <i class="edit outline icon"></i>Edit group
+                              </div>
+                              <div class="item first" *ngIf="!isGroupMember">
+                                  <i class="bell icon"></i>Subscribe
+                              </div>
+                              <div class="item" (click)="addToQueue()">
+                                  <i class="outdent alternate icon"></i>Add to queue
+                              </div>
+                              <div class="item share" [ngClass]="{first:!isGroupMember}">
+                                <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
+                                <div class="right menu">
+                                    <div class="item first last" (click)="copyLink()">
+                                        Copy link
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="item last leave" (click)="leaveGroup()" *ngIf="isGroupMember">
+                                <i class="sign-out icon"></i>Leave group
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <app-songs-list *ngIf="topSongs.length > 0" [songs]="topSongs"></app-songs-list>
+  <div class="groupAlbums" *ngIf="groupAlbums.length > 0">
+      <div class="header">
+          Albums
+          <div class="ui floating fluid selection dropdown my-dropdown" appSmDropdown>
+            <div class="text" *ngIf="isPublishedFirst">Published first</div>
+            <div class="text" *ngIf="!isPublishedFirst">Unpublished first</div>
+            <i class="chevron down icon"></i>
+            <div class="menu">
+                <div class="item" (click)="changeOrder(true)">Published first</div>
+                <div class="item" (click)="changeOrder(false)">Unpublished first</div>
+            </div>
+        </div>
+      </div>
+      <div class="items">
+        <div class="scroll-box-left" *ngIf="isTextOverflow('albums')">
+          <button class="scroll-button" (click)="scrollLeft('albums')">
+              <i class="chevron left icon"></i>
+          </button>
+        </div>
+          <div #albums id="albums" name="albums" class="cards">
+              <app-album-card 
+                class="card" 
+                *ngFor="let album of groupAlbums" 
+                [album]="album" 
+                [isLiked]=false 
+                [showPublishedStatus]="true">
+              </app-album-card>
+          </div>
+          <div class="scroll-box-right" *ngIf="isTextOverflow('albums')">
+              <button class="scroll-button" (click)="scrollRight('albums')">
+                  <i class="chevron right icon"></i>
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <div class="groupPlaylists" *ngIf="groupPlaylists.length > 0">
+      <div class="header">
+          Playlists
+      </div>
+      <div class="items">
+          <div class="scroll-box-left" *ngIf="isTextOverflow('playlists')">
+            <button class="scroll-button" (click)="scrollLeft('playlists')">
+                <i class="chevron left icon"></i>
+            </button>
+          </div>
+          <div #playlists id="playlists" name="playlists" class="cards">
+              <app-playlist-card class="card" *ngFor="let pl of groupPlaylists" [playlist]="pl"></app-playlist-card>
+          </div>
+          <div class="scroll-box-right" *ngIf="isTextOverflow('playlists')">
+              <button class="scroll-button" (click)="scrollRight('playlists')">
+                  <i class="chevron right icon"></i>
+              </button>
+          </div>
+      </div>
+  </div>
+  <app-edit-group-modal
+      [editedGroup]="group"
+      *ngIf="isModalShown" 
+      (editGroup)="onSubmitModal($event)" 
+      (isClosed)="closeModal()">
+  </app-edit-group-modal>
+  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
+      <div class="header">
+          Link copied to clipboard!
+      </div>
+  </div>
+  <div class="container"></div>
+</main>

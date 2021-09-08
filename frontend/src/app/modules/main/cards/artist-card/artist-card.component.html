@@ -20,7 +20,8 @@
         <div class="artist-name tub">
             <h5>{{artist.userName}}</h5>
         </div>
-        <span [ngClass]="{checkedConstructor:isCheckedConstructor}">Artist</span>
+        <span *ngIf="artist.isArtist" [ngClass]="{checkedConstructor:isCheckedConstructor}">Artist</span>
+        <span *ngIf="!artist.isArtist" [ngClass]="{checkedConstructor:isCheckedConstructor}">Group</span>
         <button class="ui btn-full button apply-btn" *ngIf="isChecked && !isCheckBox" (click)="onApplyClick(artist)"
             appClickStopPropagation>
             Apply

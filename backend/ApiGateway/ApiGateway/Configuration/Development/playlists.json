@@ -146,6 +146,18 @@
       ],
       "UpstreamPathTemplate": "/api/Playlists/userMix",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Playlists/recommendations",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Playlists/recommendations",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ]
 }

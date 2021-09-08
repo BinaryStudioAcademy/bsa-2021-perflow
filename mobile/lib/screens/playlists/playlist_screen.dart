@@ -96,6 +96,7 @@ class PlaylistScreen extends StatelessWidget {
                                   .unlikePlaylist(value.data.id);
                             },
                           ),
+                    onPlayPressed: context.read<PlaylistSongsCubit>().play
                   ),
                 ),
               ),

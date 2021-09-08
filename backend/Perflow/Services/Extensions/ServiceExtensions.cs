@@ -70,6 +70,9 @@ namespace Perflow.Services.Extensions
             
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<PlaylistEditorsService>();
+            services.AddScoped<SharePlayService>();
+
+            services.AddScoped<ITagService, TagService>();
         }
     }
 }

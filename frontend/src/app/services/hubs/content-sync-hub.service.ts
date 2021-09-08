@@ -11,7 +11,7 @@ import { ContentSyncWrite } from '../../models/content-synchronization/content-s
   providedIn: 'root'
 })
 export class ContentSyncHubService extends BaseHubService {
-  protected readonly hubUrl = 'content-sync';
+  protected readonly hubUrl = 'hub/content-sync';
 
   syncData$ = new Subject<ContentSyncRead>();
 

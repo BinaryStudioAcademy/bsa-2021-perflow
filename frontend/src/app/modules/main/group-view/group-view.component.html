@@ -13,7 +13,7 @@
                 </div>
                 <div class="buttons">
                     <button class="btn-full button-play" (click)="playArtist()">Play</button>
-                    <div class="action-icon">
+                    <div class="action-icon" *ngIf="!isGroupMember">
                         <i class="heart outline icon icons" (click)="likeGroup()" *ngIf="!group.isLiked"></i>
                         <i class="heart icon icons" (click)="dislikeGroup()" *ngIf="group.isLiked"></i>
                     </div>
@@ -21,8 +21,14 @@
                         <div class="ui floating dropdown icon" appSmDropdown>
                             <i class="ellipsis vertical icon icons"></i>
                             <div class="right menu">
-                                <div class="item first">
+                                <div class="item first" routerLink="/perflowstudio/groups/view-group/{{group.id}}" *ngIf="isGroupMember" >
+                                    <i class="edit outline icon"></i>Edit group
+                                </div>
+                                <div class="item first" *ngIf="!isGroupMember">
                                     <i class="bell icon"></i>Subscribe
+                                </div>
+                                <div class="item" (click)="addToQueue()">
+                                    <i class="outdent alternate icon"></i>Add to queue
                                 </div>
                                 <div class="item last share">
                                     <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
@@ -32,9 +38,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item last" (click)="addToQueue()">
-                                    <i class="outdent alternate icon"></i>Add to queue
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -43,35 +46,43 @@
         </div>
     </div>
 
-    <app-songs-list [songs]="topSongs"></app-songs-list>
-
+    <app-songs-list *ngIf="topSongs.length > 0" [songs]="topSongs"></app-songs-list>
     <div class="groupAlbums" *ngIf="groupAlbums.length > 0">
         <div class="header">
             Albums
         </div>
         <div class="items">
-            <div #albums name="albums" class="cards">
+            <div class="scroll-box-left" *ngIf="isTextOverflow('albums')">
+                <button class="scroll-button" (click)="scrollLeft('albums')">
+                    <i class="chevron left icon"></i>
+                </button>
+            </div>
+            <div #albums id="albums" name="albums" class="cards">
                 <app-album-card class="card" *ngFor="let album of groupAlbums" [album]="album" [isLiked]=false>
                 </app-album-card>
             </div>
-            <div class="scroll-box">
-                <button class="scroll-button" (click)="scroll('albums')">
+            <div class="scroll-box-right" *ngIf="isTextOverflow('albums')">
+                <button class="scroll-button" (click)="scrollRight('albums')">
                     <i class="chevron right icon"></i>
                 </button>
             </div>
         </div>
     </div>
-
     <div class="groupPlaylists" *ngIf="groupPlaylists.length > 0">
         <div class="header">
             Playlists
         </div>
         <div class="items">
-            <div #playlists name="playlists" class="cards">
+            <div class="scroll-box-left" *ngIf="isTextOverflow('playlists')">
+                <button class="scroll-button" (click)="scrollLeft('playlists')">
+                    <i class="chevron left icon"></i>
+                </button>
+            </div>
+            <div #playlists id="playlists" name="playlists" class="cards">
                 <app-playlist-card class="card" *ngFor="let pl of groupPlaylists" [playlist]="pl"></app-playlist-card>
             </div>
-            <div class="scroll-box">
-                <button class="scroll-button" (click)="scroll('playlists')">
+            <div class="scroll-box-right" *ngIf="isTextOverflow('playlists')">
+                <button class="scroll-button" (click)="scrollRight('playlists')">
                     <i class="chevron right icon"></i>
                 </button>
             </div>

@@ -173,5 +173,13 @@ namespace Perflow.Controllers
 
             return Ok(playlists);
         }
+
+        [HttpGet("recommendations")]
+        public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetRecommendationsAsync()
+        {
+            var playlists = await _playlistService.GetRecommendationsAsync(User.GetId());
+
+            return Ok(playlists);
+        }
     }
 }

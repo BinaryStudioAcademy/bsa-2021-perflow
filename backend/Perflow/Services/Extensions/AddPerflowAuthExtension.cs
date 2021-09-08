@@ -38,7 +38,9 @@ namespace Perflow.Services.Extensions
 
         private static bool IsSignalRHubPath(PathString path)
         {
-            return path.StartsWithSegments("/notifications") || path.StartsWithSegments("/content-sync");
+            return path.StartsWithSegments("/hub/notifications") 
+                || path.StartsWithSegments("/hub/content-sync")
+                || path.StartsWithSegments("/hub/share-play");
         }
     }
 }

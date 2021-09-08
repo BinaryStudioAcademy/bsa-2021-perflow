@@ -1,5 +1,7 @@
 @import "src/styles.sass"
 
+$left-padding: 30px
+
 a
     display: flex
     text-align: center
@@ -56,3 +58,43 @@ a
     margin-left: 247px
     height: 100%
     overflow-y: scroll
+
+
+.artist-groups
+    margin-top: 40px
+    color: $text
+    position: relative
+    .section
+        position: relative
+        margin-bottom: 20px
+        &:last-child
+            margin-bottom: 0px
+        ul
+            height: 100%
+            margin-top: 10px
+            li
+                display: flex
+                align-items: center
+                padding: 10px 0
+                span
+                    display: grid
+                    grid-template-columns: 180px 10px
+                    width: 200px !important
+                    max-width: 200px !important
+                    position: relative
+                    span
+                        grid-column: 1
+                        display: inline
+                        width: 170px !important
+                        overflow: hidden !important
+                        white-space: nowrap !important
+                        text-overflow: ellipsis !important
+
+                &::before
+                    content: "•"
+                    margin-right: 15px
+                    color: #FD5D34
+                    font-size: 35px
+                &:hover
+                    cursor: pointer
+                    background: $light-gray

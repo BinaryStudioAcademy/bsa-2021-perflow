@@ -1,7 +1,7 @@
 import {
   Component, OnInit, OnDestroy
 } from '@angular/core';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, filter, first, switchMap, takeUntil
 } from 'rxjs/operators';
@@ -188,9 +188,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.playlist = data;
-          this._createdPlaylistService.addPlaylist(data);
 
           if (editedPlaylist.accessType !== AccessType.collaborative) {
+            this._createdPlaylistService.addPlaylist(data);
             this._playlistEditorsService.removePlaylist(editedPlaylist.id)
               .pipe(takeUntil(this._unsubscribe$))
               .subscribe((_) => {
@@ -198,6 +198,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
               });
           }
           else if (editedPlaylist.accessType === AccessType.collaborative) {
+            this._createdPlaylistService.editCollaborativePlaylist(data);
             this._playlistEditorsService.addCollaborators(editedPlaylist.id, this.collaborators)
               .pipe(takeUntil(this._unsubscribe$))
               .subscribe();
@@ -301,15 +302,5 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.searchValue = '';
       this.foundSongs = new Array<Song>();
     }
-  }
-
-  copyLink() {
-    this._clipboardApi.copyFromContent(
-      `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
-    );
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
   }
 }

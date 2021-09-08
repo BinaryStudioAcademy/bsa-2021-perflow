@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Reactions;
+using Perflow.Common.DTO.Users;
+using Perflow.Common.Helpers;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
 using Perflow.Services.Abstract;
+using Perflow.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +16,11 @@ namespace Perflow.Services.Implementations
 {
     public class GroupReactionService : BaseService
     {
-        public GroupReactionService(PerflowContext context, IMapper mapper) : base(context, mapper) { }
+        private readonly IImageService _imageService;
+        public GroupReactionService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        {
+            _imageService = imageService;
+        }
 
         public async Task AddGroupReactionAsync(NewGroupReactionDTO reaction)
         {
@@ -37,6 +46,18 @@ namespace Perflow.Services.Implementations
             await context.GroupReactions.AddAsync(groupReaction);
 
             await context.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<ArtistReadDTO>> GetGroupsByUserId(int userId)
+        {
+            var artists = await context.GroupReactions
+                .Where(r => r.UserId == userId)
+                .Select(r =>
+                    mapper.Map<GroupWithIcon, ArtistReadDTO>(new GroupWithIcon(r.Group, _imageService.GetImageUrl(r.Group.IconURL)))
+                )
+                .ToListAsync();
+
+            return artists;
         }
 
         public async Task RemoveGroupReactionAsync(NewGroupReactionDTO reaction)

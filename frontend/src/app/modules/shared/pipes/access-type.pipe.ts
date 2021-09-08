@@ -16,10 +16,10 @@ export class AccessTypePipe implements PipeTransform {
         accessType = 'Collaborative';
         break;
       case AccessType.default:
-        accessType = 'Default';
+        accessType = 'Open to all';
         break;
       default:
-        accessType = 'Default';
+        accessType = 'Open to all';
         break;
     }
 

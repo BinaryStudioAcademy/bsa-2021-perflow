@@ -7,5 +7,6 @@ export interface FoundData {
   songs: Array<Song>,
   albums: Array<AlbumForReadDTO>,
   artists: Array<ArtistReadDTO>,
-  playlists: Array<PlaylistView>
+  playlists: Array<PlaylistView>,
+  groups: Array<ArtistReadDTO>
 }

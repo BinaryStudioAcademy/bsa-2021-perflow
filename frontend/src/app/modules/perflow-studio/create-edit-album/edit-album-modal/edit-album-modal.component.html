@@ -65,8 +65,8 @@
           <!-- Select Author Type -->
           <div class="ui field" [hidden]="isAuthorHidden">
             <select class="ui dropdown dropdown-input" name="author" (change)="authorTypeChange()" #author>
-              <option *ngFor="let author of authors" [selected]="editedAlbum.groupId===selectedIndex" 
-                value="{{author.value}}">{{author.name}}</option>
+              <option *ngFor="let author of authors" [selected]="author.value===selectedIndex" 
+                value="{{author.value}}" [disabled]="selectedIndex !== 0">{{author.name}}</option>
             </select>
           </div>
           <!-- Select Region -->
@@ -100,6 +100,8 @@
         </div>
 
       </form>
+
+      <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
     </div>
   </div>
 </div>

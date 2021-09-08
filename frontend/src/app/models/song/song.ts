@@ -2,6 +2,7 @@ import { Album } from '../album/album';
 import { User } from '../user/user';
 import { AuthorType } from '../enums/author-type.enum';
 import { Group } from '../group/group';
+import { Tag } from '../tag/tag';
 
 export interface Song {
   id: number;
@@ -16,4 +17,5 @@ export interface Song {
   isLiked: boolean;
   group?: Group;
   podcast: string;
+  tags?: Tag[];
 }

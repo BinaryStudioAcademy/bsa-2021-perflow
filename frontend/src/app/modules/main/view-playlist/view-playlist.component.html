@@ -4,7 +4,7 @@
       <div class="content-view-playlist">
         <div class="image">
           <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" *ngIf="playlist.type === playlistType.playlist" />
-          <div class="icon-background" *ngIf="playlist.type === playlistType.mix">
+          <div class="icon-background" *ngIf="playlist.type !== playlistType.playlist">
             <img class="icon" src="../../../../assets/images/playlist.svg" />
             <p class="playlist-name">
               {{ playlist?.name }}
@@ -18,7 +18,7 @@
             <span class="total-all" *ngIf="playlist.type === playlistType.playlist">
               {{ playlist?.author?.userName }} 
             </span>
-            <span class="total-all" *ngIf="playlist.type === playlistType.mix">
+            <span class="total-all" *ngIf="playlist.type !== playlistType.playlist">
               Perflow
             </span>
             <span class="menu-view-playlist-description">
@@ -39,7 +39,7 @@
               <div class="ui floating dropdown ellipsis-button" appSmDropdown>
                 <i class="ellipsis vertical icon"></i>
                 <div class="menu">
-                  <div *ngIf="isAuthor || isCollaborative" class="item first" routerLink="../../edit/{{playlist.id}}">
+                  <div *ngIf="(isAuthor || isCollaborative) && playlist.type === playlistType.playlist" class="item first" routerLink="../../edit/{{playlist.id}}">
                     <span>
                       <i class="edit outline icon"></i>
                       Edit playlist
@@ -65,7 +65,7 @@
                         </div>
                       </div>
                   </div>
-                  <div *ngIf="isAuthor" class="item last" (click)="deletePlaylist()">
+                  <div *ngIf="isAuthor && playlist.type === playlistType.playlist" class="item last" (click)="deletePlaylist()">
                     <span>
                       <i class="trash alternate outline icon"></i>
                       Delete playlist
@@ -74,6 +74,9 @@
                 </div>
               </div>
             </span>
+            <button *ngIf="!isHidden && playlist.accessType === playlistAccessType.collaborative && playlist.author?.id === userId && !isConnected && !isGroupNotified" class="ui button-upload button" (click)="sharePlay(playlist)">Share Play</button>
+            <button *ngIf="isGroupNotified && !isConnected && playlist.author?.id !== userId" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
+            <button *ngIf="isConnected" class="ui button-upload button" (click)="disconnectSharePlay()">Disconnect</button>
           </div>
         </div>
       </div>
