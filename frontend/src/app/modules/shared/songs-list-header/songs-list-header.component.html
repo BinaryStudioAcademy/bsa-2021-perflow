@@ -1,9 +1,12 @@
-<div class="list-header">
+<div class="list-header"  [ngClass]="isEditable ? 'is-editable' : 'is-not-editable'">
   <div><span id="index-header">#</span></div>
   <div></div>
   <div>
     <span (click)="updateSortType(sortProperties.name)">Name</span>
     <app-sort-order-icon *ngIf="showSortIcon(sortProperties.name)" [order]="sortType!.order"></app-sort-order-icon>
+  </div>
+  <div *ngIf="isEditable">
+    <span>Tags</span>
   </div>
   <div>
     <span (click)="updateSortType(sortProperties.artist)">Artist</span>

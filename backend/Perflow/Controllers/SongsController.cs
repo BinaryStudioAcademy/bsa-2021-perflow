@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Perflow.Common.DTO.Songs;
 using Perflow.Common.Helpers;
@@ -89,7 +88,7 @@ namespace Perflow.Controllers
         [HttpGet("top/{amount}")]
         public async Task<ActionResult<IEnumerable<SongReadDTO>>> GetTopSongsByLikes(int amount)
         {
-            return Ok(await _songsService.GetTopSongsByLikes(amount));
+            return Ok(await _songsService.GetTopSongsByLikes(amount, User.GetId()));
         }
 
         [HttpGet("byAlbum/{id}")]

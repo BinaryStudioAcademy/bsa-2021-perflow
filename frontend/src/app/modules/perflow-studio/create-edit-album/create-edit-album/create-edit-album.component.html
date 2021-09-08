@@ -31,7 +31,7 @@
         <div class="buttons">
           <button class="btn-full button-play">Play</button>
           <button class="ui button-upload button" (click)="showUploadSongsModal()">Upload songs</button>
-          <button class="ui button-upload button" (click)="setPublicStatus()">{{publishButtonTitle}}</button>
+          <button *ngIf="album.songs.length" class="ui button-upload button" (click)="setPublicStatus()">{{publishButtonTitle}}</button>
           <div class="action-icon">
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon icons"></i>
@@ -62,6 +62,7 @@
     [songs]="album.songs" 
     [isDraggable]="true" 
     [isEditable]="true" 
+    [tags]="tags"
     (clickMenuItem)="clickMenuHandler($event)">
   </app-songs-list>
 

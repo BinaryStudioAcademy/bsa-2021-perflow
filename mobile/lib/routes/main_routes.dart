@@ -4,6 +4,7 @@ import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:perflow/cubits/library_navigation/library_navigation_cubit.dart';
 import 'package:perflow/cubits/main_navigation/main_navigation_cubit.dart';
 import 'package:perflow/cubits/playback/playback_cubit.dart';
+import 'package:perflow/cubits/playback_queue/playback_queue_cubit.dart';
 import 'package:perflow/cubits/search/search_albums_cubit.dart';
 import 'package:perflow/cubits/search/search_artists_cubit.dart';
 import 'package:perflow/cubits/search/search_playlists_cubit.dart';
@@ -24,6 +25,7 @@ import 'package:perflow/screens/main/library/library_screen.dart';
 import 'package:perflow/screens/main/library/library_songs_screen.dart';
 import 'package:perflow/screens/main/main_screen.dart';
 import 'package:perflow/screens/main/player/player_screen.dart';
+import 'package:perflow/screens/main/queue/queue_screen.dart';
 import 'package:perflow/screens/main/search/search_base_screen.dart';
 import 'package:perflow/screens/main/search/search_screen.dart';
 import 'package:perflow/services/auth/auth_service.dart';
@@ -100,7 +102,14 @@ class MainRoutes extends VRouteElementBuilder {
               ),
             ],
           ),
-          VWidget(path: Routes.player, widget: const PlayerScreen()),
+          VWidget(
+            path: Routes.player,
+            widget: const PlayerScreen()
+          ),
+          VWidget(
+            path: Routes.queue,
+            widget: const QueueScreen()
+          ),
           ContentRoutes()
         ],
       )
@@ -125,10 +134,10 @@ class MainRoutes extends VRouteElementBuilder {
       create: (_) => SearchNavigationCubit(),
       child: VWidgetGuard(
         afterUpdate: _matchSearchRoute,
+        afterEnter: _matchSearchRoute,
         child: SearchScreen(
           child: child,
         ),
-        afterEnter: _matchSearchRoute,
       ),
     );
   }
@@ -141,9 +150,15 @@ class MainRoutes extends VRouteElementBuilder {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<MainNavigationCubit>(
-            create: (_) => MainNavigationCubit(),
+            create: (_) => MainNavigationCubit()
           ),
-          BlocProvider<PlaybackCubit>(create: (_) => PlaybackCubit())
+          BlocProvider<PlaybackCubit>(
+            create: (_) => PlaybackCubit()
+          ),
+          BlocProvider<PlaybackQueueCubit>(
+            lazy: false,
+            create: (_) => PlaybackQueueCubit()
+          )
         ],
         child: VWidgetGuard(
           afterUpdate: _matchRoute,

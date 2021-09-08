@@ -31,6 +31,9 @@ $checkbox-color: #FD6831
 $song-row-areas: "song-number like song-name artist-name album-name added duration settings"
 $song-row-columns: 32px 32px 6fr 4fr 4fr 3fr 2fr 32px
 
+$song-row-edit-areas: "song-number like song-name tags artist-name album-name added duration settings"
+$song-row-edit-columns: 32px 32px 5.5fr 3fr 3.5fr 3.5fr 2fr 1.5fr 32px
+
 $song-toolbar-height: 100px
 
 $fire-orange: linear-gradient(90deg, #FD8D24 0%, #FF782B 50.12%, #FD6333 100%)
@@ -46,7 +49,7 @@ $mini-profile-z-index: $queue-z-index + 1
   font-family: 'Rubik','sans-serif'
 
   &::-webkit-scrollbar
-    width: 5px
+    width: 5px !important
     height: 5px !important
     opacity: 0.7 !important
 
@@ -179,3 +182,6 @@ card
 
 .hidden
     display: none !important
+
+.ui.dimmer
+    z-index: 999 !important

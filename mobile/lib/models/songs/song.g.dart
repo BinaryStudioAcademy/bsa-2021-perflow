@@ -18,7 +18,6 @@ Song _$SongFromJson(Map<String, dynamic> json) {
         ? null
         : GroupSimplified.fromJson(json['group'] as Map<String, dynamic>),
     duration: json['duration'] as int,
-    blobId: json['blobId'] as String?,
     isLiked: json['isLiked'] as bool,
   );
 }
@@ -30,6 +29,5 @@ Map<String, dynamic> _$SongToJson(Song instance) => <String, dynamic>{
       'album': instance.album,
       'group': instance.group,
       'duration': instance.duration,
-      'blobId': instance.blobId,
       'isLiked': instance.isLiked,
     };

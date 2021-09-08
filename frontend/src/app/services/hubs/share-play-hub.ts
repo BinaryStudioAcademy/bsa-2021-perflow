@@ -12,7 +12,7 @@ import { SnackbarService } from '../snackbar.service';
   providedIn: 'root'
 })
 export class SharePlayHub extends BaseHubService {
-  protected readonly hubUrl = 'share-play';
+  protected readonly hubUrl = 'hub/share-play';
 
   syncData$ = new Subject<SharePlayData>();
 

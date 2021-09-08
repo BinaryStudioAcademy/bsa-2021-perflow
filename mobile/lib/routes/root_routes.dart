@@ -35,7 +35,7 @@ class RootRoutes extends VRouteElementBuilder {
       builder: (context, snapshot) {
         if(snapshot.hasError) {
           return const EmptyScreen(
-              child: Text('Fatal error occurred')
+            child: Text('Fatal error occurred')
           );
         }
 
@@ -44,9 +44,9 @@ class RootRoutes extends VRouteElementBuilder {
         }
 
         return const EmptyScreen(
-            child: CircularProgressIndicator(
-              color: Perflow.primaryLightColor,
-            )
+          child: CircularProgressIndicator(
+            color: Perflow.primaryLightColor,
+          )
         );
       },
     );
