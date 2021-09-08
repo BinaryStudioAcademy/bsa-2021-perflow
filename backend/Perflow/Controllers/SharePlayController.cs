@@ -24,13 +24,6 @@ namespace Perflow.Controllers
             _sharePlayService = sharePlayService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> SharePlayAsync([FromBody] SharePlayDTO dto)
-        {
-            await _sharePlayService.NotifyGroup(dto, User.GetId());
-            return Ok();
-        }
-
         [HttpGet("{playlistId}")]
         public async Task<ActionResult<bool>> GetSharePlayStateAsync(int playlistId)
         {

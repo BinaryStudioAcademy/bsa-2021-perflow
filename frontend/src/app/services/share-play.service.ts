@@ -19,18 +19,13 @@ export class SharePlayService {
   ) {
   }
 
-  sharePlayAsync(data: SharePlay) {
-    this._playlistId = data.playlistId;
-    return this._httpService.postRequest(this._routePrefix, data);
-  }
-
   getSharePlayState(playlistId: number) {
     return this._httpService.getRequest<boolean>(`${this._routePrefix}/${playlistId}`);
   }
 
-  async connectToSharePlay(id: number) {
-    this._playlistId = id;
-    await this._hub.connectToHub({ masterId: 0, playlistId: id });
+  async connectToSharePlay(sp: SharePlay) {
+    this._playlistId = sp.playlistId;
+    await this._hub.connectToHub(sp);
   }
 
   get syncData$() {
@@ -58,7 +53,8 @@ export class SharePlayService {
     return this._hub?.getHubStatus();
   }
 
-  async disconectHub() {
-    await this._hub.stop();
+  async disconectHub(data: SharePlay) {
+    await this._hub.disconect(data);
+    // await this._hub.stop();
   }
 }

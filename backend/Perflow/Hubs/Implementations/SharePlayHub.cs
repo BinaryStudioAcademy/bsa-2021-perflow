@@ -16,27 +16,29 @@ namespace Perflow.Hubs.Implementations
     [Authorize(Policy = Policies.IsUser)]
     public class SharePlayHub : Hub<ISharePlayHub>
     {
-        private readonly ContentSynchronizationService _syncService;
-        private readonly PerflowContext _context;
+        private readonly SharePlayService _sharePlayService;
         private readonly static Dictionary<int, string> _groups = new Dictionary<int, string>();
 
-        public SharePlayHub(ContentSynchronizationService syncService, PerflowContext context)
+        public SharePlayHub(SharePlayService sharePlayService)
         {
-            _syncService = syncService;
-            _context = context;
+            _sharePlayService = sharePlayService;
         }
 
         public override async Task OnConnectedAsync()
         {
+            await ClearDbRecodsAsync();
+
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            int id = int.Parse(Context.User.FindFirst(Claims.Id).Value);
-            await RemoveFromGroup(_groups[id]);
-            string temp = _groups[id];
-            _groups.Remove(id);
+            int userId = int.Parse(Context.User.FindFirst(Claims.Id).Value);
+
+            await RemoveFromGroup(_groups[userId]);
+
+            string temp = _groups[userId];
+            _groups.Remove(userId);
 
             var remained = _groups.Where(kvp => kvp.Value == temp)
                 .Select(kvp => kvp.Key)
@@ -45,41 +47,53 @@ namespace Perflow.Hubs.Implementations
             if (remained == 0)
             {
                 int playlistId = int.Parse(temp);
-                var deleted = await _context.SharePlay.FirstOrDefaultAsync(sp => sp.PlaylistId == playlistId);
-                _context.SharePlay.Remove(deleted);
-                await _context.SaveChangesAsync();
+                await _sharePlayService.RemoveRecordAsync(playlistId);
             }
 
-            var master = await _context.SharePlay.FirstOrDefaultAsync(sp => sp.MasterId == id);
+            await _sharePlayService.DeleteRecordIfMasterDisconnectedAsync(userId);
 
-            if (master != null)
-            {
-                _context.SharePlay.Remove(master);
-                await _context.SaveChangesAsync();
-            }
-
-            if (_groups.Count == 0)
-            {
-                var items = await _context.SharePlay.ToListAsync();
-                if (items != null && items.Count != 0)
-                {
-                    _context.RemoveRange(items);
-                    await _context.SaveChangesAsync();
-                }
-            }
+            await ClearDbRecodsAsync();
 
             await base.OnDisconnectedAsync(exception);
         }
 
         public async Task SendSynchronization(SharePlayDataDTO syncData)
         {
-            await Clients.Groups(syncData.PlaylistId.ToString()).ResendSynchronization(syncData);
+            int userId = int.Parse(Context.User.FindFirst(Claims.Id).Value);
+
+            if (_groups.ContainsKey(userId))
+            {
+                await Clients.Groups(syncData.PlaylistId.ToString()).ResendSynchronization(syncData);
+            }
+        }
+
+        public async Task Disconnect(SharePlayDTO dto)
+        {
+            int userId = int.Parse(Context.User.FindFirst(Claims.Id).Value);
+
+            if (_groups.ContainsKey(userId))
+            {
+                await RemoveFromGroup(dto.PlaylistId.ToString());
+                _groups.Remove(userId);
+            }
+
+            await _sharePlayService.DeleteRecordIfMasterDisconnectedAsync(userId);
         }
 
         public async Task Connect(SharePlayDTO dto)
         {
-            await AddToGroup(dto.PlaylistId.ToString());
-            _groups.TryAdd(int.Parse(Context.User.FindFirst(Claims.Id).Value), dto.PlaylistId.ToString());
+            int userId = int.Parse(Context.User.FindFirst(Claims.Id).Value);
+
+            if (!_groups.ContainsKey(userId))
+            {
+                await AddToGroup(dto.PlaylistId.ToString());
+                _groups.TryAdd(userId, dto.PlaylistId.ToString());
+            }
+            
+            if (userId == dto.MasterId && _groups.ContainsKey(userId))
+            {
+                await _sharePlayService.NotifyGroup(dto, userId);
+            }
         }
 
         private async Task AddToGroup(string groupName)
@@ -90,6 +104,14 @@ namespace Perflow.Hubs.Implementations
         private async Task RemoveFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+        }
+
+        private async Task ClearDbRecodsAsync()
+        {
+            if (_groups.Count == 0)
+            {
+                await _sharePlayService.ClearAllRecordsAsync();
+            }
         }
     }
 }

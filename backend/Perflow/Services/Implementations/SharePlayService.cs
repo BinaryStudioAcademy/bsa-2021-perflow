@@ -28,18 +28,18 @@ namespace Perflow.Services.Implementations
             var check = await context.SharePlay
                 .FirstOrDefaultAsync(sp => sp.PlaylistId == dto.PlaylistId);
 
-            if (check != null)
-                return;
-
-            SharePlay temp = new SharePlay
+            if (check == null)
             {
-                Id = 0,
-                MasterId = userId,
-                PlaylistId = dto.PlaylistId
-            };
+                SharePlay temp = new SharePlay
+                {
+                    Id = 0,
+                    MasterId = userId,
+                    PlaylistId = dto.PlaylistId
+                };
 
-            await context.SharePlay.AddAsync(temp);
-            await context.SaveChangesAsync();
+                await context.SharePlay.AddAsync(temp);
+                await context.SaveChangesAsync();
+            }
 
             var list = await context.PlaylistEditors
                 .Where(pe => pe.PlaylistId == dto.PlaylistId)
@@ -69,6 +69,37 @@ namespace Perflow.Services.Implementations
                 .FirstOrDefaultAsync(sp => sp.PlaylistId == playlistId);
 
             return result != null;
+        }
+
+        public async Task RemoveRecordAsync(int playlistId)
+        {
+            var deleted = await context.SharePlay.FirstOrDefaultAsync(sp => sp.PlaylistId == playlistId);
+            
+            context.SharePlay.Remove(deleted);
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteRecordIfMasterDisconnectedAsync(int userId)
+        {
+            var master = await context.SharePlay.FirstOrDefaultAsync(sp => sp.MasterId == userId);
+
+            if (master != null)
+            {
+                context.SharePlay.Remove(master);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task ClearAllRecordsAsync()
+        {
+            var items = await context.SharePlay.ToListAsync();
+
+            if (items != null && items.Count != 0)
+            {
+                context.RemoveRange(items);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

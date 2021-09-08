@@ -5,7 +5,7 @@ import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { QueueService } from 'src/app/services/queue.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { SharePlayService } from 'src/app/services/share-play.service';
@@ -14,8 +14,8 @@ import { Subject } from 'rxjs';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
-import { HubConnectionState } from '@microsoft/signalr';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { SharePlay } from 'src/app/models/share-play/share-play';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -35,7 +35,7 @@ export class ViewPlaylistComponent implements OnInit {
   private _unsubscribe$ = new Subject<void>();
   isAuthor: boolean;
   isCollaborative: boolean;
-  isGroupNotified: boolean = false;
+  isSharePlay: boolean = false;
   isConnected: boolean = false;
   isHidden: boolean = false;
   readonly playlistType = PlaylistType;
@@ -83,8 +83,6 @@ export class ViewPlaylistComponent implements OnInit {
           }
         }
       });
-
-    this.isConnected = this._sharePlayService.getHubStatus() === HubConnectionState.Connected;
   }
 
   nextSlide = () => { };
@@ -124,6 +122,11 @@ export class ViewPlaylistComponent implements OnInit {
         next: (playlist) => {
           this.playlist = playlist;
           this.isAuthor = this.userId === this.playlist.author.id;
+
+          if (playlist.accessType === AccessType.collaborative) {
+            this.getSharePlayState(playlist.id);
+          }
+
           this._playlistEditorsService.getCollaborators(playlist.id)
             .pipe(take(1))
             .subscribe(
@@ -131,7 +134,6 @@ export class ViewPlaylistComponent implements OnInit {
                 this.isCollaborative = result.find((u) => u.id === this.userId) !== undefined;
               }
             );
-          this.getSharePlayState(playlist.id);
         },
         error: () => {
           this._router.navigateByUrl('/playlists/all');
@@ -212,51 +214,71 @@ export class ViewPlaylistComponent implements OnInit {
   canShare = (accessType: AccessType) => accessType !== AccessType.secret;
 
   sharePlay(pl: Playlist) {
-    this.connectToSharePlay(pl.id);
+    const sp = {
+      masterId: this.userId,
+      playlistId: pl.id
+    } as SharePlay;
 
-    this._sharePlayService.sharePlayAsync({ masterId: 0, playlistId: pl.id })
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: () => {
-          this.isGroupNotified = true;
-        },
-        error: () => {
-          this._snackBarService.show({ message: 'Connection is closed! Try reload the page' });
+    this._sharePlayService.connectToSharePlay(sp)
+      .then(() => {
+        this.getSharePlayState(pl.id);
+
+        if (this.songs.length) {
+          this._queueService.clearQueue();
+          this._queueService.addSongsToQueue(this.songs);
+          this._queueService.initSong(this.songs[0], false);
         }
+      });
+  }
+
+  connectToSharePlay(id: number) {
+    const sp = {
+      masterId: this.userId,
+      playlistId: id
+    } as SharePlay;
+
+    this._sharePlayService.connectToSharePlay(sp)
+      .then(() => {
+        this.isConnected = true;
+
+        if (this.songs.length) {
+          this._queueService.clearQueue();
+          this._queueService.addSongsToQueue(this.songs);
+          this._queueService.initSong(this.songs[0], false);
+        }
+      })
+      .catch(() => {
+        this.isConnected = false;
       });
   }
 
   getSharePlayState(id: number) {
     this._sharePlayService.getSharePlayState(id)
-      .pipe(takeUntil(this._unsubscribe$))
+      .pipe(take(1))
       .subscribe({
         next: (data) => {
-          this.isGroupNotified = data;
+          if (this.playlist.author?.id === this.userId) {
+            this.isConnected = data;
+            return;
+          }
+
+          this.isSharePlay = data;
+        },
+        error: () => {
+          this._snackBarService.show({ message: 'Share play is not ready! Try later' });
         }
       });
   }
 
-  connectToSharePlay(playlistId: number) {
-    this._sharePlayService.connectToSharePlay(playlistId)
-      .then(() => {
-        this.isConnected = true;
-      })
-      .then(() => {
-        if (!this.songs.length) {
-          return;
-        }
+  disconnectSharePlay(id: number) {
+    const sp = {
+      masterId: this.userId,
+      playlistId: id
+    } as SharePlay;
 
-        this._queueService.clearQueue();
-        this._queueService.addSongsToQueue(this.songs);
-        this._queueService.initSong(this.songs[0], false);
-      });
-  }
-
-  disconnectSharePlay() {
-    this._sharePlayService.disconectHub()
+    this._sharePlayService.disconectHub(sp)
       .then(() => {
         this.isConnected = false;
-        this.isGroupNotified = false;
         this.isHidden = true;
       });
   }
