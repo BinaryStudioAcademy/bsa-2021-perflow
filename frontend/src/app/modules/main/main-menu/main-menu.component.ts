@@ -3,7 +3,7 @@ import {
   Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   filter, first, take, takeUntil
 } from 'rxjs/operators';
@@ -16,6 +16,7 @@ import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -29,7 +30,6 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   collaborativePlaylists: PlaylistName[] = [];
   editedPlaylist = {} as PlaylistName;
   isEditPlaylistMode: boolean = false;
-  isSuccess: boolean = false;
   userId: number;
 
   private _tempPlaylist = {} as PlaylistName;
@@ -44,7 +44,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
     private _playlistEditorsService: PlaylistEditorsService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _snackbarService: SnackbarService
   ) { }
 
   public ngOnInit() {
@@ -153,10 +154,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     this._clipboardApi.copyFromContent(
       `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this._tempPlaylist.id}`
     );
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({message:"Link copied to clipboard!"});
   }
 
   createPlaylist() {

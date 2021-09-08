@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
@@ -39,7 +39,6 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
   groupPlaylists: PlaylistView[] = [];
-  isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
   isGroupMember: boolean;
   isModalShown: boolean;
@@ -281,9 +280,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({message:"Link copied to clipboard!"});
   }
 }
