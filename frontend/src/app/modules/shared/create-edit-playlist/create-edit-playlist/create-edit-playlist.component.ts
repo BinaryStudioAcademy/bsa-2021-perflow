@@ -71,7 +71,6 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       if (data && this._id! !== +data) {
         this._id = +data;
         this.startEditMode();
-
       }
     });
 
