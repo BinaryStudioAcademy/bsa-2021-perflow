@@ -276,7 +276,7 @@ export class ViewPlaylistComponent implements OnInit {
   }
 
   onConfirmed() {
-    switch(this._action) {
+    switch (this._action) {
       case 'Delete Playlist':
         this.deletePlaylist();
         break;

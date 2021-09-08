@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
 
 @Component({
   selector: 'app-confirmation-modal',
@@ -6,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./confirmation-modal.component.sass']
 })
 export class ConfirmationModalComponent {
-  @Input() message: string = "Are you sure?";
+  @Input() message: string = 'Are you sure?';
 
   @Output() confirm = new EventEmitter();
   @Output() discard = new EventEmitter();
