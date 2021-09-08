@@ -289,6 +289,5 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       default:
         break;
     }
-    this.switchConfirmationModal();
   }
 }
