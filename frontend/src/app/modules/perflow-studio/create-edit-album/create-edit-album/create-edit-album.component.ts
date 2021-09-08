@@ -5,7 +5,7 @@ import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumRegion } from 'src/app/models/album/album-region';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { AlbumService } from 'src/app/services/album.service';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AudioFileDuration } from 'src/app/helpers/AudioFileDuration';
@@ -258,7 +258,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
           next: () => {
             this.albumSongs = this.album.songs.filter((s) => s.id !== song.id);
             this.album.songs = this.albumSongs;
-            if(!this.album.songs.length && this.album.isPublished){
+            if (!this.album.songs.length && this.album.isPublished) {
               this.setPublicStatus();
             }
           }
@@ -279,13 +279,5 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
           this.publishButtonTitle = this.album.isPublished ? 'Unpublish' : 'Publish';
         }
       });
-  }
-
-  copyLink() {
-    this._clipboardApi.copyFromContent(`${this._location.hostname}:${this._location.port}/albums/${this.album.id}`);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
   }
 }
