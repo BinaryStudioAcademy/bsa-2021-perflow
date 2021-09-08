@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { CheckStatus } from '../models/share-play/check-status';
 import { SharePlay } from '../models/share-play/share-play';
 import { SharePlayData } from '../models/share-play/share-play-data';
-import { HttpInternalService } from './http-internal.service';
 import { SharePlayHub } from './hubs/share-play-hub';
 import { SongToolbarService } from './song-toolbar.service';
 
@@ -10,20 +10,14 @@ import { SongToolbarService } from './song-toolbar.service';
   providedIn: 'root'
 })
 export class SharePlayService {
-  private readonly _routePrefix = '/api/SharePlay';
   private _playlistId: number;
-  checkConnectionStatus$ = new Subject<boolean>();
+  checkConnectionStatus$ = new Subject<CheckStatus>();
 
   constructor(
-    private _httpService: HttpInternalService,
     private _hub: SharePlayHub,
     private _toolbarService: SongToolbarService
   ) {
     this._hub.checkStatus$.subscribe(this.checkConnectionStatus$);
-  }
-
-  getSharePlayState(playlistId: number) {
-    return this._httpService.getRequest<boolean>(`${this._routePrefix}/${playlistId}`);
   }
 
   async connectToSharePlay(sp: SharePlay) {
@@ -52,8 +46,8 @@ export class SharePlayService {
     await this._hub.sendSyncData(syncData);
   }
 
-  checkUserStatus() {
-    this._hub.checkUserStatus();
+  checkUserStatus(data: SharePlay) {
+    this._hub.checkUserStatus(data);
   }
 
   async disconectHub(data: SharePlay) {

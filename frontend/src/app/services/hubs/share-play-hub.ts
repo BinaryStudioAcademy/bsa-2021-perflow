@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { SharePlay } from 'src/app/models/share-play/share-play';
 import { SharePlayData } from 'src/app/models/share-play/share-play-data';
 import { HubConnectionState } from '@microsoft/signalr';
+import { CheckStatus } from 'src/app/models/share-play/check-status';
 import { BaseHubService } from './base-hub.service';
 import { HubFactoryService } from './hub-factory.service';
 import { SnackbarService } from '../snackbar.service';
@@ -15,7 +16,7 @@ export class SharePlayHub extends BaseHubService {
   protected readonly hubUrl = 'hub/share-play';
 
   syncData$ = new Subject<SharePlayData>();
-  checkStatus$ = new Subject<boolean>();
+  checkStatus$ = new Subject<CheckStatus>();
 
   constructor(
     hubFactory: HubFactoryService,
@@ -35,7 +36,7 @@ export class SharePlayHub extends BaseHubService {
 
     this.hubConnection.on(
       'CheckStatus',
-      (data: boolean) => {
+      (data: CheckStatus) => {
         this.checkStatus$.next(data);
       }
     );
@@ -47,8 +48,8 @@ export class SharePlayHub extends BaseHubService {
     }
   }
 
-  checkUserStatus() {
-    return this.hubConnection.invoke('CheckUserStatus');
+  checkUserStatus(data: SharePlay) {
+    return this.hubConnection.invoke('CheckUserStatus', data);
   }
 
   disconect(data: SharePlay) {

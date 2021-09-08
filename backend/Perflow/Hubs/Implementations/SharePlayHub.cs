@@ -7,7 +7,7 @@ using Perflow.Services.Implementations;
 using Shared.Auth.Constants;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
+using Perflow.Common.DTO.Hub;
 
 namespace Perflow.Hubs.Implementations
 {
@@ -24,8 +24,6 @@ namespace Perflow.Hubs.Implementations
 
         public override async Task OnConnectedAsync()
         {
-            await ClearDbRecodsAsync();
-
             await base.OnConnectedAsync();
         }
 
@@ -36,21 +34,8 @@ namespace Perflow.Hubs.Implementations
             await RemoveFromGroup(_groups[userId]);
 
             string temp = _groups[userId];
+
             _groups.Remove(userId);
-
-            var remained = _groups.Where(kvp => kvp.Value == temp)
-                .Select(kvp => kvp.Key)
-                .Count();
-
-            if (remained == 0)
-            {
-                int playlistId = int.Parse(temp);
-                await _sharePlayService.RemoveRecordAsync(playlistId);
-            }
-
-            await _sharePlayService.DeleteRecordIfMasterDisconnectedAsync(userId);
-
-            await ClearDbRecodsAsync();
 
             await base.OnDisconnectedAsync(exception);
         }
@@ -74,18 +59,24 @@ namespace Perflow.Hubs.Implementations
                 await RemoveFromGroup(dto.PlaylistId.ToString());
                 _groups.Remove(userId);
             }
-
-            await _sharePlayService.DeleteRecordIfMasterDisconnectedAsync(userId);
         }
 
-        public async Task CheckUserStatus()
+        public async Task CheckUserStatus(SharePlayDTO dto)
         {
             int userId = int.Parse(Context.User.FindFirst(Claims.Id).Value);
 
+            var check = new CheckStatusDTO();
+
             if (_groups.ContainsKey(userId))
-                await Clients.User(userId.ToString()).CheckStatus(true);
-            else
-                await Clients.User(userId.ToString()).CheckStatus(false);
+            {
+                check.IsConnected = true;
+            }
+            if (_groups.ContainsValue(dto.PlaylistId.ToString()))
+            {
+                check.IsPlaylistshared = true;
+            }
+            
+            await Clients.User(userId.ToString()).CheckStatus(check);
         }
 
         public async Task Connect(SharePlayDTO dto)
@@ -112,14 +103,6 @@ namespace Perflow.Hubs.Implementations
         private async Task RemoveFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-        }
-
-        private async Task ClearDbRecodsAsync()
-        {
-            if (_groups.Count == 0)
-            {
-                await _sharePlayService.ClearAllRecordsAsync();
-            }
         }
     }
 }

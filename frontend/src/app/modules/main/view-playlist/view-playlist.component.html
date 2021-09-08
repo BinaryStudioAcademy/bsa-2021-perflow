@@ -74,9 +74,9 @@
                 </div>
               </div>
             </span>
-            <ng-container *ngIf="playlist.accessType === playlistAccessType.collaborative && isCollaborative && !isHidden">
+            <ng-container *ngIf="playlist.accessType === playlistAccessType.collaborative && isCollaborative">
               <button *ngIf="playlist.author?.id === userId && !isConnected" class="ui button-upload button" (click)="sharePlay(playlist)">Share Play</button>
-              <button *ngIf="playlist.author?.id !== userId && isSharePlay && !isConnected" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
+              <button *ngIf="playlist.author?.id !== userId && isPlaylistshared && !isConnected" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
               <button *ngIf="isConnected" class="ui button-upload button" (click)="disconnectSharePlay(playlist.id)">Disconnect</button>
             </ng-container>
           </div>
