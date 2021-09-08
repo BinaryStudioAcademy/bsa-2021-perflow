@@ -12,7 +12,7 @@ import { SnackbarService } from '../snackbar.service';
 export class NotificationsHubService extends BaseHubService {
   readonly notifications = new Subject<Notification>();
 
-  protected readonly hubUrl = 'notifications';
+  protected readonly hubUrl = 'hub/notifications';
 
   constructor(
     hubFactory: HubFactoryService,
