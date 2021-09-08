@@ -34,6 +34,7 @@ namespace Perflow.DataAccess.Context
         public DbSet<GroupArtist> GroupArtist { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<SongTag> SongTags { get; set; }
+        public DbSet<SharePlay> SharePlay { get; set; }
 
         public PerflowContext(DbContextOptions<PerflowContext> options): base(options)
         { }

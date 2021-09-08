@@ -543,6 +543,24 @@ namespace Perflow.Migrations
                     b.ToTable("SearchHistory");
                 });
 
+            modelBuilder.Entity("Perflow.Domain.SharePlay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MasterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SharePlay");
+                });
+
             modelBuilder.Entity("Perflow.Domain.Song", b =>
                 {
                     b.Property<int>("Id")
