@@ -113,8 +113,8 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
       .subscribe(
         (result) => {
-          this.groupAlbums = result.filter(a => !a.isSingle);
-          this.groupSingles = result.filter(a => a.isSingle);
+          this.groupAlbums = result.filter((a) => !a.isSingle);
+          this.groupSingles = result.filter((a) => a.isSingle);
         }
       );
   }

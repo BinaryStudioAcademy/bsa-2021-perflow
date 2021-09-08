@@ -118,7 +118,7 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
   }
 
   likeArtist() {
-    if (this.artist.isLiked){
+    if (this.artist.isLiked) {
       this._snackbarService.show({ message: `You already subscribed to ${this.artist.userName}.` });
       return;
     }
@@ -150,8 +150,8 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (result) => {
-          this.artistAlbums = result.filter(a => !a.isSingle);
-          this.artistSingles = result.filter(a => a.isSingle);
+          this.artistAlbums = result.filter((a) => !a.isSingle);
+          this.artistSingles = result.filter((a) => a.isSingle);
         }
       );
   }
