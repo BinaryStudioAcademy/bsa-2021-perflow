@@ -33,6 +33,7 @@ main
       display: flex
       align-items: center
       flex-direction: column
+      padding: 20px 0px
       .checkbox-container
         margin-top: 1em
         display: flex
@@ -42,19 +43,19 @@ main
         height: 100%
         width: 100%
         display: flex
-        align-items: center
+        align-items: flex-start
         flex-direction: column
+        h4
+          color: $text
+          margin-bottom: 20px
       .card
         margin-top: 2em
-      .create-btn
-        margin-top: 3em
       .text
         +text($text, 18px, $medium-weight)
         margin-top: 1em
       .ui.search
         margin-top: 1em
         background: $drk-gray
-        width: 100%
         display: flex
         align-items: center
         justify-content: center
@@ -71,6 +72,9 @@ main
             &:active
               background: $drk-rain
 
+.my-groups
+  margin: 2em 0em
+
 .container
   max-height: 600px 
   min-height: 600px 
@@ -78,7 +82,7 @@ main
   width: 100%
   display: flex
   flex-direction: column
-  margin: 2em 
+  margin: 2em 0em
   &::-webkit-scrollbar
     display: none
   .search-result

@@ -26,11 +26,6 @@
         <button class="ui btn-full button create-btn" (click)="showModal()" *ngIf="!createdGroup">
           Create a group
         </button>
-        <app-artist-card class="card" [isChecked]=true [artist]="createdGroup" (apply)="createArtistApplicant($event)"
-          *ngIf="createdGroup"></app-artist-card>
-        <div class="text">
-          or
-        </div>
         <div class="ui search">
           <div class="ui icon input">
             <input class="prompt input-dark" type="text" name="search" placeholder="Search a group..."
@@ -38,7 +33,17 @@
             <i class="search icon"></i>
           </div>
         </div>
+        <div class="my-groups" *ngIf="createdGroup">
+          <h4>My group</h4>
+          <app-artist-card 
+          class="card" 
+          [isChecked]=true 
+          [artist]="createdGroup" 
+          (apply)="createArtistApplicant($event)">
+          </app-artist-card>
+        </div>
         <div class="container" *ngIf="groups.length > 0">
+          <h4>Search result</h4>
           <div class="search-result" 
               infinite-scroll 
               [infiniteScrollDistance]="distance" 
