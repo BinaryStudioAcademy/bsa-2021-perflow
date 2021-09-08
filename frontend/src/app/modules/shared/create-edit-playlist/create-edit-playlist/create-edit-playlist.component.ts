@@ -20,6 +20,7 @@ import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
 import { SearchService } from 'src/app/services/search.service';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -52,9 +53,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _createdPlaylistService: CreatePlaylistService,
     private _searchService: SearchService,
     private _playlistEditorsService: PlaylistEditorsService,
-
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _confirmationService: ConfirmationPageService
   ) {
     this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
@@ -312,5 +313,16 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     timer(3000).subscribe((val) => {
       this.isSuccess = Boolean(val);
     });
+  }
+
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the playlist?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
   }
 }
