@@ -94,6 +94,7 @@ class ArtistScreen extends StatelessWidget {
                                       .unlikeArtist(value.data.id);
                                 },
                               ),
+                    onPlayPressed: context.read<ArtistSongsCubit>().play
                   ),
                 ),
               ),

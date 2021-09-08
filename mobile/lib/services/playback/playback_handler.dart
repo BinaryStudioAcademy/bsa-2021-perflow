@@ -1,41 +1,77 @@
+import 'dart:io';
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:logger/logger.dart';
+import 'package:perflow/api_urls.dart';
+import 'package:perflow/helpers/math/clamp.dart';
+import 'package:perflow/models/playback/playback_actions.dart';
+import 'package:perflow/models/playback/playback_duration.dart';
 import 'package:perflow/models/playback/playback_event_data.dart';
-import 'package:perflow/models/playback_sync/playback_sync_data.dart';
-import 'package:perflow/services/playback/playback_service.dart';
-import 'package:perflow/services/playback/playback_sync_hub.dart';
+import 'package:perflow/models/playback/playback_repeat_mode.dart';
+import 'package:perflow/models/songs/song.dart';
+import 'package:perflow/services/auth/auth_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
-  final AudioPlayer _player;
-  final PlaybackService _playbackService;
-  final PlaybackSyncHub _syncHub;
+  final _logger = Logger();
+
+  final _player = AudioPlayer();
+  final AuthService _authService;
+
+  final _songSubject = BehaviorSubject<Song?>.seeded(null);
+  final _actionsSubject = BehaviorSubject<PlaybackActions>.seeded(_defaultActions);
+  final _durationSubject = BehaviorSubject<PlaybackDuration?>.seeded(null);
+  final _seekSubject = PublishSubject<Duration>();
+  final _skipToNextSubject = PublishSubject<void>();
+  final _skipToPreviousSubject = PublishSubject<void>();
+
+  static final _defaultActions = PlaybackActions(
+    playing: false,
+    shuffleEnabled: false,
+    repeatMode: RepeatMode.none
+  );
 
   PlaybackHandler(
-    this._player,
-    this._playbackService,
-    this._syncHub
+    this._authService
   ) {
     CombineLatestStream<dynamic, PlaybackEventData>(
       [
-        _playbackService.playbackChanges,
-        _player.playbackEventStream
+        _player.playbackEventStream.handleError(_handleError),
+        _songSubject,
+        _actionsSubject,
+        _durationSubject,
       ],
       (values) => PlaybackEventData(
-        data: values[0],
-        event: values[1]
+        event: values[0],
+        song: values[1],
+        actions: values[2],
+        duration: values[3]
       ))
-      .doOnData(prepareSong)
       .map(_transformPlaybackDataEvent)
       .pipe(playbackState);
   }
 
-  void prepareSong(PlaybackEventData eventData) async {
-    if (eventData.data == null) {
-      return;
-    }
+  Song? get currentSong => _songSubject.valueOrNull;
+  Stream<Song?> get songChanges => _songSubject
+    .distinct((dataA, dataB) => dataA == dataB);
 
-    final song = eventData.data!.song;
+  PlaybackActions get currentActions => _actionsSubject.value;
+  Stream<PlaybackActions> get actionsChanges => _actionsSubject
+    .distinct((dataA, dataB) => dataA == dataB);
+
+  PlaybackDuration? get currentDuration => _durationSubject.valueOrNull;
+  Stream<PlaybackDuration?> get durationChanges => _durationSubject
+    .distinct((dataA, dataB) => dataA == dataB);
+
+  Stream<Duration> get onSeek => _seekSubject;
+
+  Stream<void> get onSkipToNext => _skipToNextSubject;
+  Stream<void> get onSkipToPrevious => _skipToPreviousSubject;
+
+  Future<void> setSong(Song song) async {
+    _songSubject.add(song);
+
     if(mediaItem.value?.id != song.id.toString()) {
       final item = MediaItem(
         id: song.id.toString(),
@@ -48,34 +84,65 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       mediaItem.add(item);
     }
 
-    final duration = eventData.data!.duration?.max;
-    if(mediaItem.value?.duration != duration) {
-      mediaItem.add(mediaItem.value?.copyWith(duration: duration));
+    final songDuration = await _safeSetSongById(song.id);
+
+    if(songDuration != null) {
+      if(mediaItem.value?.duration != songDuration) {
+        mediaItem.add(mediaItem.value?.copyWith(duration: songDuration));
+      }
+
+      _durationSubject.add(
+        PlaybackDuration(
+          max: songDuration,
+          timeChanges: BehaviorSubject<Duration>()..addStream(_player.positionStream)
+        )
+      );
     }
   }
 
   @override
-  Future<void> play() {
-    return Future.wait([
-      _player.play(),
-      _syncHub.sendSyncData(getCurrentSyncData())
-    ]);
+  Future<void> stop() async {
+    _songSubject.add(null);
+    _durationSubject.add(null);
+    _updateActions(false);
+    await _player.stop();
   }
 
   @override
-  Future<void> pause() {
-    return Future.wait([
-      _player.pause(),
-      _syncHub.sendSyncData(getCurrentSyncData())
-    ]);
+  Future<void> play() async {
+    _updateActions(true);
+    await _player.play();
   }
 
   @override
-  Future<void> seek(Duration position) {
-    return Future.wait([
-      _player.seek(position),
-      _syncHub.sendSyncData(getCurrentSyncData()?.copyWith(time: position.inSeconds))
-    ]);
+  Future<void> pause() async {
+    _updateActions(false);
+    await _player.pause();
+  }
+
+  Future<void> seekPercent(double percent) {
+    percent = clamp(percent);
+    return seek((currentDuration?.max ?? Duration.zero) * percent);
+  }
+
+  @override
+  Future<void> seek(Duration position) async {
+    _seekSubject.add(position);
+    await _player.seek(position);
+  }
+
+  Future<void> seekWithoutSync(Duration position) async {
+    await _player.seek(position);
+  }
+
+  @override
+  Future<void> skipToNext() async {
+    _skipToNextSubject.add(null);
+  }
+
+  @override
+  Future<void> skipToPrevious() async {
+    _skipToPreviousSubject.add(null);
   }
 
   @override
@@ -83,35 +150,88 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await _player.setSpeed(speed);
   }
 
+  void setRepeat(RepeatMode repeatMode) {
+    _actionsSubject.add(
+      currentActions.copyWith(
+        repeatMode: repeatMode
+      )
+    );
+  }
+
+  void setShuffle(bool shuffle) {
+    _actionsSubject.add(
+      currentActions.copyWith(
+        shuffleEnabled: shuffle
+      )
+    );
+  }
+
+  void _updateActions(bool playing) {
+    var currentActions = _actionsSubject.value;
+
+    _actionsSubject.add(
+      currentActions.copyWith(
+        playing: playing
+      )
+    );
+  }
+
+  Future<Duration?> _safeSetSongById(int songId) async {
+    final token = await _authService.getToken();
+
+    final headers = token != null ? {
+      HttpHeaders.authorizationHeader: 'Bearer ' + token
+    } : null;
+
+    try {
+      return await _player.setUrl(
+        '${ApiUrls.base}/api/songs/$songId/file',
+        headers: headers,
+      );
+    }
+    on PlayerInterruptedException {
+      _logger.i('Player loading interrupted');
+    }
+    catch (e) {
+      _logger.e(e);
+    }
+  }
+
+  void _handleError(dynamic error) {
+    if(error is PlatformException && error.code == 'abort') {
+      return;
+    }
+
+    _logger.e('Playback error:\n${error.toString()}');
+  }
+
   PlaybackState _transformPlaybackDataEvent(PlaybackEventData eventData) {
+    final processingState = const {
+      ProcessingState.idle: AudioProcessingState.idle,
+      ProcessingState.loading: AudioProcessingState.loading,
+      ProcessingState.buffering: AudioProcessingState.buffering,
+      ProcessingState.ready: AudioProcessingState.ready,
+      ProcessingState.completed: AudioProcessingState.completed,
+    }[_player.processingState]!;
+
     return PlaybackState(
       controls: [
-        const MediaControl(
-          androidIcon: 'mipmap/ic_launcher',
-          label: 'Like',
-          action: MediaAction.setRating
-        ),
         MediaControl.skipToPrevious,
-        eventData.data?.actions.playing == true
+        eventData.actions.playing == true
           ? MediaControl.pause
           : MediaControl.play,
         MediaControl.skipToNext,
+        MediaControl.stop
       ],
       systemActions: const {
         MediaAction.seek,
         MediaAction.seekForward,
-        MediaAction.seekBackward,
+        MediaAction.seekBackward
       },
-      androidCompactActionIndices: const [1, 2, 3],
-      processingState: const {
-        ProcessingState.idle: AudioProcessingState.idle,
-        ProcessingState.loading: AudioProcessingState.loading,
-        ProcessingState.buffering: AudioProcessingState.buffering,
-        ProcessingState.ready: AudioProcessingState.ready,
-        ProcessingState.completed: AudioProcessingState.completed,
-      }[_player.processingState]!,
-      playing: eventData.data?.actions.playing ?? false,
-      updatePosition: eventData.data?.duration?.timeChanges.valueOrNull ?? Duration.zero,
+      androidCompactActionIndices: const [0, 1, 2],
+      processingState: processingState,
+      playing: eventData.actions.playing,
+      updatePosition: eventData.duration?.timeChanges.valueOrNull ?? Duration.zero,
       bufferedPosition: _player.bufferedPosition,
       speed: _player.speed,
       queueIndex: eventData.event.currentIndex,
@@ -119,16 +239,7 @@ class PlaybackHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     );
   }
 
-  PlaybackSyncData? getCurrentSyncData() {
-    final playback = _playbackService.currentPlayback;
-
-    if(playback == null || playback.duration == null) {
-      return null;
-    }
-
-    return PlaybackSyncData(
-      playback.song.id,
-      playback.duration!.current.inSeconds
-    );
+  Future<void> dispose() async {
+    await _player.dispose();
   }
 }

@@ -11,8 +11,12 @@ import 'package:perflow/services/artists/artists_api.dart' as _i13;
 import 'package:perflow/services/auth/auth_api.dart' as _i15;
 import 'package:perflow/services/auth/auth_service.dart' as _i16;
 import 'package:perflow/services/chopper/chopper_service.dart' as _i3;
-import 'package:perflow/services/playback/playback_service.dart' as _i19;
-import 'package:perflow/services/playback/playback_sync_hub.dart' as _i18;
+import 'package:perflow/services/playback/playback_handler.dart' as _i18;
+import 'package:perflow/services/playback/playback_handler_register.dart'
+    as _i19;
+import 'package:perflow/services/playback/playback_manager.dart' as _i22;
+import 'package:perflow/services/playback/playback_queue.dart' as _i20;
+import 'package:perflow/services/playback/playback_sync_hub.dart' as _i21;
 import 'package:perflow/services/playlists/playlists_api.dart' as _i4;
 import 'package:perflow/services/reactions/albums_reactions_api.dart' as _i12;
 import 'package:perflow/services/reactions/artists_reactions_api.dart' as _i14;
@@ -53,12 +57,22 @@ _i1.GetIt $configureServices(_i1.GetIt get,
       signalsReady: true);
   gh.singleton<_i17.HubFactoryService>(
       _i17.HubFactoryService(get<_i16.AuthService>()));
-  gh.singleton<_i18.PlaybackSyncHub>(
-      _i18.PlaybackSyncHub(get<_i17.HubFactoryService>()));
-  gh.singleton<_i19.PlaybackService>(
-      _i19.PlaybackService(get<_i16.AuthService>(), get<_i18.PlaybackSyncHub>(),
-          get<_i9.SongsApi>()),
+  gh.singleton<_i18.PlaybackHandler>(
+      _i19.PlaybackHandlerRegister.registerPlaybackHandler(
+          get<_i16.AuthService>()),
       signalsReady: true,
+      dispose: _i19.PlaybackHandlerRegister.disposeHandler);
+  gh.singleton<_i20.PlaybackQueue>(
+      _i20.PlaybackQueue(get<_i18.PlaybackHandler>(), get<_i9.SongsApi>()),
+      dispose: (i) => i.dispose());
+  gh.singleton<_i21.PlaybackSyncHub>(
+      _i21.PlaybackSyncHub(get<_i17.HubFactoryService>()));
+  gh.singleton<_i22.PlaybackManager>(
+      _i22.PlaybackManager(
+          get<_i18.PlaybackHandler>(),
+          get<_i20.PlaybackQueue>(),
+          get<_i16.AuthService>(),
+          get<_i21.PlaybackSyncHub>()),
       dispose: (i) => i.dispose());
   return get;
 }

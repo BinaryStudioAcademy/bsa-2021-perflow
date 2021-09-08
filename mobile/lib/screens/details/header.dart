@@ -15,15 +15,18 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
   final String iconUrl;
   final Widget? likeButton;
   final PerflowOutlinedButton? secondaryButton;
+  final void Function()? onPlayPressed;
 
-  const HeaderDelegate(
-      {required this.primaryText,
-      required this.secondaryTextMain,
-      this.secondaryTextOther,
-      required this.iconUrl,
-      this.likeButton,
-      this.secondaryButton,
-      required this.expandedHeight});
+  const HeaderDelegate({
+    required this.primaryText,
+    required this.secondaryTextMain,
+    this.secondaryTextOther,
+    required this.iconUrl,
+    this.likeButton,
+    this.secondaryButton,
+    required this.expandedHeight,
+    this.onPlayPressed
+  });
 
   @override
   double get maxExtent => expandedHeight;
@@ -66,19 +69,21 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
     final image = NetworkImage(iconUrl);
 
     return _StackedHeader(
-        backgroundOpacity: backgroundOpacity,
-        image: image,
-        expandedHeight: expandedHeight,
-        imageOpacity: imageOpacity,
-        detailsOpacity: detailsOpacity,
-        iconUrl: iconUrl,
-        likeButton: likeButton,
-        primaryText: primaryText,
-        secondaryTextMain: secondaryTextMain,
-        secondaryTextOther: secondaryTextOther,
-        textTheme: textTheme,
-        secondaryButton: secondaryButton,
-        titleOpacity: titleOpacity);
+      backgroundOpacity: backgroundOpacity,
+      image: image,
+      expandedHeight: expandedHeight,
+      imageOpacity: imageOpacity,
+      detailsOpacity: detailsOpacity,
+      iconUrl: iconUrl,
+      likeButton: likeButton,
+      primaryText: primaryText,
+      secondaryTextMain: secondaryTextMain,
+      secondaryTextOther: secondaryTextOther,
+      textTheme: textTheme,
+      secondaryButton: secondaryButton,
+      titleOpacity: titleOpacity,
+      onPlayPressed: onPlayPressed
+    );
   }
 }
 
@@ -98,6 +103,7 @@ class _StackedHeader extends StatelessWidget {
     required this.iconUrl,
     this.likeButton,
     this.secondaryButton,
+    this.onPlayPressed
   }) : super(key: key);
 
   final double backgroundOpacity;
@@ -114,6 +120,7 @@ class _StackedHeader extends StatelessWidget {
   final String iconUrl;
   final Widget? likeButton;
   final PerflowOutlinedButton? secondaryButton;
+  final void Function()? onPlayPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +197,7 @@ class _StackedHeader extends StatelessWidget {
                         secondaryTextOther: secondaryTextOther,
                         likeButton: likeButton,
                         secondaryButton: secondaryButton,
+                        onPlayPressed: onPlayPressed,
                       ),
                     ),
                   ),
