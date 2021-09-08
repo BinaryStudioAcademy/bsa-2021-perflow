@@ -139,7 +139,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         this.editPlaylist();
         break;
       case 'Delete':
-        this.confirm('Delete Playlist', 'Are you sure you want to delete playlists?');
+        this.deletePlaylist();
         break;
       case 'Create playlist':
         this.createPlaylist();
@@ -269,25 +269,5 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   isPlaylistCollaborativeSettings() {
     return this.collaborativePlaylists.find((p) => p.id === this._tempPlaylist.id) !== undefined;
-  }
-
-  switchConfirmationModal() {
-    this.isConfirmationModalShown = !this.isConfirmationModalShown;
-  }
-
-  confirm(action: string, message: string) {
-    this._action = action;
-    this.confirmMessage = message;
-    this.switchConfirmationModal();
-  }
-
-  onConfirmed() {
-    switch (this._action) {
-      case 'Delete Playlist':
-        this.deletePlaylist();
-        break;
-      default:
-        break;
-    }
   }
 }

@@ -1,6 +1,7 @@
 import {
-  Component, EventEmitter, Input, OnInit, Output
+  Component, EventEmitter, OnInit, Output
 } from '@angular/core';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 
 @Component({
   selector: 'app-confirmation-modal',
@@ -8,22 +9,30 @@ import {
   styleUrls: ['./confirmation-modal.component.sass']
 })
 export class ConfirmationModalComponent implements OnInit {
-  @Input() message: string = '';
-
-  @Output() confirm = new EventEmitter();
-  @Output() discard = new EventEmitter();
+  message: string = 'Are you sure?';
+  isModalShown: boolean = false;
   @Output() isClosed = new EventEmitter<void>();
 
+  constructor(
+    private _confirmationService: ConfirmationPageService
+  ) {}
+
   ngOnInit(): void {
-    console.log(this.message);
+    this._confirmationService.getModalObesrvable()
+    .subscribe( message => {
+      this.message = message;
+      this.showModal();
+    })
   }
 
   onConfirm() {
-    this.confirm.emit();
+    this.hideModal();
+    this._confirmationService.confirm();
   }
 
   onDiscard() {
-    this.discard.emit();
+    this.hideModal();
+    this._confirmationService.discard();
   }
 
   cancelModal() {
@@ -32,6 +41,13 @@ export class ConfirmationModalComponent implements OnInit {
 
   clickOnModal = (event: Event) => {
     event.stopPropagation();
-    console.log(this.message);
   };
+
+  showModal() {
+    this.isModalShown = true;
+  }
+
+  hideModal() {
+    this.isModalShown = false;
+  }
 }

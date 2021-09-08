@@ -17,6 +17,7 @@ import { PlaylistType } from 'src/app/models/enums/playlist-type';
 import { HubConnectionState } from '@microsoft/signalr';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 
 @Component({
   selector: 'app-view-playlist',
@@ -32,7 +33,6 @@ export class ViewPlaylistComponent implements OnInit {
   public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
-  private _action: string;
   private _unsubscribe$ = new Subject<void>();
   public isSuccess: boolean = false;
   isAuthor: boolean;
@@ -40,8 +40,6 @@ export class ViewPlaylistComponent implements OnInit {
   isGroupNotified: boolean = false;
   isConnected: boolean = false;
   isHidden: boolean = false;
-  isConfirmationModalShown: boolean = false;
-  confirmMessage: string;
   readonly playlistType = PlaylistType;
   readonly playlistAccessType = AccessType;
 
@@ -58,7 +56,8 @@ export class ViewPlaylistComponent implements OnInit {
     private _playlistService: PlaylistsService,
     private _playlistEditorsService: PlaylistEditorsService,
     private _sharePlayService: SharePlayService,
-    private _snackBarService: SnackbarService
+    private _snackBarService: SnackbarService,
+    private _confirmationService: ConfirmationPageService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -267,23 +266,15 @@ export class ViewPlaylistComponent implements OnInit {
       });
   }
 
-  switchConfirmationModal() {
-    this.isConfirmationModalShown = !this.isConfirmationModalShown;
-  }
-
-  confirm(action: string, message: string) {
-    this._action = action;
-    this.confirmMessage = message;
-    this.switchConfirmationModal();
-  }
-
-  onConfirmed() {
-    switch (this._action) {
-      case 'Delete Playlist':
+  initConfirmDeletePlaylist() {
+    console.log("INIT CONFIRM");
+    this._confirmationService
+    .initConfirmation (
+      'Are you sure you want to delete playlists?',
+      () => { 
         this.deletePlaylist();
-        break;
-      default:
-        break;
-    }
+      },
+      () => {}
+    )
   }
 }

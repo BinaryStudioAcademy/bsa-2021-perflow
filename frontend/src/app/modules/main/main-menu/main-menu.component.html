@@ -148,15 +148,6 @@
   <router-outlet></router-outlet>
 </div>
 
-<app-confirmation-modal
-    *ngIf="isConfirmationModalShown"
-    (isClosed)="switchConfirmationModal()"
-    (discard)="switchConfirmationModal()"
-    (confirm)="onConfirmed()"
-    [message]="confirmMessage"
-    >
-</app-confirmation-modal>
-
 <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
   <div class="header">
     Link copied to clipboard!
