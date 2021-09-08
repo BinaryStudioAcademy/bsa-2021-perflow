@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
@@ -19,6 +19,7 @@ import { GroupService } from 'src/app/services/group.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -38,7 +39,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   group: GroupFull = {} as GroupFull;
   editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
-  isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
   groupSingles: AlbumForReadDTO[] = [];
   groupPlaylists: PlaylistView[] = [];
@@ -59,6 +59,7 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     private _albumsService: AlbumService,
     private _activateRoute: ActivatedRoute,
     private _playlistsService: PlaylistsService,
+    private _snackbarService: SnackbarService,
     private _router: Router
   ) {
     this.getUserId();
@@ -217,9 +218,7 @@ export class GroupViewComponent implements OnInit, OnDestroy {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 }

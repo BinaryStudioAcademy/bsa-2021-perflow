@@ -23,7 +23,7 @@
           <div class="form-group">
             <div class="field">
               <input type="text" placeholder="User Name" class="form-control input-dark" [(ngModel)]="user.userName"
-                name="userName" #userName="ngModel" required pattern="[A-Za-z0-9.-_]{6,20}">
+                name="userName" #userName="ngModel" required pattern="[\sA-Za-z0-9.-_]{6,20}">
               <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="ui error message">
                 <div *ngIf="userName.invalid">
                   Username should consist of 6-20 characters. There is can contain Latin letters, digits and

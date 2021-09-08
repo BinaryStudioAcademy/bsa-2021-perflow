@@ -32,7 +32,6 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   isModalShown = false;
   isSongUploadShown = false;
   publishButtonTitle: string = 'Publish';
-  isSuccess: boolean = false;
   isGroupAlbum: boolean = false;
   tags: Tag[] = [];
 

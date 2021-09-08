@@ -109,10 +109,6 @@
       (editGroup)="onSubmitModal($event)" 
       (isClosed)="closeModal()">
   </app-edit-group-modal>
-  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-      <div class="header">
-          Link copied to clipboard!
-      </div>
-  </div>
+
   <div class="container"></div>
 </main>

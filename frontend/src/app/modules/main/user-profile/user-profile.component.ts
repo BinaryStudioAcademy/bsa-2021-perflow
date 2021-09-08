@@ -1,7 +1,6 @@
 import { PlatformLocation } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ClipboardService } from 'ngx-clipboard';
-import { timer } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
@@ -10,6 +9,7 @@ import { User } from 'src/app/models/user/user';
 import { ArtistsService } from 'src/app/services/artists/artist.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -30,7 +30,6 @@ export class UserProfileComponent implements OnInit {
   topArtists: ArtistReadDTO[] = [];
   topSongs: Song[] = [];
   myPlaylists: PlaylistView[] = [];
-  isSuccess: boolean = false;
 
   constructor(
     private _songService: SongsService,
@@ -39,7 +38,8 @@ export class UserProfileComponent implements OnInit {
     private _userService: UserService,
     private _playlistsService: PlaylistsService,
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _snackbarService: SnackbarService
   ) { }
 
   ngOnInit(): void {
@@ -95,32 +95,10 @@ export class UserProfileComponent implements OnInit {
     this.isProfileMenuShown = !this.isProfileMenuShown;
   };
 
-  logout = () => {
-
-  };
-
-  editProfile = () => {
-
-  };
-
-  isRightRole = () => {
-
-  };
-
-  nextSlide = () => {
-
-  };
-
-  previousSlide = () => {
-
-  };
-
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 
   scroll = (id: string) => {

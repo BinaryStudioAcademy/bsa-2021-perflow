@@ -10,7 +10,7 @@ import { QueueService } from 'src/app/services/queue.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { SharePlayService } from 'src/app/services/share-play.service';
 import { PlatformLocation } from '@angular/common';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
@@ -33,7 +33,6 @@ export class ViewPlaylistComponent implements OnInit {
   private _totalTimeSongs: number;
   private _playlistId: number;
   private _unsubscribe$ = new Subject<void>();
-  public isSuccess: boolean = false;
   isAuthor: boolean;
   isCollaborative: boolean;
   isGroupNotified: boolean = false;
@@ -183,10 +182,8 @@ export class ViewPlaylistComponent implements OnInit {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackBarService.show({ message: 'Link copied to clipboard!' });
   }
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
