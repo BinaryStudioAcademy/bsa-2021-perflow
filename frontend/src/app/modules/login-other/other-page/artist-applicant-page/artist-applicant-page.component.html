@@ -1,27 +1,22 @@
 <main>
-  <div class="header">
-    <div class="logo">
-      <a class="ui logo icon image" routerLink="/home">
-        <img src="/assets/Logo.png" />
-      </a>
-    </div>
-  </div>
   <div class="main-content">
     <div class="content">
-      <h4 class="title" *ngIf="!isJoinToGroupRoute">You are:</h4>
-      <div class="checkbox-container" *ngIf="!isJoinToGroupRoute">
-        <div class="roles">
-          <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="isArtist">
-          <label>Artist</label>
+      <div class="apply-contrainer" *ngIf="!isJoinToGroupRoute">
+        <h4 class="title">You are:</h4>
+        <div class="checkbox-container">
+          <div class="roles">
+            <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="isArtist">
+            <label>Artist</label>
+          </div>
+          <div class="roles">
+            <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="!isArtist">
+            <label>Group</label>
+          </div>
         </div>
-        <div class="roles">
-          <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="!isArtist">
-          <label>Group</label>
-        </div>
+        <button class="ui btn-full button create-btn" *ngIf="isArtist" (click)="createArtistApplicant()">
+          Apply
+        </button>
       </div>
-      <button class="ui btn-full button create-btn" *ngIf="isArtist && !isJoinToGroupRoute" (click)="createArtistApplicant()">
-        Apply
-      </button>
       <div class="group" *ngIf="!isArtist || isJoinToGroupRoute">
         <button class="ui btn-full button create-btn" (click)="showModal()" *ngIf="!createdGroup">
           Create a group
@@ -35,12 +30,14 @@
         </div>
         <div class="my-groups" *ngIf="createdGroup">
           <h4>My group</h4>
-          <app-artist-card 
-          class="card" 
-          [isChecked]=true 
-          [artist]="createdGroup" 
-          (apply)="createArtistApplicant($event)">
-          </app-artist-card>
+          <div class="my-group-cards">
+            <app-artist-card 
+            class="card" 
+            [isChecked]=true 
+            [artist]="createdGroup" 
+            (apply)="createArtistApplicant($event)">
+            </app-artist-card>
+          </div>
         </div>
         <div class="container" *ngIf="groups.length > 0">
           <h4>Search result</h4>
