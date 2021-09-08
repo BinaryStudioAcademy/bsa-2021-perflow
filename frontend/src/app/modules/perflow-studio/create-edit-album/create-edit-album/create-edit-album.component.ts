@@ -268,7 +268,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   }
 
   confirmPublisStatus() {
-    if(!this.album.isPublished) {
+    if (!this.album.isPublished) {
       this.confirm('Public Album', 'Are you sure you want to publish album?');
     }
     else {
