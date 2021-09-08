@@ -46,6 +46,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   newAlbum: AlbumEdit = {} as AlbumEdit;
   groupId: number;
   isPublishedFirst: boolean = true;
+  isLoading: boolean = true;
 
   constructor(
     private _route: ActivatedRoute,
@@ -73,6 +74,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._activateRoute.params.subscribe((params: Params) => {
       this.groupId = params.id;
+      this.isLoading = true;
       this.loadData();
     });
   }
@@ -144,6 +146,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
         .subscribe(
           (result) => {
             this.groupAlbums = result;
+            this.isLoading = false;
           }
         );
     }
@@ -152,6 +155,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
         .subscribe(
           (result) => {
             this.groupAlbums = result.body!.sort((a) => (a.isPublished ? -1 : 1));
+            this.isLoading = false;
           }
         );
     }
