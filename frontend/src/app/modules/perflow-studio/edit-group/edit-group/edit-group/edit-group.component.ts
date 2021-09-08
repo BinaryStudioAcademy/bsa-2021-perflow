@@ -87,19 +87,6 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       );
   }
 
-  changeOrder(publishedFirst: boolean) {
-    if (this.isPublishedFirst === publishedFirst) {
-      return;
-    }
-    this.isPublishedFirst = publishedFirst;
-    if (this.isPublishedFirst) {
-      this.groupAlbums.sort((a) => (a.isPublished ? -1 : 1));
-    }
-    else {
-      this.groupAlbums.sort((a) => (a.isPublished ? 1 : -1));
-    }
-  }
-
   loadData() {
     const groupId = this._route.snapshot.params.id;
     this._groupService.checkGroupMember(groupId)
