@@ -3,9 +3,9 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserRoles } from '../../../models/enums/user-roles.enum';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-profile-menu',
