@@ -1,5 +1,5 @@
 import {
-  Component, EventEmitter, Input, Output
+  Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
 
 @Component({
@@ -7,12 +7,16 @@ import {
   templateUrl: './confirmation-modal.component.html',
   styleUrls: ['./confirmation-modal.component.sass']
 })
-export class ConfirmationModalComponent {
-  @Input() message: string = 'Are you sure?';
+export class ConfirmationModalComponent implements OnInit {
+  @Input() message: string = "";
 
   @Output() confirm = new EventEmitter();
   @Output() discard = new EventEmitter();
   @Output() isClosed = new EventEmitter<void>();
+
+  ngOnInit(): void {
+    console.log(this.message);
+  }
 
   onConfirm() {
     this.confirm.emit();
@@ -28,5 +32,6 @@ export class ConfirmationModalComponent {
 
   clickOnModal = (event: Event) => {
     event.stopPropagation();
+    console.log(this.message);
   };
 }

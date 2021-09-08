@@ -41,6 +41,7 @@ export class ViewPlaylistComponent implements OnInit {
   isConnected: boolean = false;
   isHidden: boolean = false;
   isConfirmationModalShown: boolean = false;
+  confirmMessage: string;
   readonly playlistType = PlaylistType;
   readonly playlistAccessType = AccessType;
 
@@ -270,8 +271,9 @@ export class ViewPlaylistComponent implements OnInit {
     this.isConfirmationModalShown = !this.isConfirmationModalShown;
   }
 
-  confirm(action: string) {
+  confirm(action: string, message: string) {
     this._action = action;
+    this.confirmMessage = message;
     this.switchConfirmationModal();
   }
 
