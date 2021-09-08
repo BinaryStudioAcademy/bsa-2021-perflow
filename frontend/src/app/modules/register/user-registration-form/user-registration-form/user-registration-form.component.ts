@@ -67,7 +67,10 @@ export class UserRegistrationFormComponent implements OnInit {
     return this.registrationForm.get('passwordConfirmation')!;
   }
 
-  public onSubmit(newUser: RegisterData) {
+  public onSubmit(invalid: boolean, newUser: RegisterData) {
+    if (invalid) {
+      return;
+    }
     this.loading = true;
     this.isSuccess.emit(true);
     this.newUser.emit(newUser);
