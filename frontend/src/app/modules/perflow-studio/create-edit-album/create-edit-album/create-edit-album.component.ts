@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { PlatformLocation } from '@angular/common';
 import { GroupService } from 'src/app/services/group.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 
 @Component({
   selector: 'app-create-edit-album',
@@ -45,7 +46,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
-    private _groupService: GroupService
+    private _groupService: GroupService,
+    private _confirmationService: ConfirmationPageService
   ) { }
 
   ngOnInit() {
@@ -248,6 +250,26 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
         });
     }
   };
+
+  confirmPublicStatus() {
+    if(!this.album.isPublished) {
+      this.initConfirmDeletePlaylist();
+    }
+    else {
+      this.setPublicStatus();
+    }
+  }
+
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to publish this album?',
+        () => {
+          this.setPublicStatus();
+        },
+        () => {}
+      );
+  }
 
   setPublicStatus() {
     const albumPublicStatus: AlbumPublicStatus = {
