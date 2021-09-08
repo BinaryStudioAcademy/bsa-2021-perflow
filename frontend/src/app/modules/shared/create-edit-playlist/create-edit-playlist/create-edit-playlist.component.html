@@ -24,19 +24,11 @@
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon"></i>
               <div class="right menu">
-                  <div class="item first" 
+                  <div class="item first last" 
                   (click)="deletePlaylist()"
                   *ngIf="isAuthor">
                       <i class="trash icon"></i>
                       Remove playlist
-                  </div>
-                  <div class="item last share">
-                      <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
-                      <div class="right menu">
-                        <div class="item first last" (click)="copyLink()">
-                            Copy link
-                        </div>
-                      </div>
                   </div>
               </div>
             </div>
@@ -75,9 +67,5 @@
     (editPlaylist)="onSubmitModal($event)" 
     [(collaborators)]="collaborators"
     (isClosed)="closeModal()"></app-edit-playlist-modal>
-    <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-      <div class="header">
-        Link copied to clipboard!
-      </div>
-    </div>
+
   </div>

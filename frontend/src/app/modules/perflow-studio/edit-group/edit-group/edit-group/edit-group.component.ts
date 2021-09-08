@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
@@ -39,7 +39,6 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
   groupPlaylists: PlaylistView[] = [];
-  isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
   isGroupMember: boolean;
   isModalShown: boolean;
@@ -87,19 +86,6 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       );
   }
 
-  changeOrder(publishedFirst: boolean) {
-    if (this.isPublishedFirst === publishedFirst) {
-      return;
-    }
-    this.isPublishedFirst = publishedFirst;
-    if (this.isPublishedFirst) {
-      this.groupAlbums.sort((a) => (a.isPublished ? -1 : 1));
-    }
-    else {
-      this.groupAlbums.sort((a) => (a.isPublished ? 1 : -1));
-    }
-  }
-
   loadData() {
     const groupId = this._route.snapshot.params.id;
     this._groupService.checkGroupMember(groupId)
@@ -107,15 +93,15 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       .subscribe(
         (result) => {
           this.isGroupMember = result.body!;
-        }
-      );
-    this._groupService.getGroup(groupId)
-      .subscribe(
-        (result) => {
-          this.group = result;
-          this.loadTopSongs();
-          this.loadPlaylists();
-          this.loadAlbums();
+          this._groupService.getGroup(groupId)
+            .subscribe(
+              (result2) => {
+                this.group = result2;
+                this.loadTopSongs();
+                this.loadPlaylists();
+                this.loadAlbums();
+              }
+            );
         }
       );
   }
@@ -281,9 +267,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 }

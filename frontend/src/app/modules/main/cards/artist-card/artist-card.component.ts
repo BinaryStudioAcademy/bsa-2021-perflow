@@ -94,7 +94,7 @@ export class ArtistCardComponent {
             this._queueService.initSong(first, true);
           }
           else {
-            this._snackBarService.show({ message: 'There is are any songs!' });
+            this._snackBarService.show({ message: 'There are no any songs!' });
           }
         }
       });

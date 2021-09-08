@@ -254,6 +254,21 @@ namespace Perflow.Services.Implementations
             await context.SaveChangesAsync();
         }
 
+        public async Task<PlaylistNameDTO> ChangeAccessTypeAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (playlistNameDTO == null)
+                throw new ArgumentNullException(nameof(playlistNameDTO), "Argument cannot be null");
+
+            var playlist = await context.Playlists.FindAsync(playlistNameDTO.Id);
+            playlist.AccessType = mapper.Map<AccessType>(playlistNameDTO.AccessType);
+
+            context.Playlists.Update(playlist);
+
+            await context.SaveChangesAsync();
+
+            return mapper.Map<PlaylistNameDTO>(playlist);
+        }
+
         public async Task<PlaylistNameDTO> CopyPlaylistAsync(PlaylistNameDTO playlistNameDTO)
         {
             if (playlistNameDTO == null)

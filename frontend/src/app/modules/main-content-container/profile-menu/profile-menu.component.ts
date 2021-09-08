@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { filter } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { filter, takeUntil } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserRoles } from '../../../models/enums/user-roles.enum';
 
@@ -11,13 +12,14 @@ import { UserRoles } from '../../../models/enums/user-roles.enum';
   templateUrl: './profile-menu.component.html',
   styleUrls: ['./profile-menu.component.sass']
 })
-export class ProfileMenuComponent {
+export class ProfileMenuComponent implements OnInit, OnDestroy {
   userName: string = 'user';
   userIconURL: string = '';
   isRightRole: boolean = false;
   currentRoute: string;
 
   private _userId: number;
+  private _unsubscribe$ = new Subject<void>();
 
   constructor(
     private _authService: AuthService,
@@ -44,6 +46,10 @@ export class ProfileMenuComponent {
       });
   }
 
+  ngOnInit() {
+    this.updateUserName();
+  }
+
   getUserIconURL() {
     this._userService.getUserImage(this._userId)
       .subscribe({
@@ -60,7 +66,22 @@ export class ProfileMenuComponent {
       );
   }
 
+  updateUserName() {
+    this._profileService.profileNameUpdated$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        (name) => {
+          this.userName = name;
+        }
+      );
+  }
+
   logout() {
     this._authService.signOut();
+  }
+
+  ngOnDestroy() {
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }

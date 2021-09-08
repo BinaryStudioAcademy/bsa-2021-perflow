@@ -59,15 +59,6 @@
   <div class="groupAlbums" *ngIf="groupAlbums.length > 0">
       <div class="header">
           Albums
-          <div class="ui floating fluid selection dropdown my-dropdown" appSmDropdown>
-            <div class="text" *ngIf="isPublishedFirst">Published first</div>
-            <div class="text" *ngIf="!isPublishedFirst">Unpublished first</div>
-            <i class="chevron down icon"></i>
-            <div class="menu">
-                <div class="item" (click)="changeOrder(true)">Published first</div>
-                <div class="item" (click)="changeOrder(false)">Unpublished first</div>
-            </div>
-        </div>
       </div>
       <div class="items">
         <div class="scroll-box-left" *ngIf="isTextOverflow('albums')">
@@ -118,10 +109,6 @@
       (editGroup)="onSubmitModal($event)" 
       (isClosed)="closeModal()">
   </app-edit-group-modal>
-  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-      <div class="header">
-          Link copied to clipboard!
-      </div>
-  </div>
+
   <div class="container"></div>
 </main>

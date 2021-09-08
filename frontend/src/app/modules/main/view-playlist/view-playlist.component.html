@@ -39,7 +39,7 @@
               <div class="ui floating dropdown ellipsis-button" appSmDropdown>
                 <i class="ellipsis vertical icon"></i>
                 <div class="menu">
-                  <div *ngIf="isAuthor || isCollaborative" class="item first" routerLink="../../edit/{{playlist.id}}">
+                  <div *ngIf="(isAuthor || isCollaborative) && playlist.type === playlistType.playlist" class="item first" routerLink="../../edit/{{playlist.id}}">
                     <span>
                       <i class="edit outline icon"></i>
                       Edit playlist
@@ -65,7 +65,7 @@
                         </div>
                       </div>
                   </div>
-                  <div *ngIf="isAuthor" class="item last" (click)="deletePlaylist()">
+                  <div *ngIf="isAuthor && playlist.type === playlistType.playlist" class="item last" (click)="deletePlaylist()">
                     <span>
                       <i class="trash alternate outline icon"></i>
                       Delete playlist
@@ -84,10 +84,5 @@
   </div>
   <div>
     <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs"></app-songs-list>
-  </div>
-  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-    <div class="header">
-      Link copied to clipboard!
-    </div>
   </div>
 </main>

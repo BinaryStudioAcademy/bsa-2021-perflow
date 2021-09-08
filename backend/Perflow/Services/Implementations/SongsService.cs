@@ -48,7 +48,7 @@ namespace Perflow.Services.Implementations
             return songs;
         }
 
-        public async Task<SongReadDTO> FindSongsByIdAsync(int id, int userId)
+        public async Task<SongReadDTO> FindSongByIdAsync(int id, int userId)
         {
             var song = await context.Songs
                 .Include(song => song.Artist)

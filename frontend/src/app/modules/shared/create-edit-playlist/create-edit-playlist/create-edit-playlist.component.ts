@@ -1,7 +1,7 @@
 import {
   Component, OnInit, OnDestroy
 } from '@angular/core';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, filter, first, switchMap, takeUntil
 } from 'rxjs/operators';
@@ -34,7 +34,6 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   playlist = {} as Playlist;
   searchValue: string;
   userId: number;
-  isSuccess: boolean = false;
   isAuthor: boolean;
 
   private _id: number | undefined;
@@ -302,15 +301,5 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.searchValue = '';
       this.foundSongs = new Array<Song>();
     }
-  }
-
-  copyLink() {
-    this._clipboardApi.copyFromContent(
-      `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
-    );
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
   }
 }

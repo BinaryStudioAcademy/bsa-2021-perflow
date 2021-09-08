@@ -66,7 +66,7 @@ namespace Perflow.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SongReadDTO>> GetSong(int id)
         {
-            return Ok(await _songsService.FindSongsByIdAsync(id, User.GetId()));
+            return Ok(await _songsService.FindSongByIdAsync(id, User.GetId()));
         }
 
         [HttpGet("{id}/isLiked")]
