@@ -33,6 +33,10 @@ export class ReactionService {
     return this.httpService.getRequest<ArtistReadDTO[]>(`/api/ArtistReaction/${userId}`);
   }
 
+  getGroupsByUserId(userId: number) {
+    return this.httpService.getRequest<ArtistReadDTO[]>(`/api/GroupReactions/${userId}`);
+  }
+
   addArtistReaction(artistId: number, userId: number) {
     return this.httpService.postClearRequest(
       '/api/ArtistReaction/like',

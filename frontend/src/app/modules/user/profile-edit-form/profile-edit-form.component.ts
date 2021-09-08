@@ -2,6 +2,7 @@ import {
   Component, EventEmitter, OnInit, Output, Input
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { CroppedImageData } from 'src/app/models/shared/cropped.model';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from '../../../models/user/user';
@@ -28,6 +29,9 @@ export class ProfileEditFormComponent implements OnInit {
   countries: Country[] = countries;
   validImageTypes: string[] = ['image/png', 'image/jpg', 'image/jpeg'];
   standartIcon: string = '../../../../assets/images/standartIcon.png';
+  isCropperModalShown = false;
+
+  file: File;
 
   @Input()
   user: User;
@@ -52,14 +56,19 @@ export class ProfileEditFormComponent implements OnInit {
   }
 
   handleFileInput(event: Event) {
-    const file: File = (<HTMLInputElement>event.target).files![0];
+    const [file] = Array.from((event.target as HTMLInputElement).files as FileList);
 
     if (this.validImageTypes.includes(file.type)) {
-      this.updateUserIcon(file);
+      this.file = file;
+      this.isCropperModalShown = !this.isCropperModalShown;
     }
     else {
       $('.ui.modal').modal('show');
     }
+  }
+
+  switchCropperImageModal() {
+    this.isCropperModalShown = !this.isCropperModalShown;
   }
 
   onSubmit() {
@@ -75,4 +84,10 @@ export class ProfileEditFormComponent implements OnInit {
         }
       });
   }
+
+  onSubmitModal = (croppedFile: CroppedImageData) => {
+    this.isCropperModalShown = !this.isCropperModalShown;
+    this.file = croppedFile.croppedFile;
+    this.updateUserIcon(this.file);
+  };
 }

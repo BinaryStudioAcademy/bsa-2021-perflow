@@ -32,6 +32,7 @@ namespace Perflow.DataAccess.Context
         public DbSet<PlaylistEditor> PlaylistEditors { get; set; }
         public DbSet<ContentSynchronization> ContentSynchronization { get; set; }
         public DbSet<GroupArtist> GroupArtist { get; set; }
+        public DbSet<SharePlay> SharePlay { get; set; }
 
         public PerflowContext(DbContextOptions<PerflowContext> options): base(options)
         { }

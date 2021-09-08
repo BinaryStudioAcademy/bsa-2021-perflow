@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.Search;
 using Perflow.Common.DTO.Users;
@@ -39,6 +40,7 @@ namespace Perflow.Services.Implementations
 
             var shUpdate = shList.FirstOrDefault(
                 rp => rp.ArtistId == historyDTO.ArtistId &&
+                rp.GroupId == historyDTO.GroupId &&
                 rp.AlbumId == historyDTO.AlbumId &&
                 rp.PlaylistId == historyDTO.PlaylistId);
 
@@ -64,12 +66,17 @@ namespace Perflow.Services.Implementations
             if (historyDTO.AlbumId != null)
             {
                 history.Album = await context.Albums
-                    .FirstOrDefaultAsync(a => a.Id == historyDTO.AlbumId);
+                   .FirstOrDefaultAsync(a => a.Id == historyDTO.AlbumId);
             }
             else if (historyDTO.ArtistId != null)
             {
                 history.Artist = await context.Users
                    .FirstOrDefaultAsync(u => u.Id == historyDTO.ArtistId);
+            }
+            else if (historyDTO.GroupId != null)
+            {
+                history.Group = await context.Groups
+                   .FirstOrDefaultAsync(g => g.Id == historyDTO.GroupId);
             }
             else
             {
@@ -94,6 +101,7 @@ namespace Perflow.Services.Implementations
                     .ThenInclude(a => a.Group)
                 .Include(sh => sh.Artist)
                 .Include(sh => sh.Playlist)
+                .Include(sh => sh.Group)
                 .OrderByDescending(sh => sh.CreatedAt)
                 .AsNoTracking()
                 .ToListAsync();
@@ -121,7 +129,15 @@ namespace Perflow.Services.Implementations
                 {
                     Id = sh.Artist.Id,
                     UserName = sh.Artist.UserName,
-                    IconURL = _imageService.GetImageUrl(sh.Artist.IconURL)
+                    IconURL = _imageService.GetImageUrl(sh.Artist.IconURL),
+                    IsArtist = true
+                } : null,
+                Group = sh.GroupId != null ? new GroupShortDTO
+                {
+                    Id = sh.Group.Id,
+                    UserName = sh.Group.Name,
+                    IconURL = _imageService.GetImageUrl(sh.Group.IconURL),
+                    IsArtist = false
                 } : null
             });
 

@@ -80,7 +80,7 @@
             <app-album-card *ngIf="entity.entityType === 0" 
               [album]="entity.entity">
             </app-album-card>
-            <app-artist-card *ngIf="entity.entityType === 2"
+            <app-artist-card *ngIf="entity.entityType === 2 || entity.entityType === 3"
               [artist]="entity.entity">
             </app-artist-card>
             <app-playlist-card *ngIf="entity.entityType === 1"

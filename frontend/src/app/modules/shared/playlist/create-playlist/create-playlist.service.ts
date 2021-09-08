@@ -32,9 +32,17 @@ export class CreatePlaylistService {
     }
   }
 
+  editCollaborativePlaylist(playlist: Playlist) {
+    this._playlistSubject$.next(playlist);
+  }
+
   editPlaylistName(playlist: PlaylistName) {
     this._editedNameSubject$.next(playlist);
     this._createdPlylists.find((pl) => pl.id === playlist.id)!.name = playlist.name;
+  }
+
+  editCollaborativePlaylistName(playlist: PlaylistName) {
+    this._editedNameSubject$.next(playlist);
   }
 
   deletePlaylist(id: number) {

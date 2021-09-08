@@ -37,9 +37,9 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   group: GroupFull = {} as GroupFull;
   editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
-  groupPlaylists: PlaylistView[] = [];
   isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
+  groupPlaylists: PlaylistView[] = [];
   isGroupMember: boolean;
   isModalShown: boolean;
   newAlbum: AlbumEdit = {} as AlbumEdit;
@@ -49,7 +49,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _groupService: GroupService,
     private _songService: SongsService,
-    private _playlistsService: PlaylistsService,
     private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
@@ -57,6 +56,7 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _albumsService: AlbumService,
     private _activateRoute: ActivatedRoute,
+    private _playlistsService: PlaylistsService,
     private _router: Router
   ) {
     this.getUserId();
@@ -98,7 +98,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
         (result) => {
           this.group = result;
           this.loadTopSongs();
-          this.loadPlaylists();
           this.loadAlbums();
         }
       );
@@ -113,20 +112,20 @@ export class GroupViewComponent implements OnInit, OnDestroy {
       );
   }
 
-  loadPlaylists() {
-    this._playlistsService.getPlaylistsByGroupId(this.group.id)
-      .subscribe(
-        (result) => {
-          this.groupPlaylists = result;
-        }
-      );
-  }
-
   loadAlbums() {
     this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
       .subscribe(
         (result) => {
           this.groupAlbums = result;
+        }
+      );
+  }
+
+  loadPlaylists() {
+    this._playlistsService.getPlaylistsByGroupId(this.group.id)
+      .subscribe(
+        (result) => {
+          this.groupPlaylists = result;
         }
       );
   }
@@ -153,9 +152,6 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     switch (id) {
       case 'albums':
         this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
-        break;
-      case 'playlists':
-        this.playlistsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
         break;
       default:
         break;

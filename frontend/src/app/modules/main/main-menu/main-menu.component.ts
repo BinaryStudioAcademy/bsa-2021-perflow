@@ -58,8 +58,13 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
     this._createdPlaylistService.playlistChanged$.subscribe((playlist) => {
       const playlistIndex = this.playlists.findIndex((pl) => pl.id === playlist?.id);
-      if (playlistIndex === -1) {
+      const collaborativeIndex = this.collaborativePlaylists.findIndex((pl) => pl.id === playlist?.id);
+
+      if (playlistIndex === -1 && collaborativeIndex === -1) {
         this.playlists.push(playlist!);
+      }
+      else if (collaborativeIndex !== -1) {
+        this.collaborativePlaylists[collaborativeIndex] = playlist!;
       }
       else {
         this.playlists[playlistIndex] = playlist!;
@@ -69,6 +74,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     this._createdPlaylistService.playlistDeleted$
       .subscribe((id) => {
         this.playlists = this.playlists.filter((pl) => pl.id !== id);
+        this.collaborativePlaylists = this.collaborativePlaylists.filter((pl) => pl.id !== id);
       });
   }
 
@@ -223,8 +229,17 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       .subscribe({
         next: () => {
           const playlistIndex = this.playlists.findIndex((pl) => pl.id === this.editedPlaylist?.id);
-          this.playlists[playlistIndex] = this.editedPlaylist!;
-          this._createdPlaylistService.editPlaylistName(this.editedPlaylist);
+          const collaborativeIndex = this.collaborativePlaylists.findIndex((pl) => pl.id === this.editedPlaylist?.id);
+
+          if (collaborativeIndex !== -1) {
+            this.collaborativePlaylists[collaborativeIndex] = this.editedPlaylist!;
+            this._createdPlaylistService.editCollaborativePlaylistName(this.editedPlaylist);
+          }
+          else {
+            this.playlists[playlistIndex] = this.editedPlaylist!;
+            this._createdPlaylistService.editPlaylistName(this.editedPlaylist);
+          }
+
           this.editedPlaylist = {} as PlaylistName;
           this._tempPlaylist = {} as PlaylistName;
         }

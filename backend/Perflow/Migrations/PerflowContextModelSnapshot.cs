@@ -516,6 +516,9 @@ namespace Perflow.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PlaylistId")
                         .HasColumnType("int");
 
@@ -528,11 +531,31 @@ namespace Perflow.Migrations
 
                     b.HasIndex("ArtistId");
 
+                    b.HasIndex("GroupId");
+
                     b.HasIndex("PlaylistId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("SearchHistory");
+                });
+
+            modelBuilder.Entity("Perflow.Domain.SharePlay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MasterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SharePlay");
                 });
 
             modelBuilder.Entity("Perflow.Domain.Song", b =>
@@ -983,6 +1006,10 @@ namespace Perflow.Migrations
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Perflow.Domain.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
                     b.HasOne("Perflow.Domain.Playlist", "Playlist")
                         .WithMany()
                         .HasForeignKey("PlaylistId")
@@ -997,6 +1024,8 @@ namespace Perflow.Migrations
                     b.Navigation("Album");
 
                     b.Navigation("Artist");
+
+                    b.Navigation("Group");
 
                     b.Navigation("Playlist");
 
@@ -1064,9 +1093,9 @@ namespace Perflow.Migrations
 
             modelBuilder.Entity("Perflow.Domain.Group", b =>
                 {
-                    b.Navigation("Artists");
-
                     b.Navigation("Albums");
+
+                    b.Navigation("Artists");
 
                     b.Navigation("Reactions");
                 });
