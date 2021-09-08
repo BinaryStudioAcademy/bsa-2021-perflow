@@ -18,6 +18,7 @@ import { PlatformLocation } from '@angular/common';
 import { Tag } from 'src/app/models/tag/tag';
 import { TagService } from 'src/app/services/tags/tag.service';
 import { GroupService } from 'src/app/services/group.service';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-create-edit-album',
@@ -49,7 +50,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
     private _tagService: TagService,
-    private _groupService: GroupService
+    private _groupService: GroupService,
+    private _queueService: QueueService,
   ) {
     this.getTags();
   }
@@ -184,7 +186,9 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
             this._songsService.uploadSong(songForWrite, s)
               .pipe(take(1))
               .subscribe((uploadedSong) => {
-                this.album.songs.push(uploadedSong);
+                const getSongSubscription = this._songsService.getSongById(uploadedSong.id).subscribe((song) => {
+                   this.album.songs.push(song); getSongSubscription.unsubscribe(); 
+                  });
               });
 
             subscription.unsubscribe();
@@ -280,4 +284,13 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
         }
       });
   }
+
+  play = () => {
+    if (this.album.songs.length === 0) return;
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.album.songs);
+
+    this._queueService.initSong(this.album.songs[0], true);
+  };
 }

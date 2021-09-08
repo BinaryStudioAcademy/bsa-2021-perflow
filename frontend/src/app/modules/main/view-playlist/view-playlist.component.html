@@ -83,7 +83,7 @@
     </div>
   </div>
   <div>
-    <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs"></app-songs-list>
+    <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs" [isRemoveFromPlaylistShown]="playlist.type === playlistType.playlist"></app-songs-list>
   </div>
   <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
     <div class="header">
