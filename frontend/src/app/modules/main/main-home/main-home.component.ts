@@ -142,6 +142,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.accordionSection = this.data?.pageSections.find((ps) => ps.position === 1)!;
     this.currentAccordionAlbum = this.accordionSection?.pageSectionEntities[0]?.entity;
     if (this.currentAccordionAlbum) this.accordionAlbumsLength = [...this.accordionSection.pageSectionEntities].length;
+    else this.accordionAlbumsLength = 0;
   }
 
   getNewestFiveAlbums() {
