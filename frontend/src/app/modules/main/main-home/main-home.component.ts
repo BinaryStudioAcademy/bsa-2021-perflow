@@ -89,7 +89,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
     this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
@@ -131,7 +130,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         next: () => {
           this.idSaveButtonShown = !this.idSaveButtonShown;
           this.isSuccess = true;
-          this._newestAlbums.find((a) => a.id === id)!.isLiked = true;
+          this.currentAccordionAlbum.isLiked = true;
 
           timer(3000).pipe(take(1)).subscribe((val) => {
             this.isSuccess = Boolean(val);
@@ -144,20 +143,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.accordionSection = this.data.pageSections.find((ps) => ps.position === 1)!;
     this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[0]?.entity;
     this.accordionAlbumsLength = [...this.accordionSection.pageSectionEntities].length;
-  }
-
-  getNewestFiveAlbums() {
-    this._albumService.getFiveNewestAlbums()
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: (data) => {
-          this._newestAlbums = data;
-          this.currentNewestAlbum = {
-            ...this._newestAlbums[0]
-          };
-          this.setButtonVisibility();
-        }
-      });
+    this.setButtonVisibility();
   }
 
   getRecommendations() {
@@ -171,8 +157,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   setButtonVisibility() {
-    this.idSaveButtonShown = this.currentAccordionAlbum.artistId !== this._userId
-      && !this.currentAccordionAlbum.isLiked;
+    this.idSaveButtonShown = !this.currentAccordionAlbum.artistIds?.includes(this._userId)
+                          && !this.currentAccordionAlbum.isLiked;
   }
 
   getRecentlyPlayed() {
