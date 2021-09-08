@@ -117,6 +117,10 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
   }
 
   likeArtist() {
+    if (this.artist.isLiked){
+      this._snackbarService.show({ message: `You already subscribed to ${this.artist.userName}.` });
+      return;
+    }
     this._reactionService.addArtistReaction(this.artist.id, this._userId)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(

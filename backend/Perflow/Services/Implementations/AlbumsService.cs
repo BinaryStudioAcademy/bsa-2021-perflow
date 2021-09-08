@@ -99,6 +99,7 @@ namespace Perflow.Services.Implementations
                                                     : a.GroupId == artistId && a.IsPublished)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
+                                        .OrderByDescending(a => a.CreatedAt)
                                         .Select(a => new AlbumShortDTO
                                         {
                                             Id = a.Id,
@@ -117,6 +118,7 @@ namespace Perflow.Services.Implementations
             var albums = await context.Albums
                                         .Where(a => a.GroupId == groupId)
                                         .Include(a => a.Group)
+                                        .OrderByDescending(a => a.CreatedAt)
                                         .Select(a => new AlbumShortDTO
                                         {
                                             Id = a.Id,
