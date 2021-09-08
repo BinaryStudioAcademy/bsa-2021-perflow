@@ -112,7 +112,7 @@ export class ArtistApplicantPageComponent implements OnInit, OnDestroy {
         switchMap((term: string) => {
           if (term) {
             this._page = 1;
-            return this._searchService.getGroupsByName({
+            return this._searchService.getGroupsForArtistApplicant({
               page: this._page,
               itemsOnPage: this._itemsOnPage,
               searchTerm: term

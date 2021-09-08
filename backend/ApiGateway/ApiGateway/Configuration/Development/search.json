@@ -39,6 +39,19 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownstreamPathTemplate": "/api/Search/forArtistApplicant",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Search/forArtistApplicant",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Search/albums/{onlyPublished}",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
