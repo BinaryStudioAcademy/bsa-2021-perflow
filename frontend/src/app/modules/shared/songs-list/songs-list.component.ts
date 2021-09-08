@@ -32,11 +32,8 @@ export class SongsListComponent implements OnInit, OnDestroy {
   @Input() playlist: Playlist | undefined;
   @Input() album: AlbumFull | undefined;
   @Input() isRemoveFromQueueShonw: boolean = false;
-<<<<<<< HEAD
   @Input() isRemoveFromPlaylistShown: boolean = true;
-=======
   @Input() isGroupMember: boolean = false;
->>>>>>> origin/develop
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();

@@ -50,7 +50,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _location: PlatformLocation,
     private _tagService: TagService,
     private _groupService: GroupService,
-    private _queueService: QueueService,
+    private _queueService: QueueService
   ) {
     this.getTags();
   }
@@ -186,8 +186,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
               .pipe(take(1))
               .subscribe((uploadedSong) => {
                 const getSongSubscription = this._songsService.getSongById(uploadedSong.id).subscribe((song) => {
-                   this.album.songs.push(song); getSongSubscription.unsubscribe(); 
-                  });
+                  this.album.songs.push(song); getSongSubscription.unsubscribe();
+                });
               });
 
             subscription.unsubscribe();
