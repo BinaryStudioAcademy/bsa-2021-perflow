@@ -1,5 +1,5 @@
 <div class="song-list drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
-  <app-songs-list-header (sortTypeChanged)="setSortType($event)" ></app-songs-list-header>
+  <app-songs-list-header [isEditable]="isEditable" (sortTypeChanged)="setSortType($event)" ></app-songs-list-header>
   
   <ng-container *ngIf="isDraggable">
     <div *ngFor="let song of songs | sortSongs:sortType | filterExplicit:!filterExplicit; let i = index" cdkDrag class="song-row">
@@ -11,6 +11,7 @@
         [isPlaying]="isPlaying"
         [playlist]="playlist"
         [album]="album"
+        [tags]="tags"
         [isRemoveFromQueueShonw]="isRemoveFromQueueShonw"
 
         (clickMenuItem)="rowMenuClick($event)" 

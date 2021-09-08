@@ -1,0 +1,20 @@
+<div class="ui mini modal edit" [ngClass]="class">
+  <div class="header">
+    Edit Tags
+  </div>
+  <div class="content">
+
+    <select id={{class}} name="tags" multiple="" class="ui search fluid dropdown" appSmDropdown [allowAdditions]=true>
+      <option *ngFor="let tag of tags" [value]=tag.name>
+        {{tag.name}}
+      </option>
+    </select>
+
+    <div class="actions">
+      <div class="buttons">
+        <button class="ui button btn-full" (click)="onSubmit()">Save</button>
+        <button class="ui deny inverted basic button btn-cancel" (click)="close()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

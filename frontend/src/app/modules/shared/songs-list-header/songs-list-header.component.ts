@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
 import { SongSortOrder, SongSortProperty, SongSortType } from '../../../models/song/song-sort-type';
 
 @Component({
@@ -7,6 +9,8 @@ import { SongSortOrder, SongSortProperty, SongSortType } from '../../../models/s
   styleUrls: ['./songs-list-header.component.sass']
 })
 export class SongsListHeaderComponent {
+  @Input() isEditable = false;
+
   @Output() sortTypeChanged = new EventEmitter<SongSortType | null>();
 
   sortProperties = SongSortProperty;

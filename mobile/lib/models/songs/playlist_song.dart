@@ -29,9 +29,6 @@ class PlaylistSong implements Song {
   @override
   final bool isLiked;
 
-  @override
-  String? get blobId => null;
-
   const PlaylistSong({
     required this.id,
     required this.name,

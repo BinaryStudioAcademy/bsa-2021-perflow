@@ -24,7 +24,7 @@
     <div class="album-name tub">
       <h5>{{ album.name }}</h5>
     </div>
-    <div class="album-author tub">
+    <div class="album-author tub" [ngClass]="{'published':showPublishedStatus && album.isPublished}">
       <span>{{ album.authorName }}</span>
     </div>
     <div class="album-year tub" [ngClass]="{'checked':isChecked}">
