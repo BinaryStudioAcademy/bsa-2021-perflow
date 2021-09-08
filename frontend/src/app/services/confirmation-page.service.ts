@@ -17,6 +17,9 @@ export class ConfirmationPageService implements OnDestroy {
 
   private _unsubscribe$: Subject<void>;
 
+  private _isModalShownSubject$ = new Subject<boolean>();
+  isModalShownObservable$ = this._isModalShownSubject$.asObservable();
+
   ngOnDestroy(): void {
     this._unsubscribe$.next();
     this._unsubscribe$.complete();
@@ -32,7 +35,8 @@ export class ConfirmationPageService implements OnDestroy {
     discardCallback: () => void
   ) {
     this._unsubscribe$ = new Subject<void>();
-    this._messageSubject$.next(message);
+    this.setModalMessage(message);
+    this.showModal();
 
     this.subscribeToConfirm(confirmCallback);
     this.subscribeToDiscard(discardCallback);
@@ -43,6 +47,7 @@ export class ConfirmationPageService implements OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(() => {
         confirmCallback();
+        this.hideModal();
         this.unsubscribe();
       });
   }
@@ -52,6 +57,7 @@ export class ConfirmationPageService implements OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(() => {
         discardCallback();
+        this.hideModal();
         this.unsubscribe();
       });
   }
@@ -61,11 +67,23 @@ export class ConfirmationPageService implements OnDestroy {
     this._unsubscribe$.complete();
   }
 
+  setModalMessage(message: string) {
+    this._messageSubject$.next(message);
+  }
+
   confirm() {
     this._confirmSubject$.next();
   }
 
   discard() {
     this._discardSubject$.next();
+  }
+
+  showModal() {
+    this._isModalShownSubject$.next(true);
+  }
+
+  hideModal() {
+    this._isModalShownSubject$.next(false);
   }
 }

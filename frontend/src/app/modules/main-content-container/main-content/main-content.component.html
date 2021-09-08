@@ -2,11 +2,9 @@
     <router-outlet></router-outlet>
 </div>
 <div class="profile-notifications-container">
-<app-notifications></app-notifications>
-<app-profile-menu></app-profile-menu>
+    <app-notifications></app-notifications>
+    <app-profile-menu></app-profile-menu>
 </div>
-
-<app-confirmation-modal></app-confirmation-modal>
 
 <app-queue 
     (opened)="hideContainer()" 
@@ -16,3 +14,4 @@
 </app-queue>
 <app-song-toolbar (queueClicked)="toggleQueue()" [isQueueOpened]="isContainerHidden"></app-song-toolbar>
 <app-snackbar></app-snackbar>
+<app-confirmation-modal [hidden]="!isConfirmationModalShown"></app-confirmation-modal>

@@ -16,6 +16,7 @@ import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -47,7 +48,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
     private _playlistEditorsService: PlaylistEditorsService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _confirmationService: ConfirmationPageService
   ) { }
 
   public ngOnInit() {
@@ -139,7 +141,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         this.editPlaylist();
         break;
       case 'Delete':
-        this.deletePlaylist();
+        this.initConfirmDeletePlaylist();
         break;
       case 'Create playlist':
         this.createPlaylist();
@@ -269,5 +271,16 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   isPlaylistCollaborativeSettings() {
     return this.collaborativePlaylists.find((p) => p.id === this._tempPlaylist.id) !== undefined;
+  }
+
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete this playlist?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
   }
 }

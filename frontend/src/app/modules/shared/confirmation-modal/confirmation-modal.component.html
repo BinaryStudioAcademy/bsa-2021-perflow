@@ -1,9 +1,6 @@
-<div class="bg-modal-fader" 
-*ngIf="isModalShown"
-(click)="cancelModal()"
->
+<div class="bg-modal-fader" (click)="cancelModal()">
   <div class="content-container" (click)="clickOnModal($event)">
-    <h4>{{message}}</h4>
+    <h4>{{ message }}</h4>
     <div class="buttons">
       <button class="ui inverted basic button btn-ghost button-no"
       (click)="onDiscard()">

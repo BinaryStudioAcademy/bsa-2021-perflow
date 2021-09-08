@@ -269,7 +269,7 @@ export class ViewPlaylistComponent implements OnInit {
   initConfirmDeletePlaylist() {
     this._confirmationService
       .initConfirmation(
-        'Are you sure you want to delete playlists?',
+        'Are you sure you want to delete this playlist?',
         () => {
           this.deletePlaylist();
         },
