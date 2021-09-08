@@ -2,10 +2,12 @@ import {
   Component, EventEmitter, Input, Output
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-playlist-card',
@@ -34,15 +36,21 @@ export class PlaylistCardComponent {
   constructor(
     private _playlistsService: PlaylistsService,
     private _queueService: QueueService,
-    private _router: Router
+    private _router: Router,
+    private _snackBarService: SnackbarService
   ) { }
 
   play = (id: number) => {
     this._playlistsService.getPlaylistSongs(id)
+      .pipe(take(1))
       .subscribe((result) => {
-        const songs = result;
-
-        this.updateQueue(songs);
+        if (result.length) {
+          const songs = result;
+          this.updateQueue(songs);
+        }
+        else {
+          this._snackBarService.show({ message: 'There are no any songs!' });
+        }
       });
   };
 

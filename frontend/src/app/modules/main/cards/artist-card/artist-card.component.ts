@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { QueueService } from 'src/app/services/queue.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -42,7 +43,8 @@ export class ArtistCardComponent {
   constructor(
     private _router: Router,
     private _songsService: SongsService,
-    private _queueService: QueueService
+    private _queueService: QueueService,
+    private _snackBarService: SnackbarService
   ) { }
 
   onDeleteClick(artist: ArtistReadDTO) {
@@ -85,10 +87,15 @@ export class ArtistCardComponent {
       .pipe(take(1))
       .subscribe({
         next: (data) => {
-          this._queueService.clearQueue();
-          this._queueService.addSongsToQueue(data);
-          const [first] = data;
-          this._queueService.initSong(first, true);
+          if (data.length) {
+            this._queueService.clearQueue();
+            this._queueService.addSongsToQueue(data);
+            const [first] = data;
+            this._queueService.initSong(first, true);
+          }
+          else {
+            this._snackBarService.show({ message: 'There is are any songs!' });
+          }
         }
       });
   }

@@ -48,18 +48,24 @@ namespace Perflow.Services.Implementations
             return songs;
         }
 
-        public async Task<SongReadDTO> FindSongsByIdAsync(int id)
+        public async Task<SongReadDTO> FindSongsByIdAsync(int id, int userId)
         {
             var song = await context.Songs
                 .Include(song => song.Artist)
                 .Include(song => song.Group)
+                    .ThenInclude(g => g.Artists)
+                        .ThenInclude(ga => ga.Artist)
                 .Include(song => song.Album)
+                .Include(song => song.Reactions)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(song => song.Id == id);
 
             song.Album.IconURL = _imageService.GetImageUrl(song.Album.IconURL);
 
-            return mapper.Map<SongReadDTO>(song);
+            var result = mapper.Map<SongReadDTO>(song);
+            result.IsLiked = song.Reactions.Any(r => r.UserId == userId);
+
+            return result;
         }
 
         public async Task<IEnumerable<SongForAlbumDTO>> GetTopSongsByAuthorIdAsync(int id, int count, AuthorType type, int userId)
