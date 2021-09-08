@@ -13,8 +13,12 @@
         [album]="album"
         [tags]="tags"
         [isRemoveFromQueueShonw]="isRemoveFromQueueShonw"
+<<<<<<< HEAD
         [isRemoveFromPlaylistShown] = "isRemoveFromPlaylistShown"
 
+=======
+        [isGroupMember]="isGroupMember"
+>>>>>>> origin/develop
         (clickMenuItem)="rowMenuClick($event)" 
         (clickDislike)="clickDislikeIcon($event)"
         (togglePlay)="togglePlay()">
@@ -32,7 +36,7 @@
       [playlist]="playlist"
       [album]="album"
       [isRemoveFromQueueShonw]="isRemoveFromQueueShonw"
-
+      [isGroupMember]="isGroupMember"
       (clickMenuItem)="rowMenuClick($event)" 
       (clickDislike)="clickDislikeIcon($event)"
       (togglePlayEvent)="togglePlay()">

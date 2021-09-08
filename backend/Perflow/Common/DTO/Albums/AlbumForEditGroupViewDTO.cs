@@ -13,5 +13,6 @@ namespace Perflow.Common.DTO.Albums
         public string IconURL { get; set; }
         public string AuthorName { get; set; }
         public bool IsPublished { get; set; }
+        public bool IsSingle { get; set; }
     }
 }

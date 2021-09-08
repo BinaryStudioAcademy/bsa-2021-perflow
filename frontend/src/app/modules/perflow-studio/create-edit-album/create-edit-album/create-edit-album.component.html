@@ -36,7 +36,7 @@
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon icons"></i>
               <div class="right menu">
-                <div class="item last" (click)="removeAlbum()">
+                <div class="item first last" (click)="removeAlbum()">
                   <i class="trash icon"></i>Remove album
                 </div>
               </div>
@@ -59,9 +59,5 @@
   </app-songs-list>
 
   <app-edit-album-modal [editedAlbum]="editedAlbum" *ngIf="isModalShown" (editAlbum)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-album-modal>
-  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-    <div class="header">
-      Link copied to clipboard!
-    </div>
-  </div>
+
 </main>

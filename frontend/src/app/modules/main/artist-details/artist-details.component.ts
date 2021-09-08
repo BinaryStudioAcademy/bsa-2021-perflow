@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
@@ -35,8 +35,8 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
   artist: ArtistFull = {} as ArtistFull;
   topSongs: Song[] = [];
   artistPlaylists: PlaylistView[] = [];
-  isSuccess: boolean = false;
   artistAlbums: AlbumForReadDTO[] = [];
+  artistSingles: AlbumForReadDTO[] = [];
   isArtist: boolean;
 
   constructor(
@@ -117,6 +117,10 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
   }
 
   likeArtist() {
+    if (this.artist.isLiked) {
+      this._snackbarService.show({ message: `You already subscribed to ${this.artist.userName}.` });
+      return;
+    }
     this._reactionService.addArtistReaction(this.artist.id, this._userId)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
@@ -145,7 +149,8 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (result) => {
-          this.artistAlbums = result;
+          this.artistAlbums = result.filter((a) => !a.isSingle);
+          this.artistSingles = result.filter((a) => a.isSingle);
         }
       );
   }
@@ -173,10 +178,8 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 
   getGridScrollWidth = (selector: string) => {

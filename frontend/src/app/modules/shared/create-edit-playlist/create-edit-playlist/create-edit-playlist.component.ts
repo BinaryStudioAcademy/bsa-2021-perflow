@@ -34,7 +34,6 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   playlist = {} as Playlist;
   searchValue: string;
   userId: number;
-  isSuccess: boolean = false;
   isAuthor: boolean;
 
   private _id: number | undefined;
