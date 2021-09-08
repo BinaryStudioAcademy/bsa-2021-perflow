@@ -281,7 +281,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
         () => {}
       );
   }
-  
+
   initConfirmDeleteSongFromAlbum(song: Song) {
     this._confirmationService
       .initConfirmation(
