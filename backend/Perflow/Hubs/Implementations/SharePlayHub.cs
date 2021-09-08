@@ -2,13 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Perflow.Common.DTO.ContentSynchronization;
-using Perflow.DataAccess.Context;
 using Perflow.Hubs.Interfaces;
 using Perflow.Services.Implementations;
 using Shared.Auth.Constants;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Perflow.Hubs.Implementations
@@ -78,6 +76,16 @@ namespace Perflow.Hubs.Implementations
             }
 
             await _sharePlayService.DeleteRecordIfMasterDisconnectedAsync(userId);
+        }
+
+        public async Task CheckUserStatus()
+        {
+            int userId = int.Parse(Context.User.FindFirst(Claims.Id).Value);
+
+            if (_groups.ContainsKey(userId))
+                await Clients.User(userId.ToString()).CheckStatus(true);
+            else
+                await Clients.User(userId.ToString()).CheckStatus(false);
         }
 
         public async Task Connect(SharePlayDTO dto)

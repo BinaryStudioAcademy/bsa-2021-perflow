@@ -6,5 +6,6 @@ namespace Perflow.Hubs.Interfaces
     public interface ISharePlayHub
     {
         Task ResendSynchronization(SharePlayDataDTO syncDto);
+        Task CheckStatus(bool connected);
     }
 }

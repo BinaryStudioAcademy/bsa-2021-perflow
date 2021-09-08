@@ -15,6 +15,7 @@ export class SharePlayHub extends BaseHubService {
   protected readonly hubUrl = 'hub/share-play';
 
   syncData$ = new Subject<SharePlayData>();
+  checkStatus$ = new Subject<boolean>();
 
   constructor(
     hubFactory: HubFactoryService,
@@ -31,16 +32,23 @@ export class SharePlayHub extends BaseHubService {
         this.syncData$.next(syncData);
       }
     );
-  }
 
-  getHubStatus() {
-    return this.hubConnection?.state;
+    this.hubConnection.on(
+      'CheckStatus',
+      (data: boolean) => {
+        this.checkStatus$.next(data);
+      }
+    );
   }
 
   sendSyncData(syncData: SharePlayData) {
     if (this.hubConnection?.state === HubConnectionState.Connected) {
       this.hubConnection?.invoke('SendSynchronization', syncData);
     }
+  }
+
+  checkUserStatus() {
+    return this.hubConnection.invoke('CheckUserStatus');
   }
 
   disconect(data: SharePlay) {

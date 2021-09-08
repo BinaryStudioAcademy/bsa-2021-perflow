@@ -83,6 +83,13 @@ export class ViewPlaylistComponent implements OnInit {
           }
         }
       });
+
+    this._sharePlayService.checkConnectionStatus$
+      .subscribe({
+        next: (data) => {
+          this.isConnected = data;
+        }
+      });
   }
 
   nextSlide = () => { };
@@ -111,6 +118,10 @@ export class ViewPlaylistComponent implements OnInit {
         const minute = 60;
         this.hours = Math.floor(this._totalTimeSongs / hour);
         this.minutes = Math.floor(((this._totalTimeSongs % hour) / minute));
+
+        if (this.playlist.accessType === AccessType.collaborative) {
+          this._sharePlayService.checkUserStatus();
+        }
       });
   }
 
@@ -131,7 +142,9 @@ export class ViewPlaylistComponent implements OnInit {
             .pipe(take(1))
             .subscribe(
               (result) => {
-                this.isCollaborative = result.find((u) => u.id === this.userId) !== undefined;
+                this.isCollaborative = this.playlist.accessType === AccessType.collaborative
+                  && (result.filter((u) => u.id === this.userId).length > 0
+                  || this.playlist.author.id === this.userId);
               }
             );
         },
