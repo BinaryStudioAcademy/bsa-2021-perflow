@@ -37,6 +37,7 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
   artistPlaylists: PlaylistView[] = [];
   isSuccess: boolean = false;
   artistAlbums: AlbumForReadDTO[] = [];
+  artistSingles: AlbumForReadDTO[] = [];
   isArtist: boolean;
 
   constructor(
@@ -149,7 +150,8 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (result) => {
-          this.artistAlbums = result;
+          this.artistAlbums = result.filter(a => !a.isSingle);
+          this.artistSingles = result.filter(a => a.isSingle);
         }
       );
   }

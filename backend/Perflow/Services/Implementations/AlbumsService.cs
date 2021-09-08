@@ -106,7 +106,8 @@ namespace Perflow.Services.Implementations
                                             Name = a.Name,
                                             AuthorName = type == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
-                                            ReleaseYear = a.ReleaseYear
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle
                                         })
                                         .ToListAsync();
 
@@ -125,7 +126,8 @@ namespace Perflow.Services.Implementations
                                             Name = a.Name,
                                             AuthorName = a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
-                                            ReleaseYear = a.ReleaseYear
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle
                                         })
                                         .ToListAsync();
 

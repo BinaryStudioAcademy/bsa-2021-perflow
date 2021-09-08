@@ -37,6 +37,7 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   topSongs: Song[] = [];
   isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
+  groupSingles: AlbumForReadDTO[] = [];
   isGroupMember: boolean;
   isModalShown: boolean;
   newAlbum: AlbumEdit = {} as AlbumEdit;
@@ -112,7 +113,8 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
       .subscribe(
         (result) => {
-          this.groupAlbums = result;
+          this.groupAlbums = result.filter(a => !a.isSingle);
+          this.groupSingles = result.filter(a => a.isSingle);
         }
       );
   }
@@ -138,6 +140,9 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   scroll(id: string, scrollingSize: number = this._scrollingSize) {
     switch (id) {
       case 'albums':
+        this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+        break;
+      case 'singles':
         this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
         break;
       default:

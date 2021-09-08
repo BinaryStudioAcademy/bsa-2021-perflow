@@ -120,7 +120,8 @@ namespace Perflow.Services.Implementations
                                                                                                                                 Name = a.Name,
                                                                                                                                 AuthorName = a.AuthorType == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
                                                                                                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
-                                                                                                                                ReleaseYear = a.ReleaseYear
+                                                                                                                                ReleaseYear = a.ReleaseYear,
+                                                                                                                                IsSingle = a.IsSingle
                                                                                                                             })
                                                                                                                             .FirstOrDefault(a => a.Id == pse.ReferenceId)
                                                                     : pse.EntityType == Domain.Enums.EntityType.Artist ? _context.Users
