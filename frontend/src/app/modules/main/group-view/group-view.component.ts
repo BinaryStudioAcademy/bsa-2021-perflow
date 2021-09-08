@@ -33,12 +33,14 @@ export class GroupViewComponent implements OnInit, OnDestroy {
 
   @ViewChild('albums') albumsElement: ElementRef;
   @ViewChild('playlists') playlistsElement: ElementRef;
+  @ViewChild('singles') singlesElement: ElementRef;
 
   group: GroupFull = {} as GroupFull;
   editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
   isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
+  groupSingles: AlbumForReadDTO[] = [];
   groupPlaylists: PlaylistView[] = [];
   isGroupMember: boolean;
   isModalShown: boolean;
@@ -116,7 +118,8 @@ export class GroupViewComponent implements OnInit, OnDestroy {
     this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
       .subscribe(
         (result) => {
-          this.groupAlbums = result;
+          this.groupAlbums = result.filter((a) => !a.isSingle);
+          this.groupSingles = result.filter((a) => a.isSingle);
         }
       );
   }
@@ -153,6 +156,12 @@ export class GroupViewComponent implements OnInit, OnDestroy {
       case 'albums':
         this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
         break;
+      case 'singles':
+        this.singlesElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+        break;
+      case 'playlists':
+        this.playlistsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+        break;
       default:
         break;
     }
@@ -161,10 +170,13 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   scrollLeft(id: string, scrollingSize: number = this._scrollingSize) {
     switch (id) {
       case 'albums':
-        this.albumsElement.nativeElement?.scrollBy({ right: scrollingSize, behavior: 'smooth' });
+        this.albumsElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
         break;
       case 'playlists':
-        this.playlistsElement.nativeElement?.scrollBy({ right: scrollingSize, behavior: 'smooth' });
+        this.playlistsElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
+        break;
+      case 'singles':
+        this.singlesElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
         break;
       default:
         break;
