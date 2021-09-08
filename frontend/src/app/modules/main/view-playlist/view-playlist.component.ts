@@ -285,5 +285,6 @@ export class ViewPlaylistComponent implements OnInit {
       default:
         break;
     }
+    this.switchConfirmationModal();
   }
 }
