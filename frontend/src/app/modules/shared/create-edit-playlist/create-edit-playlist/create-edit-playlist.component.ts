@@ -303,7 +303,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.foundSongs = new Array<Song>();
     }
   }
-  
+
   initConfirmDeletePlaylist() {
     this._confirmationService
       .initConfirmation(

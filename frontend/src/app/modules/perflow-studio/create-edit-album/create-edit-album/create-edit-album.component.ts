@@ -50,7 +50,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _location: PlatformLocation,
     private _groupService: GroupService,
     private _confirmationService: ConfirmationPageService,
-    private _tagService: TagService,
+    private _tagService: TagService
   ) {
     this.getTags();
   }
