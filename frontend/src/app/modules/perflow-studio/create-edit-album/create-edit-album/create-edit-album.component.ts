@@ -231,7 +231,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   clickMenuHandler(data: { menuItem: string, song: Song }) {
     switch (data.menuItem) {
       case 'Remove from album':
-        this.deleteSongFromAlbum(data.song);
+        this.initConfirmDeleteSongFromAlbum(data.song);
         break;
       default:
         break;
@@ -274,9 +274,20 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   initConfirmDeleteAlbum() {
     this._confirmationService
       .initConfirmation(
-        'Are you sure you want to delete this album?',
+        'Are you sure you want to delete the album?',
         () => {
           this.removeAlbum();
+        },
+        () => {}
+      );
+  }
+  
+  initConfirmDeleteSongFromAlbum(song: Song) {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the song?',
+        () => {
+          this.deleteSongFromAlbum(song);
         },
         () => {}
       );

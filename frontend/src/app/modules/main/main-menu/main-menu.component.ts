@@ -276,7 +276,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   initConfirmDeletePlaylist() {
     this._confirmationService
       .initConfirmation(
-        'Are you sure you want to delete this playlist?',
+        'Are you sure you want to delete the playlist?',
         () => {
           this.deletePlaylist();
         },
