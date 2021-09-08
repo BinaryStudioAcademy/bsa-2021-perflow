@@ -65,7 +65,7 @@
                         </div>
                       </div>
                   </div>
-                  <div *ngIf="isAuthor" class="item last" (click)="deletePlaylist()">
+                  <div *ngIf="isAuthor" class="item last" (click)="confirm('Delete Playlist')">
                     <span>
                       <i class="trash alternate outline icon"></i>
                       Delete playlist
@@ -85,6 +85,13 @@
   <div>
     <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs"></app-songs-list>
   </div>
+  <app-confirmation-modal
+    *ngIf="isConfirmationModalShown"
+    (isClosed)="switchConfirmationModal()"
+    (discard)="switchConfirmationModal()"
+    (confirm)="onConfirmed()"
+    >
+    </app-confirmation-modal>
   <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
     <div class="header">
       Link copied to clipboard!

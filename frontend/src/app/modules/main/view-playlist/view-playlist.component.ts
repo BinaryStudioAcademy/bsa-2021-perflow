@@ -32,6 +32,7 @@ export class ViewPlaylistComponent implements OnInit {
   public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
+  private _action: string;
   private _unsubscribe$ = new Subject<void>();
   public isSuccess: boolean = false;
   isAuthor: boolean;
@@ -39,6 +40,7 @@ export class ViewPlaylistComponent implements OnInit {
   isGroupNotified: boolean = false;
   isConnected: boolean = false;
   isHidden: boolean = false;
+  isConfirmationModalShown: boolean = false;
   readonly playlistType = PlaylistType;
   readonly playlistAccessType = AccessType;
 
@@ -262,5 +264,24 @@ export class ViewPlaylistComponent implements OnInit {
         this.isGroupNotified = false;
         this.isHidden = true;
       });
+  }
+
+  switchConfirmationModal() {
+    this.isConfirmationModalShown = !this.isConfirmationModalShown;
+  }
+
+  confirm(action: string) {
+    this._action = action;
+    this.switchConfirmationModal();
+  }
+
+  onConfirmed() {
+    switch(this._action) {
+      case 'Delete Playlist':
+        this.deletePlaylist();
+        break;
+      default:
+        break;
+    }
   }
 }
