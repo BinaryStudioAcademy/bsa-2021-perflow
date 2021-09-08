@@ -8,7 +8,7 @@ import {
   styleUrls: ['./confirmation-modal.component.sass']
 })
 export class ConfirmationModalComponent implements OnInit {
-  @Input() message: string = "";
+  @Input() message: string = '';
 
   @Output() confirm = new EventEmitter();
   @Output() discard = new EventEmitter();
