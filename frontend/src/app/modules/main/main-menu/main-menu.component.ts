@@ -136,10 +136,10 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         this.editPlaylist();
         break;
       case 'Make Secret':
-        this.makeSecret();
+        this.changeAccessType(AccessType.secret);
         break;
       case 'Make Default':
-        this.makeDefault();
+        this.changeAccessType(AccessType.default);
         break;
       case 'Delete':
         this.deletePlaylist();
@@ -195,22 +195,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     }
   }
 
-  makeSecret() {
-    this._tempPlaylist.accessType = AccessType.secret;
-    this._playlistsService.changeAccessType(this._tempPlaylist)
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: (data) => {
-          const playlistIndex = this.playlists.findIndex((pl) => pl.id === this._tempPlaylist?.id);
-          this.playlists[playlistIndex].accessType = data.accessType;
-          this.editedPlaylist = {} as PlaylistName;
-          this._tempPlaylist = {} as PlaylistName;
-        }
-      });
-  }
-
-  makeDefault() {
-    this._tempPlaylist.accessType = AccessType.default;
+  changeAccessType(accessType: AccessType) {
+    this._tempPlaylist.accessType = accessType;
     this._playlistsService.changeAccessType(this._tempPlaylist)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
