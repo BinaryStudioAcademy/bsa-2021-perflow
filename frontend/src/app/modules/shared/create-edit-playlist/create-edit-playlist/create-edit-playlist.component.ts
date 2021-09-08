@@ -36,6 +36,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   searchValue: string;
   userId: number;
   isAuthor: boolean;
+  authorName: string;
 
   private _id: number | undefined;
 
@@ -70,6 +71,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       if (data && this._id! !== +data) {
         this._id = +data;
         this.startEditMode();
+
       }
     });
 
@@ -104,6 +106,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.playlist = data;
           this.isAuthor = this.playlist.author.id === this.userId;
+          this.authorName = data.author.userName;
           if (this.playlist.accessType === AccessType.collaborative) {
             this._playlistEditorsService.getCollaborators(this.playlist.id)
               .pipe(first())

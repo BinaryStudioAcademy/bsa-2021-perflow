@@ -15,7 +15,8 @@
           <p class="type">Playlist</p>
           <p class="playlist-title">{{playlist.name}}</p>
           <div class="playlist-description">
-            <span class="author">You</span> | 
+            <span class="author" *ngIf="!isAuthor">{{ authorName }}</span>
+            <span class="author" *ngIf="isAuthor">You</span> | 
             <span class="amount">{{ playlistSongs.length }} songs </span>
             <span class="duration">{{ playlistSongs | songDuration }}</span>
           </div>
