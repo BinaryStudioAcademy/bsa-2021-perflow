@@ -132,7 +132,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
           this.idSaveButtonShown = !this.idSaveButtonShown;
           this.currentAccordionAlbum.isLiked = true;
 
-          this._snackbarService.show({message:"Album was saved!"});
+          this._snackbarService.show({ message: 'Album was saved!' });
         }
       });
   };

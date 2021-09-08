@@ -173,7 +173,7 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
 
-    this._snackbarService.show({message:"Link copied to clipboard!"});
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 
   getGridScrollWidth = (selector: string) => {

@@ -15,8 +15,8 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -155,7 +155,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this._tempPlaylist.id}`
     );
 
-    this._snackbarService.show({message:"Link copied to clipboard!"});
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 
   createPlaylist() {

@@ -183,7 +183,7 @@ export class ViewPlaylistComponent implements OnInit {
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
 
-    this._snackBarService.show({message:"Link copied to clipboard!"});
+    this._snackBarService.show({ message: 'Link copied to clipboard!' });
   }
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {

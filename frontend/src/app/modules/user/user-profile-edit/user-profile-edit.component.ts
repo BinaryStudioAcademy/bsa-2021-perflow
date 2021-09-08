@@ -3,6 +3,7 @@ import { filter, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/models/user/user';
 import { UserChangePassword } from 'src/app/models/user/user-change-password';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -19,7 +20,8 @@ export class UserProfileEditComponent implements OnInit {
   constructor(
     private _userService: UserService,
     private _authService: AuthService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _profileService: ProfileService
   ) { }
 
   ngOnInit() {
@@ -43,6 +45,7 @@ export class UserProfileEditComponent implements OnInit {
     this._userService.updateUser(updatedUser)
       .subscribe(() => {
         this._snackbarService.show({ message: 'Changed successfully!' });
+        this._profileService.updateProfileName(updatedUser.userName);
       },
       (e) => {
         this._snackbarService.show({ message: e.statusText, header: 'Error', type: 'error' });
