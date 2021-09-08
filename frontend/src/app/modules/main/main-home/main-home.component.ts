@@ -46,6 +46,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   public newReleases: NewReleaseView[] = [];
   public calmRhythms = new Array<Playlist>();
   public yourMix: PlaylistView[] = [];
+  public recommendations: PlaylistView[] = [];
   public top100Songs = new Array<Playlist>();
 
   isSuccess: boolean = false;
@@ -92,6 +93,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
     this.getYourMix();
+    this.getRecommendations();
     this.top100Songs = this.getTop100Songs();
   }
 
@@ -142,6 +144,16 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[0]?.entity;
     this.accordionAlbumsLength = [...this.accordionSection.pageSectionEntities].length;
     this.setButtonVisibility();
+  }
+
+  getRecommendations() {
+    this._playlistService.getRecommendations()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          this.recommendations = data;
+        }
+      });
   }
 
   setButtonVisibility() {

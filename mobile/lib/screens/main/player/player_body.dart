@@ -6,8 +6,12 @@ import 'package:perflow/helpers/get_service.dart';
 import 'package:perflow/helpers/math/clamp.dart';
 import 'package:perflow/models/playback/playback_actions.dart';
 import 'package:perflow/models/playback/playback_duration.dart';
-import 'package:perflow/services/playback/playback_service.dart';
+import 'package:perflow/models/playback/playback_repeat_mode.dart';
+import 'package:perflow/routes.dart';
+import 'package:perflow/screens/main/player/player_functions_mixin.dart';
+import 'package:perflow/services/playback/playback_handler.dart';
 import 'package:perflow/theme.dart';
+import 'package:vrouter/vrouter.dart';
 
 class PlayerBody extends StatelessWidget {
   const PlayerBody({Key? key}) : super(key: key);
@@ -23,16 +27,16 @@ class PlayerBody extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              IconButton(
-                iconSize: 18,
+            children: [
+              const IconButton(
+                iconSize: 26,
                 onPressed: null,
                 icon: Icon(Icons.devices),
               ),
               IconButton(
-                iconSize: 18,
-                onPressed: null,
-                icon: Icon(Icons.playlist_play),
+                iconSize: 26,
+                onPressed: () => context.vRouter.to(Routes.queue),
+                icon: const Icon(Icons.playlist_play),
               ),
             ],
           ),
@@ -98,7 +102,7 @@ class _PlayerProgressBarState extends State<_PlayerProgressBar> {
   }
 
   void _onDragEnd(double value) async {
-    await getService<PlaybackService>().seekPercent(value);
+    await getService<PlaybackHandler>().seekPercent(value);
     setState(() {
       dragValue = null;
     });
@@ -205,7 +209,7 @@ class _PlayerLoadingProgressbar extends StatelessWidget {
 }
 
 
-class _PlayerActionButtons extends StatelessWidget {
+class _PlayerActionButtons extends StatelessWidget with PlayerFunctionsMixin {
   const _PlayerActionButtons({Key? key}) : super(key: key);
 
   @override
@@ -227,47 +231,40 @@ class _PlayerActionButtons extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const IconButton(
-              onPressed: null,
-              icon: Icon(Icons.shuffle),
+            IconButton(
+              color: actions.shuffleEnabled ? Perflow.primaryLightColor : null,
+              onPressed: () => updateShuffle(actions),
+              icon: const Icon(Icons.shuffle),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
                   iconSize: 36,
-                  onPressed: () {},
+                  onPressed: skipToPrevious,
                   icon: const Icon(Icons.skip_previous),
                 ),
                 IconButton(
                   iconSize: 36,
-                  onPressed: () => _setPlaying(!actions.playing),
+                  onPressed: () => setPlaying(!actions.playing),
                   icon: actions.playing ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
                 ),
                 IconButton(
                   iconSize: 36,
-                  onPressed: () {},
+                  onPressed: skipToNext,
                   icon: const Icon(Icons.skip_next),
                 ),
               ],
             ),
-            const IconButton(
-              onPressed: null,
-              icon: Icon(Icons.refresh),
+            IconButton(
+              color: actions.repeatMode == RepeatMode.none ? null : Perflow.primaryLightColor,
+              onPressed: () => updateRepeat(actions),
+              icon: Icon(actions.repeatMode == RepeatMode.item ? Icons.repeat_one : Icons.repeat),
             ),
           ],
         );
       },
     );
-  }
-
-  void _setPlaying(bool playing) {
-    if(playing) {
-      getService<PlaybackService>().play();
-    }
-    else {
-      getService<PlaybackService>().pause();
-    }
   }
 }
 

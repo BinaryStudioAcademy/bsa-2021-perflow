@@ -6,8 +6,9 @@ class ContentRow extends StatelessWidget {
   final double height;
 
   final void Function()? onLikePressed;
-  final Function()? onUnlikePressed;
+  final void Function()? onUnlikePressed;
   final void Function()? onTap;
+  final void Function()? onMoreTap;
 
   final RowType contentType;
   final String iconUrl;
@@ -18,28 +19,26 @@ class ContentRow extends StatelessWidget {
 
   set isLiked(bool val) => isLiked = val;
 
-  const ContentRow(
-      {required this.contentType,
-      required this.iconUrl,
-      required this.primaryText,
-      this.isLiked = false,
-      this.secondaryText,
-      this.onLikePressed,
-      this.onUnlikePressed,
-      this.onTap,
-      this.height = 80,
-      this.isLikeAvailable = false,
-      Key? key})
-      : super(key: key);
+  const ContentRow({
+    required this.contentType,
+    required this.iconUrl,
+    required this.primaryText,
+    this.isLiked = false,
+    this.secondaryText,
+    this.onLikePressed,
+    this.onUnlikePressed,
+    this.onTap,
+    this.height = 80,
+    this.isLikeAvailable = false,
+    this.onMoreTap,
+    Key? key
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        if (onTap != null) {
-          onTap!.call();
-        }
-      },
+      onTap: onTap,
+      onLongPress: onMoreTap,
       child: SizedBox(
         height: height,
         width: height,
@@ -101,7 +100,7 @@ class ContentRow extends StatelessWidget {
                       icon: const Icon(Icons.favorite_border),
                     ),
             IconButton(
-              onPressed: () {},
+              onPressed: onMoreTap ?? () {},
               icon: const Icon(Icons.more_vert),
             ),
           ],

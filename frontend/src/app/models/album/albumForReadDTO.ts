@@ -4,4 +4,5 @@ export class AlbumForReadDTO {
   releaseYear: number;
   iconURL: string;
   authorName: string;
+  isPublished?: boolean;
 }

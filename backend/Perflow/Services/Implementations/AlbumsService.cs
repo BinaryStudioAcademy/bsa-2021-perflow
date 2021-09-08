@@ -56,10 +56,56 @@ namespace Perflow.Services.Implementations
                                                 .ThenInclude(s => s.Album)
                                             .Include(a => a.Songs)
                                                 .ThenInclude(s => s.Group)
+                                            .Include(a => a.Songs)
+                                                .ThenInclude(s => s.Tags)
                                             .Include(a => a.Author)
                                             .Include(a => a.Group)
                                             .AsNoTracking()
                                             .Select(a => new AlbumFullDTO
+                                            {
+                                                Id = a.Id,
+                                                Name = a.Name,
+                                                ReleaseYear = a.ReleaseYear,
+                                                IconURL = _imageService.GetImageUrl(a.IconURL),
+                                                Songs = a.Songs.OrderBy(s => s.Order)
+                                                .Select(s =>
+                                                    mapper.Map<SongForEditAlbumDTO>(new SongWithTags(
+                                                        s,
+                                                        _imageService.GetImageUrl(s.Album.IconURL),
+                                                        s.Reactions.Any(r => r.UserId == userId),
+                                                        s.Tags.Select(t => t.Tag)))
+                                                ),
+                                                Artist = mapper.Map<ArtistForAlbumDTO>(a.Author),
+                                                Group = mapper.Map<GroupForAlbumDTO>(a.Group),
+                                                IsLiked = a.Reactions.Any(r => r.UserId == userId),
+                                                IsSingle = a.IsSingle,
+                                                Region = a.Region,
+                                                AuthorType = a.AuthorType,
+                                                Description = a.Description,
+                                                IsPublished = a.IsPublished
+                                            })
+                                            .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (album == null)
+            {
+                throw new NotFoundExcepion($"{nameof(Album)} not found");
+            }
+
+            return album;
+        }
+
+        public async Task<AlbumForViewDTO> GetAlbumAsync(int id, int userId)
+        {
+            var album = await context.Albums.Include(a => a.Songs)
+                                                .ThenInclude(s => s.Artist)
+                                            .Include(a => a.Songs)
+                                                .ThenInclude(s => s.Album)
+                                            .Include(a => a.Songs)
+                                                .ThenInclude(s => s.Group)
+                                            .Include(a => a.Author)
+                                            .Include(a => a.Group)
+                                            .AsNoTracking()
+                                            .Select(a => new AlbumForViewDTO
                                             {
                                                 Id = a.Id,
                                                 Name = a.Name,
@@ -75,11 +121,7 @@ namespace Perflow.Services.Implementations
                                                 Artist = mapper.Map<ArtistForAlbumDTO>(a.Author),
                                                 Group = mapper.Map<GroupForAlbumDTO>(a.Group),
                                                 IsLiked = a.Reactions.Any(r => r.UserId == userId),
-                                                IsSingle = a.IsSingle,
-                                                Region = a.Region,
-                                                AuthorType = a.AuthorType,
-                                                Description = a.Description,
-                                                IsPublished = a.IsPublished
+                                                AuthorType = a.AuthorType
                                             })
                                             .FirstOrDefaultAsync(e => e.Id == id);
 
@@ -112,18 +154,19 @@ namespace Perflow.Services.Implementations
             return albums;
         }
 
-        public async Task<IEnumerable<AlbumShortDTO>> GetAlbumsByArtistUnpublished(int groupId)
+        public async Task<IEnumerable<AlbumForEditGroupViewDTO>> GetAlbumsByArtistUnpublished(int groupId)
         {
             var albums = await context.Albums
                                         .Where(a => a.GroupId == groupId)
                                         .Include(a => a.Group)
-                                        .Select(a => new AlbumShortDTO
+                                        .Select(a => new AlbumForEditGroupViewDTO
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
                                             AuthorName = a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
-                                            ReleaseYear = a.ReleaseYear
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsPublished = a.IsPublished
                                         })
                                         .ToListAsync();
 

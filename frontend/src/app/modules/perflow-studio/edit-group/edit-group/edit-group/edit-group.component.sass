@@ -12,21 +12,31 @@ $image-size: 245px
     line-height: $line-height
     max-height: $line-height * $lines
 
+.container
+  margin-left: 247px
+  padding-bottom: 100px !important
+  height: auto
+  width: auto
+  background: #21292D
+
 main
     background: $drk-gray
     width: 100%
     height: 100%
     min-height: calc(100vh - #{$song-toolbar-height})
     .button-create-album
-        padding: 12px 14px
-        font-weight: $bold-weight
-        border: none 
-        margin-left: 15px
-        margin-top: 10px
+        padding: 12px 22px
+        height: 42px
+        border-radius: 25px
+        font-weight: $bold-weight !important
+        color: $text
+        border: 2.5px solid $text
+        background-color: transparent
+        margin-right: 10px
         &:hover
-            cursor: pointer 
-            color: black
-
+          cursor: pointer
+          background-color: $text
+          color: $drk-gray
 .group
     width: 100%
     height: 401px
@@ -123,15 +133,19 @@ main
         margin-left: 3rem !important
         margin-right: 0em !important
 
-.item.last.share
+.item.share
     >.menu
         font-family: 'Montserrat' !important
         box-shadow: none !important
         margin-left: 0px !important
         >.item.first.last
           padding: 18px !important
-          padding-top: 14px !important
-          padding-bottom: 14px !important
+          padding-top: 11px !important
+          padding-bottom: 11px !important
+
+.item.last.leave
+  color: red !important
+  font-weight: bold
 
 .item.active.selected
     background-color: $light-gray !important
@@ -148,6 +162,10 @@ main
         font-size: 26px
         line-height: 32px
         color: $text
+        .ui.floating.fluid.selection.dropdown.my-dropdown
+          display: inline
+          font-size: 16px
+          width: 160px
     .items
         position: relative
         margin: 1rem
@@ -155,14 +173,35 @@ main
         .cards
             position: relative
             display: flex
-            width: 100%
+            margin-left: 40px
             height: 280px
             overflow-y: scroll
             &::-webkit-scrollbar 
                 display: none  
             .card
-                margin-right: 42px       
-    .scroll-box
+                margin-right: 42px     
+    .scroll-box-left
+        width: 40px
+        position: absolute
+        left: 0px
+        top: 0px
+        bottom: 0px
+        display: flex
+        align-items: center
+        justify-content: center
+        background: $drk-gray
+        .scroll-button
+            width: 30px
+            height: 30px
+            font-size: 1.2rem
+            color: $text
+            border: none
+            border-radius: 3px
+            background: $light-gray
+            cursor: pointer
+            &:hover
+                background: #373C43    
+    .scroll-box-right
         width: 40px
         position: absolute
         right: 0px

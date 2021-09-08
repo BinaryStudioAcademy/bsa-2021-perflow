@@ -1,5 +1,13 @@
 @import "../../../../styles"
 
+.is-editable
+  grid-template-areas: $song-row-edit-areas
+  grid-template-columns: $song-row-edit-columns
+
+.is-not-editable
+  grid-template-areas: $song-row-areas
+  grid-template-columns: $song-row-columns
+
 .list-header
   width: 100%
   height: 2.5rem
@@ -10,8 +18,6 @@
   user-select: none
   display: grid
   align-items: end
-  grid-template-areas: $song-row-areas
-  grid-template-columns: $song-row-columns
 
   div
     white-space: nowrap

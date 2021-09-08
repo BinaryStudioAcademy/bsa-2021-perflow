@@ -7,14 +7,14 @@ import 'package:perflow/services/search/search_api.dart';
 class SearchSongsCubit extends SearchCommonCubit<Song> {
   SearchSongsCubit()
       : super((SearchParams searchParams) async {
-          return await getService<SearchApi>().getSongs(searchParams.searchTerm,
-              searchParams.page, searchParams.itemsOnPage);
-        });
+        return await getService<SearchApi>()
+            .getSongs(searchParams.searchTerm, searchParams.page, searchParams.itemsOnPage);
+      });
 
   @override
   List<Song> mapToEntityList(List<dynamic> entities) {
     return entities
-        .map((dynamic albumJson) => Song.fromJson(albumJson))
-        .toList();
+      .map((dynamic albumJson) => Song.fromJson(albumJson))
+      .toList();
   }
 }
