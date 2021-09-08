@@ -2,7 +2,7 @@
 
 namespace Perflow.Common.Helpers
 {
-    public class AlbumWithIcon
+    public struct AlbumWithIcon
     {
         public Album Album;
         public string IconURL;
