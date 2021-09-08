@@ -15,32 +15,7 @@ namespace Perflow.Common.MappingProfiles
     {
         public SongProfile()
         {
-            CreateMap<Song, SongReadDTO>()
-                .ForMember(p => p.Artist, opt => opt.MapFrom(s => s.ArtistId != null
-                     ? new ArtistReadDTO
-                     {
-                         Id = s.Artist.Id,
-                         IconURL = s.Artist.IconURL,
-                         IsArtist = true,
-                         UserName = s.Artist.UserName
-                     } : null
-                ))
-                .ForMember(p => p.Group, opt => opt.MapFrom(s => s.GroupId != null
-                    ? new GroupReadDTO
-                    (
-                        s.Group.Id,
-                        s.Group.Name,
-                        s.Group.Artists.Select(ga => ga.Artist)
-                            .Select((a) => new ArtistReadDTO
-                            {
-                                Id = a.Id,
-                                IconURL = a.IconURL,
-                                IsArtist = true,
-                                UserName = a.UserName
-                            }).ToList(),
-                        s.Group.CreatedAt
-                    ) : null
-                ));
+            CreateMap<Song, SongReadDTO>();
 
             CreateMap<LikedSong, SongReadDTO>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Song.Id))

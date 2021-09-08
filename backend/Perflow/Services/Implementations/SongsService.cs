@@ -60,12 +60,10 @@ namespace Perflow.Services.Implementations
                 .AsNoTracking()
                 .FirstOrDefaultAsync(song => song.Id == id);
 
-            song.Album.IconURL = _imageService.GetImageUrl(song.Album.IconURL);
-
-            var result = mapper.Map<SongReadDTO>(song);
-            result.IsLiked = song.Reactions.Any(r => r.UserId == userId);
-
-            return result;
+            return mapper.Map<SongReadDTO>(new LikedSong(
+                song,
+                _imageService.GetImageUrl(song.Album.IconURL),
+                song.Reactions.Any(r => r.UserId == userId)));
         }
 
         public async Task<IEnumerable<SongForAlbumDTO>> GetTopSongsByAuthorIdAsync(int id, int count, AuthorType type, int userId)
