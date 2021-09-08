@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ConfirmationPageService implements OnDestroy{
+export class ConfirmationPageService implements OnDestroy {
   private _messageSubject$ = new Subject<string>();
   messageObservable$ = this._messageSubject$.asObservable();
 
@@ -30,7 +30,7 @@ export class ConfirmationPageService implements OnDestroy{
     message: string,
     confirmCallback: () => void,
     discardCallback: () => void
-    ) {
+  ) {
     this._unsubscribe$ = new Subject<void>();
     this._messageSubject$.next(message);
 
@@ -40,20 +40,20 @@ export class ConfirmationPageService implements OnDestroy{
 
   subscribeToConfirm(confirmCallback: () => void) {
     this.confirmObservable$
-    .pipe(takeUntil(this._unsubscribe$))
-    .subscribe(() => {
-      confirmCallback();
-      this.unsubscribe();
-    })
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        confirmCallback();
+        this.unsubscribe();
+      });
   }
 
   subscribeToDiscard(discardCallback: () => void) {
     this.discardObservable$
-    .pipe(takeUntil(this._unsubscribe$))
-    .subscribe(() => {
-      discardCallback();
-      this.unsubscribe();
-    })
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        discardCallback();
+        this.unsubscribe();
+      });
   }
 
   unsubscribe() {

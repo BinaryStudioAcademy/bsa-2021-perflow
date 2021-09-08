@@ -19,10 +19,10 @@ export class ConfirmationModalComponent implements OnInit {
 
   ngOnInit(): void {
     this._confirmationService.getModalObesrvable()
-    .subscribe( message => {
-      this.message = message;
-      this.showModal();
-    })
+      .subscribe((message) => {
+        this.message = message;
+        this.showModal();
+      });
   }
 
   onConfirm() {

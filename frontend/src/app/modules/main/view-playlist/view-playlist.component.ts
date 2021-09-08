@@ -16,8 +16,8 @@ import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-edit
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
 import { HubConnectionState } from '@microsoft/signalr';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
+import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-view-playlist',
@@ -267,14 +267,13 @@ export class ViewPlaylistComponent implements OnInit {
   }
 
   initConfirmDeletePlaylist() {
-    console.log("INIT CONFIRM");
     this._confirmationService
-    .initConfirmation (
-      'Are you sure you want to delete playlists?',
-      () => { 
-        this.deletePlaylist();
-      },
-      () => {}
-    )
+      .initConfirmation(
+        'Are you sure you want to delete playlists?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
   }
 }
