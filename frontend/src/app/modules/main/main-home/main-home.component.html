@@ -46,6 +46,21 @@
       </div>
     </div>
 
+    <div class="items-scroll-box" *ngIf="recommendations.length > 0 && data.showRecommendations">
+      <div class="header">Recommendations</div>
+      <div class="list-of-items">
+        <div class="ui icon button scroll-button" (click)="scrollLeft('album')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div id="album" class="items" appHideScrollButtons>
+          <app-playlist-card [playlist]=playlist *ngFor="let playlist of recommendations"></app-playlist-card>
+        </div>
+        <div class="ui icon button scroll-button" (click)="scrollRight('album')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+    </div>
+
     <!-- New Releases -->
     <div class="items-scroll-box calmRhythms" *ngIf="showNewReleases">
       <div class="header">New releases</div>
@@ -104,9 +119,4 @@
 
   </div>
 
-  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-    <div class="header">
-      Album was saved
-    </div>
-  </div>
 </main>

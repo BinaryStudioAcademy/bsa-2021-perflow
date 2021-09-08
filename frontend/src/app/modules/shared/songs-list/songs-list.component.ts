@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { AlbumFull } from 'src/app/models/album/album-full';
+import { Tag } from 'src/app/models/tag/tag';
 import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type';
 
@@ -23,6 +24,7 @@ export class SongsListComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
 
   @Input() songs: Song[];
+  @Input() tags: Tag[];
   @Input() highlightId: number;
   @Input() isDraggable = false;
   @Input() isEditable = false;
@@ -30,6 +32,7 @@ export class SongsListComponent implements OnInit, OnDestroy {
   @Input() playlist: Playlist | undefined;
   @Input() album: AlbumFull | undefined;
   @Input() isRemoveFromQueueShonw: boolean = false;
+  @Input() isGroupMember: boolean = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();

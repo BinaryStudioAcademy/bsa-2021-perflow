@@ -120,6 +120,28 @@ namespace Perflow.Services.Implementations
             return groups;
         }
 
+        public async Task<ICollection<GroupShortDTO>> FindGroupsForArtistApplicantAsync(string searchTerm, int page, int itemsOnPage, int userId)
+        {
+            int skip = (page - 1) * itemsOnPage;
+
+            var groups = await context.Groups
+                .Include(g => g.Artists)
+                .Where(g => g.Name.Contains(searchTerm.Trim())
+                                && g.Artists.All(a => a.Artist.Id != userId)
+                                && g.Approved == true)
+                .Skip(skip)
+                .Take(itemsOnPage)
+                .AsNoTracking()
+                .Select(
+                    g => mapper.Map<GroupShortDTO>(new GroupWithIcon(g, _imageService.GetImageUrl(g.IconURL)))
+                 )
+                .ToListAsync();
+
+            var applicants = await context.PerflowStudioApplicants.Where(psa => psa.UserId == userId).ToListAsync();
+            groups.RemoveAll(g => applicants.Any(a => a.GroupId == g.Id));
+            return groups;
+        }
+
         public async Task<ICollection<AlbumForListDTO>> FindAlbumsByNameAsync
             (bool onlyPublished, string searchTerm, int page, int itemsOnPage)
         {

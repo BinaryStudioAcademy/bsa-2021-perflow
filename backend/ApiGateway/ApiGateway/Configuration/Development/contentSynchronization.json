@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/content-sync",
+      "DownstreamPathTemplate": "/hub/content-sync",
       "DownstreamScheme": "ws",
       "DownstreamHostAndPorts": [
         {
@@ -9,7 +9,7 @@
           "Port": "5001"
         }
       ],
-      "UpstreamPathTemplate": "/content-sync",
+      "UpstreamPathTemplate": "/hub/content-sync",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
     }
   ]

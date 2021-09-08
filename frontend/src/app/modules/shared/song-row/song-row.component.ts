@@ -3,7 +3,7 @@ import {
   Component, Input, Output, EventEmitter, OnInit, OnDestroy
 } from '@angular/core';
 import { ClipboardService } from 'ngx-clipboard';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { PlaylistName } from 'src/app/models/playlist/playlist-name';
 import { PlaylistSongDTO } from 'src/app/models/playlist/playlistSongDTO';
@@ -17,6 +17,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarInfo } from 'src/app/models/common/snackbar-info';
+import { Tag } from 'src/app/models/tag/tag';
 import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -30,11 +31,12 @@ export class SongRowComponent implements OnInit, OnDestroy {
 
   userId: number;
   isEditing = false;
-  isSuccess: boolean = false;
   createdPlaylistArray = new Array<PlaylistName>();
   notification: string;
+  songTags: Tag[];
 
   @Input() song: Song;
+  @Input() tags: Tag[];
   @Input() number: number;
   @Input() highlightId: number;
   @Input() isInQueue = false;
@@ -43,6 +45,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
   @Input() playlist: Playlist | undefined;
   @Input() album: AlbumFull | undefined;
   @Input() isRemoveFromQueueShonw: boolean = false;
+  @Input() isGroupMember: boolean = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
@@ -115,13 +118,13 @@ export class SongRowComponent implements OnInit, OnDestroy {
       );
   }
 
-  saveToPlaylist(pId: number, sId: number) {
+  saveToPlaylist(playlist: PlaylistName, sId: number) {
     const playlistSong = {
-      playlistId: pId,
+      playlistId: playlist.id,
       songId: sId
     } as PlaylistSongDTO;
 
-    this._playlistsService.checkSongInPlaylist({ playlistId: pId, songId: sId })
+    this._playlistsService.checkSongInPlaylist({ playlistId: playlist.id, songId: sId })
       .pipe(take(1))
       .subscribe({
         next: (data) => {
@@ -130,7 +133,10 @@ export class SongRowComponent implements OnInit, OnDestroy {
           }
           else {
             this._playlistsService.addSongToPlaylist(playlistSong)
-              .pipe(take(1)).subscribe();
+              .pipe(take(1))
+              .subscribe(() => {
+                this.showNotification(`Song added to playlist ${playlist.name}`);
+              });
           }
         }
       });
@@ -157,10 +163,8 @@ export class SongRowComponent implements OnInit, OnDestroy {
 
   showNotification(text: string) {
     this.notification = text;
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: this.notification });
   }
 
   dislikeSong(songId: number) {
@@ -181,6 +185,14 @@ export class SongRowComponent implements OnInit, OnDestroy {
           this.song.isLiked = true;
         }
       );
+  }
+
+  addTag() {
+    $(`.edit.${this.song.id.toString()}`).modal('show');
+  }
+
+  updateTags(tags: Tag[]) {
+    this.song.tags = tags;
   }
 
   playSong = () => {

@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:perflow/widgets/buttons/perflow_elevated_button.dart';
-import 'package:perflow/widgets/buttons/perflow_outlined_button.dart';
 
 class HeaderInfo extends StatelessWidget {
-  final Text primaryText;
-  final Text secondaryTextMain;
-  final Text? secondaryTextOther;
+  final Widget primaryText;
+  final Widget secondaryTextMain;
+  final Widget? secondaryTextOther;
   final String iconUrl;
   final Widget? likeButton;
-  final PerflowOutlinedButton? secondaryButton;
+  final Widget? secondaryButton;
+  final void Function()? onPlayPressed;
 
-  const HeaderInfo(
-      {Key? key,
-      required this.iconUrl,
-      required this.primaryText,
-      required this.secondaryTextMain,
-      this.secondaryTextOther,
-      this.likeButton,
-      this.secondaryButton})
-      : super(key: key);
+  const HeaderInfo({
+    Key? key,
+    required this.iconUrl,
+    required this.primaryText,
+    required this.secondaryTextMain,
+    this.secondaryTextOther,
+    this.likeButton,
+    this.secondaryButton,
+    this.onPlayPressed
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class HeaderInfo extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: PerflowElevatedButton.text(
-                      onPressed: () {},
+                      onPressed: onPlayPressed ?? () {},
                       text: 'Play',
                     ),
                   ),

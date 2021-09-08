@@ -1,4 +1,4 @@
-<div class="card" (click)="handleClick()" [ngClass]="{checked:isChecked}">
+<div class="card" (click)="handleClick()" [ngClass]="{'checked':isChecked}">
   <div class="image-block">
     <div class="section-delete" (click)="onDeleteFromSectionClick(album)" appClickStopPropagation *ngIf="!isCheckBox && isDeletable">
       <i class="trash alternate outline icon"></i>
@@ -18,15 +18,16 @@
     <button *ngIf="!isCheckBox" class="play-icon" appClickStopPropagation (click)="playAlbum(album.id)">
       <i class="play icon"></i>
     </button>
+    <span class="unpublished" *ngIf="showPublishedStatus && !album.isPublished">Unpublished</span>
   </div>
   <div class="info-block">
     <div class="album-name tub">
       <h5>{{ album.name }}</h5>
     </div>
-    <div class="album-author tub">
+    <div class="album-author tub" [ngClass]="{'published':showPublishedStatus && album.isPublished}">
       <span>{{ album.authorName }}</span>
     </div>
-    <div class="album-year tub" [ngClass]="{checked:isChecked}">
+    <div class="album-year tub" [ngClass]="{'checked':isChecked}">
       <span>{{ album.releaseYear }}</span>
     </div>
   </div>

@@ -35,6 +35,8 @@ namespace Perflow.Domain
 
         public ICollection<SongReaction> Reactions { get; set; }
 
+        public ICollection<SongTag> Tags { get; set; }
+
         public bool Equals(Song other)
         {
             if (other is null) return false;

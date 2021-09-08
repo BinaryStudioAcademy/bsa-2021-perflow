@@ -95,7 +95,7 @@ namespace Perflow.Services.Implementations
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<SongReadDTO>> GetTopSongsByLikes(int amount)
+        public async Task<IEnumerable<SongForPlaylistDTO>> GetTopSongsByLikes(int amount, int userId)
         {
             var songs = await context.SongReactions
                 .GroupBy(
@@ -113,10 +113,37 @@ namespace Perflow.Services.Implementations
                 .Include(song => song.Album)
                 .Include(song => song.Artist)
                 .Include(song => song.Group)
+                .Include(song => song.Reactions)
+                .Select(s => new SongForPlaylistDTO
+                {
+                    Id = s.Id,
+                    CreatedAt = s.CreatedAt,
+                    Duration = s.Duration,
+                    HasCensorship = s.HasCensorship,
+                    Order = s.Order,
+                    Name = s.Name,
+                    Album = new Common.DTO.Albums.AlbumForPlaylistDTO
+                    {
+                        Id = s.Album.Id,
+                        Name = s.Album.Name,
+                        IconURL = _imageService.GetImageUrl(s.Album.IconURL)
+                    },
+                    Artist = s.Artist != null ? new Common.DTO.Users.UserForPlaylistDTO
+                    {
+                        Id = s.Artist.Id,
+                        UserName = s.Artist.UserName
+                    } : null,
+                    Group = s.Group != null ? new Common.DTO.Groups.GroupForPlaylistDTO
+                    {
+                        Id = s.Group.Id,
+                        Name = s.Group.Name
+                    } : null,
+                    IsLiked = s.Reactions.Any(r => r.UserId == userId)
+                })
                 .AsNoTracking()
                 .ToListAsync();
 
-            return mapper.Map<IEnumerable<SongReadDTO>>(songs);
+            return songs;
         }
 
         public async Task<bool> CheckIsLiked(int songId, int userId)

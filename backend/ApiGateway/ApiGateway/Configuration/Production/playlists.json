@@ -16,6 +16,20 @@
       ]
     },
     {
+      "DownstreamPathTemplate": "/api/Playlists/changeAccessType",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Playlists/changeAccessType",
+      "UpstreamHttpMethod": [
+        "PUT"
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Playlists/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
@@ -131,6 +145,18 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Playlists/userMix",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Playlists/recommendations",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "perflow",
+          "Port": "4202"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Playlists/recommendations",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ]

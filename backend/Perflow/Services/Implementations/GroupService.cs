@@ -96,6 +96,18 @@ namespace Perflow.Services.Implementations
             return result;
         }
 
+        public async Task<int> DeleteMemberAsync(int groupId, int userId)
+        {
+            var groupArtist = await context.GroupArtist
+                                           .FirstOrDefaultAsync(ga => ga.GroupId == groupId && ga.ArtistId == userId);
+
+            context.GroupArtist.Remove(groupArtist);
+
+            await context.SaveChangesAsync();
+
+            return userId;
+        }
+
         public async Task<GroupFullDTO> EditGroupAsync(GroupEditDTO groupDTO)
         {
             if (groupDTO == null)

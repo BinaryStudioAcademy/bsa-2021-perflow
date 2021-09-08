@@ -45,11 +45,17 @@
 .text
     @extend %ellipsis-overflow
 
+.is-editable
+    grid-template-areas: $song-row-edit-areas
+    grid-template-columns: $song-row-edit-columns
+
+.is-not-editable
+    grid-template-areas: $song-row-areas
+    grid-template-columns: $song-row-columns
+
 .sm-row
     width: 100%
     display: grid
-    grid-template-areas: $song-row-areas
-    grid-template-columns: $song-row-columns
     padding: 1rem 0
 
 .column
@@ -67,7 +73,7 @@
     display: flex
     text-align: center
     align-items: center
-    span 
+    span
         @extend %ellipsis-overflow
     .ui.input
         height: 20px
@@ -83,16 +89,45 @@
     margin-left: 10px
     visibility: hidden
     &:hover
-        cursor: pointer  
+        cursor: pointer
 
 .namesave
     font-size: 18px
     padding-top: 2px
 
-
 .artist-name
     grid-area: artist-name
     @extend %clickable
+
+.tags
+    grid-area: tags
+    .plus
+        font-size: 12px
+        height: 16px
+        color: $text
+        border: 0.5px solid $text
+        border-radius: 50%
+        align-items: center
+        display: inline-flex
+        padding: 2px 6px
+        &:hover
+            color: $gray
+            border-color: $gray
+            @extend %clickable
+    .tag-wrap
+        height: 16px
+        color: #00000099
+        background: #e8e8e8
+        max-width: 32px
+        border-radius: 20px
+        margin-right: 4px
+        align-items: center
+        display: inline-flex
+        padding: 3px 7px
+        .tag
+            font-size: 12px
+            font-weight: $medium-weight
+            width: 100%
 
 .album-name
     grid-area: album-name
@@ -144,9 +179,9 @@
         box-shadow: none !important
         margin-right: 0px !important
         >.item.first.last
-          padding: 18px !important
-          padding-top: 14px !important
-          padding-bottom: 14px !important
+            padding: 18px !important
+            padding-top: 14px !important
+            padding-bottom: 14px !important
 
 .item.active.selected
     background-color: $light-gray !important

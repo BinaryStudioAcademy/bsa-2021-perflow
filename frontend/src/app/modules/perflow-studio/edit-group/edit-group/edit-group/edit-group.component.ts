@@ -2,9 +2,9 @@ import { PlatformLocation } from '@angular/common';
 import {
   Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
@@ -19,6 +19,7 @@ import { GroupService } from 'src/app/services/group.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
@@ -38,12 +39,12 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
   groupPlaylists: PlaylistView[] = [];
-  isSuccess: boolean = false;
   groupAlbums: AlbumForReadDTO[] = [];
   isGroupMember: boolean;
   isModalShown: boolean;
   newAlbum: AlbumEdit = {} as AlbumEdit;
   groupId: number;
+  isPublishedFirst: boolean = true;
 
   constructor(
     private _route: ActivatedRoute,
@@ -56,7 +57,9 @@ export class EditGroupComponent implements OnInit, OnDestroy {
     private _reactionService: ReactionService,
     private _authService: AuthService,
     private _albumsService: AlbumService,
-    private _activateRoute: ActivatedRoute
+    private _activateRoute: ActivatedRoute,
+    private _router: Router,
+    private _snackbarService: SnackbarService
   ) {
     this.getUserId();
   }
@@ -90,15 +93,15 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       .subscribe(
         (result) => {
           this.isGroupMember = result.body!;
-        }
-      );
-    this._groupService.getGroup(groupId)
-      .subscribe(
-        (result) => {
-          this.group = result;
-          this.loadTopSongs();
-          this.loadPlaylists();
-          this.loadAlbums();
+          this._groupService.getGroup(groupId)
+            .subscribe(
+              (result2) => {
+                this.group = result2;
+                this.loadTopSongs();
+                this.loadPlaylists();
+                this.loadAlbums();
+              }
+            );
         }
       );
   }
@@ -134,7 +137,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       this._albumsService.getAlbumsByGroupUnpublished(this.group.id)
         .subscribe(
           (result) => {
-            this.groupAlbums = result.body!;
+            this.groupAlbums = result.body!.sort((a) => (a.isPublished ? -1 : 1));
           }
         );
     }
@@ -158,13 +161,34 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       );
   }
 
-  scroll(id: string, scrollingSize: number = this._scrollingSize) {
+  isTextOverflow = (elementId: string): boolean => {
+    const elem = document.getElementById(elementId);
+    if (elem) {
+      return (elem.offsetWidth < elem.scrollWidth);
+    }
+    return false;
+  };
+
+  scrollRight(id: string, scrollingSize: number = this._scrollingSize) {
     switch (id) {
       case 'albums':
         this.albumsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
         break;
       case 'playlists':
         this.playlistsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+        break;
+      default:
+        break;
+    }
+  }
+
+  scrollLeft(id: string, scrollingSize: number = this._scrollingSize) {
+    switch (id) {
+      case 'albums':
+        this.albumsElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
+        break;
+      case 'playlists':
+        this.playlistsElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
         break;
       default:
         break;
@@ -195,6 +219,20 @@ export class EditGroupComponent implements OnInit, OnDestroy {
     }
   };
 
+  leaveGroup() {
+    this._groupService.deleteMember(this.groupId)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(
+        () => {
+          this._snackbarService.show({
+            message: 'You successfully left the group.',
+            header: 'Done!'
+          });
+          this._router.navigateByUrl('/home');
+        }
+      );
+  }
+
   onSubmitModal = (data: GroupEdit) => {
     this.isModalShown = !this.isModalShown;
     this.editGroup(data);
@@ -205,7 +243,6 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       ...group,
       name: group.name.trim() === '' ? 'Group name' : group.name
     };
-
     this._groupService.editGroup(this.editedGroup)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
@@ -230,9 +267,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 }
