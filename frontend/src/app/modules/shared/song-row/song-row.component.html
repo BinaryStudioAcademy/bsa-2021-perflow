@@ -61,7 +61,7 @@
                             <img class="streaming icon" src="../../../../assets/images/streaming.svg" />
                         </div>Start radio
                     </div>
-                    <div class="item" (click)="clickItem('Remove from album')" *ngIf="album && album?.artist?.id === userId">
+                    <div class="item" (click)="clickItem('Remove from album')" *ngIf="(album && album?.artist?.id === userId) || isGroupMember">
                       <i class="trash icon"></i>Remove from album
                     </div>
                     <div class="item" *ngIf="!isRemoveFromQueueShonw" (click)="clickItem('Add to queue')">

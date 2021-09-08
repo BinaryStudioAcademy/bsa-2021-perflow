@@ -125,6 +125,7 @@ namespace Perflow.Services.Implementations
                                                                                                                                 ArtistIds = a.AuthorType == AuthorType.Artist ? new List<int>() { a.Author.Id } : a.Group.Artists.Select(a => a.Artist.Id).ToList(),
                                                                                                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                                                                                                 ReleaseYear = a.ReleaseYear,
+                                                                                                                                IsSingle = a.IsSingle,
                                                                                                                                 IsLiked = a.Reactions.Any(r => r.UserId == userId)
                                                                                                                             })
                                                                                                                             .FirstOrDefault(a => a.Id == pse.ReferenceId)

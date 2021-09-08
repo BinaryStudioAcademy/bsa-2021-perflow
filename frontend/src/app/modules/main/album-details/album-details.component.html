@@ -61,7 +61,7 @@
   </div>
 
   <div class="main-content-container">
-    <app-songs-list [album]="album" [songs]="album.songs" (clickMenuItem)="clickMenuHandler($event)"></app-songs-list>
+    <app-songs-list [album]="album" [songs]="album.songs" (clickMenuItem)="clickMenuHandler($event)" [isGroupMember]="isAuthor"></app-songs-list>
     <div class="anotherAlbums" *ngIf="anotherAlbums.length > 0">
       <div class="items-scroll-box top-artists">
         <h4 class="header">Another albums</h4>

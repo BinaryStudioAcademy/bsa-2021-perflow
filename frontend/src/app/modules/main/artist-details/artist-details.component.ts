@@ -36,6 +36,7 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
   topSongs: Song[] = [];
   artistPlaylists: PlaylistView[] = [];
   artistAlbums: AlbumForReadDTO[] = [];
+  artistSingles: AlbumForReadDTO[] = [];
   isArtist: boolean;
 
   constructor(
@@ -116,6 +117,10 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
   }
 
   likeArtist() {
+    if (this.artist.isLiked) {
+      this._snackbarService.show({ message: `You already subscribed to ${this.artist.userName}.` });
+      return;
+    }
     this._reactionService.addArtistReaction(this.artist.id, this._userId)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
@@ -144,7 +149,8 @@ export class ArtistDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
         (result) => {
-          this.artistAlbums = result;
+          this.artistAlbums = result.filter((a) => !a.isSingle);
+          this.artistSingles = result.filter((a) => a.isSingle);
         }
       );
   }

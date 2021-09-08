@@ -141,13 +141,15 @@ namespace Perflow.Services.Implementations
                                                     : a.GroupId == artistId && a.IsPublished)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
+                                        .OrderByDescending(a => a.ReleaseYear)
                                         .Select(a => new AlbumShortDTO
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
                                             AuthorName = type == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
-                                            ReleaseYear = a.ReleaseYear
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle
                                         })
                                         .ToListAsync();
 
@@ -159,6 +161,7 @@ namespace Perflow.Services.Implementations
             var albums = await context.Albums
                                         .Where(a => a.GroupId == groupId)
                                         .Include(a => a.Group)
+                                        .OrderByDescending(a => a.ReleaseYear)
                                         .Select(a => new AlbumForEditGroupViewDTO
                                         {
                                             Id = a.Id,
@@ -166,6 +169,7 @@ namespace Perflow.Services.Implementations
                                             AuthorName = a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
                                             ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle,
                                             IsPublished = a.IsPublished
                                         })
                                         .ToListAsync();
