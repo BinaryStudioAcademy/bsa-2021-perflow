@@ -117,6 +117,11 @@ class _$_QueueData extends _QueueData {
   final int currentIndex;
 
   @override
+  String toString() {
+    return 'QueueData(songs: $songs, currentIndex: $currentIndex)';
+  }
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _QueueData &&

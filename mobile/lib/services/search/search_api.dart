@@ -11,7 +11,7 @@ abstract class SearchApi extends ChopperService {
   Future<Response> getSongs(
       @Query() String searchTerm, @Query() int page, @Query() int itemsOnPage);
 
-  @Get(path: 'albums')
+  @Get(path: 'albums/true')
   Future<Response> getAlbums(
       @Query() String searchTerm, @Query() int page, @Query() int itemsOnPage);
 
