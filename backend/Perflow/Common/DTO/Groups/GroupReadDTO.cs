@@ -4,10 +4,11 @@ using Perflow.Common.DTO.Users;
 
 namespace Perflow.Common.DTO.Groups
 {
-    public record GroupReadDTO(
-        int Id,
-        string Name,
-        ICollection<ArtistReadDTO> Users,
-        DateTimeOffset CreatedAt
-    );
+    public class GroupReadDTO
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public ICollection<ArtistReadDTO> Users { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+    }
 }

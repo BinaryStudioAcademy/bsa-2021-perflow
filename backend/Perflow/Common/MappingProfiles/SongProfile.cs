@@ -7,6 +7,7 @@ using Perflow.Common.DTO.Users;
 using Perflow.Common.Helpers;
 using Perflow.Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Perflow.Common.MappingProfiles
 {
