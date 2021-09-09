@@ -18,6 +18,9 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
+import { Song } from 'src/app/models/song/song';
+import { RadioService } from 'src/app/services/radio.service';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -50,7 +53,9 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     private _playlistEditorsService: PlaylistEditorsService,
     private _authService: AuthService,
     private _confirmationService: ConfirmationPageService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _queueService: QueueService,
+    private _radioService: RadioService
   ) { }
 
   public ngOnInit() {
@@ -305,5 +310,31 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   isPlaylistSecret() {
     return this._tempPlaylist.accessType === AccessType.secret;
+  }
+
+  play(songs: Song[]) {
+    if (!songs?.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(songs);
+
+    const [firstSong] = songs;
+
+    this._queueService.initSong(firstSong, true);
+  }
+
+  startRadio() {
+    this._radioService.getRadioByPlaylistId(this._tempPlaylist.id)
+      .pipe(take(1))
+      .subscribe((songs) => {
+        if (songs.length > 0) {
+          this.play(songs);
+          this._snackbarService.show({ message: 'Radio started' });
+        } else {
+          this._snackbarService.show({ message: 'No songs found' });
+        }
+      });
   }
 }

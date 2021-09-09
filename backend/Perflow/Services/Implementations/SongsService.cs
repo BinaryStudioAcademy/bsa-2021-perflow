@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -53,6 +52,8 @@ namespace Perflow.Services.Implementations
             var song = await context.Songs
                 .Include(song => song.Artist)
                 .Include(song => song.Group)
+                    .ThenInclude(g => g.Artists)
+                        .ThenInclude(ga => ga.Artist)
                 .Include(song => song.Album)
                 .Include(song => song.Reactions)
                 .AsNoTracking()

@@ -2,9 +2,6 @@
 using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Users;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Perflow.Common.DTO.Songs
 {

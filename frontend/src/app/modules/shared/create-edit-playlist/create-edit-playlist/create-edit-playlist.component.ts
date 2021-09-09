@@ -21,6 +21,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
 import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -53,6 +54,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _createdPlaylistService: CreatePlaylistService,
     private _searchService: SearchService,
     private _playlistEditorsService: PlaylistEditorsService,
+    private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
     private _confirmationService: ConfirmationPageService
@@ -315,5 +317,18 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         },
         () => {}
       );
+  }
+  
+  play() {
+    if (!this.playlistSongs?.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.playlistSongs);
+
+    const [firstSong] = this.playlistSongs;
+
+    this._queueService.initSong(firstSong, true);
   }
 }

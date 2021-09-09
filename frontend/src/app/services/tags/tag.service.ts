@@ -9,7 +9,7 @@ import { HttpInternalService } from '../http-internal.service';
   providedIn: 'root'
 })
 export class TagService {
-  public routePrefix = '/api/Tags';
+  routePrefix = '/api/Tags';
 
   constructor(private _httpService: HttpInternalService) { }
 

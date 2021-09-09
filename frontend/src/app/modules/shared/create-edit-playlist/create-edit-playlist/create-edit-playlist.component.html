@@ -21,7 +21,7 @@
             <span class="duration">{{ playlistSongs | songDuration }}</span>
           </div>
           <div class="buttons">
-            <button class="ui btn-full button button-play">Play</button>
+            <button class="ui btn-full button button-play" (click)="play()">Play</button>
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon" *ngIf="isAuthor"></i>
               <div class="right menu">

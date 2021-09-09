@@ -73,6 +73,7 @@ namespace Perflow.Services.Extensions
             services.AddScoped<SharePlayService>();
 
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IRadioService, RadioService>();
         }
     }
 }

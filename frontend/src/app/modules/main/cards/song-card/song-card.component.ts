@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { take } from 'rxjs/operators';
 import { ConstructorRecentlyPlayedSong } from 'src/app/models/constructor/container-recently-played-song';
 import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
+import { QueueService } from 'src/app/services/queue.service';
+import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
   selector: 'app-song-card',
@@ -14,6 +17,11 @@ export class SongCardComponent implements OnInit {
   podcast: string;
   artistRoute: string;
   podcastRoute: string;
+
+  constructor(
+    private _songsService: SongsService,
+    private _queueService: QueueService
+  ) {}
 
   ngOnInit() {
     if (this.instanceOfRecentlyPlayedSong(this.song)) {
@@ -33,4 +41,19 @@ export class SongCardComponent implements OnInit {
   }
 
   instanceOfRecentlyPlayedSong = (data: any): data is RecentlyPlayedSong => 'id' in data;
+
+  play() {
+    if (!this.instanceOfRecentlyPlayedSong(this.song)) {
+      return;
+    }
+
+    this._songsService.getSongById((this.song as RecentlyPlayedSong).id)
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          this._queueService.addSongToQueue(data);
+          this._queueService.initSong(data, true);
+        }
+      });
+  }
 }

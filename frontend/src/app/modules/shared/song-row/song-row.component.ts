@@ -18,6 +18,7 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarInfo } from 'src/app/models/common/snackbar-info';
 import { Tag } from 'src/app/models/tag/tag';
+import { RadioService } from 'src/app/services/radio.service';
 import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -45,6 +46,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
   @Input() playlist: Playlist | undefined;
   @Input() album: AlbumFull | undefined;
   @Input() isRemoveFromQueueShonw: boolean = false;
+  @Input() isRemoveFromPlaylistShown: boolean = true;
   @Input() isGroupMember: boolean = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
@@ -60,7 +62,8 @@ export class SongRowComponent implements OnInit, OnDestroy {
     private _songService: SongsService,
     private _createPlaylistService: CreatePlaylistService,
     private _playlistsService: PlaylistsService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _radioService: RadioService
   ) { }
 
   ngOnDestroy(): void {
@@ -193,6 +196,30 @@ export class SongRowComponent implements OnInit, OnDestroy {
 
   updateTags(tags: Tag[]) {
     this.song.tags = tags;
+  }
+
+  startRadio() {
+    this._radioService.getRadioBySongId(this.song.id)
+      .pipe(take(1))
+      .subscribe((songs) => {
+        if (songs.length > 0) {
+          this.updateQueue(songs);
+          this.showNotification('Radio started');
+        }
+      });
+  }
+
+  updateQueue(songs: Song[]) {
+    if (!songs.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(songs);
+
+    const [first] = songs;
+
+    this._queueService.initSong(first, true);
   }
 
   playSong = () => {
