@@ -83,6 +83,6 @@
     </div>
   </div>
   <div>
-    <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs"></app-songs-list>
+    <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs" [isRemoveFromPlaylistShown]="playlist.type === playlistType.playlist"></app-songs-list>
   </div>
 </main>
