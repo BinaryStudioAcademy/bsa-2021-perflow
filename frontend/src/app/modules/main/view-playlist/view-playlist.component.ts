@@ -159,8 +159,12 @@ export class ViewPlaylistComponent implements OnInit {
     this._radioService.getRadioByPlaylistId(this.playlist.id)
       .pipe(take(1))
       .subscribe((songs) => {
-        this.play(songs);
-        this._snackBarService.show({ message: 'Radio started' });
+        if (songs.length > 0) {
+          this.play(songs);
+          this._snackBarService.show({ message: 'Radio started' });
+        } else{
+          this._snackBarService.show({ message: 'No songs found' });
+        }
       });
   }
 

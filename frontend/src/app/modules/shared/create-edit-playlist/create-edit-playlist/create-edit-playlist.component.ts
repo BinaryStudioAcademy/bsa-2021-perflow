@@ -53,7 +53,6 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _searchService: SearchService,
     private _playlistEditorsService: PlaylistEditorsService,
     private _queueService: QueueService,
-
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation
   ) {

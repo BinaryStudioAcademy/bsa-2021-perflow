@@ -201,8 +201,10 @@ export class SongRowComponent implements OnInit, OnDestroy {
     this._radioService.getRadioBySongId(this.song.id)
       .pipe(take(1))
       .subscribe((songs) => {
-        this.updateQueue(songs);
-        this.showNotification('Radio started');
+        if (songs.length > 0) {
+          this.updateQueue(songs);
+          this.showNotification('Radio started');
+        }
       });
   }
 
