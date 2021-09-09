@@ -99,7 +99,9 @@
       </div>
     </div>
   </div>
-  <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
+  <div class="app-crop-image">
+    <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
+  </div>
 </form>
 
 <app-upload-image-modal></app-upload-image-modal>
