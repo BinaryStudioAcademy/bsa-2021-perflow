@@ -1,4 +1,5 @@
 ﻿using Perflow.Common.DTO.Albums;
+using Perflow.Common.DTO.Groups;
 using Perflow.Common.DTO.Playlists;
 using Perflow.Common.DTO.Users;
 using System;
@@ -14,5 +15,6 @@ namespace Perflow.Common.DTO.Search
         public AlbumForListDTO Album { get; set; }
         public ArtistReadDTO Artist { get; set; }
         public PlaylistViewDTO Playlist { get; set; }
+        public GroupShortDTO Group { get; set; }
     }
 }

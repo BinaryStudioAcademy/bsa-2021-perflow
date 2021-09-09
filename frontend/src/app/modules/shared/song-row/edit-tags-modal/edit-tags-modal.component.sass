@@ -1,0 +1,119 @@
+@import '../../../../../styles'
+
+%base
+    background-color: $drk-gray !important
+    color: $text !important
+
+=flex-container($align-items, $justify-content)
+    display: flex
+    align-items: $align-items
+    justify-content: $justify-content
+
+.header
+    @extend %base
+    text-align: center
+    font-family: Rubik !important
+
+.content
+    @extend %base
+    flex-direction: column
+    +flex-container(left, left)
+    font-family: Rubik !important
+    >.dropdown
+      display: inline-block
+    .tags-dropdown
+        padding-left: 8em !important
+        padding: 0.5em 0 1em 0
+    .tags
+        padding: 0px 20px !important
+
+.actions
+    @extend %base
+    .buttons
+        display: flex
+        justify-content: center
+        margin-top: 2em
+
+.btn-cancel
+    border-radius: 50px !important
+    font-size: 16px !important
+    margin-left: 16px !important
+    font-weight: $bold-weight !important
+ 
+.tag-wrap
+    +flex-container(left, left)
+    height: 18px
+    color: $text
+    border: 0.5px solid $gray
+    background: $gray
+    border-radius: 20px
+    margin-right: 4px
+    margin-bottom: 4px
+    align-items: center
+    display: inline-flex
+    padding: 2px 6px
+    .tag
+        font-size: 14px
+        >i
+          font-size: 12px !important
+          margin-left: auto
+          margin-right: 0
+    &:hover
+        background: darken($gray, 10%)
+        border-color: darken($gray, 10%)
+        cursor: pointer
+
+.orange
+    background: $light-orange
+    border: 0.5px solid $light-orange
+    &:hover
+        background: darken($light-orange, 10%)
+        border-color: darken($light-orange, 10%)
+        cursor: pointer
+
+.link-wrap
+    +flex-container(center, center)
+    .link
+        font-weight: $normal-weight
+        color: $medium-orange
+        &:hover
+            color: darken($medium-orange, 10%)
+            cursor: pointer
+        
+.ui.dropdown
+    background-color: transparent !important
+
+.ui.floating.dropdown
+    .menu
+        background: $light-gray
+        border: none !important
+        border-radius: 4px
+        box-shadow: none !important
+        .scrolling
+            border: 0.5px solid #373C43 !important
+        .header
+            font-size: 14px !important
+            font-weight: $medium-weight
+            text-transform: none !important
+        .item
+            background-color: $light-gray
+            span
+                color: $text !important
+                font-family: Montserrat !important
+                font-weight: $normal-weight !important
+                line-height: 135%
+            &:hover
+                background-color: $drk-gray !important
+            &:active
+                background-color: $light-gray !important
+                font-weight: $normal-weight !important
+        .item.first
+            padding-top: 18px !important
+        .item.last
+            padding-bottom: 18px !important
+
+.item.active.selected
+    background-color: $light-gray !important
+    font-weight: $normal-weight !important
+    &:hover
+        background-color: $drk-gray !important

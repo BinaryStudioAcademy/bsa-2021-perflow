@@ -144,6 +144,17 @@ namespace Perflow.Controllers
             return Ok();
         }
 
+        [HttpPut("changeAccessType")]
+        public async Task<ActionResult<PlaylistNameDTO>> ChangeAccessTypeAsync(PlaylistNameDTO playlistNameDTO)
+        {
+            if (!ModelState.IsValid)
+                throw new ArgumentException("Model is not valid.");
+
+            var result = await _playlistService.ChangeAccessTypeAsync(playlistNameDTO);
+
+            return Ok(result);
+        }
+
         [HttpPost("copy")]
         public async Task<ActionResult<PlaylistNameDTO>> CopyPlaylistAsync(PlaylistNameDTO playlistNameDTO)
         {
@@ -159,6 +170,14 @@ namespace Perflow.Controllers
         public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetUserMixAsync()
         {
             var playlists = await _playlistService.GetUserMixAsync(User.GetId());
+
+            return Ok(playlists);
+        }
+
+        [HttpGet("recommendations")]
+        public async Task<ActionResult<IEnumerable<PlaylistViewDTO>>> GetRecommendationsAsync()
+        {
+            var playlists = await _playlistService.GetRecommendationsAsync(User.GetId());
 
             return Ok(playlists);
         }

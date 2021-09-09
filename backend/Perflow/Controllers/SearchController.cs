@@ -48,16 +48,23 @@ namespace Perflow.Controllers
 
         [HttpGet("groups")]
         public async Task<ActionResult<ICollection<GroupShortDTO>>> FindGroupsByNameAsync
-            (string searchTerm, int page, int itemsOnPage)
+            (string searchTerm, int page, int itemsOnPage, int userId)
         {
-            return Ok(await _searchService.FindGroupsByNameAsync(searchTerm, page, itemsOnPage));
+            return Ok(await _searchService.FindGroupsByNameAsync(searchTerm, page, itemsOnPage, User.GetId()));
         }
 
-        [HttpGet("albums")]
-        public async Task<ActionResult<ICollection<AlbumForListDTO>>> FindAlbumsByNameAsync
-            (string searchTerm, int page, int itemsOnPage)
+        [HttpGet("forArtistApplicant")]
+        public async Task<ActionResult<ICollection<GroupShortDTO>>> FindGroupsForArtistApplicantAsync
+        (string searchTerm, int page, int itemsOnPage, int userId)
         {
-            return Ok(await _searchService.FindAlbumsByNameAsync(searchTerm, page, itemsOnPage));
+            return Ok(await _searchService.FindGroupsForArtistApplicantAsync(searchTerm, page, itemsOnPage, User.GetId()));
+        }
+
+        [HttpGet("albums/{onlyPublished}")]
+        public async Task<ActionResult<ICollection<AlbumForListDTO>>> FindAlbumsByNameAsync
+            (bool onlyPublished, string searchTerm, int page, int itemsOnPage)
+        {
+            return Ok(await _searchService.FindAlbumsByNameAsync(onlyPublished, searchTerm, page, itemsOnPage));
         }
 
         [HttpGet("playlists")]

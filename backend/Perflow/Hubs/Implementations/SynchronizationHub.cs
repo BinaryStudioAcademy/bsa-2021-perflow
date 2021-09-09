@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -26,6 +27,8 @@ namespace Perflow.Hubs.Implementations
                 return;
             }
 
+            await Groups.AddToGroupAsync(Context.ConnectionId, Context.UserIdentifier!);
+
             var userId = Context.User.GetId();
             var syncData = await _syncService.GetContentSyncAsync(userId);
 
@@ -45,11 +48,22 @@ namespace Perflow.Hubs.Implementations
 
             await _syncService.AddContentSyncAsync(syncData, userId);
 
-            await Clients.Others.ReceiveSynchronization(new()
+            await Clients.OthersInGroup(Context.UserIdentifier!)
+                .ReceiveSynchronization(new()
+                {
+                    SongId = syncData.SongId,
+                    Time = syncData.Time
+                });
+        }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            if (Context.User != null)
             {
-                SongId = syncData.SongId,
-                Time = syncData.Time
-            });
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, Context.UserIdentifier!);
+            }
+            
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }

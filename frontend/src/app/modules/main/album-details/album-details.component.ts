@@ -11,9 +11,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter, takeUntil } from 'rxjs/operators';
 import { QueueService } from 'src/app/services/queue.service';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { Song } from 'src/app/models/song/song';
+import { GroupService } from 'src/app/services/group.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-album-details',
@@ -29,7 +31,6 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
 
   @ViewChild('albums') albumsElement: ElementRef;
   album: AlbumFull = {} as AlbumFull;
-  isSuccess: boolean = false;
   anotherAlbums: AlbumForReadDTO[] = [];
   isAuthor: boolean;
 
@@ -42,7 +43,9 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
     private _location: PlatformLocation,
     private _authService: AuthService,
     private _queueService: QueueService,
-    private _songsService: SongsService
+    private _songsService: SongsService,
+    private _groupService: GroupService,
+    private _snackbarService: SnackbarService
   ) {
     this.getUserId();
   }
@@ -72,12 +75,22 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
   loadData() {
     const albumId = this._route.snapshot.params.id;
 
-    this._service.getAlbum(albumId)
+    this._service.getAlbumWithSongs(albumId)
       .subscribe(
         (result) => {
           this.album = result;
-          this.isAuthor = this._userId === (this.album?.artist?.id ?? this.album?.group?.id);
-
+          if (this.album.group) {
+            this._groupService.checkGroupMember(this.album.group.id)
+              .pipe(takeUntil(this._unsubscribe$))
+              .subscribe(
+                (resp) => {
+                  this.isAuthor = resp.body!;
+                }
+              );
+          }
+          if (this.album.artist) {
+            this.isAuthor = this._userId === this.album?.artist?.id;
+          }
           this.loadAnotherAlbums();
         }
       );
@@ -130,10 +143,8 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 
   playAlbum = () => {

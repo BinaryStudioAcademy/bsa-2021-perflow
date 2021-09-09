@@ -1,6 +1,7 @@
 import {
-  Component, EventEmitter, Input, Output
+  Component, EventEmitter, Input, Output, OnInit
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { CreatedGroup } from 'src/app/models/group/createdGroup';
 import { CroppedImageData } from 'src/app/models/shared/cropped.model';
 
@@ -9,16 +10,25 @@ import { CroppedImageData } from 'src/app/models/shared/cropped.model';
   templateUrl: './group-modal.component.html',
   styleUrls: ['./group-modal.component.sass']
 })
-export class GroupModalComponent {
+export class GroupModalComponent implements OnInit {
   readonly pattern = '.*(.jpg$|.png$|.jpeg$)';
 
   isCropperModalShown = false;
   file: File;
   public tempIconURL: string = '';
+  isJoinToGroupRoute: boolean = false;
 
   @Input() createdGroup: CreatedGroup;
   @Output() isClosed = new EventEmitter<void>();
   @Output() createGroup = new EventEmitter<CreatedGroup>();
+
+  constructor(private _router: Router) {}
+
+  ngOnInit() {
+    if (this._router.url === '/perflowstudio/jointogroup') {
+      this.isJoinToGroupRoute = true;
+    }
+  }
 
   public onSubmit() {
     this.createdGroup.icon = this.file;

@@ -4,5 +4,5 @@ export interface NewestFiveAlbum {
   description: string;
   iconURL: string;
   isLiked: boolean;
-  artistId?: number
+  artistIds?: number[]
 }

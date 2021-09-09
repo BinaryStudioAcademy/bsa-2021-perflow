@@ -5,7 +5,6 @@ using Perflow.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using Shared.Auth;
-using System.Linq;
 
 namespace Perflow.DataAccess.Context
 {
@@ -29,6 +28,7 @@ namespace Perflow.DataAccess.Context
             modelBuilder.ApplyConfiguration(new SearchHistoryConfiguration());
             modelBuilder.ApplyConfiguration(new PlaylistEditorConfiguration());
             modelBuilder.ApplyConfiguration(new ContentSynchronizationConfiguration());
+            modelBuilder.ApplyConfiguration(new TagConfiguration());
         }
 
         public static void Seed(this ModelBuilder modelBuilder)

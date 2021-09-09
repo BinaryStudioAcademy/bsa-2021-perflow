@@ -37,4 +37,11 @@ class _$AlbumsApi extends AlbumsApi {
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getNewReleases() {
+    final $url = 'api/albums/new-releases';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

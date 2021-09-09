@@ -20,68 +20,50 @@ class Perflow {
   static const textAccentColor = Color(0xFFFF792A);
 
   static const primaryGradient = LinearGradient(
-    begin: Alignment.centerLeft,
-    end: Alignment.centerRight,
-    colors: [ primaryLightColor, primaryColor ]
-  );
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: [primaryLightColor, primaryColor]);
 
   static const secondaryGradient = LinearGradient(
-    begin: Alignment.centerLeft,
-    end: Alignment.centerRight,
-    colors: [ Color(0xFF864099), Color(0xFF464192) ]
-  );
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: [Color(0xFF864099), Color(0xFF464192)]);
 
   static final inputDecoration = InputDecoration(
-    contentPadding: const EdgeInsets.symmetric(
-      horizontal: 26,
-      vertical: 12
-    ),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
     filled: true,
     fillColor: surfaceColor,
     border: const OutlineInputBorder(),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
-      borderSide: const BorderSide(style: BorderStyle.none)
+      borderSide: const BorderSide(color: textDarkColor, width: 2),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(32),
-      borderSide: const BorderSide(
-        style: BorderStyle.solid,
-        color: primaryLightColor
-      )
-    ),
-    errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(32),
-      borderSide: const BorderSide(
-          style: BorderStyle.solid,
-          color: errorColor
-      )
-    ),
-    focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(32),
         borderSide: const BorderSide(
-          style: BorderStyle.solid,
-          color: errorColor
-        )
-    ),
+            style: BorderStyle.solid, color: primaryLightColor)),
+    errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(32),
+        borderSide:
+            const BorderSide(style: BorderStyle.solid, color: errorColor)),
+    focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(32),
+        borderSide:
+            const BorderSide(style: BorderStyle.solid, color: errorColor)),
   );
 
   static final ThemeData theme = ThemeData(
     textTheme: textTheme.apply(
-      bodyColor: textColor,
-      displayColor: textGrayColor,
-      decorationColor: textGrayColor
-    ),
-
+        bodyColor: textColor,
+        displayColor: textGrayColor,
+        decorationColor: textGrayColor),
     brightness: Brightness.dark,
     primaryColor: primaryColor,
     accentColor: primaryLightColor,
     errorColor: errorColor,
-
     backgroundColor: backgroundColor,
     canvasColor: backgroundColor,
     cardColor: surfaceColor,
-
     primarySwatch: createMaterialColor(primaryLightColor),
   );
 
@@ -141,7 +123,7 @@ class Perflow {
       letterSpacing: 1.25,
     ),
     caption: GoogleFonts.rubik(
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.4
     ),

@@ -35,9 +35,14 @@ export class SearchService {
     return this._httpService.getRequest<ArtistReadDTO[]>('/api/Search/groups', httpParams);
   };
 
-  getAlbumsByName = (data: SearchParam): Observable<AlbumForReadDTO[]> => {
+  getGroupsForArtistApplicant = (data: SearchParam): Observable<ArtistReadDTO[]> => {
     const httpParams = { ...data };
-    return this._httpService.getRequest<AlbumForReadDTO[]>('/api/Search/albums', httpParams);
+    return this._httpService.getRequest<ArtistReadDTO[]>('/api/Search/forArtistApplicant', httpParams);
+  };
+
+  getAlbumsByName = (onlyPublished: boolean, data: SearchParam): Observable<AlbumForReadDTO[]> => {
+    const httpParams = { ...data };
+    return this._httpService.getRequest<AlbumForReadDTO[]>(`/api/Search/albums/${onlyPublished}`, httpParams);
   };
 
   getPlaylistsByName = (data: SearchParam): Observable<PlaylistView[]> => {

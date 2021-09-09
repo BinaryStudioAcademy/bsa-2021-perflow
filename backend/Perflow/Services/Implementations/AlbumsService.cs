@@ -56,6 +56,8 @@ namespace Perflow.Services.Implementations
                                                 .ThenInclude(s => s.Album)
                                             .Include(a => a.Songs)
                                                 .ThenInclude(s => s.Group)
+                                            .Include(a => a.Songs)
+                                                .ThenInclude(s => s.Tags)
                                             .Include(a => a.Author)
                                             .Include(a => a.Group)
                                             .AsNoTracking()
@@ -67,10 +69,11 @@ namespace Perflow.Services.Implementations
                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs.OrderBy(s => s.Order)
                                                 .Select(s =>
-                                                    mapper.Map<SongForAlbumDTO>(new LikedSong(
+                                                    mapper.Map<SongForEditAlbumDTO>(new SongWithTags(
                                                         s,
                                                         _imageService.GetImageUrl(s.Album.IconURL),
-                                                        s.Reactions.Any(r => r.UserId == userId)))
+                                                        s.Reactions.Any(r => r.UserId == userId),
+                                                        s.Tags.Select(t => t.Tag)))
                                                 ),
                                                 Artist = mapper.Map<ArtistForAlbumDTO>(a.Author),
                                                 Group = mapper.Map<GroupForAlbumDTO>(a.Group),
@@ -91,6 +94,45 @@ namespace Perflow.Services.Implementations
             return album;
         }
 
+        public async Task<AlbumForViewDTO> GetAlbumAsync(int id, int userId)
+        {
+            var album = await context.Albums.Include(a => a.Songs)
+                                                .ThenInclude(s => s.Artist)
+                                            .Include(a => a.Songs)
+                                                .ThenInclude(s => s.Album)
+                                            .Include(a => a.Songs)
+                                                .ThenInclude(s => s.Group)
+                                            .Include(a => a.Author)
+                                            .Include(a => a.Group)
+                                            .AsNoTracking()
+                                            .Select(a => new AlbumForViewDTO
+                                            {
+                                                Id = a.Id,
+                                                Name = a.Name,
+                                                ReleaseYear = a.ReleaseYear,
+                                                IconURL = _imageService.GetImageUrl(a.IconURL),
+                                                Songs = a.Songs.OrderBy(s => s.Order)
+                                                .Select(s =>
+                                                    mapper.Map<SongForAlbumDTO>(new LikedSong(
+                                                        s,
+                                                        _imageService.GetImageUrl(s.Album.IconURL),
+                                                        s.Reactions.Any(r => r.UserId == userId)))
+                                                ),
+                                                Artist = mapper.Map<ArtistForAlbumDTO>(a.Author),
+                                                Group = mapper.Map<GroupForAlbumDTO>(a.Group),
+                                                IsLiked = a.Reactions.Any(r => r.UserId == userId),
+                                                AuthorType = a.AuthorType
+                                            })
+                                            .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (album == null)
+            {
+                throw new NotFoundExcepion($"{nameof(Album)} not found");
+            }
+
+            return album;
+        }
+
         public async Task<IEnumerable<AlbumShortDTO>> GetAlbumsByArtist(int artistId, AuthorType type)
         {
             var albums = await context.Albums
@@ -99,13 +141,36 @@ namespace Perflow.Services.Implementations
                                                     : a.GroupId == artistId && a.IsPublished)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
+                                        .OrderByDescending(a => a.ReleaseYear)
                                         .Select(a => new AlbumShortDTO
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
                                             AuthorName = type == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
-                                            ReleaseYear = a.ReleaseYear
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle
+                                        })
+                                        .ToListAsync();
+
+            return albums;
+        }
+
+        public async Task<IEnumerable<AlbumForEditGroupViewDTO>> GetAlbumsByArtistUnpublished(int groupId)
+        {
+            var albums = await context.Albums
+                                        .Where(a => a.GroupId == groupId)
+                                        .Include(a => a.Group)
+                                        .OrderByDescending(a => a.ReleaseYear)
+                                        .Select(a => new AlbumForEditGroupViewDTO
+                                        {
+                                            Id = a.Id,
+                                            Name = a.Name,
+                                            AuthorName = a.Group.Name,
+                                            IconURL = _imageService.GetImageUrl(a.IconURL),
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle,
+                                            IsPublished = a.IsPublished
                                         })
                                         .ToListAsync();
 

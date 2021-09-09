@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:perflow/cubits/albums/new_releases_cubit.dart';
 import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:perflow/cubits/home/home_playlists_cubit.dart';
 import 'package:perflow/cubits/playlists/recommended_playlists_cubit.dart';
 import 'package:perflow/helpers/icon_url_convert.dart';
-import 'package:perflow/models/playlists/playlist_info.dart';
 import 'package:perflow/models/playlists/playlist_simplified.dart';
+import 'package:perflow/cubits/recently_played/recently_played_cubit.dart';
+import 'package:perflow/models/albums/album_simplified.dart';
+import 'package:perflow/models/songs/song.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/theme.dart';
-import 'package:perflow/widgets/cards/content_row.dart';
 import 'package:perflow/widgets/cards/medium_content_card.dart';
 import 'package:perflow/widgets/cards/small_content_card.dart';
 import 'package:perflow/cubits/common/api_call_state.dart';
+import 'package:perflow/widgets/songs/song_row.dart';
 import 'package:vrouter/vrouter.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -30,10 +32,9 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   _buildHeader(context),
                   _buildSmallCards(context),
-                  const _HomeSectionHeader(
-                      title: 'New songs added', showMoreLabel: true),
-                  _buildContentRow(),
                   const _HomeSectionHeader(title: 'Recently played'),
+                  _buildContentRow(),
+                  const _HomeSectionHeader(title: 'New releases'),
                   _buildMediumCards(),
                 ],
               ),
@@ -101,39 +102,51 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildContentRow() {
-    return const ContentRow(
-      imageUrl:
-          'https://media.discordapp.net/attachments/763282727826227202/877648551121915984/unknown.png',
-      title: 'We are who',
-      subtitle: 'Olivia Whodrigo | ONLY WHO',
+    return BlocProvider<RecentlyPlayedCubit>(
+      create: (context) => RecentlyPlayedCubit(),
+      child: BlocBuilder<RecentlyPlayedCubit, ApiCallState<List<Song>>>(
+        builder: (context, state) => state.map(
+          loading: (_) => const SizedBox(),
+          error: (_) => const SizedBox(),
+          data: (songs) => Column(
+            children: songs.data
+                .map(
+                  (e) => SongRow(
+                    song: e,
+                  ),
+                )
+                .toList(),
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildMediumCards() {
-    return BlocProvider<HomePlaylistsCubit>(
-      create: (context) => HomePlaylistsCubit([
-        190,
-        167,
-        187,
-      ]),
-      child: BlocBuilder<HomePlaylistsCubit, ApiCallState<List<PlaylistInfo>>>(
+    return BlocProvider<NewReleasesCubit>(
+      create: (context) => NewReleasesCubit(),
+      child: BlocBuilder<NewReleasesCubit, ApiCallState<List<AlbumSimplified>>>(
         builder: (context, state) => state.map(
           loading: (_) => const SizedBox(),
           error: (_) => const SizedBox(),
-          data: (state) => SingleChildScrollView(
+          data: (albums) => SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: state.data
-                  .map((playlist) => MediumContentCard(
-                        cardSize: 142,
-                        imageUrl: playlist.iconURL,
-                        title: playlist.name,
-                        subtitle: playlist.author.userName,
-                        onTap: () =>
-                            context.vRouter.to(Routes.playlist(playlist.id)),
-                      ))
+              children: albums.data
+                  .map(
+                    (album) => MediumContentCard(
+                      cardSize: 142,
+                      imageUrl: getValidUrl(album.iconURL),
+                      title: album.name,
+                      subtitle: album.author == null
+                          ? album.group!.name
+                          : album.author!.name,
+                      onTap: () => context.vRouter.to(Routes.album(album.id)),
+                    ),
+                  )
                   .toList(),
             ),
           ),

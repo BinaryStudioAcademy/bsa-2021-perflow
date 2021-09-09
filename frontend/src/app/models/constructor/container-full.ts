@@ -6,5 +6,6 @@ export interface ContainerFull {
   isPublished: boolean;
   showRecentlyPlayed: boolean;
   showMix: boolean;
+  showRecommendations: boolean;
   pageSections: PageSectionFull[];
 }

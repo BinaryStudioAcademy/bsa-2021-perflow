@@ -29,22 +29,14 @@
           </span>
         </div>
         <div class="buttons">
-          <button class="btn-full button-play">Play</button>
+          <button class="btn-full button-play" (click)="play()">Play</button>
           <button class="ui button-upload button" (click)="showUploadSongsModal()">Upload songs</button>
-          <button class="ui button-upload button" (click)="setPublicStatus()">{{publishButtonTitle}}</button>
+          <button *ngIf="album.songs.length" class="ui button-upload button" (click)="confirmPublicStatus()">{{publishButtonTitle}}</button>
           <div class="action-icon">
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon icons"></i>
               <div class="right menu">
-                <div class="item first share">
-                  <i class="share alternate icon"></i>Share<i class="dropdown icon"></i>
-                  <div class="right menu">
-                    <div class="item first last" (click)="copyLink()">
-                        Copy link
-                    </div>
-                </div>
-                </div>
-                <div class="item last" (click)="removeAlbum()">
+                <div class="item first last" (click)="initConfirmDeleteAlbum()">
                   <i class="trash icon"></i>Remove album
                 </div>
               </div>
@@ -62,13 +54,10 @@
     [songs]="album.songs" 
     [isDraggable]="true" 
     [isEditable]="true" 
+    [tags]="tags"
     (clickMenuItem)="clickMenuHandler($event)">
   </app-songs-list>
 
   <app-edit-album-modal [editedAlbum]="editedAlbum" *ngIf="isModalShown" (editAlbum)="onSubmitModal($event)" (isClosed)="closeModal()"></app-edit-album-modal>
-  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-    <div class="header">
-      Link copied to clipboard!
-    </div>
-  </div>
+
 </main>

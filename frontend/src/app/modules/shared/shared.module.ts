@@ -36,6 +36,8 @@ import { CropImageComponent } from './crop-image/crop-image.component';
 import { FilterExplicitPipe } from './pipes/filter-explicit.pipe';
 import { ColaborativeModalComponent } from './create-edit-playlist/colaborative-modal/colaborative-modal.component';
 import { UserRolePipe } from './pipes/user-role.pipe';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { EditTagsModalComponent } from './song-row/edit-tags-modal/edit-tags-modal.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { UserRolePipe } from './pipes/user-role.pipe';
     CropImageComponent,
     FilterExplicitPipe,
     ColaborativeModalComponent,
-    UserRolePipe
+    UserRolePipe,
+    ConfirmationModalComponent,
+    EditTagsModalComponent
   ],
   imports: [
     CommonModule,
@@ -102,7 +106,9 @@ import { UserRolePipe } from './pipes/user-role.pipe';
     CreateEditPlaylistComponent,
     EditPlaylistModalComponent,
     CropImageComponent,
-    UserRolePipe
+    UserRolePipe,
+    ConfirmationModalComponent,
+    EditTagsModalComponent
   ]
 })
 

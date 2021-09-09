@@ -101,6 +101,7 @@ class AlbumScreen extends StatelessWidget {
                                   .unlikeAlbum(value.data.id);
                             },
                           ),
+                    onPlayPressed: context.read<AlbumInfoCubit>().play
                   ),
                 ),
               ),

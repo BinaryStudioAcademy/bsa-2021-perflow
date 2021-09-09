@@ -53,6 +53,9 @@ import { SongCardComponent } from './cards/song-card/song-card.component';
 import { GroupViewComponent } from './group-view/group-view.component';
 import { ConstructorContainerCardComponent }
   from './cards/constructor-container-card/constructor-container-card/constructor-container-card.component';
+import { SearchGroupsResultComponent }
+  from './search/components/search-groups-result/search-groups-result/search-groups-result.component';
+import { AllGroupsComponent } from './search/components/all-groups/all-groups/all-groups.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +93,9 @@ import { ConstructorContainerCardComponent }
     AllPlaylistsComponent,
     SongCardComponent,
     GroupViewComponent,
-    ConstructorContainerCardComponent
+    ConstructorContainerCardComponent,
+    SearchGroupsResultComponent,
+    AllGroupsComponent
   ],
   imports: [
     CommonModule,
@@ -115,6 +120,7 @@ import { ConstructorContainerCardComponent }
     SearchAlbumsResultComponent,
     SearchArtistsResultComponent,
     SearchPlaylistsResultComponent,
+    SearchGroupsResultComponent,
     PlaylistCardComponent,
     ArtistCardComponent,
     ConstructorContainerCardComponent,

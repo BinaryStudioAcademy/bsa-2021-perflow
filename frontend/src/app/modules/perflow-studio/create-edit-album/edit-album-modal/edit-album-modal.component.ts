@@ -6,6 +6,7 @@ import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumRegion } from 'src/app/models/album/album-region';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { Group } from 'src/app/models/group/group';
+import { CroppedImageData } from 'src/app/models/shared/cropped.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GroupService } from 'src/app/services/group.service';
 
@@ -39,6 +40,7 @@ export class EditAlbumModalComponent implements OnInit {
   authors = [] as Author[];
   isAuthorHidden: boolean = true;
   selectedIndex: number;
+  isCropperModalShown = false;
 
   @Input() editedAlbum: AlbumEdit = { } as AlbumEdit;
 
@@ -69,7 +71,6 @@ export class EditAlbumModalComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.groups = data;
-
           if (this.groups?.length) {
             this.fillAuthors(this.groups);
           }
@@ -104,6 +105,16 @@ export class EditAlbumModalComponent implements OnInit {
     this.editAlbum.emit(this.editedAlbum);
   }
 
+  onSubmitModal = (croppedFile: CroppedImageData) => {
+    this.isCropperModalShown = !this.isCropperModalShown;
+    this.file = croppedFile.croppedFile;
+    this.tempIconURL = croppedFile.croppedImage;
+  };
+
+  switchCropperImageModal() {
+    this.isCropperModalShown = !this.isCropperModalShown;
+  }
+
   loadIcon = (event: Event) => {
     const [file] = Array.from((event.target as HTMLInputElement).files as FileList);
 
@@ -116,6 +127,8 @@ export class EditAlbumModalComponent implements OnInit {
       };
 
       reader.readAsDataURL(this.file);
+
+      this.isCropperModalShown = !this.isCropperModalShown;
     }
   };
 

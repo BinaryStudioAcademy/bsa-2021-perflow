@@ -7,6 +7,7 @@
         ApplicantNotification,
         UserNotification,
         CollaborativePlaylistSubscription,
-        GroupMembersNotification
+        GroupMembersNotification,
+        SharePlayNotification
     }
 }

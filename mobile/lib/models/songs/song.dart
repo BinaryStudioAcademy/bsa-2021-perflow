@@ -13,7 +13,6 @@ class Song {
   final AlbumSimplified album;
   final GroupSimplified? group;
   final int duration;
-  final String? blobId;
   final bool isLiked;
 
   const Song({
@@ -23,7 +22,6 @@ class Song {
     required this.album,
     this.group,
     required this.duration,
-    required this.blobId,
     required this.isLiked,
   });
 

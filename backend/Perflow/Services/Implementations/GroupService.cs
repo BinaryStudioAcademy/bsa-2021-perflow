@@ -25,7 +25,9 @@ namespace Perflow.Services.Implementations
 
         public async Task<ICollection<GroupForAlbumDTO>> GetAllGroupsAsync()
         {
-            var groups = await context.Groups.AsNoTracking().ToListAsync();
+            var groups = await context.Groups
+                .Where(g => g.Approved == true)
+                .AsNoTracking().ToListAsync();
 
             return mapper.Map<ICollection<GroupForAlbumDTO>>(groups);
         }
@@ -35,7 +37,7 @@ namespace Perflow.Services.Implementations
             var groups = await context.GroupArtist
                 .Include(ga => ga.Group)
                 .Include(ga => ga.Artist)
-                .Where(ga => ga.Artist.Id == id)
+                .Where(ga => ga.Artist.Id == id && ga.Group.Approved == true)
                 .Select(ga => ga.Group)
                 .AsNoTracking()
                 .ToListAsync();
@@ -49,6 +51,7 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentNullException("Argument cannot be null");
 
             var groupEntity = mapper.Map<Group>(group);
+            groupEntity.Approved = false;
 
             if (group.Icon != null)
             {
@@ -81,6 +84,53 @@ namespace Perflow.Services.Implementations
             }
 
             return group;
+        }
+
+        public async Task<bool> CheckGroupMemberAsync(int id, int userId)
+        {
+            var result = await context.GroupArtist
+                                      .Include(ga => ga.Group)
+                                      .Include(ga => ga.Artist)
+                                      .Where(ga => ga.Group.Id == id)
+                                      .AnyAsync(ga => ga.ArtistId == userId);
+            return result;
+        }
+
+        public async Task<int> DeleteMemberAsync(int groupId, int userId)
+        {
+            var groupArtist = await context.GroupArtist
+                                           .FirstOrDefaultAsync(ga => ga.GroupId == groupId && ga.ArtistId == userId);
+
+            context.GroupArtist.Remove(groupArtist);
+
+            await context.SaveChangesAsync();
+
+            return userId;
+        }
+
+        public async Task<GroupFullDTO> EditGroupAsync(GroupEditDTO groupDTO)
+        {
+            if (groupDTO == null)
+                throw new ArgumentNullException("Argument cannot be null");
+
+            var updatedGroup = await context.Groups.FirstOrDefaultAsync(g => g.Id == groupDTO.Id);
+
+            var group = mapper.Map(groupDTO, updatedGroup);
+
+            if (groupDTO.Icon != null)
+            {
+                var oldImageId = group.IconURL;
+
+                group.IconURL = await _imageService.UploadImageAsync(groupDTO.Icon);
+
+                _ = _imageService.DeleteImageAsync(oldImageId);
+            }
+
+            context.Entry(group).State = EntityState.Modified;
+
+            await context.SaveChangesAsync();
+
+            return mapper.Map<GroupFullDTO>(new GroupWithIcon(updatedGroup, _imageService.GetImageUrl(updatedGroup.IconURL)));
         }
     }
 }

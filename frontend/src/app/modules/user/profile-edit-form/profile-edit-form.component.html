@@ -1,12 +1,12 @@
 <form name="form" #form="ngForm" class="ui form error">
   <div class="avatar-background">
     <div class="user-icon">
-      <input hidden #file type="file" id="iconURL" accept=".png, .jpg, .jpeg" (change)="handleFileInput($event)">
+      <input hidden #filesrc type="file" id="iconURL" accept=".png, .jpg, .jpeg" (change)="handleFileInput($event)">
       <img class="image" alt="avatar" [src]="user.iconURL" *ngIf="user.iconURL">
       <div class="icon-background" *ngIf="!user.iconURL">
         <i class="user icon"></i>
       </div>
-      <button class="btn-full btn-edit bottom-right-corner" (click)="file.click()">
+      <button class="btn-full btn-edit bottom-right-corner" (click)="filesrc.click()">
         <i class="fitted pencil alternate icon"></i>
       </button>
     </div>
@@ -23,7 +23,7 @@
           <div class="form-group">
             <div class="field">
               <input type="text" placeholder="User Name" class="form-control input-dark" [(ngModel)]="user.userName"
-                name="userName" #userName="ngModel" required pattern="[A-Za-z0-9.-_]{6,20}">
+                name="userName" #userName="ngModel" required pattern="[\sA-Za-z0-9.-_]{6,20}">
               <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="ui error message">
                 <div *ngIf="userName.invalid">
                   Username should consist of 6-20 characters. There is can contain Latin letters, digits and
@@ -99,6 +99,7 @@
       </div>
     </div>
   </div>
+  <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
 </form>
 
 <app-upload-image-modal></app-upload-image-modal>

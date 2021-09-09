@@ -6,5 +6,6 @@ export interface ReadSearchHistory {
   userId: number,
   album: AlbumForReadDTO,
   artist: ArtistReadDTO,
-  playlist: PlaylistView
+  playlist: PlaylistView,
+  group: ArtistReadDTO
 }

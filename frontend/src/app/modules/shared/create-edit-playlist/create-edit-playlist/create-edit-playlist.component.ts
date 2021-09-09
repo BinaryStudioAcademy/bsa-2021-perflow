@@ -1,7 +1,7 @@
 import {
   Component, OnInit, OnDestroy
 } from '@angular/core';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, filter, first, switchMap, takeUntil
 } from 'rxjs/operators';
@@ -20,6 +20,8 @@ import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
 import { SearchService } from 'src/app/services/search.service';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-create-edit-playlist',
@@ -34,8 +36,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   playlist = {} as Playlist;
   searchValue: string;
   userId: number;
-  isSuccess: boolean = false;
   isAuthor: boolean;
+  authorName: string;
 
   private _id: number | undefined;
 
@@ -52,9 +54,10 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _createdPlaylistService: CreatePlaylistService,
     private _searchService: SearchService,
     private _playlistEditorsService: PlaylistEditorsService,
-
+    private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _confirmationService: ConfirmationPageService
   ) {
     this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
@@ -104,6 +107,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.playlist = data;
           this.isAuthor = this.playlist.author.id === this.userId;
+          this.authorName = data.author.userName;
           if (this.playlist.accessType === AccessType.collaborative) {
             this._playlistEditorsService.getCollaborators(this.playlist.id)
               .pipe(first())
@@ -188,9 +192,9 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.playlist = data;
-          this._createdPlaylistService.addPlaylist(data);
 
           if (editedPlaylist.accessType !== AccessType.collaborative) {
+            this._createdPlaylistService.addPlaylist(data);
             this._playlistEditorsService.removePlaylist(editedPlaylist.id)
               .pipe(takeUntil(this._unsubscribe$))
               .subscribe((_) => {
@@ -198,6 +202,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
               });
           }
           else if (editedPlaylist.accessType === AccessType.collaborative) {
+            this._createdPlaylistService.editCollaborativePlaylist(data);
             this._playlistEditorsService.addCollaborators(editedPlaylist.id, this.collaborators)
               .pipe(takeUntil(this._unsubscribe$))
               .subscribe();
@@ -303,13 +308,27 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     }
   }
 
-  copyLink() {
-    this._clipboardApi.copyFromContent(
-      `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this.playlist.id}`
-    );
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the playlist?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
+  }
+
+  play() {
+    if (!this.playlistSongs?.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.playlistSongs);
+
+    const [firstSong] = this.playlistSongs;
+
+    this._queueService.initSong(firstSong, true);
   }
 }

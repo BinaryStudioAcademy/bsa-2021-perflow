@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ContainerView } from 'src/app/models/constructor/container-view';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 import { ConstructorService } from 'src/app/services/constructor.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
@@ -25,7 +26,8 @@ export class ConstructorContainerCardComponent {
   constructor(
     private _constructorService: ConstructorService,
     private _router: Router,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _confirmationService: ConfirmationPageService
   ) { }
 
   publishContainer = () => {
@@ -48,6 +50,17 @@ export class ConstructorContainerCardComponent {
         }
       );
   };
+
+  initConfirmDeleteConstructor() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete this container?',
+        () => {
+          this.deleteContainer();
+        },
+        () => {}
+      );
+  }
 
   redirectTo() {
     this.clickEmiter.emit();

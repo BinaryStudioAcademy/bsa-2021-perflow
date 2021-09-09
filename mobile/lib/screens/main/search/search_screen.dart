@@ -33,6 +33,7 @@ class SearchScreen extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: searchBar(context),
           backgroundColor: Perflow.surfaceColor,
@@ -40,13 +41,7 @@ class SearchScreen extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _topNavmenu(),
-                  ],
-                ),
-              ),
+              _topNavmenu(),
               Expanded(child: child)
             ],
           ),
@@ -56,20 +51,25 @@ class SearchScreen extends StatelessWidget {
   }
 
   Widget searchBar(BuildContext context) {
+    var textEditService = GetIt.instance.get<SearchTextEditService>();
     return TextField(
+      controller: TextEditingController()..text = textEditService.text ?? '',
       onChanged: (text) {
-        var textEditService = GetIt.instance.get<SearchTextEditService>();
-        if (textEditService.onTextEdit != null) {
+        if (textEditService.onTextEdit != null &&
+            textEditService.text != text) {
           textEditService.onTextEdit!.call(text);
         }
         textEditService.text = text;
       },
-      decoration: Perflow.inputDecoration,
+      decoration: Perflow.inputDecoration.copyWith(
+        hintText: "Search...",
+      ),
     );
   }
 
   Widget _topNavmenu() {
     return Container(
+      color: Perflow.surfaceColor,
       child: BlocBuilder<SearchNavigationCubit, SearchNavigationState>(
         builder: (context, state) {
           return Row(
@@ -105,15 +105,7 @@ class SearchScreen extends StatelessWidget {
             ],
           );
         },
-      ),
-      decoration: const BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Color(0x3421292D),
-          spreadRadius: 7,
-          blurRadius: 5,
-          offset: Offset(0, 0), // changes position of shadow
-        ),
-      ], color: Perflow.surfaceColor),
+      )
     );
   }
 }

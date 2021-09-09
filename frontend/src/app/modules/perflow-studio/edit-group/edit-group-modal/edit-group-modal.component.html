@@ -1,0 +1,51 @@
+<div class="bg-modal-fader" (click)="cancelModal()">
+  <div class="ui modal modal-upload" (click)="clickOnModal($event)">
+    <div class="ui icon header">
+      Edit group
+    </div>
+    <!-- Modal Content -->
+    <div class="content">
+      <form #formEdit="ngForm" (ngSubmit)="onSubmit()" class="ui form error" >
+        <!-- Hidden -->
+        <input type="hidden" [(ngModel)]="editedGroup.id" required name="id" #id="ngModel">
+        <!-- Image -->
+        <div class="ui field image">
+          <div class="image-upload-cont" >
+            <div class="hover-content">
+              <img id="image" src="{{tempIconURL}}">
+              <i class="edit outline icon"></i>
+              <input pattern="{{pattern}}" type="file" (change)="loadIcon($event)" name="iconURL" 
+                [ngModel] #iconURL="ngModel" accept=".jpeg,.png,.jpg">
+              <div *ngIf="iconURL.invalid && (iconURL.dirty || iconURL.touched)" class="ui error message">
+                <div *ngIf="iconURL.errors?.pattern">
+                  Invalid file type.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div class="ui field name">
+          <input type="text" maxlength="50" placeholder="Album title" value="{{ editedGroup.name }}" 
+           required pattern="[^<>^@]*" [(ngModel)]="this.name" name="name">    
+        </div>
+
+        <!-- Description -->
+        <div class="ui field description">
+          <textarea form="formEdit" placeholder="Group description" value="{{ editedGroup.description }}" maxlength="200"
+            name="description" [(ngModel)]="this.description" pattern="[^<>^@]*"></textarea>
+        </div>
+      
+        <!-- Buttons -->
+        <div class="ui field buttons-row">
+          <div class="form-group">
+            <button type="submit" class="ui button submit btn-full" [disabled]="formEdit.form.invalid">Save</button>
+            <button type="button" class="ui btn-cancel inverted basic button" (click)="cancelModal()">Cancel</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

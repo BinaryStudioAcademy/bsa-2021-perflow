@@ -5,7 +5,7 @@ import { Playlist } from 'src/app/models/playlist';
 import { HttpResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { AlbumService } from 'src/app/services/album.service';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { NewReleaseView } from 'src/app/models/album/new-release-view';
 import { RecentlyPlayedService } from 'src/app/services/recently-played.service';
 import { RecentlyPlayedSong } from 'src/app/models/recently-played/recent-song';
@@ -22,6 +22,7 @@ import { UserService } from 'src/app/services/user.service';
 import { ContainerFull } from 'src/app/models/constructor/container-full';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { PlaylistView } from 'src/app/models/playlist/playlist-view';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-main-home',
@@ -34,7 +35,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   private _newestAlbums = new Array<NewestFiveAlbum>(); // Top 5 the newest albums. it's necessary to add  {{...}} to .html
 
   private readonly _animationDuration: number = 800;
-  private readonly _scrollingSize: number = 1530;
+  private readonly _scrollingSize: number = 1000;
 
   public data: ContainerFull = {} as ContainerFull;
   public accordionSection: PageSectionFull = {} as PageSectionFull;
@@ -46,9 +47,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   public newReleases: NewReleaseView[] = [];
   public calmRhythms = new Array<Playlist>();
   public yourMix: PlaylistView[] = [];
+  public recommendations: PlaylistView[] = [];
   public top100Songs = new Array<Playlist>();
 
-  isSuccess: boolean = false;
   idSaveButtonShown: boolean = true;
   showNewReleases: boolean;
 
@@ -64,7 +65,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private _songsService: SongsService,
     private _queueService: QueueService,
     private _reactionService: ReactionService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _snackbarService: SnackbarService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -88,11 +90,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.getNewestFiveAlbums();
     this.getRecentlyPlayed();
     this.getNewReleases();
     this.calmRhythms = this.getCalmRhythms();
     this.getYourMix();
+    this.getRecommendations();
     this.top100Songs = this.getTop100Songs();
   }
 
@@ -128,38 +130,33 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.idSaveButtonShown = !this.idSaveButtonShown;
-          this.isSuccess = true;
-          this._newestAlbums.find((a) => a.id === id)!.isLiked = true;
+          this.currentAccordionAlbum.isLiked = true;
 
-          timer(3000).pipe(take(1)).subscribe((val) => {
-            this.isSuccess = Boolean(val);
-          });
+          this._snackbarService.show({ message: 'Album was saved!' });
         }
       });
   };
 
   getAccordionAlbums() {
-    this.accordionSection = this.data.pageSections.find((ps) => ps.position === 1)!;
-    this.currentAccordionAlbum = this.accordionSection.pageSectionEntities[0]?.entity;
-    this.accordionAlbumsLength = [...this.accordionSection.pageSectionEntities].length;
+    this.accordionSection = this.data?.pageSections.find((ps) => ps.position === 1)!;
+    this.currentAccordionAlbum = this.accordionSection?.pageSectionEntities[0]?.entity;
+    if (this.currentAccordionAlbum) this.accordionAlbumsLength = [...this.accordionSection.pageSectionEntities].length;
+    else this.accordionAlbumsLength = 0;
+    this.setButtonVisibility();
   }
 
-  getNewestFiveAlbums() {
-    this._albumService.getFiveNewestAlbums()
+  getRecommendations() {
+    this._playlistService.getRecommendations()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe({
         next: (data) => {
-          this._newestAlbums = data;
-          this.currentNewestAlbum = {
-            ...this._newestAlbums[0]
-          };
-          this.setButtonVisibility();
+          this.recommendations = data;
         }
       });
   }
 
   setButtonVisibility() {
-    this.idSaveButtonShown = this.currentAccordionAlbum.artistId !== this._userId
+    this.idSaveButtonShown = !this.currentAccordionAlbum.artistIds?.includes(this._userId)
                           && !this.currentAccordionAlbum.isLiked;
   }
 

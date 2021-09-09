@@ -100,12 +100,15 @@ namespace Perflow.Services.Implementations
             return artists;
         }
 
-        public async Task<ICollection<GroupShortDTO>> FindGroupsByNameAsync(string searchTerm, int page, int itemsOnPage)
+        public async Task<ICollection<GroupShortDTO>> FindGroupsByNameAsync(string searchTerm, int page, int itemsOnPage, int userId)
         {
             int skip = (page - 1) * itemsOnPage;
 
             var groups = await context.Groups
-                .Where(g => g.Name.Contains(searchTerm.Trim()))
+                .Include(g => g.Artists)
+                .Where(g => g.Name.Contains(searchTerm.Trim()) 
+                                && g.Artists.All(a => a.Artist.Id != userId)
+                                && g.Approved == true)
                 .Skip(skip)
                 .Take(itemsOnPage)
                 .AsNoTracking()
@@ -117,13 +120,36 @@ namespace Perflow.Services.Implementations
             return groups;
         }
 
+        public async Task<ICollection<GroupShortDTO>> FindGroupsForArtistApplicantAsync(string searchTerm, int page, int itemsOnPage, int userId)
+        {
+            int skip = (page - 1) * itemsOnPage;
+
+            var groups = await context.Groups
+                .Include(g => g.Artists)
+                .Where(g => g.Name.Contains(searchTerm.Trim())
+                                && g.Artists.All(a => a.Artist.Id != userId)
+                                && g.Approved == true)
+                .Skip(skip)
+                .Take(itemsOnPage)
+                .AsNoTracking()
+                .Select(
+                    g => mapper.Map<GroupShortDTO>(new GroupWithIcon(g, _imageService.GetImageUrl(g.IconURL)))
+                 )
+                .ToListAsync();
+
+            var applicants = await context.PerflowStudioApplicants.Where(psa => psa.UserId == userId).ToListAsync();
+            groups.RemoveAll(g => applicants.Any(a => a.GroupId == g.Id));
+            return groups;
+        }
+
         public async Task<ICollection<AlbumForListDTO>> FindAlbumsByNameAsync
-            (string searchTerm, int page, int itemsOnPage)
+            (bool onlyPublished, string searchTerm, int page, int itemsOnPage)
         {
             int skip = (page - 1) * itemsOnPage;
 
             var albums = await context.Albums
-                .Where(album => album.Name.Contains(searchTerm.Trim()))
+                .Where(album => album.Name.Contains(searchTerm.Trim()) &&
+                                (onlyPublished ? album.IsPublished : true))
                 .Include(album => album.Author)
                 .Include(album => album.Reactions)
                 .Include(album => album.Group)
@@ -174,9 +200,10 @@ namespace Perflow.Services.Implementations
             var result = new SearchResultDTO
             {
                 Songs = await FindSongsByNameAsync(searchTerm, page, maxSongAmount, userId),
-                Albums = await FindAlbumsByNameAsync(searchTerm, page, maxEntitiesAmount),
+                Albums = await FindAlbumsByNameAsync(true, searchTerm, page, maxEntitiesAmount),
                 Artists = await FindArtistsByNameAsync(searchTerm, page, maxEntitiesAmount),
-                Playlists = await FindPlaylistsByNameAsync(searchTerm, page, maxEntitiesAmount)
+                Playlists = await FindPlaylistsByNameAsync(searchTerm, page, maxEntitiesAmount),
+                Groups = await FindGroupsByNameAsync(searchTerm, page, maxSongAmount, userId)
             };
 
             return result;
