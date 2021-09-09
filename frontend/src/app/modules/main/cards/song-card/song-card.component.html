@@ -1,6 +1,6 @@
 <div class="rp-card">
   <div class="fader">
-      <button class="play-icon" appClickStopPropagation>
+      <button class="play-icon" (click)="play()" appClickStopPropagation>
           <i class="play icon"></i>
       </button>  
     <img *ngIf="instanceOfRecentlyPlayedSong(song)" src="{{ song.album?.iconURL }}" alt="Artist Avatar" />

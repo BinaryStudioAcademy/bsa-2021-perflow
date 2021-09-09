@@ -2,7 +2,12 @@ import {
   Component, Input, Output, EventEmitter
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
+import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { QueueService } from 'src/app/services/queue.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { SongsService } from 'src/app/services/songs/songs.service';
 
 @Component({
   selector: 'app-artist-card',
@@ -35,7 +40,12 @@ export class ArtistCardComponent {
   @Output()
   clickEmiter = new EventEmitter<void>();
 
-  constructor(private _router: Router) { }
+  constructor(
+    private _router: Router,
+    private _songsService: SongsService,
+    private _queueService: QueueService,
+    private _snackBarService: SnackbarService
+  ) { }
 
   onDeleteClick(artist: ArtistReadDTO) {
     this.delete.emit(artist);
@@ -68,5 +78,25 @@ export class ArtistCardComponent {
       this.isChecked = !this.isChecked;
       this.addDeleteFromSection.emit(this.artist);
     }
+  }
+
+  play(artistId: number) {
+    this._songsService.getTopSongsByAuthorId(
+      artistId, 100, this.artist.isArtist ? AuthorType.artist : AuthorType.group
+    )
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          if (data.length) {
+            this._queueService.clearQueue();
+            this._queueService.addSongsToQueue(data);
+            const [first] = data;
+            this._queueService.initSong(first, true);
+          }
+          else {
+            this._snackBarService.show({ message: 'There are no any songs!' });
+          }
+        }
+      });
   }
 }
