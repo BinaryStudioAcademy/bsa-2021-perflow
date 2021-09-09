@@ -12,7 +12,7 @@
         <div class="remove" *ngIf="isLiked && !isCheckBox" (click)="onDeleteClick(artist)" appClickStopPropagation>
             <i class="like icon ui"></i>
         </div>
-        <button *ngIf="!isCheckBox && !isChecked" class="play-icon" appClickStopPropagation>
+        <button *ngIf="!isCheckBox && !isChecked" (click)="play(artist.id)" class="play-icon" appClickStopPropagation>
           <i class="play icon"></i>
         </button> 
     </div>

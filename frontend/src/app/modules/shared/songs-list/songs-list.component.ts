@@ -32,6 +32,7 @@ export class SongsListComponent implements OnInit, OnDestroy {
   @Input() playlist: Playlist | undefined;
   @Input() album: AlbumFull | undefined;
   @Input() isRemoveFromQueueShonw: boolean = false;
+  @Input() isRemoveFromPlaylistShown: boolean = true;
   @Input() isGroupMember: boolean = false;
 
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
