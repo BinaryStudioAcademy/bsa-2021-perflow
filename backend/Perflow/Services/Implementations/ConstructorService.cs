@@ -29,26 +29,6 @@ namespace Perflow.Services.Implementations
             _mapper = mapper;
             _imageService = imageService;
         }
-
-
-        public async Task<PageContainerViewDTO> PublishContainer(PageContainerViewDTO containerDTO)
-        {
-            var container = await _context.PageContainers.FirstOrDefaultAsync(pc => pc.Id == containerDTO.Id);
-            var publishedContainer = await _context.PageContainers.FirstOrDefaultAsync(pc => pc.IsPublished);
-            container.IsPublished = true;
-            if (publishedContainer != null)
-            {
-                publishedContainer.IsPublished = false;
-                _context.PageContainers.UpdateRange(publishedContainer, container);
-            }
-            else
-            {
-                _context.PageContainers.Update(container);
-            }
-            await _context.SaveChangesAsync();
-            return _mapper.Map<PageContainerViewDTO>(container);
-        }
-
         public async Task<PageContainerDTO> GetPublishedContainer(int userId)
         {
             var result = await GetContainer(userId, findPublished: true);
