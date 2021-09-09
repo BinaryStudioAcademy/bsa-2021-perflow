@@ -30,7 +30,7 @@
             </span>
           </div>
           <div class="view-button-toolbar">
-            <button class="ui btn-full button" (click)="play()">Play</button>
+            <button class="ui btn-full button" (click)="play(songs)">Play</button>
             <div class="like" *ngIf="!isAuthor">
               <i class="heart outline icon" (click)="likePlaylist(playlist.id)" *ngIf="!playlist.isLiked"></i>
               <i class="heart icon" (click)="dislikePlaylist(playlist.id)" *ngIf="playlist.isLiked"></i>
@@ -51,7 +51,7 @@
                       Add to queue
                     </span>
                   </div>
-                  <div class="item" routerLink="/">
+                  <div class="item" (click)="startRadio()">
                     <span>
                       <i class="podcast icon"></i>
                       Start playlist radio
@@ -74,15 +74,17 @@
                 </div>
               </div>
             </span>
-            <button *ngIf="!isHidden && playlist.accessType === playlistAccessType.collaborative && playlist.author?.id === userId && !isConnected && !isGroupNotified" class="ui button-upload button" (click)="sharePlay(playlist)">Share Play</button>
-            <button *ngIf="isGroupNotified && !isConnected && playlist.author?.id !== userId" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
-            <button *ngIf="isConnected" class="ui button-upload button" (click)="disconnectSharePlay()">Disconnect</button>
+            <ng-container *ngIf="playlist.accessType === playlistAccessType.collaborative && isCollaborative">
+              <button *ngIf="playlist.author?.id === userId && !isConnected" class="ui button-upload button" (click)="sharePlay(playlist)">Share Play</button>
+              <button *ngIf="playlist.author?.id !== userId && isPlaylistshared && !isConnected" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
+              <button *ngIf="isConnected" class="ui button-upload button" (click)="disconnectSharePlay(playlist.id)">Disconnect</button>
+            </ng-container>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div>
-    <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs"></app-songs-list>
+    <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs" [isRemoveFromPlaylistShown]="playlist.type === playlistType.playlist"></app-songs-list>
   </div>
 </main>

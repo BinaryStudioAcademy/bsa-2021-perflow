@@ -20,7 +20,7 @@
             <span class="duration">{{ playlistSongs | songDuration }}</span>
           </div>
           <div class="buttons">
-            <button class="button-play btn-full">Play</button>
+            <button class="button-play btn-full" (click)="play()">Play</button>
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon"></i>
               <div class="right menu">
