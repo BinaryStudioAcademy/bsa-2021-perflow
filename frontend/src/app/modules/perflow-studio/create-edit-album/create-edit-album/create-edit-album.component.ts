@@ -186,7 +186,8 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
               .pipe(take(1))
               .subscribe((uploadedSong) => {
                 const getSongSubscription = this._songsService.getSongById(uploadedSong.id).subscribe((song) => {
-                  this.album.songs.push(song); getSongSubscription.unsubscribe();
+                  this.album.songs.push(song);
+                  getSongSubscription.unsubscribe();
                 });
               });
 
