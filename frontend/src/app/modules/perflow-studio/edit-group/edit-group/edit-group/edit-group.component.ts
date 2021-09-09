@@ -15,6 +15,7 @@ import { PlaylistView } from 'src/app/models/playlist/playlist-view';
 import { Song } from 'src/app/models/song/song';
 import { AlbumService } from 'src/app/services/album.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 import { GroupService } from 'src/app/services/group.service';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { QueueService } from 'src/app/services/queue.service';
@@ -59,7 +60,8 @@ export class EditGroupComponent implements OnInit, OnDestroy {
     private _albumsService: AlbumService,
     private _activateRoute: ActivatedRoute,
     private _router: Router,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _confirmationService: ConfirmationPageService
   ) {
     this.getUserId();
   }
@@ -269,5 +271,16 @@ export class EditGroupComponent implements OnInit, OnDestroy {
     this._clipboardApi.copyFromContent(this._location.href);
 
     this._snackbarService.show({ message: 'Link copied to clipboard!' });
+  }
+
+  initConfirmLeaveGroup() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to leave this group?',
+        () => {
+          this.leaveGroup();
+        },
+        () => {}
+      );
   }
 }

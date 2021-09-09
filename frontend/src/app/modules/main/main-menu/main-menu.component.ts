@@ -15,11 +15,12 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 import { Song } from 'src/app/models/song/song';
 import { RadioService } from 'src/app/services/radio.service';
 import { QueueService } from 'src/app/services/queue.service';
+import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -33,8 +34,11 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   collaborativePlaylists: PlaylistName[] = [];
   editedPlaylist = {} as PlaylistName;
   isEditPlaylistMode: boolean = false;
+  isConfirmationModalShown: boolean = false;
   userId: number;
+  confirmMessage: string;
 
+  private _action: string;
   private _tempPlaylist = {} as PlaylistName;
   private _isOnCollaborativePlaylistClick: boolean = false;
 
@@ -48,6 +52,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     private _location: PlatformLocation,
     private _playlistEditorsService: PlaylistEditorsService,
     private _authService: AuthService,
+    private _confirmationService: ConfirmationPageService,
     private _snackbarService: SnackbarService,
     private _queueService: QueueService,
     private _radioService: RadioService
@@ -148,7 +153,7 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         this.changeAccessType(AccessType.default);
         break;
       case 'Delete':
-        this.deletePlaylist();
+        this.initConfirmDeletePlaylist();
         break;
       case 'Create playlist':
         this.createPlaylist();
@@ -292,6 +297,17 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     return this.collaborativePlaylists.find((p) => p.id === this._tempPlaylist.id) !== undefined;
   }
 
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the playlist?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
+  }
+
   isPlaylistSecret() {
     return this._tempPlaylist.accessType === AccessType.secret;
   }
@@ -316,7 +332,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         if (songs.length > 0) {
           this.play(songs);
           this._snackbarService.show({ message: 'Radio started' });
-        } else {
+        }
+        else {
           this._snackbarService.show({ message: 'No songs found' });
         }
       });

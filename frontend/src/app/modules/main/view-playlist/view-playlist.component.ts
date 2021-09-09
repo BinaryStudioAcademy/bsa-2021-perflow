@@ -14,6 +14,7 @@ import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 import { SharePlay } from 'src/app/models/share-play/share-play';
 import { RadioService } from 'src/app/services/radio.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
@@ -55,6 +56,7 @@ export class ViewPlaylistComponent implements OnInit {
     private _playlistEditorsService: PlaylistEditorsService,
     private _sharePlayService: SharePlayService,
     private _snackBarService: SnackbarService,
+    private _confirmationService: ConfirmationPageService,
     private _radioService: RadioService
   ) {
     this._authService.getAuthStateObservable()
@@ -178,7 +180,8 @@ export class ViewPlaylistComponent implements OnInit {
         if (songs.length > 0) {
           this.play(songs);
           this._snackBarService.show({ message: 'Radio started' });
-        } else{
+        }
+        else {
           this._snackBarService.show({ message: 'No songs found' });
         }
       });
@@ -273,5 +276,16 @@ export class ViewPlaylistComponent implements OnInit {
         this.isConnected = false;
         this.isPlaylistshared = false;
       });
+  }
+
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the playlist?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
   }
 }

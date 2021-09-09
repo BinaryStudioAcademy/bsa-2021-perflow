@@ -65,7 +65,7 @@
                         </div>
                       </div>
                   </div>
-                  <div *ngIf="isAuthor && playlist.type === playlistType.playlist" class="item last" (click)="deletePlaylist()">
+                  <div *ngIf="isAuthor && playlist.type === playlistType.playlist" class="item last" (click)="initConfirmDeletePlaylist()">
                     <span>
                       <i class="trash alternate outline icon"></i>
                       Delete playlist
