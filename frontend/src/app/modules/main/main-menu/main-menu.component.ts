@@ -17,10 +17,10 @@ import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-edit
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 import { Song } from 'src/app/models/song/song';
 import { RadioService } from 'src/app/services/radio.service';
 import { QueueService } from 'src/app/services/queue.service';
+import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -332,7 +332,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
         if (songs.length > 0) {
           this.play(songs);
           this._snackbarService.show({ message: 'Radio started' });
-        } else {
+        }
+        else {
           this._snackbarService.show({ message: 'No songs found' });
         }
       });

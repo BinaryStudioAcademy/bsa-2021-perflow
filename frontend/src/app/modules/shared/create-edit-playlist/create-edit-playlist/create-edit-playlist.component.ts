@@ -318,7 +318,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         () => {}
       );
   }
-  
+
   play() {
     if (!this.playlistSongs?.length) {
       return;

@@ -180,7 +180,8 @@ export class ViewPlaylistComponent implements OnInit {
         if (songs.length > 0) {
           this.play(songs);
           this._snackBarService.show({ message: 'Radio started' });
-        } else{
+        }
+        else {
           this._snackBarService.show({ message: 'No songs found' });
         }
       });
