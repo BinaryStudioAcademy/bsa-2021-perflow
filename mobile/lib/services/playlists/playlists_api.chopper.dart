@@ -36,4 +36,11 @@ class _$PlaylistsApi extends PlaylistsApi {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getRecommendedPlaylists() {
+    final $url = 'api/playlists/recommended';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

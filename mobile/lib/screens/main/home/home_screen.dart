@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:perflow/cubits/albums/new_releases_cubit.dart';
 import 'package:perflow/cubits/auth/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:perflow/cubits/recently_played/recently_played_cubit.dart';
+import 'package:perflow/cubits/playlists/recommended_playlists_cubit.dart';
 import 'package:perflow/helpers/icon_url_convert.dart';
+import 'package:perflow/models/playlists/playlist_simplified.dart';
+import 'package:perflow/cubits/recently_played/recently_played_cubit.dart';
 import 'package:perflow/models/albums/album_simplified.dart';
 import 'package:perflow/models/songs/song.dart';
 import 'package:perflow/routes.dart';
@@ -59,70 +61,43 @@ class HomeScreen extends StatelessWidget {
             style: theme.textTheme.headline6,
           ),
           IconButton(
-              onPressed: () => context.read<AuthCubit>().signOut(),
-              icon: const Icon(Icons.logout))
+            onPressed: () => context.read<AuthCubit>().signOut(),
+            icon: const Icon(Icons.logout),
+          )
         ],
       ),
     );
   }
 
   Widget _buildSmallCards(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            SmallContentCard(
-              imageUrl:
-                  'https://media.discordapp.net/attachments/763282727826227202/877998049207660614/unknown.png',
-              title: "Indie",
-              onTap: f,
+    return BlocProvider<RecommendedPlaylistsCubit>(
+      create: (context) => RecommendedPlaylistsCubit(),
+      child: BlocBuilder<RecommendedPlaylistsCubit,
+          ApiCallState<List<PlaylistSimplified>>>(
+        builder: (context, state) => state.map(
+          loading: (_) => const SizedBox(),
+          error: (_) => const SizedBox(),
+          data: (playlists) => SizedBox(
+            child: GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: (3 / 1),
+              children: playlists.data
+                  .map(
+                    (e) => SmallContentCard(
+                      title: e.name,
+                      imageUrl: getValidUrl(e.iconURL),
+                      onTap: () => context.vRouter.to(
+                        Routes.playlist(e.id),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              physics: const NeverScrollableScrollPhysics(),
             ),
-            SmallContentCard(
-              imageUrl:
-                  'https://media.discordapp.net/attachments/763282727826227202/877997420305350707/unknown.png',
-              title: 'Rock',
-              onTap: f,
-            ),
-          ],
+            height: (playlists.data.length / 2).round() * 62,
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            SmallContentCard(
-              imageUrl:
-                  'https://media.discordapp.net/attachments/763282727826227202/877997441234923571/unknown.png',
-              title: 'Club',
-              onTap: f,
-            ),
-            SmallContentCard(
-              imageUrl:
-                  'https://media.discordapp.net/attachments/763282727826227202/877997488978665512/unknown.png',
-              title: 'Electro',
-              onTap: f,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            SmallContentCard(
-              imageUrl:
-                  'https://media.discordapp.net/attachments/763282727826227202/877997505969791006/unknown.png',
-              title: 'Relax',
-              onTap: f,
-            ),
-            SmallContentCard(
-              imageUrl:
-                  'https://media.discordapp.net/attachments/763282727826227202/877997460193177620/unknown.png',
-              title: 'Work',
-              onTap: f,
-            ),
-          ],
-        ),
-      ],
+      ),
     );
   }
 
@@ -206,8 +181,9 @@ class _HomeSectionHeader extends StatelessWidget {
           if (showMoreLabel)
             Text(
               'See more',
-              style: textTheme.subtitle2!
-                  .copyWith(color: Perflow.primaryLightColor),
+              style: textTheme.subtitle2!.copyWith(
+                color: Perflow.primaryLightColor,
+              ),
             )
         ],
       ),

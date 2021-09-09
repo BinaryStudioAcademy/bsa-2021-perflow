@@ -18,6 +18,7 @@ import { PlatformLocation } from '@angular/common';
 import { Tag } from 'src/app/models/tag/tag';
 import { TagService } from 'src/app/services/tags/tag.service';
 import { GroupService } from 'src/app/services/group.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
@@ -48,8 +49,9 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
-    private _tagService: TagService,
     private _groupService: GroupService,
+    private _confirmationService: ConfirmationPageService,
+    private _tagService: TagService,
     private _queueService: QueueService
   ) {
     this.getTags();
@@ -247,7 +249,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   clickMenuHandler(data: { menuItem: string, song: Song }) {
     switch (data.menuItem) {
       case 'Remove from album':
-        this.deleteSongFromAlbum(data.song);
+        this.initConfirmDeleteSongFromAlbum(data.song);
         break;
       default:
         break;
@@ -269,6 +271,48 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
         });
     }
   };
+
+  confirmPublicStatus() {
+    if (!this.album.isPublished) {
+      this.initConfirmPublishAlbum();
+    }
+    else {
+      this.setPublicStatus();
+    }
+  }
+
+  initConfirmPublishAlbum() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to publish this album?',
+        () => {
+          this.setPublicStatus();
+        },
+        () => {}
+      );
+  }
+
+  initConfirmDeleteAlbum() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the album?',
+        () => {
+          this.removeAlbum();
+        },
+        () => {}
+      );
+  }
+
+  initConfirmDeleteSongFromAlbum(song: Song) {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the song?',
+        () => {
+          this.deleteSongFromAlbum(song);
+        },
+        () => {}
+      );
+  }
 
   setPublicStatus() {
     const albumPublicStatus: AlbumPublicStatus = {

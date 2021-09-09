@@ -20,6 +20,7 @@ import { PlaylistForSave } from 'src/app/models/playlist/playlist-for-save';
 import { SearchService } from 'src/app/services/search.service';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { ArtistReadDTO } from 'src/app/models/user/ArtistReadDTO';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
@@ -36,6 +37,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
   searchValue: string;
   userId: number;
   isAuthor: boolean;
+  authorName: string;
 
   private _id: number | undefined;
 
@@ -54,7 +56,8 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
     private _playlistEditorsService: PlaylistEditorsService,
     private _queueService: QueueService,
     private _clipboardApi: ClipboardService,
-    private _location: PlatformLocation
+    private _location: PlatformLocation,
+    private _confirmationService: ConfirmationPageService
   ) {
     this._authService.getAuthStateObservableFirst()
       .pipe(filter((state) => !!state))
@@ -104,6 +107,7 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.playlist = data;
           this.isAuthor = this.playlist.author.id === this.userId;
+          this.authorName = data.author.userName;
           if (this.playlist.accessType === AccessType.collaborative) {
             this._playlistEditorsService.getCollaborators(this.playlist.id)
               .pipe(first())
@@ -302,6 +306,17 @@ export class CreateEditPlaylistComponent implements OnInit, OnDestroy {
       this.searchValue = '';
       this.foundSongs = new Array<Song>();
     }
+  }
+
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the playlist?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
   }
 
   play() {
