@@ -61,7 +61,7 @@ export class AlbumService {
     return this._httpService.putRequest<AlbumEdit>(`${this.routePrefix}`, formData);
   }
 
-  public removeAlbum(id: number): Observable<number> {
+  public removeAlbum(id: number): Observable<number> { 
     return this._httpService.deleteRequest<number>(`${this.routePrefix}/${id}`);
   }
 
