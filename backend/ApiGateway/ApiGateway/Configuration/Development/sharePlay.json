@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/hub/share-play",
-      "DownstreamScheme": "ws",
+      "DownstreamScheme": "wss",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",

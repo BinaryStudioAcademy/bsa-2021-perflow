@@ -15,6 +15,7 @@ import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-edit
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SharePlay } from 'src/app/models/share-play/share-play';
+import { RadioService } from 'src/app/services/radio.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -53,7 +54,8 @@ export class ViewPlaylistComponent implements OnInit {
     private _playlistService: PlaylistsService,
     private _playlistEditorsService: PlaylistEditorsService,
     private _sharePlayService: SharePlayService,
-    private _snackBarService: SnackbarService
+    private _snackBarService: SnackbarService,
+    private _radioService: RadioService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -92,17 +94,13 @@ export class ViewPlaylistComponent implements OnInit {
       });
   }
 
-  nextSlide = () => { };
-
-  previousSlide = () => { };
-
-  play = () => {
-    if (this.songs.length === 0) return;
+  play = (songs: Song[]) => {
+    if (songs.length === 0) return;
 
     this._queueService.clearQueue();
-    this._queueService.addSongsToQueue(this.songs);
+    this._queueService.addSongsToQueue(songs);
 
-    this._queueService.initSong(this.songs[0], true);
+    this._queueService.initSong(songs[0], true);
   };
 
   loadPlaylistSongs() {
@@ -171,6 +169,19 @@ export class ViewPlaylistComponent implements OnInit {
           this.playlist.isLiked = true;
         }
       );
+  }
+
+  startRadio() {
+    this._radioService.getRadioByPlaylistId(this.playlist.id)
+      .pipe(take(1))
+      .subscribe((songs) => {
+        if (songs.length > 0) {
+          this.play(songs);
+          this._snackBarService.show({ message: 'Radio started' });
+        } else{
+          this._snackBarService.show({ message: 'No songs found' });
+        }
+      });
   }
 
   addToQueue = () => {
