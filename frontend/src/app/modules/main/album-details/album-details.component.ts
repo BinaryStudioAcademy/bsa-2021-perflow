@@ -16,6 +16,7 @@ import { SongsService } from 'src/app/services/songs/songs.service';
 import { Song } from 'src/app/models/song/song';
 import { GroupService } from 'src/app/services/group.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 
 @Component({
   selector: 'app-album-details',
@@ -45,7 +46,8 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
     private _queueService: QueueService,
     private _songsService: SongsService,
     private _groupService: GroupService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _confirmationService: ConfirmationPageService
   ) {
     this.getUserId();
   }
@@ -197,7 +199,7 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
   clickMenuHandler(data: { menuItem: string, song: Song }) {
     switch (data.menuItem) {
       case 'Remove from album':
-        this.deleteSongFromAlbum(data.song);
+        this.initConfirmDeleteSongFromAlbum(data.song);
         break;
       default:
         break;
@@ -215,4 +217,26 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
         });
     }
   };
+
+  initConfirmDeleteAlbum() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the album?',
+        () => {
+          this.removeAlbum();
+        },
+        () => {}
+      );
+  }
+
+  initConfirmDeleteSongFromAlbum(song: Song) {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the song?',
+        () => {
+          this.deleteSongFromAlbum(song);
+        },
+        () => {}
+      );
+  }
 }

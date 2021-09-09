@@ -46,7 +46,7 @@
                 <div class="item" *ngIf="isAuthor" routerLink="/perflowstudio/albums/edit/{{album.id}}">
                   <i class="edit icon"></i>Edit album
                 </div>
-                <div class="item" *ngIf="isAuthor" (click)="removeAlbum()">
+                <div class="item" *ngIf="isAuthor" (click)="initConfirmDeleteAlbum()">
                   <i class="trash icon"></i>Remove album
                 </div>
                 <div class="item last" (click)="addToQueue()">
