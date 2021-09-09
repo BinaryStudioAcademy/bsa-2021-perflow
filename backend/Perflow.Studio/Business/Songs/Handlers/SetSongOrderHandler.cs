@@ -19,6 +19,7 @@ namespace Perflow.Studio.Business.Songs.Handlers
 
         public async Task<Unit> Handle(SetSongOrderCommand request, CancellationToken cancellationToken)
         {
+            _connection.Open();
             using var transaction = _connection.BeginTransaction();
 
             foreach (var order in request.Orders)
@@ -27,6 +28,7 @@ namespace Perflow.Studio.Business.Songs.Handlers
             }
 
             transaction.Commit();
+            _connection.Close();
 
             return Unit.Value;
         }
