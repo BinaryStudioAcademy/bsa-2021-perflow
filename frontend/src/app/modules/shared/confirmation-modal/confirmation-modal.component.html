@@ -2,13 +2,13 @@
   <div class="content-container" (click)="clickOnModal($event)">
     <h4>{{ message }}</h4>
     <div class="buttons">
+      <button class="ui btn-full button button-yes"
+      (click)="onConfirm()">
+        Yes
+      </button>
       <button class="ui inverted basic button btn-ghost button-no"
       (click)="onDiscard()">
         No
-      </button>
-      <button class="ui inverted basic button btn-ghost button-yes"
-      (click)="onConfirm()">
-        Yes
       </button>
     </div>
   </div>
