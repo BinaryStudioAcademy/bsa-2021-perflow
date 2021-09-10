@@ -3,6 +3,7 @@ using Perflow.Services.Interfaces;
 using Perflow.Common.MappingProfiles;
 using System.Reflection;
 using Perflow.Services.Implementations;
+using Perflow.Common.Helpers;
 
 namespace Perflow.Services.Extensions
 {
@@ -74,6 +75,8 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IRadioService, RadioService>();
+
+            services.AddScoped<PlaylistNotifier>();
         }
     }
 }

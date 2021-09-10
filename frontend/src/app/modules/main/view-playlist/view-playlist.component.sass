@@ -46,26 +46,13 @@ main
             height: $image-size
             width: $image-size
             display: flex
+            border-radius: 50%
+            box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
             >img
                 margin: 0 auto
                 overflow: hidden
                 border-radius: 50%
                 object-fit: cover
-            .icon-background
-                @extend %avatar
-                +flex-container(center, center)
-                flex-direction: column
-                background: $gray-gradient
-                box-shadow: 0 0 20px 10px rgba(50, 50, 93, 0.35)
-                color: $text
-                .icon
-                    height: 54px
-                    width: 54px
-                    margin-top: 1rem 
-                .playlist-name
-                    font-size: 24px
-                    font-weight: $bold-weight
-                    padding: 10px
         .menu-view-playlist
             padding-left: 35px
             padding-top: 25px

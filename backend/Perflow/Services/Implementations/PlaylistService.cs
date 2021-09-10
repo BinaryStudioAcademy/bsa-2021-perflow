@@ -16,12 +16,15 @@ using Perflow.Common.DTO.Groups;
 using Perflow.Services.Interfaces;
 using Perflow.Common.Helpers;
 using Perflow.Domain.Enums;
+using Perflow.Common.DTO.Notifications;
 
 namespace Perflow.Services.Implementations
 {
     public class PlaylistService : BaseService
     {
         private readonly IImageService _imageService;
+        private readonly INotificationService _notificationService;
+        private readonly PlaylistNotifier _notifier;
         private const int numberOfDaysToStoreMix = 7;
         private const int numberOfDaysToStoreRecommendations = 7;
         private const int numberOfUserMixes = 3;
@@ -29,9 +32,17 @@ namespace Perflow.Services.Implementations
         private const int numberOfSongs = 8;
         private const int numberOfRecommendationSongs = 20;
 
-        public PlaylistService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        public PlaylistService(
+            PerflowContext context,
+            IMapper mapper, 
+            IImageService imageService, 
+            INotificationService notificationService,
+            PlaylistNotifier notifier
+            ) : base(context, mapper)
         {
             _imageService = imageService;
+            _notificationService = notificationService;
+            _notifier = notifier;
         }
 
         public async Task<PlaylistDTO> GetEntityAsync(int id)
@@ -118,6 +129,20 @@ namespace Perflow.Services.Implementations
 
             var playlist = await context.Playlists.FindAsync(playlistDTO.Id);
 
+            if(playlist.Name != playlistDTO.Name)
+            {
+                string notificationTitle = "Playlist was renamed!";
+                string notificationDescription = $"\"{playlist.Name}\" was renamed to\"{playlistDTO.Name}\"";
+                await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
+            }
+
+            if (playlist.Description != playlistDTO.Description)
+            {
+                string notificationTitle = "Description was changed!";
+                string notificationDescription = $"Description of \"{playlist.Name}\" was changed.";
+                await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
+            }
+
             if (playlistDTO.Icon != null)
             {
                 var oldImageId = playlist.IconURL;
@@ -166,6 +191,10 @@ namespace Perflow.Services.Implementations
             await context.PlaylistSong.AddAsync(playlistSong);
 
             await context.SaveChangesAsync();
+
+            string notificationTitle = "New song was added!";
+            string notificationDescription = $"\"{song.Name}\" was added, check it";
+            await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
         }
 
         public async Task<PlaylistSongDTO> DeleteSongAsync(PlaylistSongDTO playlistSongDTO)
@@ -173,9 +202,19 @@ namespace Perflow.Services.Implementations
             var playlistSong = await context.PlaylistSong
                 .FirstOrDefaultAsync(p => p.PlaylistId == playlistSongDTO.PlaylistId && p.SongId == playlistSongDTO.SongId);
 
+            var playlist = await context.Playlists
+                .FirstOrDefaultAsync(playlist => playlist.Id == playlistSongDTO.PlaylistId);
+
+            var song = await context.Songs
+                .FirstOrDefaultAsync(song => song.Id == playlistSongDTO.SongId);
+
             context.Entry(playlistSong).State = EntityState.Deleted;
 
             await context.SaveChangesAsync();
+
+            string notificationTitle = "Song was deleted!";
+            string notificationDescription = $"\"{song.Name}\" was deleted";
+            await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
 
             return playlistSongDTO;
         }
@@ -247,11 +286,16 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentNullException(nameof(playlistNameDTO), "Argument cannot be null");
 
             var playlist = await context.Playlists.FindAsync(playlistNameDTO.Id);
+
+            string notificationTitle = "Playlist was renamed!";
+            string notificationDescription = $"\"{playlist.Name}\" was renamed to\"{playlistNameDTO.Name}\"";
+            await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
+
             playlist.Name = playlistNameDTO.Name;
 
             context.Playlists.Update(playlist);
 
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync();            
         }
 
         public async Task<PlaylistNameDTO> ChangeAccessTypeAsync(PlaylistNameDTO playlistNameDTO)
@@ -315,7 +359,10 @@ namespace Perflow.Services.Implementations
                 mixes = await CreateUserMixesAsync(userId);
             }
 
-            return mapper.Map<IEnumerable<PlaylistViewDTO>>(mixes);
+            return mixes
+                .Select(
+                    p => mapper.Map<PlaylistViewDTO>(new PlaylistWithIcon(p, _imageService.GetImageUrl(p.IconURL)))
+                 );
         }
 
         public async Task<IEnumerable<PlaylistViewDTO>> GetRecommendationsAsync(int userId)
@@ -333,7 +380,10 @@ namespace Perflow.Services.Implementations
                 recommendations = await CreateRecommendationsAsync(userId);
             }
 
-            return mapper.Map<IEnumerable<PlaylistViewDTO>>(recommendations);
+            return recommendations
+                .Select(
+                    p => mapper.Map<PlaylistViewDTO>(new PlaylistWithIcon(p, _imageService.GetImageUrl(p.IconURL)))
+                 );
         }
 
         private async Task<List<Playlist>> CreateRecommendationsAsync(int userId)
@@ -349,17 +399,22 @@ namespace Perflow.Services.Implementations
 
             var recommendations = await CreateRecommendationPlaylistsAsync(userId, tags);
 
-            foreach (var recommendation in recommendations.ToList())
+            foreach (var item in tags.Zip(recommendations.ToList(), (t, r) => (Tag: t, Recommendation: r)))
             {
-                var result = await AddSongsToRecommendationAsync(recommendation, recommendation.Name, songs);
+                var result = await AddSongsToRecommendationAsync(item.Recommendation, item.Tag, songs);
 
-                if (result == 0)
+                if (result.Count == 0)
                 {
-                    recommendations.Remove(recommendation);
-                    context.Playlists.Remove(recommendation);
-                    await context.SaveChangesAsync();
+                    recommendations.Remove(item.Recommendation);
+                    context.Playlists.Remove(item.Recommendation);
+                }
+                else
+                {
+                    item.Recommendation.IconURL = result.First().Album.IconURL;
                 }
             }
+
+            await context.SaveChangesAsync();
 
             return recommendations;
         }
@@ -373,7 +428,7 @@ namespace Perflow.Services.Implementations
                 var recommendation = context.Playlists.Add(new Playlist
                 {
                     Description = "Tracks in the recommendation especially for you.",
-                    Name = tag,
+                    Name = tag.First().ToString().ToUpper() + tag[1..].ToLower(),
                     AccessType = AccessType.Secret,
                     AuthorId = userId,
                     Type = PlaylistType.Recommendations
@@ -387,13 +442,13 @@ namespace Perflow.Services.Implementations
             return recommendations;
         }
 
-        private async Task<int> AddSongsToRecommendationAsync(Playlist recommendation, string tagName, ICollection<Song> excludingSongs)
+        private async Task<ICollection<Song>> AddSongsToRecommendationAsync(Playlist recommendation, string tagName, ICollection<Song> excludingSongs)
         {
             var songs = await GetSongsByTagAsync(tagName, excludingSongs);
 
             if (songs.Count == 0)
             {
-                return 0;
+                return new List<Song>();
             }
 
             var playlistSongs = songs.Select(s => new PlaylistSong
@@ -404,12 +459,15 @@ namespace Perflow.Services.Implementations
 
             await context.PlaylistSong.AddRangeAsync(playlistSongs);
 
-            return await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
+
+            return songs;
         }
 
         private async Task<ICollection<Song>> GetSongsByTagAsync(string tagName, ICollection<Song> songs = null, int numberOfSongs = numberOfRecommendationSongs)
         {
             return await context.SongTags
+                .Include(st => st.Song.Album)
                 .Where(st => songs != null ? !songs.Contains(st.Song) && st.Tag.Name == tagName : st.Tag.Name == tagName)
                 .AsNoTracking()
                 .Take(numberOfSongs)
@@ -453,40 +511,49 @@ namespace Perflow.Services.Implementations
             {
                 var result = await AddSongsToMixAsync(mix);
 
-                if (result == 0)
+                if (!result.Any())
                 {
                     mixes.Remove(mix);
                     context.Playlists.Remove(mix);
-                    await context.SaveChangesAsync();
+                }
+                else
+                {
+                    mix.IconURL = context.Songs.Include(s => s.Album).FirstOrDefault(s => s.Id == result.First().Id).Album.IconURL;
                 }
             }
+
+            await context.SaveChangesAsync();
 
             return mixes;
         }
 
-        private async Task<int> AddSongsToMixAsync(Playlist mix)
+        private async Task<IEnumerable<Song>> AddSongsToMixAsync(Playlist mix)
         {
             var artistsSongs = await GetRandomLikedArtistsSongsAsync(mix.AuthorId);
             var groupSongs = await GetRandomLikedGroupsSongsAsync(mix.AuthorId);
             var recentlyPlayed = await GetRecentlyPlayedSongsAsync(mix.AuthorId);
             var likedSongs = await GetRandomLikedSongsAsync(mix.AuthorId);
 
-            var songs = artistsSongs.Concat(groupSongs).Concat(recentlyPlayed).Concat(likedSongs)
-                .Distinct()
-                .Select(s => new PlaylistSong
-                {
-                    PlaylistId = mix.Id,
-                    SongId = s.Id
-                });
+            var songs = artistsSongs
+                .Concat(groupSongs)
+                .Concat(recentlyPlayed)
+                .Concat(likedSongs)
+                .Distinct();
 
             if (!songs.Any())
             {
-                return 0;
+                return new List<Song>();
             }
 
-            await context.PlaylistSong.AddRangeAsync(songs);
+            await context.PlaylistSong.AddRangeAsync(songs.Select(s => new PlaylistSong
+            {
+                PlaylistId = mix.Id,
+                SongId = s.Id
+            }));
 
-            return await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
+
+            return songs;
         }
 
         private async Task<ICollection<Song>> GetRandomLikedArtistsSongsAsync(int userId, int numberOfSongs = numberOfSongs)
@@ -496,8 +563,8 @@ namespace Perflow.Services.Implementations
             return await context.ArtistReactions
                 .Where(ar => ar.UserId == userId)
                 .Include(ar => ar.Artist)
-                .ThenInclude(a => a.Albums)
-                .ThenInclude(a => a.Songs)
+                    .ThenInclude(a => a.Albums)
+                        .ThenInclude(a => a.Songs)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .OrderBy(_ => Guid.NewGuid())
