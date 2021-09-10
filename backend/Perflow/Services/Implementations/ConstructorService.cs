@@ -29,58 +29,6 @@ namespace Perflow.Services.Implementations
             _mapper = mapper;
             _imageService = imageService;
         }
-
-        public async Task<PageContainer> CreatePageContainer(PageContainerDTO pageContainer)
-        {
-            var entity = _mapper.Map<PageContainer>(pageContainer);
-            var result = await _context.PageContainers.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return result.Entity;
-        }
-
-        public async Task<PageContainerDTO> UpdatePageContainer(PageContainerDTO containerDTO)
-        {
-            var container = await _context.PageContainers
-                                            .Include(pc => pc.PageSections)
-                                            .ThenInclude(ps => ps.PageSectionEntities)
-                                            .FirstOrDefaultAsync(pc => pc.Id == containerDTO.Id);
-            _context.PageSections.RemoveRange(_context.PageSections
-                                                        .Include(ps => ps.PageSectionEntities)
-                                                        .Where(ps => !container.PageSections.Contains(ps) && ps.PageContainerId == container.Id));
-            var updatedContainer = _mapper.Map(containerDTO, container);
-            _context.PageContainers.Update(updatedContainer);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<PageContainerDTO>(updatedContainer);
-        }
-
-        public async Task<PageContainerViewDTO> PublishContainer(PageContainerViewDTO containerDTO)
-        {
-            var container = await _context.PageContainers.FirstOrDefaultAsync(pc => pc.Id == containerDTO.Id);
-            var publishedContainer = await _context.PageContainers.FirstOrDefaultAsync(pc => pc.IsPublished);
-            container.IsPublished = true;
-            if (publishedContainer != null)
-            {
-                publishedContainer.IsPublished = false;
-                _context.PageContainers.UpdateRange(publishedContainer, container);
-            }
-            else
-            {
-                _context.PageContainers.Update(container);
-            }
-            await _context.SaveChangesAsync();
-            return _mapper.Map<PageContainerViewDTO>(container);
-        }
-
-        public async Task<ICollection<PageContainerViewDTO>> GetAllContainersViews()
-        {
-            var result = _mapper
-                            .Map<ICollection<PageContainerViewDTO>>
-                                (await _context.PageContainers
-                                                .OrderByDescending(pc => pc.IsPublished)
-                                                .ToListAsync());
-            return result;
-        }
-
         public async Task<PageContainerDTO> GetPublishedContainer(int userId)
         {
             var result = await GetContainer(userId, findPublished: true);
@@ -166,20 +114,6 @@ namespace Perflow.Services.Implementations
                                                     .ToList()
                                                 }).FirstOrDefaultAsync();
             return result;
-        }
-
-        public async Task<int> DeleteContainer(int id)
-        {
-            var deletedContainer = await _context.PageContainers
-                .Include(pc => pc.PageSections)
-                .ThenInclude(ps => ps.PageSectionEntities)
-                .FirstOrDefaultAsync(pc => pc.Id == id);
-
-            _context.PageContainers.Remove(deletedContainer);
-
-            await _context.SaveChangesAsync();
-
-            return id;
         }
     }
 }

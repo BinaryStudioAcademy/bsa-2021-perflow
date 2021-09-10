@@ -8,15 +8,16 @@ import { HttpInternalService } from './http-internal.service';
 })
 export class ConstructorService {
   public routePrefix = '/api/Constructor';
+  public routePrefixStudio = '/api/studio/Constructor';
 
   constructor(private _httpService: HttpInternalService) { }
 
   createContainer(container: ContainerFull) {
-    return this._httpService.putFullRequest<ContainerFull>(`${this.routePrefix}`, container);
+    return this._httpService.postFullRequest(`${this.routePrefixStudio}`, container);
   }
 
   getAllContainersViews() {
-    return this._httpService.getFullRequest<ContainerView[]>(`${this.routePrefix}`);
+    return this._httpService.getFullRequest<ContainerView[]>(`${this.routePrefixStudio}`);
   }
 
   getContainer(containerId: number) {
@@ -28,14 +29,14 @@ export class ConstructorService {
   }
 
   updateContainer(container: ContainerFull) {
-    return this._httpService.postFullRequest<ContainerFull>(`${this.routePrefix}`, container);
+    return this._httpService.putFullRequest<ContainerFull>(`${this.routePrefixStudio}`, container);
   }
 
   deleteContainer(containerId: number) {
-    return this._httpService.deleteFullRequest(`${this.routePrefix}/${containerId}`);
+    return this._httpService.deleteFullRequest(`${this.routePrefixStudio}/${containerId}`);
   }
 
   publishContainer(container: ContainerView) {
-    return this._httpService.postFullRequest<ContainerView>(`${this.routePrefix}/publish`, container);
+    return this._httpService.postFullRequest<ContainerView>(`${this.routePrefixStudio}/publish`, container);
   }
 }
