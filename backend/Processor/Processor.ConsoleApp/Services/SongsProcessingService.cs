@@ -86,7 +86,7 @@ namespace Processor.ConsoleApp.Services
                 .Start();
         }
 
-        private async Task ProcessSongFingerprint(string sourcePath, int id)
+        public async Task ProcessSongFingerprint(string sourcePath, int id)
         {
             var tempGuid = Guid.NewGuid().ToString();
             var tempFile = Path.Combine(TempPath, $"{tempGuid}.wav");

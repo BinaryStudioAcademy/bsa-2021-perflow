@@ -62,6 +62,7 @@ namespace Perflow.Services.Extensions
 
             services.AddScoped<ISongFilesService, SongFilesService>();
             services.AddScoped<ISongsService, SongsService>();
+            services.AddScoped<ISongIndexingService, SongIndexingService>();
 
             services.AddScoped<AlbumsService>();
 
@@ -78,6 +79,8 @@ namespace Perflow.Services.Extensions
             services.AddScoped<ITagService, TagService>();
 
             services.AddOptions<SongRecognitionRabbitMQOptions>().BindConfiguration(SongRecognitionRabbitMQOptions.Key);
+            services.AddOptions<SongIndexingRabbitMQOptions>().BindConfiguration(SongIndexingRabbitMQOptions.Key);
+
             services.AddScoped<IRadioService, RadioService>();
 
             services.AddScoped<PlaylistNotifier>();

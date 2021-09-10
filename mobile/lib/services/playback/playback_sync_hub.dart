@@ -14,7 +14,7 @@ class PlaybackSyncHub extends BaseHubService {
   PlaybackSyncData? get currentSyncData => _currentSyncData;
 
   @override
-  String get hubUrl => 'content-sync';
+  String get hubUrl => 'hub/content-sync';
 
   @override
   Future<void> onStart() async {

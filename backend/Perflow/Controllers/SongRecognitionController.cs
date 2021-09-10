@@ -1,4 +1,5 @@
-﻿using System.Linq;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,12 @@ namespace Perflow.Controllers
     public class SongRecognitionController : ControllerBase
     {
         private readonly ISongRecognitionService _recognitionService;
+        private readonly ISongIndexingService _indexingService;
 
-        public SongRecognitionController(ISongRecognitionService recognitionService)
+        public SongRecognitionController(ISongRecognitionService recognitionService, ISongIndexingService indexingService)
         {
             _recognitionService = recognitionService;
+            _indexingService = indexingService;
         }
 
         [HttpPost]
@@ -47,6 +50,14 @@ namespace Perflow.Controllers
             {
                 SongId = result.SongId
             });
+        }
+
+        [HttpPost("index")]
+        public async Task<ActionResult> IndexSongs([FromBody] List<int> songIds)
+        {
+            await _indexingService.IndexSongs(songIds);
+
+            return Ok();
         }
     }
 }
