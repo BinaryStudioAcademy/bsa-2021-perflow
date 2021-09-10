@@ -24,7 +24,7 @@
                                 <div class="item first" routerLink="/perflowstudio/groups/view-group/{{group.id}}" *ngIf="isGroupMember" >
                                     <i class="edit outline icon"></i>Edit group
                                 </div>
-                                <div class="item first" *ngIf="!isGroupMember">
+                                <div class="item first" *ngIf="!isGroupMember" (click)="likeGroup()">
                                     <i class="bell icon"></i>Subscribe
                                 </div>
                                 <div class="item" (click)="addToQueue()">
@@ -70,7 +70,7 @@
     </div>
     <div class="groupPlaylists" *ngIf="groupPlaylists.length > 0">
         <div class="header">
-            Playlists
+            Artist Playlists
         </div>
         <div class="items">
             <div class="scroll-box-left" *ngIf="isTextOverflow('playlists')">
