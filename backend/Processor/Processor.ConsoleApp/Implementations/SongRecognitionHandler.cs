@@ -61,7 +61,7 @@ namespace Processor.ConsoleApp.Implementations
             }
 
             const string initializationMessage =
-@"{Data} Started SongProcessingHandler
+@"{Data} Started SongRecognitionHandler
   Exchange name: {ExchangeName}
   Exchange type: {ExchangeType}
   VoidQueue name: {QueueName}

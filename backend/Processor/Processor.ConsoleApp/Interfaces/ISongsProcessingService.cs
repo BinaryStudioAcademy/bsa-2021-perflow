@@ -10,5 +10,9 @@ namespace Processor.ConsoleApp.Interfaces
         public Task ProcessSongs(SongProcessingOptions options);
 
         public Task PrepareSongForRecognition(string sourcePath, string preparedSongPath);
+
+        public Task ProcessSongFingerprint(string sourcePath, int id);
+
+        public Task PrepareSongForRecognition(string sourcePath, string preparedSongPath);
     }
 }

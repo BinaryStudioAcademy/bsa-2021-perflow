@@ -25,7 +25,7 @@ class HubFactoryService {
 
     final connection = HubConnectionBuilder()
       .withUrl(
-        '${ApiUrls.base}/content-sync',
+        '${ApiUrls.base}/$url',
         HttpConnectionOptions(
           skipNegotiation: true,
           transport: HttpTransportType.webSockets,
