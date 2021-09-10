@@ -24,7 +24,10 @@
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon icons"></i>
               <div class="right menu">
-                <div class="item first" (click)="likeArtist()">
+                <div class="item first" (click)="addToQueue()">
+                  <i class="outdent alternate icon"></i>Add to queue
+                </div>
+                <div class="item" *ngIf="!isArtist" (click)="likeArtist()">
                   <i class="bell icon"></i>Subscribe
                 </div>
                 <div class="item last share">
@@ -34,9 +37,6 @@
                       Copy link
                     </div>
                   </div>
-                </div>
-                <div class="item last" (click)="addToQueue()">
-                  <i class="outdent alternate icon"></i>Add to queue
                 </div>
               </div>
             </div>

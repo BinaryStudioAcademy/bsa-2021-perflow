@@ -93,13 +93,15 @@
           </div>
           <div class="buttons">
             <button class="btn-full btn-save" [disabled]="form.invalid" (click)="onSubmit()">Save</button>
-            <button class="button-cancel" routerLink="/profile">Cancel</button>
+            <button class="ui button-cancel inverted basic button" routerLink="/profile">Cancel</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
+  <div class="app-crop-image">
+    <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
+  </div>
 </form>
 
 <app-upload-image-modal></app-upload-image-modal>
