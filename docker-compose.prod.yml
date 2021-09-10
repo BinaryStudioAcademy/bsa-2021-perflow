@@ -40,6 +40,12 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    
+  emy-storage:
+    image: addictedcs/soundfingerprinting.emy
+    ports:
+      - '3399:3399'
+      - '3340:3340'
 
   perflow:
     image: krasnovnikita/bsa2021-perflow-api

@@ -6,10 +6,12 @@ using Microsoft.Extensions.Logging;
 using Processor.ConsoleApp.Extensions;
 using Processor.ConsoleApp.Interfaces;
 using Processor.ConsoleApp.Options;
+using Processor.ConsoleApp.Services;
 using Shared.AzureBlobStorage.Extensions;
 using Shared.Processor.Models;
 using Shared.RabbitMQ.Extensions;
 using Shared.RabbitMQ.Options;
+using Shared.SongRecognition.Extensions;
 
 namespace Processor.ConsoleApp.Implementations
 {
@@ -35,20 +37,24 @@ namespace Processor.ConsoleApp.Implementations
 
             services.AddOptions<ImageProcessingRabbitMQOptions>().BindConfiguration(ImageProcessingRabbitMQOptions.Key);
             services.AddOptions<SongProcessingRabbitMQOptions>().BindConfiguration(SongProcessingRabbitMQOptions.Key);
+            services.AddOptions<SongRecognitionRabbitMQOptions>().BindConfiguration(SongRecognitionRabbitMQOptions.Key);
 
             RabbitMQOptions rabbitMQOptions = new();
             configuration.Bind("RabbitMQConnection", rabbitMQOptions);
             services.AddRabbitMQ(rabbitMQOptions);
 
-            services.AddBlobStorage(configuration["BlobStorageConnection"]);
-
             services.AddSingleton<ISongsProcessingService, SongsProcessingService>();
+
+            services.AddSongRecognition(configuration);
+
+            services.AddBlobStorage(configuration["BlobStorageConnection"]);
 
             services.AddSingleton<IProcessor, Processor>();
 
             services.AddMessageHandlerManager(builder => builder
                 .AddHandler<ImageProcessingHandler>()
-                .AddHandler<SongProcessingHandler>());
+                .AddHandler<SongProcessingHandler>()
+                .AddHandler<SongRecognitionHandler>());
 
             _provider = services.BuildServiceProvider();
         }

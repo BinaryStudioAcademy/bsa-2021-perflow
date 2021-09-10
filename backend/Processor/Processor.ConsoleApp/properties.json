@@ -13,6 +13,11 @@
     "Password": "guest"
   },
 
+  "EmyConnection": {
+    "HostName": "localhost",
+    "Port": 3399
+  },
+
   "ImageProcessingOptions": {
     "ExchangeOptions": {
       "Name": "Processor-Images-Exchange",
@@ -32,6 +37,17 @@
     "QueueOptions": {
       "Name": "Processor-Songs-Queue",
       "RoutingKey": "songs-key"
+    }
+  },
+
+  "SongRecognitionOptions": {
+    "ExchangeOptions": {
+      "Name": "Processor-Recognition-Exchange",
+      "Type": "direct"
+    },
+    "QueueOptions": {
+      "Name": "Processor-Recognition-Queue",
+      "RoutingKey": "recognition-key"
     }
   }
 }

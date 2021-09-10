@@ -12,9 +12,14 @@ namespace Shared.RabbitMQ.Implementations
             _connectionFactory = connectionFactory;
         }
 
-        public IQueue CreateQueue(ExchangeOptions exchangeOptions, QueueOptions queueOptions)
+        public IVoidQueue CreateVoidQueue(ExchangeOptions exchangeOptions, QueueOptions queueOptions)
         {
-            return new Queue(exchangeOptions, queueOptions, _connectionFactory);
+            return new VoidQueue(exchangeOptions, queueOptions, _connectionFactory);
+        }
+
+        public ICallableQueue CreateCallableQueue(ExchangeOptions exchangeOptions, QueueOptions queueOptions)
+        {
+            return new CallableQueue(exchangeOptions, queueOptions, _connectionFactory);
         }
     }
 }

@@ -7,12 +7,15 @@ import 'package:perflow/models/songs/song.dart';
 import 'package:perflow/root_media_query.dart';
 import 'package:perflow/services/playback/playback_queue.dart';
 import 'package:perflow/theme.dart';
+import 'package:perflow/widgets/song_dialog/song_dialog_action.dart';
 
 class SongDialog extends StatelessWidget {
   final Song song;
+  final List<Widget>? actions;
 
   const SongDialog({
     required this.song,
+    this.actions,
     Key? key
   }) : super(key: key);
 
@@ -24,7 +27,7 @@ class SongDialog extends StatelessWidget {
       type: MaterialType.transparency,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -49,28 +52,30 @@ class SongDialog extends StatelessWidget {
               Text(
                 song.name,
                 style: textTheme.subtitle1,
+                textAlign: TextAlign.center
               ),
               const SizedBox(height: 4),
               Text(
                 song.artist?.userName ?? song.group?.name ?? 'Artist',
                 style: textTheme.caption,
+                textAlign: TextAlign.center
               ),
             ],
           ),
           Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              _SongDialogAction(
+            children: actions ?? [
+              SongDialogAction(
                 icon: Icons.add_circle_outline,
                 title: const Text('Add to start of queue'),
                 onTap: () => getService<PlaybackQueue>().addToStart(song),
               ),
-              _SongDialogAction(
+              SongDialogAction(
                 icon: Icons.play_circle_outline,
                 title: const Text('Play next'),
                 onTap: () => getService<PlaybackQueue>().addNext(song),
               ),
-              _SongDialogAction(
+              SongDialogAction(
                 icon: Icons.add_circle_outline,
                 title: const Text('Add to end of queue'),
                 onTap: () => getService<PlaybackQueue>().addToEnd(song),
@@ -93,13 +98,16 @@ class SongDialog extends StatelessWidget {
     );
   }
 
-  static void show(BuildContext context, Song song) {
+  static void show(BuildContext context, Song song, [List<Widget>? actions]) {
     showGeneralDialog(
       barrierDismissible: true,
       barrierLabel: '',
       barrierColor: Colors.black12,
       transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (ctx, anim1, anim2) => SongDialog(song: song),
+      pageBuilder: (ctx, anim1, anim2) => SongDialog(
+        song: song,
+        actions: actions,
+      ),
       transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
         filter: ImageFilter.blur(
           sigmaX: 12 * anim1.value,
@@ -115,44 +123,3 @@ class SongDialog extends StatelessWidget {
     );
   }
 }
-
-class _SongDialogAction extends StatelessWidget {
-  final IconData icon;
-  final Widget title;
-  final void Function()? onTap;
-
-  const _SongDialogAction({
-    required this.icon,
-    required this.title,
-    this.onTap,
-    Key? key
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return InkWell(
-      onTap: onTap ?? () {},
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 12
-            ),
-            child: Icon(
-              icon,
-              size: 28,
-            ),
-          ),
-          DefaultTextStyle(
-            style: textTheme.subtitle1 ?? Perflow.textTheme.headline1!,
-            child: title,
-          )
-        ],
-      ),
-    );
-  }
-}
-

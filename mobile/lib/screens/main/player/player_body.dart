@@ -28,10 +28,10 @@ class PlayerBody extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const IconButton(
+              IconButton(
                 iconSize: 26,
-                onPressed: null,
-                icon: Icon(Icons.devices),
+                onPressed: () => context.vRouter.to(Routes.songRecognizer),
+                icon: const Icon(Icons.local_fire_department),
               ),
               IconButton(
                 iconSize: 26,

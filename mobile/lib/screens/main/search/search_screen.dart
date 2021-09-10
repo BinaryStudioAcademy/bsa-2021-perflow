@@ -6,6 +6,7 @@ import 'package:perflow/cubits/search/search_artists_cubit.dart';
 import 'package:perflow/cubits/search/search_playlists_cubit.dart';
 import 'package:perflow/cubits/search/search_songs_cubit.dart';
 import 'package:perflow/cubits/search_navigation/search_navigation_cubit.dart';
+import 'package:perflow/perflow_icons.dart';
 import 'package:perflow/routes.dart';
 import 'package:perflow/services/search/search_text_edit_service.dart';
 import 'package:perflow/theme.dart';
@@ -52,18 +53,28 @@ class SearchScreen extends StatelessWidget {
 
   Widget searchBar(BuildContext context) {
     var textEditService = GetIt.instance.get<SearchTextEditService>();
-    return TextField(
-      controller: TextEditingController()..text = textEditService.text ?? '',
-      onChanged: (text) {
-        if (textEditService.onTextEdit != null &&
-            textEditService.text != text) {
-          textEditService.onTextEdit!.call(text);
-        }
-        textEditService.text = text;
-      },
-      decoration: Perflow.inputDecoration.copyWith(
-        hintText: "Search...",
-      ),
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: TextEditingController()..text = textEditService.text ?? '',
+            onChanged: (text) {
+              if (textEditService.onTextEdit != null &&
+                  textEditService.text != text) {
+                textEditService.onTextEdit!.call(text);
+              }
+              textEditService.text = text;
+            },
+            decoration: Perflow.inputDecoration.copyWith(
+              hintText: "Search...",
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.local_fire_department),
+          onPressed: () => context.vRouter.to(Routes.songRecognizer),
+        )
+      ],
     );
   }
 

@@ -15,6 +15,7 @@ class Routes {
 
   static const String player = '/player';
   static const String queue = '/queue';
+  static const String songRecognizer = '/recognizer';
 
   static const String playlistTemplate = '/playlist/:id';
   static String playlist(int playlistId) => '/playlist/$playlistId';

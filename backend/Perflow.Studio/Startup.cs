@@ -9,6 +9,7 @@ using Shared.Auth.Extensions;
 using Shared.ExceptionsHandler.Filters;
 using Microsoft.Extensions.Configuration;
 using Shared.AzureBlobStorage.Extensions;
+using Shared.SongRecognition.Extensions;
 
 namespace Perflow.Studio
 {
@@ -32,6 +33,8 @@ namespace Perflow.Studio
             services.AddAuth(Configuration["FirebaseProjectId"]);
 
             services.AddProcessorRabbitMQ(Configuration);
+
+            services.AddSongRecognition(Configuration);
 
             services.AddBlobStorage(Configuration["ConnectionStrings:BlobStorage"]);
 

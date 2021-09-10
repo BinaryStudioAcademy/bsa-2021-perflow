@@ -10,13 +10,13 @@ namespace Perflow.Services.Implementations
 {
     public class ImageUploadService : IImageUploadService, IDisposable
     {
-        private readonly IQueue _imageProcessingQueue;
+        private readonly IVoidQueue _imageProcessingQueue;
 
         public ImageUploadService(IOptions<ImageProcessingRabbitMQOptions> options, IQueueFactory queueFactory)
         {
             var rabbitMqOptions = options.Value;
 
-            _imageProcessingQueue = queueFactory.CreateQueue(rabbitMqOptions.ExchangeOptions, rabbitMqOptions.QueueOptions);
+            _imageProcessingQueue = queueFactory.CreateVoidQueue(rabbitMqOptions.ExchangeOptions, rabbitMqOptions.QueueOptions);
         }
 
         public void UploadImage(string guid, BinaryData imageData)

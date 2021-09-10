@@ -8,13 +8,13 @@ namespace Perflow.Services.Implementations
 {
     public class SongsUploadService : ISongsUploadService, IDisposable
     {
-        private readonly IQueue _songProcessingQueue;
+        private readonly IVoidQueue _songProcessingQueue;
 
         public SongsUploadService(IOptions<SongProcessingRabbitMQOptions> options, IQueueFactory queueFactory)
         {
             var rabbitMqOptions = options.Value;
 
-            _songProcessingQueue = queueFactory.CreateQueue(rabbitMqOptions.ExchangeOptions, rabbitMqOptions.QueueOptions);
+            _songProcessingQueue = queueFactory.CreateVoidQueue(rabbitMqOptions.ExchangeOptions, rabbitMqOptions.QueueOptions);
         }
 
         public void UploadSong(SongProcessingOptions options)

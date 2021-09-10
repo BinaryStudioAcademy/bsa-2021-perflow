@@ -78,6 +78,7 @@ namespace Perflow.Studio.Services.Implementations
 
             var options = new SongProcessingOptions
             {
+                Id = songId,
                 SourceBlobId = blobIds.SourceBlobId,
                 SourceContentType = songFile.ContentType,
                 QualityLevels = songQualityLevels,
