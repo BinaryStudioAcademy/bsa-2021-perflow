@@ -16,12 +16,15 @@ using Perflow.Common.DTO.Groups;
 using Perflow.Services.Interfaces;
 using Perflow.Common.Helpers;
 using Perflow.Domain.Enums;
+using Perflow.Common.DTO.Notifications;
 
 namespace Perflow.Services.Implementations
 {
     public class PlaylistService : BaseService
     {
         private readonly IImageService _imageService;
+        private readonly INotificationService _notificationService;
+        private readonly PlaylistNotifier _notifier;
         private const int numberOfDaysToStoreMix = 7;
         private const int numberOfDaysToStoreRecommendations = 7;
         private const int numberOfUserMixes = 3;
@@ -29,9 +32,17 @@ namespace Perflow.Services.Implementations
         private const int numberOfSongs = 8;
         private const int numberOfRecommendationSongs = 20;
 
-        public PlaylistService(PerflowContext context, IMapper mapper, IImageService imageService) : base(context, mapper)
+        public PlaylistService(
+            PerflowContext context,
+            IMapper mapper, 
+            IImageService imageService, 
+            INotificationService notificationService,
+            PlaylistNotifier notifier
+            ) : base(context, mapper)
         {
             _imageService = imageService;
+            _notificationService = notificationService;
+            _notifier = notifier;
         }
 
         public async Task<PlaylistDTO> GetEntityAsync(int id)
@@ -118,6 +129,20 @@ namespace Perflow.Services.Implementations
 
             var playlist = await context.Playlists.FindAsync(playlistDTO.Id);
 
+            if(playlist.Name != playlistDTO.Name)
+            {
+                string notificationTitle = "Playlist was renamed!";
+                string notificationDescription = $"\"{playlist.Name}\" was renamed to\"{playlistDTO.Name}\"";
+                await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
+            }
+
+            if (playlist.Description != playlistDTO.Description)
+            {
+                string notificationTitle = "Description was changed!";
+                string notificationDescription = $"Description of \"{playlist.Name}\" was changed.";
+                await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
+            }
+
             if (playlistDTO.Icon != null)
             {
                 var oldImageId = playlist.IconURL;
@@ -166,6 +191,10 @@ namespace Perflow.Services.Implementations
             await context.PlaylistSong.AddAsync(playlistSong);
 
             await context.SaveChangesAsync();
+
+            string notificationTitle = "New song was added!";
+            string notificationDescription = $"\"{song.Name}\" was added, check it";
+            await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
         }
 
         public async Task<PlaylistSongDTO> DeleteSongAsync(PlaylistSongDTO playlistSongDTO)
@@ -173,9 +202,19 @@ namespace Perflow.Services.Implementations
             var playlistSong = await context.PlaylistSong
                 .FirstOrDefaultAsync(p => p.PlaylistId == playlistSongDTO.PlaylistId && p.SongId == playlistSongDTO.SongId);
 
+            var playlist = await context.Playlists
+                .FirstOrDefaultAsync(playlist => playlist.Id == playlistSongDTO.PlaylistId);
+
+            var song = await context.Songs
+                .FirstOrDefaultAsync(song => song.Id == playlistSongDTO.SongId);
+
             context.Entry(playlistSong).State = EntityState.Deleted;
 
             await context.SaveChangesAsync();
+
+            string notificationTitle = "Song was deleted!";
+            string notificationDescription = $"\"{song.Name}\" was deleted";
+            await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
 
             return playlistSongDTO;
         }
@@ -247,11 +286,16 @@ namespace Perflow.Services.Implementations
                 throw new ArgumentNullException(nameof(playlistNameDTO), "Argument cannot be null");
 
             var playlist = await context.Playlists.FindAsync(playlistNameDTO.Id);
+
+            string notificationTitle = "Playlist was renamed!";
+            string notificationDescription = $"\"{playlist.Name}\" was renamed to\"{playlistNameDTO.Name}\"";
+            await _notifier.NotifyPlaylistMembers(playlist, notificationTitle, notificationDescription);
+
             playlist.Name = playlistNameDTO.Name;
 
             context.Playlists.Update(playlist);
 
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync();            
         }
 
         public async Task<PlaylistNameDTO> ChangeAccessTypeAsync(PlaylistNameDTO playlistNameDTO)
