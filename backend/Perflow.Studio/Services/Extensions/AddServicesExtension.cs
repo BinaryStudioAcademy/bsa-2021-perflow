@@ -16,6 +16,8 @@ namespace Perflow.Studio.Services.Extensions
 
             services.AddSingleton<ISongsUploadService, SongsUploadService>();
 
+            services.AddSingleton<ISongsRecognitionService, SongsRecognitionService>();
+
             services.AddScoped<ISongFilesService, SongFilesService>();
 
             services.AddScoped<IDbConnection>(provider => provider

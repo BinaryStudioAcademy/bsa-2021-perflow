@@ -17,14 +17,18 @@ dependencies:
 
   audio_service: ^0.18.0-beta.0
   just_audio: ^0.9.10
+  flutter_sound: ^8.3.11
 
+  path_provider: ^2.0.3
   logger: ^1.1.0
   http: ^0.13.3
+  http_parser: ^4.0.0
   chopper: ^4.0.1
   firebase_core: ^1.6.0
   firebase_auth: ^3.1.0
   google_sign_in: ^5.1.0
   signalr_core: ^1.1.1
+  permission_handler: ^8.1.4+2
 
   provider: ^6.0.0
   flutter_bloc: ^7.2.0
@@ -59,3 +63,8 @@ flutter:
   assets:
     - google_fonts/
     - assets/
+
+  fonts:
+    - family: PerflowIcons
+      fonts:
+        - asset: assets/PerflowIcons.ttf

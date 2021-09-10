@@ -3,6 +3,7 @@ using Perflow.Services.Interfaces;
 using Perflow.Common.MappingProfiles;
 using System.Reflection;
 using Perflow.Services.Implementations;
+using Shared.Processor.Models;
 
 namespace Perflow.Services.Extensions
 {
@@ -43,6 +44,7 @@ namespace Perflow.Services.Extensions
 
             services.AddSingleton<IImageUploadService, ImageUploadService>();
             services.AddSingleton<ISongsUploadService, SongsUploadService>();
+            services.AddSingleton<ISongRecognitionService, SongRecognitionService>();
 
             services.AddScoped<PlaylistService>();
             services.AddScoped<GroupService>();
@@ -67,12 +69,14 @@ namespace Perflow.Services.Extensions
             services.AddScoped<IImageService, ImageService>();
 
             services.AddScoped<ConstructorService>();
-            
+
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<PlaylistEditorsService>();
             services.AddScoped<SharePlayService>();
 
             services.AddScoped<ITagService, TagService>();
+
+            services.AddOptions<SongRecognitionRabbitMQOptions>().BindConfiguration(SongRecognitionRabbitMQOptions.Key);
         }
     }
 }

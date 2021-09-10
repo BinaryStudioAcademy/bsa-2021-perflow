@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Processor.ConsoleApp.Abstract;
 using Processor.ConsoleApp.Interfaces;
 using Processor.ConsoleApp.Options;
 using Shared.AzureBlobStorage.Interfaces;
@@ -16,7 +16,7 @@ using Xabe.FFmpeg.Downloader;
 
 namespace Processor.ConsoleApp.Implementations
 {
-    public class SongProcessingHandler : MessageHandlerBase
+    public class SongProcessingHandler : VoidMessageHandlerBase
     {
         private readonly IBlobService _blobService;
 
@@ -24,7 +24,7 @@ namespace Processor.ConsoleApp.Implementations
 
         private readonly string _containerName;
 
-        protected override IQueue Queue { get; }
+        protected override IVoidQueue VoidQueue { get; }
 
         public SongProcessingHandler(
             IOptions<SongProcessingRabbitMQOptions> rabbitMqOptions,
@@ -45,7 +45,7 @@ namespace Processor.ConsoleApp.Implementations
             var exchangeOptions = options.ExchangeOptions;
             var queueOptions = options.QueueOptions;
 
-            Queue = queueFactory.CreateQueue(exchangeOptions, queueOptions);
+            VoidQueue = queueFactory.CreateVoidQueue(exchangeOptions, queueOptions);
         }
 
         protected override async Task Initialize()
@@ -66,10 +66,10 @@ namespace Processor.ConsoleApp.Implementations
             Logger.LogInformation(
                 initializationMessage,
                 DateTime.Now.ToLongTimeString(),
-                Queue.ExchangeOptions.Name,
-                Queue.ExchangeOptions.Type,
-                Queue.QueueOptions.Name,
-                Queue.QueueOptions.RoutingKey
+                VoidQueue.ExchangeOptions.Name,
+                VoidQueue.ExchangeOptions.Type,
+                VoidQueue.QueueOptions.Name,
+                VoidQueue.QueueOptions.RoutingKey
             );
         }
 
@@ -94,7 +94,7 @@ namespace Processor.ConsoleApp.Implementations
                 );
             });
 
-            await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official, progress);
+            await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Full, progress);
         }
 
         private async Task SetFFmpegPermissionsAsync()

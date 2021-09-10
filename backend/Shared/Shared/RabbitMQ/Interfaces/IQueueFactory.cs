@@ -4,6 +4,8 @@ namespace Shared.RabbitMQ.Interfaces
 {
     public interface IQueueFactory
     {
-        public IQueue CreateQueue(ExchangeOptions exchangeOptions, QueueOptions queueOptions);
+        public IVoidQueue CreateVoidQueue(ExchangeOptions exchangeOptions, QueueOptions queueOptions);
+
+        public ICallableQueue CreateCallableQueue(ExchangeOptions exchangeOptions, QueueOptions queueOptions);
     }
 }

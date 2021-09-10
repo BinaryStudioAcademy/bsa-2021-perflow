@@ -5,14 +5,14 @@ namespace Shared.RabbitMQ.Extensions
 {
     public static class QueueSendExtensions
     {
-        public static void SendString(this IQueue queue, string message)
+        public static void SendString(this IVoidQueue voidQueue, string message)
         {
-            queue.SendMessage(Encoding.UTF8.GetBytes(message));
+            voidQueue.SendMessage(Encoding.UTF8.GetBytes(message));
         }
 
-        public static void SendString(this IQueue queue, string message, Encoding encoding)
+        public static void SendString(this IVoidQueue voidQueue, string message, Encoding encoding)
         {
-            queue.SendMessage(encoding.GetBytes(message));
+            voidQueue.SendMessage(encoding.GetBytes(message));
         }
     }
 }

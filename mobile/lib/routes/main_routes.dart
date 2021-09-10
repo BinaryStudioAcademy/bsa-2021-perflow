@@ -28,6 +28,7 @@ import 'package:perflow/screens/main/player/player_screen.dart';
 import 'package:perflow/screens/main/queue/queue_screen.dart';
 import 'package:perflow/screens/main/search/search_base_screen.dart';
 import 'package:perflow/screens/main/search/search_screen.dart';
+import 'package:perflow/screens/song_recognition/song_recognition_screen.dart';
 import 'package:perflow/services/auth/auth_service.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -109,6 +110,10 @@ class MainRoutes extends VRouteElementBuilder {
           VWidget(
             path: Routes.queue,
             widget: const QueueScreen()
+          ),
+          VWidget(
+            path: Routes.songRecognizer,
+            widget: const SongRecognitionScreen()
           ),
           ContentRoutes()
         ],

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Processor.ConsoleApp.Abstract;
 using Processor.ConsoleApp.Options;
 using Shared.AzureBlobStorage.Interfaces;
 using Shared.AzureBlobStorage.Models;
@@ -13,13 +14,13 @@ using SkiaSharp;
 
 namespace Processor.ConsoleApp.Implementations
 {
-    public class ImageProcessingHandler : MessageHandlerBase
+    public class ImageProcessingHandler : VoidMessageHandlerBase
     {
         private readonly IBlobService _blobService;
 
         private readonly string _blobContainer;
 
-        protected override IQueue Queue { get; }
+        protected override IVoidQueue VoidQueue { get; }
 
         public ImageProcessingHandler(
             IOptions<ImageProcessingRabbitMQOptions> rabbitMqOptions,
@@ -36,7 +37,7 @@ namespace Processor.ConsoleApp.Implementations
             var exchangeOptions = options.ExchangeOptions;
             var queueOptions = options.QueueOptions;
 
-            Queue = queueFactory.CreateQueue(exchangeOptions, queueOptions);
+            VoidQueue = queueFactory.CreateVoidQueue(exchangeOptions, queueOptions);
         }
 
         protected override Task Initialize()
@@ -45,16 +46,16 @@ namespace Processor.ConsoleApp.Implementations
 @"{Data} Started ImageProcessingHandler
   Exchange name: {ExchangeName}
   Exchange type: {ExchangeType}
-  Queue name: {QueueName}
+  VoidQueue name: {QueueName}
   Routing key: {RoutingKey}";
 
             Logger.LogInformation(
                 initializationMessage,
                 DateTime.Now.ToLongTimeString(),
-                Queue.ExchangeOptions.Name,
-                Queue.ExchangeOptions.Type,
-                Queue.QueueOptions.Name,
-                Queue.QueueOptions.RoutingKey
+                VoidQueue.ExchangeOptions.Name,
+                VoidQueue.ExchangeOptions.Type,
+                VoidQueue.QueueOptions.Name,
+                VoidQueue.QueueOptions.RoutingKey
             );
 
             return Task.CompletedTask;

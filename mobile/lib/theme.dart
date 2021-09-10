@@ -36,7 +36,7 @@ class Perflow {
     border: const OutlineInputBorder(),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
-      borderSide: const BorderSide(color: textDarkColor, width: 2),
+      borderSide: BorderSide.none,
     ),
     focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(32),

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -7,17 +6,17 @@ using Processor.ConsoleApp.Interfaces;
 using Shared.RabbitMQ.Interfaces;
 using Shared.RabbitMQ.Models;
 
-namespace Processor.ConsoleApp.Implementations
+namespace Processor.ConsoleApp.Abstract
 {
-    public abstract class MessageHandlerBase : IAsyncMessageHandler, IDisposable
+    public abstract class VoidMessageHandlerBase : IAsyncMessageHandler, IDisposable
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new();
 
-        protected ILogger<MessageHandlerBase> Logger { get; }
+        protected ILogger<VoidMessageHandlerBase> Logger { get; }
 
-        protected abstract IQueue Queue { get; }
+        protected abstract IVoidQueue VoidQueue { get; }
 
-        protected MessageHandlerBase(ILogger<MessageHandlerBase> logger)
+        protected VoidMessageHandlerBase(ILogger<VoidMessageHandlerBase> logger)
         {
             Logger = logger;
         }
@@ -32,7 +31,7 @@ namespace Processor.ConsoleApp.Implementations
 
             while (!handlerCancellationToken.IsCancellationRequested)
             {
-                var message = await Queue.ListenAsync(handlerCancellationToken);
+                var message = await VoidQueue.ListenAsync(handlerCancellationToken);
 
                 try
                 {
@@ -56,7 +55,7 @@ namespace Processor.ConsoleApp.Implementations
 
         public void Dispose()
         {
-            Queue.Dispose();
+            VoidQueue.Dispose();
             _cancellationTokenSource.Dispose();
         }
     }
