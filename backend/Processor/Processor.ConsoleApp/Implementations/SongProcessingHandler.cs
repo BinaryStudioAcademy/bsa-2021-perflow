@@ -94,7 +94,7 @@ namespace Processor.ConsoleApp.Implementations
                 );
             });
 
-            await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Full, progress);
+            await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official, progress);
         }
 
         private async Task SetFFmpegPermissionsAsync()
