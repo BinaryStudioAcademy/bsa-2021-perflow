@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { AlbumFull } from 'src/app/models/album/album-full';
 import { Tag } from 'src/app/models/tag/tag';
+import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { Song } from '../../../models/song/song';
 import { SongSortType } from '../../../models/song/song-sort-type';
 
@@ -43,12 +44,24 @@ export class SongsListComponent implements OnInit, OnDestroy {
 
   constructor(
     private _songService: SongsService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _songToolbarService: SongToolbarService
   ) {
 
   }
 
   public ngOnInit() {
+    this._songToolbarService.pauseSong$.subscribe((result) => {
+      const index = this.songs.findIndex((s) => s.id === result);
+      this.songs[index].isPlaying = false;
+    });
+    this._songToolbarService.resumeSong$.subscribe((result) => {
+      const index = this.songs.findIndex((s) => s.id === result);
+      /* eslint-disable no-param-reassign */
+      this.songs.forEach((s) => { s.isPlaying = false });
+      this.songs[index].isPlaying = true;
+      /* eslint-enable no-param-reassign */
+    });
     this._userService.getUserSettings()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(
@@ -88,4 +101,14 @@ export class SongsListComponent implements OnInit, OnDestroy {
   togglePlay = () => {
     this.togglePlayEvent.emit();
   };
+
+  // changeIsPlaying = (song: Song) => {
+  //   if (!song.isPlaying) {
+  //     this.songs.forEach(s => s.isPlaying = false);
+  //     song.isPlaying = true;
+  //   }
+  //   else {
+  //     song.isPlaying = false;
+  //   }
+  // }
 }

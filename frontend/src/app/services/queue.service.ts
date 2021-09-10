@@ -86,7 +86,6 @@ export class QueueService {
       )
       .subscribe((result) => {
         const { settings, song } = result;
-
         const songForPlay = new SongInfo(
           song.id,
           song.name,
@@ -99,7 +98,6 @@ export class QueueService {
         QueueService.isInitialized = true;
 
         if (play) this._toolbarService.togglePlay();
-
         this.currentSongUpdate.emit(song);
       });
   }

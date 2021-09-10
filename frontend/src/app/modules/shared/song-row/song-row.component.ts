@@ -19,6 +19,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarInfo } from 'src/app/models/common/snackbar-info';
 import { Tag } from 'src/app/models/tag/tag';
 import { RadioService } from 'src/app/services/radio.service';
+import { SongToolbarService } from 'src/app/services/song-toolbar.service';
 import { CreatePlaylistService } from '../playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -29,7 +30,6 @@ import { CreatePlaylistService } from '../playlist/create-playlist/create-playli
 
 export class SongRowComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
-
   userId: number;
   isEditing = false;
   createdPlaylistArray = new Array<PlaylistName>();
@@ -52,6 +52,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
   @Output() clickMenuItem = new EventEmitter<{ menuItem: string, song: Song }>();
   @Output() clickDislike = new EventEmitter<number>();
   @Output() togglePlayEvent = new EventEmitter<void>();
+  @Output() changeIsPlaylingEvent = new EventEmitter<Song>();
 
   constructor(
     private _reactionService: ReactionService,
@@ -63,7 +64,8 @@ export class SongRowComponent implements OnInit, OnDestroy {
     private _createPlaylistService: CreatePlaylistService,
     private _playlistsService: PlaylistsService,
     private _snackbarService: SnackbarService,
-    private _radioService: RadioService
+    private _radioService: RadioService,
+    private _songToolbarService: SongToolbarService
   ) { }
 
   ngOnDestroy(): void {
@@ -223,6 +225,7 @@ export class SongRowComponent implements OnInit, OnDestroy {
   }
 
   playSong = () => {
+    this.changeIsPlaylingEvent.emit(this.song);
     if (!this.highlightId) {
       this._queueService.addSongToQueue(this.song);
     }
@@ -231,12 +234,15 @@ export class SongRowComponent implements OnInit, OnDestroy {
       this._queueService.initSong(this.song, true);
     }
     else {
+      // this._songToolbarService.togglePlay();
       this.togglePlayEvent.emit();
     }
   };
 
   pauseSong = () => {
-    this.togglePlayEvent.emit();
+    this._songToolbarService.togglePlay();
+    // this.togglePlayEvent.emit();
+    this.changeIsPlaylingEvent.emit(this.song);
   };
 
   editName = () => {

@@ -18,7 +18,8 @@
         [isGroupMember]="isGroupMember"
         (clickMenuItem)="rowMenuClick($event)" 
         (clickDislike)="clickDislikeIcon($event)"
-        (togglePlay)="togglePlay()">
+        (togglePlayEvent)="togglePlay()">
+        <!-- (changeIsPlaylingEvent)="changeIsPlaying($event)"> -->
       </app-song-row>
     </div>
   </ng-container>
@@ -38,6 +39,7 @@
       (clickMenuItem)="rowMenuClick($event)" 
       (clickDislike)="clickDislikeIcon($event)"
       (togglePlayEvent)="togglePlay()">
+      <!-- (changeIsPlaylingEvent)="changeIsPlaying($event)"> -->
     </app-song-row>
   </ng-container>
 </div>

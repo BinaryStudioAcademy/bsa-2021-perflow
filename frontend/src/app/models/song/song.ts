@@ -18,4 +18,5 @@ export interface Song {
   group?: Group;
   podcast: string;
   tags?: Tag[];
+  isPlaying?: boolean;
 }
