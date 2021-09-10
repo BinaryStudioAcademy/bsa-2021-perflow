@@ -58,7 +58,9 @@ export class SongsListComponent implements OnInit, OnDestroy {
     this._songToolbarService.resumeSong$.subscribe((result) => {
       const index = this.songs.findIndex((s) => s.id === result);
       /* eslint-disable no-param-reassign */
-      this.songs.forEach((s) => { s.isPlaying = false });
+      this.songs.forEach((s) => {
+        s.isPlaying = false;
+      });
       this.songs[index].isPlaying = true;
       /* eslint-enable no-param-reassign */
     });
