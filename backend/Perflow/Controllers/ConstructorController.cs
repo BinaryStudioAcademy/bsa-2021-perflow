@@ -27,14 +27,6 @@ namespace Perflow.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        [Authorize(Policy = Policies.IsModerator)]
-        public async Task<ActionResult<ICollection<PageContainerViewDTO>>> GetAllContainersViews()
-        {
-            var result = await _constructorService.GetAllContainersViews();
-            return Ok(result);
-        }
-
         [HttpGet("published")]
         public async Task<ActionResult<PageContainerDTO>> GetPublishedContainer()
         {
@@ -48,51 +40,6 @@ namespace Perflow.Controllers
         {
             var result = await _constructorService.GetContainer(User.GetId(), containerId: id);
             return Ok(result);
-        }
-
-        [HttpPut]
-        [Authorize(Policy = Policies.IsModerator)]
-        public async Task<ActionResult<string>> CreateContainer([FromBody] PageContainerDTO pageContainer)
-        {
-            var json = JsonSerializer.Serialize(await _constructorService.CreatePageContainer(pageContainer), new JsonSerializerOptions()
-            {
-                WriteIndented = true,
-                ReferenceHandler = ReferenceHandler.Preserve
-            });
-
-            return Ok(json);
-        }
-
-        [HttpPost]
-        [Authorize(Policy = Policies.IsModerator)]
-        public async Task<ActionResult<string>> UpdateContainer([FromBody] PageContainerDTO pageContainer)
-        {
-            var json = JsonSerializer.Serialize(await _constructorService.UpdatePageContainer(pageContainer), new JsonSerializerOptions()
-            {
-                WriteIndented = true,
-                ReferenceHandler = ReferenceHandler.Preserve
-            });
-
-            return Ok(json);
-        }
-
-        [HttpPost("publish")]
-        [Authorize(Policy = Policies.IsModerator)]
-        public async Task<ActionResult<PageContainerViewDTO>> PublishContainer([FromBody] PageContainerViewDTO pageContainer)
-        {
-            var result = await _constructorService.PublishContainer(pageContainer);
-
-            return Ok(result);
-        }
-
-        [HttpDelete("{id}")]
-        [Authorize(Policy = Policies.IsModerator)]
-        public async Task<ActionResult> DeleteContainer(int id)
-        {
-            if (id <= 0)
-                throw new ArgumentException("Container ID cannot be less than or equal to zero");
-
-            return Ok(await _constructorService.DeleteContainer(id));
         }
     }
 }
