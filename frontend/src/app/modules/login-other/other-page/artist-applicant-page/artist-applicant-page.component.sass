@@ -8,31 +8,16 @@
 main
   background: $drk-gray
   width: 100%
-  height: 100vh
-  overflow-y: scroll
-  display: grid
-  grid-template-areas: "header""main-content"
-  grid-template-columns: 1fr
-  grid-template-rows: 80px 1fr
-  .header
-    grid-area: header
-    border-bottom: 1.5px solid #373C43
-    .logo
-      padding: 15px
-      .ui.logo.icon.image
-        display: flex
-        align-items: center
+  min-height: calc(100vh - #{$song-toolbar-height})
+  padding-top: 90px
   .main-content
-    grid-area: main-content
-    display: grid
-    grid-template-areas: "left-col content right-col"
-    grid-template-columns: 30px 1fr 30px
+    padding: 0px 40px
     .content
       height: 100%
-      grid-area: content
       display: flex
       align-items: center
       flex-direction: column
+      padding: 20px 0px
       .checkbox-container
         margin-top: 1em
         display: flex
@@ -42,43 +27,55 @@ main
         height: 100%
         width: 100%
         display: flex
-        align-items: center
+        align-items: flex-start
         flex-direction: column
-      .card
-        margin-top: 2em
-      .create-btn
-        margin-top: 3em
+        .search-create
+          width: 100%
+          display: flex
+          align-items: center
+          .create-btn
+            margin-left: 20px
+          .ui.search
+            width: 50%
+            background: $drk-gray
+            display: flex
+            align-items: center
+            justify-content: center
+            .ui.icon.input
+              width: 100%
+              i
+                color: $text
+              .prompt.input-dark
+                background: $drk-rain
+                border: 1px solid $text
+                color: $text
+                &:focus
+                  background: $drk-rain
+                &:active
+                  background: $drk-rain
+        h4
+          color: $text
+          margin-bottom: 20px
       .text
         +text($text, 18px, $medium-weight)
         margin-top: 1em
-      .ui.search
-        margin-top: 1em
-        background: $drk-gray
-        width: 100%
-        display: flex
-        align-items: center
-        justify-content: center
-        .ui.icon.input
-          width: 20em
-          i
-            color: $text
-          .prompt.input-dark
-            background: $drk-rain
-            border: 1px solid $text
-            color: $text
-            &:focus
-              background: $drk-rain
-            &:active
-              background: $drk-rain
+
+.my-groups
+  margin: 2em 0em
+  width: 100%
+  .my-group-cards
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+    grid-gap: 2em 1em
+    justify-items: center
 
 .container
-  max-height: 600px 
   min-height: 600px 
   overflow: scroll
   width: 100%
   display: flex
   flex-direction: column
-  margin: 2em 
+  margin: 2em 0em
   &::-webkit-scrollbar
     display: none
   .search-result
@@ -91,15 +88,20 @@ main
     &::-webkit-scrollbar
       display: none
 
-.title
-  +text($text, 26px, $medium-weight)
-  margin-top: 1.5em
-
-.checkbox-container
-  margin-top: 1em
+.apply-contrainer
   display: flex
   align-items: center
-  justify-content: center
+  flex-direction: column
+  margin-bottom: 40px
+  .title
+    +text($text, 26px, $medium-weight)
+    margin-top: 1.5em
+  .checkbox-container
+    margin-top: 1em
+    margin-bottom: 1em
+    display: flex
+    align-items: center
+    justify-content: center
 
 .roles
     color: white
