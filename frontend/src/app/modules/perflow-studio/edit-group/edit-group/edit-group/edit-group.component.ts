@@ -144,7 +144,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
           (result) => {
             this.groupAlbums = result.body!.filter((a) => !a.isSingle).sort((a) => (a.isPublished ? -1 : 1));
             this.groupSingles = result.body!.filter((a) => a.isSingle).sort((a) => (a.isPublished ? -1 : 1));
-            //this.groupAlbums = result.body!.sort((a) => (a.isPublished ? -1 : 1));
+            // this.groupAlbums = result.body!.sort((a) => (a.isPublished ? -1 : 1));
           }
         );
     }
