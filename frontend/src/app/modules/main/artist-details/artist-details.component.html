@@ -24,7 +24,10 @@
             <div class="ui floating dropdown icon" appSmDropdown>
               <i class="ellipsis vertical icon icons"></i>
               <div class="right menu">
-                <div class="item first">
+                <div class="item first" (click)="addToQueue()">
+                  <i class="outdent alternate icon"></i>Add to queue
+                </div>
+                <div class="item" *ngIf="!isArtist" (click)="likeArtist()">
                   <i class="bell icon"></i>Subscribe
                 </div>
                 <div class="item last share">
@@ -34,9 +37,6 @@
                       Copy link
                     </div>
                   </div>
-                </div>
-                <div class="item last" (click)="addToQueue()">
-                  <i class="outdent alternate icon"></i>Add to queue
                 </div>
               </div>
             </div>
@@ -63,8 +63,23 @@
         </div>
       </div>
     </div>
+    <div class="items-scroll-box top-artists" *ngIf="artistSingles.length > 0">
+      <h4 class="header">Singles</h4>
+      <div class="list-of-items">
+        <div class="ui icon button scroll-button" (click)="scrollGridLeft('singles', '.items')">
+          <i class="large inverted angle left icon"></i>
+        </div>
+        <div id="singles" class="items" appHideScrollButtons>
+          <app-album-card class="card" *ngFor="let album of artistSingles" [album]="album" [isLiked]=false>
+          </app-album-card>
+        </div>
+        <div class="ui icon button scroll-button" (click)="scrollGridRight('singles', '.items')">
+          <i class="large inverted angle right icon"></i>
+        </div>
+      </div>
+    </div>
     <div class="items-scroll-box top-artists" *ngIf="artistPlaylists.length > 0">
-      <h4 class="header">Playlists</h4>
+      <h4 class="header">Artist Playlists</h4>
       <div class="list-of-items">
         <div class="ui icon button scroll-button" (click)="scrollGridLeft('playlists', '.items')">
           <i class="large inverted angle left icon"></i>
@@ -76,11 +91,6 @@
         <div class="ui icon button scroll-button" (click)="scrollGridRight('playlists', '.items')">
           <i class="large inverted angle right icon"></i>
         </div>
-      </div>
-    </div>
-    <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-      <div class="header">
-        Link copied to clipboard!
       </div>
     </div>
   </div>

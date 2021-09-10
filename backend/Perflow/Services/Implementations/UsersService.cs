@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Perflow.Common.DTO.Notifications;
 using Perflow.Common.DTO.Users;
 using Perflow.DataAccess.Context;
 using Perflow.Domain;
+using Perflow.Domain.Enums;
 using Perflow.Services.Interfaces;
 using Shared.Auth;
 
@@ -14,12 +17,14 @@ namespace Perflow.Services.Implementations
         private readonly PerflowContext _context;
         private readonly IImageService _imageService;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
 
-        public UsersService(PerflowContext context, IMapper mapper, IImageService imageService)
+        public UsersService(PerflowContext context, IMapper mapper, IImageService imageService, INotificationService notificationService)
         {
             _context = context;
             _mapper = mapper;
             _imageService = imageService;
+            _notificationService = notificationService;
         }
 
         public async ValueTask<User> GetUserAsync(int id)
@@ -60,9 +65,37 @@ namespace Perflow.Services.Implementations
         {
             var applicant = new PerflowStudioApplicant(userId, (UserRole)artistApplicant.UserRole, artistApplicant.GroupId);
 
+            await NotifyModerators(userId, artistApplicant);
+
             var result = await _context.PerflowStudioApplicants.AddAsync(applicant);
             await _context.SaveChangesAsync();
+
             return result.Entity;
+        }
+
+        public async Task NotifyModerators(int userId, ArtistApplicantDTO artistApplicant)
+        {
+            var moderators = await _context.Users.Where(u => u.Role == UserRole.Moderator).Select(moder => moder.Id).ToListAsync();
+            var user = await _context.Users.FindAsync(userId);
+
+            foreach (var moderId in moderators)
+            {
+                var notification = new NotificationWriteDTO
+                {
+                    Title = artistApplicant.UserRole == 1 ? "New artist applicant" : "New moderator applicant",
+                    Description = $"{user.UserName} wants to become " + (artistApplicant.UserRole == 1 ? "an artist." : "a moderator."),
+                    Reference = userId,
+                    Type = NotificationType.UserNotification,
+                };
+
+                await Notify(notification, moderId);
+            }
+        }
+
+        private async Task Notify(NotificationWriteDTO notification, int applicantId)
+        {
+            var message = await _notificationService.CreateApplicantNotificationAsync(notification, applicantId);
+            await _notificationService.SendNotificationAsync(message);
         }
 
         public async Task<PerflowStudioApplicant> GetArtistApplicantAsync(int userId)

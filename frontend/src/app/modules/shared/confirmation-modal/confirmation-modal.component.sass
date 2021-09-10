@@ -1,0 +1,33 @@
+@import "src/styles.sass"
+
+.bg-modal-fader
+    position: fixed
+    top: 0px
+    left: 0px
+    width: 100%
+    height: 100%
+    background: #00000060
+    z-index: 200
+    .content-container
+        width: 400px
+        height: 220px
+        padding: 30px 40px
+        left: 50%
+        top: 50%
+        position: fixed
+        transform: translate(-50%,-50%)
+        border-radius: 10px
+        background: $drk-gray 
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: space-around
+        color: $text
+        border: 1px solid $medium-orange
+        h4
+            text-align: center
+        .buttons
+            transform: translate(0px, 10px)
+            width: 100%
+            display: flex
+            justify-content: space-around

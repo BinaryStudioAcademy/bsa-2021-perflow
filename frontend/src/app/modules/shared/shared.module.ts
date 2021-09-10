@@ -36,6 +36,7 @@ import { CropImageComponent } from './crop-image/crop-image.component';
 import { FilterExplicitPipe } from './pipes/filter-explicit.pipe';
 import { ColaborativeModalComponent } from './create-edit-playlist/colaborative-modal/colaborative-modal.component';
 import { UserRolePipe } from './pipes/user-role.pipe';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { EditTagsModalComponent } from './song-row/edit-tags-modal/edit-tags-modal.component';
 
 @NgModule({
@@ -68,6 +69,7 @@ import { EditTagsModalComponent } from './song-row/edit-tags-modal/edit-tags-mod
     FilterExplicitPipe,
     ColaborativeModalComponent,
     UserRolePipe,
+    ConfirmationModalComponent,
     EditTagsModalComponent
   ],
   imports: [
@@ -104,7 +106,9 @@ import { EditTagsModalComponent } from './song-row/edit-tags-modal/edit-tags-mod
     CreateEditPlaylistComponent,
     EditPlaylistModalComponent,
     CropImageComponent,
-    UserRolePipe
+    UserRolePipe,
+    ConfirmationModalComponent,
+    EditTagsModalComponent
   ]
 })
 

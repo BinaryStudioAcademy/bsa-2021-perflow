@@ -39,4 +39,8 @@ export class GroupService {
 
     return this._httpService.putFullRequest<GroupFull>(`${this.routePrefix}`, formData);
   }
+
+  deleteMember(groupId: number) {
+    return this._httpService.deleteRequest<number>(`${this.routePrefix}/${groupId}`);
+  }
 }

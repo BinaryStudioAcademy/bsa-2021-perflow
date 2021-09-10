@@ -1,15 +1,9 @@
 <main>
-  <div class="fon-view-playlist">
+  <div class="fon-view-playlist" [style.background-image]="'url(' + playlist?.iconURL + ')'">
     <div class="hat-view-playlist">
       <div class="content-view-playlist">
         <div class="image">
-          <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" *ngIf="playlist.type === playlistType.playlist" />
-          <div class="icon-background" *ngIf="playlist.type !== playlistType.playlist">
-            <img class="icon" src="../../../../assets/images/playlist.svg" />
-            <p class="playlist-name">
-              {{ playlist?.name }}
-            </p>
-          </div>
+          <img src="{{ playlist?.iconURL }}" alt="Avatar playlist"/>
         </div>
         <div class="menu-view-playlist">
           <div class="text">Playlist</div>
@@ -30,7 +24,7 @@
             </span>
           </div>
           <div class="view-button-toolbar">
-            <button class="ui btn-full button" (click)="play()">Play</button>
+            <button class="ui btn-full button" (click)="play(songs)">Play</button>
             <div class="like" *ngIf="!isAuthor">
               <i class="heart outline icon" (click)="likePlaylist(playlist.id)" *ngIf="!playlist.isLiked"></i>
               <i class="heart icon" (click)="dislikePlaylist(playlist.id)" *ngIf="playlist.isLiked"></i>
@@ -39,7 +33,7 @@
               <div class="ui floating dropdown ellipsis-button" appSmDropdown>
                 <i class="ellipsis vertical icon"></i>
                 <div class="menu">
-                  <div *ngIf="isAuthor || isCollaborative" class="item first" routerLink="../../edit/{{playlist.id}}">
+                  <div *ngIf="(isAuthor || isCollaborative) && playlist.type === playlistType.playlist" class="item first" routerLink="../../edit/{{playlist.id}}">
                     <span>
                       <i class="edit outline icon"></i>
                       Edit playlist
@@ -51,7 +45,7 @@
                       Add to queue
                     </span>
                   </div>
-                  <div class="item" routerLink="/">
+                  <div class="item" (click)="startRadio()">
                     <span>
                       <i class="podcast icon"></i>
                       Start playlist radio
@@ -65,7 +59,7 @@
                         </div>
                       </div>
                   </div>
-                  <div *ngIf="isAuthor" class="item last" (click)="deletePlaylist()">
+                  <div *ngIf="isAuthor && playlist.type === playlistType.playlist" class="item last" (click)="initConfirmDeletePlaylist()">
                     <span>
                       <i class="trash alternate outline icon"></i>
                       Delete playlist
@@ -74,20 +68,17 @@
                 </div>
               </div>
             </span>
-            <button *ngIf="!isHidden && playlist.accessType === playlistAccessType.collaborative && playlist.author?.id === userId && !isConnected && !isGroupNotified" class="ui button-upload button" (click)="sharePlay(playlist)">Share Play</button>
-            <button *ngIf="isGroupNotified && !isConnected && playlist.author?.id !== userId" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
-            <button *ngIf="isConnected" class="ui button-upload button" (click)="disconnectSharePlay()">Disconnect</button>
+            <ng-container *ngIf="playlist.accessType === playlistAccessType.collaborative && isCollaborative">
+              <button *ngIf="playlist.author?.id === userId && !isConnected" class="ui button-upload button" (click)="sharePlay(playlist)">Share Play</button>
+              <button *ngIf="playlist.author?.id !== userId && isPlaylistshared && !isConnected" class="ui button-upload button" (click)="connectToSharePlay(playlist.id)">Connect</button>
+              <button *ngIf="isConnected" class="ui button-upload button" (click)="disconnectSharePlay(playlist.id)">Disconnect</button>
+            </ng-container>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div>
-    <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs"></app-songs-list>
-  </div>
-  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-    <div class="header">
-      Link copied to clipboard!
-    </div>
+    <app-songs-list [playlist]="playlist" (clickMenuItem)="clickMenuHandler($event)" [songs]="songs" [isRemoveFromPlaylistShown]="playlist.type === playlistType.playlist"></app-songs-list>
   </div>
 </main>

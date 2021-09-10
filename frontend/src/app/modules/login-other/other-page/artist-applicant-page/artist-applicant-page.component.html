@@ -1,44 +1,48 @@
 <main>
-  <div class="header">
-    <div class="logo">
-      <a class="ui logo icon image" routerLink="/home">
-        <img src="/assets/Logo.png" />
-      </a>
-    </div>
-  </div>
   <div class="main-content">
     <div class="content">
-      <h4 class="title" *ngIf="!isJoinToGroupRoute">You are:</h4>
-      <div class="checkbox-container" *ngIf="!isJoinToGroupRoute">
-        <div class="roles">
-          <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="isArtist">
-          <label>Artist</label>
+      <div class="apply-contrainer" *ngIf="!isJoinToGroupRoute">
+        <h4 class="title">You are:</h4>
+        <div class="checkbox-container">
+          <div class="roles">
+            <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="isArtist">
+            <label>Artist</label>
+          </div>
+          <div class="roles">
+            <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="!isArtist">
+            <label>Group</label>
+          </div>
         </div>
-        <div class="roles">
-          <input type="radio" name="roles" (change)="isArtist = !isArtist" [checked]="!isArtist">
-          <label>Group</label>
-        </div>
-      </div>
-      <button class="ui btn-full button create-btn" *ngIf="isArtist && !isJoinToGroupRoute" (click)="createArtistApplicant()">
-        Apply
-      </button>
-      <div class="group" *ngIf="!isArtist || isJoinToGroupRoute">
-        <button class="ui btn-full button create-btn" (click)="showModal()" *ngIf="!createdGroup">
-          Create a group
+        <button class="ui btn-full button create-btn" *ngIf="isArtist" (click)="createArtistApplicant()">
+          Apply
         </button>
-        <app-artist-card class="card" [isChecked]=true [artist]="createdGroup" (apply)="createArtistApplicant($event)"
-          *ngIf="createdGroup"></app-artist-card>
-        <div class="text">
-          or
+      </div>
+      <div class="group" *ngIf="!isArtist || isJoinToGroupRoute">
+        <div class="search-create">
+          <div class="ui search">
+            <div class="ui icon input">
+              <input class="prompt input-dark" type="text" name="search" placeholder="Search a group..."
+                autocomplete="off" (input)="findGroup()" [(ngModel)]="searchValue" (keyup)="clearSearch($event)">
+              <i class="search icon"></i>
+            </div>
+          </div>
+          <button class="ui btn-full button create-btn" (click)="showModal()" *ngIf="!createdGroup">
+            Create a group
+          </button>
         </div>
-        <div class="ui search">
-          <div class="ui icon input">
-            <input class="prompt input-dark" type="text" name="search" placeholder="Search a group..."
-              autocomplete="off" (input)="findGroup()" [(ngModel)]="searchValue" (keyup)="clearSearch($event)">
-            <i class="search icon"></i>
+        <div class="my-groups" *ngIf="createdGroup">
+          <h4>My group</h4>
+          <div class="my-group-cards">
+            <app-artist-card 
+            class="card" 
+            [isChecked]=true 
+            [artist]="createdGroup" 
+            (apply)="createArtistApplicant($event)">
+            </app-artist-card>
           </div>
         </div>
         <div class="container" *ngIf="groups.length > 0">
+          <h4>Search result</h4>
           <div class="search-result" 
               infinite-scroll 
               [infiniteScrollDistance]="distance" 

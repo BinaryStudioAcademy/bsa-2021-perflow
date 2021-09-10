@@ -29,65 +29,13 @@ namespace Perflow.Services.Implementations
             _mapper = mapper;
             _imageService = imageService;
         }
-
-        public async Task<PageContainer> CreatePageContainer(PageContainerDTO pageContainer)
+        public async Task<PageContainerDTO> GetPublishedContainer(int userId)
         {
-            var entity = _mapper.Map<PageContainer>(pageContainer);
-            var result = await _context.PageContainers.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return result.Entity;
-        }
-
-        public async Task<PageContainerDTO> UpdatePageContainer(PageContainerDTO containerDTO)
-        {
-            var container = await _context.PageContainers
-                                            .Include(pc => pc.PageSections)
-                                            .ThenInclude(ps => ps.PageSectionEntities)
-                                            .FirstOrDefaultAsync(pc => pc.Id == containerDTO.Id);
-            _context.PageSections.RemoveRange(_context.PageSections
-                                                        .Include(ps => ps.PageSectionEntities)
-                                                        .Where(ps => !container.PageSections.Contains(ps) && ps.PageContainerId == container.Id));
-            var updatedContainer = _mapper.Map(containerDTO, container);
-            _context.PageContainers.Update(updatedContainer);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<PageContainerDTO>(updatedContainer);
-        }
-
-        public async Task<PageContainerViewDTO> PublishContainer(PageContainerViewDTO containerDTO)
-        {
-            var container = await _context.PageContainers.FirstOrDefaultAsync(pc => pc.Id == containerDTO.Id);
-            var publishedContainer = await _context.PageContainers.FirstOrDefaultAsync(pc => pc.IsPublished);
-            container.IsPublished = true;
-            if (publishedContainer != null)
-            {
-                publishedContainer.IsPublished = false;
-                _context.PageContainers.UpdateRange(publishedContainer, container);
-            }
-            else
-            {
-                _context.PageContainers.Update(container);
-            }
-            await _context.SaveChangesAsync();
-            return _mapper.Map<PageContainerViewDTO>(container);
-        }
-
-        public async Task<ICollection<PageContainerViewDTO>> GetAllContainersViews()
-        {
-            var result = _mapper
-                            .Map<ICollection<PageContainerViewDTO>>
-                                (await _context.PageContainers
-                                                .OrderByDescending(pc => pc.IsPublished)
-                                                .ToListAsync());
+            var result = await GetContainer(userId, findPublished: true);
             return result;
         }
 
-        public async Task<PageContainerDTO> GetPublishedContainer()
-        {
-            var result = await GetContainer(findPublished: true);
-            return result;
-        }
-
-        public async Task<PageContainerDTO> GetContainer(int containerId = 0, bool findPublished = false)
+        public async Task<PageContainerDTO> GetContainer(int userId, int containerId = 0, bool findPublished = false)
         {
             var result = await _context.PageContainers
                                                 .Include(pc => pc.PageSections)
@@ -115,13 +63,18 @@ namespace Perflow.Services.Implementations
                                                             Entity = pse.EntityType == Domain.Enums.EntityType.Album ? _context.Albums
                                                                                                                             .Include(a => a.Author)
                                                                                                                             .Include(a => a.Group)
+                                                                                                                                .ThenInclude(g => g.Artists)
+                                                                                                                            .Include(a => a.Reactions)
                                                                                                                             .Select(a => new AlbumShortDTO
                                                                                                                             {
                                                                                                                                 Id = a.Id,
                                                                                                                                 Name = a.Name,
                                                                                                                                 AuthorName = a.AuthorType == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
+                                                                                                                                ArtistIds = a.AuthorType == AuthorType.Artist ? new List<int>() { a.Author.Id } : a.Group.Artists.Select(a => a.Artist.Id).ToList(),
                                                                                                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
-                                                                                                                                ReleaseYear = a.ReleaseYear
+                                                                                                                                ReleaseYear = a.ReleaseYear,
+                                                                                                                                IsSingle = a.IsSingle,
+                                                                                                                                IsLiked = a.Reactions.Any(r => r.UserId == userId)
                                                                                                                             })
                                                                                                                             .FirstOrDefault(a => a.Id == pse.ReferenceId)
                                                                     : pse.EntityType == Domain.Enums.EntityType.Artist ? _context.Users
@@ -161,20 +114,6 @@ namespace Perflow.Services.Implementations
                                                     .ToList()
                                                 }).FirstOrDefaultAsync();
             return result;
-        }
-
-        public async Task<int> DeleteContainer(int id)
-        {
-            var deletedContainer = await _context.PageContainers
-                .Include(pc => pc.PageSections)
-                .ThenInclude(ps => ps.PageSectionEntities)
-                .FirstOrDefaultAsync(pc => pc.Id == id);
-
-            _context.PageContainers.Remove(deletedContainer);
-
-            await _context.SaveChangesAsync();
-
-            return id;
         }
     }
 }

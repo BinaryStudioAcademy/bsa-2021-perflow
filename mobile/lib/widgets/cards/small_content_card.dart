@@ -25,7 +25,7 @@ class SmallContentCard extends StatelessWidget {
         fit: BoxFit.cover,
         width: height,
         height: height,
-        image: NetworkImage(imageUrl!)
+            image: NetworkImage(imageUrl!),
       )
       : SizedBox(
         height: height,
@@ -39,13 +39,15 @@ class SmallContentCard extends StatelessWidget {
         child: Row(
           children: [
             image,
-            Padding(
+            Flexible(
+              child: Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Text(
                 title,
-                maxLines: 3,
+                  maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: textTheme.subtitle2,
+                ),
               ),
             )
           ],
@@ -53,13 +55,6 @@ class SmallContentCard extends StatelessWidget {
       ),
     );
 
-    return width == null
-      ? Expanded(
-        child: card
-      )
-      : SizedBox(
-        width: width,
-        child: card
-      );
+    return width == null ? card : SizedBox(width: width, child: card);
   }
 }

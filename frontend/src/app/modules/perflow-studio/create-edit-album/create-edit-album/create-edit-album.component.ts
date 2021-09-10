@@ -5,7 +5,7 @@ import { AlbumEdit } from 'src/app/models/album/album-edit';
 import { AlbumRegion } from 'src/app/models/album/album-region';
 import { AuthorType } from 'src/app/models/enums/author-type.enum';
 import { AlbumService } from 'src/app/services/album.service';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AudioFileDuration } from 'src/app/helpers/AudioFileDuration';
@@ -18,6 +18,8 @@ import { PlatformLocation } from '@angular/common';
 import { Tag } from 'src/app/models/tag/tag';
 import { TagService } from 'src/app/services/tags/tag.service';
 import { GroupService } from 'src/app/services/group.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-create-edit-album',
@@ -32,7 +34,6 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   isModalShown = false;
   isSongUploadShown = false;
   publishButtonTitle: string = 'Publish';
-  isSuccess: boolean = false;
   isGroupAlbum: boolean = false;
   tags: Tag[] = [];
 
@@ -48,8 +49,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
+    private _groupService: GroupService,
+    private _confirmationService: ConfirmationPageService,
     private _tagService: TagService,
-    private _groupService: GroupService
+    private _queueService: QueueService
   ) {
     this.getTags();
   }
@@ -184,7 +187,10 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
             this._songsService.uploadSong(songForWrite, s)
               .pipe(take(1))
               .subscribe((uploadedSong) => {
-                this.album.songs.push(uploadedSong);
+                const getSongSubscription = this._songsService.getSongById(uploadedSong.id).subscribe((song) => {
+                  this.album.songs.push(song);
+                  getSongSubscription.unsubscribe();
+                });
               });
 
             subscription.unsubscribe();
@@ -243,7 +249,7 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
   clickMenuHandler(data: { menuItem: string, song: Song }) {
     switch (data.menuItem) {
       case 'Remove from album':
-        this.deleteSongFromAlbum(data.song);
+        this.initConfirmDeleteSongFromAlbum(data.song);
         break;
       default:
         break;
@@ -258,10 +264,55 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
           next: () => {
             this.albumSongs = this.album.songs.filter((s) => s.id !== song.id);
             this.album.songs = this.albumSongs;
+            if (!this.album.songs.length && this.album.isPublished) {
+              this.setPublicStatus();
+            }
           }
         });
     }
   };
+
+  confirmPublicStatus() {
+    if (!this.album.isPublished) {
+      this.initConfirmPublishAlbum();
+    }
+    else {
+      this.setPublicStatus();
+    }
+  }
+
+  initConfirmPublishAlbum() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to publish this album?',
+        () => {
+          this.setPublicStatus();
+        },
+        () => {}
+      );
+  }
+
+  initConfirmDeleteAlbum() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the album?',
+        () => {
+          this.removeAlbum();
+        },
+        () => {}
+      );
+  }
+
+  initConfirmDeleteSongFromAlbum(song: Song) {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the song?',
+        () => {
+          this.deleteSongFromAlbum(song);
+        },
+        () => {}
+      );
+  }
 
   setPublicStatus() {
     const albumPublicStatus: AlbumPublicStatus = {
@@ -278,11 +329,12 @@ export class CreateEditAlbumComponent implements OnInit, OnDestroy {
       });
   }
 
-  copyLink() {
-    this._clipboardApi.copyFromContent(`${this._location.hostname}:${this._location.port}/albums/${this.album.id}`);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
-  }
+  play = () => {
+    if (this.album.songs.length === 0) return;
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(this.album.songs);
+
+    this._queueService.initSong(this.album.songs[0], true);
+  };
 }

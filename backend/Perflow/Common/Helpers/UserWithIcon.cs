@@ -2,7 +2,7 @@
 
 namespace Perflow.Common.Helpers
 {
-    public class UserWithIcon
+    public struct UserWithIcon
     {
         public User User;
         public string IconURL;

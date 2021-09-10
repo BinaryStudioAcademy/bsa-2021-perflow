@@ -1,19 +1,19 @@
 @import "./../../../../../styles"
 
 h3
-  text-align: center
-  color: #FF792A
+    text-align: center
+    color: #FF792A
 
 h5
-  padding-top: 16px
-  text-align: center
-  color: $text-color-gray
+    padding-top: 16px
+    text-align: center
+    color: $text-color-gray
 
 .log-in-link
-  color: $login-text-color
-  &:hover
-    text-decoration: underline
-    cursor: pointer
+    color: $login-text-color
+    &:hover
+        text-decoration: underline
+        cursor: pointer
 
 form
     display: flex
@@ -21,7 +21,7 @@ form
     align-items: center
     padding: 20px 20px 0
     text-align: center
-    height: 100%
+    margin: 60px 0 60px 0
     .cross-validation
         width: 450px
     .field
@@ -33,10 +33,11 @@ form
             caret-color: white
             &::placeholder
                 color: #717477
+                font-family: 'Rubik','sans-serif'
             &:-webkit-autofill,
             &:-webkit-autofill:focus,
             &:-webkit-autofill:hover
-                -webkit-box-shadow: 0 0 0 100px  $drk-gray inset !important
+                -webkit-box-shadow: 0 0 0 100px $drk-gray inset !important
                 -webkit-text-fill-color: $text
     button:disabled
         color: white
@@ -45,11 +46,6 @@ form
 
 .ui.error.message
     border-radius: 25px !important
-
-.btn-full
-    padding: 10px 55px 10px 55px
-    font-weight: $bold-weight
-    color: white
 
 .social-media-buttons
     text-align: center
@@ -72,4 +68,3 @@ form
     i.icon
         color: #FF792A
         font-size: 16px !important
-

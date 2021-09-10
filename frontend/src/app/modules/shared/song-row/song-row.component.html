@@ -22,7 +22,7 @@
                 <i class="ui pencil alternate icon"></i>
             </span>
             <span class="namesave" *ngIf="isEditable && isEditing" (click)="saveName()">
-                <i class="ui check"></i>
+                <i class="ui check icon"></i>
             </span>
 
             <span class="e foredit" *ngIf="isEditable" [ngClass]="song.hasCensorship ? 'active' : ''" (click)="changeCensorship()">E</span>
@@ -56,17 +56,17 @@
             <div class="ui floating dropdown icon" appSmDropdown>
                 <i class="ellipsis vertical icon"></i>
                 <div class="left menu">
-                    <div class="item first" (click)="clickItem('Start radio')">
+                    <div class="item first" (click)="startRadio()">
                         <div class="img-wrapper">
-                            <img class="streaming icon" src="../../../../assets/images/streaming.svg" />
+                            <img class="streaming icon" src="/assets/images/streaming.svg" />
                         </div>Start radio
                     </div>
-                    <div class="item" (click)="clickItem('Remove from album')" *ngIf="album && album?.artist?.id === userId">
+                    <div class="item" (click)="clickItem('Remove from album')" *ngIf="(album && album?.artist?.id === userId) || isGroupMember">
                       <i class="trash icon"></i>Remove from album
                     </div>
                     <div class="item" *ngIf="!isRemoveFromQueueShonw" (click)="clickItem('Add to queue')">
                         <div class="img-wrapper">
-                            <img class="playlist" src="../../../../assets/images/playlist.svg" />
+                            <img class="playlist" src="/assets/images/playlist.svg" />
                         </div>Add to queue
                     </div>
                     <div class="item" *ngIf="isRemoveFromQueueShonw" (click)="clickItem('Remove from queue')">
@@ -75,12 +75,12 @@
                     <div class="item" (click)="clickItem('Add to playlist')">
                         <i class="list icon"></i>Add to playlist
                         <div class="left menu add-to-playlist">
-                            <div class="item" *ngFor="let playlist of createdPlaylistArray" (click)="saveToPlaylist(playlist.id, song.id)">
+                            <div class="item" *ngFor="let playlist of createdPlaylistArray" (click)="saveToPlaylist(playlist, song.id)">
                                 {{ playlist.name }}
                             </div>
                         </div>
                     </div>
-                    <div class="item" (click)="clickItem('Remove from playlist')" *ngIf="playlist && playlist?.author?.id === userId">
+                    <div class="item" (click)="clickItem('Remove from playlist')" *ngIf="playlist && playlist?.author?.id === userId && isRemoveFromPlaylistShown">
                         <i class="trash icon"></i>Remove from playlist
                     </div>
                     <div class="item" [routerLink]="['/artists', song?.artist?.id]" *ngIf="song?.artist">
@@ -100,11 +100,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-    <div class="header">
-      {{ notification }}   
     </div>
 </div>
 

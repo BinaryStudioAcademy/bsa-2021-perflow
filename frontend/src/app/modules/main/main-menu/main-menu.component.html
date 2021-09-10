@@ -81,22 +81,22 @@
       Add to queue
     </span>
   </div>
-  <div class="item" (click)="clickOnMenuItem('')">
+  <div class="item" (click)="startRadio()">
     <span>
       <i class="podcast icon"></i>
       Start playlist radio
     </span>
   </div>
-  <div class="item" (click)="clickOnMenuItem('')">
-    <span>
-      <i class="users icon"></i>
-      Collaborative playlist
-    </span>
-  </div>
-  <div class="item" *ngIf="!isPlaylistCollaborativeSettings()" (click)="clickOnMenuItem('')">
+  <div class="item" *ngIf="!isPlaylistSecret()" (click)="clickOnMenuItem('Make Secret')">
     <span>
       <i class="user secret icon"></i>
       Make secret
+    </span>
+  </div>
+  <div class="item" *ngIf="isPlaylistSecret()" (click)="clickOnMenuItem('Make Default')">
+    <span>
+      <i class="user secret icon"></i>
+      Make default
     </span>
   </div>
   <div class="item" (click)="clickOnMenuItem('Edit details')">
@@ -146,10 +146,4 @@
 
 <div class="container">
   <router-outlet></router-outlet>
-</div>
-
-<div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-  <div class="header">
-    Link copied to clipboard!
-  </div>
 </div>

@@ -1,20 +1,30 @@
 ﻿{
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/constructor",
+      "DownstreamPathTemplate": "/api/studio/constructor/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
           "Host": "localhost",
-          "Port": "5001"
+          "Port": "44355"
         }
       ],
-      "UpstreamPathTemplate": "/api/constructor",
+      "UpstreamPathTemplate": "/api/studio/constructor/{id}",
       "UpstreamHttpMethod": [
-        "GET",
-        "PUT",
-        "POST"
+        "DELETE"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/studio/constructor",
+      "DownstreamScheme": "https",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44355"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/studio/constructor",
+      "UpstreamHttpMethod": [ "POST", "GET", "PUT" ]
     },
     {
       "DownstreamPathTemplate": "/api/constructor/published",
@@ -41,20 +51,19 @@
       ],
       "UpstreamPathTemplate": "/api/constructor/{id}",
       "UpstreamHttpMethod": [
-        "GET",
-        "DELETE"
+        "GET"
       ]
     },
     {
-      "DownstreamPathTemplate": "/api/constructor/publish",
+      "DownstreamPathTemplate": "/api/studio/constructor/publish",
       "DownstreamScheme": "https",
       "DownstreamHostandPorts": [
         {
           "Host": "localhost",
-          "Port": "5001"
+          "Port": "44355"
         }
       ],
-      "UpstreamPathTemplate": "/api/constructor/publish",
+      "UpstreamPathTemplate": "/api/studio/constructor/publish",
       "UpstreamHttpMethod": [
         "POST"
       ]

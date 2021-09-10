@@ -23,7 +23,7 @@
           <div class="form-group">
             <div class="field">
               <input type="text" placeholder="User Name" class="form-control input-dark" [(ngModel)]="user.userName"
-                name="userName" #userName="ngModel" required pattern="[A-Za-z0-9.-_]{6,20}">
+                name="userName" #userName="ngModel" required pattern="[\sA-Za-z0-9.-_]{6,20}">
               <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="ui error message">
                 <div *ngIf="userName.invalid">
                   Username should consist of 6-20 characters. There is can contain Latin letters, digits and
@@ -93,13 +93,15 @@
           </div>
           <div class="buttons">
             <button class="btn-full btn-save" [disabled]="form.invalid" (click)="onSubmit()">Save</button>
-            <button class="button-cancel" routerLink="/profile">Cancel</button>
+            <button class="ui button-cancel inverted basic button" routerLink="/profile">Cancel</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
+  <div class="app-crop-image">
+    <app-crop-image [file] = "file"  *ngIf="isCropperModalShown" (croppedFile)="onSubmitModal($event)"  (isClosed)="switchCropperImageModal()"></app-crop-image>
+  </div>
 </form>
 
 <app-upload-image-modal></app-upload-image-modal>

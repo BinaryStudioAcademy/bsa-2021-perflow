@@ -12,6 +12,9 @@
         <p class="album-title">
           {{album.name}}
         </p>
+        <p class="description" *ngIf="album.description">
+          {{album.description}}
+        </p>
         <div class="album-description">
           <span *ngIf="album?.artist || album?.group">{{album?.artist?.userName ?? album?.group?.name
             }}</span>
@@ -46,7 +49,7 @@
                 <div class="item" *ngIf="isAuthor" routerLink="/perflowstudio/albums/edit/{{album.id}}">
                   <i class="edit icon"></i>Edit album
                 </div>
-                <div class="item" *ngIf="isAuthor" (click)="removeAlbum()">
+                <div class="item" *ngIf="isAuthor" (click)="initConfirmDeleteAlbum()">
                   <i class="trash icon"></i>Remove album
                 </div>
                 <div class="item last" (click)="addToQueue()">
@@ -61,7 +64,7 @@
   </div>
 
   <div class="main-content-container">
-    <app-songs-list [album]="album" [songs]="album.songs" (clickMenuItem)="clickMenuHandler($event)"></app-songs-list>
+    <app-songs-list [album]="album" [songs]="album.songs" (clickMenuItem)="clickMenuHandler($event)" [isGroupMember]="isAuthor"></app-songs-list>
     <div class="anotherAlbums" *ngIf="anotherAlbums.length > 0">
       <div class="items-scroll-box top-artists">
         <h4 class="header">Another albums</h4>
@@ -77,11 +80,6 @@
             <i class="large inverted angle right icon"></i>
           </div>
         </div>
-      </div>
-    </div>
-    <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-      <div class="header">
-        Link copied to clipboard!
       </div>
     </div>
   </div>

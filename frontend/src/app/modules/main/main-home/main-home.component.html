@@ -15,15 +15,15 @@
       <img
         class="album-icon"
         alt="Album"
-        src="{{currentAccordionAlbum.iconURL}}" routerLink="/albums/{{currentAccordionAlbum.id}}" *ngIf="currentAccordionAlbum.iconURL"/>
-        <div class="album-icon icon-background" routerLink="/albums/{{currentAccordionAlbum.id}}" *ngIf="!currentAccordionAlbum.iconURL">
+        src="{{currentAccordionAlbum?.iconURL}}" routerLink="/albums/{{currentAccordionAlbum?.id}}" *ngIf="currentAccordionAlbum?.iconURL"/>
+        <div class="album-icon icon-background" routerLink="/albums/{{currentAccordionAlbum?.id}}" *ngIf="!currentAccordionAlbum?.iconURL">
           <i class="itunes note icon"></i>
         </div>
       <div class="album-info">
         <p class="type">Album</p>
-        <p class="album-title">{{currentAccordionAlbum.name}}</p>
+        <p class="album-title">{{currentAccordionAlbum?.name}}</p>
         <p class="album-description">
-          {{currentAccordionAlbum.description}}
+          {{currentAccordionAlbum?.description}}
         </p>
 
         <div class="buttons">
@@ -38,7 +38,7 @@
 
   <div class="main-content">
     <!-- Recently played -->
-    <div class="recently-played" *ngIf="recentlyPlayed?.length && data.showRecentlyPlayed">
+    <div class="recently-played" *ngIf="recentlyPlayed?.length && data?.showRecentlyPlayed">
       <div class="header">Recently played</div>
       <div class="ui grid recently-played-cont">
         <app-song-card routerLink="/albums/{{song.album.id}}" *ngFor="let song of recentlyPlayed" 
@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <div class="items-scroll-box" *ngFor="let section of data.pageSections?.slice(1)">
+    <div class="items-scroll-box" *ngFor="let section of data?.pageSections?.slice(1)">
       <div class="header">{{section.name}}</div>
       <div class="list-of-items">
         <div class="ui icon button scroll-button" (click)="scrollLeft('section-' + section.position)">
@@ -110,7 +110,7 @@
     </div>
 
     <!-- Your mix -->
-    <div class="your-mix" *ngIf="yourMix.length > 0 && data.showMix">
+    <div class="your-mix" *ngIf="yourMix.length > 0 && data?.showMix">
       <div class="header">Your mix</div>
       <div id="yourMix" class="ui grid your-mix-cont">
         <app-your-mix-card [mix]=mix *ngFor="let mix of yourMix"></app-your-mix-card> 
@@ -119,9 +119,4 @@
 
   </div>
 
-  <div [ngClass]="['ui', 'success', 'message', 'copied']" *ngIf="isSuccess">
-    <div class="header">
-      Album was saved
-    </div>
-  </div>
 </main>

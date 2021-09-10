@@ -1,5 +1,4 @@
-﻿using Perflow.Domain.Enums;
-using Perflow.Common.DTO.Notifications;
+﻿using Perflow.Common.DTO.Notifications;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,7 +6,8 @@ namespace Perflow.Services.Interfaces
 {
     public interface INotificationService
     {
-        Task<IEnumerable<NotificationReadDTO>> CreateSubscriberNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type);
+        Task<IEnumerable<NotificationReadDTO>> CreateNotificationAsync(NotificationWriteDTO notification, int[] subscribersIds);
+
         Task<NotificationReadDTO> CreateNotificationAsync(NotificationWriteDTO notification, int subscriberId, bool autoSaveChanges = true);
 
         Task SendNotificationAsync(IEnumerable<NotificationReadDTO> notifications);

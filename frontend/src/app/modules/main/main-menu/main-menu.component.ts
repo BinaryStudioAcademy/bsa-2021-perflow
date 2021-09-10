@@ -3,7 +3,7 @@ import {
   Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   filter, first, take, takeUntil
 } from 'rxjs/operators';
@@ -15,6 +15,11 @@ import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Song } from 'src/app/models/song/song';
+import { RadioService } from 'src/app/services/radio.service';
+import { QueueService } from 'src/app/services/queue.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -29,9 +34,11 @@ export class MainMenuComponent implements OnDestroy, OnInit {
   collaborativePlaylists: PlaylistName[] = [];
   editedPlaylist = {} as PlaylistName;
   isEditPlaylistMode: boolean = false;
-  isSuccess: boolean = false;
+  isConfirmationModalShown: boolean = false;
   userId: number;
+  confirmMessage: string;
 
+  private _action: string;
   private _tempPlaylist = {} as PlaylistName;
   private _isOnCollaborativePlaylistClick: boolean = false;
 
@@ -44,7 +51,11 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     private _clipboardApi: ClipboardService,
     private _location: PlatformLocation,
     private _playlistEditorsService: PlaylistEditorsService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _confirmationService: ConfirmationPageService,
+    private _snackbarService: SnackbarService,
+    private _queueService: QueueService,
+    private _radioService: RadioService
   ) { }
 
   public ngOnInit() {
@@ -135,8 +146,14 @@ export class MainMenuComponent implements OnDestroy, OnInit {
       case 'Edit details':
         this.editPlaylist();
         break;
+      case 'Make Secret':
+        this.changeAccessType(AccessType.secret);
+        break;
+      case 'Make Default':
+        this.changeAccessType(AccessType.default);
+        break;
       case 'Delete':
-        this.deletePlaylist();
+        this.initConfirmDeletePlaylist();
         break;
       case 'Create playlist':
         this.createPlaylist();
@@ -153,10 +170,8 @@ export class MainMenuComponent implements OnDestroy, OnInit {
     this._clipboardApi.copyFromContent(
       `${this._location.hostname}:${this._location.port}/playlists/view-playlist/${this._tempPlaylist.id}`
     );
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 
   createPlaylist() {
@@ -187,6 +202,20 @@ export class MainMenuComponent implements OnDestroy, OnInit {
           }
         });
     }
+  }
+
+  changeAccessType(accessType: AccessType) {
+    this._tempPlaylist.accessType = accessType;
+    this._playlistsService.changeAccessType(this._tempPlaylist)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe({
+        next: (data) => {
+          const playlistIndex = this.playlists.findIndex((pl) => pl.id === this._tempPlaylist?.id);
+          this.playlists[playlistIndex].accessType = data.accessType;
+          this.editedPlaylist = {} as PlaylistName;
+          this._tempPlaylist = {} as PlaylistName;
+        }
+      });
   }
 
   editPlaylist() {
@@ -266,5 +295,47 @@ export class MainMenuComponent implements OnDestroy, OnInit {
 
   isPlaylistCollaborativeSettings() {
     return this.collaborativePlaylists.find((p) => p.id === this._tempPlaylist.id) !== undefined;
+  }
+
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the playlist?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
+  }
+
+  isPlaylistSecret() {
+    return this._tempPlaylist.accessType === AccessType.secret;
+  }
+
+  play(songs: Song[]) {
+    if (!songs?.length) {
+      return;
+    }
+
+    this._queueService.clearQueue();
+    this._queueService.addSongsToQueue(songs);
+
+    const [firstSong] = songs;
+
+    this._queueService.initSong(firstSong, true);
+  }
+
+  startRadio() {
+    this._radioService.getRadioByPlaylistId(this._tempPlaylist.id)
+      .pipe(take(1))
+      .subscribe((songs) => {
+        if (songs.length > 0) {
+          this.play(songs);
+          this._snackbarService.show({ message: 'Radio started' });
+        }
+        else {
+          this._snackbarService.show({ message: 'No songs found' });
+        }
+      });
   }
 }

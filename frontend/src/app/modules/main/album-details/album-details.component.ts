@@ -11,10 +11,12 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { filter, takeUntil } from 'rxjs/operators';
 import { QueueService } from 'src/app/services/queue.service';
 import { AlbumForReadDTO } from 'src/app/models/album/albumForReadDTO';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SongsService } from 'src/app/services/songs/songs.service';
 import { Song } from 'src/app/models/song/song';
 import { GroupService } from 'src/app/services/group.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
 
 @Component({
   selector: 'app-album-details',
@@ -30,7 +32,6 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
 
   @ViewChild('albums') albumsElement: ElementRef;
   album: AlbumFull = {} as AlbumFull;
-  isSuccess: boolean = false;
   anotherAlbums: AlbumForReadDTO[] = [];
   isAuthor: boolean;
 
@@ -44,7 +45,9 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _queueService: QueueService,
     private _songsService: SongsService,
-    private _groupService: GroupService
+    private _groupService: GroupService,
+    private _snackbarService: SnackbarService,
+    private _confirmationService: ConfirmationPageService
   ) {
     this.getUserId();
   }
@@ -142,10 +145,8 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackbarService.show({ message: 'Link copied to clipboard!' });
   }
 
   playAlbum = () => {
@@ -198,7 +199,7 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
   clickMenuHandler(data: { menuItem: string, song: Song }) {
     switch (data.menuItem) {
       case 'Remove from album':
-        this.deleteSongFromAlbum(data.song);
+        this.initConfirmDeleteSongFromAlbum(data.song);
         break;
       default:
         break;
@@ -216,4 +217,26 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
         });
     }
   };
+
+  initConfirmDeleteAlbum() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the album?',
+        () => {
+          this.removeAlbum();
+        },
+        () => {}
+      );
+  }
+
+  initConfirmDeleteSongFromAlbum(song: Song) {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the song?',
+        () => {
+          this.deleteSongFromAlbum(song);
+        },
+        () => {}
+      );
+  }
 }

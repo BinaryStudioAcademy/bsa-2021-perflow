@@ -5,17 +5,18 @@ import { Song } from 'src/app/models/song/song';
 import { PlaylistsService } from 'src/app/services/playlists/playlist.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { QueueService } from 'src/app/services/queue.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { SharePlayService } from 'src/app/services/share-play.service';
 import { PlatformLocation } from '@angular/common';
-import { Subject, timer } from 'rxjs';
 import { AccessType } from 'src/app/models/playlist/accessType';
 import { PlaylistEditorsService } from 'src/app/services/playlists/playlist-editors.service';
 import { PlaylistType } from 'src/app/models/enums/playlist-type';
-import { HubConnectionState } from '@microsoft/signalr';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ConfirmationPageService } from 'src/app/services/confirmation-page.service';
+import { SharePlay } from 'src/app/models/share-play/share-play';
+import { RadioService } from 'src/app/services/radio.service';
 import { CreatePlaylistService } from '../../shared/playlist/create-playlist/create-playlist.service';
 
 @Component({
@@ -32,15 +33,14 @@ export class ViewPlaylistComponent implements OnInit {
   public playlist: Playlist = {} as Playlist;
   private _totalTimeSongs: number;
   private _playlistId: number;
-  private _unsubscribe$ = new Subject<void>();
-  public isSuccess: boolean = false;
   isAuthor: boolean;
   isCollaborative: boolean;
-  isGroupNotified: boolean = false;
+  isPlaylistshared: boolean = false;
   isConnected: boolean = false;
   isHidden: boolean = false;
   readonly playlistType = PlaylistType;
   readonly playlistAccessType = AccessType;
+  private _sharePlayData = { } as SharePlay;
 
   constructor(
     private _activateRoute: ActivatedRoute,
@@ -55,7 +55,9 @@ export class ViewPlaylistComponent implements OnInit {
     private _playlistService: PlaylistsService,
     private _playlistEditorsService: PlaylistEditorsService,
     private _sharePlayService: SharePlayService,
-    private _snackBarService: SnackbarService
+    private _snackBarService: SnackbarService,
+    private _confirmationService: ConfirmationPageService,
+    private _radioService: RadioService
   ) {
     this._authService.getAuthStateObservable()
       .pipe(filter((state) => !!state))
@@ -85,20 +87,22 @@ export class ViewPlaylistComponent implements OnInit {
         }
       });
 
-    this.isConnected = this._sharePlayService.getHubStatus() === HubConnectionState.Connected;
+    this._sharePlayService.checkConnectionStatus$
+      .subscribe({
+        next: (data) => {
+          this.isConnected = data.isConnected;
+          this.isPlaylistshared = data.isPlaylistshared;
+        }
+      });
   }
 
-  nextSlide = () => { };
-
-  previousSlide = () => { };
-
-  play = () => {
-    if (this.songs.length === 0) return;
+  play = (songs: Song[]) => {
+    if (songs.length === 0) return;
 
     this._queueService.clearQueue();
-    this._queueService.addSongsToQueue(this.songs);
+    this._queueService.addSongsToQueue(songs);
 
-    this._queueService.initSong(this.songs[0], true);
+    this._queueService.initSong(songs[0], true);
   };
 
   loadPlaylistSongs() {
@@ -125,14 +129,25 @@ export class ViewPlaylistComponent implements OnInit {
         next: (playlist) => {
           this.playlist = playlist;
           this.isAuthor = this.userId === this.playlist.author.id;
+
           this._playlistEditorsService.getCollaborators(playlist.id)
             .pipe(take(1))
             .subscribe(
               (result) => {
-                this.isCollaborative = result.find((u) => u.id === this.userId) !== undefined;
+                this.isCollaborative = this.playlist.accessType === AccessType.collaborative
+                  && (result.filter((u) => u.id === this.userId).length > 0
+                  || this.playlist.author.id === this.userId);
+
+                this._sharePlayData = {
+                  masterId: this.playlist.author.id,
+                  playlistId: this.playlist.id
+                } as SharePlay;
+
+                if (this.playlist.accessType === AccessType.collaborative) {
+                  this._sharePlayService.checkUserStatus(this._sharePlayData);
+                }
               }
             );
-          this.getSharePlayState(playlist.id);
         },
         error: () => {
           this._router.navigateByUrl('/playlists/all');
@@ -156,6 +171,20 @@ export class ViewPlaylistComponent implements OnInit {
           this.playlist.isLiked = true;
         }
       );
+  }
+
+  startRadio() {
+    this._radioService.getRadioByPlaylistId(this.playlist.id)
+      .pipe(take(1))
+      .subscribe((songs) => {
+        if (songs.length > 0) {
+          this.play(songs);
+          this._snackBarService.show({ message: 'Radio started' });
+        }
+        else {
+          this._snackBarService.show({ message: 'No songs found' });
+        }
+      });
   }
 
   addToQueue = () => {
@@ -183,10 +212,8 @@ export class ViewPlaylistComponent implements OnInit {
 
   copyLink() {
     this._clipboardApi.copyFromContent(this._location.href);
-    this.isSuccess = true;
-    timer(3000).subscribe((val) => {
-      this.isSuccess = Boolean(val);
-    });
+
+    this._snackBarService.show({ message: 'Link copied to clipboard!' });
   }
 
   clickMenuHandler(data: { menuItem: string, song: Song }) {
@@ -215,52 +242,50 @@ export class ViewPlaylistComponent implements OnInit {
   canShare = (accessType: AccessType) => accessType !== AccessType.secret;
 
   sharePlay(pl: Playlist) {
-    this.connectToSharePlay(pl.id);
-
-    this._sharePlayService.sharePlayAsync({ masterId: 0, playlistId: pl.id })
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: () => {
-          this.isGroupNotified = true;
-        },
-        error: () => {
-          this._snackBarService.show({ message: 'Connection is closed! Try reload the page' });
-        }
-      });
-  }
-
-  getSharePlayState(id: number) {
-    this._sharePlayService.getSharePlayState(id)
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: (data) => {
-          this.isGroupNotified = data;
-        }
-      });
-  }
-
-  connectToSharePlay(playlistId: number) {
-    this._sharePlayService.connectToSharePlay(playlistId)
+    this._sharePlayService.connectToSharePlay(this._sharePlayData)
       .then(() => {
-        this.isConnected = true;
+        this._sharePlayService.checkUserStatus(this._sharePlayData);
+
+        if (this.songs.length) {
+          this._queueService.clearQueue();
+          this._queueService.addSongsToQueue(this.songs);
+          this._queueService.initSong(this.songs[0], false);
+        }
+      });
+  }
+
+  connectToSharePlay(id: number) {
+    this._sharePlayService.connectToSharePlay(this._sharePlayData)
+      .then(() => {
+        this._sharePlayService.checkUserStatus(this._sharePlayData);
+
+        if (this.songs.length) {
+          this._queueService.clearQueue();
+          this._queueService.addSongsToQueue(this.songs);
+          this._queueService.initSong(this.songs[0], false);
+        }
       })
-      .then(() => {
-        if (!this.songs.length) {
-          return;
-        }
-
-        this._queueService.clearQueue();
-        this._queueService.addSongsToQueue(this.songs);
-        this._queueService.initSong(this.songs[0], false);
+      .catch(() => {
+        this.isConnected = false;
       });
   }
 
-  disconnectSharePlay() {
-    this._sharePlayService.disconectHub()
+  disconnectSharePlay(id: number) {
+    this._sharePlayService.disconectHub(this._sharePlayData)
       .then(() => {
         this.isConnected = false;
-        this.isGroupNotified = false;
-        this.isHidden = true;
+        this.isPlaylistshared = false;
       });
+  }
+
+  initConfirmDeletePlaylist() {
+    this._confirmationService
+      .initConfirmation(
+        'Are you sure you want to delete the playlist?',
+        () => {
+          this.deletePlaylist();
+        },
+        () => {}
+      );
   }
 }

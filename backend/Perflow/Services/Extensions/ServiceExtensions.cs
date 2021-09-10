@@ -4,6 +4,7 @@ using Perflow.Common.MappingProfiles;
 using System.Reflection;
 using Perflow.Services.Implementations;
 using Shared.Processor.Models;
+using Perflow.Common.Helpers;
 
 namespace Perflow.Services.Extensions
 {
@@ -77,6 +78,9 @@ namespace Perflow.Services.Extensions
             services.AddScoped<ITagService, TagService>();
 
             services.AddOptions<SongRecognitionRabbitMQOptions>().BindConfiguration(SongRecognitionRabbitMQOptions.Key);
+            services.AddScoped<IRadioService, RadioService>();
+
+            services.AddScoped<PlaylistNotifier>();
         }
     }
 }

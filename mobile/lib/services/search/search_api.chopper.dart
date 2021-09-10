@@ -32,7 +32,7 @@ class _$SearchApi extends SearchApi {
   @override
   Future<Response<dynamic>> getAlbums(
       String searchTerm, int page, int itemsOnPage) {
-    final $url = 'api/search/albums';
+    final $url = 'api/search/albums/true';
     final $params = <String, dynamic>{
       'searchTerm': searchTerm,
       'page': page,

@@ -109,6 +109,7 @@ namespace Perflow.Services.Implementations
                                             {
                                                 Id = a.Id,
                                                 Name = a.Name,
+                                                Description = a.Description,
                                                 ReleaseYear = a.ReleaseYear,
                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs.OrderBy(s => s.Order)
@@ -141,31 +142,36 @@ namespace Perflow.Services.Implementations
                                                     : a.GroupId == artistId && a.IsPublished)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
+                                        .OrderByDescending(a => a.ReleaseYear)
                                         .Select(a => new AlbumShortDTO
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
                                             AuthorName = type == AuthorType.Artist ? a.Author.UserName : a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
-                                            ReleaseYear = a.ReleaseYear
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle
                                         })
                                         .ToListAsync();
 
             return albums;
         }
 
-        public async Task<IEnumerable<AlbumShortDTO>> GetAlbumsByArtistUnpublished(int groupId)
+        public async Task<IEnumerable<AlbumForEditGroupViewDTO>> GetAlbumsByArtistUnpublished(int groupId)
         {
             var albums = await context.Albums
                                         .Where(a => a.GroupId == groupId)
                                         .Include(a => a.Group)
-                                        .Select(a => new AlbumShortDTO
+                                        .OrderByDescending(a => a.ReleaseYear)
+                                        .Select(a => new AlbumForEditGroupViewDTO
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
                                             AuthorName = a.Group.Name,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
-                                            ReleaseYear = a.ReleaseYear
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle,
+                                            IsPublished = a.IsPublished
                                         })
                                         .ToListAsync();
 
@@ -368,8 +374,31 @@ namespace Perflow.Services.Implementations
                 Type = isArtist ? NotificationType.ArtistSubscribtion : NotificationType.GroupSubscribtion
             };
 
-            var notifications = await _notificationService.CreateSubscriberNotificationAsync(notification, authorId, album.AuthorType);
+            var subscribersIds = isArtist ? await GetArtistSubscribersAsync(authorId) : await GetGroupSubscribersAsync(authorId);
+
+            await NotifyAsync(notification, subscribersIds);
+        }
+
+        private async Task NotifyAsync(NotificationWriteDTO notification, int[] subscribersIds)
+        {
+            var notifications = await _notificationService.CreateNotificationAsync(notification, subscribersIds);
             await _notificationService.SendNotificationAsync(notifications);
+        }
+
+        private async Task<int[]> GetArtistSubscribersAsync(int id)
+        {
+            return await context.ArtistReactions
+                    .Where(ar => ar.ArtistId == id)
+                    .Select(ar => ar.UserId)
+                    .ToArrayAsync();
+        }
+
+        private async Task<int[]> GetGroupSubscribersAsync(int id)
+        {
+            return await context.GroupReactions
+                    .Where(ar => ar.GroupId == id)
+                    .Select(ar => ar.UserId)
+                    .ToArrayAsync();
         }
     }
 }

@@ -49,7 +49,7 @@
       "UpstreamHttpMethod": [ "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/notifications",
+      "DownstreamPathTemplate": "/hub/notifications",
       "DownstreamScheme": "wss",
       "DownstreamHostAndPorts": [
         {
@@ -57,7 +57,7 @@
           "Port": "5001"
         }
       ],
-      "UpstreamPathTemplate": "/notifications",
+      "UpstreamPathTemplate": "/hub/notifications",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
     }
   ]
