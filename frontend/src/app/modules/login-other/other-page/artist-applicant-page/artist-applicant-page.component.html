@@ -18,15 +18,17 @@
         </button>
       </div>
       <div class="group" *ngIf="!isArtist || isJoinToGroupRoute">
-        <button class="ui btn-full button create-btn" (click)="showModal()" *ngIf="!createdGroup">
-          Create a group
-        </button>
-        <div class="ui search">
-          <div class="ui icon input">
-            <input class="prompt input-dark" type="text" name="search" placeholder="Search a group..."
-              autocomplete="off" (input)="findGroup()" [(ngModel)]="searchValue" (keyup)="clearSearch($event)">
-            <i class="search icon"></i>
+        <div class="search-create">
+          <div class="ui search">
+            <div class="ui icon input">
+              <input class="prompt input-dark" type="text" name="search" placeholder="Search a group..."
+                autocomplete="off" (input)="findGroup()" [(ngModel)]="searchValue" (keyup)="clearSearch($event)">
+              <i class="search icon"></i>
+            </div>
           </div>
+          <button class="ui btn-full button create-btn" (click)="showModal()" *ngIf="!createdGroup">
+            Create a group
+          </button>
         </div>
         <div class="my-groups" *ngIf="createdGroup">
           <h4>My group</h4>

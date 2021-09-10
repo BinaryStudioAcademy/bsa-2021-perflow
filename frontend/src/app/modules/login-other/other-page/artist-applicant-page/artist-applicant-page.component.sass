@@ -29,30 +29,36 @@ main
         display: flex
         align-items: flex-start
         flex-direction: column
+        .search-create
+          width: 100%
+          display: flex
+          align-items: center
+          .create-btn
+            margin-left: 20px
+          .ui.search
+            width: 50%
+            background: $drk-gray
+            display: flex
+            align-items: center
+            justify-content: center
+            .ui.icon.input
+              width: 100%
+              i
+                color: $text
+              .prompt.input-dark
+                background: $drk-rain
+                border: 1px solid $text
+                color: $text
+                &:focus
+                  background: $drk-rain
+                &:active
+                  background: $drk-rain
         h4
           color: $text
           margin-bottom: 20px
       .text
         +text($text, 18px, $medium-weight)
         margin-top: 1em
-      .ui.search
-        margin-top: 1em
-        background: $drk-gray
-        display: flex
-        align-items: center
-        justify-content: center
-        .ui.icon.input
-          width: 20em
-          i
-            color: $text
-          .prompt.input-dark
-            background: $drk-rain
-            border: 1px solid $text
-            color: $text
-            &:focus
-              background: $drk-rain
-            &:active
-              background: $drk-rain
 
 .my-groups
   margin: 2em 0em
@@ -86,7 +92,7 @@ main
   display: flex
   align-items: center
   flex-direction: column
-  margin-bottom: 20px
+  margin-bottom: 40px
   .title
     +text($text, 26px, $medium-weight)
     margin-top: 1.5em
