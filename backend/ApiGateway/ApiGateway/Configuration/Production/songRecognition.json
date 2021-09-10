@@ -15,7 +15,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/api/SongReaction/index",
+      "DownstreamPathTemplate": "/api/songRecognition/index",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
@@ -23,7 +23,7 @@
           "Port": "4202"
         }
       ],
-      "UpstreamPathTemplate": "/api/SongReaction/index",
+      "UpstreamPathTemplate": "/api/songRecognition/index",
       "UpstreamHttpMethod": [
         "POST"
       ]
