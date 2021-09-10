@@ -49,5 +49,16 @@
       "Name": "Processor-Recognition-Queue",
       "RoutingKey": "recognition-key"
     }
+  },
+
+  "SongIndexingOptions": {
+    "ExchangeOptions": {
+      "Name": "Processor-Indexing-Exchange",
+      "Type": "direct"
+    },
+    "QueueOptions": {
+      "Name": "Processor-Indexing-Queue",
+      "RoutingKey": "indexing-key"
+    }
   }
 }

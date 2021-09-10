@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using Perflow.Common.DTO.SongRecignition;
 using Perflow.Services.Interfaces;
 using Shared.Processor.Models;
 using Shared.RabbitMQ.Interfaces;

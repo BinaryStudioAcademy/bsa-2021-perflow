@@ -38,6 +38,7 @@ namespace Processor.ConsoleApp.Implementations
             services.AddOptions<ImageProcessingRabbitMQOptions>().BindConfiguration(ImageProcessingRabbitMQOptions.Key);
             services.AddOptions<SongProcessingRabbitMQOptions>().BindConfiguration(SongProcessingRabbitMQOptions.Key);
             services.AddOptions<SongRecognitionRabbitMQOptions>().BindConfiguration(SongRecognitionRabbitMQOptions.Key);
+            services.AddOptions<SongIndexingRabbitMQOptions>().BindConfiguration(SongIndexingRabbitMQOptions.Key);
 
             RabbitMQOptions rabbitMQOptions = new();
             configuration.Bind("RabbitMQConnection", rabbitMQOptions);
@@ -54,7 +55,8 @@ namespace Processor.ConsoleApp.Implementations
             services.AddMessageHandlerManager(builder => builder
                 .AddHandler<ImageProcessingHandler>()
                 .AddHandler<SongProcessingHandler>()
-                .AddHandler<SongRecognitionHandler>());
+                .AddHandler<SongRecognitionHandler>()
+                .AddHandler<SongIndexingHandler>());
 
             _provider = services.BuildServiceProvider();
         }
