@@ -83,6 +83,33 @@
       </div>
   </div>
 
+  <div class="groupAlbums" *ngIf="groupSingles.length > 0">
+    <div class="header">
+        Singles
+    </div>
+    <div class="items">
+      <div class="scroll-box-left" *ngIf="isTextOverflow('singles')">
+        <button class="scroll-button" (click)="scrollLeft('singles')">
+            <i class="chevron left icon"></i>
+        </button>
+      </div>
+        <div #singles id="singles" name="singles" class="cards">
+            <app-album-card 
+              class="card" 
+              *ngFor="let album of groupSingles" 
+              [album]="album" 
+              [isLiked]=false 
+              [showPublishedStatus]="true">
+            </app-album-card>
+        </div>
+        <div class="scroll-box-right" *ngIf="isTextOverflow('singles')">
+            <button class="scroll-button" (click)="scrollRight('singles')">
+                <i class="chevron right icon"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
   <div class="groupPlaylists" *ngIf="groupPlaylists.length > 0">
       <div class="header">
           Artist Playlists

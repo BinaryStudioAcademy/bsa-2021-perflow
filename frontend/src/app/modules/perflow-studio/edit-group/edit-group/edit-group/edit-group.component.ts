@@ -35,12 +35,14 @@ export class EditGroupComponent implements OnInit, OnDestroy {
 
   @ViewChild('albums') albumsElement: ElementRef;
   @ViewChild('playlists') playlistsElement: ElementRef;
+  @ViewChild('singles') singlesElement: ElementRef;
 
   group: GroupFull = {} as GroupFull;
   editedGroup: GroupEdit = {} as GroupEdit;
   topSongs: Song[] = [];
   groupPlaylists: PlaylistView[] = [];
   groupAlbums: AlbumForReadDTO[] = [];
+  groupSingles: AlbumForReadDTO[] = [];
   isGroupMember: boolean;
   isModalShown: boolean;
   newAlbum: AlbumEdit = {} as AlbumEdit;
@@ -131,7 +133,8 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       this._albumsService.getAlbumsByArtist(this.group.id, AuthorType.group)
         .subscribe(
           (result) => {
-            this.groupAlbums = result;
+            this.groupAlbums = result.filter((a) => !a.isSingle);
+            this.groupSingles = result.filter((a) => a.isSingle);
           }
         );
     }
@@ -139,7 +142,9 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       this._albumsService.getAlbumsByGroupUnpublished(this.group.id)
         .subscribe(
           (result) => {
-            this.groupAlbums = result.body!.sort((a) => (a.isPublished ? -1 : 1));
+            this.groupAlbums = result.body!.filter((a) => !a.isSingle).sort((a) => (a.isPublished ? -1 : 1));
+            this.groupSingles = result.body!.filter((a) => a.isSingle).sort((a) => (a.isPublished ? -1 : 1));
+            //this.groupAlbums = result.body!.sort((a) => (a.isPublished ? -1 : 1));
           }
         );
     }
@@ -179,6 +184,9 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       case 'playlists':
         this.playlistsElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
         break;
+      case 'singles':
+        this.singlesElement.nativeElement?.scrollBy({ left: scrollingSize, behavior: 'smooth' });
+        break;
       default:
         break;
     }
@@ -191,6 +199,9 @@ export class EditGroupComponent implements OnInit, OnDestroy {
         break;
       case 'playlists':
         this.playlistsElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
+        break;
+      case 'singles':
+        this.singlesElement.nativeElement?.scrollBy({ left: -scrollingSize, behavior: 'smooth' });
         break;
       default:
         break;
