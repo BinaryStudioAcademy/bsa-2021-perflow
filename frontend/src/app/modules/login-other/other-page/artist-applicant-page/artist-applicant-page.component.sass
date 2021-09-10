@@ -9,20 +9,15 @@ main
   background: $drk-gray
   width: 100%
   min-height: 100vh
-  padding-top: 90px
+  padding-top: 40px
   .main-content
     padding: 0px 40px
     .content
       height: 100%
       display: flex
-      align-items: center
+      align-items: flex-start
       flex-direction: column
       padding: 20px 0px
-      .checkbox-container
-        margin-top: 1em
-        display: flex
-        align-items: center
-        justify-content: center
       .group
         height: 100%
         width: 100%
@@ -91,14 +86,11 @@ main
 .apply-contrainer
   display: flex
   align-items: center
-  flex-direction: column
   margin-bottom: 40px
   .title
     +text($text, 26px, $medium-weight)
-    margin-top: 1.5em
+    transform: translate(0px, -2px)
   .checkbox-container
-    margin-top: 1em
-    margin-bottom: 1em
     display: flex
     align-items: center
     justify-content: center
