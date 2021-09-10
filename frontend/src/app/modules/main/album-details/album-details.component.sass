@@ -12,6 +12,15 @@ $image-size: 245px
     align-items: $align-items
     justify-content: $justify-content
 
+=max-lines($lines, $line-height)
+    overflow: hidden
+    text-overflow: ellipsis
+    display: -webkit-box
+    -webkit-box-orient: vertical
+    -webkit-line-clamp: $lines
+    line-height: $line-height
+    max-height: $line-height * $lines
+
 main
     background: $drk-gray
     width: 100%
@@ -59,7 +68,7 @@ main
             margin-left: 35px
             color: $text
             .type
-                margin-top: 2rem
+                margin-top: 1rem
                 font-weight: $light-weight
                 font-size: 18px
                 line-height: 21px
@@ -68,12 +77,18 @@ main
                 font-weight: $bold-weight
                 font-size: 40px
                 line-height: 47px
+            .description
+                margin-top: 0.5rem
+                padding-bottom: 0.5rem
+                font-weight: $light-weight
+                font-size: 16px
+                +max-lines(2, 18px)
             .album-description
-                margin-top: 1.2rem
+                margin-top: 1rem
                 padding-bottom: 1rem
                 font-weight: $light-weight
                 font-size: 16px
-                line-height: 21px
+                line-height: 18px
                 .info
                     opacity: 0.8
                 .divider

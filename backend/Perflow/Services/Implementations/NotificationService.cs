@@ -29,12 +29,8 @@ namespace Perflow.Services.Implementations
             _hubContext = hubContext;
         }
 
-        public async Task<IEnumerable<NotificationReadDTO>> CreateSubscriberNotificationAsync(NotificationWriteDTO notification, int id, AuthorType type)
+        public async Task<IEnumerable<NotificationReadDTO>> CreateNotificationAsync(NotificationWriteDTO notification, int[] subscribersIds)
         {
-            var subscribersIds = type == AuthorType.Artist
-                ? await GetArtistSubscribersAsync(id)
-                : await GetGroupSubscribersAsync(id);
-
             var notifications = new List<Notification>();
 
             foreach (var subscriberId in subscribersIds)
@@ -79,9 +75,9 @@ namespace Perflow.Services.Implementations
 
         public async Task SendNotificationAsync(IEnumerable<NotificationReadDTO> notifications)
         {
-            foreach (var n in notifications)
+            foreach (var notification in notifications)
             {
-                await _hubContext.Clients.User(n.UserId.ToString()).SendNotification(n);
+                await _hubContext.Clients.User(notification.UserId.ToString()).SendNotification(notification);
             }
         }
 
@@ -150,22 +146,6 @@ namespace Perflow.Services.Implementations
             context.Notifications.RemoveRange(notifications);
 
             await context.SaveChangesAsync();
-        }
-
-        private async Task<int[]> GetArtistSubscribersAsync(int id)
-        {
-            return await context.ArtistReactions
-                    .Where(ar => ar.ArtistId == id)
-                    .Select(ar => ar.UserId)
-                    .ToArrayAsync();
-        }
-
-        private async Task<int[]> GetGroupSubscribersAsync(int id)
-        {
-            return await context.GroupReactions
-                    .Where(ar => ar.GroupId == id)
-                    .Select(ar => ar.UserId)
-                    .ToArrayAsync();
         }
 
         public async Task<NotificationReadDTO> CreateApplicantNotificationAsync(NotificationWriteDTO notification, int applicantId)

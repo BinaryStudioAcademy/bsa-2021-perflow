@@ -2,8 +2,9 @@
     <div class="fader">
         <button class="play-icon">
             <i class="play icon" appClickStopPropagation (click)="play(mix.id)"></i>
-        </button>
-        <img src="../../../../../assets/images/mix-4.jpg" alt="Icon">
+        </button> 
+        <img src="../../../../../assets/images/mix-4.jpg" alt="Icon" *ngIf="!mix.iconURL">
+        <img [src]="mix.iconURL" alt="Icon" *ngIf="mix.iconURL">
     </div>
     <div class="card-name">{{mix.name}}</div>
 </div>

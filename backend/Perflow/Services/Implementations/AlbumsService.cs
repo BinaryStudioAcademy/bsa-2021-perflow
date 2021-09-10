@@ -109,6 +109,7 @@ namespace Perflow.Services.Implementations
                                             {
                                                 Id = a.Id,
                                                 Name = a.Name,
+                                                Description = a.Description,
                                                 ReleaseYear = a.ReleaseYear,
                                                 IconURL = _imageService.GetImageUrl(a.IconURL),
                                                 Songs = a.Songs.OrderBy(s => s.Order)
@@ -373,8 +374,31 @@ namespace Perflow.Services.Implementations
                 Type = isArtist ? NotificationType.ArtistSubscribtion : NotificationType.GroupSubscribtion
             };
 
-            var notifications = await _notificationService.CreateSubscriberNotificationAsync(notification, authorId, album.AuthorType);
+            var subscribersIds = isArtist ? await GetArtistSubscribersAsync(authorId) : await GetGroupSubscribersAsync(authorId);
+
+            await NotifyAsync(notification, subscribersIds);
+        }
+
+        private async Task NotifyAsync(NotificationWriteDTO notification, int[] subscribersIds)
+        {
+            var notifications = await _notificationService.CreateNotificationAsync(notification, subscribersIds);
             await _notificationService.SendNotificationAsync(notifications);
+        }
+
+        private async Task<int[]> GetArtistSubscribersAsync(int id)
+        {
+            return await context.ArtistReactions
+                    .Where(ar => ar.ArtistId == id)
+                    .Select(ar => ar.UserId)
+                    .ToArrayAsync();
+        }
+
+        private async Task<int[]> GetGroupSubscribersAsync(int id)
+        {
+            return await context.GroupReactions
+                    .Where(ar => ar.GroupId == id)
+                    .Select(ar => ar.UserId)
+                    .ToArrayAsync();
         }
     }
 }

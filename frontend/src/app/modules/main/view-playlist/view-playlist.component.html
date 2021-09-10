@@ -3,13 +3,7 @@
     <div class="hat-view-playlist">
       <div class="content-view-playlist">
         <div class="image">
-          <img src="{{ playlist?.iconURL }}" alt="Avatar playlist" *ngIf="playlist.type === playlistType.playlist" />
-          <div class="icon-background" *ngIf="playlist.type !== playlistType.playlist">
-            <img class="icon" src="../../../../assets/images/playlist.svg" />
-            <p class="playlist-name">
-              {{ playlist?.name }}
-            </p>
-          </div>
+          <img src="{{ playlist?.iconURL }}" alt="Avatar playlist"/>
         </div>
         <div class="menu-view-playlist">
           <div class="text">Playlist</div>

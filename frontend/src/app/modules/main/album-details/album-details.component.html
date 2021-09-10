@@ -12,6 +12,9 @@
         <p class="album-title">
           {{album.name}}
         </p>
+        <p class="description" *ngIf="album.description">
+          {{album.description}}
+        </p>
         <div class="album-description">
           <span *ngIf="album?.artist || album?.group">{{album?.artist?.userName ?? album?.group?.name
             }}</span>
