@@ -135,6 +135,10 @@ export class GroupViewComponent implements OnInit, OnDestroy {
   }
 
   likeGroup() {
+    if (this.group.isLiked) {
+      this._snackbarService.show({ message: `You already subscribed to ${this.group.name}.` });
+      return;
+    }
     this._reactionService.addGroupReaction(this.group.id, this._userId)
       .subscribe(
         () => {

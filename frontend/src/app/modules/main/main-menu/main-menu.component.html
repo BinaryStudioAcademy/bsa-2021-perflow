@@ -87,13 +87,13 @@
       Start playlist radio
     </span>
   </div>
-  <div class="item" *ngIf="!isPlaylistSecret()" (click)="clickOnMenuItem('Make Secret')">
+  <div class="item" *ngIf="!isPlaylistSecret() && !isPlaylistCollaborativeSettings()" (click)="clickOnMenuItem('Make Secret')">
     <span>
       <i class="user secret icon"></i>
       Make secret
     </span>
   </div>
-  <div class="item" *ngIf="isPlaylistSecret()" (click)="clickOnMenuItem('Make Default')">
+  <div class="item" *ngIf="isPlaylistSecret() && !isPlaylistCollaborativeSettings()" (click)="clickOnMenuItem('Make Default')">
     <span>
       <i class="user secret icon"></i>
       Make default
