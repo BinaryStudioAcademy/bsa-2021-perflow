@@ -276,12 +276,14 @@ export class SongToolbarComponent implements OnInit, OnDestroy {
     if (this.isPlaying) {
       this.audio?.pause();
       this.isPlaying = false;
+      this._songToolbarService.pauseSong(this._songToolbarService.getCurrentSong()!.id);
       this.playPauseButton?.lastElementChild?.classList.replace('pause', 'play');
     }
     else {
       this._audioContext.resume();
       this.audio?.play();
       this.isPlaying = true;
+      this._songToolbarService.resumeSong(this._songToolbarService.getCurrentSong()!.id);
       this.playPauseButton?.lastElementChild?.classList.replace('play', 'pause');
     }
 

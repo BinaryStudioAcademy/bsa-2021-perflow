@@ -8,6 +8,8 @@ import { SongInfo } from '../models/song/song-info';
 export class SongToolbarService {
   private _songUpdatedSource = new Subject<SongInfo>();
   private _playToggledSource = new Subject<void>();
+  pauseSong$ = new Subject<number>();
+  resumeSong$ = new Subject<number>();
 
   private _currentSong: SongInfo | null = null;
 
@@ -25,5 +27,13 @@ export class SongToolbarService {
 
   togglePlay = () => {
     this._playToggledSource.next();
+  };
+
+  pauseSong = (songId: number) => {
+    this.pauseSong$.next(songId);
+  };
+
+  resumeSong = (songId: number) => {
+    this.resumeSong$.next(songId);
   };
 }

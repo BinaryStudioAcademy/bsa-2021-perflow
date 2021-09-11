@@ -158,6 +158,7 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
     this._queueService.addSongsToQueue(this.album.songs);
 
     const [first] = this.album.songs;
+    first.isPlaying = true;
 
     this._queueService.initSong(first, true);
   };

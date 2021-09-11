@@ -174,14 +174,16 @@ export class QueueComponent implements OnDestroy {
       if (!this.songs.length || index + 1 >= this.songs.length) return null;
 
       this.currentSongId = this.songs[index + 1].id;
-
+      this.songs[index].isPlaying = false;
+      this.songs[index + 1].isPlaying = true;
       return this.songs[index + 1];
     }
 
     if (!this.unshuffledSongs.length || index + 1 >= this.unshuffledSongs.length) return null;
 
     this.currentSongId = this.unshuffledSongs[index + 1].id;
-
+    this.unshuffledSongs[index].isPlaying = false;
+    this.unshuffledSongs[index + 1].isPlaying = true;
     return this.unshuffledSongs[index + 1];
   };
 
@@ -191,14 +193,16 @@ export class QueueComponent implements OnDestroy {
       if (!this.songs.length || index - 1 < 0) return null;
 
       this.currentSongId = this.songs[index - 1].id;
-
+      this.songs[index].isPlaying = false;
+      this.songs[index - 1].isPlaying = true;
       return this.songs[index - 1];
     }
 
     if (!this.unshuffledSongs.length || index - 1 < 0) return null;
 
     this.currentSongId = this.unshuffledSongs[index - 1].id;
-
+    this.unshuffledSongs[index].isPlaying = false;
+    this.unshuffledSongs[index - 1].isPlaying = true;
     return this.unshuffledSongs[index - 1];
   };
 
