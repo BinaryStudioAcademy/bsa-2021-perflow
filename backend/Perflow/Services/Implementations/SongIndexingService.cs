@@ -25,28 +25,18 @@ namespace Perflow.Services.Implementations
             _indexingQueue = queueFactory.CreateVoidQueue(rabbitMqOptions.ExchangeOptions, rabbitMqOptions.QueueOptions);
         }
 
-        public async Task IndexSongs(List<int> songIds)
+        public async Task IndexSongs()
         {
             var indexingOptions = new SongIndexingOptions();
 
-            foreach (var songId in songIds)
-            {
-                var sourceBlobId = await _context.Songs
-                    .Where(x => x.Id == songId)
-                    .Select(x => x.SourceBlobId)
-                    .FirstOrDefaultAsync();
-
-                if (sourceBlobId == null)
+            indexingOptions.SongsIndexData = await _context
+                .Songs
+                .Select(x => new SongIndexData() 
                 {
-                    continue;
-                }
-
-                indexingOptions.SongsIndexData.Add(new()
-                {
-                    Id = songId,
-                    BlobId = sourceBlobId
-                });
-            }
+                    Id = x.Id,
+                    BlobId = x.SourceBlobId
+                })
+                .ToListAsync();
 
             if (indexingOptions.SongsIndexData.Count == 0)
             {

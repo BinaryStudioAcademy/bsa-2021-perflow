@@ -5,6 +5,6 @@ namespace Perflow.Services.Interfaces
 {
     public interface ISongIndexingService
     {
-        public Task IndexSongs(List<int> songIds);
+        Task IndexSongs();
     }
 }

@@ -53,9 +53,9 @@ namespace Perflow.Controllers
         }
 
         [HttpPost("index")]
-        public async Task<ActionResult> IndexSongs([FromBody] List<int> songIds)
+        public async Task<ActionResult> IndexSongs()
         {
-            await _indexingService.IndexSongs(songIds);
+            await _indexingService.IndexSongs();
 
             return Ok();
         }
