@@ -178,22 +178,20 @@ namespace Perflow.Services.Implementations
             return albums;
         }
 
-        public async Task<ICollection<AlbumForListDTO>> GetAlbumShortInfosByArtist(int artistId)
+        public async Task<ICollection<AlbumShortDTO>> GetAlbumShortInfosByArtist(int artistId)
         {
             var albums = await context.Albums
-                                        .Where(a => a.AuthorId == artistId || a.GroupId == artistId)
+                                        .Where(a => a.AuthorId == artistId)
                                         .Include(a => a.Author)
                                         .Include(a => a.Group)
-                                        .Select(a => new AlbumForListDTO
+                                        .Select(a => new AlbumShortDTO
                                         {
                                             Id = a.Id,
                                             Name = a.Name,
+                                            AuthorName = a.Author.UserName,
                                             IconURL = _imageService.GetImageUrl(a.IconURL),
-                                            Author = new AlbumViewAuthorsDTO(
-                                            a.Author.Id,
-                                            a.Author.UserName,
-                                            a.Group == null),
-
+                                            ReleaseYear = a.ReleaseYear,
+                                            IsSingle = a.IsSingle
                                         })
                                         .ToListAsync();
 
