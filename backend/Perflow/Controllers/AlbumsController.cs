@@ -59,7 +59,7 @@ namespace Perflow.Controllers
         }
 
         [HttpGet("viewsByArtist/{artistId}")]
-        public async Task<ActionResult<ICollection<AlbumViewDTO>>> GetAlbumsShortInfoByArtistId(int artistId)
+        public async Task<ActionResult<ICollection<AlbumShortDTO>>> GetAlbumsShortInfoByArtistId(int artistId)
         {
             return Ok(await _albumsService.GetAlbumShortInfosByArtist(artistId));
         }
